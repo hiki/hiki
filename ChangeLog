@@ -1,4 +1,7 @@
 2004-09-09  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/command.rb (Hiki::Command::cmd_save): @options['freeeze'] 
+	も参照するように修正。
+
 	* misc/plugin/diffmail2.rb: 差分周辺だけを通知する diffmail.rb の
 	改良版。タイトルやキーワードの変更も通知する。
 

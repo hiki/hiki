@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.17 2004-09-08 15:42:49 fdiary Exp $
+# $Id: command.rb,v 1.18 2004-09-09 05:03:31 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'amrita/template'
@@ -316,7 +316,7 @@ module Hiki
         @db.delete( page )
         @plugin.delete_proc
       else
-        if @db.is_frozen?( page )
+        if @db.is_frozen?( page ) || @conf.options['freeze']
           unless pass_check
             @cmd = 'edit'
             cmd_edit( page, text )
