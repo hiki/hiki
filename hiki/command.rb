@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.32 2005-02-14 07:57:29 fdiary Exp $
+# $Id: command.rb,v 1.33 2005-02-15 05:23:44 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -263,7 +263,7 @@ module Hiki
       elsif @cmd == 'conflict'
 	old = text.gsub(/\r/, '')
 	new = @db.load( page ) || ''
-	differ = word_diff( old, new ).gsub( /\n/, '<br>' )
+	differ = word_diff( old, new ).gsub( /\n/, "<br>\n" )
         link = @plugin.hiki_anchor( page.escape, page.escapeHTML )
       end
       
@@ -301,7 +301,7 @@ module Hiki
     def cmd_diff
       old = @db.load_backup( @p ) || ''
       new = @db.load( @p ) || ''
-      differ = word_diff( old, new ).gsub( /\n/, '<br>' )
+      differ = word_diff( old, new ).gsub( /\n/, "<br>\n" )
       
       data = Hiki::Util::get_common_data( @db, @plugin, @conf )
       @plugin.hiki_menu(data, @cmd)

@@ -1,6 +1,6 @@
 2005-02-15  Kazuhiko  <kazuhiko@fdiary.net>
-	* misc/plugin/history.rb (history_src): diff の出力を <pre> から
-	<div> に変更
+	* misc/plugin/src.rb (src), misc/plugin/history.rb (history_src,
+	history_diff): 出力を <pre> から <div> に変更
 	(parse_history): require 'time' の追加
 
 2005-02-14  Kazuhiko  <kazuhiko@fdiary.net>

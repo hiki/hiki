@@ -1,4 +1,4 @@
-# $Id: src.rb,v 1.4 2004-06-26 14:12:29 fdiary Exp $
+# $Id: src.rb,v 1.5 2005-02-15 05:23:44 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 def src_label
@@ -17,12 +17,12 @@ def src
   <title id=title></title>
 </head>
 <body>
-<pre>
+<div>
 EOS
   page = @db.load( @page )
-  sources << (page ? page.escapeHTML : 'load error.')
+  sources << (page ? page.escapeHTML.gsub(/\n/, "<br>\n") : 'load error.')
   sources  << <<EOS
-</pre>
+</div>
 </body>
 </html>
 EOS
