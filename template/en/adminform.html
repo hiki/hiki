@@ -2,17 +2,17 @@
     PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
-<head id=header>
+<head id="header">
 </head>
 
 <body>
 <div class="hiki">
-  <div class="adminmenu" id=tools></div>
+  <div class="adminmenu" id="tools"></div>
 <h1>Hiki Configurations</h1>
 
 <form method="post" action="@cgi_name">
-  <input type=hidden value=admin name=c>
-  <p id=msg></p>
+  <input type="hidden" value="admin" name="c">
+  <p id="msg"></p>
   <div class="conf day">
     <h2><span class="title">Basic preferences</span></h2>
     <div class="body">
@@ -41,8 +41,8 @@
       <h3 class="subtitle">Send mail for changes.</h3>
       <p>If ON, notice-mail is sended to "e-mail address" of Basic preferences via SMTP server(which set in config.rb) when a page is updated. If OFF, e-mail isn't sended.</p>
       <p><select name="mail_on_update">
-         <option id=mail_on_update value="true">ON</option>
-         <option id=no_mail value="false">OFF</option>
+         <option id="mail_on_update" value="true">ON</option>
+         <option id="no_mail" value="false">OFF</option>
          </select></p>
       <p><input type="submit" name="saveconf" value="OK"></p>
     </div>
@@ -64,8 +64,8 @@
       <h3 class="subtitle">Sidebar</h3>
       <p>ON if Sidebar is shown. If you want to use a theme which doesn't support Sidebar, you need to select OFF here.</p>
       <p><select name="sidebar">
-         <option id=use_sidebar value="true">ON</option>
-         <option id=no_sidebar value="false">OFF</option>
+         <option id="use_sidebar" value="true">ON</option>
+         <option id="no_sidebar" value="false">OFF</option>
          </select></p>
       <h3 class="subtitle">Class name of the main area (CSS)</h3>
       <p>Enter the class name of the main area (default: 'main').</p>
@@ -76,8 +76,8 @@
       <h3 class="subtitle">Auto link</h3>
       <p>If you want to use the auto link function, select 'On' here.</p>
       <p><select name="auto_link">
-         <option id=use_auto_link value="true">ON</option>
-         <option id=no_auto_link value="false">OFF</option>
+         <option id="use_auto_link" value="true">ON</option>
+         <option id="no_auto_link" value="false">OFF</option>
          </select></p>
       <p><input type="submit" name="saveconf" value="OK"></p>
     </div>
@@ -86,6 +86,6 @@
 </form>
 </div>
 
-<div class="footer" id=footer></div>
+<div class="footer" id="footer"></div>
 </body>
 </html>

@@ -2,17 +2,17 @@
     PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="fr">
-<head id=header>
+<head id="header">
 </head>
 
 <body>
 <div class="hiki">
-  <div class="adminmenu" id=tools></div>
+  <div class="adminmenu" id="tools"></div>
 <h1>Configuration du Hiki</h1>
 
 <form method="post" action="@cgi_name">
-  <input type=hidden value=admin name=c>
-  <p id=msg></p>
+  <input type="hidden" value="admin" name="c">
+  <p id="msg"></p>
   <div class="conf day">
     <h2><span class="title">Préférences de base</span></h2>
     <div class="body">
@@ -41,8 +41,8 @@
       <h3 class="subtitle">Notification par e-mail.</h3>
       <p>Si cette option est activée, un e-mail de notification sera envoyé à votre adresse électronique via le serveur SMTP (définit dans config.rb) lorsqu'une page est modifiée.  Aucun e-mail ne sera envoyé si cette option est désactivée.</p>
       <p><select name="mail_on_update">
-         <option id=mail_on_update value="true">ON</option>
-         <option id=no_mail value="false">OFF</option>
+         <option id="mail_on_update" value="true">ON</option>
+         <option id="no_mail" value="false">OFF</option>
          </select></p>
       <p><input type="submit" name="saveconf" value="OK"></p>
     </div>
@@ -64,8 +64,8 @@
       <h3 class="subtitle">Barre contextuelle</h3>
       <p>ON et la barre contextuelle sera affichée.  Si vous voulez utiliser un thème qui ne gère pas de barre contextuelle, vous devez sélectionner OFF.</p>
       <p><select name="sidebar">
-         <option id=use_sidebar value="true">ON</option>
-         <option id=no_sidebar value="false">OFF</option>
+         <option id="use_sidebar" value="true">ON</option>
+         <option id="no_sidebar" value="false">OFF</option>
          </select></p>
       <h3 class="subtitle">Nom de la classe dans la section principale (CSS)</h3>
       <p>Entrez le nom CSS de la classe dans la section principale.</p>
@@ -76,8 +76,8 @@
       <h3 class="subtitle">Liens automatiques</h3>
       <p>Choisissez ON si vous désirez activer les liens automatiques.</p>
       <p><select name="auto_link">
-         <option id=use_auto_link value="true">ON</option>
-         <option id=no_auto_link value="false">OFF</option>
+         <option id="use_auto_link" value="true">ON</option>
+         <option id="no_auto_link" value="false">OFF</option>
          </select></p>
       <p><input type="submit" name="saveconf" value="OK"></p>
     </div>
@@ -86,6 +86,6 @@
 </form>
 </div>
 
-<div class="footer" id=footer></div>
+<div class="footer" id="footer"></div>
 </body>
 </html>

@@ -2,53 +2,53 @@
     PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="fr">
-<head id=header>
+<head id="header">
 </head>
 
 <body>
-<div class="adminmenu" id=tools></div>
-<h1 class="header" id=title></h1>
+<div class="adminmenu" id="tools"></div>
+<h1 class="header" id="title"></h1>
 
 <div class="update day">
 <div class="form">
   <div id="msg" class="msg"></div>
-  <div id=freeze_msg class="msg"></div>
+  <div id="freeze_msg" class="msg"></div>
   <div id="preview"></div>
-  <pre id=differ></pre>
+  <pre id="differ"></pre>
   <form class="update" action="@cgi_name" method="POST">
-    <input type="hidden" name="p" id=pagename>
+    <input type="hidden" name="p" id="pagename">
     <input type="hidden" name="c" value="save">
-    <input type="hidden" name="md5hex" id=md5hex>
+    <input type="hidden" name="md5hex" id="md5hex">
     <p>
-   Titre de la page <input type="text" name="page_title" size="60" accesskey="T" value=@page_title>
+   Titre de la page <input type="text" name="page_title" size="60" accesskey="T" value="@page_title">
     </p>
     <div class="textarea">
-      <textarea cols="80" rows="20" name="contents" accesskey="C" id=contents></textarea>
+      <textarea cols="80" rows="20" name="contents" accesskey="C" id="contents"></textarea>
     </div>
     <p>
     Mot clef (veuillez entrer distinctement chaque mot sur une ligne à part)
-      <textarea id=keyword cols="15" rows="3" name="keyword" class="keyword" accesskey="K"></textarea>
+      <textarea id="keyword" cols="15" rows="3" name="keyword" class="keyword" accesskey="K"></textarea>
       
     </p>
     <p>
-    <input type="checkbox" name="freeze" id=freeze>Geler la page courante. 
+    <input type="checkbox" name="freeze" id="freeze">Geler la page courante. 
     Mot de passe: <input type="password" name="password" size="20">
     </p>
-    <div id=edit_proc></div>
+    <div id="edit_proc"></div>
     <p>
-      <input type="submit" name="preview" value="Prévisualiser" id=preview_button>
-      <input type="submit" name="save" value="Sauver" accesskey="O" id=button>
+      <input type="submit" name="preview" value="Prévisualiser" id="preview_button">
+      <input type="submit" name="save" value="Sauver" accesskey="O" id="button">
     </p>
   </form>
-  <div id=link>
-    Référencie version récente: [<span id=p></span>]
+  <div id="link">
+    Référencie version récente: [<span id="p"></span>]
   </div>
 </div>
 </div>
 
 <hr class="sep">
 
-<div class="update day" id=form_proc></div>
+<div class="update day" id="form_proc"></div>
 
 <div class="update day">
 <div class="comment">
@@ -56,6 +56,6 @@
 </div>
 </div>
 
-<div class="footer" id=footer></div>
+<div class="footer" id="footer"></div>
 </body>
 </html>
