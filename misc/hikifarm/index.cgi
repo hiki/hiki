@@ -65,7 +65,7 @@ end
 
 #--------------------------------------------------------------------
 
-HIKIFARM_VERSION = '0.3.0.20040620'
+HIKIFARM_VERSION = '0.3.0.20040831'
 
 def index( wiki )
 <<-INDEX
@@ -247,9 +247,9 @@ def create_wiki( wiki, hiki, cgi_name, data_path )
 end
 
 def body( data_path )
-   r = "<table>\n"
-   r << %Q|<tr><th>Wiki の名前</th><th>タイトル</th><th>最終更新時刻</th></tr>|
    wikilist = []
+   wikis = 0
+   pages = 0
    Dir['*'].each do |wiki|
       next unless FileTest::directory?( wiki.untaint )
       next if FileTest::symlink?( wiki )
@@ -257,7 +257,7 @@ def body( data_path )
       if not @repos.imported?( wiki ) then
          @repos.import( wiki )
       end
-      @repos.update( wiki )
+#      @repos.update( wiki )
       title = wiki
       mtime = nil
       file = ''
@@ -270,6 +270,7 @@ def body( data_path )
       rescue
       	 title = "#{wiki}'s Wiki"
       end
+      pages += Dir["#{data_path}/#{wiki}/text/*"].size
       Dir["#{data_path}/#{wiki}/text/*"].sort{ |a,b| File.mtime(a.untaint) <=> File.mtime(b.untaint) }.reverse.each do |f|
          next if File.basename(f) == "CVS" || !File.size?(f)
 	 mtime = File.mtime(f)
@@ -277,15 +278,20 @@ def body( data_path )
 	 break
       end
       wikilist.push( WikiList.new(wiki, title, mtime, file) ) if mtime
+      wikis += 1
    end
+   r = "<p>全 #{wikis} Wiki / #{pages} ページ (* は差分へのリンク)</p>\n"
+   r << "<table>\n"
+   r << %Q|<tr><th>Wiki の名前</th><th>タイトル</th><th>最終更新時刻</th></tr>|
    wikilist = wikilist.sort{ |a,b| a.mtime <=> b.mtime }.reverse
    wikilist.each do |wiki|
       page = CGI.escapeHTML(CGI.unescape(wiki.file))
       r << %Q|<tr>|
       r << %Q|<td><a href="#{wiki.name}/">#{wiki.name}</a></td>|
       r << %Q|<td>#{CGI::escapeHTML(wiki.title)}</td>|
-      r << %Q|<td>#{wiki.mtime.strftime("%Y/%m/%d %H:%M:%S")}|
-      r << %Q| (<a href="#{wiki.name}/?#{wiki.file}">#{page}</a>)</td></tr>\n|
+      r << %Q|<td>#{wiki.mtime.strftime("%Y/%m/%d %H:%M")}|
+      r << %Q| <a href="#{wiki.name}/?c=diff;p=#{wiki.file}">*</a>\n|
+      r << %Q| <a href="#{wiki.name}/?#{wiki.file}">#{page}</a></td></tr>\n|
    end
    @head['Last-Modified'] = CGI::rfc1123_date( wikilist[0].mtime ) unless wikilist.empty?
 r << "</table>\n"
