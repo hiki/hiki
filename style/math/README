@@ -1,0 +1,64 @@
+! Math スタイルと数式表示プラグイン
+
+default スタイルを拡張して数式の表示ができるようにしたスタイルです。
+
+!! 必要なもの
+
+* LaTeX → DVI に変換するもの (デフォルト：platex)
+* DVI → PS に変換するもの (デフォルト：dvips)
+* PS → PNG に変換するもの (デフォルト：convert と ghostscript)
+
+!! インストール方法
+
+# hikiconf.rbの @style を @style = 'math' と変更する
+# misc/plugin/math.rb を plugin/ にコピーする
+
+!! 書き方
+
+文法は Hiki の default スタイルに、インライン数式用の
+
+ [$...$]
+
+というマークアップと、ディスプレイ数式用の
+
+ $$...
+ $$...
+
+というマークアップを追加してあります。
+
+!! オプション
+
+Math スタイルでは以下のオプションを用意しています。hikiconf.rbに記述し
+てください。
+
+* @options['math.latex.ptsize']
+** LaTeX の基本ポイントサイズです (デフォルトは '12pt')。
+
+* @options['math.latex.documentclass']
+** LaTeX の documentclass です (デフォルトは 'report')。
+
+* @options['math.latex.preamble']
+** laTeX の preamble 部です (デフォルトは '')。
+
+* @options['math.latex.latex']
+** LaTeX → DVI 変換するコマンド (デフォルトは 'platex %.tex')
+
+* @options['math.latex.dvips']
+** DVI → PS 変換するコマンド (デフォルトは 'dvips %.dvi')
+
+* @options['math.latex.convert']
+** DVI → PNG 変換するコマンド (デフォルトは 'convert -antialias -trim -transparent white %.ps %.png')
+
+* @options['math.latex.log']
+** ログを出力するかどうか (デフォルトは false)。
+
+* @options['math.latex.recompile']
+** リクエストのたびに変換しなおすかどうか (デフォルトは false)。
+
+!! Tips
+
+背景が暗いテーマを使っている場合は、@options['math.latex.convert'] を
+ 'convert -antialias -trim -border 4x4 -bordercolor white %.ps %.png'
+とか
+ 'convert -antialias -trim -negate -transparent black %.ps %.png'
+のように設定すると、数式が見やすくなるでしょう。
