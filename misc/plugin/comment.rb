@@ -1,4 +1,4 @@
-# $Id: comment.rb,v 1.3 2004-06-26 14:12:29 fdiary Exp $
+# $Id: comment.rb,v 1.4 2004-08-06 15:31:57 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 # modified by yoshimi.
@@ -40,7 +40,7 @@ def comment(cols = 60, style = 0)
     <input type="submit" name="comment" value="#{comment_post_label}">
     <input type="hidden" name="comment_no" value="#{@comment_num}">
     <input type="hidden" name="c" value="plugin">
-    <input type="hidden" name="p" value="#{@page}">
+    <input type="hidden" name="p" value="#{@page.escapeHTML}">
     <input type="hidden" name="plugin" value="comment_post">
     <input type="hidden" name="style" value="#{style}">
   </div>

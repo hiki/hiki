@@ -1,4 +1,4 @@
-# $Id: template.rb,v 1.2 2004-02-15 02:48:35 hitoshi Exp $
+# $Id: template.rb,v 1.3 2004-08-06 15:31:57 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 #
 
@@ -26,7 +26,7 @@ def template_form
     s = <<EOS
 <div>
   #{template_label}:
-  <input type="hidden" name="p" value="#{@page}">
+  <input type="hidden" name="p" value="#{@page.escapeHTML}">
   <input type="hidden" name="plugin" value="load_template">
   <select name="template">
 EOS

@@ -1,4 +1,4 @@
-# $Id: attach.rb,v 1.9 2004-07-26 07:53:43 fdiary Exp $
+# $Id: attach.rb,v 1.10 2004-08-06 15:31:57 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 #
 # thanks to Kazuhiko, Masao Mutoh, SHIMADA Mitsunobu, Yoshimi, ¤ê¤¿
@@ -29,7 +29,7 @@ def attach_form(s = '')
 <div class="form">
 <form class="nodisp" method="post" enctype="multipart/form-data" action="#{@conf.farm_page or "./"}attach.cgi">
   <div>
-    <input type="hidden" name="p" value="#{@page.escape}">
+    <input type="hidden" name="p" value="#{@page.escapeHTML}">
     <input type="hidden" name="cache_path" value="#{@cache_path}">
     <input type="hidden" name="command" value="#{command}">
     <input type="hidden" name="refresh" value="#{@conf.index_page}">
@@ -206,7 +206,7 @@ def attach_show_page_files_checkbox
   s =  ''
   if (files = attach_page_files).size > 0
     s << %Q!<form method="post" enctype="multipart/form-data" action="#{@conf.farm_page or "./"}attach.cgi">
-  <input type="hidden" name="p" value="#{@page}">
+  <input type="hidden" name="p" value="#{@page.escapeHTML}">
   <input type="hidden" name="cache_path" value="#{@cache_path}">
   <input type="hidden" name="command" value="#{@command == 'create' ? 'edit' : @command}">
   <input type="hidden" name="refresh" value="#{@conf.index_page}">

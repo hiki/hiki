@@ -1,4 +1,4 @@
-# $Id: bbs.rb,v 1.3 2004-06-26 14:12:29 fdiary Exp $
+# $Id: bbs.rb,v 1.4 2004-08-06 15:31:57 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 def bbs_name_label
@@ -37,7 +37,7 @@ def bbs
     <input type="submit" name="comment" value="#{bbs_post_label}">
     <input type="hidden" name="bbs_num" value="#{@bbs_num}">
     <input type="hidden" name="c" value="plugin">
-    <input type="hidden" name="p" value="#{@page}">
+    <input type="hidden" name="p" value="#{@page.escapeHTML}">
     <input type="hidden" name="plugin" value="bbs_post">
   </div>
 </form>

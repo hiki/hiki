@@ -1,3 +1,9 @@
+2004-08-07  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/attach/attach.rb: page を escapeHTML するように修正 
+	thanks to yoggy
+	* misc/plugin/bbs.rb, misc/plugin/comment.rb,
+	misc/plugin/template.rb: page を escapeHTML するように修正
+
 2004-07-26  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/attach/attach.rb (attach_src): page を untaint する
 	ように修正 thanks to MACHIDA Hideki
