@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# $Id: attach.cgi,v 1.9 2004-09-22 15:02:21 fdiary Exp $
+# $Id: attach.cgi,v 1.10 2004-09-22 15:10:02 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 BEGIN { $defout.binmode }
@@ -40,7 +40,7 @@ def attach_file
 
     begin
       Dir.mkdir(cache_path) unless test(?e, cache_path.untaint)
-      attach_path = "#{cache_path}/#{page.escape}"
+      attach_path = "#{cache_path}/#{page.untaint.escape}"
       Dir.mkdir(attach_path) unless test(?e, attach_path)
       path = "#{attach_path}/#{CGI.escape(NKF.nkf('-e', filename))}"
       open(path.untaint, "wb") do |f|
@@ -62,7 +62,7 @@ def attach_file
       Dir.foreach(attach_path) do |file|
         next unless params["file_#{file}"][0]
         path = "#{attach_path}/#{file}"
-        if FileTest::file?(path) and params["file_#{file}"][0].read
+        if FileTest::file?(path.untaint) and params["file_#{file}"][0].read
           File::unlink(path)
           r << "FILE        = #{path}\n"
         end
