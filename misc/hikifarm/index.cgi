@@ -150,7 +150,7 @@ class ReposCvs < ReposDefault
       oldpwd = Dir.pwd
       begin
          Dir.chdir( "#{@data_path}/#{wiki}/text" )
-         system( "cvs -d #{@root} import -m 'Starting #{wiki}' #{wiki} #{wiki} start > /dev/null 2>&1" )
+         system( "cvs -d #{@root} import -m 'Starting #{wiki}' #{wiki} T#{wiki} start > /dev/null 2>&1" )
          Dir.chdir( '..' )
          system( "cvs -d #{@root} co -d text #{wiki} > /dev/null 2>&1" )
       ensure

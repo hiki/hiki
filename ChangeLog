@@ -1,3 +1,7 @@
+2004-08-31  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/hikifarm/index.cgi (ReposCvs::import): 数字で始まる wiki を 
+	import できるように、vendor-tag の先頭に 'T' を追加
+
 2004-08-12  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/pluginutil.rb: lstrip を ruby-1.6 で動くように修正
 
