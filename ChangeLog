@@ -1,4 +1,7 @@
 2004-09-10  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/trackback.rb: tdiary テーマ向け修正 by MACHIDA
+	Hideki
+
 	* hiki/command.rb (Hiki::Command::get_recent): 各ページの差分への
 	リンクを追加
 

@@ -1,11 +1,13 @@
-# $Id: trackback.rb,v 1.1 2004-09-10 06:51:50 fdiary Exp $
+# $Id: trackback.rb,v 1.2 2004-09-10 11:01:07 fdiary Exp $
 # Copyright (C) 2004 Kazuhiko <kazuhiko@fdiary.net>
 
 require 'uconv'
 
 add_body_leave_proc do
   <<-EOF
-<p>TrackBack URL: <a href="#{File.basename(ENV['SCRIPT_NAME'])}/tb/#{@page.escape}">#{base_url}#{File.basename(ENV['SCRIPT_NAME'])}/tb/#{@page.escape}</a></p>
+<div class="comment trackbacks">
+<div class="caption">TrackBack URL: <a href="#{File.basename(ENV['SCRIPT_NAME'])}/tb/#{@page.escape}">#{base_url}#{File.basename(ENV['SCRIPT_NAME'])}/tb/#{@page.escape}</a></div>
+</div>
   EOF
 end if @options['trackback.enable']
 
