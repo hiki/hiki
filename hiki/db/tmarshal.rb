@@ -6,7 +6,7 @@
 module TMarshal
   module_function
   def dump(obj, port = nil)
-    dumped = obj.dump_text
+    dumped = dump_text(obj)
     if port
       port.write dumped
     end
@@ -14,104 +14,56 @@ module TMarshal
   end
   
   def load(port)
-    eval port.read.untaint
+    case port
+    when String
+      eval port.untaint
+    when IO, StringIO
+      eval port.read.untaint
+    else
+      raise 'Wrong type!'
+    end
   end
   
   def restore(port)
     load(port)
   end
-end
 
-
-################ dump_text for Standard Libraries
-
-class String
-  alias :dump_text :dump
-  def read
-    self
-  end
-end
-
-class Array
-  def dump_text
-    "[\n"+self.collect{|x| x.dump_text+",\n"}.to_s+"]"
-  end
-end
-
-class Numeric
-  alias :dump_text :inspect
-end
-
-class Hash
-  def dump_text
-    "{\n"+self.collect{|k,v| "#{k.dump_text} => #{v.dump_text},\n"}.to_s+"}"
-  end
-end
-
-class TrueClass
-  def dump_text
-    "true"
-  end
-end
-
-class FalseClass
-  def dump_text
-    "false"
-  end
-end
-
-class NilClass
-  def dump_text
-    "nil"
-  end
-end
-
-class Module
-  alias :dump_text :inspect
-end
-
-class Range
-  alias :dump_text :to_s
-end
-
-class Regexp
-  alias :dump_text :inspect
-end
-
-class Symbol
-  alias :dump_text :inspect
-end
-
-class Time
-  def dump_text
-    "Time.at(#{self.to_i})"
+  def dump_text(obj)
+    case obj
+    when String
+      obj.dump
+    when Array
+      "[\n"+obj.collect{|x| dump_text(x)+",\n"}.to_s+"]"
+    when Numeric, Module, Regexp, Symbol
+      obj.inspect
+    when Hash
+      "{\n"+obj.sort{|a,b| a[0].inspect<=>b[0].inspect}.collect{|k,v| "#{dump_text(k)} => #{dump_text(v)},\n"}.to_s+"}"
+    when TrueClass
+      'true'
+    when FalseClass
+      'false'
+    when NilClass
+      'nil'
+    when Range
+      obj.to_s
+    when Time
+      "Time.at(#{obj.to_i})"
+    else
+      raise 'Wrong type!'
+    end
   end
 end
 
 if __FILE__ == $0
-  class C
-    def initialize(v)
-      @v = v
-    end
-    attr :v
-    def dump_text
-      "#{self.class}::new(#{@v.dump_text})"
-    end
-    def ==(other)
-      @v == other.v
-    end
-  end
-
- File::open("aaa", "w") do |f|  
-  [true, false, nil, Object, :a, /x/, 1..2, 3...4, Time.now, 'ABC'].each do |x|
+  File::open("aaa", "w") do |f|
+    x = [true, false, nil, Object, :a, /x/, 1..2, 3...4, Time.now, 'ABC', {'a'=>1, 'b'=>2, 'c'=>3}]
     f.puts TMarshal::dump(x)
   end
- end
 
- File::open("aaa", "r") do |f|
-   f.each do |a|
-     c = TMarshal::load(a.chomp!)
-     puts c, c.class
-   end
- end
+  File::open("aaa", "r") do |f|
+    c = TMarshal::load(f.read)
+    c.each do |i|
+      puts i, i.class
+    end
+  end
 end

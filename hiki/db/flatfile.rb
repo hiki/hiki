@@ -1,4 +1,4 @@
-# $Id: flatfile.rb,v 1.10 2004-12-17 17:48:04 koma2 Exp $
+# $Id: flatfile.rb,v 1.11 2005-01-04 08:43:22 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'ftools'
@@ -53,12 +53,6 @@ module Hiki
       end
     end
     
-    def touch( page )
-      create_info_default( page ) unless info_exist?( page )
-      filename = textdir( page )
-      File::open( filename, "w" ) {|f|}
-    end
-
     def load( page )
       return nil unless exist?( page )
       filename = textdir( page )

@@ -1,3 +1,14 @@
+2005-01-04  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/db/ptstore.rb: ruby-1.8.2 の pstore.rb に追従
+
+2005-01-03  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/db/tmarshal.rb: 標準クラスに dump_text を追加するのを廃止
+	(TMarshal::dump_text): 追加。Hash の出力を key でソートするように変
+	更
+	(TMarshal::load): String の場合は read を呼ばないように変更
+
+	* hiki/db/flatfile.rb (Hiki::HikiDB::touch): 削除
+
 2004-12-31  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/attach/attach.rb: 強制的にダウンロードされるように修
 	正 report by Kazuhiro NISHIYAMA
