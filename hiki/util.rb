@@ -1,10 +1,8 @@
-# $Id: util.rb,v 1.26 2005-01-28 04:35:29 fdiary Exp $
+# $Id: util.rb,v 1.27 2005-01-29 14:58:26 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'nkf'
 require 'cgi'
-require 'net/smtp'
-require 'time'
 
 autoload( :Document, 'docdiff' )
 autoload( :DocDiff, 'docdiff' )
@@ -181,6 +179,8 @@ module Hiki
     end
 
     def sendmail(subject, body)
+      require 'net/smtp'
+      require 'time'
       return unless @conf.mail || @conf.smtp_server
       Net::SMTP.start(@conf.smtp_server, 25) {|smtp|
         smtp.send_mail <<EndOfMail, @conf.mail.untaint, @conf.mail
