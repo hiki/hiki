@@ -2,76 +2,60 @@
     PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
-<head>
-  <meta http-equiv="Content-Language" content="en">
-  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-  <title id=title></title>
-  <link rel="stylesheet" type="text/css" href="theme/hiki_base.css">
-  <link rel="stylesheet" type="text/css" href="@stylesheet">
+<head id=header>
 </head>
 
 <body>
-<div class="sidebar" id="sidebar">
-  <div id="menu"   class="recentsubtitles"></div>
-</div>
+<div class="adminmenu" id=tools></div>
+<h1 class="header" id=title></h1>
 
-<div class="@view_style">
-  <div class="adminmenu" id=tools>
-    <span class="adminmenu">
-      [
-      <a id=create>Create</a> |
-      <a id=edit>Edit</a> | 
-      <a id=diff>Diff</a> 
-      ]
-      [
-      <a id=FrontPage>FrontPage</a> | 
-      <a id=index>Indexes</a> | 
-      <a id=search>Search</a> | 
-      <a id=recent>Recent</a>
-      ]
-      [
-      <a id=admin>Admin</a>
-      ]
-    </span>
-  </div>
-  <h1 class="header" id=title></h1>
-
-  <div class="day">
-    <div class="body">
-      <div class="section">
-        <div id="msg" class="msg"></div>
-        <div id=freeze_msg class="msg"></div>
-        <div id="preview" class="comment"></div>
-        <pre id=differ></pre>
-        <form action="@cgi_name" method="POST">
-          <input type="hidden" name="p" id=pagename>
-          <input type="hidden" name="c" value="save">
-          <input type="hidden" name="md5hex" id=md5hex>
-          <textarea cols="80" rows="20" name="contents" wrap="off" id=contents></textarea><br>
-          <p>
-          <input type="submit" name="preview" value="Preview" id=preview_button>
-          <input type="submit" name="save" value="Save" id=button>
-          </p>
-          <p>
-          <input type="checkbox" name="freeze" id=freeze>Freeze the current page. 
-          Password <input type="password" name="password" size="20">
-          </p>
-        </form>
-        <div id=link>
-          Refer Recent version: [<span id=p></span>]
-        </div>
-        <hr>
-        <div id="format"></div>
-      </div>
+<div class="update day">
+<div class="form">
+  <div id="msg" class="msg"></div>
+  <div id=freeze_msg class="msg"></div>
+  <div id="preview"></div>
+  <pre id=differ></pre>
+  <form class="update" action="@cgi_name" method="POST">
+    <input type="hidden" name="p" id=pagename>
+    <input type="hidden" name="c" value="save">
+    <input type="hidden" name="md5hex" id=md5hex>
+    <p>
+      Title <input type="text" name="page_title" size="60" accesskey="T" value=@page_title>
+    </p>
+    <div class="textarea">
+      <textarea cols="80" rows="20" name="contents" accesskey="C" id=contents></textarea>
     </div>
+    <p>
+      Keyword (one keyword per line)
+      <textarea id=keyword cols="15" rows="3" name="keyword" class="keyword" accesskey="K"></textarea>
+      
+    </p>
+    <p>
+      <input type="checkbox" name="freeze" id=freeze>Freeze the current page. 
+      Password <input type="password" name="password" size="20">
+    </p>
+    <div id=edit_proc></div>
+    <p>
+      <input type="submit" name="preview" value="Preview" id=preview_button>
+      <input type="submit" name="save" value="Save" accesskey="O" id=button>
+    </p>
+  </form>
+  <div id=link>
+    Refer Recent version: [<span id=p></span>]
   </div>
 </div>
-
-<div class="footer">
-  <a href="http://www.namaraii.com/hiki/">Hiki</a> <span id=version>0.0.1</span>
-  &copy; 2002-2003 by <a href="http://www.namaraii.com/">TAKEUCHI Hitoshi</a>.<br>
-  Powered by <span id=ruby_ver></span> and <span id=amrita_ver></span>.<br>
-  Modified by <span id=author_name></span>.
 </div>
+
+<hr class="sep">
+
+<div class="update day" id=form_proc></div>
+
+<div class="update day">
+<div class="comment">
+  <div class="commentbody"><p>½ñ¤­Êý¤¬¤ï¤«¤é¤Ê¤¤¾ì¹ç¤Ï<a href="?TextFormattingRules">TextFormattingRules</a>¤ò»²¾È¤·¤Æ¤¯¤À¤µ¤¤¡£</p></div>
+</div>
+</div>
+
+<div class="footer" id=footer></div>
 </body>
 </html>

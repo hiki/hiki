@@ -2,38 +2,12 @@
     PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
-<head>
-  <meta http-equiv="Content-Language" content="en">
-  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-  <title id=title>Diff</title>
-  <link rel="stylesheet" type="text/css" href="theme/hiki_base.css">
-  <link rel="stylesheet" type="text/css" href="@stylesheet">
+<head id=header>
 </head>
 
 <body>
-<div class="sidebar" id="sidebar">
-  <div id="menu"   class="recentsubtitles"></div>
-</div>
-
 <div class="@view_style">
-  <div class="adminmenu" id=tools>
-    <span class="adminmenu">
-      [
-      <a id=create>Create</a> | 
-      <a id=edit>Edit</a> | 
-      <a id=diff>Diff</a> 
-      ]
-      [
-      <a id=FrontPage>FrontPage</a> | 
-      <a id=index>Indexes</a> | 
-      <a id=search>Search</a> | 
-      <a id=recent>Recent</a>
-      ]
-      [
-      <a id=admin>Admin</a>
-      ]
-    </span>
-  </div>
+  <div class="adminmenu" id=tools></div>
   <h1 class="header" id=title></h1>
 
   <div class="day">
@@ -50,11 +24,10 @@
   </div>
 </div>
 
-<div class="footer">
-  <a href="http://www.namaraii.com/hiki/">Hiki</a> <span id=version>0.0.1</span>
-  &copy; 2002-2003 by <a href="http://www.namaraii.com/">TAKEUCHI Hitoshi</a>.<br>
-  Powered by <span id=ruby_ver></span> and <span id=amrita_ver></span>.<br>
-  Modified by <span id=author_name></span>.
+<div class=@sidebar_class id="sidebar">
+  <div id="menu" class="recentsubtitles"></div>
 </div>
+
+<div class="footer" id=footer></div>
 </body>
 </html>
