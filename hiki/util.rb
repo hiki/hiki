@@ -1,4 +1,4 @@
-# $Id: util.rb,v 1.16 2004-09-13 14:23:16 fdiary Exp $
+# $Id: util.rb,v 1.17 2004-11-15 14:45:23 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'nkf'
@@ -164,6 +164,9 @@ From: #{@conf.mail_from ? @conf.mail_from : @conf.mail}
 To: #{@conf.mail}
 Subject: #{subject.to_jis}
 Date: #{Time.now.rfc2822}
+MIME-Version: 1.0
+Content-Type: text/plain; charset="iso-2022-jp"
+Content-Transfer-Encoding: 7bit
 X-Mailer: Hiki #{HIKI_VERSION}
 
 #{body.to_jis}
