@@ -163,6 +163,7 @@ class View
     }
     result.unshift(tags[:start_digest_body])
     result.push(tags[:end_digest_body])
+    result = [] if result.size == 2
     if headfoot == true
       result = tags[:header] + result + tags[:footer]
     end
@@ -270,10 +271,10 @@ class View
      :outside_escape_pat  => HTMLEscapePat,
      :inside_escape_dic   => HTMLEscapeDic,
      :inside_escape_pat   => HTMLEscapePat,
-     :start_digest_body   => '<ul><hr />',
+     :start_digest_body   => '<ul>',
      :end_digest_body     => '</ul>',
      :start_entry         => '<li class="entry">',
-     :end_entry           => '</p></blockquote></li><hr />',
+     :end_entry           => '</p></blockquote></li>',
      :start_position      => '<p class="position">',
      :end_position        => '</p><blockquote class="body"><p class="body">',
      :start_prefix        => '',

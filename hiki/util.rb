@@ -1,4 +1,4 @@
-# $Id: util.rb,v 1.28 2005-03-02 04:32:39 fdiary Exp $
+# $Id: util.rb,v 1.29 2005-03-03 12:56:53 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'nkf'
@@ -136,27 +136,34 @@ module Hiki
       data
     end
 
-    def word_diff( src, dst, html = true )
+    def word_diff( src, dst, digest = false )
+      src_doc = Document.new( src, 'EUC-JP', CharString.guess_eol($/) )
+      dst_doc = Document.new( dst, 'EUC-JP', CharString.guess_eol($/) )
+      diff = compare_by_line_word( src_doc, dst_doc )
+      overriding_tags = {
+	:start_common => '',
+	:end_common => '',
+	:start_del           => '<del class="deleted">',
+	:end_del             => '</del>',
+	:start_add           => '<ins class="added">',
+	:end_add             => '</ins>',
+	:start_before_change => '<del class="deleted">',
+	:end_before_change   => '</del>',
+	:start_after_change  => '<ins class="added">',
+	:end_after_change    => '</ins>',
+      }
+      if digest
+	return View.new( diff, src.encoding, src.eol ).to_html_digest(overriding_tags, false).to_s.gsub( %r|<br />|, '' ).gsub( %r|\n</ins>|, "</ins>\n" )
+      else
+	return View.new( diff, src.encoding, src.eol ).to_html(overriding_tags, false).to_s.gsub( %r|<br />|, '' ).gsub( %r|\n</ins>|, "</ins>\n" )
+      end
+    end
+
+    def word_diff_text( src, dst )
       src_doc = Document.new( src, 'EUC-JP' )
       dst_doc = Document.new( dst, 'EUC-JP' )
       diff = compare_by_line_word( src_doc, dst_doc )
-      if html
-	overriding_tags = {
-	  :start_common => '',
-	  :end_common => '',
-	  :start_del           => '<del class="deleted">',
-	  :end_del             => '</del>',
-	  :start_add           => '<ins class="added">',
-	  :end_add             => '</ins>',
-	  :start_before_change => '<del class="deleted">',
-	  :end_before_change   => '</del>',
-	  :start_after_change  => '<ins class="added">',
-	  :end_after_change    => '</ins>',
-	}
-	return View.new( diff, src.encoding, src.eol ).to_html(overriding_tags, false).to_s.gsub( %r|<br />|, '' ).gsub( %r|\n</ins>|, "</ins>\n" )
-      else
-	return View.new( diff, src.encoding, src.eol ).to_wdiff({}, false).join.gsub( %r|\n\+\}|, "+}\n" )
-      end	
+      return View.new( diff, src.encoding, src.eol ).to_wdiff({}, false).join.gsub( %r|\n\+\}|, "+}\n" )
     end
 
     def unified_diff( src, dst, context_lines = 3 )
@@ -245,7 +252,7 @@ EOS
     end
 
     def euc_to_utf8(str)
-      if NKF::const_defined?(:NKF_VERSION) && NKF::NKF_VERSION >= "2.0.4"
+      if NKF::const_defined?(:UTF8)
 	return NKF::nkf('-m0 -w', str)
       else
 	require 'uconv'
@@ -254,7 +261,7 @@ EOS
     end
   
     def utf8_to_euc(str)
-      if NKF::const_defined?(:NKF_VERSION) && NKF::NKF_VERSION >= "2.0.4"
+      if NKF::const_defined?(:UTF8)
 	return NKF::nkf('-m0 -e', str)
       else
 	require 'uconv'

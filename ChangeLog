@@ -1,4 +1,14 @@
 2005-03-03  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/rss.rb: 出力のフォーマットに従来の unified diff に加
+	えて word diff (ダイジェスト) と word diff (全文) を選べるようにし
+	て、管理画面での設定に対応
+	* hiki/util.rb (Util::word_diff): 第 3 引数を digest モードの真偽に
+	変更 (デフォルトは偽)
+	(Util::word_diff_text): plain text 用 word_diff メソッドを移動
+	* hiki/docdiff/view.rb (View::apply_style_digest): 差分が無いときは
+	空 Array を返すように変更
+	(View::html_tags): <ul>...</ul> 内の <hr /> を削除
+
 	* misc/plugin/incremental_search.rb: ajaxsearch.rb から改名
 
 2005-03-02  Kazuhiko  <kazuhiko@fdiary.net>

@@ -1,10 +1,9 @@
-# $Id: test_util.rb,v 1.2 2005-01-28 04:35:32 fdiary Exp $
+# $Id: test_util.rb,v 1.3 2005-03-03 12:56:55 fdiary Exp $
 
 $KCODE = 'e'
 
 require 'test/unit'
 require 'hiki/util'
-require 'stringio'
 
 class TMarshal_Unit_Tests < Test::Unit::TestCase
   include Hiki::Util
@@ -27,9 +26,9 @@ class TMarshal_Unit_Tests < Test::Unit::TestCase
     assert_equal( "<del class=\"deleted\">こんにちは</del><ins class=\"added\">こんばんは</ins>、私の<del class=\"deleted\">名前はわたなべです</del><ins class=\"added\">名前はまつもとです</ins>。\n<ins class=\"added\">Rubyを作ったのは私です。</ins>私は<del class=\"deleted\">Just Another </del>Ruby <del class=\"deleted\">Porter</del><ins class=\"added\">Hacker</ins>です。", word_diff( @t4, @t5) )
   end
 
-  def test_word_diff_txt
-    assert_equal( "123\n{+abc+}\n456\n", word_diff( @t1, @t2, false ) )
-    assert_equal( "[-こんにちは-]{+こんばんは+}、私の[-名前はわたなべです-]{+名前はまつもとです+}。\n{+Rubyを作ったのは私です。+}私は[-Just Another -]Ruby [-Porter-]{+Hacker+}です。", word_diff( @t4, @t5, false ) )
+  def test_word_diff_text
+    assert_equal( "123\n{+abc+}\n456\n", word_diff_text( @t1, @t2 ) )
+    assert_equal( "[-こんにちは-]{+こんばんは+}、私の[-名前はわたなべです-]{+名前はまつもとです+}。\n{+Rubyを作ったのは私です。+}私は[-Just Another -]Ruby [-Porter-]{+Hacker+}です。", word_diff_text( @t4, @t5 ) )
   end
 
   def test_unified_diff

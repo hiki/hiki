@@ -1,9 +1,6 @@
-# $Id: rss.rb,v 1.14 2005-02-21 03:03:11 fdiary Exp $
+# $Id: rss.rb,v 1.15 2005-03-03 12:56:54 fdiary Exp $
 # Copyright (C) 2003-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
-
-def rss_recent_label
-  '更新日時順'
-end
+# Copyright (C) 2005 Kazuhiko <kazuhiko@fdiary.net>
 
 def rss_body(page_num = 10)
 
@@ -21,9 +18,9 @@ def rss_body(page_num = 10)
 <?xml version="1.0" encoding="#{@conf.charset}" standalone="yes"?>
 <rdf:RDF xmlns="http://purl.org/rss/1.0/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:content="http://purl.org/rss/1.0/modules/content/" xml:lang="ja-JP">
   <channel rdf:about="#{@conf.index_url}?c=recent">
-    <title>#{CGI::escapeHTML(@conf.site_name)} : #{rss_recent_label}</title>
+    <title>#{CGI::escapeHTML(@conf.site_name)} : #{label_rss_recent}</title>
     <link>#{@conf.index_url}?c=recent</link>
-    <description>#{CGI::escapeHTML(@conf.site_name)} #{rss_recent_label}</description>
+    <description>#{CGI::escapeHTML(@conf.site_name)} #{label_rss_recent}</description>
     <dc:language>ja</dc:language>
     <dc:rights>Copyright (C) #{CGI::escapeHTML(@conf.author_name)}</dc:rights>
     <dc:date>#{last_modified.utc.strftime('%Y-%m-%dT%H:%M:%S+00:00')}</dc:date>
@@ -36,7 +33,15 @@ EOS
     name = p.keys[0]
     src = @db.load_backup(name) || ''
     dst = @db.load(name) || ''
-    content = unified_diff(src, dst)
+
+    case @conf['rss.mode']
+    when 1
+      content = word_diff(src, dst, true)
+    when 2
+      content = word_diff(src, dst).gsub(/\n/, "<br>\n")
+    else
+      content = CGI::escapeHTML(unified_diff(src, dst)).gsub(/\n/, "<br>\n").gsub(/ /, '&nbsp;')
+    end
     if content.empty?
       content = shorten(dst).strip
     end
@@ -51,7 +56,7 @@ EOS
     <title>#{CGI::escapeHTML(page_name(name))}</title>
     <link>#{uri}</link>
     <dc:date>#{p[name][:last_modified].utc.strftime('%Y-%m-%dT%H:%M:%S+00:00')}</dc:date>
-    <content:encoded><![CDATA[<div>#{CGI::escapeHTML(content).gsub(/\n/, '<br>').gsub(/ /, '&nbsp;')}</div>]]></content:encoded>
+    <content:encoded><![CDATA[<div>#{content}</div>]]></content:encoded>
   </item>
 EOS
   end
@@ -80,9 +85,31 @@ def rss
 
   nil # Don't move to the 'FrontPage'
 end
+
 add_body_enter_proc(Proc.new do
+  @conf['rss.mode'] ||= 0
   add_plugin_command('rss', 'RSS')
 end)
+
 add_header_proc(Proc.new do
   %Q!  <link rel="alternate" type="application/rss+xml" title="RSS" href="#{@conf.index_url}?c=rss">!
 end)
+
+def saveconf_rss
+  if @mode == 'saveconf' then
+    @conf['rss.mode'] = @cgi.params['rss.mode'][0].to_i
+  end
+end
+
+add_conf_proc('rss', label_rss_config) do
+  saveconf_rss
+  str = <<-HTML
+  <h3 class="subtitle">#{label_rss_mode_title}</h3>
+  <p><select name="rss.mode">
+  HTML
+  label_rss_mode_candidate.each_index{ |i|
+    str << %Q|<option value="#{i}"#{@conf['rss.mode'] == i ? ' selected' : ''}>#{label_rss_mode_candidate[i]}</option>\n|
+  }
+  str << "</select></p>\n"
+  str
+end
