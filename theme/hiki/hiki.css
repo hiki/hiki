@@ -1,6 +1,6 @@
 /*
 Title: Hiki
-$Revision: 1.4 $
+$Revision: 1.5 $
 Author: TAKEUCHI Hitoshi
 Access: hitoshi@namaraii.com
 License: GPL
@@ -386,6 +386,69 @@ img.right {
 	border-width: 1px;
 	border-color: #000080;
 	float: right;
+}
+
+/* similarity Plugin */
+.bulkfeedsSimilarity {
+  width: 500px;
+}
+
+.bulkfeedsSimilarityHeader {
+  font-weight: bold;
+  background: #ccc;
+  padding: 0.2em;
+  margin-bottom: 0.2em;
+}
+
+.bulkfeedsSimilarityHeader a {
+  font-weight: bold;
+  color: #000;
+}
+
+.bulkfeedsSimilarityHeader a:visited {
+  color: #000;
+}
+
+.bulkfeedsSimilarityItems {
+  margin: 0;
+  padding-left: 1em;
+  list-style: none;
+}
+
+.bulkfeedsSimilarityFooter {
+  text-align: center;
+  margin-top: 0.5em;
+}
+
+.bulkfeedsSimilarityFooter a {
+  color: #000;
+}
+
+.bulkfeedsSimilarityFooter a:visited {
+  color: #000;
+}
+
+.comments-head {
+  padding: 0.4em;
+  background: #ccc;
+}
+
+.comments-head a {
+  font-weight: bold;
+  color: #000;
+}
+
+.comments-head a:visited {
+  font-weight: bold;
+  color: #000;
+}
+
+.comments-body {
+  padding: 0.5em;
+}
+
+.comments-body p {
+  margin: 0.2em;
 }
 
 .hilight {
