@@ -1,4 +1,7 @@
 2004-09-14  Kazuhiko  <kazuhiko@fdiary.net>
+	* attach.rb (attach_src): @options['attach.show_linenum] が true 
+	なら行番号を表示するように変更
+
 	* hikiconf.rb.sample, hiki/config.rb,
 	style/default/html_formatter.rb: WikiName によるリンクを使うかどう
 	かを @use_wikiname で制御できるように変更

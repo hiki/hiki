@@ -1,4 +1,4 @@
-# $Id: attach.rb,v 1.11 2004-09-10 06:51:51 fdiary Exp $
+# $Id: attach.rb,v 1.12 2004-09-14 06:04:26 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 #
 # thanks to Kazuhiko, Masao Mutoh, SHIMADA Mitsunobu, Yoshimi, ¤ê¤¿
@@ -144,7 +144,12 @@ def attach_src(file_name, page=@page)
   if file_name =~ /\.(txt|rd|rb|c|pl|py|sh|java|html|htm|css|xml|xsl)\z/i
     file = "#{@conf.cache_path}/attach/#{page.untaint.escape}/#{file_name.untaint.escape}"
     s = %Q!<pre>!
-    s << File::readlines(file).join.escapeHTML.gsub(/^\t+/) {|t| tabstop * t.size}.to_euc
+    content = File::readlines(file)
+    if @options['attach.show_linenum']
+      line = 0
+      content.collect! {|i| sprintf("%3d| %s", line+=1, i)}
+    end
+    s << content.join.escapeHTML.gsub(/^\t+/) {|t| tabstop * t.size}.to_euc
     s << %Q!</pre>!
   end
 end
