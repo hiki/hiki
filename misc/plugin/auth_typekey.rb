@@ -1,4 +1,4 @@
-# $Id: auth_typekey.rb,v 1.4 2005-03-06 08:09:05 fdiary Exp $
+# $Id: auth_typekey.rb,v 1.5 2005-03-17 13:43:13 fdiary Exp $
 # Copyright (C) 2005 TAKEUCHI Hitoshi
 #
 # 
@@ -49,14 +49,14 @@ end
 
 add_body_enter_proc(Proc::new do
   nick = @cgi.cookies['auth_name'][0]
-  if auth? and nick
+  if !auth?
+    label_auth_typekey_login
+  elsif nick
     <<EOS
 <div class="hello">
 #{sprintf(label_auth_typekey_hello, nick.escapeHTML)}
 </div>
 EOS
-  else
-    label_auth_typekey_login
   end
 end)
 
