@@ -1,4 +1,7 @@
 2005-01-31  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/command.rb (admin_config), hiki/page.rb (page): save_config
+	の呼び出し条件を確認するように修正
+
 	* hiki/plugin.rb (initialize): 例外時にプラグインのファイル名が表示
 	されるように修正 by U.Nakamura
 

@@ -1,4 +1,4 @@
-# $Id: page.rb,v 1.6 2005-01-28 04:35:29 fdiary Exp $
+# $Id: page.rb,v 1.7 2005-01-31 03:17:02 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 
@@ -34,7 +34,7 @@ module Hiki
       @contents[:footer]         = plugin.footer_proc.sanitize
       
       html = to_html
-      @conf.save_config if @cgi.params['saveconf'][0]
+      @conf.save_config if @contents[:save_config]
       header = Hash::new
       if @contents[:last_modified] and /HEAD/i =~ @cgi.request_method
 	header['Last-Modified']    = CGI::rfc1123_date(@contents[:last_modified])

@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.30 2005-01-30 15:25:21 fdiary Exp $
+# $Id: command.rb,v 1.31 2005-01-31 03:17:02 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -492,6 +492,7 @@ module Hiki
                               end
       data[:theme_url]      = @conf.theme_url
       data[:theme_path]     = @conf.theme_path
+      data[:save_config]    = true if @cgi.params['saveconf'][0]
       generate_page( data )
     end
 
