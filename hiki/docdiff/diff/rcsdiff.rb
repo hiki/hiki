@@ -1,10 +1,10 @@
 class DocDiff
-  def Diff.rcsdiff(a, b)
+  def DocDiff.rcsdiff(a, b)
     al = []
     a.each_line {|l| al << l}
     bl = []
     b.each_line {|l| bl << l}
-    return Diff.new(al, bl).ses.rcsdiff
+    return DocDiff.new(al, bl).ses.rcsdiff
   end
 
   class EditScript

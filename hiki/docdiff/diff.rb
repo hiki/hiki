@@ -1,6 +1,6 @@
 =begin
 = Diff
---- Diff.new(seq_a, seq_b)
+--- DocDiff.new(seq_a, seq_b)
 --- Diff#ses([algorithm=:speculative])
 --- Diff#lcs([algorithm=:speculative])
 
@@ -140,7 +140,7 @@ class DocDiff
     }
   end
 
-  def Diff.algorithm(algorithm)
+  def DocDiff.algorithm(algorithm)
     case algorithm
     when :shortestpath
       return ShortestPath
@@ -154,7 +154,7 @@ class DocDiff
   end
 
   def lcs(algorithm=:speculative) # longest common subsequence
-    klass = Diff.algorithm(algorithm)
+    klass = DocDiff.algorithm(algorithm)
     reduced_lcs = klass.new(@a, @b).lcs
 
     lcs = Subsequence.new
