@@ -1,3 +1,8 @@
+2004-03-01  Kazuhiko  <kazuhiko@fdiary.net>
+	* messages/en.rb: 不足しているリソースの追加
+	* template/en/adminform.html, template/en/edit.html,
+	template/en/form.html: hiki.cgi → @cgi_name
+
 2004-02-15  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
 
 	* data/text/TextFormattingRules, FrontPage: hiki.pngへのリンク削除、文言の修正

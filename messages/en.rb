@@ -1,4 +1,4 @@
-# $Id: en.rb,v 1.2 2003-03-23 03:37:13 hitoshi Exp $
+# $Id: en.rb,v 1.3 2004-03-01 04:06:11 fdiary Exp $
 # en.rb
 #
 # Copyright (C) 2003 Masao Mutoh <mutoh@highway.ne.jp>
@@ -17,10 +17,11 @@ module Hiki
     def msg_diff; 'Diff' end
     def msg_edit; 'Edit' end
     def msg_search; 'Search' end
+    def msg_admin; 'Admin' end
     def msg_search_result; 'Search Results' end
     def msg_search_hits; '\'%1$s\': %3$d page(s) were found in %2$d pages.' end
     def msg_search_not_found; '\'%s\'was not found.' end
-    def msg_search_comment; 'Search from whole this site. Ignore Upper/Lowere cases.' end
+    def msg_search_comment; 'Search from whole this site. Ignore Upper/Lowere cases. Hiki returns pages that contain all the words in your query' end
     def msg_frontpage; 'Top' end
     def msg_hitory; 'History' end
     def msg_index; 'Indexes' end
@@ -51,5 +52,8 @@ module Hiki
     def msg_delete; 'Deleted' end
     def msg_delete_page; 'The page deleted.' end
     def msg_follow_link; 'Click the anchor below to show your page: ' end
+    def msg_match_title; '[matched in title]' end
+    def msg_match_keyword; '[matched in keyword]' end
+    def msg_duplicate_page_title; 'The page title has already been existed.' end
   end
 end
