@@ -1,4 +1,4 @@
-# $Id: en.rb,v 1.8 2005-03-01 07:58:13 fdiary Exp $
+# $Id: en.rb,v 1.9 2005-03-02 04:32:39 fdiary Exp $
 # en.rb
 #
 # Copyright (C) 2003 Masao Mutoh <mutoh@highway.ne.jp>
@@ -18,6 +18,7 @@ module Hiki
     def msg_edit; 'Edit' end
     def msg_search; 'Search' end
     def msg_admin; 'Admin' end
+    def msg_logout; 'Logout' end
     def msg_search_result; 'Search Results' end
     def msg_search_hits; '%3$d page(s) containing the phrase \'%1$s\' were found in a set of %2$d pages.' end
     def msg_search_not_found; 'No pages containing the phrase \'%s\' were found.' end

@@ -1,4 +1,25 @@
+2005-03-02  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/ajaxsearch.rb: 新プラグインの追加 by Michitaka Ohno
+
+	* hiki/plugin.rb (Plugin::add_plugin_command): display_text が偽の
+	時は plugin_menu に追加しないように変更
+	* hiki/command.rb (Command::dispatch): プラグインの提供するコマンド
+	を優先するように変更
+
 2005-03-01  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/plugin.rb (Plugin::initialize): インスタンス変数 '@cookies'
+	を追加
+	(Plugin::cookie_path): 新メソッドの追加
+	* hiki/page.rb (Page::page): クッキーがあれば出力するように変更
+	* template/adminform.html: セッション ID をクエリーで渡すのを廃止
+	* hiki/command.rb (Command::cmd_admin): セッションの管理をクッキー
+	で行うように変更
+	(Command::cmd_logout): ログアウトの追加
+	* plugin/00default.rb (hiki_menu): ログアウトの追加
+	* hiki/session.rb (Session::delete): 新メソッドの追加
+	(Session::initialize): 有効期限が切れたセッションファイルのみ削除す
+	るように変更
+
 	* plugin/en/00default.rb, messages/en.rb: メッセージの修正 by
 	Steve Brumbaugh
 

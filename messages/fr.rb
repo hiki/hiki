@@ -1,4 +1,4 @@
-# $Id: fr.rb,v 1.6 2005-02-14 07:51:09 fdiary Exp $
+# $Id: fr.rb,v 1.7 2005-03-02 04:32:39 fdiary Exp $
 # fr.rb
 #
 # Copyright (C) 2003 Laurent Sansonetti <laurent@datarescue.be>
@@ -18,6 +18,7 @@ module Hiki
     def msg_edit; 'Editer' end
     def msg_search; 'Chercher' end
     def msg_admin; 'Administration' end
+    def msg_logout; 'Logout' end
     def msg_search_result; 'Résultats de la recherche' end
     def msg_search_hits; '\'%1$s\': %3$d page(s) trouvées dans %2$d pages.' end
     def msg_search_not_found; '\'%s\' introuvable.' end

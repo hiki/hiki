@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.34 2005-02-28 12:28:56 fdiary Exp $
+# $Id: command.rb,v 1.35 2005-03-02 04:32:39 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -74,14 +74,10 @@ module Hiki
             cmd_edit( @p, @plugin.text )
           end
         else
-          begin
-            send( "cmd_#{@cmd}" )
-          rescue NameError
-            if @conf.use_plugin and @plugin.plugin_command.index(@cmd) and @plugin.respond_to?(@cmd)
-              @plugin.send( @cmd )
-            else
-              raise #"undefined command #{@cmd}"
-            end
+	  if @conf.use_plugin and @plugin.plugin_command.index(@cmd) and @plugin.respond_to?(@cmd)
+	    @plugin.send( @cmd )
+	  else
+	    send( "cmd_#{@cmd}" )
           end
         end
 #      rescue Exception
@@ -445,7 +441,7 @@ module Hiki
     end
 
     def cmd_admin
-      session_id = @params['session_id'][0]
+      session_id = @cgi.cookies['session_id'][0]
       if session_id && Hiki::Session::new( @conf, session_id ).check
 	admin_config( session_id )
 	return
@@ -457,6 +453,7 @@ module Hiki
 	end
       end
       session = Hiki::Session::new( @conf )
+      @plugin.cookies << session_cookie( session.session_id )
       admin_config( session.session_id )
     end
     
@@ -548,6 +545,23 @@ module Hiki
       if redirect_mode and result
         redirect(@cgi, @plugin.hiki_url(@p))
       end
+    end
+
+    def cmd_logout
+      if session_id = @cgi.cookies['session_id'][0]
+	cookies = [session_cookie(session_id, -1)]
+	Hiki::Session::new( @conf, session_id ).delete
+      end
+      redirect(@cgi, @conf.cgi_name, cookies)
+    end
+
+    def session_cookie(session_id, max_age = Session::MAX_AGE)
+      CGI::Cookie::new( {
+                          'name' => 'session_id',
+                          'value' => session_id,
+                          'path' => @plugin.cookie_path,
+                          'expires' => Time::now.gmtime + max_age
+                        } )
     end
   end
 end

@@ -1,4 +1,4 @@
-# $Id: plugin.rb,v 1.9 2005-01-31 01:39:36 fdiary Exp $
+# $Id: plugin.rb,v 1.10 2005-03-02 04:32:39 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
@@ -11,13 +11,14 @@ module Hiki
 
   class Plugin
     attr_reader   :toc_f, :plugin_command
-    attr_accessor :text, :title
+    attr_accessor :text, :title, :cookies
     
     def initialize( options, conf )
       @options      = options
       @conf         = conf
       set_tdiary_env
-      
+
+      @cookies = []
       @plugin_method_list = []
       @header_procs     = []
       @update_procs     = []
@@ -42,8 +43,8 @@ module Hiki
       @plugin_menu      = []
       @text             = ''
 
-      @mode = 'conf' if options['cgi'].params['c'][0] == 'admin'
-      @mode = 'saveconf' if options['cgi'].params['saveconf'][0]
+      @mode = 'conf' if options['params']['c'][0] == 'admin'
+      @mode = 'saveconf' if options['params']['saveconf'][0]
 
       # loading plugins
       @plugin_files = []
@@ -58,6 +59,12 @@ module Hiki
       rescue Exception
 	raise PluginError, "Plugin error in '#{File::basename( plugin_file )}'.\n#{$!}\n#{$!.backtrace[0]}"
       end
+    end
+
+    def cookie_path
+      ret = File::dirname( @options['cgi'].script_name )
+      ret += '/' unless %r|/+$| =~ ret
+      ret
     end
 
     def header_proc
@@ -313,7 +320,7 @@ module Hiki
       @plugin_command << command
       @plugin_menu    << {:command => command,
                           :display_text => display_text,
-                          :option => option}
+                          :option => option} if display_text
       nil
     end
 

@@ -1,4 +1,4 @@
-# $Id: util.rb,v 1.27 2005-01-29 14:58:26 fdiary Exp $
+# $Id: util.rb,v 1.28 2005-03-02 04:32:39 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'nkf'
@@ -163,11 +163,13 @@ module Hiki
       return DocDiff.new(src.to_a, dst.to_a).ses.unidiff( '', context_lines )
     end
 
-    def redirect(cgi, url)
-      head = {
+    def redirect(cgi, url, cookies = nil)
+      header = {
                'type' => 'text/html',
              }
-      print cgi.header(head)
+      header['cookie'] = cookies if cookies
+
+      print cgi.header(header)
       print %Q[
                <html>
                <head>

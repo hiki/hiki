@@ -1,4 +1,4 @@
-# $Id: page.rb,v 1.7 2005-01-31 03:17:02 fdiary Exp $
+# $Id: page.rb,v 1.8 2005-03-02 04:32:39 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 
@@ -45,6 +45,7 @@ module Hiki
       header['Content-Language'] = @conf.lang
       header['Pragma']           = 'no-cache'
       header['Cache-Control']    = 'no-cache'
+      header['cookie']           = plugin.cookies unless plugin.cookies.empty?
       response = @cgi.header(header)
       response += html if /HEAD/i !~ @cgi.request_method
       response

@@ -1,4 +1,4 @@
-# $Id: it.rb,v 1.6 2005-02-14 07:51:09 fdiary Exp $
+# $Id: it.rb,v 1.7 2005-03-02 04:32:39 fdiary Exp $
 # it.rb
 #
 # Copyright (C) 2003 Luigi Maselli <metnik@tiscali.it>
@@ -18,6 +18,7 @@ module Hiki
     def msg_edit; 'Modifica' end
     def msg_search; 'Cerca' end
     def msg_admin; 'Amministratore' end
+    def msg_logout; 'Logout' end
     def msg_search_result; 'Risultati trovati' end
     def msg_search_hits; '\'%1$s\': %3$d pagina(e) sono trovati in %2$d pagine.' end #da verificare
     def msg_search_not_found; '\'%s\'non trovato.' end

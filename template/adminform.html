@@ -12,7 +12,7 @@
 <div class="sidebar">
 <ul style="margin-top: 5em;">
 <% @plugin.each_conf_key do |key|%>
-  <li><a href="<%=@contents[:cgi_name]%>?c=admin;conf=<%=key%>;session_id=<%=@contents[:session_id]%>"><%=@plugin.conf_label( key )%></a></li>
+  <li><a href="<%=@contents[:cgi_name]%>?c=admin;conf=<%=key%>"><%=@plugin.conf_label( key )%></a></li>
 <% end %>
 </ul>
 </div>
@@ -20,7 +20,6 @@
 <form method="post" action="<%= @contents[:cgi_name] %>">
 <div class="conf day">
   <input type="hidden" value="admin" name="c">
-  <input type="hidden" name="session_id" value="<%=@contents[:session_id]%>">
   <input type="hidden" name="conf" value="<%=@contents[:key]%>">
   <h2><span class="title"><%=@conf.msg_conf( @contents[:key] )%></span></h2>
   <div class="body">

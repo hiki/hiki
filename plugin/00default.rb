@@ -1,4 +1,4 @@
-# $Id: 00default.rb,v 1.18 2005-02-28 12:28:57 fdiary Exp $
+# $Id: 00default.rb,v 1.19 2005-03-02 04:32:39 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #==============================
@@ -176,8 +176,8 @@ def hiki_menu(data, command)
     end
     menu_proc.each {|i| menu << i}
     menu << %Q!<a accesskey="m" href="#{@conf.cgi_name}?c=admin">#{@conf.msg_admin}</a>!
+    menu << %Q!<a accesskey="l" href="#{@conf.cgi_name}?c=logout">#{@conf.msg_logout}</a>! if cookies.find{|i| i.name = 'session_id'} || @cgi.cookies['session_id'][0]
   end
-
   data[:tools] = menu.collect! {|i| %Q!<span class="adminmenu">#{i}</span>! }.join("&nbsp;\n").sanitize
 end
 

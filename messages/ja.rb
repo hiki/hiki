@@ -1,4 +1,4 @@
-# $Id: ja.rb,v 1.6 2005-01-28 04:35:29 fdiary Exp $
+# $Id: ja.rb,v 1.7 2005-03-02 04:32:39 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # You can redistribute it and/or modify it under the terms of
 # the Ruby's licence.
@@ -10,6 +10,7 @@ module Hiki
     def msg_edit; '編集' end
     def msg_search; '検索' end
     def msg_admin; '管理' end
+    def msg_logout; 'ログアウト' end
     def msg_search_result; '検索結果' end
     def msg_search_hits; '\'%s\'を含むページは全%dページ中、%dページ見つかりました。' end
     def msg_search_not_found; '\'%s\'を含むページは見つかりませんでした。' end
