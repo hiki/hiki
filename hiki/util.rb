@@ -1,4 +1,4 @@
-# $Id: util.rb,v 1.24 2005-01-09 15:59:34 fdiary Exp $
+# $Id: util.rb,v 1.25 2005-01-14 01:39:46 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'nkf'
@@ -43,6 +43,10 @@ class String
   def sanitize
     SanitizedString::new(self)
   end
+end
+
+class Hash
+  alias :key :index unless method_defined?(:key)
 end
 
 module Hiki

@@ -1,4 +1,4 @@
-# $Id: aliaswiki.rb,v 1.3 2004-06-26 14:12:28 fdiary Exp $
+# $Id: aliaswiki.rb,v 1.4 2005-01-14 01:39:46 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 module Hiki
@@ -21,7 +21,7 @@ module Hiki
     end
 
     def original_name(alias_name)
-      orig = @aliaswiki_names.index(alias_name)
+      orig = @aliaswiki_names.key(alias_name)
       orig ? orig : alias_name
     end
 

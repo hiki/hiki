@@ -1,3 +1,11 @@
+2005-01-14  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/rss.rb (rss_body): <language> を <dc:language> に、
+	<copyright> を <dc:rights> に変更 by Masahiro Sakai
+
+	* hiki/util.rb: Hash#key が無い場合に定義するように変更
+	* hiki/aliaswiki.rb, style/default/html_formatter.rb: Hash#index の
+	代わりに Hash#key を使うように変更
+
 2005-01-10  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/attach/attach.cgi: hiki/ を $: に追加するように変更
 

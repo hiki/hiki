@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.12 2004-12-22 04:43:03 fdiary Exp $
+# $Id: html_formatter.rb,v 1.13 2005-01-14 01:39:46 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -155,7 +155,7 @@ module Hiki
         s[:toc_title] << t[:s] if s[:toc_level] > 0
       when :wikiname, :bracketname
         disp = t[:s]
-        t[:href] = @aliaswiki.aliaswiki_names.index(t[:href]) || t[:href]
+        t[:href] = @aliaswiki.aliaswiki_names.key(t[:href]) || t[:href]
         if t[:e] == :bracketname
           orig = @db.select {|p| p[:title] == t[:href]}
           t[:href] = orig[0] if orig[0]

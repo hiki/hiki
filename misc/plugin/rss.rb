@@ -1,4 +1,4 @@
-# $Id: rss.rb,v 1.10 2005-01-05 01:05:48 fdiary Exp $
+# $Id: rss.rb,v 1.11 2005-01-14 01:39:46 fdiary Exp $
 # Copyright (C) 2003-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 def rss_recent_label
@@ -24,8 +24,8 @@ def rss_body(page_num = 10)
     <title>#{CGI::escapeHTML(@conf.site_name)} : #{rss_recent_label}</title>
     <link>#{@conf.index_url}?c=recent</link>
     <description>#{CGI::escapeHTML(@conf.site_name)} #{rss_recent_label}</description>
-    <language>ja</language>
-    <copyright>Copyright (C) #{CGI::escapeHTML(@conf.author_name)}</copyright>
+    <dc:language>ja</dc:language>
+    <dc:rights>Copyright (C) #{CGI::escapeHTML(@conf.author_name)}</dc:rights>
     <dc:date>#{last_modified.utc.strftime("%Y-%m-%dT%H:%M:%S+00:00")}</dc:date>
     <items>
       <rdf:Seq>
