@@ -1,4 +1,4 @@
-# $Id: referer.rb,v 1.2 2004-02-15 02:48:35 hitoshi Exp $
+# $Id: referer.rb,v 1.3 2004-07-01 10:14:45 hitoshi Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/db/ptstore'
@@ -88,6 +88,7 @@ def referer_map
       disp = replace_url(ref[0].unescape).escapeHTML
       s << %!<li>#{ref[1]} ! + make_anchor("#{ref[0]}", "#{disp}")
     end
+    db.close_cache
     s << "</ul>\n"
   end
   
@@ -124,5 +125,7 @@ add_body_leave_proc(Proc.new do
       show_short_referer(db)
     end
   rescue Exception
+  eusure
+    db.close_cache 
   end
 end)
