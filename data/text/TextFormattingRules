@@ -28,7 +28,6 @@
  *fooWikiName  - 先頭に全て小文字の英字fooがあるためWikiNameではない
 
 *出力例
-
 **WikiName     - WikiName
 **HogeRule1    - WikiName
 **NOTWIKINAME  - 全て大文字なのでWikiNameではない
@@ -83,7 +82,6 @@ InterWikiNameというページを編集します。
  *[[GoogleJ:ruby wiki]]
 
 *出力例
-
 **[[Hiki:逆引きRuby]]
 **[[ruby-list:1]]
 **[[GoogleJ:ruby wiki]]
@@ -151,7 +149,7 @@ InterWikiNameというページを編集します。
  ----
  かきくけこ。
 
-!!!出力例
+*出力例
 
 あいうえお。
 ----
