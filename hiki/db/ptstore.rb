@@ -1,4 +1,4 @@
-# $Id: ptstore.rb,v 1.4 2004-07-01 09:21:36 hitoshi Exp $
+# $Id: ptstore.rb,v 1.5 2004-12-16 14:04:45 fdiary Exp $
 #
 # ptstore.rb
 #   converts pstore.rb contained in Ruby 1.8.0 Preview 1.
@@ -169,6 +169,7 @@ class PTStore
       end
     ensure
       if file
+        file.flock(File::LOCK_UN)
         if read_only
           @table_cache = @table
           @file_cache = file

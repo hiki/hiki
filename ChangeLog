@@ -1,5 +1,8 @@
-2004-12-15  Kazuhiko  <kazuhiko@fdiary.net>
+2004-12-16  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/db/ptstore.rb (PTStore::transaction): 確実にアンロックするよ
+	うに修正
 
+2004-12-15  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/footnote.rb: 不具合の修正
 
 2004-12-14  Kazuhiko  <kazuhiko@fdiary.net>
@@ -21,7 +24,6 @@
 	* misc/plugin/attach/attach.rb: 拡張子に sql と yaml を追加
 
 2004-12-14  KOMATSU Shinichiro  <koma2@ms.u-tokyo.ac.jp>
-
 	* misc/hikifarm/index.cgi, hiki/config.rb, 
 	hiki/repos/cvs.rb hiki/repos/default.rb hiki/repos/svn.rb, 
 	hiki.cgi, plugin/00default.rb: hikifarm と plugin の中の
