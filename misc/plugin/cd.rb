@@ -1,3 +1,5 @@
+# $Id: cd.rb,v 1.3 2004-03-01 09:50:45 hitoshi Exp $
+# Copyright (C) 2003 not <not@cds.ne.jp>
 def cd(code)
 
   amazon_id = @options['amazon.aid'].to_s

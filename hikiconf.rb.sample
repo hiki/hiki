@@ -1,4 +1,4 @@
-# $Id: hikiconf.rb.sample,v 1.3 2004-02-15 02:48:35 hitoshi Exp $
+# $Id: hikiconf.rb.sample,v 1.4 2004-03-01 09:50:45 hitoshi Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #============================
@@ -11,25 +11,19 @@
 #   ディレクトリを指定します。
 #   このディレクトリの「全ファイル」と「全ディレクトリ」は、WWWサーバの
 #   権限で書き込めるパーミッションにしておく必要があります。
-$data_path       = '/home/foo/data/'
+$data_path       = 'path to data'
 
 # トップページの URL【オプション】
 #   トップページのURLを指定します。
-$index_page      = 'http://www.hoge.com/hiki/'
+$index_page      = 'http://www.example.net/hiki/'
 
 # メールサーバ名【オプション】
 #   メールサーバ名を指定します。$mail_on_updateがtrueの場合に有効です。
-$smtp_server     = 'mail.hoge.hoge'
+$smtp_server     = 'localhost'
 
 # プラグインを使うかどうかの指定【オプション】
 #   使用する場合には true、使用しない場合は false を指定します。
 $use_plugin      = true
-
-# キャッシュディレクトリ【オプション】
-#    tDiaryのプラグインでキャッシュ用のディレクトリを使用する
-#    （例えばamazon.rb）ものをHikiで使いたい場合、キャッシュディレクトリ
-#    をここで指定します。
-$cache_path      = '/home/foo/cache'
 
 #====================================================================
 #  管理画面から変更できる項目
@@ -51,7 +45,7 @@ $mail_on_update  = false
 
 # 更新通知先メールアドレス
 #   更新内容を送信するメールアドレス
-$mail            = 'your@mail.address.hoge'
+$mail            = 'hoge@example.net'
 
 # テーマ
 #   使用するテーマ
@@ -82,6 +76,10 @@ $auto_link       = false
 #  変更可能項目
 #=========================================
 
+# キャッシュディレクトリ【オプション】
+#    プラグインで使われるキャッシュ用のディレクトリを指定する
+$cache_path      = "#{$data_path}/cache"
+
 # スタイル【オプション】
 #   デフォルト以外のスタイルを使いたい場合は、そのスタイル名を指定します。
 #   現状 default と rd+ を指定することができます。
@@ -91,13 +89,22 @@ $style           = 'default'
 #   更新通知メールの From に指定するアドレスです。
 #$mail_from      = 'from@mail.address.hoge'
 
+# キーワードハイライト【オプション】
+$hilight_keys    = true
+
 $charset         = 'EUC-JP'
 $lang            = 'ja'
 $database_type   = 'flatfile'
-
 $cgi_name        = 'hiki.cgi'
+$options         = {}                    # この行は変更しないでください。
 
 # プラグインのデバッグ時に true にします。
 $plugin_debug    = false
 
-$options         = {}                      # for tDiary plugin
+# プラグインに渡すオプションを記述します 【オプション】
+#   プラグインによってはオプションを渡すことで挙動を変えることができます。
+#   詳しくは各プラグインのドキュメントを参照してください。
+#
+# 記述例
+# $options['amazon.aid'] = 'amazon-01' 
+

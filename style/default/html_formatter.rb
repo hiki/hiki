@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.2 2004-02-15 02:48:35 hitoshi Exp $
+# $Id: html_formatter.rb,v 1.3 2004-03-01 09:50:45 hitoshi Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -102,14 +102,10 @@ module Hiki
     end
 
     def flush_normal_text(text, pre)
-      if pre 
-        text + "\n"
+      if not pre and $auto_link
+        auto_link(text)
       else
-        if $auto_link
-          auto_link(text)
-        else
-          text 
-        end
+        text 
       end
     end
     private :flush_normal_text
@@ -123,18 +119,14 @@ module Hiki
       
       @tokens.each do |t|
         if (normal_text.size > 0 && t[:e] != :normal_text)
-          html << flush_normal_text(normal_text.chomp, pre)
+          html << flush_normal_text(normal_text, pre)
           normal_text = ''
         end
         case t[:e]
         when :normal_text
-          if pre
-            html << "#{t[:s].escapeHTML}\n"
-          else
-            normal_text << "#{t[:s].escapeHTML}"
-            if toc_level > 0
-              toc_title << t[:s]
-            end
+          normal_text << "#{t[:s].escapeHTML}"
+          if not pre and toc_level > 0
+            toc_title << t[:s]
           end
         when :reference
           html << @plugin.make_anchor( t[:href], t[:s].escapeHTML )
@@ -197,7 +189,7 @@ module Hiki
         end
       end
       if (normal_text.size > 0)
-        html << flush_normal_text(normal_text.chomp, pre)
+        html << flush_normal_text(normal_text, pre)
       end
       html
     end

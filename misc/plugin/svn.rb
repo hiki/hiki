@@ -1,5 +1,6 @@
-# $Id: svn.rb,v 1.2 2004-02-15 02:48:35 hitoshi Exp $
+# $Id: svn.rb,v 1.3 2004-03-01 09:50:45 hitoshi Exp $
 # Copyright (C) 2003, Koichiro Ohba <koichiro@meadowy.org>
+# Copyright (C) 2003, Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
 # You can distribute this under GPL.
 
 #===== update_proc
@@ -18,6 +19,7 @@ def svn_commit
   begin
     Dir.chdir( "#{$data_path}/text" )
     system( "svn add -- #{@page.escape} > /dev/null 2>&1" )
+    system( "svn propdel svn:mime-type -- #{@page.escape} > /dev/null 2>&1" )
     system( "svn ci -m '#{ENV['REMOTE_ADDR']} - #{ENV['REMOTE_HOST']}' > /dev/null 2>&1" )
   ensure
     Dir.chdir( oldpwd )

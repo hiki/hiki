@@ -1,4 +1,4 @@
-# footnote.rb $Revision: 1.1 $
+# footnote.rb $Revision: 1.2 $
 #
 # fn: 脚注plugin
 #   パラメタ:

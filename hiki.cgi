@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# $Id: hiki.cgi,v 1.11 2004-02-15 03:09:04 hitoshi Exp $
+# $Id: hiki.cgi,v 1.12 2004-03-01 09:50:45 hitoshi Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 BEGIN { $defout.binmode }
@@ -9,7 +9,7 @@ $KCODE    = 'e'
 
 $path  = File::dirname(__FILE__)
 
-HIKI_VERSION  = '0.7-devel-20040215'
+HIKI_VERSION  = '0.7-devel-20040301'
 
 begin
   require 'cgi'

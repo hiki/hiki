@@ -1,4 +1,4 @@
-# amazon.rb $Revision: 1.1 $
+# amazon.rb $Revision: 1.2 $
 #
 # isbn_image_left: 指定したISBNの書影をclass="left"で表示
 #   パラメタ:

@@ -2,6 +2,7 @@
 # Copyright (C) 2003, TADA Tadashi <sho@spc.gr.jp>
 # Copyright (C) 2003, Kazuhiko <kazuhiko@fdiary.net>
 # Copyright (C) 2003, Koichiro Ohba <koichiro@meadowy.org>
+# Copyright (C) 2003, Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
 # You can distribute this under GPL.
 
 #--- Default Settings -----------------------------------------------
@@ -190,6 +191,7 @@ class ReposSvn < ReposDefault
          Dir.chdir( '..' )
          rmdir( 'text' )
          system( "svn checkout file://#{@root}/#{wiki}/trunk text > /dev/null 2>&1" )
+         system( "svn propdel svn:mime-type -R text > /dev/null 2>&1" )
       ensure
          Dir.chdir( oldpwd )
       end

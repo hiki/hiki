@@ -1,6 +1,7 @@
 # search.rb - search plugin for Hiki
 # Usage: just only {{search}} in your page.
 # See http://www.usability.gr.jp/alertbox/20010513.html in detail.
+# Copyright (C) 2003 Hajime BABA <baba.hajime@nifty.com>
 
 def search_key_label
   '¸¡º÷¸ì¶ç'

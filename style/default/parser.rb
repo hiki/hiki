@@ -1,4 +1,4 @@
-# $Id: parser.rb,v 1.2 2004-02-15 02:48:35 hitoshi Exp $
+# $Id: parser.rb,v 1.3 2004-03-01 09:50:45 hitoshi Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 module Hiki
@@ -63,7 +63,6 @@ module Hiki
       @last_blocktype.clear
 
       s.each do |line|
-        line.sub!( /[\n\r]+\z/, '')
         case line
         when /^(\!{1,5})(.+)$/
           @cur_stack.push( {:e => :heading_open, :lv => $1.size} )
@@ -104,7 +103,7 @@ module Hiki
           @cur_stack.push( {:e => :definition_desc_close} )
         when /^$/
           @cur_stack.push( {:e => :empty} )
-        when /^\s(.*)/
+        when /^\s(.*)/m
           @cur_stack.push( {:e => :pre, :s => $1} )
         when /^#{TABLE}/
           @cur_stack.push( {:e => :table} )

@@ -1,4 +1,4 @@
-# highlight.rb $Revision: 1.1 $
+# highlight.rb $Revision: 1.2 $
 #
 # ジャンプ先のエレメントをハイライトする。通称「謎JavaScript。最終形態」
 # インストールするだけで動作します。

@@ -1,6 +1,6 @@
 /*
 Title: Hiki
-$Revision: 1.3 $
+$Revision: 1.4 $
 Author: TAKEUCHI Hitoshi
 Access: hitoshi@namaraii.com
 License: GPL
@@ -43,15 +43,19 @@ body {
 }
 
 a:link {
-	color: #000077;
-	background-color: transparent;
-	text-decoration: none;
+        color: darkblue;
+        text-decoration: underline;
+        font-weight: bolder;
 }
 
 a:visited {
-	color: #002288;
-	background-color: transparent;
-	text-decoration: none;
+        color: darkblue;
+        text-decoration: none;
+        font-weight: bolder;
+}
+
+a:hover {
+        text-decoration: underline;
 }
 
 div.adminmenu {
@@ -382,6 +386,11 @@ img.right {
 	border-width: 1px;
 	border-color: #000080;
 	float: right;
+}
+
+.hilight {
+    color: black;
+    background: #ff6666;
 }
 
 div.section {
