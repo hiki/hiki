@@ -40,7 +40,7 @@ module Hiki
           end
           si += elements.length
           elements.each do |l|
-            text << "<del class=deleted>#{l}</del>"
+            text << "<del class=deleted>#{l.escapeHTML}</del>"
           end
         when :+
           while di < position
@@ -50,7 +50,7 @@ module Hiki
           end
           di += elements.length
           elements.each do |l|
-            text << "<ins class=added>#{l}</ins>"
+            text << "<ins class=added>#{l.escapeHTML}</ins>"
           end
         end
       end

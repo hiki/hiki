@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.4 2004-03-04 06:15:19 hitoshi Exp $
+# $Id: html_formatter.rb,v 1.5 2004-03-11 02:31:24 hitoshi Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -80,7 +80,7 @@ module Hiki
           end
           si += elements.length
           elements.each do |l|
-            text << "<del class=deleted>#{l}</del>"
+            text << "<del class=deleted>#{l.escapeHTML}</del>"
           end
         when :+
           while di < position
@@ -90,7 +90,7 @@ module Hiki
           end
           di += elements.length
           elements.each do |l|
-            text << "<ins class=added>#{l}</ins>"
+            text << "<ins class=added>#{l.escapeHTML}</ins>"
           end
         end
       end

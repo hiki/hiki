@@ -1,3 +1,7 @@
+2004-03-11  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
+        * style/default+/html_formatter.rb, style/rd+/html_formatter.rb: XSS脆弱性の修正
+	* template/en/edit.html: 英語テンプレートの修正 by mput<webmaster@mput.dip.jp>
+
 2004-03-09  Kazuhiko  <kazuhiko@fdiary.net>
 	* plugin/00default.rb(hiki_footer): 不要な <div> の削除
 
