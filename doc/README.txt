@@ -54,6 +54,7 @@ Hikiは作者であるたけうちひとし(hitoshi@namaraii.com)がGPL2で配布、改変を
 :hiki/algorithm/diff.rb:Lars Christensen氏作。GPL2で配布。 
 :hiki/db/tmarshal.rb:るびきちさんがruby-list:30305にポストしたスクリプトを若干修正したもの。Ruby'sで配布。 
 :amrita/*.rb:Taku Nakajima氏作。Ruby'sで配布。
+:hiki/docdiff/*:森田尚氏作。修正BSDライセンスで配布。
 
 Hikiはhttp://www.namaraii.com/hiki/でサポートを行っています。
 ご意見・ご要望はこちらへどうぞ。

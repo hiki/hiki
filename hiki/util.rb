@@ -1,4 +1,4 @@
-# $Id: util.rb,v 1.21 2005-01-04 14:11:51 fdiary Exp $
+# $Id: util.rb,v 1.22 2005-01-06 10:08:59 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'nkf'
@@ -6,7 +6,10 @@ require 'cgi'
 require 'net/smtp'
 require 'time'
 require 'amrita/template'
-require 'hiki/algorithm/diff'
+require 'algorithm/diff'
+require 'docdiff/difference'
+require 'docdiff/document'
+require 'docdiff/view'
 
 class String
   def to_euc
@@ -167,7 +170,7 @@ module Hiki
           si += elements.length
           elements.each do |l|
             if html
-              text << "<del class=deleted>#{l.escapeHTML.chomp}</del>\n"
+              text << "<del class=\"deleted\">#{l.escapeHTML.chomp}</del>\n"
             else
               text << "- #{l}"
             end
@@ -185,7 +188,7 @@ module Hiki
           di += elements.length
           elements.each do |l|
             if html
-              text << "<ins class=added>#{l.escapeHTML.chomp}</ins>\n"
+              text << "<ins class=\"added\">#{l.escapeHTML.chomp}</ins>\n"
             else
               text << "+ #{l}"
             end
@@ -201,6 +204,27 @@ module Hiki
         si += 1
       end
       text
+    end
+
+    def word_diff( src, dst, html = true )
+      diff = compare_by_line_word( Document.new( src, 'EUC-JP', 'CR' ), Document.new( dst, 'EUC-JP', 'CR' ) )
+      if html
+	overriding_tags = {
+	  :start_common => '',
+	  :end_common => '',
+	  :start_del           => '<del class="deleted">',
+	  :end_del             => '</del>',
+	  :start_add           => '<ins class="added">',
+	  :end_add             => '</ins>',
+	  :start_before_change => '<del class="deleted">',
+	  :end_before_change   => '</del>',
+	  :start_after_change  => '<ins class="added">',
+	  :end_after_change    => '</ins>',
+	}
+	return View.new( diff, 'EUC-JP', 'CR' ).to_html(overriding_tags, false).to_s.gsub( %r|<br />|, '' ).gsub( %r|\n</ins>|, "</ins>\n" )
+      else
+	return View.new( diff, 'EUC-JP', 'CR' ).to_wdiff({}, false).join.gsub( %r|\n\+\}|, "+}\n" )
+      end	
     end
 
     def unified_diff( src, dst, unified = 3 )
@@ -357,6 +381,32 @@ EOS
       else
         arr[0...len-2].join('') + '..'
       end
+    end
+
+    private
+
+    def compare_by_line(doc1, doc2)
+      Difference.new(doc1.split_to_line, doc2.split_to_line)
+    end
+
+    def compare_by_line_word(doc1, doc2)
+      lines = compare_by_line(doc1, doc2)
+      words = Difference.new
+      lines.each{|line|
+	if line.first == :change_elt
+	  before_change = Document.new(line[1].to_s,
+				       doc1.encoding, doc1.eol)
+	  after_change  = Document.new(line[2].to_s,
+				       doc2.encoding, doc2.eol)
+	  Difference.new(before_change.split_to_word,
+			 after_change.split_to_word).each{|word|
+	    words << word
+	  }
+	else  # :common_elt_elt, :del_elt, or :add_elt
+	  words << line
+	end
+      }
+      words
     end
   end
 end

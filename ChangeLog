@@ -1,3 +1,12 @@
+2005-01-06  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/docdiff: 追加 <http://raa.ruby-lang.org/project/docdiff/>
+	* hiki/util.rb (Hiki::Util::word_diff): 追加
+	* hiki/command.rb (Hiki::Command::cmd_diff): word_diff を使うように
+	変更
+	* misc/plugin/history.rb: word_diff を使うように変更
+
+	* hiki.cgi: hiki/ を $: に追加するように変更
+
 2005-01-04  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/rss.rb (rss_body): 差分を content:encoded として出力
 	するように変更

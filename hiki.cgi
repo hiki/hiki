@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# $Id: hiki.cgi,v 1.23 2004-12-14 16:12:32 fdiary Exp $
+# $Id: hiki.cgi,v 1.24 2005-01-06 10:08:58 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 BEGIN { $defout.binmode }
@@ -13,7 +13,7 @@ begin
   else
     org_path = File::dirname( __FILE__ )
   end
-  $:.unshift( org_path.untaint )
+  $:.unshift( org_path.untaint, "#{org_path.untaint}/hiki" )
 
   require 'hiki/config'
   conf = Hiki::Config::new

@@ -3,7 +3,7 @@
 == plugin/history.rb - CVS の編集履歴を表示するプラグイン
 
   Copyright (C) 2003 Hajime BABA <baba.hajime@nifty.com>
-  $Id: history.rb,v 1.14 2004-12-17 17:48:04 koma2 Exp $
+  $Id: history.rb,v 1.15 2005-01-06 10:08:59 fdiary Exp $
   You can redistribute and/or modify this file under the terms of the LGPL.
 
   Copyright (C) 2003 Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
@@ -249,7 +249,7 @@ module Hiki
       r = @cgi.params['r'][0] || '1'
       case history_repos_type
       when 'cvs'
-	hstcmd = "cvs -Q -d #{history_repos_root} update -p -r 1.#{r.to_i} #{@p.escape}"
+	hstcmd = "cvs -Q up -p -r 1.#{r.to_i} #{@p.escape}"
       when 'svn'
         hstcmd = "svn cat -r #{r.to_i} #{@p.escape}"
       else
@@ -284,21 +284,26 @@ module Hiki
       r2 = @cgi.params['r2'][0]
       case history_repos_type
       when 'cvs'
-	revopt = "-r 1.#{r.to_i}"
-	revopt = "-r 1.#{r2.to_i} -r 1.#{r.to_i}" unless r2.nil? || r2.to_i == 0
-	hstcmd = "cvs -Q -d #{history_repos_root} diff -u #{revopt} #{@p.escape}"
+	if r2.nil? || r2.to_i == 0
+	  new = @db.load(@p)
+	  old = history_exec_command("cvs -Q up -p -r 1.#{r.to_i} #{@p.escape}")
+	else
+	  new = history_exec_command("cvs -Q up -p -r 1.#{r.to_i} #{@p.escape}")
+	  old = history_exec_command("cvs -Q up -p -r 1.#{r2.to_i} #{@p.escape}")
+	end	  
       when 'svn'
-        revopt = "#{r.to_i}"
-        revopt = "#{r2.to_i}:#{r.to_i}" unless r2.nil? || r2.to_i == 0
-        hstcmd = "svn diff -r #{revopt} #{@p.escape}"
+	if r2.nil? || r2.to_i == 0
+	  new = @db.load(@p)
+	  old = history_exec_command("svn cat -r #{r.to_i} #{@p.escape}")
+	else
+	  new = history_exec_command("svn cat -r #{r.to_i} #{@p.escape}")
+	  old = history_exec_command("svn cat -r #{r2.to_i} #{@p.escape}")
+	end	  
       else
 	return history_output(history_not_supported_label)
       end
 
-      # invoke external command
-      cmdlog = history_exec_command(hstcmd)
-      cmdlog = '---' + cmdlog.split(/^---/)[1..-1].join('---') # Get rid of header
-      cmdlog = "*** no diff ***" if cmdlog.empty?
+      diff = word_diff( old, new )
 
       # construct output sources
       sources = ''
@@ -307,22 +312,7 @@ module Hiki
       sources << "</div>\n<br>\n"
       sources << "<span class=\"add_line\">#{history_add_line_label.escapeHTML}</span><br>\n"
       sources << "<span class=\"del_line\">#{history_delete_line_label.escapeHTML}</span><br>\n"
-      sources << "<pre class=\"diff\">\n"
-      diffsrc = cmdlog.escapeHTML
-      cmdlog = nil
-      diffsrc.each do |tmp|
-        if /^[\+\-].*/m =~ tmp then
-          if /^\+.*/m =~ tmp then
-            tmp = "<span class=\"add_line\">#{tmp}<\/span>"
-          elsif
-            tmp = "<span class=\"del_line\">#{tmp}<\/span>"
-          end
-        end
-        if /^[^\\].*/m =~ tmp then
-          sources << "#{tmp}"
-        end
-      end
-      sources << "</pre>\n"
+      sources << "<pre class=\"diff\">#{diff}</pre>\n"
 
       history_output(sources)
     end

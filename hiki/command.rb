@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.23 2005-01-04 14:11:51 fdiary Exp $
+# $Id: command.rb,v 1.24 2005-01-06 10:08:59 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'amrita/template'
@@ -302,7 +302,7 @@ module Hiki
     def cmd_diff
       old = @db.load_backup( @p ) || ''
       new = @db.load( @p ) || ''
-      differ = diff( old, new )
+      differ = word_diff( old, new )
       
       data = Hiki::Util::get_common_data( @db, @plugin, @conf )
       @plugin.hiki_menu(data, @cmd)
