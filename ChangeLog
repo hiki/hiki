@@ -34,8 +34,8 @@
 	* hiki/command.rb (admin_save_config): パスワード無しの場合もセッ
 	ションを確認するように修正 thanks to sheepman
 
-	* misc/plugin/history.rb: @options['hidelog'] に対応、テーブルのス
-	タイルシートはテーマに任せるように修正
+	* misc/plugin/history.rb: @options['history.hidelog'] に対応、テー
+	ブルのスタイルシートはテーマに任せるように修正
 
 2004-06-18  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/config.rb: 設定項目のデフォルト値を用意するように修正
