@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.14 2005-01-23 09:06:34 fdiary Exp $
+# $Id: html_formatter.rb,v 1.15 2005-01-27 15:23:03 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -10,7 +10,8 @@ module Hiki
     
   class HTMLFormatter_default < HikiFormatter
     MAP = Hash::new
-    MAP[:heading1_open]        = '<h2><span class="date"></span><span class="title">'
+    MAP[:heading1_open]        = '<h2><span class="date">'
+    MAP[:heading1_open_end]    = '</span><span class="title">'
     MAP[:heading1_close]       = '</span></h2>'
     MAP[:heading2_open]        = '<h3>'
     MAP[:heading2_close]       = '</h3>'
@@ -175,7 +176,12 @@ module Hiki
         s[:html] << "\n"
       when :heading1_open, :heading2_open, :heading3_open, :heading4_open, :heading5_open
         s[:toc_level] = t[:lv]
-        s[:html] << %Q!#{map(t[:e])}<a name="#{@suffix}#{@toc_cnt}"> </a>!
+        if t[:e] == :heading2_open
+          link_label = %Q[<span class="sanchor">_</span>]
+        else
+          link_label = ' '
+        end
+        s[:html] << %Q!#{map(t[:e])}<a name="#{@suffix}#{@toc_cnt}">#{link_labe
       when :heading1_close, :heading2_close, :heading3_close, :heading4_close, :heading5_close
         add_toc( s[:toc_level], s[:toc_title] )
         s[:toc_level] = 0
@@ -202,10 +208,11 @@ module Hiki
           s[:pre] = true
         elsif t[:e] == :pre_close
           s[:pre] = false
+        elsif t[:e] == :p_close
+	  s[:html].chomp!
         end
         s[:html] << "#{map(t[:e])}"
-        if [:emphasis_close, :strong_close, :delete_close].index(t[:e]) == nil and
-          /_close\z/ =~ t[:e].to_s
+        if [:emphasis_close, :strong_close, :delete_close].index(t[:e]) == nil and /_close\z/ =~ t[:e].to_s
           s[:html] <<  "\n"
         end
       end
@@ -219,10 +226,10 @@ module Hiki
     def tdiary_section(title, section)
 <<"EOS"
 <div class="day">
-  #{title}
+  #{title.chomp}
   <div class="body">
     <div class="section">
-      #{section}
+      #{section.chomp}
     </div>
   </div>
 </div>

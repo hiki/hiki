@@ -1,3 +1,10 @@
+2005-01-28  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/html_formatter.rb: より tDiary 風の HTML を出力する
+	ように修正 by す
+
+	* data/text/InterWikiName, misc/text/default/InterWikiName,
+	misc/text/rd+/InterWikiName: RWiki のリンクを更新 by す
+
 2005-01-23  Kazuhiko  <kazuhiko@fdiary.net>
 	* style/default/html_formatter.rb (apply_tdiary_theme): 見出し行連
 	続時に出力されない不具合の修正 by す
@@ -5,6 +12,10 @@
 2005-01-21  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/repos/cvs.rb, hiki/repos/svn.rb: 開設者の IP アドレスをイン
 	ポート時のコミットログに記すように変更
+
+2005-01-15  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/html_formatter.rb (token_to_s, tdiary_section): 不
+	要な改行の削除 report by ibs
 
 2005-01-14  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/rss.rb (rss_body): <language> を <dc:language> に、
