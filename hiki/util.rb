@@ -1,4 +1,4 @@
-# $Id: util.rb,v 1.22 2005-01-06 10:08:59 fdiary Exp $
+# $Id: util.rb,v 1.23 2005-01-07 12:21:32 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'nkf'
@@ -207,7 +207,9 @@ module Hiki
     end
 
     def word_diff( src, dst, html = true )
-      diff = compare_by_line_word( Document.new( src, 'EUC-JP', 'CR' ), Document.new( dst, 'EUC-JP', 'CR' ) )
+      src_doc = Document.new( src, 'EUC-JP' )
+      dst_doc = Document.new( dst, 'EUC-JP' )
+      diff = compare_by_line_word( src_doc, dst_doc )
       if html
 	overriding_tags = {
 	  :start_common => '',
@@ -221,9 +223,9 @@ module Hiki
 	  :start_after_change  => '<ins class="added">',
 	  :end_after_change    => '</ins>',
 	}
-	return View.new( diff, 'EUC-JP', 'CR' ).to_html(overriding_tags, false).to_s.gsub( %r|<br />|, '' ).gsub( %r|\n</ins>|, "</ins>\n" )
+	return View.new( diff, src.encoding, src.eol ).to_html(overriding_tags, false).to_s.gsub( %r|<br />|, '' ).gsub( %r|\n</ins>|, "</ins>\n" )
       else
-	return View.new( diff, 'EUC-JP', 'CR' ).to_wdiff({}, false).join.gsub( %r|\n\+\}|, "+}\n" )
+	return View.new( diff, src.encoding, src.eol ).to_wdiff({}, false).join.gsub( %r|\n\+\}|, "+}\n" )
       end	
     end
 
@@ -345,7 +347,7 @@ EndOfMail
 REMOTE_ADDR = #{ENV['REMOTE_ADDR']}
 REMOTE_HOST = #{ENV['REMOTE_HOST']}
 EOS
-      body << "REMOTE_USER = #{ENV['REMOTE_HOST']}" if ENV['REMOTE_HOST']
+      body << "REMOTE_USER = #{ENV['REMOTE_USER']}" if ENV['REMOTE_USER']
       body << <<EOS
         URL = #{@conf.index_url}?#{page.escape}
 #{'-' * 25}
@@ -382,8 +384,6 @@ EOS
         arr[0...len-2].join('') + '..'
       end
     end
-
-    private
 
     def compare_by_line(doc1, doc2)
       Difference.new(doc1.split_to_line, doc2.split_to_line)
