@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.3 2003-02-23 02:20:08 hitoshi Exp $
+# $Id: command.rb,v 1.4 2003-02-26 00:59:23 hitoshi Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'amrita/template'
@@ -197,7 +197,7 @@ module Hiki
       data[:tools][:diff]   = a( :href=> cmdhref( 'diff', @p ) )
       data[:pagename]       = a( :value => page.escape )
       data[:md5hex]         = a( :value => md5hex )
-      data[:contents]       = text
+      data[:contents]       = text.escapeHTML
       data[:msg]            = msg
       data[:button]         = save_button
       data[:preview_button] = save_button
