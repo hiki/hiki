@@ -1,4 +1,9 @@
 2005-01-30  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/command.rb (cmd_view): キャッシュの更新時刻を確認するように
+	修正
+
+	* misc/plugin/diffmail.rb: タイトル比較のエスケープを修正
+
 	* style/default/html_formatter.rb (apply_tdiary_theme): H2 がない場
 	合に本文が出力されない不具合の修正 report by kdmsnr
 

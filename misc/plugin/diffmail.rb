@@ -1,4 +1,4 @@
-# $Id: diffmail.rb,v 1.6 2005-01-28 04:35:30 fdiary Exp $
+# $Id: diffmail.rb,v 1.7 2005-01-30 11:50:55 fdiary Exp $
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 
 #----- send a mail on updating
@@ -15,7 +15,7 @@ def updating_mail
       head << "KEYWORD     = #{keyword}\n"
       r = "#{latest_text}\n"
     elsif type == 'update'
-      title_old = page_name(@page)
+      title_old = CGI::unescapeHTML( page_name( @page ) )
       keyword_old = @db.get_attribute(@page, :keyword).join(' / ')
       unless title == title_old
 	head << "TITLE       = #{title_old} -> #{title}\n"
@@ -29,6 +29,7 @@ def updating_mail
       src = @db.text
       dst = latest_text
       r = unified_diff( src, dst, unified )
+STDERR.puts r
     end
     send_updating_mail(@page, type, head + r) unless (head + r).empty?
   rescue

@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.28 2005-01-29 03:34:35 fdiary Exp $
+# $Id: command.rb,v 1.29 2005-01-30 11:50:55 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -133,6 +133,7 @@ module Hiki
       prepare_cache_dir
       cache_file = "#{@conf.cache_path}/parser/#{@p.escape}".untaint
       begin
+	raise if File.mtime( cache_file ) < @db.get_last_update( @p )
 	tokens = Marshal::load( File.read( cache_file ) )
       rescue
 	text = @db.load( @p )
