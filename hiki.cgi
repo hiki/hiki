@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# $Id: hiki.cgi,v 1.20 2004-09-10 06:51:50 fdiary Exp $
+# $Id: hiki.cgi,v 1.21 2004-09-10 13:41:36 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 BEGIN { $defout.binmode }
@@ -30,7 +30,7 @@ begin
   if %r|/tb/(.+)$| =~ ENV['REQUEST_URI']
     cgi.params['p'] = [CGI::unescape($1)]
     cgi.params['c'] = ['plugin']
-    cgi.params['plugin'] = ['trackback']
+    cgi.params['plugin'] = ['trackback_post']
   end
 
   db = Hiki::HikiDB::new( conf )

@@ -1,4 +1,7 @@
 2004-09-10  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki.cgi, misc/plugin/trackback.rb: {{trackback}} と書いたページ
+	に trackback URI を表示するように変更
+
 	* misc/plugin/trackback.rb: tdiary テーマ向け修正 by MACHIDA
 	Hideki
 
