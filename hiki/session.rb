@@ -1,4 +1,4 @@
-# $Id: session.rb,v 1.5 2005-03-06 04:38:49 hitoshi Exp $
+# $Id: session.rb,v 1.6 2005-03-06 05:00:43 hitoshi Exp $
 # Copyright (C) 2004 Kazuhiko <kazuhiko@fdiary.net>
 
 module Hiki
@@ -9,7 +9,7 @@ module Hiki
 
     def initialize( conf, session_id = nil, max_age = MAX_AGE )
       @conf = conf
-		@max_age = max_age
+      @max_age = max_age
       if session_id
         if /[0-9a-f]{16}/ =~ session_id
           @session_id = session_id
