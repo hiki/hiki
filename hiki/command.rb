@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.37 2005-04-01 02:25:55 fdiary Exp $
+# $Id: command.rb,v 1.38 2005-04-01 07:44:28 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -451,7 +451,7 @@ module Hiki
     def cmd_admin
       session_id = @cgi.cookies['session_id'][0]
       if session_id && Hiki::Session::new( @conf, session_id ).check
-        admin_config( session_id )
+        admin_config
         return
       elsif @conf.password.size > 0
         key = @params['key'][0]
@@ -462,10 +462,10 @@ module Hiki
       end
       session = Hiki::Session::new( @conf )
       @plugin.cookies << session_cookie( session.session_id )
-      admin_config( session.session_id )
+      admin_config
     end
     
-    def admin_config( session_id, msg=nil )
+    def admin_config
       data = get_common_data( @db, @plugin, @conf )
       @plugin.hiki_menu(data, @cmd)
       data[:key]            = @cgi.params['conf'][0] || 'default'
