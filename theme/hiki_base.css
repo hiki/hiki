@@ -1,0 +1,7 @@
+span.added {
+	font-weight: bold;
+}
+
+span.deleted {
+	text-decoration: line-through;
+}

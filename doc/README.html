@@ -1,0 +1,122 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ja">
+<head>
+  <meta http-equiv="Content-Language" content="ja">
+  <meta http-equiv="Content-Type" content="text/html; charset=EUC-JP">
+  <meta name="generator" content="Hiki 0.3">
+  <title>Hiki - Hikiとは？</title>
+  <link rel="stylesheet" type="text/css" href="../theme/hiki_base.css">
+  <link rel="stylesheet" type="text/css" href="../theme/hiki/hiki.css">
+</head>
+
+<body>
+
+
+<div class="hiki">
+  <h1 class="header"><a href="hiki.cgi?c=search;key=Hiki%A4%C8%A4%CF%A1%A9">Hikiとは？</a></h1>
+
+  <div class="day">
+    <div class="body">
+      <div class="section">
+        <div><ul>
+<li><a href="#l0">Hikiとは</a>
+<ul>
+<li><a href="#l1">オリジナルWikiに似たシンプルな書式</a>
+<li><a href="#l2">CSSを使ったテーマ機能</a>
+<li><a href="#l3">プラグインによる機能拡張</a>
+<li><a href="#l4">出力するHTMLを柔軟に変更できる</a>
+<li><a href="#l5">InterWikiのサポート</a>
+<li><a href="#l6">Rubyで記述されている</a>
+</ul>
+<li><a href="#l7">著作権、サポートなど</a>
+</ul>
+</div>
+        <div></div>
+        <div><p>
+</p>
+<h2><a name="l0"> </a>Hikiとは</h2>
+<p>
+HikiはいわゆるひとつのWikiエンジンです。Hikiには以下の特徴があります。</p>
+<h3><a name="l1"> </a>オリジナルWikiに似たシンプルな書式</h3>
+<p>
+HikiはオリジナルのWikiに似たシンプルな書式をサポートしています。詳細については<a href="http://www.namaraii.com/hiki/hiki.cgi?TextFormattingRules">Hiki:TextFormattingRules</a>を参照してください。</p>
+<h3><a name="l2"> </a>CSSを使ったテーマ機能</h3>
+<p>
+スタイルシートを使って簡単に見た目を変えることができ、これはテーマと呼ばれます。Hikiでは、ただただしさん作の日記システム<a href="http://www.tdiary.org/">tDiary</a>用の<a href="http://www.tdiary.net/theme.rhtml">豊富なテーマ</a>を使用することができます。</p>
+<h3><a name="l3"> </a>プラグインによる機能拡張</h3>
+<p>
+プラグインにより機能を拡張することができます。ただし、プラグインについては現段階では仕様が流動的です。tDiaryの（日記に依存しない）プラグイン資産を最大限生かせる方向で検討中です。</p>
+<h3><a name="l4"> </a>出力するHTMLを柔軟に変更できる</h3>
+<p>
+HikiではRuby用のHTML/XMLテンプレートライブラリ<a href="http://www.brain-tokyo.jp/research/amrita/index_ja.html">Amrita</a>を使っているため、出力するHTMLの形式を柔軟に変更することができます。</p>
+<h3><a name="l5"> </a>InterWikiのサポート</h3>
+<p>
+InterWikiをサポートしています。InterWikiとは、もともとはWikiサーバー間をつなげる機能だった（らしい）のですが、使い方によってはWikiサーバー以外へのリンクすることができます。たとえばInterWikiNameというページに以下のように書いた後、</p>
+<pre>
+*[[ruby-list|http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/]]
+*[[Hiki|http://www.namaraii.com/hiki/hiki.cgi?]] euc
+</pre>
+<p>
+任意のページに、</p>
+<pre>
+[[Hiki:逆引きRuby]]
+</pre>
+<p>
+と書くと<a href="http://www.namaraii.com/hiki/hiki.cgi">http://www.namaraii.com/hiki/hiki.cgi</a>にあるHikiの「逆引きRuby」というページへのリンクになります。</p>
+<p>
+同様に、</p>
+<pre>
+[[ruby-list:30305]]
+</pre>
+<p>
+と書くとruby-listメーリングリストの1番のメールへのリンクになります。</p>
+<ul>
+<li>
+<a href="http://www.namaraii.com/hiki/hiki.cgi?%B5%D5%B0%FA%A4%ADRuby">Hiki:逆引きRuby</a></li>
+<li>
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/30305">ruby-list:30305</a></li>
+</ul>
+<h3><a name="l6"> </a>Rubyで記述されている</h3>
+<p>
+Rubyで記述されていることと、Rubyらしいプログラムであることは別です。Hikiの場合Rubyで記述された、あまりRubyらしくないプログラムです。(^^;</p>
+<p>
+もちろん、わざとそうしているわけではないのが悲しいところですが、少しずつRubyらしいプログラムにしていけたらなぁと考えています。</p>
+<p>
+…ということで、皆様のコメントをお待ちしております。</p>
+<h2><a name="l7"> </a>著作権、サポートなど</h2>
+<p>
+Hikiは作者である竹内 仁(hitoshi@namaraii.com)が<a href="http://www.ruby-lang.org/ja/LICENSE.txt">Rubyと同じライセンス</a>で配布、改変を許可するフリーソフトウェアです。</p>
+<p>
+ただし、配布ファイルのうち以下のものは竹内が開発したものではなく、それぞれの原作者が著作権を有します。配布条件もそれぞれで異なります。詳細については個々のファイルを参照してください。</p>
+<p>
+<dl>
+<dt>
+hiki/algorithm/dif.rb</dt>
+<dd>
+Lars Christensen氏作。GPL2で配布。</dd>
+</dl>
+<dl>
+<dt>
+hiki/db/tmarshal.rb</dt>
+<dd>
+るびきちさんが<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/30305">ruby-list:30305</a>にポストしたスクリプトを若干修正したもの。Ruby'sで配布。</dd>
+</dl>
+</p>
+<p>
+Hikiは<a href="http://www.namaraii.com/hiki/">http://www.namaraii.com/hiki/</a>でサポートを行っています。ご意見・ご要望はこちらへどうぞ。</p>
+</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <a href="http://www.namaraii.com/hiki/">Hiki</a> 0.3
+  &copy; 2002-2003 by <a href="http://www.namaraii.com/">TAKEUCHI Hitoshi</a>.<br>
+  Powered by Ruby 1.6.8 and Amrita.<br>
+  Modified by たけぞう.
+</div>
+</body>
+</html>

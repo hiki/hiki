@@ -1,0 +1,77 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ja">
+<head>
+  <meta http-equiv="Content-Language" content="ja">
+  <meta http-equiv="Content-Type" content="text/html; charset=EUC-JP">
+  <title id=title></title>
+  <link rel="stylesheet" type="text/css" href="theme/hiki_base.css">
+  <link rel="stylesheet" type="text/css" href="@stylesheet">
+</head>
+
+<body>
+<div class="sidebar" id="sidebar">
+  <div id="menu"   class="recentsubtitles"></div>
+</div>
+
+<div class="@view_style">
+  <div class="adminmenu" id=tools>
+    <span class="adminmenu">
+      [
+      <a id=create>新規作成</a> |
+      <a id=edit>編集</a> | 
+      <a id=diff>差分</a> 
+      ]
+      [
+      <a id=FrontPage>FrontPage</a> | 
+      <a id=index>一覧</a> | 
+      <a id=search>検索</a> | 
+      <a id=recent>更新履歴</a>
+      ]
+      [
+      <a id=admin>管理</a>
+      ]
+    </span>
+  </div>
+  <h1 class="header" id=title></h1>
+
+  <div class="day">
+    <div class="body">
+      <div class="section">
+        <div id="msg" class="msg"></div>
+        <div id=freeze_msg class="msg"></div>
+        <div id="preview" class="comment"></div>
+        <pre id=differ></pre>
+        <form action="hiki.cgi" method="POST">
+          <input type="hidden" name="p" id=pagename>
+          <input type="hidden" name="c" value="save">
+          <input type="hidden" name="md5hex" id=md5hex>
+          <textarea cols="80" rows="20" name="contents" wrap="off" id=contents></textarea><br>
+          <p>
+          <input type="submit" name="preview" value="プレビュー" id=preview_button>
+          <input type="submit" name="save" value="保存" id=button>
+          </p>
+          <p>
+          <input type="checkbox" name="freeze" id=freeze>ページの凍結 
+          パスワード <input type="password" name="password" size="20">
+          </p>
+        </form>
+        <div id=link>
+          最新版を参照: [<span id=p></span>]
+        </div>
+        <hr>
+        <div id="format"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <a href="http://www.namaraii.com/hiki/">Hiki</a> <span id=version>0.0.1</span>
+  &copy; 2002-2003 by <a href="http://www.namaraii.com/">TAKEUCHI Hitoshi</a>.<br>
+  Powered by <span id=ruby_ver></span> and <span id=amrita_ver></span>.<br>
+  Modified by <span id=author_name></span>.
+</div>
+</body>
+</html>

@@ -1,0 +1,72 @@
+# $Id: hikiconf.rb.sample,v 1.1.1.1 2003-02-22 04:39:31 hitoshi Exp $
+# Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+# You can redistribute it and/or modify it under the terms of
+# the Ruby's licence.
+
+#============================
+#  変更する必要がある項目
+#============================
+
+# データを保存するディレクトリ【必須】
+#   ページの内容や更新日時などを保存するディレクトリです。
+#   のディレクトリは通常、WWW経由でアクセスできない(public_html配下でない)
+#   ディレクトリを指定します。
+#   このディレクトリの「全ファイル」と「全ディレクトリ」は、WWWサーバの
+#   権限で書き込めるパーミッションにしておく必要があります。
+$data_path       = '/home/foo/data/'
+
+# メールサーバ名【オプション】
+#   メールサーバ名を指定します。$mail_on_updateがtrueの場合に有効です。
+$smtp_server     = 'mail.hoge.hoge'
+
+# トップページの URL【オプション】
+#   トップページのURLを指定します。
+$index_page      = 'http://www.namaraii.com/hiki/'
+
+# プラグインを使うかどうかの指定【オプション】
+#   使用する場合には true、使用しない場合は false を指定します。
+$use_plugin      = true
+
+#====================================================================
+#  管理画面から変更できる項目
+#  必要なら書き換えてください。なお、一度管理画面で設定してしまうと、
+#  こちらのファイルを編集しても反映されません。
+#====================================================================
+# サイト名
+#   あなたのサイト名称を指定します。ページタイトルなどに表示されます。
+$site_name       = 'hoge hoge'
+
+# サイト管理者名
+#   サイト管理者の名前を指定します。フッタに表示されます。
+$author_name     = '名無しさん'
+
+# メール通知の有無
+#   trueにするとページの更新時、$smtp_serverのサーバにより$mail宛に
+#   変更内容がメールで送信されます。
+$mail_on_update  = false
+
+# 管理者のメールアドレス
+#   更新内容を送信するメールアドレス
+$mail            = 'your@mail.address.hoge'
+
+# テーマ
+#   使用するテーマ
+$theme           = 'hiki'
+
+# サイドバー
+#   サイドバーをサポートしていないテーマを使用する場合、
+#   falseを設定します。
+$use_sidebar     = true
+
+#=========================================
+#  変更可能項目
+#=========================================
+$charset         = 'EUC-JP'
+$lang            = 'ja'
+$database_type   = 'flatfile'
+
+$options         = {                       # for tDiary plugin
+}
+
+#$LOAD_PATH.unshift('/home/foo/public_html/hiki/hiki')
+#$LOAD_PATH.unshift('/home/foo/lib/ruby')

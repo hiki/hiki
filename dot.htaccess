@@ -1,0 +1,12 @@
+Options +ExecCGI
+
+AddHandler cgi-script .cgi
+DirectoryIndex hiki.cgi
+
+<Files "*.rb">
+	deny from all
+</Files>
+
+<Files "data/*">
+	deny from all
+</Files>
