@@ -1,3 +1,8 @@
+2004-09-14  Kazuhiko  <kazuhiko@fdiary.net>
+	* hikiconf.rb.sample, hiki/config.rb,
+	style/default/html_formatter.rb: WikiName によるリンクを使うかどう
+	かを @use_wikiname で制御できるように変更
+
 2004-09-13  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/util.rb (Hiki::Util::shorten): 追加
 	* misc/plugin/trackback.rb: TrackBack 受信時刻の表示を追加。長すぎ

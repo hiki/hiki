@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.8 2004-08-31 07:25:46 fdiary Exp $
+# $Id: html_formatter.rb,v 1.9 2004-09-14 02:21:10 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -140,7 +140,9 @@ module Hiki
             orig = @db.select {|p| p[:title] == t[:href]}
             t[:href] = orig[0] if orig[0]
           end
-          if @db.exist?( t[:href] )
+          if !@conf.use_wikiname and t[:e] == :wikiname
+            html << disp.escapeHTML
+          elsif @db.exist?( t[:href] )
              html << @plugin.hiki_anchor(t[:href].escape, disp.escapeHTML)
             @references << t[:href]
           else

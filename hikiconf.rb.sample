@@ -1,4 +1,4 @@
-# $Id: hikiconf.rb.sample,v 1.6 2004-09-13 13:53:10 fdiary Exp $
+# $Id: hikiconf.rb.sample,v 1.7 2004-09-14 02:21:10 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #============================
@@ -20,6 +20,10 @@
 # プラグインを使うかどうかの指定【オプション】
 #   使用する場合には true、使用しない場合は false を指定します。
 @use_plugin      = true
+
+# WikiName によるリンク機能を使うかどうかの指定【オプション】
+#   WikiName によるリンク機能を使わない場合には false を指定します。
+@use_wikiname    = true
 
 #====================================================================
 #  管理画面から変更できる項目
