@@ -1,4 +1,8 @@
 2005-01-07  Kazuhiko  <kazuhiko@fdiary.net>
+
+	* misc/plugin/footnote.rb (render): footnote プラグイン内部ではプラ
+	グインを無効にするように修正
+
 	* hiki/docdiff/charstring.rb: 今のところ Hiki では不要な require
 	'iconv' を削除
 

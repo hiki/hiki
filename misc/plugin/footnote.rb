@@ -1,4 +1,4 @@
-# footnote.rb $Revision: 1.4 $
+# footnote.rb $Revision: 1.5 $
 #
 # fn: 脚注plugin
 #   パラメタ:
@@ -41,10 +41,13 @@ def fn(text, mark = '*')
 end
 
 def render( text )
+	tmp = @conf.use_plugin
+	@conf.use_plugin = false
 	parser = @conf.parser::new( @conf )
 	tokens = parser.parse( text.unescapeHTML )
 	formatter = @conf.formatter::new( tokens, @db, self, @conf )
-	formatter.to_s.gsub(/\A<p>/,'').gsub(/\Z<\/p>/,'')
+	@conf.use_plugin = tmp
+	formatter.to_s.gsub(/\A<p>/,'').gsub(/<\/p>\Z/,'')
 end
 
 add_body_enter_proc(Proc::new do |date|
