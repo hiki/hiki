@@ -1,4 +1,4 @@
-# $Id: parser.rb,v 1.1.1.1 2003-02-22 04:39:31 hitoshi Exp $
+# $Id: parser.rb,v 1.2 2003-02-22 05:15:42 hitoshi Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # You can redistribute it and/or modify it under the terms of
 # the Ruby's licence.
@@ -71,7 +71,7 @@ module Hiki
           @cur_stack.push( {:e => :ordered_listitem_open, :lv => $1.size} )
           inline( $2 )
           @cur_stack.push( {:e => :ordered_listitem_close} )
-        when /^""(.+)$/
+        when /^""(.*)$/
           @cur_stack.push( {:e => :blockquote_open} )
           inline( $1 )
           @cur_stack.push( {:e => :blockquote_close} )
