@@ -1,3 +1,7 @@
+2004-04-07  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/pluginutil.rb: プラグイン評価用ファイル by Masao Mutoh
+	* style/rd+/rd2html.rb: セキュリティバグの修正 by Masao Mutoh
+
 2004-04-03  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/rss-show.rb (rss_show): $SAFE=1 向けの修正 by MACHIDA Hideki <h@matchy.net>
 
