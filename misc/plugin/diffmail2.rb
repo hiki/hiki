@@ -1,4 +1,4 @@
-# $Id: diffmail2.rb,v 1.1 2004-09-09 03:05:48 fdiary Exp $
+# $Id: diffmail2.rb,v 1.2 2004-09-10 06:37:42 fdiary Exp $
 # Copyright (C) 2003 SHIMADA Mitsunobu <simm@fan.jp>
 
 require 'hiki/algorithm/diff'
@@ -8,7 +8,7 @@ def updating_mail
   begin
     latest_text = @db.load(@page) || ''
     title = @params['page_title'][0] ? @params['page_title'][0].strip : @page
-    keyword = @params['keyword'][0].split("\n").collect {|k|
+    keyword = (@params['keyword'][0]||'').split("\n").collect {|k|
       k.chomp.strip}.delete_if{|k| k.empty?}.join(' / ')
     head = ''
     type = (!@db.text or @db.text.empty?) ? 'create' : 'update'
