@@ -1,7 +1,10 @@
 2005-01-28  Kazuhiko  <kazuhiko@fdiary.net>
-	* style/default/html_formatter.rb (auto_link): 二度 escapeHTML され
+	* plugin/00default.rb (hiki_header): タイトルが二度 escapeHTML され
 	ているのを修正
-	
+
+	* style/default/html_formatter.rb (auto_link): オートリンクのページ
+	名が二度 escapeHTML されているのを修正
+
 	* style/default/html_formatter.rb: より tDiary 風の HTML を出力する
 	ように修正 by す
 
