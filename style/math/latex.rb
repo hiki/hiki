@@ -13,14 +13,13 @@ module Hiki
       rescue Exception
       end
 
-      @ptsize = @conf.options['math.latex.ptsize'] || '12pt'
-      @documentclass = @conf.options['math.latex.documentclass'] || 'report'
-      @preamble = @conf.options['math.latex.preamble'] || ''
-      @latex = @conf.options['math.latex.latex'] || 'platex %.tex'
-      @dvips = @conf.options['math.latex.dvips'] || 'dvips %.dvi'
-      @convert = @conf.options['math.latex.convert'] || 'convert -antialias -transparent white -trim %.ps %.png'
-      @log = @conf.options['math.latex.log'] || false
-      @recompile = @conf.options['math.latex.recompile'] || false
+      @ptsize = @conf['math.latex.ptsize']
+      @documentclass = @conf['math.latex.documentclass']
+      @preamble = @conf['math.latex.preamble']
+      @latex = @conf['math.latex.latex'] ||= 'latex %.tex'
+      @dvips = @conf['math.latex.dvips'] ||= 'dvips %.dvi'
+      @convert = @conf['math.latex.convert'] ||= 'convert -antialias -transparent white -trim %.ps %.png'
+      @log = @conf['math.latex.log']
     end
 
     def md5(text)
@@ -38,13 +37,13 @@ module Hiki
       self.prepare_directory()
 
       filename = md5(text.untaint)
-      if !File.exist?("#{@image_path}/#{filename}.png") or @recompile
+      if !File.exist?("#{@image_path}/#{filename}.png") then
         File.open("#{@image_path}/#{filename}.tex", "w") do |f|
-          f.puts('\documentclass[' + @ptsize + ']{' + @documentclass + '}')
+          f.puts('\documentclass[' + @ptsize + 'pt]{' + @documentclass + '}')
           f.puts(@preamble)
           f.puts('\pagestyle{empty}')
           f.puts('\begin{document}')
-          f.puts(text.unescape)
+          f.puts(text)
           f.puts('\end{document}')
         end
 
@@ -54,7 +53,6 @@ module Hiki
           else
             log = ">/dev/null 2>&1"
           end
-  
           [ @latex, @dvips, @convert ].each do |cmd|
             run = cmd.gsub('%') { filename }
             File.open("#{@image_path}/#{filename}.err", "a"){|f|

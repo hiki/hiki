@@ -1,9 +1,9 @@
-# $Id: config.rb,v 1.22 2005-01-28 04:35:29 fdiary Exp $
+# $Id: config.rb,v 1.23 2005-01-28 19:35:06 fdiary Exp $
 # Copyright (C) 2004 Kazuhiko <kazuhiko@fdiary.net>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
 
-HIKI_VERSION  = '0.7-devel-20050127'
+HIKI_VERSION  = '0.7-devel-20050128'
 
 require 'cgi'
 require 'hiki/command'
@@ -56,18 +56,25 @@ module Hiki
       @bot =~ ENV['HTTP_USER_AGENT']
     end
 
+    #
+    # get/set/delete plugin options
+    #
+    def []( key )
+      @options[key]
+    end
+
+    def []=( key, val )
+      @options2[key] = @options[key] = val
+    end
+
+    def delete( key )
+      @options.delete( key )
+      @options2.delete( key )
+    end
+
     def save_config
       File::open(self.config_file, "w") do |f|
-        %w(site_name author_name mail theme password theme_url sidebar_class main_class theme_path mail_on_update use_sidebar auto_link).each do |c|
-          case eval(c).class.to_s
-          when "String"
-            f.puts( %Q|@#{c} = #{eval(c).dump}| )
-          when "TrueClass", "FalseClass", "NilClass"
-            f.puts( %Q|@#{c} = #{eval(c).inspect}| )
-          else
-            raise SecurityError, "Invalid configuration"
-          end
-        end
+	f.print ERB::new( File::open( "#{@template_path}/hiki.conf" ){|f| f.read }.untaint ).result( binding )
       end
     end
 
@@ -94,6 +101,7 @@ module Hiki
     end
     
     private
+
     # loading hikiconf.rb in current directory
     def load
       @secure = true unless @secure
@@ -137,7 +145,7 @@ module Hiki
 
       variables = [:site_name, :author_name, :mail, :theme, :password,
 		   :theme_url, :sidebar_class, :main_class, :theme_path,
-		   :mail_on_update, :use_sidebar, :auto_link]
+		   :mail_on_update, :use_sidebar, :auto_link, :options2]
       begin
 	cgi_conf = File::open( "#{@data_path}hiki.conf" ){|f| f.read }.untaint
 	cgi_conf.gsub!( /^[@$]/, '' )
@@ -150,6 +158,11 @@ module Hiki
 	}.join
 	variables.each do |var| eval "@#{var} = #{var} if #{var} != nil" end
       rescue IOError, Errno::ENOENT
+      end
+      if @options2 then
+	@options.update( @options2 )
+      else
+	@options2 = {}.taint
       end
       formaterror if $site_name
     end

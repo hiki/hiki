@@ -1,3 +1,11 @@
+2005-01-29  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/math/html_formatter.rb, style/math/latex.rb,
+	misc/plugin/math.rb: style/math/parser.rb: Math スタイルの拡張 by
+	Kenta MURATA
+
+	* hiki/config.rb, template/hiki.conf: tDiary 風にプラグインのオプショ
+	ンを保存できるように変更
+
 2005-01-28  Kazuhiko  <kazuhiko@fdiary.net>
 	* plugin/00default.rb (hiki_header): タイトルが二度 escapeHTML され
 	ているのを修正

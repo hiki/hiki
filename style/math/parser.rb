@@ -1,4 +1,4 @@
-# $Id: parser.rb,v 1.1 2004-12-22 04:43:04 fdiary Exp $
+# $Id: parser.rb,v 1.2 2005-01-28 19:35:08 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require "style/default/parser"
@@ -40,11 +40,12 @@ module Hiki
       type = e[:e]
       case type
       when :displaymath
-        if type != @last_blocktype.last
+        if !@last_blocktype.index(type)
           close_blocks( ns, block_level )
           ns.push( {:e => "#{type}_open".intern} )
           @last_blocktype.push(type)
         end
+
         e[:e] = :math_display
         ns.push( e )
       else
