@@ -1,4 +1,4 @@
-# $Id: util.rb,v 1.4 2003-02-23 02:20:08 hitoshi Exp $
+# $Id: util.rb,v 1.5 2003-02-26 03:00:08 hitoshi Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'nkf'
@@ -199,7 +199,7 @@ From: #{$mail}
 To: #{$mail}
 Subject: #{subject.to_jis}
 Date: #{Time.now.rfc2822}
-
+X-Mailer: "Hiki #{HIKI_VERSION}"
 -------------------------
 REMOTE_ADDR = #{ENV['REMOTE_ADDR']}
 REMOTE_HOST = #{ENV['REMOTE_HOST']}
