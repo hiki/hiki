@@ -1,3 +1,6 @@
+2004-09-28  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/hikifarm/index.cgi: $SAFE = 1 の追加 by 柳田
+
 2004-09-23  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/referer.rb: escapeHTML するように修正 thanks to みや
 	ざわ

@@ -5,6 +5,8 @@
 # Copyright (C) 2003, Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
 # You can distribute this under GPL.
 
+$SAFE = 1
+
 #--- Default Settings -----------------------------------------------
 ruby = '/usr/bin/env ruby'
 hiki = ''
