@@ -1,3 +1,6 @@
+2004-04-03  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/rss-show.rb (rss_show): $SAFE=1 向けの修正 by MACHIDA Hideki <h@matchy.net>
+
 2004-04-02  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
         * style/default/html_formatter.rb, messages/en.rb, messages/ja.rb: 存在しない\
 ページを作成するアンカー ? にtitle属性をつける by OZAWA Sakuro <crouton@ex-machina.jp>
