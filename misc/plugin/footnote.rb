@@ -1,4 +1,4 @@
-# footnote.rb $Revision: 1.5 $
+# footnote.rb $Revision: 1.6 $
 #
 # fn: 脚注plugin
 #   パラメタ:
@@ -50,25 +50,27 @@ def render( text )
 	formatter.to_s.gsub(/\A<p>/,'').gsub(/<\/p>\Z/,'')
 end
 
-add_body_enter_proc(Proc::new do |date|
-	date = date.strftime("%Y%m%d")
-	@footnote_name.replace "f%02d"
-	@footnote_url.replace "#{@index}#{anchor date}##{@footnote_name}"
-	@footnote_mark_name.replace "fm%02d"
-	@footnote_mark_url.replace "#{@index}#{anchor date}##{@footnote_mark_name}"
-	@footnotes.clear
-	@footnote_index[0] = 0
-	""
-end)
-
-add_body_leave_proc(Proc::new do |date|
-	if @footnote_name and @footnotes.size > 0
-		%Q|<div class="footnote">\n| +
-		@footnotes.collect do |fn|
-			%Q|  <p class="footnote"><a name="#{@footnote_name % fn[0]}" href="#{@footnote_mark_url % fn[0]}">#{fn[2]}#{fn[0]}</a>&nbsp;#{render(fn[1])}</p>|
-		end.join("\n") +
-		%Q|\n</div>\n|
-	else
+if @options['command'] == 'view'
+	add_body_enter_proc(Proc::new do |date|
+		date = date.strftime("%Y%m%d")
+		@footnote_name.replace "f%02d"
+		@footnote_url.replace "#{@index}#{anchor date}##{@footnote_name}"
+		@footnote_mark_name.replace "fm%02d"
+		@footnote_mark_url.replace "#{@index}#{anchor date}##{@footnote_mark_name}"
+		@footnotes.clear
+		@footnote_index[0] = 0
 		""
-	end
-end)
+	end)
+	
+	add_body_leave_proc(Proc::new do |date|
+		if @footnote_name and @footnotes.size > 0
+			%Q|<div class="footnote">\n| +
+			@footnotes.collect do |fn|
+				%Q|  <p class="footnote"><a name="#{@footnote_name % fn[0]}" href="#{@footnote_mark_url % fn[0]}">#{fn[2]}#{fn[0]}</a>&nbsp;#{render(fn[1])}</p>|
+			end.join("\n") +
+			%Q|\n</div>\n|
+		else
+			""
+		end
+	end)
+end

@@ -1,4 +1,4 @@
-# ajaxsearch.rb $Revision: 1.1 $
+# ajaxsearch.rb $Revision: 1.2 $
 # Copyright (C) 2005 Michitaka Ohno <elpeo@mars.dti.ne.jp>
 # 
 # This program is free software; you can redistribute it and/or
@@ -146,5 +146,5 @@ end
 TOPLEVEL_CLASS
 
 add_body_enter_proc do
-	add_plugin_command( 'search', nil ) 
+	add_plugin_command( 'search', nil )
 end

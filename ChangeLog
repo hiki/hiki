@@ -1,4 +1,7 @@
 2005-03-02  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/footnote.rb: view 時以外は add_*_proc を実行しないよ
+	うに修正
+
 	* misc/plugin/ajaxsearch.rb: 新プラグインの追加 by Michitaka Ohno
 
 	* hiki/plugin.rb (Plugin::add_plugin_command): display_text が偽の
