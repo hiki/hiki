@@ -1,4 +1,4 @@
-# $Id: storage.rb,v 1.7 2005-01-29 14:44:00 fdiary Exp $
+# $Id: storage.rb,v 1.8 2005-01-30 15:25:21 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'digest/md5'
@@ -32,6 +32,7 @@ module Hiki
       result = store(page, src, md5)
       
       if result
+	delete_cache( page )
         begin
           @plugin.update_proc
         rescue Exception
@@ -43,6 +44,7 @@ module Hiki
     def delete( page )
       text = load(page) || ''
       unlink(page)
+      delete_cache( page )
       begin
         send_updating_mail(page, 'delete', text) if @conf.mail_on_update
       rescue
@@ -84,6 +86,33 @@ module Hiki
       end
 
       [total, result]
+    end
+
+    def load_cache( page )
+      Dir.mkdir( @conf.cache_path ) unless test( ?e, @conf.cache_path )
+      cache_path = "#{@conf.cache_path}/parser"
+      Dir.mkdir( cache_path ) unless test( ?e, cache_path )
+      begin
+	return Marshal::load( File.read( "#{cache_path}/#{CGI::escape( page )}" ) )
+      rescue
+	return nil
+      end
+    end
+
+    def save_cache( page, tokens )
+      begin
+	File.open( "#{@conf.cache_path}/parser/#{CGI::escape( page )}", 'wb') do |f|
+	  Marshal::dump(tokens, f)
+	end
+      rescue
+      end
+    end
+
+    def delete_cache( page )
+      begin
+	File.unlink("#{@conf.cache_path}/parser/#{CGI::escape( page )}".untaint)
+      rescue Errno::ENOENT
+      end
     end
   end
 end

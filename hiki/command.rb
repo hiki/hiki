@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.29 2005-01-30 11:50:55 fdiary Exp $
+# $Id: command.rb,v 1.30 2005-01-30 15:25:21 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -130,18 +130,12 @@ module Hiki
         end
       end
 
-      prepare_cache_dir
-      cache_file = "#{@conf.cache_path}/parser/#{@p.escape}".untaint
-      begin
-	raise if File.mtime( cache_file ) < @db.get_last_update( @p )
-	tokens = Marshal::load( File.read( cache_file ) )
-      rescue
+      tokens = @db.load_cache( @p )
+      unless tokens
 	text = @db.load( @p )
 	parser = @conf.parser::new( @conf )
 	tokens = parser.parse( text )
-	File.open(cache_file, 'wb') do |f|
-	  Marshal::dump(tokens, f)
-	end
+	@db.save_cache( @p, tokens )
       end
       formatter = @conf.formatter::new( tokens, @db, @plugin, @conf )
       contents, toc = formatter.to_s, formatter.toc
@@ -361,12 +355,6 @@ module Hiki
         end  
       end
 
-      prepare_cache_dir
-      begin
-	File.unlink("#{@conf.cache_path}/parser/#{@p.escape}".untaint)
-      rescue Errno::ENOENT
-      end
-
       if text.size == 0 && pass_check
         data             = get_common_data( @db, @plugin, @conf )
         @plugin.hiki_menu(data, @cmd)
@@ -559,14 +547,6 @@ module Hiki
       if redirect_mode and result
         redirect(@cgi, @plugin.hiki_url(@p))
       end
-    end
-
-    private
-
-    def prepare_cache_dir
-      Dir.mkdir( @conf.cache_path ) unless test( ?e, @conf.cache_path )
-      cache_path = "#{@conf.cache_path}/parser"
-      Dir.mkdir( cache_path ) unless test( ?e, cache_path )
     end
   end
 end

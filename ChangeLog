@@ -1,7 +1,12 @@
-2005-01-30  Kazuhiko  <kazuhiko@fdiary.net>
-	* hiki/command.rb (cmd_view): キャッシュの更新時刻を確認するように
-	修正
+2005-01-31  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/storage.rb (load_cache, save_cache, delete_cache): パ−サ
+	キャッシュの処理を command.rb から移動
+	(save, delete): delete_cache を呼ぶように変更
 
+	* hiki/command.rb (cmd_view): 上記を使うように変更
+	(cmd_save): キャッシュの削除は上記で行うように変更
+
+2005-01-30  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/diffmail.rb: タイトル比較のエスケープを修正
 
 	* style/default/html_formatter.rb (apply_tdiary_theme): H2 がない場
