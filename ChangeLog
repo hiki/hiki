@@ -1,4 +1,6 @@
 2004-08-31  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/en/history.rb: 英語リソースを追加
+
 	* misc/hikifarm/hiki.conf: @repos_type の設定を追加
 	* misc/hikifarm/index.cgi: Wiki 数とページ数の合計を出力するように
 	変更、最終更新ページの差分へのリンクを追加、@repos.update を呼ばな
