@@ -1,6 +1,12 @@
+2005-02-15  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/history.rb (history_src): diff の出力を <pre> から
+	<div> に変更
+	(parse_history): require 'time' の追加
+
 2005-02-14  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/command.rb (cmd_edit, cmd_diff), template/diff.html,
-	template/edit.html: diff 表示を <pre> から <div> に変更
+	template/edit.html, misc/plugin/rss.rb: diff の出力を <pre> から
+	<div> に変更
 
 	* hiki/pluginutil.rb (Hiki::Util::methodwords): パースの修正 by
 	Masao Mutoh

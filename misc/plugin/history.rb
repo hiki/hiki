@@ -3,7 +3,7 @@
 == plugin/history.rb - CVS の編集履歴を表示するプラグイン
 
   Copyright (C) 2003 Hajime BABA <baba.hajime@nifty.com>
-  $Id: history.rb,v 1.18 2005-02-08 20:14:13 fdiary Exp $
+  $Id: history.rb,v 1.19 2005-02-15 05:17:21 fdiary Exp $
   You can redistribute and/or modify this file under the terms of the LGPL.
 
   Copyright (C) 2003 Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
@@ -175,6 +175,7 @@ module Hiki
     end
 
     def parse_history(cmdlog)
+      require 'time'
       revs = []
       diffrevs = []
       case history_repos_type
@@ -323,9 +324,9 @@ module Hiki
       sources << "<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{@p.escape};r=#{r.escapeHTML}")}\">#{history_diffto_current_label.escapeHTML}</a><br>\n"
       sources << "<a href=\"#{@conf.cgi_name}#{cmdstr('history', "p=#{@p.escape}")}\">#{history_backto_summary_label.escapeHTML}</a><br>\n"
       sources << "</div>\n"
-      sources << "<pre class=\"diff\">\n"
-      sources << cmdlog.escapeHTML
-      sources << "</pre>\n"
+      sources << "<div class=\"diff\">\n"
+      sources << cmdlog.escapeHTML.gsub(/\n/, '<br>')
+      sources << "</div>\n"
 
       history_output(sources)
     end
