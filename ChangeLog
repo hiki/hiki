@@ -1,3 +1,9 @@
+2005-03-15  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
+	* misc/plugin/00default.rb, misc/plugin/*/00default.rb: パスワード変更時、
+	パスワード間違っている場合にエラーメッセージを表示するように修正 thanks to Kouhei Yanagita
+	* misc/plugin/keyword.rb: <h2> から <h3>へ変更
+	* misc/plugin/referer.rb: ファイル名をuntaintするように修正 by NOB
+
 2005-03-14  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/attach/attach.cgi: ファイル名を保存時にエスケープする
 	ように修正 by Yazawa

@@ -1,4 +1,4 @@
-# $Id: keyword.rb,v 1.2 2004-02-15 02:48:35 hitoshi Exp $
+# $Id: keyword.rb,v 1.3 2005-03-15 07:43:25 hitoshi Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 def keyword_list(*key)
@@ -8,7 +8,7 @@ def keyword_list(*key)
   list.each do |j|
     category = j[0]
     p = j[1]
-    s << "<h2>#{view_title(category)}</h2>\n"
+    s << "<h3>#{view_title(category)}</h3>\n"
     s << "<ul>\n"
     # sort by page name
     p.collect! { |i| i.to_a.flatten! }.sort! do |p1, p2|

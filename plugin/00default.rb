@@ -1,4 +1,4 @@
-# $Id: 00default.rb,v 1.20 2005-03-05 15:24:29 hitoshi Exp $
+# $Id: 00default.rb,v 1.21 2005-03-15 07:43:26 hitoshi Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #==============================
@@ -202,16 +202,16 @@ def saveconf_password
     old_password    = @cgi.params['old_password'][0]
     password1       = @cgi.params['password1'][0]
     password2       = @cgi.params['password2'][0]
-    if password1.size > 0
+    if password1 and password1.size > 0
       if (@conf.password.size > 0 && old_password.crypt( @conf.password ) != @conf.password) ||
 	  (password1 != password2)
-	admin_config( nil, @conf.msg_invalid_password )
-	return
+         return false
       end
       salt = [rand(64),rand(64)].pack("C*").tr("\x00-\x3f","A-Za-z0-9./")
       @conf.password = password1.crypt( salt )
     end
   end
+  return true
 end
 
 # conf: display

@@ -23,7 +23,7 @@ add_conf_proc( 'default', 'Preferenze base' ) do
 end
 
 add_conf_proc( 'password', 'Password' ) do
-  saveconf_password
+  if saveconf_password
   <<-HTML
       <h3 class="password">Password</h3>
       <p>Inserisci le password sotto quando vuoi cambiare solamente la password.</p>
@@ -31,6 +31,12 @@ add_conf_proc( 'password', 'Password' ) do
       <p>Password nuova: <input type="password" name="password1" size="40"></p>
       <p>Password nuova(conferma): <input type="password" name="password2" size="40"></p>
   HTML
+  else
+  <<-HTML
+      <h3 class="password">Password</h3>
+      <p>Sorry, wrong password.</p>
+  HTML
+  end
 end
 
 add_conf_proc( 'theme', 'Aspetto' ) do

@@ -23,7 +23,7 @@ add_conf_proc( 'default', '基本' ) do
 end
 
 add_conf_proc( 'password', 'パスワード' ) do
-  saveconf_password
+  if saveconf_password
   <<-HTML
       <h3 class="password">パスワード</h3>
       <p>管理者用パスワードを変更したい場合のみ入力してください。</p>
@@ -31,6 +31,12 @@ add_conf_proc( 'password', 'パスワード' ) do
       <p>新しいパスワード: <input type="password" name="password1" size="40"></p>
       <p>新しいパスワード（確認用に再入力してください）: <input type="password" name="password2" size="40"></p>
   HTML
+  else
+  <<-HTML
+      <h3 class="password">パスワード</h3>
+      <p>管理者用パスワードが間違っているか、パスワードが一致しません。</p>
+  HTML
+  end
 end
 
 add_conf_proc( 'theme', '表示設定' ) do

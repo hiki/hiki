@@ -23,13 +23,18 @@ add_conf_proc( 'default', 'Préférences de base' ) do
 end
 
 add_conf_proc( 'password', 'Mot de passe' ) do
-  saveconf_password
+  if saveconf_password
   <<-HTML
       <h3 class="password">Mot de passe</h3>
       <p>Entrez le mots de passe ci-dessous seulement si vous désirez le changer.</p>
       <p>Mot de passe courant: <input type="password" name="old_password" size="40"></p>
       <p>Nouveau mot de passe: <input type="password" name="password1" size="40"></p>
       <p>Nouveau mot de passe (confirmez): <input type="password" name="password2" size="40"></p>
+  HTML
+  else
+  <<-HTML
+      <h3 class="password">Mot de passe</h3>
+      <p>Sorry, wrong password.</p>
   HTML
 end
 

@@ -1,4 +1,4 @@
-# $Id: referer.rb,v 1.7 2005-03-03 15:53:55 fdiary Exp $
+# $Id: referer.rb,v 1.8 2005-03-15 07:43:25 hitoshi Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/db/ptstore'
@@ -70,7 +70,7 @@ def referer_map
 
   Dir.entries(path).sort {|a, b| a.unescape <=> b.unescape}.each do |f|
     next if /(?:^\.)|(?:~$)/ =~ f
-    next unless @db.exist?(f.unescape)
+    next unless @db.exist?(f.untaint.unescape)
     db = PTStore::new("#{path}/#{f}")
     p = File.basename(f)
     s << "<li>#{hiki_anchor(p, page_name(p.unescape))}\n"
