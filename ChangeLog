@@ -1,0 +1,13 @@
+26 Feb 2003 12:48:14 +0900	TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+
+  * 0.4.1
+  * ライセンスをRuby'sからGPL2に変更
+  * WikiNameの解釈を変更
+  * doc/配下のドキュメントをHTMLからWiki形式に変更
+  * HTML 4.01 Transitional Validにした（少なくともTextFormattingRulesは）
+  * メール送信時にX-Mailerを出力するように変更
+  * 編集でテキストを読み込む際のescape漏れ修正
+  * 編集画面のtextareaの属性変更(wrap削除、accesskey追加)
+  * 引用のレンダリング不正を修正
+  * URLで使用できる文字として#を追加(RFC的には…)
+  * ドキュメントのtype修正
