@@ -1,10 +1,10 @@
 #!/usr/bin/env ruby
-# $Id: hiki.cgi,v 1.13 2004-03-04 06:15:19 hitoshi Exp $
+# $Id: hiki.cgi,v 1.14 2004-03-06 01:02:06 hitoshi Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 BEGIN { $defout.binmode }
 
-$SAFE     = 0
+$SAFE     = 1
 $KCODE    = 'e'
 
 $path  = File::dirname(__FILE__)

@@ -1,4 +1,4 @@
-# amazon.rb $Revision: 1.2 $
+# amazon.rb $Revision: 1.3 $
 #
 # isbn_image_left: 指定したISBNの書影をclass="left"で表示
 #   パラメタ:
@@ -74,7 +74,7 @@ def getAmazon( asin )
 
 	Dir::mkdir( cache ) unless File::directory?( cache )
 	begin
-		item = File::readlines( "#{cache}/#{asin}" )
+		item = File::readlines( "#{cache}/#{asin}".untaint )
 		raise if item.length < 2
 
 		return item
@@ -154,7 +154,6 @@ end
 
 def getAmazonImg(position,asin,comment)
 	begin
-
 		item = getAmazon(asin)
 		item[0].sub!( %r|[^/]+$|, @options['amazon.aid'] ) if @options['amazon.aid']
 
@@ -187,6 +186,7 @@ end
 alias isbn_image_right isbnImgRight
 
 def isbnImg(asin,comment = nil)
+	return "invalid asin: '#{asin}'" unless /\A[a-zA-Z\d]+\Z/ =~ asin
 	getAmazonImg("amazon",asin,comment)
 end
 alias isbn_image isbnImg

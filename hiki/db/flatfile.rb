@@ -1,4 +1,4 @@
-# $Id: flatfile.rb,v 1.4 2004-02-15 02:48:35 hitoshi Exp $
+# $Id: flatfile.rb,v 1.5 2004-03-06 01:02:07 hitoshi Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'ftools'
@@ -70,7 +70,7 @@ module Hiki
     end
 
     def pages
-      Dir.glob( "#{$pages_path}/*" ).delete_if {|f| !test(?f, f)}.collect! {|f|
+      Dir.glob( "#{$pages_path}/*" ).delete_if {|f| !test(?f, f.untaint)}.collect! {|f|
         File::basename( f ).unescape
       }
     end

@@ -1,4 +1,4 @@
-# $Id: attach.rb,v 1.2 2004-02-15 02:48:35 hitoshi Exp $
+# $Id: attach.rb,v 1.3 2004-03-06 01:02:08 hitoshi Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 #
 # thanks to Kazuhiko, Masao Mutoh, SHIMADA Mitsunobu, Yoshimi, ¤ê¤¿
@@ -173,7 +173,7 @@ def attach_all_files
 
   Dir.foreach("#{@cache_path}/attach/") do |dir|
     next if /^\./ =~ dir
-    attach_files[File.basename(dir)] = Dir.glob("#{@cache_path}/attach/#{dir}/*").collect do |f|
+    attach_files[File.basename(dir)] = Dir.glob("#{@cache_path}/attach/#{dir.untaint}/*").collect do |f|
       File.basename(f).unescape
     end
   end

@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.8 2004-03-01 09:50:45 hitoshi Exp $
+# $Id: command.rb,v 1.9 2004-03-06 01:02:07 hitoshi Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'amrita/template'
@@ -96,7 +96,7 @@ module Hiki
     end
 
     def themes
-      Dir::glob("#{$theme_path }/*/*.css").sort.collect {|t| File::basename(t, '.css')}
+      Dir::glob("#{$theme_path }/*/*.css".untaint).sort.collect {|t| File::basename(t, '.css')}
     end
 
     def generate_page( data )
@@ -539,7 +539,7 @@ module Hiki
     def load_plugin( plugin )
       ["#{$plugin_path}/*.rb", "#{$plugin_path}/#{$lang}/*.rb"].each do |d|
         Dir::glob( d ).sort.each do |f|
-          next unless test(?f, f)
+          next unless test(?f, f.untaint)
 
           plugin.load(f.untaint)
         end
