@@ -1,4 +1,4 @@
-# $Id: flatfile.rb,v 1.5 2004-03-06 01:02:07 hitoshi Exp $
+# $Id: flatfile.rb,v 1.6 2004-04-18 07:22:50 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'ftools'
@@ -24,7 +24,7 @@ module Hiki
       create_info_default( page ) unless info_exist?( page )
 
       File::open( filename, "w" ) do |f|
-        f.write( text )
+        f.write( text.gsub(/\r\n/, "\n") )
       end
       set_last_update( page, Time::now )
       true

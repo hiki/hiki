@@ -1,4 +1,4 @@
-# $Id: attach.rb,v 1.5 2004-03-17 16:02:44 fdiary Exp $
+# $Id: attach.rb,v 1.6 2004-04-18 07:22:51 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 #
 # thanks to Kazuhiko, Masao Mutoh, SHIMADA Mitsunobu, Yoshimi, ¤ê¤¿
@@ -132,6 +132,7 @@ def attach_download
   mime_type   = mime_types[extname]
 
   print "Content-Type: #{mime_type}\n"
+  print "Last-Modified: #{CGI::rfc1123_date(File.mtime(attach_file))}\n"
   print %Q!Content-Disposition: filename="#{file_name.to_sjis}"\n\n!
   print open(attach_file.untaint, "rb").read
   nil

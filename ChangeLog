@@ -1,3 +1,8 @@
+2004-04-18  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/db/flatfile.rb: プラグインからのフォーム入力中の改行正規化 
+	by さく <http://hiki.ex-machina.jp/crouton/?2004-03-29>
+	* attach.rb: Last-Modified の出力 by matsui
+
 2004-04-07  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/history.rb: $SAFE=1 向けの修正 by Kouhei Sutou <kou@cozmixng.org>
 	* misc/plugin/cvs.rb: $SAFE=1 向けの修正
