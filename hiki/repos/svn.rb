@@ -1,4 +1,4 @@
-# $Id: svn.rb,v 1.1 2004-12-14 11:11:20 koma2 Exp $
+# $Id: svn.rb,v 1.2 2005-01-21 13:50:21 fdiary Exp $
 # Copyright (C) 2003, Koichiro Ohba <koichiro@meadowy.org>
 # Copyright (C) 2003, Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
 # You can distribute this under GPL.
@@ -28,7 +28,7 @@ module Hiki
 	begin
 	   Dir.chdir( "#{@data_path}/#{wiki}/text" )
 	   system( "svnadmin create #{@root}/#{wiki} > /dev/null 2>&1" )
-	   system( "svn import -m 'Starting #{wiki}' . file://#{@root}/#{wiki}/trunk > /dev/null 2>&1" )
+	   system( "svn import -m 'Starting #{wiki} from #{ENV['REMOTE_ADDR']} - #{ENV['REMOTE_HOST']}' . file://#{@root}/#{wiki}/trunk > /dev/null 2>&1".untaint )
 	   Dir.chdir( '..' )
 	   rmdir( 'text' )
 	   system( "svn checkout file://#{@root}/#{wiki}/trunk text > /dev/null 2>&1" )

@@ -1,3 +1,7 @@
+2005-01-21  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/repos/cvs.rb, hiki/repos/svn.rb: 開設者の IP アドレスをイン
+	ポート時のコミットログに記すように変更
+
 2005-01-14  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/rss.rb (rss_body): <language> を <dc:language> に、
 	<copyright> を <dc:rights> に変更 by Masahiro Sakai
