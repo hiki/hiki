@@ -1,4 +1,7 @@
 2004-09-23  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/referer.rb: escapeHTML するように修正 thanks to みや
+	ざわ
+
 	* misc/hikifarm/index.cgi: POST メソッドか判定するように修正
 
 2004-09-22  Kazuhiko  <kazuhiko@fdiary.net>

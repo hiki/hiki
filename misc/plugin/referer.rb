@@ -1,4 +1,4 @@
-# $Id: referer.rb,v 1.5 2004-08-06 06:54:59 fdiary Exp $
+# $Id: referer.rb,v 1.6 2004-09-23 07:42:04 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/db/ptstore'
@@ -46,7 +46,7 @@ def show_short_referer(db)
   referers(db).each_with_index do |ref, i|
     break if i == @options['referer_limit']
     disp = replace_url(ref[0].unescape).escapeHTML
-    s << make_anchor("#{ref[0]}", " #{ref[1]}").gsub(/<a\s+([^>]+)>/i) { %Q!<a #{$1} title="#{disp}">! }
+    s << make_anchor("#{ref[0].escapeHTML}", " #{ref[1]}").gsub(/<a\s+([^>]+)>/i) { %Q!<a #{$1} title="#{disp}">! }
     s << ' |'
   end
   
@@ -59,7 +59,7 @@ def show_referer(db)
   referers(db).each_with_index do |ref, i|
     break if i == @options['referer_limit']
     disp = replace_url(ref[0].unescape).escapeHTML
-    s << %!<li>#{ref[1]} ! + make_anchor("#{ref[0]}", "#{disp}")
+    s << %!<li>#{ref[1]} ! + make_anchor("#{ref[0].escapeHTML}", "#{disp}")
   end
   
   s << '</ul></div>'
@@ -86,7 +86,7 @@ def referer_map
     referers(db).each_with_index do |ref, i|
       break if i == @options['referer_limit']
       disp = replace_url(ref[0].unescape).escapeHTML
-      s << %!<li>#{ref[1]} ! + make_anchor("#{ref[0]}", "#{disp}")
+      s << %!<li>#{ref[1]} ! + make_anchor("#{ref[0].escapeHTML}", "#{disp}")
     end
     db.close_cache
     s << "</ul>\n"
