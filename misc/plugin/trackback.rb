@@ -1,4 +1,4 @@
-# $Id: trackback.rb,v 1.4 2004-09-13 13:53:11 fdiary Exp $
+# $Id: trackback.rb,v 1.5 2004-09-13 14:23:16 fdiary Exp $
 # Copyright (C) 2004 Kazuhiko <kazuhiko@fdiary.net>
 
 require 'uconv'
@@ -28,8 +28,8 @@ def trackback_post
   lines.each do |l|
     if /^\{\{trackback\}\}/ =~ l && flag == false
       content << "#{l}\n"
-      content << %Q!* trackback : [[#{title} (#{blog_name})|#{url}]]\n!
-      content << %Q!#{excerpt.split(/\n/).collect{|s| %Q|""#{s}\n|}}\n!
+      content << %Q!* trackback : [[#{title} (#{blog_name})|#{url}]] (#{format_date(Time::now)})\n!
+      content << %Q!#{shorten(excerpt).split(/\n/).collect{|s| %Q|""#{s}\n|}}\n!
       flag = true
     else
       content << l

@@ -1,4 +1,8 @@
 2004-09-13  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/util.rb (Hiki::Util::shorten): 追加
+	* misc/plugin/trackback.rb: TrackBack 受信時刻の表示を追加。長すぎ
+	る excerpt を shorten するように変更
+
 	* hiki/config.rb, hiki/util.rb: Hiki::Util::base_url から 
 	Hiki::Config::base_url に移動
 

@@ -1,4 +1,4 @@
-# $Id: util.rb,v 1.15 2004-09-13 13:53:11 fdiary Exp $
+# $Id: util.rb,v 1.16 2004-09-13 14:23:16 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'nkf'
@@ -200,6 +200,15 @@ EOS
 
     def set_conf(conf)
       @conf = conf
+    end
+
+    def shorten(str, len = 200)
+      arr = str.split(//)
+      if arr.length <= len - 2
+	str
+      else
+	arr[0...len-2].join('') + '..'
+      end
     end
   end
 end
