@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.13 2004-08-31 07:56:03 fdiary Exp $
+# $Id: command.rb,v 1.14 2004-08-31 08:04:04 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'amrita/template'
@@ -251,7 +251,7 @@ module Hiki
       formatter    = nil
 
       if @cmd == 'preview'
-        p = Hiki::Parser::new( @conf ).parse( text.gsub(/\r\n/, "\n") )
+        p = eval( @conf.parser )::new( @conf ).parse( text.gsub(/\r\n/, "\n") )
         formatter = eval( @conf.formatter ).new( p, @db, @plugin, @conf )
         preview_text = formatter.to_s
         save_button = ''
