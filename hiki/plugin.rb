@@ -1,4 +1,4 @@
-# $Id: plugin.rb,v 1.8 2005-01-30 07:34:36 fdiary Exp $
+# $Id: plugin.rb,v 1.9 2005-01-31 01:39:36 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
@@ -51,6 +51,7 @@ module Hiki
       plugin_file = ''
       begin
 	Dir::glob( "#{plugin_path}/*.rb" ).sort.each do |file|
+          plugin_file = file
 	  load_plugin( file )
 	  @plugin_files << file
 	end

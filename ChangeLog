@@ -1,4 +1,7 @@
 2005-01-31  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/plugin.rb (initialize): 例外時にプラグインのファイル名が表示
+	されるように修正 by U.Nakamura
+
 	* hiki/storage.rb (load_cache, save_cache, delete_cache): パ−サ
 	キャッシュの処理を command.rb から移動
 	(save, delete): delete_cache を呼ぶように変更
