@@ -1,4 +1,4 @@
-# $Id: flatfile.rb,v 1.9 2004-09-09 08:45:40 fdiary Exp $
+# $Id: flatfile.rb,v 1.10 2004-12-17 17:48:04 koma2 Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'ftools'
@@ -9,10 +9,16 @@ require 'hiki/util'
 
 module Hiki
   class HikiDB < HikiDBBase
+    attr_reader :pages_path
+
     def initialize( conf )
       @conf = conf
-      create_infodb unless test(?e, @conf.info_db)
-      @info = PTStore::new( @conf.info_db )
+      @pages_path = File::join(@conf.data_path, "text")
+      @backup_path = File::join(@conf.data_path, "backup")
+      @info_db = File::join(@conf.data_path, "info.db")
+      create_missing_dirs
+      create_infodb unless test(?e, @info_db)
+      @info = PTStore::new( @info_db )
     end
     
     def close_db
@@ -76,7 +82,7 @@ module Hiki
     end
 
     def pages
-      Dir.glob( "#{@conf.pages_path}/*" ).delete_if {|f| !test(?f, f.untaint)}.collect! {|f|
+      Dir.glob( "#{@pages_path}/*" ).delete_if {|f| !test(?f, f.untaint)}.collect! {|f|
         File::basename( f ).unescape
       }
     end
@@ -84,17 +90,6 @@ module Hiki
     # ==============
     #   info DB
     # ==============
-    def create_infodb
-      @info = PTStore::new( @conf.info_db )
-      @info.transaction do
-        pages.each do |a|
-          r = default
-          r[:last_modified] = File::mtime( "#{@conf.pages_path}/#{a.escape}".untaint )
-          @info[a.escape]  = r
-        end
-      end
-    end
-    
     def info_exist? ( p )
       f = p.escape
       @info.transaction(true) do
@@ -103,7 +98,7 @@ module Hiki
     end
     
     def infodb_exist?
-      test( ?e, @conf.info_db )
+      test( ?e, @info_db )
     end
 
     def info( p )
@@ -192,6 +187,12 @@ module Hiki
     end
 
   private
+    def create_missing_dirs
+      [@pages_path, @backup_path].each {|d|
+	Dir.mkdir d unless FileTest::exists?(d)
+      }
+    end
+
     def delete_info(p)
       f = p.escape
       begin
@@ -199,6 +200,17 @@ module Hiki
           @info.delete(f)
         end
       rescue
+      end
+    end
+    
+    def create_infodb
+      @info = PTStore::new( @info_db )
+      @info.transaction do
+        pages.each do |a|
+          r = default
+          r[:last_modified] = File::mtime( "#{@pages_path}/#{a.escape}".untaint )
+          @info[a.escape]  = r
+        end
       end
     end
     
@@ -220,11 +232,11 @@ module Hiki
     end
 
     def textdir(s)
-      ( @conf.pages_path + '/' + s.escape ).untaint
+      File::join(@pages_path, s.escape).untaint
     end
 
     def backupdir(s)
-     ( @conf.backup_path  + '/' + s.escape ).untaint
+      File::join(@backup_path, s.escape).untaint
     end
   end
 end

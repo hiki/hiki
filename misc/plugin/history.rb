@@ -3,7 +3,7 @@
 == plugin/history.rb - CVS の編集履歴を表示するプラグイン
 
   Copyright (C) 2003 Hajime BABA <baba.hajime@nifty.com>
-  $Id: history.rb,v 1.13 2004-12-14 16:12:33 fdiary Exp $
+  $Id: history.rb,v 1.14 2004-12-17 17:48:04 koma2 Exp $
   You can redistribute and/or modify this file under the terms of the LGPL.
 
   Copyright (C) 2003 Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
@@ -125,7 +125,7 @@ module Hiki
       cmdlog = ''
       oldpwd = Dir.pwd.untaint
       begin
-	Dir.chdir( "#{@conf.pages_path}" )
+	Dir.chdir( "#{@db.pages_path}" )
 	# うーん... まあとりあえず。
 	cmdlog = `#{cmd_string.untaint}`
       ensure

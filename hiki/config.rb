@@ -1,4 +1,4 @@
-# $Id: config.rb,v 1.16 2004-12-14 16:12:32 fdiary Exp $
+# $Id: config.rb,v 1.17 2004-12-17 17:48:03 koma2 Exp $
 # Copyright (C) 2004 Kazuhiko <kazuhiko@fdiary.net>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
@@ -155,11 +155,6 @@ module Hiki
       @interwiki_name  = 'InterWikiName' 
       @aliaswiki_name  = 'AliasWikiName' 
       @formatting_rule = 'TextFormattingRules'
-
-      # 'flat file database'
-      @pages_path      = "#{@data_path}/text"
-      @backup_path     = "#{@data_path}/backup"
-      @info_db         = "#{@data_path}/info.db"
 
       @template        = {'view'    => 'view.html',
                           'index'   => 'list.html',
