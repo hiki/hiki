@@ -1,8 +1,7 @@
-# $Id: flatfile.rb,v 1.11 2005-01-04 08:43:22 fdiary Exp $
+# $Id: flatfile.rb,v 1.12 2005-01-29 14:44:01 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
-require 'ftools'
-require 'time'
+require 'fileutils'
 require 'hiki/db/ptstore'
 require 'hiki/storage'
 require 'hiki/util'
@@ -31,7 +30,7 @@ module Hiki
 
       if exist?( page )
         return nil if md5 != md5hex( page )
-        File::copy( filename, backupdir( page ) )
+        FileUtils.copy( filename, backupdir( page ) )
       end
       create_info_default( page ) unless info_exist?( page )
 
@@ -43,11 +42,10 @@ module Hiki
     end
 
     def unlink( page )
-      filename = textdir( page )
       if exist?( page )
         begin
           delete_info( page )
-          File::unlink( filename )
+          File::unlink( textdir( page ) )
         rescue
         end
       end
@@ -55,24 +53,20 @@ module Hiki
     
     def load( page )
       return nil unless exist?( page )
-      filename = textdir( page )
-      File::readlines( filename ).join
+      File::read( textdir( page ) )
     end
 
     def load_backup( page )
       return nil unless backup_exist?( page )
-      filename = backupdir( page )
-      File::readlines( filename ).join
+      File::read( backupdir( page ) )
     end
 
     def exist?( page )
-      filename = textdir( page )
-      test( ?e,  filename )
+      test( ?e,  textdir( page ) )
     end
 
     def backup_exist?( page )
-      filename = backupdir( page )
-      test( ?e,  filename )
+      test( ?e,  backupdir( page ) )
     end
 
     def pages

@@ -1,7 +1,7 @@
-# $Id: storage.rb,v 1.6 2005-01-28 04:35:29 fdiary Exp $
+# $Id: storage.rb,v 1.7 2005-01-29 14:44:00 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
-require 'md5'
+require 'digest/md5'
 require 'hiki/util'
 
 module Hiki
@@ -51,7 +51,7 @@ module Hiki
     
     def md5hex( page )
       s = load( page )
-      MD5.new( s || '' ).hexdigest
+      Digest::MD5::new( s || '' ).hexdigest
     end
 
     def search( w )
