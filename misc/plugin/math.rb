@@ -50,11 +50,10 @@ end
 
 def math_clear_cache
   cache_path = "#{@conf.cache_path}/math_latex".untaint
-  Dir.chdir(cache_path) do
+  Dir.glob("#{cache_path}/*") do |ent|
     require 'fileutils'
-    Dir.foreach('.') do |ent|
-      File.directory?(ent) and FileUtils.rm_rf(ent)
-    end
+    ent.untaint
+    FileUtils.rm_rf(ent) if File.directory?(ent)
   end
 end
 
@@ -70,8 +69,7 @@ def saveconf_math
       @conf['math.latex.convert'] = @cgi.params['math.latex.convert'][0]
     end
     math_init
-    if not @conf.secure and
-        @cgi.params['math.latex.cache_clear'][0] == 'true' then
+    if @cgi.params['math.latex.cache_clear'][0] == 'true' then
       math_clear_cache
     end
   end
@@ -90,13 +88,9 @@ add_conf_proc('math', 'math style') do
   <p><textarea name="math.latex.preamble" cols="60" rows="8">#{CGI::escapeHTML( @conf['math.latex.preamble'])}</textarea></p>
   <h3 class="subtitle">#{label_math_latex_log}</h3>
   <p><input type="checkbox" name="math.latex.log" value="true"#{@conf['math.latex.log'] ? ' checked="checked"' : ""}>#{label_math_latex_log_description}</p>
+  <h3 class="subtitle">#{label_math_latex_cache_clear}</h3>
+  <p><input type="checkbox" name="math.latex.cache_clear" value="true">#{label_math_latex_cache_clear_description}</p>
   HTML
-  unless @conf.secure then
-    str += <<-HTML
-    <h3 class="subtitle">#{label_math_latex_cache_clear}</h3>
-    <p><input type="checkbox" name="math.latex.cache_clear" value="true">#{label_math_latex_cache_clear_description}</p>
-    HTML
-  end
 
   # NOTE that following items are disabled now because it is not
   # suitable for setting these through CGI.  If you want to configure
