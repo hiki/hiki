@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# $Id: attach.cgi,v 1.11 2004-12-14 05:34:57 fdiary Exp $
+# $Id: attach.cgi,v 1.12 2004-12-18 08:17:07 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 BEGIN { $defout.binmode }
@@ -7,7 +7,6 @@ BEGIN { $defout.binmode }
 $SAFE     = 1
 
 require 'cgi'
-require 'nkf'
 
 if FileTest::symlink?( __FILE__ ) then
   org_path = File::dirname( File::readlink( __FILE__ ) )
@@ -32,28 +31,34 @@ def attach_file
   command = 'view' unless ['view', 'edit'].index(command)
   r = ''
 
-  if cgi.params['attach'][0] then
-    raise unless params['p'][0] && params['attach_file'][0]
+  max_size = @conf.options['attach_size'] || 1048576
 
-    filename   = File.basename(params['attach_file'][0].original_filename.gsub(/\\/, '/'))
-    cache_path = "#{@conf.cache_path}/attach"
-
+  if cgi.params['attach'][0]
     begin
+      raise 'Invalid request.' unless params['p'][0] && params['attach_file'][0]
+
+      filename   = File.basename(params['attach_file'][0].original_filename.gsub(/\\/, '/'))
+      cache_path = "#{@conf.cache_path}/attach"
+
       Dir.mkdir(cache_path) unless test(?e, cache_path.untaint)
       attach_path = "#{cache_path}/#{page.escape}"
       Dir.mkdir(attach_path) unless test(?e, attach_path.untaint)
-      path = "#{attach_path}/#{CGI.escape(NKF.nkf('-e', filename))}"
-      open(path.untaint, "wb") do |f|
-        f.print params['attach_file'][0].read
+      path = "#{attach_path}/#{filename.to_euc}"
+      if params['attach_file'][0].size > max_size
+	raise "File size is larger than limit (#{max_size} bytes)."
       end
-      r << "FILE        = #{path}\n"
-      r << "SIZE        = #{File.size(path)} bytes\n"
-    rescue Exception
-      r << "#$! (#{$!.class})\n"
-      r << $@.join( "\n" )
-    ensure
-      send_updating_mail(page, 'attach', r) if @conf.mail_on_update
+      unless filename.empty?
+	open(path.untaint, "wb") do |f|
+	  f.print params['attach_file'][0].read
+	end
+	r << "FILE        = #{path}\n"
+	r << "SIZE        = #{File.size(path)} bytes\n"
+	send_updating_mail(page, 'attach', r) if @conf.mail_on_update
+      end
       redirect(cgi, "#{@conf.index_url}?c=#{command}&p=#{page.escape}")
+    rescue Exception => ex
+      print cgi.header( 'type' => 'text/plain' )
+      puts ex.message
     end
   elsif cgi.params['detach'][0] then
     attach_path = "#{@conf.cache_path}/attach/#{page.escape}"
@@ -68,12 +73,11 @@ def attach_file
         end
       end
       Dir::rmdir(attach_path) if Dir::entries(attach_path).size == 2
-    rescue Exception
-      r << "#$! (#{$!.class})\n"
-      r << $@.join( "\n" )
-    ensure
       send_updating_mail(page, 'detach', r) if @conf.mail_on_update
       redirect(cgi, "#{@conf.index_url}?c=#{command}&p=#{page.escape}")
+    rescue Exception => ex
+      print cgi.header( 'type' => 'text/plain' )
+      puts ex.message
     end
   end
 end

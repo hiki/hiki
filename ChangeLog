@@ -1,3 +1,8 @@
+2004-12-18  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/attach/attach.cgi: アップロードするファイルサイズの最
+	大値を @options['attach_size'] で指定できるように修正 (無指定時は
+	1MB)
+
 2004-12-18  KOMATSU Shinichiro  <koma2@ms.u-tokyo.ac.jp>
 	* hiki/db/flatfile.rb (Hiki::HikiDB), hiki/config.rb (Hiki::Config):
 	Hiki::Config の @pages_path, @backup_path, @info_db は
@@ -9,13 +14,11 @@
 	private メソッドに変更。
 	* hiki/db/flatfile.rb (Hiki::HikiDB::create_missing_dirs): 
 	追加(private)。@pages_path, @backup_path が存在しない時は作成する。
-	* hiki/db/flatfile.rb (Hiki::HikiDB::textdir, Hiki::HikiDB::backupdir): 
-	File::join を使用。
+	* hiki/db/flatfile.rb (Hiki::HikiDB::textdir,
+	Hiki::HikiDB::backupdir): File::join を使用。
 
 2004-12-18  Kazuhiko  <kazuhiko@fdiary.net>
-
 	* hiki/util.rb (Hiki::Util::diff): テキスト用の差分出力に対応
-
 	* style/default/html_formatter.rb, style/rd+/html_formatter.rb:
 	diff メソッドを Hiki::Util モジュールに移動
 
