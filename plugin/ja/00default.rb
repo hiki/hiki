@@ -14,7 +14,7 @@ add_conf_proc( 'default', '基本' ) do
       <p>あなたのメールアドレスを指定します。</p>
       <p><input name="mail" value="#{CGI::escapeHTML(@conf.mail)}" size="40"></p>
       <h3 class="subtitle">更新をメールで通知</h3>
-      <p>ページの更新があった場合にメールで通知するかどうかを指定します。メールは基本設定で指定したアドレスに送信されます。あらかじめconfig.rbでSMTPサーバを設定しておいてください。</p>
+      <p>ページの更新があった場合にメールで通知するかどうかを指定します。メールは基本設定で指定したアドレスに送信されます。あらかじめhikiconf.rbでSMTPサーバを設定しておいてください。</p>
       <p><select name="mail_on_update">
          <option value="true"#{@conf.mail_on_update ? ' selected' : ''}>メール で通知</option>
          <option value="false"#{@conf.mail_on_update ? '' : ' selected'}>非通知</option>

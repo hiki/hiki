@@ -14,7 +14,7 @@ add_conf_proc( 'default', 'Preferenze base' ) do
       <p>Imposta il tuo indirizzo email.</p>
       <p><input name="mail" value="#{CGI::escapeHTML(@conf.mail)}" size="40"></p>
       <h3 class="subtitle">Manda email per le modifiche.</h3>
-      <p>Se è ABILITATO, l'email di notifica è inviata all'"Indirizzo email" delle preferenze di base via SMTP server(che è impostato in config.rb) quando una pagina è aggiornata. Se è DISABILITATO, l'email viene inviata.</p>
+      <p>Se è ABILITATO, l'email di notifica è inviata all'"Indirizzo email" delle preferenze di base via SMTP server(che è impostato in hikiconf.rb) quando una pagina è aggiornata. Se è DISABILITATO, l'email viene inviata.</p>
       <p><select name="mail_on_update">
          <option value="true"#{@conf.mail_on_update ? ' selected' : ''}>ABILIATO</option>
          <option value="false"#{@conf.mail_on_update ? '' : ' selected'}>DISABILIATO</option>

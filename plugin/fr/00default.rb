@@ -14,7 +14,7 @@ add_conf_proc( 'default', 'Préférences de base' ) do
       <p>Entrez votre adresse e-mail.</p>
       <p><input name="mail" value="#{CGI::escapeHTML(@conf.mail)}" size="40"></p>
       <h3 class="subtitle">Notification par e-mail.</h3>
-      <p>Si cette option est activée, un e-mail de notification sera envoyé à votre adresse électronique via le serveur SMTP (définit dans config.rb) lorsqu'une page est modifiée.  Aucun e-mail ne sera envoyé si cette option est désactivée.</p>
+      <p>Si cette option est activée, un e-mail de notification sera envoyé à votre adresse électronique via le serveur SMTP (définit dans hikiconf.rb) lorsqu'une page est modifiée.  Aucun e-mail ne sera envoyé si cette option est désactivée.</p>
       <p><select name="mail_on_update">
          <option value="true"#{@conf.mail_on_update ? ' selected' : ''}>ON</option>
          <option value="false"#{@conf.mail_on_update ? '' : ' selected'}>OFF</option>

@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.36 2005-03-05 15:24:28 hitoshi Exp $
+# $Id: command.rb,v 1.37 2005-04-01 02:25:55 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -471,38 +471,12 @@ module Hiki
       data[:key]            = @cgi.params['conf'][0] || 'default'
 
       data[:title]          = title( @conf.msg_admin )
-      data[:session_id]     = session_id
-      data[:site_name]      = @conf.site_name || ''
-      data[:author_name]    = @conf.author_name || ''
-      data[:mail]           = @conf.mail || ''
-      data[:msg]            = msg
-      s = @conf.mail_on_update ? :mail_on_update : :no_mail
-      data[:mail_on_update] = @conf.msg_mail_on
-      data[:no_mail]        = @conf.msg_mail_off
-
-      s = @conf.use_sidebar ? :use_sidebar : :no_sidebar
-      data[:use_sidebar]    = @conf.msg_use
-      data[:no_sidebar]     = @conf.msg_unuse
-
-      s = @conf.auto_link ? :use_auto_link : :no_auto_link
-      data[:use_auto_link]  = @conf.msg_use
-      data[:no_auto_link]   = @conf.msg_unuse
-
-      data[:theme]          = themes.collect! do |t|
-                                if @conf.theme == t
-                                  [t, true]
-                                else
-                                  [t, false]
-                                end
-                              end
-      data[:theme_url]      = @conf.theme_url
-      data[:theme_path]     = @conf.theme_path
       data[:save_config]    = true if @cgi.params['saveconf'][0]
       generate_page( data )
     end
 
     def admin_enter_password
-      data           = get_common_data( @db, @plugin, @conf )
+      data = get_common_data( @db, @plugin, @conf )
       @plugin.hiki_menu(data, @cmd)
 
       data[:cmd]     = 'admin'

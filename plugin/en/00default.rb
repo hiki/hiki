@@ -17,7 +17,7 @@ add_conf_proc( 'default', 'Basic preferences' ) do
       <p>Enter your e-mail address.</p>
       <p><input name="mail" value="#{CGI::escapeHTML(@conf.mail)}" size="40"></p>
       <h3 class="subtitle">Send update e-mails?</h3>
-      <p>Set whether or not you want to have e-mail sent when a page is updated.  E-mail will be sent to the address set in the Basic Preferences.  (Make sure to specify an SMTP server beforehand in config.rb.)</p>
+      <p>Set whether or not you want to have e-mail sent when a page is updated.  E-mail will be sent to the address set in the Basic Preferences.  (Make sure to specify an SMTP server beforehand in hikiconf.rb.)</p>
       <p><select name="mail_on_update">
          <option value="true"#{@conf.mail_on_update ? ' selected' : ''}>Yes</option>
          <option value="false"#{@conf.mail_on_update ? '' : ' selected'}>No</option>
