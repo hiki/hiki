@@ -1,4 +1,4 @@
-# $Id: pluginutil.rb,v 1.3 2004-08-12 07:47:03 fdiary Exp $
+# $Id: pluginutil.rb,v 1.4 2005-02-14 07:28:28 fdiary Exp $
 #
 # apply_plugin(str):
 #  Eval the string as a plugin.
@@ -14,6 +14,10 @@ require 'cgi'
 
 module Hiki
   module Util
+    DIGIT_RE = /^[-+]?\d+(\.\d+)?$/
+    NIL_RE = /^\s*nil\s*$/
+    LSTRIP_RE = /\A\s+/
+
     module_function
     def apply_plugin(str, plugin, conf)
       return str unless conf.use_plugin
@@ -33,62 +37,85 @@ module Hiki
       end
     end
 
-    def argwords(args)
+    def convert_value(field, escape = false)
+      if DIGIT_RE =~ field
+        $1 ? field.to_f : field.to_i
+      elsif NIL_RE =~ field
+        nil
+      elsif field.size > 0
+        field = CGI.escapeHTML(field) if escape
+        field
+      else
+        :no_data
+      end
+    end
+
+    ARG_REG_A = /\A\[/
+    ARG_REG_B = /\A\]/
+    ARG_REG_C = /\A"(([^"\\]|\\.)*)"/
+    ARG_REG_D = /\\(.)/
+    ARG_REG_E = /\A"/
+    ARG_REG_F = /\A'([^']*)'/
+    ARG_REG_G = /\A'/
+    ARG_REG_H = /\A(\(|\)|,)/
+    ARG_REG_I = /\A\\(.)/
+    ARG_REG_J = /\A([^\s\\'"\(\),\]]+)/
+
+    def argwords(args, escape = false)
       args= String.new(args) rescue 
       raise(ArgumentError, "Argument must be a string")
       
-      args.sub!(/\A\s+/, '')
+      args.sub!(LSTRIP_RE, '')
       words = []
       is_ary = false
       until args.empty?
 	field = ''
 	loop do
-	  if args.sub!(/\A\[/, '') then
-	    child_words, args = argwords(args)
-	    words << child_words
-	    break
-	  elsif args.sub!(/\A\]/, '') then
-	    break
-	  elsif args.sub!(/\A"(([^"\\]|\\.)*)"/, '') then
-	    snippet = $1.gsub(/\\(.)/, '\1')
-	  elsif args =~ /\A"/ then
-	    raise ArgumentError, "Unmatched double quote: #{args}"
-	  elsif args.sub!(/\A'([^']*)'/, '') then
-	    snippet = $1
-	  elsif args =~ /\A'/ then
-	    raise ArgumentError, "Unmatched single quote: #{args}"
-	  elsif args.sub!(/\A(\(|\)|,)/, '') then
-	    snippet = nil
-	    break
-	  elsif args.sub!(/\A\\(.)/, '') then
-	    snippet = $1
-	  elsif args.sub!(/\A([^\s\\'"\(\),\]]+)/, '') then
-	    snippet = $1
-	  else
-	    args.sub!(/\A\s+/, '')
-	    break
-	  end
-	  field.concat(snippet) if snippet
-	end
-	if /^[-+]?\d+(\.\d+)?$/ =~ field
-	  words.push($1 ? field.to_f : field.to_i)
-	elsif field.size > 0
-	  field = CGI.escapeHTML(field)
-	  words.push(field)
-	end
+          if args.sub!(ARG_REG_A, '') then
+            child_words, args = argwords(args)
+            words << child_words
+          elsif args.sub!(ARG_REG_B, '') then
+            val = convert_value(field, escape)
+            words.push(val) unless val == :no_data
+            return [words, args]
+          elsif args.sub!(ARG_REG_C, '') then
+            snippet = $1.gsub(ARG_REG_D, '\1')
+          elsif args =~ ARG_REG_E then
+            raise ArgumentError, "Unmatched double quote: #{args}"
+          elsif args.sub!(ARG_REG_F, '') then
+            snippet = $1
+          elsif args =~ ARG_REG_G then
+            raise ArgumentError, "Unmatched single quote: #{args}"
+          elsif args.sub!(ARG_REG_H, '') then
+            snippet = nil
+            break
+          elsif args.sub!(ARG_REG_I, '') then
+            snippet = $1
+          elsif args.sub!(ARG_REG_J, '') then
+            snippet = $1
+          else
+	    args.sub!(LSTRIP_RE, '')
+            break
+          end
+          field.concat(snippet) if snippet
+        end
+	val = convert_value(field, escape)
+        words.push(val) unless val == :no_data
       end
       [words, args]
     end
+
+    METHOD_REG_A = /\A([^\s\\'"\(\)]+)/
 
     def methodwords(line)
       line = String.new(line) rescue 
       raise(ArgumentError, "Argument must be a string")
       
-      line.sub!(/\A\s+/, '')
+      line.sub!(LSTRIP_RE, '')
       words = []
       meth = ''
       while ! line.empty?
-	if line.sub!(/\A([^\s\\'"\(\)]+)/, '') then
+	if line.sub!(METHOD_REG_A, '') then
 	  meth.concat($1)
 	  words.push(meth)
 	else
@@ -110,4 +137,5 @@ kaki"])
   p Hiki::Util.methodwords(%Q[foo('ba"r', "a'iueo" )])
   p Hiki::Util.methodwords(%Q[foo File, ["h]oge", "f[uga"], "bar", [1, 2.0, 0.4]])
   p Hiki::Util.methodwords(%Q[foo [[0,1],[2,3]]])
+  p Hiki::Util.methodwords(%Q[foo nil, nil, "hoge"])
 end

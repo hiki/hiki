@@ -1,4 +1,4 @@
-# $Id: comment.rb,v 1.4 2004-08-06 15:31:57 fdiary Exp $
+# $Id: comment.rb,v 1.5 2005-02-14 07:28:28 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 # modified by yoshimi.
@@ -65,7 +65,7 @@ def comment_post
 
   content = ''
   lines.each do |l|
-    if /^\{\{comment.*\}\}/ =~ l && flag == false
+    if /^\{\{r?comment.*\}\}/ =~ l && flag == false
       if count == comment_no
         content << l if style == 1
         content << "*#{format_date(Time::now)} \'\'[[#{name}]]\'\' : #{msg}\n"
@@ -81,4 +81,8 @@ def comment_post
   end
   
   @db.save( @page, content, md5hex ) if flag
+end
+
+def rcomment(cols = 60)
+  comment(cols, 1)
 end

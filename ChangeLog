@@ -1,3 +1,10 @@
+2005-02-14  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/pluginutil.rb (Hiki::Util::methodwords): パースの修正 by
+	Masao Mutoh
+
+	* misc/plugin/comment.rb (rcomment): 逆順コメント用メソッド
+	'rcomment' の追加 by KADO Masanori
+
 2005-02-08  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/history.rb: リンクの追加 by Kouhei Sutou
 
