@@ -44,7 +44,7 @@ server.add_handler('wiki.putPage') do |page, content, attributes|
     options = @conf.options || Hash::new( '' )
     options['page'] = page
     options['cgi']  = @cgi
-    options['params'] = {}
+    options['params'] = Hash::new( [] )
     @plugin = Hiki::Plugin::new( options, @conf )
     @db.plugin = @plugin
 

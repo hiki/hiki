@@ -1,3 +1,7 @@
+2005-03-22  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/xmlrpc/xmlrpc.cgi: options['params'] の初期化のバグを修正
+	report by Yoshikazu TAKATA
+
 2005-03-20  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/interwiki.rb: utf8 に対応 report by Zeus
 
