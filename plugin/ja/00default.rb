@@ -16,8 +16,8 @@ add_conf_proc( 'default', '基本' ) do
       <h3 class="subtitle">更新をメールで通知</h3>
       <p>ページの更新があった場合にメールで通知するかどうかを指定します。メールは基本設定で指定したアドレスに送信されます。あらかじめconfig.rbでSMTPサーバを設定しておいてください。</p>
       <p><select name="mail_on_update">
-         <option value="true">メールで通知</option>
-         <option value="false">非通知</option>
+         <option value="true"#{@conf.mail_on_update ? ' selected' : ''}>メール で通知</option>
+         <option value="false"#{@conf.mail_on_update ? '' : ' selected'}>非通知</option>
          </select></p>
   HTML
 end
@@ -54,8 +54,8 @@ add_conf_proc( 'theme', '表示設定' ) do
       <h3 class="subtitle">サイドバーの利用</h3>
       <p>テーマによってはサイドバーを利用すると表示が乱れるものがあります。その場合、サイドバーの表示をオフにすることができます。</p>
       <p><select name="sidebar">
-         <option value="true">使用する</option>
-         <option value="false">使用しない</option>
+         <option value="true"#{@conf.use_sidebar ? ' selected' : ''}>使用する</option>
+         <option value="false"#{@conf.use_sidebar ? '' : ' selected'}>使用しない</option>
          </select></p>
       <h3 class="subtitle">メインエリアのクラス名(CSS)の指定</h3>
       <p>デフォルトでは本文部分のクラス名として'main'を使用しますが、それ以外のクラス名を使用したい場合に指定します。</p>
@@ -66,8 +66,8 @@ add_conf_proc( 'theme', '表示設定' ) do
       <h3 class="subtitle">オートリンクの利用</h3>
       <p>既存のページに自動的にリンクを設定するオートリンク機能を使用するかどうか指定します。</p>
       <p><select name="auto_link">
-         <option value="true">使用する</option>
-         <option value="false">使用しない</option>
+         <option value="true"#{@conf.auto_link ? ' selected' : ''}>使用する</option>
+         <option value="false"#{@conf.auto_link ? '' : ' selected'}>使用しない</option>
          </select></p>
   HTML
 end

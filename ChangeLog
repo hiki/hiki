@@ -1,4 +1,8 @@
 2005-01-31  Kazuhiko  <kazuhiko@fdiary.net>
+	* plugin/en/00default.rb, plugin/fr/00default.rb,
+	plugin/it/00default.rb, plugin/ja/00default.rb: プルダウンの設定項
+	目をあらかじめ選択するように修正 report by GOTO Naohisa
+
 	* hiki/command.rb (admin_config), hiki/page.rb (page): save_config
 	の呼び出し条件を確認するように修正
 

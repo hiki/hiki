@@ -16,8 +16,8 @@ add_conf_proc( 'default', 'Preferenze base' ) do
       <h3 class="subtitle">Manda email per le modifiche.</h3>
       <p>Se è ABILITATO, l'email di notifica è inviata all'"Indirizzo email" delle preferenze di base via SMTP server(che è impostato in config.rb) quando una pagina è aggiornata. Se è DISABILITATO, l'email viene inviata.</p>
       <p><select name="mail_on_update">
-         <option value="true">ABILITATO</option>
-         <option value="false">DISABILITATO</option>
+         <option value="true"#{@conf.mail_on_update ? ' selected' : ''}>ABILIATO</option>
+         <option value="false"#{@conf.mail_on_update ? '' : ' selected'}>DISABILIATO</option>
          </select></p>
   HTML
 end
@@ -54,8 +54,8 @@ add_conf_proc( 'theme', 'Aspetto' ) do
       <h3 class="subtitle">Barra laterale</h3>
       <p>ABILITATO se la barra laterale è mostrata. Se vuoi usare un tema che non supporta la barra laterale, devi selezionare DISABILITATO qui.</p>
       <p><select name="sidebar">
-         <option value="true">ABILITATO</option>
-         <option value="false">DISABILITATO</option>
+         <option value="true"#{@conf.use_sidebar ? ' selected' : ''}>ABILIATO</option>
+         <option value="false"#{@conf.use_sidebar ? '' : ' selected'}>DISABILIATO</option>
          </select></p>
       <h3 class="subtitle">Nome della classe nell'area principale(CSS)</h3>
       <p>Imposta il nome della classe CSS nell'area principale.</p>
@@ -66,8 +66,8 @@ add_conf_proc( 'theme', 'Aspetto' ) do
       <h3 class="subtitle">Collegamento automatico</h3>
       <p>Imposta ABILITATO se vuoi usare il collegamento automatico.</p>
       <p><select name="auto_link">
-         <option value="true">ABILITATO</option>
-         <option value="false">DISABILITATO</option>
+         <option value="true"#{@conf.auto_link ? ' selected' : ''}>ABILIATO</option>
+         <option value="false"#{@conf.auto_link ? '' : ' selected'}>DISABILIATO</option>
          </select></p>
   HTML
 end

@@ -19,8 +19,8 @@ add_conf_proc( 'default', 'Basic preferences' ) do
       <h3 class="subtitle">Send mail for changes.</h3>
       <p>If ON, notice-mail is sended to "e-mail address" of Basic preferences via SMTP server(which set in config.rb) when a page is updated. If OFF, e-mail isn't sended.</p>
       <p><select name="mail_on_update">
-         <option value="true">ON</option>
-         <option value="false">OFF</option>
+         <option value="true"#{@conf.mail_on_update ? ' selected' : ''}>ON</option>
+         <option value="false"#{@conf.mail_on_update ? '' : ' selected'}>OFF</option>
          </select></p>
   HTML
 end
@@ -57,8 +57,8 @@ add_conf_proc( 'theme', 'Appearance' ) do
       <h3 class="subtitle">Sidebar</h3>
       <p>ON if Sidebar is shown. If you want to use a theme which doesn't support Sidebar, you need to select OFF here.</p>
       <p><select name="sidebar">
-         <option value="true">ON</option>
-         <option value="false">OFF</option>
+         <option value="true"#{@conf.use_sidebar ? ' selected' : ''}>ON</option>
+         <option value="false"#{@conf.use_sidebar ? '' : ' selected'}>OFF</option>
          </select></p>
       <h3 class="subtitle">Class name of the main area (CSS)</h3>
       <p>Enter the class name of the main area (default: 'main').</p>
@@ -69,8 +69,8 @@ add_conf_proc( 'theme', 'Appearance' ) do
       <h3 class="subtitle">Auto link</h3>
       <p>If you want to use the auto link function, select 'On' here.</p>
       <p><select name="auto_link">
-         <option value="true">ON</option>
-         <option value="false">OFF</option>
+         <option value="true"#{@conf.auto_link ? ' selected' : ''}>ON</option>
+         <option value="false"#{@conf.auto_link ? '' : ' selected'}>OFF</option>
          </select></p>
   HTML
 end

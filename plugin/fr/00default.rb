@@ -16,8 +16,8 @@ add_conf_proc( 'default', 'Préférences de base' ) do
       <h3 class="subtitle">Notification par e-mail.</h3>
       <p>Si cette option est activée, un e-mail de notification sera envoyé à votre adresse électronique via le serveur SMTP (définit dans config.rb) lorsqu'une page est modifiée.  Aucun e-mail ne sera envoyé si cette option est désactivée.</p>
       <p><select name="mail_on_update">
-         <option value="true">ON</option>
-         <option value="false">OFF</option>
+         <option value="true"#{@conf.mail_on_update ? ' selected' : ''}>ON</option>
+         <option value="false"#{@conf.mail_on_update ? '' : ' selected'}>OFF</option>
          </select></p>
   HTML
 end
@@ -54,8 +54,8 @@ add_conf_proc( 'theme', 'Apparence' ) do
       <h3 class="subtitle">Barre contextuelle</h3>
       <p>ON et la barre contextuelle sera affichée.  Si vous voulez utiliser un thème qui ne gère pas de barre contextuelle, vous devez sélectionner OFF.</p>
       <p><select name="sidebar">
-         <option value="true">ON</option>
-         <option value="false">OFF</option>
+         <option value="true"#{@conf.use_sidebar ? ' selected' : ''}>ON</option>
+         <option value="false"#{@conf.use_sidebar ? '' : ' selected'}>OFF</option>
          </select></p>
       <h3 class="subtitle">Nom de la classe dans la section principale (CSS)</h3>
       <p>Entrez le nom CSS de la classe dans la section principale.</p>
@@ -66,8 +66,8 @@ add_conf_proc( 'theme', 'Apparence' ) do
       <h3 class="subtitle">Liens automatiques</h3>
       <p>Choisissez ON si vous désirez activer les liens automatiques.</p>
       <p><select name="auto_link">
-         <option value="true">ON</option>
-         <option value="false">OFF</option>
+         <option value="true"#{@conf.auto_link ? ' selected' : ''}>ON</option>
+         <option value="false"#{@conf.auto_link ? '' : ' selected'}>OFF</option>
          </select></p>
   HTML
 end
