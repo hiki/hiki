@@ -1,7 +1,8 @@
 #!/usr/bin/env ruby
-
-# $Id: attach.cgi,v 1.7 2004-09-22 14:33:10 fdiary Exp $
+# $Id: attach.cgi,v 1.8 2004-09-22 14:46:05 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+
+BEGIN { $defout.binmode }
 
 require 'cgi'
 require 'nkf'

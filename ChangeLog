@@ -1,5 +1,6 @@
 2004-09-22  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/attach/attach.cgi: ページ名の escape しすぎを修正
+	$defout.binmode の追加
 
 2004-09-14  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/attach/attach.rb (attach_src):
