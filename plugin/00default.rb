@@ -1,4 +1,4 @@
-# $Id: 00default.rb,v 1.9 2004-06-27 01:52:42 fdiary Exp $
+# $Id: 00default.rb,v 1.10 2004-06-27 08:55:28 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #==============================
@@ -107,8 +107,8 @@ def hiki_header
   <meta http-equiv="Content-Type" content="text/html; charset=#{@conf.charset}">
   <meta name="generator" content="#{@conf.generator}">
   <title>#{title.escapeHTML}</title>
-  <link rel="stylesheet" type="text/css" href="#{base_css_url.escape}" media="all">
-  <link rel="stylesheet" type="text/css" href="#{theme_url.escape}" media="all">
+  <link rel="stylesheet" type="text/css" href="#{base_css_url.escapeHTML}" media="all">
+  <link rel="stylesheet" type="text/css" href="#{theme_url.escapeHTML}" media="all">
 EOS
   s << <<EOS if @command != 'view'
   <meta name="ROBOTS" content="NOINDEX,NOFOLLOW"> 

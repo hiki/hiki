@@ -1,3 +1,6 @@
+2004-06-27  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/config.rb (load_cgi_conf): $SAFE=4 で評価するように変更
+
 2004-06-26  Kazuhiko  <kazuhiko@fdiary.net>
 	* template/en/edit.html, template/fr/edit.html, it/edit.html,
 	template/ja/edit.html: 書き方へのリンクを修正
@@ -9,9 +12,9 @@
 	* attach.rb (attach_form): page を escapeHTML するように修正し、出
 	力される HTML を修正
 	* misc/plugin/local_css.rb (about_local_css): theme_url と 
-	local_theme_url をescape するように修正
+	local_theme_url をescapeHTML するように修正
 	* plugin/00default.rb (hiki_header): base_css と theme_url を 
-	escape するように修正
+	escapeHTML するように修正
 	* hiki/storage.rb (search): 検索結果を escapeHTML するように修正
 	* hiki/command.rb (cmd_edit): pagename を escapeHTML するように修
 	正
