@@ -111,7 +111,7 @@
 	* attach.rb: Last-Modified の出力 by matsui
 
 2004-04-07  Kazuhiko  <kazuhiko@fdiary.net>
-	* misc/plugin/history.rb: $SAFE=1 向けの修正 by Kouhei Sutou <kou@cozmixng.org>
+	* misc/plugin/history.rb: $SAFE=1 向けの修正 by Kouhei Sutou
 	* misc/plugin/cvs.rb: $SAFE=1 向けの修正
 	* misc/plugin/svn.rb: $SAFE=1 向けの修正
 
@@ -119,7 +119,7 @@
 	* style/rd+/rd2html.rb: セキュリティバグの修正 by Masao Mutoh
 
 2004-04-03  Kazuhiko  <kazuhiko@fdiary.net>
-	* misc/plugin/rss-show.rb (rss_show): $SAFE=1 向けの修正 by MACHIDA Hideki <h@matchy.net>
+	* misc/plugin/rss-show.rb (rss_show): $SAFE=1 向けの修正 by MACHIDA Hideki
 
 2004-04-02  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
         * style/default/html_formatter.rb, messages/en.rb, messages/ja.rb: 存在しないページを作成するアンカー ? にtitle属性をつける by OZAWA Sakuro
@@ -922,7 +922,7 @@
 	* style/rd+/html_formatter.rb: 複数Hiki設置対応
 
 	* style/rd+/html_formatter.rb, style/rd+/rd2html.rb: RD+スタイルで
-	のtoc対応 by usa <usa@dm4lab.to>
+	のtoc対応 by usa
 
 10 Apr 2003 22:33:44 +0900	TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
