@@ -1,4 +1,4 @@
-# $Id: auth_typekey.rb,v 1.1 2005-03-05 15:24:28 hitoshi Exp $
+# $Id: auth_typekey.rb,v 1.2 2005-03-05 15:51:55 hitoshi Exp $
 # Copyright (C) 2005 TAKEUCHI Hitoshi
 #
 # 
@@ -30,6 +30,7 @@ def auth_typekey
   name =  @cgi.params["name"][0]
   nick =  @cgi.params["nick"][0]
   sig =   @cgi.params["sig"][0]
+  page =  @cgi.params["p"][0] || 'FrontPage'
 
   if ts and email and name and nick and sig and tk.verify(email, name, nick, ts, sig)
     session = Session::new(@conf)
@@ -37,13 +38,13 @@ def auth_typekey
     self.cookies << typekey_cookie('auth_name', utf8_to_euc(nick))
   end
 
-  redirect(@cgi, @conf.cgi_name, self.cookies)
+  redirect(@cgi, "#{@conf.cgi_name}?#{page}", self.cookies)
 end
 
 
 def login_url
   tk = TypeKey.new(@conf['typekey.token'])
-  return_url = "#{@conf.index_url}?c=plugin;plugin=auth_typekey"
+  return_url = "#{@conf.index_url}?c=plugin;plugin=auth_typekey;p=#{@page}"
   tk.getLoginUrl(return_url)
 end
 
