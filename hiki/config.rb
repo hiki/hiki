@@ -1,9 +1,9 @@
-# $Id: config.rb,v 1.8 2004-08-31 07:28:01 fdiary Exp $
+# $Id: config.rb,v 1.9 2004-09-01 07:37:53 fdiary Exp $
 # Copyright (C) 2004 Kazuhiko <kazuhiko@fdiary.net>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
 
-HIKI_VERSION  = '0.7-devel-20040701'
+HIKI_VERSION  = '0.7-devel-20040901'
 
 module Hiki
   PATH  = "#{File::dirname(File::dirname(__FILE__))}"
