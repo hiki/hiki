@@ -1,4 +1,4 @@
-# $Id: 00default.rb,v 1.17 2005-01-28 12:29:04 fdiary Exp $
+# $Id: 00default.rb,v 1.18 2005-02-28 12:28:57 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #==============================
@@ -25,10 +25,10 @@ end
 
 #===== hiki_anchor
 def hiki_anchor( page, display_text )
-  unless page == 'FrontPage' then
-    make_anchor("#{@conf.cgi_name}?#{page}", display_text)
-  else  
+  if page == 'FrontPage' then
     make_anchor(@conf.cgi_name, display_text)
+  else  
+    make_anchor("#{@conf.cgi_name}?#{page}", display_text)
   end
 end
 

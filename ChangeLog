@@ -1,3 +1,8 @@
+2005-02-28  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/command.rb (cmd_create): 新規作成時に CGI 変数 'text' でデフォ
+	ルトのテキストを指定できるように変更
+	* misc/plugin/note.rb: 新プラグインの追加 thanks to joesaisan
+
 2005-02-21  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/rss.rb (rss_body): diff が空の時は先頭を出力するよう
 	に変更

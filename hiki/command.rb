@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.33 2005-02-15 05:23:44 fdiary Exp $
+# $Id: command.rb,v 1.34 2005-02-28 12:28:56 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -426,7 +426,7 @@ module Hiki
           s = @db.load( @p )
           cmd_edit( orig_page || @p, s, @conf.msg_already_exist )
         else
-          cmd_edit( @p )
+          cmd_edit( @p, @params['text'][0] )
         end
       else
         data           = get_common_data( @db, @plugin, @conf )
