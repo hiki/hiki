@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.15 2004-09-01 07:33:21 fdiary Exp $
+# $Id: command.rb,v 1.16 2004-09-01 13:19:25 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'amrita/template'
@@ -150,7 +150,7 @@ module Hiki
       
       pg_title = @plugin.page_name(@p)
       
-      data[:page_title]   = ('<br>' + @plugin.hiki_anchor( @p.escape, @p.escapeHTML )).sanitize
+      data[:page_title]   = (@plugin.hiki_anchor( @p.escape, @p.escapeHTML )).sanitize
       data[:view_title]   = view_title( pg_title.unescapeHTML ).sanitize
       data[:title]        = title( pg_title )
       data[:toc]          = @plugin.toc_f ? toc.sanitize : nil
