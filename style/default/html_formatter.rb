@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.16 2005-01-28 04:00:51 fdiary Exp $
+# $Id: html_formatter.rb,v 1.17 2005-01-28 04:02:23 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -181,7 +181,7 @@ module Hiki
         else
           link_label = ' '
         end
-        s[:html] << %Q!#{map(t[:e])}<a name="#{@suffix}#{@toc_cnt}">#{link_labe
+        s[:html] << %Q!#{map(t[:e])}<a name="#{@suffix}#{@toc_cnt}">#{link_label}</a>#{map("#{t[:e]}_end".to_sym)}!
       when :heading1_close, :heading2_close, :heading3_close, :heading4_close, :heading5_close
         add_toc( s[:toc_level], s[:toc_title] )
         s[:toc_level] = 0
