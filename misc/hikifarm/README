@@ -48,8 +48,6 @@ index.cgiとhikifarm.confは、CGIを設置するディレクトリにコピーします。
 index.cgiには実行権限を付け、hikifarm.confは自分の環境に合わせて書き換
 えておきます。
 
-Hikiインストールディレクトリにあるhiki.cgiを、hiki.rbにリネームします(もしくはhiki.rbという名前でsymlinkを生成しても良い)。
-
 次に、hiki.confもHikiインストールディレクトリに置いて、環境に合わせて
 書き換えます。このファイルは本質的にhikiconf.rbと同じものですが、
 「__my_wiki_name__」というキーワードが生成されたWikiサイト名に置き変わ
