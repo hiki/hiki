@@ -1,5 +1,5 @@
 def history_label
-  'History'
+  '編集履歴'
 end
 
 module Hiki
@@ -7,35 +7,35 @@ module Hiki
     private
 
     def history_label
-      'History'
+      '編集履歴'
     end
 
     def history_th_label
-      ['Rev', 'Time(GMT)', 'Changes', 'Operation', 'Log']
+      ['Rev', '時刻', '変更', '操作', 'ログ']
     end
 
     def history_not_supported_label
-      'History is not available in current configuration.'
+      '現在の設定では編集履歴はサポートされていません。'
     end
 
     def history_diffto_current_label
-      'Diff to current'
+      '現在のバージョンとの差分を見る'
     end
 
     def history_view_this_version_src_label
-      'See the source of this version'
+      'このバージョンのソースを見る'
     end
 
     def history_backto_summary_label
-      'Back to History page'
+      '編集履歴ページに戻る'
     end
 
     def history_add_line_label
-      'Added words are showed as <b class="added">here</b>.'
+      '追加された部分は<ins class="added">このように</ins>表示します。'
     end
 
     def history_delete_line_label
-      'Removed words are showed as <s class="deleted">here</s>.'
+      '削除された部分は<del class="deleted">このように</del>表示します。'
     end
   end
 end

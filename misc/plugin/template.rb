@@ -1,14 +1,6 @@
-# $Id: template.rb,v 1.3 2004-08-06 15:31:57 fdiary Exp $
+# $Id: template.rb,v 1.4 2005-03-03 15:53:55 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 #
-
-def template_label
-  'テンプレート'
-end
-
-def template_select_label
-  '読込'
-end
 
 def templates
   keyword = @options['template.keyword']

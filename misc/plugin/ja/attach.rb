@@ -1,14 +1,14 @@
-# $Id: attach.rb,v 1.3 2005-03-03 15:53:55 fdiary Exp $
+# $Id: attach.rb,v 1.1 2005-03-03 15:53:56 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 def attach_files_label
-  'Attached Files'
+  '添付ファイル'
 end
 
 def attach_upload_label
-  'File Upload'
+  'ファイルの添付'
 end
 
 def detach_upload_label
-  'Remove files'
+  'チェックしたファイルを削除'
 end

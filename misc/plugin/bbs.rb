@@ -1,25 +1,5 @@
-# $Id: bbs.rb,v 1.4 2004-08-06 15:31:57 fdiary Exp $
+# $Id: bbs.rb,v 1.5 2005-03-03 15:53:55 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
-
-def bbs_name_label
-  'お名前'
-end
-
-def bbs_subject_label
-  '件名'
-end
-
-def bbs_post_label
-  '投稿'
-end
-
-def bbs_anonymous_label
-  '名無しさん'
-end
-
-def bbs_notitle_label
-  '無題'
-end
 
 add_body_enter_proc(Proc.new do
   @bbs_num = 0

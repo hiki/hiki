@@ -1,19 +1,7 @@
-# $Id: attach.rb,v 1.14 2004-12-31 04:49:26 fdiary Exp $
+# $Id: attach.rb,v 1.15 2005-03-03 15:53:55 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 #
 # thanks to Kazuhiko, Masao Mutoh, SHIMADA Mitsunobu, Yoshimi, りた
-
-def attach_files_label
-  '添付ファイル'
-end
-
-def attach_upload_label
-  'ファイルの添付'
-end
-
-def detach_upload_label
-  'チェックしたファイルを削除'
-end
 
 def plugin_usage_label
        '<div><ul>

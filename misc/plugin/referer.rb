@@ -1,15 +1,7 @@
-# $Id: referer.rb,v 1.6 2004-09-23 07:42:04 fdiary Exp $
+# $Id: referer.rb,v 1.7 2005-03-03 15:53:55 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/db/ptstore'
-
-def referer_short_label
-  'リンク元'
-end
-
-def referer_long_label
-  'このページへのリンク元'
-end
 
 def add_referer(db)
   begin

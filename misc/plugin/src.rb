@@ -1,9 +1,5 @@
-# $Id: src.rb,v 1.6 2005-02-16 01:17:11 fdiary Exp $
+# $Id: src.rb,v 1.7 2005-03-03 15:53:55 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
-
-def src_label
-  '¥½¡¼¥¹'
-end
 
 def src
   sources = <<EOS

@@ -1,23 +1,7 @@
-# $Id: comment.rb,v 1.5 2005-02-14 07:28:28 fdiary Exp $
+# $Id: comment.rb,v 1.6 2005-03-03 15:53:55 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 # modified by yoshimi.
-
-def comment_name_label
-  'お名前'
-end
-
-def comment_comment_label
-  'コメント'
-end
-
-def comment_post_label
-  '投稿'
-end
-
-def comment_anonymous_label
-  '名無しさん'
-end
 
 add_body_enter_proc(Proc.new do
   @comment_num = 0

@@ -1,6 +1,12 @@
 2005-03-04  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/ja/attach.rb misc/plugin/ja/bbs.rb
+	misc/plugin/ja/comment.rb misc/plugin/ja/frozenmark.rb
+	misc/plugin/ja/history.rb misc/plugin/ja/referer.rb
+	misc/plugin/ja/src.rb misc/plugin/ja/template.rb: 日本語リソースを
+	分離
+
 	* hiki/plugin.rb (Plugin::load_plugin): プラグイン本体のロードをリ
-	ソースのロードよりも先に行うように修正 report by Masao Mutoh
+	ソースのロードよりも先に行うように修正 → この変更はキャンセル
 
 2005-03-03  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/rss.rb: 出力のフォーマットに従来の unified diff に加

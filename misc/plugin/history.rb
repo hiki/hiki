@@ -3,7 +3,7 @@
 == plugin/history.rb - CVS ¤ÎÊÔ½¸ÍúÎò¤òÉ½¼¨¤¹¤ë¥×¥é¥°¥¤¥ó
 
   Copyright (C) 2003 Hajime BABA <baba.hajime@nifty.com>
-  $Id: history.rb,v 1.21 2005-02-16 01:17:11 fdiary Exp $
+  $Id: history.rb,v 1.22 2005-03-03 15:53:55 fdiary Exp $
   You can redistribute and/or modify this file under the terms of the LGPL.
 
   Copyright (C) 2003 Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
@@ -52,10 +52,6 @@ CSS¤Çspan.add_line, span.del_line¤òÀßÄê¤¹¤ë¤È¡¢ÊÑ¹¹²Õ½ê¤ÎÊ¸»úÂ°À­¤òÊÑ¹¹¤Ç¤­¤Ş¤¹¡
 
 =end
 
-def history_label
-  'ÊÔ½¸ÍúÎò'
-end
-
 def history
   h = Hiki::History::new(@cgi, @db, @conf)
   h.history
@@ -89,39 +85,6 @@ module Hiki
 
     def history_repos_root
       @conf.repos_root # hiki.conf
-    end
-
-    def history_label
-      'ÊÔ½¸ÍúÎò'
-    end
-
-    def history_th_label
-      #  ['Rev', 'Time(GMT)', 'Changes', 'Operation', 'Log']
-      ['Rev', '»ş¹ï', 'ÊÑ¹¹', 'Áàºî', '¥í¥°']
-    end
-
-    def history_not_supported_label
-      '¸½ºß¤ÎÀßÄê¤Ç¤ÏÊÔ½¸ÍúÎò¤Ï¥µ¥İ¡¼¥È¤µ¤ì¤Æ¤¤¤Ş¤»¤ó¡£'
-    end
-
-    def history_diffto_current_label
-      '¸½ºß¤Î¥Ğ¡¼¥¸¥ç¥ó¤È¤Îº¹Ê¬¤ò¸«¤ë'
-    end
-
-    def history_view_this_version_src_label
-      '¤³¤Î¥Ğ¡¼¥¸¥ç¥ó¤Î¥½¡¼¥¹¤ò¸«¤ë'
-    end
-
-    def history_backto_summary_label
-      'ÊÔ½¸ÍúÎò¥Ú¡¼¥¸¤ËÌá¤ë'
-    end
-
-    def history_add_line_label
-      'ÄÉ²Ã¤µ¤ì¤¿ÉôÊ¬¤Ï<ins class="added">¤³¤Î¤è¤¦¤Ë</ins>É½¼¨¤·¤Ş¤¹¡£'
-    end
-
-    def history_delete_line_label
-      'ºï½ü¤µ¤ì¤¿ÉôÊ¬¤Ï<del class="deleted">¤³¤Î¤è¤¦¤Ë</del>É½¼¨¤·¤Ş¤¹¡£'
     end
 
     # Subroutine to invoke external command using `` sequence.

@@ -1,7 +1,5 @@
-# $Id: frozenmark.rb,v 1.3 2004-03-01 09:50:45 hitoshi Exp $
+# $Id: frozenmark.rb,v 1.4 2005-03-03 15:53:55 fdiary Exp $
 # Copyright (C) 2003 OZAWA Sakuro <crouton@users.sourceforge.jp>
-
-def frozenmark_message; 'このページは凍結されています。'; end
 
 def about_frozenmark
   <<-EOS
