@@ -1,4 +1,4 @@
-# $Id: auth_typekey.rb,v 1.2 2005-03-05 15:51:55 hitoshi Exp $
+# $Id: auth_typekey.rb,v 1.3 2005-03-06 04:38:50 hitoshi Exp $
 # Copyright (C) 2005 TAKEUCHI Hitoshi
 #
 # 
@@ -6,7 +6,7 @@
 require 'hiki/auth/typekey'
 require 'hiki/session'
 
-def auth_typekey_label
+def label_auth_typekey_login
 <<EOS
 <div class="hello">
 ページを編集するには<a href="#{login_url}">ログイン</a>が必要です。
@@ -14,8 +14,16 @@ def auth_typekey_label
 EOS
 end
 
-def auth_typekey_hello
+def label_auth_typekey_hello
 	"こんにちは。%sさん"
+end
+
+def label_auth_typekey_config
+	'TypeKey認証'
+end
+
+def label_auth_typekey_token
+	'TypeKeyトークン'
 end
 
 def auth?
@@ -61,11 +69,27 @@ add_body_enter_proc(Proc::new do
   if auth? and nick
     <<EOS
 <div class="hello">
-#{sprintf(auth_typekey_hello, nick.escapeHTML)}
+#{sprintf(label_auth_typekey_hello, nick.escapeHTML)}
 </div>
 EOS
   else
-    auth_typekey_label
+    label_auth_typekey_login
   end
 end)
 
+def saveconf_auth_typekey
+  if @mode == 'saveconf' then
+    @conf['typekey.token'] = @cgi.params['typekey.token'][0]
+  end
+end
+
+add_conf_proc('auth_typekey', label_auth_typekey_config) do
+  saveconf_auth_typekey
+  @conf['typekey.token'] ||= ''
+  str = <<-HTML
+  <h3 class="subtitle">#{label_auth_typekey_token}</h3>
+  <p>TypeKeyのトークンを指定します。トークンはTypeKeyのサイトのアカウント情報で確認してください。</p>
+  <p><input name="typekey.token" size="40" value="#{CGI::escapeHTML(@conf['typekey.token'])}"></p>
+  HTML
+  str
+end

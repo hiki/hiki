@@ -1,3 +1,6 @@
+2005-03-06  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
+	* hiki/auth/typekey.rb: conf_proc への対応
+
 2005-03-05  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
 	* hiki/command.rb hiki/config.rb plugin/00default.rb
 	style/default/html_formatter.rb theme/hiki/hiki.css

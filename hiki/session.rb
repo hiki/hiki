@@ -1,4 +1,4 @@
-# $Id: session.rb,v 1.4 2005-03-02 04:32:39 fdiary Exp $
+# $Id: session.rb,v 1.5 2005-03-06 04:38:49 hitoshi Exp $
 # Copyright (C) 2004 Kazuhiko <kazuhiko@fdiary.net>
 
 module Hiki
@@ -7,8 +7,9 @@ module Hiki
 
     attr_reader :session_id
 
-    def initialize( conf, session_id = nil )
+    def initialize( conf, session_id = nil, max_age = MAX_AGE )
       @conf = conf
+		@max_age = max_age
       if session_id
         if /[0-9a-f]{16}/ =~ session_id
           @session_id = session_id
@@ -21,7 +22,7 @@ module Hiki
         Dir.mkdir( session_path ) unless test( ?e,  session_path )
         Dir.glob( "#{session_path}/*" ).each do |file|
           file.untaint
-          File.delete( file ) if Time.now - File.mtime( file ) > MAX_AGE
+          File.delete( file ) if Time.now - File.mtime( file ) > @max_age
         end
         # create a new session file
         File.new( session_file, 'w' ).close
@@ -31,7 +32,7 @@ module Hiki
     def check
       return false unless @session_id
       # a session will expire in 10 minutes
-      if test( ?e, session_file ) && Time.now - File.mtime( session_file ) < MAX_AGE
+      if test( ?e, session_file ) && Time.now - File.mtime( session_file ) < @max_age
         File.new( session_file, 'w' ).close
         return true
       end
