@@ -1,4 +1,4 @@
-# $Id: rss.rb,v 1.15 2005-03-03 12:56:54 fdiary Exp $
+# $Id: rss.rb,v 1.16 2005-03-03 13:06:42 fdiary Exp $
 # Copyright (C) 2003-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # Copyright (C) 2005 Kazuhiko <kazuhiko@fdiary.net>
 
@@ -36,7 +36,7 @@ EOS
 
     case @conf['rss.mode']
     when 1
-      content = word_diff(src, dst, true)
+      content = word_diff(src, dst, true).gsub(/\n/, "<br>\n")
     when 2
       content = word_diff(src, dst).gsub(/\n/, "<br>\n")
     else
