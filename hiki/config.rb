@@ -1,4 +1,4 @@
-# $Id: config.rb,v 1.14 2004-09-14 02:24:49 fdiary Exp $
+# $Id: config.rb,v 1.15 2004-12-14 11:11:20 koma2 Exp $
 # Copyright (C) 2004 Kazuhiko <kazuhiko@fdiary.net>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
@@ -14,9 +14,14 @@ module Hiki
       default
       load_cgi_conf
 
+      require "style/#{@style}/parser"
+      require "style/#{@style}/html_formatter"
+      require "hiki/repos/#{@repos_type}"
+
       style = @style.gsub( /\+/, '' )
       @parser = "Parser_#{style}"
       @formatter = "HTMLFormatter_#{style}"
+      @repos = Hiki::const_get("Repos#{@repos_type.capitalize}").new(@repos_root, @data_path)
 
       instance_variables.each do |v|
         v.sub!( /@/, '' )
@@ -102,6 +107,7 @@ module Hiki
       @lang          ||= 'ja'
       @database_type ||= 'flatfile'
       @cgi_name      ||= './'
+      @repos_type    ||= 'default'
       @use_wikiname    = true if @use_wikiname.nil?
       @options         = {} unless @options.class == Hash
     end

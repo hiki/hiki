@@ -1,3 +1,10 @@
+2004-12-14  KOMATSU Shinichiro  <koma2@ms.u-tokyo.ac.jp>
+
+	* misc/hikifarm/index.cgi, hiki/config.rb, 
+	hiki/repos/cvs.rb hiki/repos/default.rb hiki/repos/svn.rb, 
+	hiki.cgi, plugin/00default.rb: hikifarm と plugin の中の
+	リポジトリ回りのコードを hiki/repos/ に移動 ([Hiki-dev:00600])。
+
 2004-12-14  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/attach/attach.cgi: $SAFE = 1 向け修正 by KAKUTANI
 	Shintaro

@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# $Id: hiki.cgi,v 1.21 2004-09-10 13:41:36 fdiary Exp $
+# $Id: hiki.cgi,v 1.22 2004-12-14 11:11:20 koma2 Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 BEGIN { $defout.binmode }
@@ -18,9 +18,7 @@ begin
 
   require 'hiki/config'
   conf = Hiki::Config::new
-  require "style/#{conf.style}/html_formatter"
-  require "style/#{conf.style}/parser"
-  require "messages/#{conf.lang}"
+  load "messages/#{conf.lang}.rb"
   require "hiki/db/#{conf.database_type}"
 
   require 'hiki/command'

@@ -13,8 +13,6 @@ hiki = ''
 default_pages = "#{hiki}/text"
 data_path = ''
 cvsroot = nil
-repos_type = nil
-repos_root = nil
 hikifarm_path = './'
 
 title = ''
@@ -32,6 +30,9 @@ eval( open( 'hikifarm.conf' ){|f|f.read.untaint} )
 @ruby = ruby
 @hiki = hiki
 @default_pages = default_pages
+
+repos_type ||= 'default'
+repos_root ||= nil
 
 # Support depracated configuration
 if cvsroot then
@@ -113,118 +114,6 @@ def rmdir( dir )
    }
 end
 
-# Null Repository Backend
-class ReposDefault
-   attr_reader :root, :data_path
-   def initialize(root, data_path)
-      @root = root
-      @data_path = data_path
-   end
-   def setup()
-   end
-   def imported?( wiki )
-      return true
-   end
-   def import( wiki )
-   end
-   def update( wiki )
-   end
-end
-
-# CVS Repository Backend
-class ReposCvs < ReposDefault
-   def setup()
-      oldpwd = Dir.pwd
-      begin
-         Dir.chdir( @data_path )
-         system( "cvs -d #{@root} init > /dev/null 2>&1" )
-         if not File.directory?(".CVSROOT") then
-            system( "cvs -d #{@root} co -d .CVSROOT CVSROOT > /dev/null 2>&1" )
-         end
-         Dir.chdir( ".CVSROOT" )
-         system( "cvs -d #{@root} update > /dev/null 2>&1" )
-      ensure
-         Dir.chdir( oldpwd.untaint )
-      end
-   end
-   def imported?( wiki )
-      return File.directory?( "#{@root}/#{wiki}" )
-   end
-   def import( wiki )
-      oldpwd = Dir.pwd
-      begin
-         Dir.chdir( "#{@data_path}/#{wiki}/text" )
-         system( "cvs -d #{@root} import -m 'Starting #{wiki}' #{wiki} T#{wiki} start > /dev/null 2>&1" )
-         Dir.chdir( '..' )
-         system( "cvs -d #{@root} co -d text #{wiki} > /dev/null 2>&1" )
-      ensure
-         Dir.chdir( oldpwd.untaint )
-      end
-   end
-   def update( wiki )
-      oldpwd = Dir.pwd
-      begin
-         Dir.chdir( "#{@data_path}/#{wiki}/text" )
-         system( "cvs -d #{@root} update > /dev/null 2>&1" )
-      ensure
-         Dir.chdir( oldpwd.untaint )
-      end
-   end
-end
-
-# Subversion Repository Backend
-class ReposSvn < ReposDefault
-   def setup()
-      system( "svnadmin create #{@root} > /dev/null 2>&1" )
-   end
-   def imported?( wiki )
-      s = ''
-      open("|svn ls file://#{@root}/#{wiki}") do |f|
-         s << (f.gets( nil ) ? $_ : '')
-      end
-
-      if %r|^trunk/$| =~ s then
-         return true
-      else
-         return false
-      end
-   end
-   def import( wiki )
-      oldpwd = Dir.pwd
-      begin
-         Dir.chdir( "#{@data_path}/#{wiki}/text" )
-         system( "svnadmin create #{@root}/#{wiki} > /dev/null 2>&1" )
-         system( "svn import -m 'Starting #{wiki}' . file://#{@root}/#{wiki}/trunk > /dev/null 2>&1" )
-         Dir.chdir( '..' )
-         rmdir( 'text' )
-         system( "svn checkout file://#{@root}/#{wiki}/trunk text > /dev/null 2>&1" )
-         system( "svn propdel svn:mime-type -R text > /dev/null 2>&1" )
-      ensure
-         Dir.chdir( oldpwd.untaint )
-      end
-   end
-   def update( wiki )
-      oldpwd = Dir.pwd
-      begin
-         Dir.chdir( "#{@data_path}/#{wiki}/text" )
-         system( "svn update > /dev/null 2>&1" )
-      ensure
-         Dir.chdir( oldpwd.untaint )
-      end
-   end
-end
-
-# Create repository backend
-def create_repos(repos_type, repos_root, data_path)
-   case repos_type
-   when 'cvs'
-      return ReposCvs.new(repos_root, data_path)
-   when 'svn'
-      return ReposSvn.new(repos_root, data_path)
-   else
-      return ReposDefault.new(repos_root, data_path)
-   end
-end
 
 def create_wiki( wiki, hiki, cgi_name, data_path )
    Dir.mkdir( wiki.untaint )
@@ -327,11 +216,14 @@ end
 
 #--- main -----------------------------------------------------------
 
+$:.unshift(hiki)
 require 'cgi'
+require "hiki/repos/#{repos_type}"
 
 cgi = CGI::new
 msg = nil
-@repos = create_repos(repos_type, repos_root, data_path)
+
+@repos = Hiki::const_get("Repos#{repos_type.capitalize}").new(repos_root, data_path)
 
 @repos.setup()
 

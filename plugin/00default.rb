@@ -1,4 +1,4 @@
-# $Id: 00default.rb,v 1.12 2004-09-28 13:47:28 fdiary Exp $
+# $Id: 00default.rb,v 1.13 2004-12-14 11:11:21 koma2 Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #==============================
@@ -84,6 +84,7 @@ end
 #===== update_proc
 add_update_proc {
   updating_mail if @conf.mail_on_update
+  @conf.repos.commit(@page)
 }
 
 #----- send a mail on updating
@@ -99,6 +100,11 @@ def updating_mail
   rescue
   end
 end
+
+#===== delete_proc
+add_delete_proc {
+  @conf.repos.delete(@page)
+}
 
 #===== hiki_header
 add_header_proc {
