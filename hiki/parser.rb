@@ -1,4 +1,4 @@
-# $Id: parser.rb,v 1.8 2003-03-23 03:37:12 hitoshi Exp $
+# $Id: parser.rb,v 1.9 2003-03-24 08:10:48 hitoshi Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 module Hiki
@@ -27,9 +27,9 @@ module Hiki
     STRONG     = "'''"
     DELETE     = "=="
     URL        = '(?:http|https|ftp|mailto):[a-zA-Z0-9;/?:@&=+$,\-_.!~*\'()#%]+'
-    REF1       = '\[\[([^\]|]+?)\|([^\]]+?)\]\]'
-    REF2       =  '\[\[([^\]|]+?)\]\]'
-    INTERWIKI  = '\[\[([^:]+?):([^\]]+)\]\]'
+    REF1       = "\\[\\[([^\\]|:]+?)\\|(#{URL})\\]\\]"
+    REF2       =  '\[\[([^\]|:]+?)\]\]'
+    INTERWIKI  = '\[\[([^\]:]+?):([^\]]+)\]\]'
     WIKINAME   = '((?:[A-Z][a-z0-9]+){2,})([^A-Za-z0-9])?'
     IMAGE      = '\.(?:jpg|jpeg|png|gif)'
     PLUGIN     = '\{\{(.+?)(?:\((.*?)\))?\s*\}\}'
@@ -151,13 +151,13 @@ module Hiki
           else
             @cur_stack.push ( {:e => :normal_text, :s => match_pattern} )
           end
+        when INTERWIKI_RE
+          @cur_stack.push ( {:e => :interwiki, :href => $1, :s => $2} )
+          str = $'          
         when URL_RE
           href = $&
           str  = $'
           @cur_stack.push ( {:e => :reference, :href => href, :s => href} )
-        when INTERWIKI_RE
-          @cur_stack.push ( {:e => :interwiki, :href => $1, :s => $2} )
-          str = $'
         when PLUGIN_RE
           if $use_plugin
             @cur_stack.push( {:e => :inline_plugin, :method => $1, :param => $2} )

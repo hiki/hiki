@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.5 2003-03-23 03:37:12 hitoshi Exp $
+# $Id: command.rb,v 1.6 2003-03-24 08:10:48 hitoshi Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'amrita/template'
@@ -170,7 +170,7 @@ module Hiki
     end
 
     def cmd_edit( page, text=nil, msg=nil )
-      save_button = (@cmd == 'edit') ? '' : nil
+      save_button = @cmd == 'edit' ? '' : nil
       preview_text = differ = link = nil
       tokens = Hiki::Parser::new.parse( @db.load( $formatting_rule ) )
       format_text = Hiki::HTMLFormatter::new( tokens, @db, @plugin ).to_s
@@ -179,14 +179,14 @@ module Hiki
         p = Hiki::Parser::new.parse( text )
         preview_text = Hiki::HTMLFormatter::new( p, @db, @plugin ).to_s
         save_button = ''
-        @cmd = 'edit'
       elsif @cmd == 'conflict'
         t = @db.load( page ) || ''
         d = diff_t( t, text.gsub!(/\r/, '') )
         differ = HTMLFormatter::diff ( d )
         link = anchor( page )
-        @cmd = 'edit'
       end
+      
+      @cmd = 'edit'
 
       text = ( @db.load( page ) || '' ) unless text
       md5hex = @params['md5hex'][0] || @db.md5hex( page )
@@ -195,7 +195,7 @@ module Hiki
       data[:title]          = title( page.escapeHTML )
       data[:tools][:edit]   = a( :href=> cmdhref( 'edit', @p ) )
       data[:tools][:diff]   = a( :href=> cmdhref( 'diff', @p ) )
-      data[:pagename]       = a( :value => page.escape )
+      data[:pagename]       = a( :value => page )
       data[:md5hex]         = a( :value => md5hex )
       data[:contents]       = text.escapeHTML
       data[:msg]            = msg
@@ -224,8 +224,7 @@ module Hiki
       generate_page( data )
     end
 
-    def cmd_save( p, text, md5hex )
-      page = p.unescape
+    def cmd_save( page, text, md5hex )
       last_text = @db.load( page ) || ''
 
       pass_check = false

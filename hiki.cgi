@@ -1,11 +1,11 @@
 #!/usr/bin/env ruby
-# $Id: hiki.cgi,v 1.8 2003-03-23 03:26:30 hitoshi Exp $
+# $Id: hiki.cgi,v 1.9 2003-03-24 08:10:48 hitoshi Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 $SAFE     = 1
 $KCODE    = 'e'
 
-HIKI_VERSION  = '0.42'
+HIKI_VERSION  = '0.4.2a'
 
 require 'cgi'
 require 'hikiconf'
