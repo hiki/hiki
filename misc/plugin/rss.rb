@@ -1,4 +1,4 @@
-# $Id: rss.rb,v 1.7 2004-09-13 13:53:11 fdiary Exp $
+# $Id: rss.rb,v 1.8 2004-09-28 13:31:52 fdiary Exp $
 # Copyright (C) 2003-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 def rss_recent_label
@@ -74,4 +74,7 @@ def rss
 end
 add_body_enter_proc(Proc.new do
   add_plugin_command('rss', 'RSS')
+end)
+add_header_proc(Proc.new do
+  %Q!  <link rel="alternate" type="application/rss+xml" title="RSS" href="#{@conf.index_url}?c=rss">!
 end)
