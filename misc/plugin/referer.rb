@@ -1,4 +1,4 @@
-# $Id: referer.rb,v 1.4 2004-08-04 09:41:57 fdiary Exp $
+# $Id: referer.rb,v 1.5 2004-08-06 06:54:59 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/db/ptstore'
@@ -126,6 +126,6 @@ add_body_leave_proc(Proc.new do
     end
   rescue Exception
   ensure
-    db.close_cache 
+    db.close_cache if db 
   end
 end)
