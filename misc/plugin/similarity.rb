@@ -1,5 +1,4 @@
-# $Id: similarity.rb,v 1.1 2004-03-02 02:46:41 hitoshi Exp $
-# Copyright (C) 2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+# $Id: similarity.rb,v 1.2 2004-03-02 03:13:16 hitoshi Exp $
 
 def similarity(style, permalink)
   s = <<"EOS"
