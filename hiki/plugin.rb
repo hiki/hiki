@@ -1,4 +1,4 @@
-# $Id: plugin.rb,v 1.12 2005-03-03 15:53:55 fdiary Exp $
+# $Id: plugin.rb,v 1.13 2005-03-08 05:19:34 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
@@ -257,7 +257,6 @@ module Hiki
       dirname, basename = File.split( file )
       [@conf.lang, 'en', 'ja'].uniq.each do |lang|
 	begin
-	  STDERR.puts( File.join( dirname, lang, basename ) )
 	  load( File.join( dirname, lang, basename ) )
 	  @resource_loaded = true
 	  break
