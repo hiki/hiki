@@ -1,4 +1,4 @@
-# ajaxsearch.rb $Revision: 1.2 $
+# ajaxsearch.rb $Revision: 1.3 $
 # Copyright (C) 2005 Michitaka Ohno <elpeo@mars.dti.ne.jp>
 # 
 # This program is free software; you can redistribute it and/or
@@ -21,33 +21,9 @@ def search
 end
 
 module Hiki
-	class AjaxConfig
-		include Messages if defined?( Messages )
-		def cgi_name; $cgi_name end
-		def hilight_keys; $hilight_keys end
-		def lang; $lang end
-	end
-
 	class AjaxSearch < Command
-		def self.label
-			'Ajax¸¡º÷'
-		end
-
-		def initialize( cgi, db, conf )
-			begin
-				super( cgi, db, conf )
-			rescue Exception
-				super( cgi, db )
-				@conf = AjaxConfig.new
-			end
-		end
-
 		def form
-			begin
-				data = get_common_data( @db, @plugin, @conf )
-			rescue Exception
-				data = get_common_data( @db, @plugin )
-			end
+			data = get_common_data( @db, @plugin, @conf )
 			@plugin.hiki_menu( data, @cmd )
 			body =<<-HTML
 			<script language="JScript">
@@ -92,23 +68,14 @@ module Hiki
 			  </div>
 			</div>
 			HTML
-			data[:title] = data[:view_title] = title( AjaxSearch::label )
+			data[:title] = data[:view_title] = title( @conf.msg_search )
 			data[:body] = body.sanitize
 			@cmd = 'plugin'
 			generate_page(data)
 		end
 
 		def search
-			if defined?( NKF::UTF8 ) then
-				word = NKF::nkf( "-m0 -e", @cgi.params['key'][0] )
-			else
-				begin
-					require 'uconv'
-					word = Uconv.u8toeuc( @cgi.params['key'][0] )
-				rescue Exception
-					word = @cgi.params['key'][0].to_euc
-				end
-			end
+			word = utf8_to_euc( @cgi.params['key'][0] )
 			r = ""
 			unless word.empty? then
 				total, l = @db.search( word )
