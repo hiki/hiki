@@ -1,4 +1,4 @@
-# $Id: util.rb,v 1.23 2005-01-07 12:21:32 fdiary Exp $
+# $Id: util.rb,v 1.24 2005-01-09 15:59:34 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'nkf'
@@ -382,6 +382,24 @@ EOS
         str
       else
         arr[0...len-2].join('') + '..'
+      end
+    end
+
+    def euc_to_utf8(str)
+      if NKF::const_defined?(:NKF_VERSION) && NKF::NKF_VERSION >= "2.0.4"
+	return NKF::nkf('-m0 -w', str)
+      else
+	require 'uconv'
+	return Uconv.euctou8(str)
+      end
+    end
+  
+    def utf8_to_euc(str)
+      if NKF::const_defined?(:NKF_VERSION) && NKF::NKF_VERSION >= "2.0.4"
+	return NKF::nkf('-m0 -e', str)
+      else
+	require 'uconv'
+	return Uconv.u8toeuc(str)
       end
     end
 
