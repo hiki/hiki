@@ -1,4 +1,4 @@
-# amazon.rb $Revision: 1.3 $
+# amazon.rb $Revision: 1.4 $
 #
 # isbn_image_left: 指定したISBNの書影をclass="left"で表示
 #   パラメタ:
@@ -138,7 +138,7 @@ def getAmazon( asin )
 		end
 	end
 	item = [item_url.strip,item_name,img_url,img_name,img_width,img_height]
-	open("#{cache}/#{asin}","w") do |f|
+	open("#{cache}/#{asin}".untaint,"w") do |f|
 		item.each do |i|
 			next unless i
 			f.print i,"\n"

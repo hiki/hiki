@@ -1,3 +1,6 @@
+2004-03-16  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/amazon.rb: $SAFE=1 向けの修正
+
 2004-03-11  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
         * style/default+/html_formatter.rb, style/rd+/html_formatter.rb: XSS脆弱性の修正
 	* template/en/edit.html: 英語テンプレートの修正 by mput<webmaster@mput.dip.jp>
