@@ -18,8 +18,8 @@ Hikiでは、ただただしさん作の日記システム[[tDiary|http://www.tdiary.org/]]用の
 
 !!出力するHTMLを柔軟に変更可能
 HikiではRuby用のHTML/XMLテンプレートライブラリ
-[[Amrita|http://www.brain-tokyo.jp/research/amrita/index_ja.html]]を
-使っているため、出力するHTMLの形式を柔軟に変更することができます。
+[[Amrita|http://amrita.sourceforge.jp/]]を使っているため、出力するHTMLの
+形式を柔軟に変更することができます。
 
 !!InterWikiのサポート
 InterWikiをサポートしています。InterWikiとは、もともとはWikiサーバー間を
