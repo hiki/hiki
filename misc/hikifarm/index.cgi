@@ -157,7 +157,7 @@ def body( data_path )
       file = ''
       begin
          File::open( "#{data_path}/#{wiki}/hiki.conf" ) do |conf|
-            if /^@site_name\s*=\s*(".*")\s*$/ =~ conf.read then
+            if /^@?site_name\s*=\s*(".*")\s*$/ =~ conf.read then
                title = eval($1.untaint)
             end
          end
@@ -217,6 +217,7 @@ end
 #--- main -----------------------------------------------------------
 
 $:.unshift(hiki)
+$:.delete(".") if File.writable?(".")
 require 'cgi'
 require "hiki/repos/#{repos_type}"
 

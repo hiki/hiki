@@ -1,3 +1,8 @@
+2005-04-05  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/hikifarm/index.cgi: fix a bug in collecting site_name
+	(reported by kdmsnr). remove the current directory from $: when it
+	is writable (by hsuzuki)
+
 2005-04-01  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/command.rb (Command::cmd_admin, Command::admin_config): 不要
 	なコードの削除
