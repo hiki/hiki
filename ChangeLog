@@ -1,3 +1,7 @@
+2005-02-21  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/rss.rb (rss_body): diff が空の時は先頭を出力するよう
+	に変更
+
 2005-02-16  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/rss.rb (rss_body), misc/plugin/src.rb (src),
 	misc/plugin/history.rb (history_src): 空白を '&nbsp;' で出力する用

@@ -1,4 +1,4 @@
-# $Id: rss.rb,v 1.13 2005-02-16 01:17:11 fdiary Exp $
+# $Id: rss.rb,v 1.14 2005-02-21 03:03:11 fdiary Exp $
 # Copyright (C) 2003-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 def rss_recent_label
@@ -37,6 +37,9 @@ EOS
     src = @db.load_backup(name) || ''
     dst = @db.load(name) || ''
     content = unified_diff(src, dst)
+    if content.empty?
+      content = shorten(dst).strip
+    end
     
     items << '        '
 
