@@ -95,7 +95,7 @@ if __FILE__ == $0
     end
     attr :v
     def dump_text
-      "#{self.type}::new(#{@v.dump_text})"
+      "#{self.class}::new(#{@v.dump_text})"
     end
     def ==(other)
       @v == other.v
@@ -111,7 +111,7 @@ if __FILE__ == $0
  File::open("aaa", "r") do |f|
    f.each do |a|
      c = TMarshal::load(a.chomp!)
-     puts c, c.type
+     puts c, c.class
    end
  end
 end
