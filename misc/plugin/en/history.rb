@@ -27,11 +27,11 @@ module Hiki
     end
 
     def history_add_line_label
-      '+Added lines'
+      'Added words are showed as <b class="added">here</b>.'
     end
 
     def history_delete_line_label
-      '-Removed lines'
+      'Removed words are showed as <s class="deleted">here</s>.'
     end
   end
 end

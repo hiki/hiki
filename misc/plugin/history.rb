@@ -3,7 +3,7 @@
 == plugin/history.rb - CVS の編集履歴を表示するプラグイン
 
   Copyright (C) 2003 Hajime BABA <baba.hajime@nifty.com>
-  $Id: history.rb,v 1.15 2005-01-06 10:08:59 fdiary Exp $
+  $Id: history.rb,v 1.16 2005-01-06 10:30:52 fdiary Exp $
   You can redistribute and/or modify this file under the terms of the LGPL.
 
   Copyright (C) 2003 Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
@@ -113,11 +113,11 @@ module Hiki
     end
 
     def history_add_line_label
-      '+追加された行'
+      '追加された部分は<ins class="added">このように</ins>表示します。'
     end
 
     def history_delete_line_label
-      '-削除された行'
+      '削除された部分は<del class="deleted">このように</del>表示します。'
     end
 
     # Subroutine to invoke external command using `` sequence.
@@ -310,8 +310,10 @@ module Hiki
       sources << "<div class=\"section\">\n"
       sources << "<a href=\"#{@conf.cgi_name}#{cmdstr('history', "p=#{@p.escape}")}\">#{history_backto_summary_label.escapeHTML}</a><br>\n"
       sources << "</div>\n<br>\n"
-      sources << "<span class=\"add_line\">#{history_add_line_label.escapeHTML}</span><br>\n"
-      sources << "<span class=\"del_line\">#{history_delete_line_label.escapeHTML}</span><br>\n"
+      sources << "<ul>"
+      sources << "  <li>#{history_add_line_label}</li>"
+      sources << "  <li>#{history_delete_line_label}</li>"
+      sources << "</ul>"
       sources << "<pre class=\"diff\">#{diff}</pre>\n"
 
       history_output(sources)
