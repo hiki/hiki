@@ -1,4 +1,10 @@
 2005-01-29  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/command.rb (load_plugin): Hiki::Plugin クラスに移動
+
+	* plugin/01sp.rb, plugin/en/01sp.rb, plugin/fr/01sp.rb,
+	plugin/it/01sp.rb, plugin/ja/01sp.rb: tDiary のプラグイン選択プラグ
+	インを導入 (fr, it は未訳)
+
 	* style/math/html_formatter.rb, style/math/latex.rb,
 	misc/plugin/math.rb: style/math/parser.rb: Math スタイルの拡張 by
 	Kenta MURATA

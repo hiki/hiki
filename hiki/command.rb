@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.27 2005-01-28 04:35:29 fdiary Exp $
+# $Id: command.rb,v 1.28 2005-01-29 03:34:35 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -53,8 +53,6 @@ module Hiki
       @plugin = Plugin::new( options, @conf )
       @db.plugin = @plugin
       
-      load_plugin( @plugin )
-
       @body_enter = @plugin.body_enter_proc.sanitize
     end
 
@@ -521,16 +519,6 @@ module Hiki
       data[:method]  = 'post'
       @cmd = 'password'
       generate_page( data )
-    end
-
-    def load_plugin( plugin )
-      ["#{@conf.plugin_path}/*.rb", "#{@conf.plugin_path}/#{@conf.lang}/*.rb"].each do |d|
-        Dir::glob( d ).sort.each do |f|
-          next unless test(?f, f.untaint)
-
-          plugin.load(f.untaint)
-        end
-      end
     end
 
     def exist?( page )

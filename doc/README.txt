@@ -17,9 +17,9 @@ Hikiでは、ただただしさん作の日記システム[[tDiary|http://www.tdiary.org/]]用の
 プラグイン資産を最大限生かせる方向で実装を進めています。
 
 !!出力するHTMLを柔軟に変更可能
-HikiではRuby用のHTML/XMLテンプレートライブラリ
-[[Amrita|http://amrita.sourceforge.jp/]]を使っているため、出力するHTMLの
-形式を柔軟に変更することができます。
+Hikiでは文書埋め込みRubyスクリプト
+[[ERB|http://www2a.biglobe.ne.jp/~seki/ruby/erb.html]]を使っているため、
+出力するHTMLの形式を柔軟に変更することができます。
 
 !!InterWikiのサポート
 InterWikiをサポートしています。InterWikiとは、もともとはWikiサーバー間を
@@ -28,12 +28,12 @@ InterWikiをサポートしています。InterWikiとは、もともとはWikiサーバー間を
 書いた後、
 
  *[[ruby-list|http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/]]
- *[[Hiki|http://www.namaraii.com/hiki/hiki.cgi?]] euc
+ *[[Hiki|http://www.namaraii.com/hiki/?]] euc
 
 任意のページに、
- [[Hiki:逆引きRuby]]
+ [[Hiki:HikiFarm]]
 
-と書くとhttp://www.namaraii.com/hiki/hiki.cgiの「逆引きRuby」という
+と書くとhttp://www.namaraii.com/hiki/の「HikiFarm」という
 ページへのリンクになります。
 
 同様に、
@@ -51,9 +51,7 @@ Hikiは作者であるたけうちひとし(hitoshi@namaraii.com)がGPL2で配布、改変を
 
 ただし、配布ファイルのうち以下のものはそれぞれの原作者が著作権を有します。
 
-:hiki/algorithm/diff.rb:Lars Christensen氏作。GPL2で配布。 
 :hiki/db/tmarshal.rb:るびきちさんがruby-list:30305にポストしたスクリプトを若干修正したもの。Ruby'sで配布。 
-:amrita/*.rb:Taku Nakajima氏作。Ruby'sで配布。
 :hiki/docdiff/*:森田尚氏作。修正BSDライセンスで配布。
 
 Hikiはhttp://www.namaraii.com/hiki/でサポートを行っています。

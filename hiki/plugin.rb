@@ -1,4 +1,4 @@
-# $Id: plugin.rb,v 1.6 2005-01-28 04:35:29 fdiary Exp $
+# $Id: plugin.rb,v 1.7 2005-01-29 03:34:35 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
@@ -7,6 +7,8 @@ require 'cgi'
 require 'hiki/util'
 
 module Hiki
+  class PluginError < StandardError; end
+
   class Plugin
     attr_reader   :toc_f, :plugin_command
     attr_accessor :text, :title
@@ -42,6 +44,19 @@ module Hiki
 
       @mode = 'conf' if options['cgi'].params['c'][0] == 'admin'
       @mode = 'saveconf' if options['cgi'].params['saveconf'][0]
+
+      # loading plugins
+      @plugin_files = []
+      plugin_path = @conf.plugin_path || "#{PATH}/plugin"
+      plugin_file = ''
+      begin
+	Dir::glob( "#{plugin_path}/*.rb" ).sort.each do |file|
+	  load_plugin( file )
+	  @plugin_files << file
+	end
+      rescue Exception
+	raise PluginError, "Plugin error in '#{File::basename( plugin_file )}'.\n#{$!}\n#{$!.backtrace[0]}"
+      end
     end
 
     def header_proc
@@ -227,7 +242,19 @@ module Hiki
       label
     end
 
-  private
+    def load_plugin( file )
+      @resource_loaded = false
+      file.untaint
+      begin   
+	load( File::dirname( file ) + "/#{@conf.lang}/" + File::basename( file ) )
+	@resource_loaded = true
+      rescue IOError, Errno::ENOENT
+      end
+      load( file )
+    end
+
+    private
+
     def export_plugin_methods(*names)
       @export_method_list = names.collect do |name|
         name = name.intern if name.is_a?(String)
