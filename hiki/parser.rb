@@ -1,4 +1,4 @@
-# $Id: parser.rb,v 1.5 2003-02-22 13:04:21 hitoshi Exp $
+# $Id: parser.rb,v 1.6 2003-02-23 02:20:08 hitoshi Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 module Hiki
@@ -194,7 +194,7 @@ module Hiki
       s.each do |e|
         type = e[:e]
         case type
-        when :horizontal_rule
+        when :horizontal_rule, :plugin
           close_blocks( ns, block_level )
           ns.push ( e )
         when :heading_open
@@ -241,9 +241,6 @@ module Hiki
         when :emphasis_close, :strong_close, :delete_close
           ns.push ( e )
         when :blockquote_close
-        when :plugin
-          close_blocks( ns, block_level )
-          ns.push ( e )
         else
           if @last_blocktype.empty?
             ns.push( {:e => :p_open} )

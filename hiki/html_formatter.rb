@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.4 2003-02-22 13:04:21 hitoshi Exp $
+# $Id: html_formatter.rb,v 1.5 2003-02-23 02:20:08 hitoshi Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -181,7 +181,7 @@ module Hiki
           when /^[-+]?\d+(\.\d+)?$/
             $1 ? a.to_f : a.to_i
           when /^'(.+)'$/, /^"(.+)"$/
-            $1
+            $1.escapeHTML
           else
             a
           end

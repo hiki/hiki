@@ -1,8 +1,10 @@
-# $Id: category.rb,v 1.3 2003-02-22 13:04:21 hitoshi Exp $
+# $Id: category.rb,v 1.4 2003-02-23 02:20:08 hitoshi Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 def category_list(*category)
   category_re = /^\(([^\)]+?)\)/
+
+  category.collect! {|a| a.unescapeHTML}
   
   l = Hash::new
   @db.page_info.each do |a|

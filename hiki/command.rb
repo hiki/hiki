@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.2 2003-02-22 06:18:00 hitoshi Exp $
+# $Id: command.rb,v 1.3 2003-02-23 02:20:08 hitoshi Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'amrita/template'
@@ -31,7 +31,7 @@ module Hiki
       @p = @p.unescape.to_euc if @p
       
       @page   = Hiki::Page::new( cgi )
-      options = $options || Hash.new( nil )
+      options = $options || Hash.new( '' )
       
       options['page'] = @p
       options['db']   = @db
