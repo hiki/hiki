@@ -1,4 +1,4 @@
-# $Id: pluginutil.rb,v 1.1 2004-04-06 16:01:14 fdiary Exp $
+# $Id: pluginutil.rb,v 1.2 2004-06-26 14:12:28 fdiary Exp $
 #
 # apply_plugin(str):
 #  Eval the string as a plugin.
@@ -15,8 +15,8 @@ require 'cgi'
 module Hiki
   module Util
     module_function
-    def apply_plugin(str, plugin)
-      return str unless $use_plugin
+    def apply_plugin(str, plugin, conf)
+      return str unless conf.use_plugin
       method, *args = methodwords(str)
       begin
         if plugin.respond_to?(method) && !Object.method_defined?(method)

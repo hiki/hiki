@@ -1,8 +1,50 @@
+2004-06-26  Kazuhiko  <kazuhiko@fdiary.net>
+	* template/en/edit.html, template/fr/edit.html, it/edit.html,
+	template/ja/edit.html: 書き方へのリンクを修正
+
+2004-06-23  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/session.rb (session_path): NetBSD 対策のため末尾に '/' を付
+	けないように修正 thanks to zunda
+
+	* attach.rb (attach_form): page を escapeHTML するように修正し、出
+	力される HTML を修正
+	* misc/plugin/local_css.rb (about_local_css): theme_url と 
+	local_theme_url をescape するように修正
+	* plugin/00default.rb (hiki_header): base_css と theme_url を 
+	escape するように修正
+	* hiki/storage.rb (search): 検索結果を escapeHTML するように修正
+	* hiki/command.rb (cmd_edit): pagename を escapeHTML するように修
+	正
+	* misc/plugin/pagerank.rb: title と stylesheet を escapeHTML し、
+	URI を escape するように修正
+
+	* hiki/command.rb (cmd_diff), hiki/util.rb (title): escapeHTML し
+	すぎなバグを修正
+
+2004-06-22  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/config.rb (save_config): String の際は dump を使うように修
+	正 thanks to akira yamada / やまだあきら
+
+	* hiki/page.rb (page): HEAD アクセス時のみ Last-Modified を返すよ
+	うに修正
+
+	* hiki/config.rb (load): 旧フォーマットの hikiconf.rb 使用時にエラー
+	を出すように修正
+
+	* hiki/command.rb (admin_save_config): パスワード無しの場合もセッ
+	ションを確認するように修正 thanks to sheepman
+
+	* misc/plugin/history.rb: @options['hidelog'] に対応、テーブルのス
+	タイルシートはテーマに任せるように修正
+
 2004-06-18  Kazuhiko  <kazuhiko@fdiary.net>
-	* hiki/global.rb: 設定項目のデフォルト値を用意するように修正
+	* hiki/config.rb: 設定項目のデフォルト値を用意するように修正
+
+	* hiki/config.rb (default), hiki/util.rb, plugin/00default.rb:
+	generator の定義を Config クラスに移動
 
 	* plugin/00default.rb (hiki_header): title 出力を escapeHTMLするよ
-	うに修正 thanks to "Yuya Yamaguchi" <bebe@hepo.jp>
+	うに修正 thanks to Yuya Yamaguchi
 
 2004-06-17  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/session.rb: 新ファイル
@@ -17,9 +59,45 @@
 	* misc/hikifarm/index.cgi: title 取得の修正、title 出力を 
 	escapeHTMLするように修正
 
+2004-06-15  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki.cgi: load を require に修正
+	* misc/plugin/attach/attach.cgi: $cgi_name を './' に変更
+	* hiki/config.rb: hiki.conf の前にデフォルト設定を読み込むように修
+	正 thanks to m_t
+	* hiki/parser.rb, hiki/storage.rb, misc/plugin/src.rb: mod_ruby 対
+	応の修正
+	* style/default/html_formatter.rb: auto_link まわりの mod_ruby 対
+	応の修正 thanks to OZAWA Sakuro
+
+2004-06-12  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/hikifarm/hikifarm.conf, misc/hikifarm/index.cgi: 設定項目 
+	'cgi_name' を新設
+	* misc/hikifarm/index.cgi: 生成する Hiki CGI の require 'hiki' を
+	load 'hiki.cgi' に修正
+
+	* hiki.cgi, hiki/aliaswiki.rb, hiki/command.rb,
+	hiki/hiki_formatter.rb, hiki/interwiki.rb, hiki/page.rb,
+	hiki/plugin.rb, hiki/pluginutil.rb, hiki/util.rb,
+	hiki/db/flatfile.rb, misc/hikifarm/hiki.conf,
+	misc/hikifarm/hikifarm.conf, misc/hikifarm/index.cgi,
+	misc/plugin/bbs.rb, misc/plugin/comment.rb, misc/plugin/cvs.rb,
+	misc/plugin/history.rb, misc/plugin/local_css.rb,
+	misc/plugin/pagerank.rb, misc/plugin/rss.rb,
+	misc/plugin/search.rb, misc/plugin/svn.rb,
+	misc/plugin/attach/attach.cgi, misc/plugin/attach/attach.rb,
+	plugin/00default.rb, style/default/html_formatter.rb,
+	style/default/parser.rb, style/rd+/html_formatter.rb,
+	style/rd+/parser.rb, style/rd+/rd2html.rb: mod_ruby 対応
+	* hiki/config.rb: Config クラス用ファイルを新設
+	* hiki/global.rb: Config#default に移行したため消去
+	* hikiconf.rb.sample, doc/INSTALL.txt, doc/VERSIONUP.txt: ドキュメ
+	ントの修正
+
 2004-06-11  Kazuhiko  <kazuhiko@fdiary.net>
-	* misc/plugin/rss.rb: site_name, author_name をエスケープするように修正
-	* misc/plugin/pagerank.rb, misc/plugin/rss.rb, misc/plugin/src.rb: CGI ヘッダの後に不要な改行の出力をしないように修正
+	* misc/plugin/rss.rb: site_name, author_name をエスケープするよう
+	に修正
+	* misc/plugin/pagerank.rb, misc/plugin/rss.rb, misc/plugin/src.rb:
+	CGI ヘッダの後に不要な改行の出力をしないように修正
 
 2004-06-10  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/util.rb (save_config): エスケープして保存するように修正
@@ -44,24 +122,23 @@
 	* misc/plugin/rss-show.rb (rss_show): $SAFE=1 向けの修正 by MACHIDA Hideki <h@matchy.net>
 
 2004-04-02  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
-        * style/default/html_formatter.rb, messages/en.rb, messages/ja.rb: 存在しない\
-ページを作成するアンカー ? にtitle属性をつける by OZAWA Sakuro <crouton@ex-machina.jp>
+        * style/default/html_formatter.rb, messages/en.rb, messages/ja.rb: 存在しないページを作成するアンカー ? にtitle属性をつける by OZAWA Sakuro
 
 2004-03-17  Kazuhiko  <kazuhiko@fdiary.net>
-	* misc/plugin/attach/attach.rb: $SAFE=1 向けの修正 by HOSONO Hidetomo <h12o@h12o.org>
+	* misc/plugin/attach/attach.rb: $SAFE=1 向けの修正 by HOSONO Hidetomo
 
 2004-03-16  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/amazon.rb: $SAFE=1 向けの修正
 
 2004-03-11  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
         * style/default+/html_formatter.rb, style/rd+/html_formatter.rb: XSS脆弱性の修正
-	* template/en/edit.html: 英語テンプレートの修正 by mput<webmaster@mput.dip.jp>
+	* template/en/edit.html: 英語テンプレートの修正 by mput
 
 2004-03-09  Kazuhiko  <kazuhiko@fdiary.net>
 	* plugin/00default.rb (hiki_footer): 不要な <div> の削除
 
 2004-03-05  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
-	* misc/plugin/pagerank.rb: 追加 by ichiyama ryoichi <ir@bellbind.net>
+	* misc/plugin/pagerank.rb: 追加 by ichiyama ryoichi
 	* hiki.cgi, hiki/command.rb, hiki/db/flatfile.rb, misc/plugin/attach/attach.rb, misc/plugin/amazon.rb: $SAFE=1
 
 2004-03-04  Kazuhiko  <kazuhiko@fdiary.net>
@@ -89,11 +166,10 @@
 	* doc/*.txt: 文字コードをEUCに統一
 	* hikiconf.rb.sample: 設定例の変更
 	* plugin/remap_headings.rb: misc/pluginへ移動
-	* misc/hiki-farm/*: hiki-modeの同梱
-	by Hideaki Hori  <yowaken@cool.ne.jp>
+	* misc/hiki-farm/*: hiki-modeの同梱 by Hideaki Hori
 	* theme/hiki/hiki.css: hilight時のCSSを追加
 	* hikiconf.rb.sample: キーワードハイライトをデフォルトの動作に変更
-	* misc/plugin/recent2.rb: 新規追加 by not <not@cds.ne.jp>
+	* misc/plugin/recent2.rb: 新規追加 by not
 	* Version 0.6 リリース
 	* misc/hikifarm/hiki.conf: $hilight_keysの追加
 
@@ -196,7 +272,7 @@
 28 Aug 2003 23:38:34 +0900	TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 	* misc/hikifarm/hiki.conf, misc/hikifarm/hikifarm.conf,
 	misc/hikifarm/index.cgi, misc/plugin/svn.rb: Subversion バックエン
-	ドへの対応 by koichiro koichiro <koichiro@meadowy.org>
+	ドへの対応 by koichiro koichiro
 
 24 Aug 2003 20:57:43 +0900	TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 	* hiki/command.rb, plugin/00default.rb: ページ編集後にリダイレクトする 
@@ -227,8 +303,7 @@
 	* template/*/view.html: div.footerをbodyの小要素に変更した thanks
 	to Kiyo
 	* messages/fr.rb, template/fr/*.html, misc/plugin/fr/*.rb: 
-	フランス語リソースの追加 by Laurent Sansonetti <laurent@datarescue.be>
-	via Masao Mutoh
+	フランス語リソースの追加 by Laurent Sansonetti via Masao Mutoh
 
 12 Aug 2003 15:33:13 +0900	TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 	* misc/plugin/attach/attach.rb: MIME Typeにapplication/pdf追加
@@ -859,7 +934,7 @@
 
 09 Apr 2003 23:21:22 +0900	TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
-	* dot.htaccess: 複数Hiki設置対応 by かずひこ <kazuhiko@fdiary.net>
+	* dot.htaccess: 複数Hiki設置対応 by かずひこ
 
 09 Apr 2003 14:05:12 +0900	Kazuhiko  <kazuhiko@fdiary.net>
 
@@ -889,12 +964,11 @@
 
 05 Apr 2003 11:41:42 +0900	TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
-	* Hiki/RD+ のマージ : contributed by Masao Mutoh <mutoh@highway.ne.jp>
+	* Hiki/RD+ のマージ : contributed by Masao Mutoh
 
-	* テーブルのサポート: by かずひこ <kazuhiko@fdiary.net>
+	* テーブルのサポート: by かずひこ
 
 	* 定義リスト中に':'がある場合のレンダリングバグFix: by ょゎ
-	<yowaken@cool.ne.jp>
 
 	* 更新後にredirectするようにした
 

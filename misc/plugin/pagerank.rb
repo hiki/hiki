@@ -21,7 +21,7 @@
 #    PageRank table: default "%2.6f"
 #
 #  @options["pagerank.pagetitle"]: string
-#    PageRank page title: default "PageRank: #{$site_name}"
+#    PageRank page title: default "PageRank: #{@conf.site_name}"
 #
 #  @options["pagerank.showfrom"]: true or false
 #    show "linked from" column if true: default true
@@ -41,13 +41,13 @@ end
 def PageRank.menu_label
   'PageRank'
 end
-def PageRank.default_options
+def PageRank.default_options( conf )
   {
     "pagerank.algorithm" => "google-original",
     "pagerank.dvalue" => 0.85,
     "pagerank.tablealign" => "left",
     "pagerank.rankformat" => "%2.6f",
-    "pagerank.pagetitle" => "PageRank: #{$site_name}",
+    "pagerank.pagetitle" => "PageRank: #{conf.site_name}",
     "pagerank.showfrom" => true,
     "pagerank.maxpages" => nil,
     "pagerank.showtime" => false,
@@ -324,15 +324,15 @@ def pagerank_page
   header = Hash::new
   header['Last-Modified'] = CGI::rfc1123_date(Time.now)
   header['type']          = 'text/html'
-  header['charset']       = $charset
-  header['Content-Language'] = $lang
+  header['charset']       = @conf.charset
+  header['Content-Language'] = @conf.lang
   header['Pragma']           = 'no-cache'
   header['Cache-Control']    = 'no-cache'
   print @cgi.header(header)
   
-  options = PageRank.default_options
+  options = PageRank.default_options( @conf )
   options.update(@options)
-  stylesheet = $theme_url + "/" + $theme + "/" + $theme + ".css"
+  stylesheet = @conf.theme_url + "/" + @conf.theme + "/" + @conf.theme + ".css"
   align = options["pagerank.tablealign"]
   title = options["pagerank.pagetitle"]
   
@@ -344,11 +344,11 @@ def pagerank_page
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=EUC-JP" />
   <meta http-equiv="Content-Language" content="ja" />
-  <title id=title>#{title}</title>
-  <link rel="stylesheet" type="text/css" href="#{stylesheet}" /> 
+  <title id=title>#{title.escapeHTML}</title>
+  <link rel="stylesheet" type="text/css" href="#{stylesheet.escapeHTML}" /> 
 </head>
 <body>
-<h1>#{title}</h1>
+<h1>#{title.escapeHTML}</h1>
 <div align="#{align}">
 #{pagerank()}
 </div>
@@ -365,7 +365,7 @@ end
 
 # print pagerank table
 def pagerank(pagerank_options = @options)
-  options = PageRank.default_options
+  options = PageRank.default_options( @conf )
   options.update(pagerank_options)
   pr = PageRank.new
   page_names = @db.pages
@@ -396,11 +396,11 @@ def get_rank_table(page_names, pagerank, calcsec, options)
     no[i] = i + 1
     no[i] = no[i - 1] if i > 0 and pagerank[i] == pagerank[i - 1]
     page = page_names[i]
-    page = hiki_anchor(page, page_name(page))
+    page = hiki_anchor(page.escape, page_name(page))
     rank = sprintf(rankformat, pagerank[i])
     if showfrom
       linked_names = @db.get_references(page_names[i]).collect do |linked_name|
-        hiki_anchor(linked_name, page_name(linked_name))
+        hiki_anchor(linked_name.escape, page_name(linked_name))
       end
       linked = linked_names.join(", ")
       source += %{<tr><td style="text-align: right">#{no[i].to_s}</td><td>#{page}</td><td style="text-align: right">#{rank}</td><td>#{linked}</td></tr>}

@@ -1,4 +1,4 @@
-# $Id: parser.rb,v 1.9 2003-03-24 08:10:48 hitoshi Exp $
+# $Id: parser.rb,v 1.10 2004-06-26 14:12:28 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 module Hiki
@@ -85,7 +85,7 @@ module Hiki
         when /^\s(.*)/
           @cur_stack.push( {:e => :pre, :s => $1} )
         when /^#{PLUGIN}\s*$/
-          if $use_plugin
+          if @conf.use_plugin
             @cur_stack.push( {:e => :plugin, :method => $1, :param => $2} )
           else
             inline( line )
@@ -159,7 +159,7 @@ module Hiki
           str  = $'
           @cur_stack.push ( {:e => :reference, :href => href, :s => href} )
         when PLUGIN_RE
-          if $use_plugin
+          if @conf.use_plugin
             @cur_stack.push( {:e => :inline_plugin, :method => $1, :param => $2} )
             str = $'
           else

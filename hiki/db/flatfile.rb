@@ -1,4 +1,4 @@
-# $Id: flatfile.rb,v 1.6 2004-04-18 07:22:50 fdiary Exp $
+# $Id: flatfile.rb,v 1.7 2004-06-26 14:12:29 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'ftools'
@@ -9,9 +9,10 @@ require 'hiki/util'
 
 module Hiki
   class HikiDB < HikiDBBase
-    def initialize
-      create_infodb unless test(?e, $info_db)
-      @info = PTStore::new( $info_db )
+    def initialize( conf )
+      @conf = conf
+      create_infodb unless test(?e, @conf.info_db)
+      @info = PTStore::new( @conf.info_db )
     end
     
     def store( page, text, md5 )
@@ -70,7 +71,7 @@ module Hiki
     end
 
     def pages
-      Dir.glob( "#{$pages_path}/*" ).delete_if {|f| !test(?f, f.untaint)}.collect! {|f|
+      Dir.glob( "#{@conf.pages_path}/*" ).delete_if {|f| !test(?f, f.untaint)}.collect! {|f|
         File::basename( f ).unescape
       }
     end
@@ -79,11 +80,11 @@ module Hiki
     #   info DB
     # ==============
     def create_infodb
-      @info = PTStore::new( $info_db )
+      @info = PTStore::new( @conf.info_db )
       @info.transaction do
         pages.each do |a|
           r = default
-          r[:last_modified] = File::mtime( "#{$pages_path}/#{a.escape}".untaint )
+          r[:last_modified] = File::mtime( "#{@conf.pages_path}/#{a.escape}".untaint )
           @info[a.escape]  = r
         end
       end
@@ -97,7 +98,7 @@ module Hiki
     end
     
     def infodb_exist?
-      test( ?e, $info_db )
+      test( ?e, @conf.info_db )
     end
 
     def info( p )
@@ -213,11 +214,11 @@ module Hiki
     end
 
     def textdir(s)
-      ( $pages_path + '/' + s.escape ).untaint
+      ( @conf.pages_path + '/' + s.escape ).untaint
     end
 
     def backupdir(s)
-     ( $backup_path  + '/' + s.escape ).untaint
+     ( @conf.backup_path  + '/' + s.escape ).untaint
     end
   end
 end

@@ -27,11 +27,12 @@ module Hiki
     ESC_WORD = '_h_i-k-i_'
     ESC_WORD_RE = /#{ESC_WORD}/
 
-    def initialize(plugin, db)
+    def initialize(plugin, db, conf)
       super()
       @title = "Untitled"
       @plugin = plugin
       @db = db
+      @conf = conf
       @references = Array.new
       @regex = nil
       @toc = []
@@ -44,7 +45,7 @@ module Hiki
       end
 
       #InterWikiName
-      @anchorlist = AnchorList.new(@db.load($interwiki_name), plugin)
+      @anchorlist = AnchorList.new(@db.load(@conf.interwiki_name), plugin)
     end
 
     def get_anchor(element)
@@ -78,11 +79,11 @@ module Hiki
         method = $1
 	ret = ''
 	begin
-	  ret = Hiki::Util.apply_plugin(method, @plugin)
+	  ret = Hiki::Util.apply_plugin(method, @plugin, @conf)
           ret.gsub!(@regex_modulenames, "\\&#{ESC_WORD}") if @regex_modulenames
         rescue Exception
           err = "Plugin Error: #{$!}" #<pre>#{match.to_s.escapeHTML}</pre>"
-          if $plugin_debug
+          if @conf.plugin_debug
             err += "</p><p>Back trace<pre>"
             $!.backtrace.each do |v|
               err += v + "\n"
@@ -149,7 +150,7 @@ module Hiki
                 ret = @plugin.hiki_anchor(target, name)
               end
             else
-              ret = %Q[#{name}<a href=\"#{$cgi_name}?c=edit&p=#{target}\">?</a>]
+              ret = %Q[#{name}<a href=\"#{@conf.cgi_name}?c=edit&p=#{target}\">?</a>]
             end
             ret
           else
@@ -177,7 +178,7 @@ module Hiki
       label = hyphen_escape(element.label)
       @toc.push({'level' => element.level, 'index' => anchor, 'title' => title})
       depth = element.level
-      depth += $options['rd.header_depth'] - 1 if $options['rd.header_depth']
+      depth += @conf.options['rd.header_depth'] - 1 if @conf.options['rd.header_depth']
       %Q[<h#{depth}>#{a_name_href(anchor, title)}] +
       %Q[</h#{depth}><!-- RDLabel: "#{label}" -->]
     end
@@ -254,7 +255,7 @@ module Hiki
             label.gsub!(@regex_modulenames, "\\&#{ESC_WORD}")
           end
           escaped = label.escape
-          content + %Q[<a href="#{$cgi_name}?c=edit;p=#{escaped}">?</a>]
+          content + %Q[<a href="#{@conf.cgi_name}?c=edit;p=#{escaped}">?</a>]
         end
       end
     end

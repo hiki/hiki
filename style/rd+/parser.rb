@@ -10,6 +10,9 @@ require 'cgi'
 
 module Hiki
   class Parser
+    def initialize( conf )
+    end
+
     def parse(s)
       begin
         RD::RDTree.new("=begin\n#{s}\n=end\n\n")

@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.6 2004-04-02 00:45:02 hitoshi Exp $
+# $Id: html_formatter.rb,v 1.7 2004-06-26 14:12:30 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -51,17 +51,18 @@ module Hiki
     MAP[:table_data_open]      = '<td>'
     MAP[:table_data_close]     = '</td>'
 
-    def initialize( s, db, plugin, suffix = 'l')
+    def initialize( s, db, plugin, conf, suffix = 'l')
       @tokens     = s
       @db         = db
       @plugin     = plugin
+      @conf       = conf
       @suffix     = suffix
       @toc_cnt    = 0
       @toc        = Array::new
       @references = Array::new
-      @interwiki  = InterWiki::new( @db, plugin )
-      @aliaswiki  = AliasWiki::new( @db )
-      @auto_links  = get_auto_links if $auto_link
+      @interwiki  = InterWiki::new( @db, plugin, @conf )
+      @aliaswiki  = AliasWiki::new( @db, @conf )
+      @auto_links  = get_auto_links if @conf.auto_link
     end
 
     def HTMLFormatter::diff( d, src )
@@ -102,7 +103,7 @@ module Hiki
     end
 
     def flush_normal_text(text, pre)
-      if not pre and $auto_link
+      if not pre and @conf.auto_link
         auto_link(text)
       else
         text 
@@ -143,7 +144,7 @@ module Hiki
             @references << t[:href]
           else
             missing_anchor_title = msg_missing_anchor_title % [ disp.escapeHTML ]
-            outer_alias = @interwiki.outer_alias(t[:href]) || "#{disp.escapeHTML}<a class=\"nodisp\" href=\"#{$cgi_name}?c=edit;p=#{t[:href].escape}\" title=\"#{missing_anchor_title}\">?</a>"
+            outer_alias = @interwiki.outer_alias(t[:href]) || "#{disp.escapeHTML}<a class=\"nodisp\" href=\"#{@conf.cgi_name}?c=edit;p=#{t[:href].escape}\" title=\"#{missing_anchor_title}\">?</a>"
             html << outer_alias
           end
           toc_title << t[:href] if toc_level > 0
@@ -169,7 +170,7 @@ module Hiki
               html << s
             end
           rescue Exception => e
-            if $plugin_debug
+            if @conf.plugin_debug
               html << e.message
             else
               html << plugin_error( t[:method], $! )
@@ -286,7 +287,7 @@ EOS
     end
       
     def call_plugin_method( t )
-      return nil unless $use_plugin
+      return nil unless @conf.use_plugin
       
       method = t[:method]
       args = nil

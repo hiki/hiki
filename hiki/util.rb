@@ -1,4 +1,4 @@
-# $Id: util.rb,v 1.9 2004-06-10 14:37:45 fdiary Exp $
+# $Id: util.rb,v 1.10 2004-06-26 14:12:28 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'nkf'
@@ -6,8 +6,6 @@ require 'cgi'
 require 'net/smtp'
 require 'amrita/template'
 require 'hiki/algorithm/diff'
-require "style/#{$style}/parser"
-require "hiki/hiki_formatter"
 
 class String
   def to_euc
@@ -95,24 +93,8 @@ module Hiki
 
     def plugin_error( method, e )
       msg = "<strong>#{e.class}(#{e.message}): #{method.escapeHTML}</strong><br>"
-      msg << "<strong>#{e.backtrace.join("<br>\n")}</strong>" if $plugin_debug
+      msg << "<strong>#{e.backtrace.join("<br>\n")}</strong>" if @conf.plugin_debug
       msg
-    end
-
-    def save_config
-      File::open($config_file, "w") do |f|
-        %w($site_name $author_name $mail $theme $password $theme_url $sidebar_class $main_class $theme_path $mail_on_update $use_sidebar $auto_link).each do |c|
-          f.puts( %Q|#{c} = #{eval(c).inspect}| ) if c
-        end
-      end
-    end
-
-    def load_config
-      begin
-        conf = File::readlines( $config_file ).join
-        eval( conf.untaint, binding, $config_file, 1 )
-      rescue
-      end
     end
 
     def cmdstr( cmd, param )
@@ -120,31 +102,30 @@ module Hiki
     end
 
     def title( s )
-      "#{$site_name.escapeHTML} - #{s}"
+      "#{@conf.site_name} - #{s}"
     end
 
     def view_title( s )
-      %Q!<a href="#{$cgi_name}#{cmdstr('search', "key=#{s.escape}") }">#{s.escapeHTML}</a>!
+      %Q!<a href="#{@conf.cgi_name}#{cmdstr('search', "key=#{s.escape}") }">#{s.escapeHTML}</a>!
     end
 
     def format_date( tm )
       tm.strftime(msg_time_format).sub(/#DAY#/, "(#{msg_day[tm.wday]})")
     end
 
-    def get_common_data( db, plugin )
+    def get_common_data( db, plugin, conf )
       data = Hash::new
-      $generator         = "Hiki #{HIKI_VERSION}"
-      data[:author_name] = $author_name
-      data[:view_style]  = $use_sidebar ? $main_class : 'hiki' # for tDiary theme
-      data[:cgi_name]    = $cgi_name
-      if $use_sidebar
-        parser = Parser::new
-        m = db.load( $side_menu ) || ''
+      data[:author_name] = conf.author_name
+      data[:view_style]  = conf.use_sidebar ? conf.main_class : 'hiki' # for tDiary theme
+      data[:cgi_name]    = conf.cgi_name
+      if conf.use_sidebar
+        parser = Parser::new( conf )
+        m = db.load( conf.side_menu ) || ''
         t = parser.parse( m )
-        f = HikiFormatter::new( t, db, plugin, 's' )
+        f = HikiFormatter::new( t, db, plugin, conf, 's' )
         data[:sidebar]   =  {:menu => f.to_s.sanitize}
-        data[:main_class]    = $main_class
-        data[:sidebar_class] = $sidebar_class
+        data[:main_class]    = conf.main_class
+        data[:sidebar_class] = conf.sidebar_class
       else
         data[:sidebar] = nil
       end
@@ -175,11 +156,11 @@ module Hiki
     end
 
     def sendmail(subject, body)
-      return unless $mail || $smtp_server
-      Net::SMTP.start($smtp_server, 25) {|smtp|
-        smtp.send_mail <<EndOfMail, $mail, $mail
-From: #{$mail_from ? $mail_from : $mail}
-To: #{$mail}
+      return unless @conf.mail || @conf.smtp_server
+      Net::SMTP.start(@conf.smtp_server, 25) {|smtp|
+        smtp.send_mail <<EndOfMail, @conf.mail, @conf.mail
+From: #{@conf.mail_from ? @conf.mail_from : @conf.mail}
+To: #{@conf.mail}
 Subject: #{subject.to_jis}
 Date: #{Time.now.rfc2822}
 X-Mailer: Hiki #{HIKI_VERSION}
@@ -194,25 +175,25 @@ EndOfMail
 #{'-' * 25}
 REMOTE_ADDR = #{ENV['REMOTE_ADDR']}
 REMOTE_HOST = #{ENV['REMOTE_HOST']}
-        URL = #{$index_page}?#{page.escape}
+        URL = #{@conf.index_page}?#{page.escape}
 #{'-' * 25}
 #{text}
 EOS
     end
 
     def theme_url
-      if /\.css\Z/i =~ $theme_url
-        $theme_url
+      if /\.css\Z/i =~ @conf.theme_url
+        @conf.theme_url
       else
-       "#{$theme_url}/#{$theme}/#{$theme}.css"
+       "#{@conf.theme_url}/#{@conf.theme}/#{@conf.theme}.css"
       end
     end
 
     def base_css_url
-      if /\.css\Z/i =~ $theme_url
-        "#{File.dirname($theme_url)}/../hiki_base.css"
+      if /\.css\Z/i =~ @conf.theme_url
+        "#{File.dirname(@conf.theme_url)}/../hiki_base.css"
       else
-       "#{$theme_url}/hiki_base.css"
+       "#{@conf.theme_url}/hiki_base.css"
       end
     end
   end

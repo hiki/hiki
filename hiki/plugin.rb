@@ -1,4 +1,4 @@
-# $Id: plugin.rb,v 1.3 2004-02-15 02:48:35 hitoshi Exp $
+# $Id: plugin.rb,v 1.4 2004-06-26 14:12:28 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
@@ -7,46 +7,13 @@ require 'cgi'
 require 'hiki/util'
 
 module Hiki
-  class Config
-    def initialize
-      instance_variables.each do |v|
-        v.sub!( '@', '' )
-        instance_eval( <<-SRC
-          def #{v}
-            @#{v}
-          end
-          def #{v}=(p)
-            @#{v} = p
-          end
-          SRC
-        )
-      end
-    end
-
-    def charset( mobile = false )
-      case $lang
-      when 'en'
-        'ISO-8859-1'
-      else
-        if mobile then
-          'Shift_JIS'
-        else
-          'EUC-JP'
-        end
-      end
-    end
-
-    def mobile_agent?
-      %r[(DoCoMo|J-PHONE|UP\.Browser|ASTEL|PDXGW|Palmscape|Xiino|sharp pda browser|Windows CE|L-mode)]i =~ ENV['HTTP_USER_AGENT']
-    end
-  end
-  
   class Plugin
     attr_reader   :toc_f, :plugin_command
-    attr_accessor :text
+    attr_accessor :text, :title
     
-    def initialize( options )
+    def initialize( options, conf )
       @options      = options
+      @conf         = conf
       set_tdiary_env
       
       @plugin_method_list = []
@@ -85,7 +52,7 @@ module Hiki
     end
 
     def update_proc
-      return unless $use_plugin
+      return unless @conf.use_plugin
       
       @update_procs.each do |proc|
         begin
@@ -96,7 +63,7 @@ module Hiki
     end
 
     def delete_proc
-      return unless $use_plugin
+      return unless @conf.use_plugin
       
       @delete_procs.each do |proc|
         begin
@@ -107,7 +74,7 @@ module Hiki
     end
     
     def body_enter_proc
-      return '' unless $use_plugin
+      return '' unless @conf.use_plugin
 
       r = []
       @body_enter_procs.each do |proc|
@@ -121,7 +88,7 @@ module Hiki
     end
 
     def body_leave_proc
-      return '' unless $use_plugin
+      return '' unless @conf.use_plugin
       r = []
 
       @body_leave_procs.each do |proc|
@@ -135,7 +102,7 @@ module Hiki
     end
 
     def page_attribute_proc
-      return '' unless $use_plugin
+      return '' unless @conf.use_plugin
       r = []
 
       @page_attribute_procs.each do |proc|
@@ -149,7 +116,7 @@ module Hiki
     end
 
     def footer_proc
-#      return '' unless $use_plugin
+#      return '' unless @conf.use_plugin
       r = []
 
       @footer_procs.each do |proc|
@@ -163,7 +130,7 @@ module Hiki
     end
 
     def edit_proc
-      return '' unless $use_plugin
+      return '' unless @conf.use_plugin
       r = []
 
       @edit_procs.each do |proc|
@@ -177,7 +144,7 @@ module Hiki
     end
       
     def form_proc
-      return '' unless $use_plugin
+      return '' unless @conf.use_plugin
       r = []
 
       @form_procs.each do |proc|
@@ -191,7 +158,7 @@ module Hiki
     end
     
     def menu_proc
-      return '' unless $use_plugin
+      return '' unless @conf.use_plugin
       r = []
 
       @menu_procs.each do |proc|
@@ -300,12 +267,12 @@ module Hiki
       @date             = Time::now
       @cookies          = []
       
-      @options['cache_path']  = $cache_path 
+      @options['cache_path']  = @conf.cache_path 
       @options['mode']        = "day"
-#      @options['author_name'] = $author_name || 'anonymous'
-#      @options['author_mail'] = $mail
-#      @options['index_page']  = $index_page
-#      @options['html_title']  = $site_name
+#      @options['author_name'] = @conf.author_name || 'anonymous'
+#      @options['author_mail'] = @conf.mail
+#      @options['index_page']  = @conf.index_page
+#      @options['html_title']  = @conf.site_name
       @options['years']       = {}
       @options['diaries']     = nil,
       @options['date']        = Time::now

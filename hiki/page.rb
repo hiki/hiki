@@ -1,4 +1,4 @@
-# $Id: page.rb,v 1.4 2004-02-15 02:48:35 hitoshi Exp $
+# $Id: page.rb,v 1.5 2004-06-26 14:12:28 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'cgi'
@@ -7,8 +7,9 @@ module Hiki
   class Page
     attr_accessor :template, :contents
     
-    def initialize(cgi)
+    def initialize(cgi, conf)
       @cgi = cgi
+      @conf = conf
       @template = nil
       @contents = nil
     end
@@ -25,22 +26,21 @@ module Hiki
     end
 
     def page( plugin )
-      $title = @contents[:title]
+      plugin.title = @contents[:title]
       @contents[:header]         = plugin.header_proc.sanitize
       @contents[:body_leave]     = plugin.body_leave_proc.sanitize
       @contents[:footer]         = plugin.footer_proc.sanitize
       
       html = to_html
       header = Hash::new
-# XREA
-#      if @contents[:last_modified] and /HEAD/i =~ @cgi.request_method
-#       header['Last-Modified']    = CGI::rfc1123_date(@contents[:last_modified])
-#      end
-      header['Last-Modified']    = CGI::rfc1123_date(@contents[:last_modified])
+
+      if @contents[:last_modified] and /HEAD/i =~ @cgi.request_method
+	header['Last-Modified']    = CGI::rfc1123_date(@contents[:last_modified])
+      end
       header['type']     = 'text/html'
-      header['charset']          = $charset
+      header['charset']          = @conf.charset
       header['Content-Length']   = html.size.to_s
-      header['Content-Language'] = $lang
+      header['Content-Language'] = @conf.lang
       header['Pragma']           = 'no-cache'
       header['Cache-Control']    = 'no-cache'
       response = @cgi.header(header)

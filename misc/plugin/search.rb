@@ -13,7 +13,7 @@ end
 
 def search
   <<EOS
-<form action="#{$cgi_name}" method="get">
+<form action="#{@conf.cgi_name}" method="get">
   #{search_key_label}:<br>
   <input type="text" name="key" size="15">
   <input type="submit" name="comment" value="#{search_post_label}">

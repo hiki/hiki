@@ -3,7 +3,7 @@
 == plugin/history.rb - CVS の編集履歴を表示するプラグイン
 
   Copyright (C) 2003 Hajime BABA <baba.hajime@nifty.com>
-  $Id: history.rb,v 1.3 2004-04-07 06:36:06 fdiary Exp $
+  $Id: history.rb,v 1.4 2004-06-26 14:12:29 fdiary Exp $
   You can redistribute and/or modify this file under the terms of the LGPL.
 
   Copyright (C) 2003 Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
@@ -23,8 +23,8 @@
     * history_src   あるリビジョンのソースを表示
     * history_diff  任意のリビジョン間の差分を表示
   実際には、
-    $cgi_name?c=history;p=FrontPage や
-    $cgi_name?c=plugin;plugin=history_diff;p=FrontPage;r=2
+    @conf.cgi_name?c=history;p=FrontPage や
+    @conf.cgi_name?c=plugin;plugin=history_diff;p=FrontPage;r=2
   のように使用します。
 
 * 履歴にはブランチ等が現れないことを前提にしています。
@@ -38,7 +38,7 @@
 
 === notice
 Hikifarmを使用している場合、hiki.confに
-$repos_type      = (defined? repos_type) ? "#{repos_type}" : nil
+@conf.repos_type      = (defined? repos_type) ? "#{repos_type}" : nil
 を追加してください。-- Yas
 
 CSSでspan.add_line, span.del_lineを設定すると、変更箇所の文字属性を変更できます。
@@ -57,22 +57,22 @@ def history_label
 end
 
 def history
-  h = Hiki::History::new(@cgi, @db)
+  h = Hiki::History::new(@cgi, @db, @conf)
   h.history
 end
 
 def history_src
-  h = Hiki::History::new(@cgi, @db)
+  h = Hiki::History::new(@cgi, @db, @conf)
   h.history_src
 end
 
 def history_diff
-  h = Hiki::History::new(@cgi, @db)
+  h = Hiki::History::new(@cgi, @db, @conf)
   h.history_diff
 end
 
 add_body_enter_proc(Proc.new do
-  if $repos_root then
+  if @conf.repos_root then
     add_plugin_command('history', history_label, {'p' => true})
   else
     ''
@@ -84,11 +84,11 @@ module Hiki
     private
 
     def history_repos_type
-      $repos_type # 'cvs' or 'svn'
+      @conf.repos_type # 'cvs' or 'svn'
     end
 
     def history_repos_root
-      $repos_root # hiki.conf
+      @conf.repos_root # hiki.conf
     end
 
     def history_label
@@ -125,7 +125,7 @@ module Hiki
       cmdlog = ''
       oldpwd = Dir.pwd.untaint
       begin
-	Dir.chdir( "#{$pages_path}" )
+	Dir.chdir( "#{@conf.pages_path}" )
 	# うーん... まあとりあえず。
 	cmdlog = `#{cmd_string.untaint}`
       ensure
@@ -137,11 +137,11 @@ module Hiki
     # Subroutine to output proper HTML for Hiki.
     def history_output (s)
       # Imported codes from hiki/command.rb::cmd_view()
-      parser = Parser::new
+      parser = Parser::new( @conf )
       tokens = parser.parse( s )
-      formatter = HikiFormatter::new( tokens, @db, @plugin )
-      @page  = Page::new( @cgi )
-      data   = Util::get_common_data( @db, @plugin )
+      formatter = HikiFormatter::new( tokens, @db, @plugin, @conf )
+      @page  = Page::new( @cgi, @conf )
+      data   = Util::get_common_data( @db, @plugin, @conf )
       @plugin.hiki_menu(data, @cmd)
       pg_title = @plugin.page_name(@p)
       data[:title]      = title( "#{pg_title} - #{history_label}")
@@ -201,27 +201,35 @@ module Hiki
       #  sources << "<pre>\n"
       #  sources << cmdlog
       #  sources << "</pre>\n"
-      sources << "\n<table border=\"1\" style=\"margin-left:0px;width:100%\">\n"
-      sources << " <tr><th rowspan=\"2\">#{history_th_label[0].escapeHTML}</th><th>#{history_th_label[1].escapeHTML}</th><th>#{history_th_label[2].escapeHTML}</th><th>#{history_th_label[3].escapeHTML}</th></tr><tr><th colspan=\"3\">#{history_th_label[4].escapeHTML}</th></tr>\n"
+      sources << "\n<table border=\"1\">\n"
+      if @conf.options['hidelog']
+	sources << " <tr><th>#{history_th_label[0].escapeHTML}</th><th>#{history_th_label[1].escapeHTML}</th><th>#{history_th_label[2].escapeHTML}</th><th>#{history_th_label[3].escapeHTML}</th></tr>\n"
+      else
+	sources << " <tr><th rowspan=\"2\">#{history_th_label[0].escapeHTML}</th><th>#{history_th_label[1].escapeHTML}</th><th>#{history_th_label[2].escapeHTML}</th><th>#{history_th_label[3].escapeHTML}</th></tr><tr><th colspan=\"3\">#{history_th_label[4].escapeHTML}</th></tr>\n"
+      end
       revisions.each do |rev,time,changes,log|
 	#    time << " GMT"
-        op = "[<a href=\"#{$cgi_name}#{cmdstr('plugin', "plugin=history_src;p=#{@p.escape};r=#{rev}")}\">View</a> this version] "
+        op = "[<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_src;p=#{@p.escape};r=#{rev}")}\">View</a> this version] "
 	op << "[Diff to "
         case history_repos_type
         when 'cvs'
-          op << "<a href=\"#{$cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{@p.escape};r=#{rev}")}\">current</a>" unless revisions.size == rev
+          op << "<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{@p.escape};r=#{rev}")}\">current</a>" unless revisions.size == rev
 	op << " | " unless (revisions.size == rev || rev == 1)
-          op << "<a href=\"#{$cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{@p.escape};r=#{rev};r2=#{rev-1}")}\">previous</a>" unless rev == 1
+          op << "<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{@p.escape};r=#{rev};r2=#{rev-1}")}\">previous</a>" unless rev == 1
         when 'svn'
-          op << "<a href=\"#{$cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{@p.escape};r=#{rev}")}\">current</a>" unless prevdiff == 1
+          op << "<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{@p.escape};r=#{rev}")}\">current</a>" unless prevdiff == 1
           op << " | " unless (prevdiff == 1 || prevdiff >= diffrevs.size)
-          op << "<a href=\"#{$cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{@p.escape};r=#{rev};r2=#{diffrevs[prevdiff]}")}\">previous</a>" unless prevdiff >= diffrevs.size
+          op << "<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{@p.escape};r=#{rev};r2=#{diffrevs[prevdiff]}")}\">previous</a>" unless prevdiff >= diffrevs.size
         end
 	op << "]"
-	log.gsub!(/=============================================================================/, '')
-	log.chomp!
-	log = "*** no log message ***" if log.empty?
-	sources << " <tr><td rowspan=\"2\">#{rev}</td><td>#{time.escapeHTML}</td><td>#{changes.escapeHTML}</td><td align=right>#{op}</td></tr><tr><td colspan=\"3\">#{log.escapeHTML}</td></tr>\n"
+	if @conf.options['hidelog']
+	  sources << " <tr><td>#{rev}</td><td>#{time.escapeHTML}</td><td>#{changes.escapeHTML}</td><td align=right>#{op}</td></tr>\n"
+	else
+	  log.gsub!(/=============================================================================/, '')
+	  log.chomp!
+	  log = "*** no log message ***" if log.empty?
+	  sources << " <tr><td rowspan=\"2\">#{rev}</td><td>#{time.escapeHTML}</td><td>#{changes.escapeHTML}</td><td align=right>#{op}</td></tr><tr><td colspan=\"3\">#{log.escapeHTML}</td></tr>\n"
+	end
         if history_repos_type == 'svn' then
           prevdiff += 1
         end
@@ -255,8 +263,8 @@ module Hiki
       # construct output sources
       sources = ''
       sources << "<div class=\"section\">\n"
-      sources << "<a href=\"#{$cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{@p.escape};r=#{r}")}\">#{history_diffto_current_label.escapeHTML}</a><br>\n"
-      sources << "<a href=\"#{$cgi_name}#{cmdstr('history', "p=#{@p.escape}")}\">#{history_backto_summary_label.escapeHTML}</a><br>\n"
+      sources << "<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{@p.escape};r=#{r}")}\">#{history_diffto_current_label.escapeHTML}</a><br>\n"
+      sources << "<a href=\"#{@conf.cgi_name}#{cmdstr('history', "p=#{@p.escape}")}\">#{history_backto_summary_label.escapeHTML}</a><br>\n"
       sources << "</div>\n"
       sources << "<pre class=\"diff\">\n"
       sources << cmdlog.escapeHTML
@@ -295,7 +303,7 @@ module Hiki
       # construct output sources
       sources = ''
       sources << "<div class=\"section\">\n"
-      sources << "<a href=\"#{$cgi_name}#{cmdstr('history', "p=#{@p.escape}")}\">#{history_backto_summary_label.escapeHTML}</a><br>\n"
+      sources << "<a href=\"#{@conf.cgi_name}#{cmdstr('history', "p=#{@p.escape}")}\">#{history_backto_summary_label.escapeHTML}</a><br>\n"
       sources << "</div>\n<br>\n"
       sources << "<span class=\"add_line\">#{history_add_line_label.escapeHTML}</span><br>\n"
       sources << "<span class=\"del_line\">#{history_delete_line_label.escapeHTML}</span><br>\n"

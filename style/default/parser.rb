@@ -1,4 +1,4 @@
-# $Id: parser.rb,v 1.3 2004-03-01 09:50:45 hitoshi Exp $
+# $Id: parser.rb,v 1.4 2004-06-26 14:12:30 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 module Hiki
@@ -51,7 +51,8 @@ module Hiki
     TABLE_RE       = /^#{TABLE}/
     DEFLIST_RE     = /#{DEFLIST}/
 
-    def initialize
+    def initialize( conf )
+      @conf           = conf
       @stack          = HikiStack::new
       @cur_stack      = HikiStack::new
       @last_blocktype = []
@@ -182,7 +183,7 @@ module Hiki
           str  = $'
           @cur_stack.push( {:e => :reference, :href => href, :s => href} )
         when PLUGIN_RE
-          if $use_plugin
+          if @conf.use_plugin
             @cur_stack.push( {:e => :inline_plugin, :method => $1, :param => $2} )
             str = $'
           else

@@ -1,9 +1,7 @@
-# $Id: hiki_formatter.rb,v 1.2 2004-02-15 02:48:35 hitoshi Exp $
+# $Id: hiki_formatter.rb,v 1.3 2004-06-26 14:12:28 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 module Hiki
-  require "style/#{$style}/html_formatter"
-  
   class HikiFormatter < HTMLFormatter
     def apply_tdiary_theme(html)
       section = ''

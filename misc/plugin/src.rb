@@ -1,4 +1,4 @@
-# $Id: src.rb,v 1.3 2004-06-10 17:13:18 fdiary Exp $
+# $Id: src.rb,v 1.4 2004-06-26 14:12:29 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 def src_label
@@ -31,7 +31,7 @@ EOS
   header['Last-Modified'] = CGI::rfc1123_date(Time.now)
   header['type']          = 'text/html'
   header['charset']       = 'EUC-jp'
-  header['Content-Language'] = $lang
+  header['Content-Language'] = @conf.lang
   header['Pragma']           = 'no-cache'
   header['Cache-Control']    = 'no-cache'
   print @cgi.header(header)

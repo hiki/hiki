@@ -55,7 +55,7 @@ Hikiインストールディレクトリにあるhiki.cgiを、hiki.rbにリネームします(もしくはhi
 「__my_wiki_name__」というキーワードが生成されたWikiサイト名に置き変わ
 るようになっているところがミソです。
 
-また、$mailに「Wiki名@hikifarm.quickml.com」が入っています。更新情報を
+また、@mailに「Wiki名@hikifarm.quickml.com」が入っています。更新情報を
 [[QuickML|http://www.quickml.com/]]で配信するための設定です。必要に応
 じて書き換えてください(配信無用ならnilにする)。
 

@@ -1,7 +1,33 @@
-!バージョンアップの方法
+![重要] 0.6.x 以前および 0.7-devel-20040618 以前からのバージョンアップ
+
+設定ファイルの書式が変更になりました。hikiconf.rbおよびdata_path内の
+hiki.confの「$変数名」をすべて「@変数名」に変更してください。
+
+hikifarmを使っている人は、hikifarm用のhiki.confと各hikiのデータディレク
+トリのhiki.confも同様に変更した上で、hikifarmによって作られたhikiのCGIが
+あるディレクトリのindex.cgiとhikiconf.rbを、それぞれ以下のように変更して
+ください。
+
+●index.cgi
+ #!/usr/bin/ruby
+ hiki=''
+ eval( open( '../hikifarm.conf' ){|f|f.read.untaint} )
+ $:.unshift "#{hiki}"
+ load "#{hiki}/hiki.cgi"
+
+●hikiconf.rb
+ hiki=''
+ eval( open( '../hikifarm.conf' ){|f|f.read.untaint} )
+ __my_wiki_name__ = '「wikiの名前」'
+ eval( File::open( "#{hiki}/hiki.conf" ){|f| f.read.untaint} )
+
+また、自作のプラグイン等については、「$変数名」をすべて「@conf.変数名」
+に変更してください。
+
+!バージョンアップの一般的な手順
 
 バージョンアップの方法は比較的簡単ですが、操作ミスなどで貴重なデータを
-失わないようhikiconf.rbの$data_pathで指定したディレクトリ配下のファイルは
+失わないようhikiconf.rbの@data_pathで指定したディレクトリ配下のファイルは
 どこかにバックアップしておいてください。
 
 では、バージョンアップの手順を示します。
@@ -26,9 +52,9 @@
 
 アーカイブ中のdata/text/TextFormattingRulesというファイルは書式の変更や
 追加などで変更される可能性があります。このため、このファイルはhikiconf.rb
-の$data_pathで指定したデータ格納用ディレクトリ配下へコピーします。
+の@data_pathで指定したデータ格納用ディレクトリ配下へコピーします。
 
-$data_pathに'/home/foo/hiki'が指定されているとすると、
+@data_pathに'/home/foo/hiki'が指定されているとすると、
 
  $ cp data/text/TextFormattingRules /home/foo/hiki/text/
 
@@ -56,4 +82,3 @@ hiki.cgiの1行目を確認してください。サーバによっては/usr/bin/envが使えない
  #!C:\ruby\bin\ruby.exe
 
 など、Rubyがインストールされているパスを明示する必要があるかもしれません。
-

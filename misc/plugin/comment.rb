@@ -1,4 +1,4 @@
-# $Id: comment.rb,v 1.2 2004-02-15 02:48:35 hitoshi Exp $
+# $Id: comment.rb,v 1.3 2004-06-26 14:12:29 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 # modified by yoshimi.
@@ -31,7 +31,7 @@ def comment(cols = 60, style = 0)
 
   @comment_num += 1
   <<EOS
-<form action="#{$cgi_name}" method="post">
+<form action="#{@conf.cgi_name}" method="post">
   <div>
     #{comment_name_label}:
     <input type="text" name="name" size="10">

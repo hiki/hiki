@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-# $Id: attach.cgi,v 1.2 2004-02-15 02:48:35 hitoshi Exp $
+# $Id: attach.cgi,v 1.3 2004-06-26 14:12:30 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'cgi'
@@ -21,11 +21,11 @@ def attach_image
     cache_path = "#{params['cache_path'][0].read}/attach"
 
     begin
-      Dir.mkdir(cache_path) unless test(?e, cache_path)
+      Dir.mkdir(cache_path) unless test(?e, cache_path.untaint)
       attach_path = "#{cache_path}/#{page}"
       Dir.mkdir(attach_path) unless test(?e, attach_path)
 
-      open("#{attach_path}/#{CGI.escape(NKF.nkf('-e', filename))}",  "wb") do |f|
+      open("#{attach_path}/#{CGI.escape(NKF.nkf('-e', filename))}".untaint,  "wb") do |f|
         f.print params['attach_file'][0].read
       end
     rescue Exception
@@ -33,7 +33,7 @@ def attach_image
       if params['refresh'][0] then 
         url=params['refresh'][0].read
       else
-        url=$cgi_name
+        url='./'
       end
       redirect(cgi, "#{url}?c=#{command}&p=#{page}")
     end
@@ -59,7 +59,7 @@ def attach_image
       if params['refresh'][0] then 
         url=params['refresh'][0].read
       else
-        url=$cgi_name
+        url='./'
       end
       redirect(cgi, "#{url}?c=#{command}&p=#{page}")
     end

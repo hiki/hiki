@@ -1,4 +1,4 @@
-# $Id: storage.rb,v 1.3 2004-02-15 02:48:35 hitoshi Exp $
+# $Id: storage.rb,v 1.4 2004-06-26 14:12:28 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'md5'
@@ -44,7 +44,7 @@ module Hiki
       text = load(page) || ''
       unlink(page)
       begin
-        send_updating_mail(page, 'delete', text) if $mail_on_update
+        send_updating_mail(page, 'delete', text) if @conf.mail_on_update
       rescue
       end
     end
@@ -82,9 +82,9 @@ module Hiki
 	keys.each do |key|
 	  quoted_key = Regexp::quote(key)
 	  if keyword and keyword.join("\n").index(/#{quoted_key}/i)
-	    status << msg_match_keyword.gsub(/\]/, " <strong>#{key}</strong>]")
+	    status << msg_match_keyword.gsub(/\]/, " <strong>#{key.escapeHTML}</strong>]")
 	  elsif title and title.index(/#{quoted_key}/i)
-	    status << msg_match_title.gsub(/\]/, " <strong>#{key}</strong>]")
+	    status << msg_match_title.gsub(/\]/, " <strong>#{key.escapeHTML}</strong>]")
 	  elsif load( page ).index(/^.*#{quoted_key}.*$/i)
 	    status << '[' + $&.escapeHTML.gsub(/#{Regexp::quote(key.escapeHTML)}/i) { "<strong>#{$&}</strong>"} + ']'
 	  else

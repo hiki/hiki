@@ -16,12 +16,13 @@ require 'style/rd+/rd2html.rb'
 
 module Hiki
   class HTMLFormatter
-    def initialize( s, db, plugin, suffix = 'l')
+    def initialize( s, db, plugin, conf, suffix = 'l')
       @tokens     = s
       @db         = db
       @plugin     = plugin
-      @interwiki  = InterWiki::new(@db, @plugin)
-      @visitor = Hiki::RD2HTMLVisitor.new(@plugin, @db)
+      @conf       = conf
+      @interwiki  = InterWiki::new(@db, @plugin, @conf)
+      @visitor = Hiki::RD2HTMLVisitor.new(@plugin, @db, @conf)
     end
 
     def HTMLFormatter::diff( d, src )

@@ -1,4 +1,4 @@
-# $Id: hikiconf.rb.sample,v 1.4 2004-03-01 09:50:45 hitoshi Exp $
+# $Id: hikiconf.rb.sample,v 1.5 2004-06-26 14:12:27 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #============================
@@ -11,19 +11,19 @@
 #   ディレクトリを指定します。
 #   このディレクトリの「全ファイル」と「全ディレクトリ」は、WWWサーバの
 #   権限で書き込めるパーミッションにしておく必要があります。
-$data_path       = 'path to data'
+@data_path       = 'path to data'
 
 # トップページの URL【オプション】
 #   トップページのURLを指定します。
-$index_page      = 'http://www.example.net/hiki/'
+@index_page      = 'http://www.example.net/hiki/'
 
 # メールサーバ名【オプション】
-#   メールサーバ名を指定します。$mail_on_updateがtrueの場合に有効です。
-$smtp_server     = 'localhost'
+#   メールサーバ名を指定します。@mail_on_updateがtrueの場合に有効です。
+@smtp_server     = 'localhost'
 
 # プラグインを使うかどうかの指定【オプション】
 #   使用する場合には true、使用しない場合は false を指定します。
-$use_plugin      = true
+@use_plugin      = true
 
 #====================================================================
 #  管理画面から変更できる項目
@@ -32,45 +32,45 @@ $use_plugin      = true
 #====================================================================
 # サイト名
 #   あなたのサイト名称を指定します。ページタイトルなどに表示されます。
-$site_name       = 'hoge hoge'
+@site_name       = 'hoge hoge'
 
 # サイト管理者名
 #   サイト管理者の名前を指定します。フッタに表示されます。
-$author_name     = '名無しさん'
+@author_name     = '名無しさん'
 
 # メール通知の有無
-#   trueにするとページの更新時、$smtp_serverのサーバにより$mail宛に
+#   trueにするとページの更新時、@smtp_serverのサーバにより@mail宛に
 #   変更内容がメールで送信されます。
-$mail_on_update  = false
+@mail_on_update  = false
 
 # 更新通知先メールアドレス
 #   更新内容を送信するメールアドレス
-$mail            = 'hoge@example.net'
+@mail            = 'hoge@example.net'
 
 # テーマ
 #   使用するテーマ
-$theme           = 'hiki'
+@theme           = 'hiki'
 #   テーマのURL
-$theme_url       = 'theme'
+@theme_url       = 'theme'
 #   テーマが存在するパス
-$theme_path      = 'theme'
+@theme_path      = 'theme'
 
 # サイドバー
 #   サイドバーをサポートしていないテーマを使用する場合、
 #   falseを設定します。
-$use_sidebar     = true
+@use_sidebar     = true
 
 # メインエリアのクラス名(CSS)
 #   メインエリアのクラス名を設定します。
-$main_class      = 'main'
+@main_class      = 'main'
 
 # サイドバーのクラス名(CSS)
 #   サイドバーのクラス名を設定します。
-$sidebar_class   = 'sidebar'
+@sidebar_class   = 'sidebar'
 
 # オートリンク
 #   既存ページ名の自動リンク機能を使用する場合には true を指定します。
-$auto_link       = false
+@auto_link       = false
 
 #=========================================
 #  変更可能項目
@@ -78,33 +78,32 @@ $auto_link       = false
 
 # キャッシュディレクトリ【オプション】
 #    プラグインで使われるキャッシュ用のディレクトリを指定する
-$cache_path      = "#{$data_path}/cache"
+@cache_path      = "#{@data_path}/cache"
 
 # スタイル【オプション】
 #   デフォルト以外のスタイルを使いたい場合は、そのスタイル名を指定します。
 #   現状 default と rd+ を指定することができます。
-$style           = 'default'
+@style           = 'default'
 
 # 更新通知元メールアドレス【オプション】
 #   更新通知メールの From に指定するアドレスです。
-#$mail_from      = 'from@mail.address.hoge'
+#@mail_from      = 'from@mail.address.hoge'
 
 # キーワードハイライト【オプション】
-$hilight_keys    = true
+@hilight_keys    = true
 
-$charset         = 'EUC-JP'
-$lang            = 'ja'
-$database_type   = 'flatfile'
-$cgi_name        = 'hiki.cgi'
-$options         = {}                    # この行は変更しないでください。
+@charset         = 'EUC-JP'
+@lang            = 'ja'
+@database_type   = 'flatfile'
+@cgi_name        = 'hiki.cgi'
+@options         = {}                    # この行は変更しないでください。
 
 # プラグインのデバッグ時に true にします。
-$plugin_debug    = false
+@plugin_debug    = false
 
 # プラグインに渡すオプションを記述します 【オプション】
 #   プラグインによってはオプションを渡すことで挙動を変えることができます。
 #   詳しくは各プラグインのドキュメントを参照してください。
 #
 # 記述例
-# $options['amazon.aid'] = 'amazon-01' 
-
+# @options['amazon.aid'] = 'amazon-01' 

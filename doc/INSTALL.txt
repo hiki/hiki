@@ -63,9 +63,9 @@ hiki.cgiがCGIスクリプト本体なので、WWWサーバの権限で実行可能なようにパーミッショ
 
 !!hikiconf.rbの作成
 次に、''hikiconf.rb.sample''を''hikiconf.rb''にリネームして、内容を書き換えます。これはRubyスクリプトとして、CGIに直接読み込まれます。(requireされます）
-Hikiの主要な設定はCGI経由で行えるので、最低限書き換えるべきなのは最初に出てくる''$data_path''だけです。
+Hikiの主要な設定はCGI経由で行えるので、最低限書き換えるべきなのは最初に出てくる''@data_path''だけです。
 
- $data_path = '/home/foo/hiki/data'
+ @data_path = '/home/foo/hiki/data'
 
 ''hikiconf.rb''には、他にもいろいろな設定項目を記述できます。詳細については、''hikiconf.rb.sample''中のコメントを参照してください。
 

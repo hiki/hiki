@@ -1,4 +1,4 @@
-# $Id: bbs.rb,v 1.2 2004-02-15 02:48:35 hitoshi Exp $
+# $Id: bbs.rb,v 1.3 2004-06-26 14:12:29 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 def bbs_name_label
@@ -29,7 +29,7 @@ end)
 def bbs
   @bbs_num += 1
   <<EOS
-<form action="#{$cgi_name}" method="post">
+<form action="#{@conf.cgi_name}" method="post">
   <div>
     #{bbs_name_label}: <input type="text" name="name" size="10">
     #{bbs_subject_label}: <input type="text" name="subject" size="40"><br>

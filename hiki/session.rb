@@ -1,11 +1,12 @@
-# $Id: session.rb,v 1.1 2004-06-18 03:29:01 fdiary Exp $
+# $Id: session.rb,v 1.2 2004-06-26 14:12:28 fdiary Exp $
 # Copyright (C) 2004 Kazuhiko <kazuhiko@fdiary.net>
 
 module Hiki
   class Session
     attr_reader :session_id
 
-    def initialize( session_id = nil )
+    def initialize( conf, session_id = nil )
+      @conf = conf
       if session_id
         if /[0-9a-f]{16}/ =~ session_id
           @session_id = session_id
@@ -16,7 +17,7 @@ module Hiki
         @session_id = create_new_id
         # remove old session files
         Dir.mkdir( session_path ) unless test( ?e,  session_path )
-        Dir.glob( "#{session_path}*" ).each do |file|
+        Dir.glob( "#{session_path}/*" ).each do |file|
           File.delete( file.untaint )
         end
         # create a new session file
@@ -35,11 +36,11 @@ module Hiki
 
     private
     def session_path
-      "#{$data_path}/session/"
+      "#{@conf.data_path}session"
     end
 
     def session_file
-      "#{session_path}#{@session_id}".untaint
+      "#{session_path}/#{@session_id}".untaint
     end
 
     # (from cgi/session.rb)

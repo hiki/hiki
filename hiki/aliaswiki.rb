@@ -1,4 +1,4 @@
-# $Id: aliaswiki.rb,v 1.2 2004-02-15 02:48:35 hitoshi Exp $
+# $Id: aliaswiki.rb,v 1.3 2004-06-26 14:12:28 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 module Hiki
@@ -9,8 +9,9 @@ module Hiki
 
     attr_reader :aliaswiki_names
     
-    def initialize(db)
+    def initialize(db, conf)
       @db = db
+      @conf = conf
       @aliaswiki_names = Hash::new
       load_aliaswiki_names
     end
@@ -26,7 +27,7 @@ module Hiki
 
     private
     def load_aliaswiki_names
-      n = @db.load( $aliaswiki_name ) || ''
+      n = @db.load( @conf.aliaswiki_name ) || ''
       n.scan( ALIASWIKI_NAME_RE ) do |i|
         @aliaswiki_names[i[0]] = i[1]
       end

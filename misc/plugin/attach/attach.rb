@@ -1,4 +1,4 @@
-# $Id: attach.rb,v 1.7 2004-05-12 01:42:40 fdiary Exp $
+# $Id: attach.rb,v 1.8 2004-06-26 14:12:30 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 #
 # thanks to Kazuhiko, Masao Mutoh, SHIMADA Mitsunobu, Yoshimi, ¤ê¤¿
@@ -27,12 +27,12 @@ def attach_form(s = '')
   command = @command == 'create' ? 'edit' : @command
   <<EOS
 <div class="form">
-<form class="nodisp" method="post" enctype="multipart/form-data" action="#{$farm_page or "./"}attach.cgi">
+<form class="nodisp" method="post" enctype="multipart/form-data" action="#{@conf.farm_page or "./"}attach.cgi">
   <div>
-    <input type="hidden" name="p" value="#{@page}">
+    <input type="hidden" name="p" value="#{@page.escape}">
     <input type="hidden" name="cache_path" value="#{@cache_path}">
     <input type="hidden" name="command" value="#{command}">
-    <input type="hidden" name="refresh" value="#{$index_page}">
+    <input type="hidden" name="refresh" value="#{@conf.index_page}">
     <input type="file" name="attach_file">
     <input type="submit" name="attach" value="#{attach_upload_label}">
   </div>
@@ -65,19 +65,19 @@ end
 
 def attach_anchor_string(string, file_name, page=@page)
   s =  %Q!<a href="!
-  s << %Q!#{$cgi_name}#{cmdstr('plugin', "plugin=attach_download;p=#{page.escape};file_name=#{file_name.escape}")}">!
+  s << %Q!#{@conf.cgi_name}#{cmdstr('plugin', "plugin=attach_download;p=#{page.escape};file_name=#{file_name.escape}")}">!
   s << %Q!#{if string then string.escapeHTML else file_name.escapeHTML end}</a>!
 end
 
 def attach_anchor(file_name, page=@page)
   s =  %Q!<a href="!
-  s << %Q!#{$cgi_name}#{cmdstr('plugin', "plugin=attach_download;p=#{page.escape};file_name=#{file_name.escape}")}">!
+  s << %Q!#{@conf.cgi_name}#{cmdstr('plugin', "plugin=attach_download;p=#{page.escape};file_name=#{file_name.escape}")}">!
   s << %Q!#{file_name.escapeHTML}</a>!
 end
 
 def attach_image_anchor(file_name, page=@page)
   s =  %Q!<img alt="#{file_name.escapeHTML}" src="!
-  s << %Q!#{$cgi_name}#{cmdstr('plugin', "plugin=attach_download;p=#{page.escape};file_name=#{file_name.escape}")}">!
+  s << %Q!#{@conf.cgi_name}#{cmdstr('plugin', "plugin=attach_download;p=#{page.escape};file_name=#{file_name.escape}")}">!
   s << %Q!</img>!
 end
 
@@ -92,7 +92,7 @@ def attach_flash_anchor(file_name, page=@page)
   rescue
   end
   s =  %Q!<embed type="application/x-shockwave-flash" src="!
-  s << %Q!#{$cgi_name}#{cmdstr('plugin', "plugin=attach_download;p=#{page.escape};file_name=#{file_name}")}" !
+  s << %Q!#{@conf.cgi_name}#{cmdstr('plugin', "plugin=attach_download;p=#{page.escape};file_name=#{file_name}")}" !
   s << %Q! width="#{img_size[0]}" height="#{img_size[1]}" ! unless img_size.nil?
   s << %Q!>!
 end
@@ -131,9 +131,11 @@ def attach_download
   extname     =  /\.([^.]+)$/.match(file_name.downcase).to_a[1]
   mime_type   = mime_types[extname]
 
-  print "Content-Type: #{mime_type}\n"
-  print "Last-Modified: #{CGI::rfc1123_date(File.mtime(attach_file.untaint))}\n"
-  print %Q!Content-Disposition: filename="#{file_name.to_sjis}"\n\n!
+  header = Hash::new
+  header['Content-Type'] = mime_type
+  header['Last-Modified'] = CGI::rfc1123_date(File.mtime(attach_file.untaint))
+  header['Content-Disposition'] = %Q|filename="#{file_name.to_sjis}"|
+  print @cgi.header(header)
   print open(attach_file.untaint, "rb").read
   nil
 end
@@ -142,7 +144,7 @@ def attach_src(file_name, page=@page)
   tabstop = ' ' * (@options['attach.tabstop'] ? @options['attach.tabstop'].to_i : 2)
   
   if file_name =~ /\.(txt|rd|rb|c|pl|py|sh|java|html|htm|css|xml|xsl)\z/i
-    file = "#{$cache_path}/attach/#{page.escape}/#{file_name.escape}"
+    file = "#{@conf.cache_path}/attach/#{page.escape}/#{file_name.escape}"
     s = %Q!<pre>!
     s << File::readlines(file).join.escapeHTML.gsub(/^\t+/) {|t| tabstop * t.size}.to_euc
     s << %Q!</pre>!
@@ -187,7 +189,7 @@ def attach_show_page_files
     s << %Q!<p>#{attach_files_label}: \n!
     files.each do |file_name|
       f = file_name.unescape
-      case $charset
+      case @conf.charset
       when 'EUC-JP'
 	f = file_name.unescape.to_euc
       when 'Shift_JIS'
@@ -203,16 +205,16 @@ end
 def attach_show_page_files_checkbox
   s =  ''
   if (files = attach_page_files).size > 0
-    s << %Q!<form method="post" enctype="multipart/form-data" action="#{$farm_page or "./"}attach.cgi">
+    s << %Q!<form method="post" enctype="multipart/form-data" action="#{@conf.farm_page or "./"}attach.cgi">
   <input type="hidden" name="p" value="#{@page}">
   <input type="hidden" name="cache_path" value="#{@cache_path}">
   <input type="hidden" name="command" value="#{@command == 'create' ? 'edit' : @command}">
-  <input type="hidden" name="refresh" value="#{$index_page}">
+  <input type="hidden" name="refresh" value="#{@conf.index_page}">
   <p>#{attach_files_label}: 
 !
     files.each do |file_name|
       f = file_name.unescape
-      case $charset
+      case @conf.charset
       when 'EUC-JP'
 	f = file_name.unescape.to_euc
       when 'Shift_JIS'

@@ -1,4 +1,4 @@
-# $Id: rss.rb,v 1.4 2004-06-10 17:23:11 fdiary Exp $
+# $Id: rss.rb,v 1.5 2004-06-26 14:12:29 fdiary Exp $
 # Copyright (C) 2003-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 def rss_recent_label
@@ -18,14 +18,14 @@ def rss(page_num = 10)
   last_modified = pages[0].values[0][:last_modified]
 
   items = <<EOS
-<?xml version="1.0" encoding="#{$charset}" standalone="yes"?>
+<?xml version="1.0" encoding="#{@conf.charset}" standalone="yes"?>
 <rdf:RDF xmlns="http://purl.org/rss/1.0/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <channel rdf:about="#{$index_page}?c=recent">
-    <title>#{CGI::escapeHTML($site_name)} : #{rss_recent_label}</title>
-    <link>#{$index_page}?c=recent</link>
-    <description>#{CGI::escapeHTML($site_name)} #{rss_recent_label}</description>
+  <channel rdf:about="#{@conf.index_page}?c=recent">
+    <title>#{CGI::escapeHTML(@conf.site_name)} : #{rss_recent_label}</title>
+    <link>#{@conf.index_page}?c=recent</link>
+    <description>#{CGI::escapeHTML(@conf.site_name)} #{rss_recent_label}</description>
     <language>ja</language>
-    <copyright>Copyright (C) #{CGI::escapeHTML($author_name)}</copyright>
+    <copyright>Copyright (C) #{CGI::escapeHTML(@conf.author_name)}</copyright>
     <dc:date>#{last_modified.utc.strftime("%Y-%m-%dT%H:%M:%S+00:00")}</dc:date>
     <items>
       <rdf:Seq>
@@ -36,8 +36,8 @@ EOS
     name = p.keys[0]
     items << '        '
 
-    uri = "#{$index_page}?#{name.escape}"
-    items << %Q!<rdf:li resource="#{uri}"/>!
+    uri = "#{@conf.index_page}?#{name.escape}"
+    items << %Q!<rdf:li resource="#{uri}"/>\n!
 
     item_list << <<EOS
     <item rdf:about="#{uri}">
@@ -59,8 +59,8 @@ EOS
   header = Hash::new
   header['Last-Modified'] = CGI::rfc1123_date(last_modified)
   header['type']          = 'text/xml'
-  header['charset']       =  $charset
-  header['Content-Language'] = $lang
+  header['charset']       =  @conf.charset
+  header['Content-Language'] = @conf.lang
   header['Pragma']           = 'no-cache'
   header['Cache-Control']    = 'no-cache'
   print @cgi.header(header)

@@ -15,17 +15,17 @@ RDとはRubyスクリプトファイルの中に埋め込む事を意図して定義されたドキュメントフォ
     (RDToolが必要とするライブラリもインストールしておく)
 (2) Hikiをインストールする(Hikiが必要とするライブラリもインストールしておく)
 (3) Hikiの動作確認
-(4) hikiconf.rbの$styleを以下のように変更する
-        $style = 'rd+'
+(4) hikiconf.rbの@styleを以下のように変更する
+        @style = 'rd+'
 (5) rd+ styleの動作確認
 
 == オプション
 RDスタイルでは以下のオプションを用意しています。hikiconf.rbに記述してください。
 
---- $options['rd.header_depth'] 
+--- @options['rd.header_depth'] 
     ヘッダの階層を指定できます。'='がh2に、'=='がh3にしたい場合は以下のようにします。
 
-     $options['rd.header_depth'] = 2
+     @options['rd.header_depth'] = 2
 
     なお、デフォルトで'='がh1になります。タイトル表示部分もh1ですので表示上、バランスを調整するときに使いましょう。
 

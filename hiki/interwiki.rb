@@ -1,4 +1,4 @@
-# $Id: interwiki.rb,v 1.5 2004-02-15 02:48:35 hitoshi Exp $
+# $Id: interwiki.rb,v 1.6 2004-06-26 14:12:28 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 module Hiki
@@ -10,8 +10,9 @@ module Hiki
 
     attr_reader :interwiki_names
     
-    def initialize(db, plugin)
+    def initialize(db, plugin, conf)
       @db = db
+      @conf = conf
       @plugin = plugin
       @interwiki_names = Hash::new
       
@@ -54,7 +55,7 @@ module Hiki
     
     private
     def load_interwiki_names
-      n = @db.load( $interwiki_name ) || ''
+      n = @db.load( @conf.interwiki_name ) || ''
       n.scan( INTERWIKI_NAME_RE ) do |i|
         e = i.size > 2 ? i[2] : 'none'
         @interwiki_names[i[0]] = {:url => i[1], :encoding => e}
