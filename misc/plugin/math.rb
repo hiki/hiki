@@ -98,11 +98,11 @@ add_conf_proc('math', 'math style') do
   unless @conf['math.latex.secure'] then
     str += <<-HTML
     <h3 class="subtitle">#{label_math_latex_latex}</h3>
-    <p><input type="text" name="math.latex.latex" value="#{@conf['math.latex.latex']}"></p>
+    <p><input type="text" name="math.latex.latex" value="#{CGI::escapeHTML(@conf['math.latex.latex'])}"></p>
     <h3 class="subtitle">#{label_math_latex_dvips}</h3>
-    <p><input type="text" name="math.latex.dvips" value="#{@conf['math.latex.dvips']}"></p>
+    <p><input type="text" name="math.latex.dvips" value="#{CGI::escapeHTML(@conf['math.latex.dvips'])}"></p>
     <h3 class="subtitle">#{label_math_latex_convert}</h3>
-    <p><input type="text" name="math.latex.convert" value="#{@conf['math.latex.convert']}"></p>
+    <p><input type="text" name="math.latex.convert" value="#{CGI::escapeHTML(@conf['math.latex.convert'])}"></p>
     HTML
   end
   str

@@ -1,3 +1,10 @@
+2005-03-06  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/auth_typekey.rb: token を設定するまでは auth が true
+	になるように修正
+	* misc/plugin/ja/auth_typekey.rb: リソースの分離
+	
+	* misc/plugin/math.rb: 設定画面の出力をエスケープするように修正
+
 2005-03-06  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
 	* hiki/auth/typekey.rb: conf_proc への対応
 	* hiki/session.rb: セション有効期間を変更可能に
