@@ -1,5 +1,8 @@
+2004-03-04  Kazuhiko  <kazuhiko@fdiary.net>
+	* template/: テンプレートの整理
+
 2004-03-04  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
-        * style/default/html_formatter.rb: XSS脆弱性の対処 thanks to SHIMADA Keiki <k-ki@a01.itscom.net>
+	* style/default/html_formatter.rb: XSS脆弱性の対処 thanks to SHIMADA Keiki <k-ki@a01.itscom.net>
 
 2004-03-02  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
 	* misc/plugin/similarity.rb: 追加 
