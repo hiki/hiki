@@ -1,6 +1,10 @@
+2004-09-22  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/attach/attach.cgi: ページ名の escape しすぎを修正
+
 2004-09-14  Kazuhiko  <kazuhiko@fdiary.net>
-	* attach.rb (attach_src): @options['attach.show_linenum] が true 
-	なら行番号を表示するように変更
+	* misc/plugin/attach/attach.rb (attach_src):
+	@options['attach.show_linenum] が true なら行番号を表示するように
+	変更
 
 	* hikiconf.rb.sample, hiki/config.rb,
 	style/default/html_formatter.rb: WikiName によるリンクを使うかどう

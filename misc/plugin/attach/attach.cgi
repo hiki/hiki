@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-# $Id: attach.cgi,v 1.6 2004-09-13 13:53:11 fdiary Exp $
+# $Id: attach.cgi,v 1.7 2004-09-22 14:33:10 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'cgi'
@@ -24,7 +24,7 @@ def attach_file
   cgi = CGI.new
 
   params     = cgi.params
-  page       = CGI.escape(params['p'][0] ? params['p'][0].read : 'FrontPage')
+  page       = params['p'][0] ? params['p'][0].read : 'FrontPage'
   command = params['command'][0] ? params['command'][0].read : 'view'
   command = 'view' unless ['view', 'edit'].index(command)
   r = ''
@@ -37,7 +37,7 @@ def attach_file
 
     begin
       Dir.mkdir(cache_path) unless test(?e, cache_path.untaint)
-      attach_path = "#{cache_path}/#{page}"
+      attach_path = "#{cache_path}/#{page.escape}"
       Dir.mkdir(attach_path) unless test(?e, attach_path)
       path = "#{attach_path}/#{CGI.escape(NKF.nkf('-e', filename))}"
       open(path.untaint, "wb") do |f|
@@ -53,7 +53,7 @@ def attach_file
       redirect(cgi, "#{@conf.index_url}?c=#{command}&p=#{page}")
     end
   elsif cgi.params['detach'][0] then
-    attach_path = "#{@conf.cache_path}/attach/#{page}"
+    attach_path = "#{@conf.cache_path}/attach/#{page.escape}"
 
     begin
       Dir.foreach(attach_path) do |file|
