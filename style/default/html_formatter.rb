@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.15 2005-01-27 15:23:03 fdiary Exp $
+# $Id: html_formatter.rb,v 1.16 2005-01-28 04:00:51 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -262,7 +262,7 @@ EOS
         page = @auto_links.assoc($&).size > 2 ? @auto_links.assoc($&)[2] : $&
         title = @auto_links.assoc($&)[1]
         @references << page
-        @plugin.hiki_anchor(page.escape, title.escapeHTML)
+        @plugin.hiki_anchor(page.escape, title)
       }
     end
       
