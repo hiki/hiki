@@ -1,4 +1,4 @@
-# $Id: util.rb,v 1.12 2004-08-31 07:25:46 fdiary Exp $
+# $Id: util.rb,v 1.13 2004-09-01 07:33:21 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'nkf'
@@ -119,10 +119,10 @@ module Hiki
       data[:view_style]  = conf.use_sidebar ? conf.main_class : 'hiki' # for tDiary theme
       data[:cgi_name]    = conf.cgi_name
       if conf.use_sidebar
-        parser = eval( conf.parser )::new( conf )
+        parser = Hiki::const_get( conf.parser )::new( conf )
         m = db.load( conf.side_menu ) || ''
         t = parser.parse( m )
-        f = eval( conf.formatter )::new( t, db, plugin, conf, 's' )
+        f = Hiki::const_get( conf.formatter )::new( t, db, plugin, conf, 's' )
         data[:sidebar]   =  {:menu => f.to_s.sanitize}
         data[:main_class]    = conf.main_class
         data[:sidebar_class] = conf.sidebar_class

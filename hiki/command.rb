@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.14 2004-08-31 08:04:04 fdiary Exp $
+# $Id: command.rb,v 1.15 2004-09-01 07:33:21 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'amrita/template'
@@ -130,9 +130,9 @@ module Hiki
 
       html = nil
       text = @db.load( @p )
-      parser = eval( @conf.parser )::new( @conf )
+      parser = Hiki::const_get( @conf.parser )::new( @conf )
       tokens = parser.parse( text )
-      formatter = eval( @conf.formatter )::new( tokens, @db, @plugin, @conf )
+      formatter = Hiki::const_get( @conf.formatter )::new( tokens, @db, @plugin, @conf )
       contents, toc = formatter.to_s, formatter.toc
       if @conf.hilight_keys
         word = @params['key'][0]
@@ -251,14 +251,14 @@ module Hiki
       formatter    = nil
 
       if @cmd == 'preview'
-        p = eval( @conf.parser )::new( @conf ).parse( text.gsub(/\r\n/, "\n") )
-        formatter = eval( @conf.formatter ).new( p, @db, @plugin, @conf )
+        p = Hiki::const_get( @conf.parser )::new( @conf ).parse( text.gsub(/\r\n/, "\n") )
+        formatter = Hiki::const_get( @conf.formatter ).new( p, @db, @plugin, @conf )
         preview_text = formatter.to_s
         save_button = ''
       elsif @cmd == 'conflict'
         t = @db.load( page ) || ''
         d = diff_t( text.gsub!(/\r/, ''), t )
-        differ = eval( @conf.formatter )::diff( d, text )
+        differ = Hiki::const_get( @conf.formatter )::diff( d, text )
         link = @plugin.hiki_anchor( page.escape, page.escapeHTML )
       end
       
@@ -295,7 +295,7 @@ module Hiki
 
     def cmd_diff
       diff = @db.diff( @p )
-      differ = diff ? eval ( @conf.formatter )::diff( diff, @db.load_backup(@p) || '' ) : msg_no_recent
+      differ = diff ? Hiki::const_get( @conf.formatter )::diff( diff, @db.load_backup(@p) || '' ) : msg_no_recent
       
       data = Hiki::Util::get_common_data( @db, @plugin, @conf )
       @plugin.hiki_menu(data, @cmd)
