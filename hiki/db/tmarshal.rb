@@ -34,36 +34,14 @@ module TMarshal
       obj.dump
     when Array
       "[\n"+obj.collect{|x| dump_text(x)+",\n"}.to_s+"]"
-    when Numeric, Module, Regexp, Symbol
-      obj.inspect
     when Hash
       "{\n"+obj.sort{|a,b| a[0].inspect<=>b[0].inspect}.collect{|k,v| "#{dump_text(k)} => #{dump_text(v)},\n"}.to_s+"}"
-    when TrueClass
-      'true'
-    when FalseClass
-      'false'
-    when NilClass
-      'nil'
-    when Range
-      obj.to_s
+    when Numeric, Module, Regexp, Symbol, TrueClass, FalseClass, NilClass, Range
+      obj.inspect
     when Time
       "Time.at(#{obj.to_i})"
     else
       raise 'Wrong type!'
-    end
-  end
-end
-
-if __FILE__ == $0
-  File::open("aaa", "w") do |f|
-    x = [true, false, nil, Object, :a, /x/, 1..2, 3...4, Time.now, 'ABC', {'a'=>1, 'b'=>2, 'c'=>3}]
-    f.puts TMarshal::dump(x)
-  end
-
-  File::open("aaa", "r") do |f|
-    c = TMarshal::load(f.read)
-    c.each do |i|
-      puts i, i.class
     end
   end
 end
