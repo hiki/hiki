@@ -2,7 +2,7 @@
 	* hiki/global.rb: 設定項目のデフォルト値を用意するように修正
 
 	* plugin/00default.rb (hiki_header): title 出力を escapeHTMLするよ
-	うに修正
+	うに修正 thanks to "Yuya Yamaguchi" <bebe@hepo.jp>
 
 2004-06-17  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/session.rb: 新ファイル
