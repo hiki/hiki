@@ -104,7 +104,9 @@ def rmdir( dir )
    }
 
    dirlist.each {|d|
+      d.untaint
       Dir::foreach(d) {|f|
+         f.untaint
          File::delete(d+f) if ! (/\.+$/ =~ f)
       }
       Dir::rmdir(d)
@@ -198,7 +200,7 @@ class ReposSvn < ReposDefault
          system( "svn checkout file://#{@root}/#{wiki}/trunk text > /dev/null 2>&1" )
          system( "svn propdel svn:mime-type -R text > /dev/null 2>&1" )
       ensure
-         Dir.chdir( oldpwd )
+         Dir.chdir( oldpwd.untaint )
       end
    end
    def update( wiki )
@@ -207,7 +209,7 @@ class ReposSvn < ReposDefault
          Dir.chdir( "#{@data_path}/#{wiki}/text" )
          system( "svn update > /dev/null 2>&1" )
       ensure
-         Dir.chdir( oldpwd )
+         Dir.chdir( oldpwd.untaint )
       end
    end
 end

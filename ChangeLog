@@ -1,3 +1,6 @@
+2004-10-31  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/hikifarm/index.cgi: $SAFE = 1 向け修正 by 柳田
+
 2004-09-28  Kazuhiko  <kazuhiko@fdiary.net>
 	* theme/hiki/hiki.css: IE5 向けに @media screen に div.main を追加
 
