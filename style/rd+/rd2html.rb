@@ -1,6 +1,6 @@
 # rd2html.rb for Hiki/RD+
 #
-# Copyright (C) 2003 Masao Mutoh <mutoh@highway.ne.jp>
+# Copyright (C) 2003,2004 Masao Mutoh <mutoh@highway.ne.jp>
 #
 # You can redistribute it and/or modify it under the terms of
 # the Ruby's licence.
@@ -13,7 +13,8 @@
 
 require "cgi"
 require "rd/rd2html-lib"
-require 'style/rd+/anchorlist.rb'
+require 'style/rd+/anchorlist'
+require 'hiki/pluginutil'
 
 module Hiki
   class RD2HTMLVisitor < RD::RD2HTMLVisitor
@@ -75,22 +76,21 @@ module Hiki
       #Eval Plugin
       content = content.gsub(EVAL_PLUGIN_RE) do |match|
         method = $1
-        ret = eval("begin; ret = @plugin.#{method}; rescue Exception; ret = $!; end; ret")
-        if ret.is_a? String
+	ret = ''
+	begin
+	  ret = Hiki::Util.apply_plugin(method, @plugin)
           ret.gsub!(@regex_modulenames, "\\&#{ESC_WORD}") if @regex_modulenames
-        elsif ret.kind_of? Exception
-          err = "Plugin Error: #{ret.message.escapeHTML}<pre>#{match.to_s.escapeHTML}</pre>"
+        rescue Exception
+          err = "Plugin Error: #{$!}" #<pre>#{match.to_s.escapeHTML}</pre>"
           if $plugin_debug
             err += "</p><p>Back trace<pre>"
-            ret.backtrace.each do |v|
+            $!.backtrace.each do |v|
               err += v + "\n"
               break if v =~ /special_parse/
             end
             err += "</pre>" 
           end
           ret = err
-        else
-          ret = ''
         end
         ret
       end
