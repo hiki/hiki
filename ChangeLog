@@ -1,4 +1,6 @@
 2005-01-04  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/rss.rb (rss_body): 差分を content:encoded として出力
+	するように変更
 
 	* hiki/util.rb (Hiki::Util::diff): 引数を「差分、旧、HTML フラグ」
 	から「旧、新、HTML フラグ」に変更

@@ -1,4 +1,4 @@
-# $Id: rss.rb,v 1.9 2004-12-14 16:12:33 fdiary Exp $
+# $Id: rss.rb,v 1.10 2005-01-05 01:05:48 fdiary Exp $
 # Copyright (C) 2003-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 def rss_recent_label
@@ -19,7 +19,7 @@ def rss_body(page_num = 10)
 
   items = <<EOS
 <?xml version="1.0" encoding="#{@conf.charset}" standalone="yes"?>
-<rdf:RDF xmlns="http://purl.org/rss/1.0/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:RDF xmlns="http://purl.org/rss/1.0/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:content="http://purl.org/rss/1.0/modules/content/" xml:lang="ja-JP">
   <channel rdf:about="#{@conf.index_url}?c=recent">
     <title>#{CGI::escapeHTML(@conf.site_name)} : #{rss_recent_label}</title>
     <link>#{@conf.index_url}?c=recent</link>
@@ -34,6 +34,10 @@ EOS
   pages.each do |p|
     break if (n += 1) > page_num
     name = p.keys[0]
+    src = @db.load_backup(name) || ''
+    dst = @db.load(name) || ''
+    content = unified_diff(src, dst)
+    
     items << '        '
 
     uri = "#{@conf.index_url}?#{name.escape}"
@@ -44,6 +48,7 @@ EOS
     <title>#{CGI::escapeHTML(page_name(name))}</title>
     <link>#{uri}</link>
     <dc:date>#{p[name][:last_modified].utc.strftime("%Y-%m-%dT%H:%M:%S+00:00")}</dc:date>
+    <content:encoded><![CDATA[<pre>\n#{CGI::escapeHTML(content)}</pre>]]></content:encoded>
   </item>
 EOS
   end
