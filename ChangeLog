@@ -1,3 +1,7 @@
+2005-03-04  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/plugin.rb (Plugin::load_plugin): プラグイン本体のロードをリ
+	ソースのロードよりも先に行うように修正 report by Masao Mutoh
+
 2005-03-03  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/rss.rb: 出力のフォーマットに従来の unified diff に加
 	えて word diff (ダイジェスト) と word diff (全文) を選べるようにし
