@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.2 2003-02-22 06:18:00 hitoshi Exp $
+# $Id: html_formatter.rb,v 1.3 2003-02-22 08:28:47 hitoshi Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -121,7 +121,7 @@ module Hiki
           tag = ( t[:e] == :plugin ) ? 'div' : 'span'
           begin
             s = call_plugin_method( t )
-            if s.type == String
+            if s.class == String
               html << %Q!<#{tag} class = "plugin">!
               html << s
               html << "</#{tag}>"

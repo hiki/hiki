@@ -1,4 +1,4 @@
-# $Id: ptstore.rb,v 1.1.1.1 2003-02-22 04:39:31 hitoshi Exp $
+# $Id: ptstore.rb,v 1.2 2003-02-22 08:28:47 hitoshi Exp $
 #
 # ptstore.rb
 #   converts pstore.rb contained in Ruby 1.8.0 Preview 1.
@@ -187,8 +187,8 @@ if __FILE__ == $0
     end
   end
 
-  db.transaction do
-    p db.root? ('Taro')
-    p db.root? ('Hitoshi')
-  end
+#  db.transaction do
+#    p db.root? ('Taro')
+#    p db.root? ('Hitoshi')
+#  end
 end

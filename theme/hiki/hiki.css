@@ -1,6 +1,6 @@
 /*
 Title: Hiki default
-Revision: $Revision: 1.1.1.1 $
+Revision: $Revision: 1.2 $
 Author: TAKEUCHI Hitoshi
 Access: hitoshi@namaraii.com
 License: GPL
@@ -12,7 +12,7 @@ validated by W3C.
 /*
 共通設定の読み込み
 */
-@import url(../base.css);
+/*@import url(../base.css);*/
 /*
 ページ全体の基本的な設定。背景色や文字色など
 */

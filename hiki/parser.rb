@@ -1,4 +1,4 @@
-# $Id: parser.rb,v 1.3 2003-02-22 06:18:00 hitoshi Exp $
+# $Id: parser.rb,v 1.4 2003-02-22 08:28:47 hitoshi Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 module Hiki
@@ -26,11 +26,11 @@ module Hiki
     EMPHASIS   = "'''"
     STRONG     = "''"
     DELETE     = "=="
-    URL        = '(?:http|https|ftp):\/\/[a-zA-Z0-9;/?:@&=+$,\-_.!~*\'()%]+'
+    URL        = '(?:http|https|ftp):\/\/[a-zA-Z0-9;/?:@&=+$,\-_.!~*\'()#%]+'
     REF1       = '\[\[([^\]|]+?)\|([^\]]+?)\]\]'
     REF2       =  '\[\[([^\]]+?)\]\]'
     INTERWIKI  = '\[\[([^:]+?):([^\]]+)\]\]'
-    WIKINAME   = '([A-Z][a-zA-Z\d]{4,})'
+    WIKINAME   = '((?:[A-Z][a-z0-9]+){2,})([^A-Za-z0-9])'
     IMAGE      = '\.(?:jpg|jpeg|png|gif)'
     PLUGIN     = '\{\{(.+?)(?:\((.*?)\))?\s*\}\}'
 
@@ -168,7 +168,7 @@ module Hiki
             str = ''
           end
         when WIKINAME_RE
-          str = $'
+          str = $2 + $'
           @cur_stack.push ( {:e => :wikiname, :s => $1} )
         when NORMAL_TEXT_RE
           m = $&

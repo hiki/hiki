@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# $Id: hiki.cgi,v 1.3 2003-02-22 06:18:00 hitoshi Exp $
+# $Id: hiki.cgi,v 1.4 2003-02-22 08:28:47 hitoshi Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 $SAFE     = 1
@@ -26,6 +26,6 @@ begin
   }
 rescue Exception
   print "Content-Type: text/plain\n\n"
-  puts "#$! (#{$!.type})\n\n"
+  puts "#$! (#{$!.class})\n\n"
   puts $@.join( "\n" )
 end
