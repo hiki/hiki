@@ -1,4 +1,4 @@
-# $Id: fr.rb,v 1.2 2004-02-15 02:48:35 hitoshi Exp $
+# $Id: fr.rb,v 1.3 2004-04-02 00:51:24 hitoshi Exp $
 # fr.rb
 #
 # Copyright (C) 2003 Laurent Sansonetti <laurent@datarescue.be>
@@ -55,5 +55,6 @@ module Hiki
     def msg_match_title; '[correspondance dans le titre]' end
     def msg_match_keyword; '[correspondance dans un mot clef]' end
     def msg_duplicate_page_title; 'Une page portant le même nom existe déjà.' end
+    def msg_missing_anchor_title; 'Create new %s and edit.' end
   end
 end

@@ -1,4 +1,4 @@
-# $Id: it.rb,v 1.2 2004-02-15 02:48:35 hitoshi Exp $
+# $Id: it.rb,v 1.3 2004-04-02 00:51:24 hitoshi Exp $
 # it.rb
 #
 # Copyright (C) 2003 Luigi Maselli <metnik@tiscali.it>
@@ -44,16 +44,17 @@ module Hiki
     def msg_ok; 'OK' end
     def msg_invalid_password; 'Password non corretta. Le tue modifiche non sono ancora state salvate.' end
     def msg_save_config; 'Modifiche salvate' end
-    def msg_freeze; 'Questa pagina è bloccata. Ti serve la password dell\'amministratore per salvare.' end
+    def msg_freeze; 'Questa pagina ? bloccata. Ti serve la password dell\'amministratore per salvare.' end
     def msg_freeze_mark; '[Bloccata]' end
-    def msg_already_exist; 'La pagina già esistente.' end
+    def msg_already_exist; 'La pagina gi? esistente.' end
     def msg_page_not_exist; 'La pagina non esiste. Createla! :-)' end
-    def msg_invalid_filename(s); "Includi i caratteri invalidi, o è oltre la lunghezza massima(#{s}byte). Cambia il nome della pagina." end
+    def msg_invalid_filename(s); "Includi i caratteri invalidi, o ? oltre la lunghezza massima(#{s}byte). Cambia il nome della pagina." end
     def msg_delete; 'Cancellato' end
     def msg_delete_page; 'Pagina cancellata.' end
     def msg_follow_link; 'Segui il collegamento: ' end
     def msg_match_title; '[corrispondente in titolo]' end
     def msg_match_keyword; '[corrispondente nella chiave di ricerca]' end
-    def msg_duplicate_page_title; 'Titolo della pagina già esistente.' end
+    def msg_duplicate_page_title; 'Titolo della pagina gi? esistente.' end
+    def msg_missing_anchor_title; 'Create new %s and edit.' end
   end
 end
