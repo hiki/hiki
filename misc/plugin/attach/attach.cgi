@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# $Id: attach.cgi,v 1.12 2004-12-18 08:17:07 fdiary Exp $
+# $Id: attach.cgi,v 1.13 2005-01-10 14:45:59 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 BEGIN { $defout.binmode }
@@ -13,7 +13,7 @@ if FileTest::symlink?( __FILE__ ) then
 else
   org_path = File::dirname( __FILE__ )
 end
-$:.unshift( org_path.untaint )
+$:.unshift( org_path.untaint, "#{org_path.untaint}/hiki" )
 
 require 'hiki/config'
 require 'hiki/util'

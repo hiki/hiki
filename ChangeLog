@@ -1,4 +1,6 @@
 2005-01-10  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/attach/attach.cgi: hiki/ を $: に追加するように変更
+
 	* hiki/util.rb (Hiki::Util::euc_to_utf8, Hiki::Util::utf8_to_euc):
 	追加
 
