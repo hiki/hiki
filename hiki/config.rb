@@ -1,9 +1,9 @@
-# $Id: config.rb,v 1.2 2004-06-26 14:19:03 fdiary Exp $
+# $Id: config.rb,v 1.3 2004-06-27 08:54:57 fdiary Exp $
 # Copyright (C) 2004 Kazuhiko <kazuhiko@fdiary.net>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
 
-HIKI_VERSION  = '0.7-devel-20040626'
+HIKI_VERSION  = '0.7-devel-20040627'
 
 module Hiki
   PATH  = "#{File::dirname(File::dirname(__FILE__))}"
@@ -84,8 +84,20 @@ module Hiki
     def load_cgi_conf
       raise 'Do not set @data_path as same as Hiki system directory.' if @data_path == "#{PATH}/"
 
+      variables = [:site_name, :author_name, :mail, :theme, :password,
+		   :theme_url, :sidebar_class, :main_class, :theme_path,
+		   :mail_on_update, :use_sidebar, :auto_link]
       begin
-        eval( File::open( "#{@data_path}hiki.conf" ){|f| f.read }.untaint, binding, "(hiki.conf)", 1 )
+	cgi_conf = File::open( "#{@data_path}hiki.conf" ){|f| f.read }.untaint
+	cgi_conf.gsub!( /^@/, '' )
+	def_vars = ''
+	variables.each do |var| def_vars << "#{var} = nil\n" end
+	eval( def_vars )
+	Thread.start {
+	  $SAFE = 4
+	  eval( cgi_conf, binding, "(hiki.conf)", 1 )
+	}
+	variables.each do |var| eval "@#{var} = #{var} if #{var} != nil" end
       rescue IOError, Errno::ENOENT
       end
       formaterror if $site_name
