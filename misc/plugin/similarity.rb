@@ -1,8 +1,8 @@
-# $Id: similarity.rb,v 1.2 2004-03-02 03:13:16 hitoshi Exp $
+# $Id: similarity.rb,v 1.3 2004-03-04 06:15:19 hitoshi Exp $
 
 def similarity(style, permalink)
   s = <<"EOS"
-<div class="similariry">
+<div class="similarity">
 <script language="JavaScript">
 var url = '#{permalink}';
 var n = 10;

@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.3 2004-03-01 09:50:45 hitoshi Exp $
+# $Id: html_formatter.rb,v 1.4 2004-03-04 06:15:19 hitoshi Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -298,7 +298,7 @@ EOS
           when /^'(.+)'$/, /^"(.+)"$/
             $1.escapeHTML
           else
-            a
+            a.escapeHTML
           end
         end
       end
