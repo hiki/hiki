@@ -1,14 +1,16 @@
-2004-07-01  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
+2004-07-03  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/util.rb (sendmail): from_addr を untaint するように修正
 
-	* hiki/db/flatfile.rb, ptstore.rb, misc/plugin/referer.rb : mod_ruby時のキャッシュファイル開放漏れ修正
+2004-07-01  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
+	* hiki/db/flatfile.rb, ptstore.rb, misc/plugin/referer.rb :
+	mod_ruby時のキャッシュファイル開放漏れ修正
 	
 2004-06-30  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
-
 	* hiki/db/ptstore.rb: 読み込み時のキャッシュ対応 by matsui
 
 2004-06-30  Kazuhiko  <kazuhiko@fdiary.net>
-	* hiki/config.rb (load_cgi_conf): Thread を join するように修正 thanks
-	to yoggy
+	* hiki/config.rb (load_cgi_conf): Thread を join するように修正 
+	thanks to yoggy
 
 2004-06-28  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
         * misc/plugin/history.rb: r を escapeHTML するように修正 thanks to

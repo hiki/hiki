@@ -1,4 +1,4 @@
-# $Id: util.rb,v 1.10 2004-06-26 14:12:28 fdiary Exp $
+# $Id: util.rb,v 1.11 2004-07-02 23:33:26 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'nkf'
@@ -158,7 +158,7 @@ module Hiki
     def sendmail(subject, body)
       return unless @conf.mail || @conf.smtp_server
       Net::SMTP.start(@conf.smtp_server, 25) {|smtp|
-        smtp.send_mail <<EndOfMail, @conf.mail, @conf.mail
+        smtp.send_mail <<EndOfMail, @conf.mail.untaint, @conf.mail
 From: #{@conf.mail_from ? @conf.mail_from : @conf.mail}
 To: #{@conf.mail}
 Subject: #{subject.to_jis}
