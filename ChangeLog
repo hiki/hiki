@@ -1,7 +1,7 @@
 2004-08-31  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/config.rb: @style に応じて @parser および @formatter を定義
-	* hiki/command.rb, hiki/util.rb: conf.parser および conf.formatter 
-	を使うように変更
+	* hiki/command.rb, hiki/util.rb, misc/plugin/history.rb:
+	conf.parser および conf.formatter を使うように変更
 	* style/default/html_formatter.rb: クラス名を 
 	HTMLFormatter_default に変更し、HikiFormatter を継承
 	* style/rd+/html_formatter.rb: クラス名を HTMLFormatter_rd に変更
