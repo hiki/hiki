@@ -1,4 +1,4 @@
-# $Id: ptstore.rb,v 1.2 2003-02-22 08:28:47 hitoshi Exp $
+# $Id: ptstore.rb,v 1.3 2004-06-30 10:26:39 hitoshi Exp $
 #
 # ptstore.rb
 #   converts pstore.rb contained in Ruby 1.8.0 Preview 1.
@@ -100,26 +100,40 @@ class PTStore
   def transaction(read_only=false)
     raise PTStore::Error, "nested transaction" if @transaction
     begin
+
+      if !read_only
+          @table_cache = nil
+          @file_cache.close if @file_cache
+        @file_cache = nil
+      end
+
       @transaction = true
       value = nil
       backup = @filename+"~"
-      begin
-        file = File::open(@filename, "rb+")
+
+      if @file_cache
+        file = @file_cache
         orig = true
-      rescue Errno::ENOENT
-        raise if read_only
-        file = File::open(@filename, "wb+")
-      end
-      file.flock(read_only ? File::LOCK_SH : File::LOCK_EX)
-      if read_only
-        @table = TMarshal::load(file)
-      elsif orig and (content = file.read) != ""
-        @table = TMarshal::load(content)
-        size = content.size
-        md5 = Digest::MD5.digest(content)
-        content = nil    # unreference huge data
+        @table = @table_cache
       else
-        @table = {}
+        begin
+          file = File::open(@filename, "rb+")
+          orig = true
+        rescue Errno::ENOENT
+          raise if read_only
+          file = File::open(@filename, "wb+")
+        end
+        file.flock(read_only ? File::LOCK_SH : File::LOCK_EX)
+        if read_only
+          @table = TMarshal::load(file)
+        elsif orig and (content = file.read) != ""
+          @table = TMarshal::load(content)
+          size = content.size
+          md5 = Digest::MD5.digest(content)
+          content = nil    # unreference huge data
+        else
+          @table = {}
+        end
       end
       begin
         catch(:ptstore_abort_transaction) do
@@ -127,7 +141,7 @@ class PTStore
         end
       rescue Exception
         @abort = true
-  raise
+        raise
       ensure
         if !read_only and !@abort
           file.rewind
@@ -150,9 +164,17 @@ class PTStore
         @abort = false
       end
     ensure
+      if file
+        if read_only
+          @table_cache = @table
+          @file_cache = file
+        else
+          file.close
+        end
+      end
+
       @table = nil
       @transaction = false
-      file.close if file
     end
     value
   end
