@@ -1,0 +1,74 @@
+#!/usr/bin/ruby
+#
+# hikisetup - setup hiki for debian systems
+# Copyright (C) Taku YASUI <tach@debian.or.jp>
+#
+
+require 'getoptlong'
+require 'ftools'
+
+CGIDIR = '/usr/lib/cgi-bin'
+SRCDIR = '/usr/share/hiki'
+EXAMPLEDIR = '/usr/share/doc/hiki/examples'
+
+def parse_options
+  options = Hash.new
+  parser = GetoptLong.new
+  parser.set_options(['--help',          '-h', GetoptLong::NO_ARGUMENT],
+  		     ['--copy',		 '-c', GetoptLong::NO_ARGUMENT])
+  parser.each_option { |name, arg|  options[name.sub(/^--/, "")] = arg }
+  show_usage if options['help']
+  return options
+end
+
+def setup_symlink(dir)
+  File.makedirs("#{dir}/plugin", "#{dir}/theme")
+  Dir.glob("#{SRCDIR}/plugin/*.rb") do |file|
+    system('ln', '-s', file, "#{dir}/plugin")
+  end
+  Dir.glob("#{SRCDIR}/theme/*") do |file|
+    system('ln', '-s', file, "#{dir}/theme")
+  end
+  system('ln', '-s', "#{SRCDIR}/messages", dir)
+  system('ln', '-s', "#{SRCDIR}/template", dir)
+  File.symlink("#{CGIDIR}/hiki.cgi", "#{dir}/hiki.cgi")
+end
+
+def setup_copy(dir)
+  system('cp', '-r', "#{SRCDIR}/plugin", dir)
+  system('cp', '-r', "#{SRCDIR}/theme", dir)
+  system('cp', '-r', "#{SRCDIR}/messages", dir)
+  system('cp', '-r', "#{SRCDIR}/template", dir)
+  File.cp("#{CGIDIR}/hiki.cgi", dir)
+end
+
+def show_usage
+  print <<_EOT
+Usage: hikisetup [OPTIONS] [directory]
+OPTIONS:
+  --help,              -h: Show this help
+  --copy,              -c: Copy CGI and some files instead of symlink
+_EOT
+end
+
+def main
+  begin
+    opts = parse_options
+    dir = ARGV[0] || '.'
+    File.makedirs(dir)
+    system('cp', '-r', "#{SRCDIR}/data", dir)
+    File.cp("#{EXAMPLEDIR}/hikiconf.rb", dir)
+    if ( opts['copy'])
+      setup_copy(dir)
+    else
+      setup_symlink(dir)
+    end
+    puts "hikisetup succeeded!"
+    puts "Please edit #{dir}/hikiconf.rb"
+  rescue
+    puts "hikisetup failed!"
+    puts $!
+  end
+end
+
+main if __FILE__ == $0

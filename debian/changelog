@@ -1,0 +1,14 @@
+hiki (0.4.2a-2) unstable; urgency=low
+
+  * Fix: Cannot execute install.rb
+    (closes: #201055)
+
+ -- Taku YASUI <tach@debian.or.jp>  Thu, 17 Jul 2003 10:25:48 +0900
+
+hiki (0.4.2a-1) unstable; urgency=low
+
+  * Initial Release.
+    (closes: #199125)
+
+ -- Taku YASUI <tach@debian.or.jp>  Sun,  6 Jul 2003 23:28:18 +0900
+

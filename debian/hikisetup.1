@@ -1,0 +1,32 @@
+.\" hikisetup manpage for Debian GNU/Linux
+.\" written by Taku YASUI <tach@debian.or.jp>
+.TH HIKI 1
+.\" NAME should be all caps, SECTION should be 1-8, maybe w/ subsection
+.\" other parms are allowed: see man(7), man(1)
+.SH NAME
+hikisetup \- hiki setup utility for Debian
+.SH SYNOPSIS
+.B hikisetup
+.RI [--copy]
+.RI [directory]
+.SH DESCRIPTION
+This manual page documents briefly the support commands for
+.BR hiki .
+It was written for the Debian GNU/Linux distribution
+because the original program does not have a manual page.
+.PP
+.B hikisetup
+is a program that make directory and create configuration file for Hiki.
+If directory is specified, it setup to the directory.  If not, to
+current directory.
+.SH OPTIONS
+.TP
+.B --copy
+copy various files instead of symlink.  It symlinks some files and
+directories by default.  Then, cgi and some files to use are upgraded
+automatically when the package is upgraded.  But if your web server
+does not allow to run CGI which is symlink, you should copy CGI file.
+.SH AUTHOR
+hikisetup and this manual page was written by Taku YASUI
+<tach@debian.or.jp>,
+for the Debian GNU/Linux system (but may be used by others).
