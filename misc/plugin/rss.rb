@@ -1,4 +1,4 @@
-# $Id: rss.rb,v 1.3 2004-06-10 17:13:18 fdiary Exp $
+# $Id: rss.rb,v 1.4 2004-06-10 17:23:11 fdiary Exp $
 # Copyright (C) 2003-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 def rss_recent_label
@@ -21,11 +21,11 @@ def rss(page_num = 10)
 <?xml version="1.0" encoding="#{$charset}" standalone="yes"?>
 <rdf:RDF xmlns="http://purl.org/rss/1.0/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
   <channel rdf:about="#{$index_page}?c=recent">
-    <title>#{$site_name} : #{rss_recent_label}</title>
+    <title>#{CGI::escapeHTML($site_name)} : #{rss_recent_label}</title>
     <link>#{$index_page}?c=recent</link>
-    <description>#{$site_name} #{rss_recent_label}</description>
+    <description>#{CGI::escapeHTML($site_name)} #{rss_recent_label}</description>
     <language>ja</language>
-    <copyright>Copyright (C) #{$author_name}</copyright>
+    <copyright>Copyright (C) #{CGI::escapeHTML($author_name)}</copyright>
     <dc:date>#{last_modified.utc.strftime("%Y-%m-%dT%H:%M:%S+00:00")}</dc:date>
     <items>
       <rdf:Seq>

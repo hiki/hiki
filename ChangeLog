@@ -1,4 +1,5 @@
 2004-06-11  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/rss.rb: site_name, author_name をエスケープするように修正
 	* misc/plugin/pagerank.rb, misc/plugin/rss.rb, misc/plugin/src.rb: CGI ヘッダの後に不要な改行の出力をしないように修正
 
 2004-06-10  Kazuhiko  <kazuhiko@fdiary.net>
