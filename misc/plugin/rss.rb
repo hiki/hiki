@@ -1,4 +1,4 @@
-# $Id: rss.rb,v 1.16 2005-03-03 13:06:42 fdiary Exp $
+# $Id: rss.rb,v 1.17 2005-03-04 09:29:56 fdiary Exp $
 # Copyright (C) 2003-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # Copyright (C) 2005 Kazuhiko <kazuhiko@fdiary.net>
 
@@ -36,14 +36,14 @@ EOS
 
     case @conf['rss.mode']
     when 1
-      content = word_diff(src, dst, true).gsub(/\n/, "<br>\n")
+      content = word_diff(src, dst, true).strip.gsub(/\n/, "<br>\n")
     when 2
-      content = word_diff(src, dst).gsub(/\n/, "<br>\n")
+      content = word_diff(src, dst).strip.gsub(/\n/, "<br>\n")
     else
-      content = CGI::escapeHTML(unified_diff(src, dst)).gsub(/\n/, "<br>\n").gsub(/ /, '&nbsp;')
+      content = CGI::escapeHTML(unified_diff(src, dst)).strip.gsub(/\n/, "<br>\n").gsub(/ /, '&nbsp;')
     end
     if content.empty?
-      content = shorten(dst).strip
+      content = shorten(dst).strip.gsub(/\n/, "<br>\n")
     end
     
     items << '        '
