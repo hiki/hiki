@@ -1,4 +1,4 @@
-# $Id: plugin.rb,v 1.4 2004-06-26 14:12:28 fdiary Exp $
+# $Id: plugin.rb,v 1.5 2004-07-26 07:53:43 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
@@ -33,7 +33,6 @@ module Hiki
       end
       
       @toc_f            = false
-      @conf             = Hiki::Config::new
       @plugin_command   = []
       @plugin_menu      = []
       @text             = ''
