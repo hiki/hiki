@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-# $Id: attach.cgi,v 1.5 2004-09-10 06:59:32 fdiary Exp $
+# $Id: attach.cgi,v 1.6 2004-09-13 13:53:11 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'cgi'
@@ -50,7 +50,7 @@ def attach_file
       r << $@.join( "\n" )
     ensure
       send_updating_mail(page, 'attach', r) if @conf.mail_on_update
-      redirect(cgi, "#{@conf.index_page}?c=#{command}&p=#{page}")
+      redirect(cgi, "#{@conf.index_url}?c=#{command}&p=#{page}")
     end
   elsif cgi.params['detach'][0] then
     attach_path = "#{@conf.cache_path}/attach/#{page}"
@@ -70,7 +70,7 @@ def attach_file
       r << $@.join( "\n" )
     ensure
       send_updating_mail(page, 'detach', r) if @conf.mail_on_update
-      redirect(cgi, "#{@conf.index_page}?c=#{command}&p=#{page}")
+      redirect(cgi, "#{@conf.index_url}?c=#{command}&p=#{page}")
     end
   end
 end

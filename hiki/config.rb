@@ -1,4 +1,4 @@
-# $Id: config.rb,v 1.11 2004-09-09 08:45:40 fdiary Exp $
+# $Id: config.rb,v 1.12 2004-09-13 13:53:11 fdiary Exp $
 # Copyright (C) 2004 Kazuhiko <kazuhiko@fdiary.net>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
@@ -47,6 +47,28 @@ module Hiki
       end
     end
 
+    def base_url
+      unless @base_url
+	if !ENV['SCRIPT_NAME']
+	  @base_url = ''
+	elsif ENV['HTTPS']
+	  port = (ENV['SERVER_PORT'] == '443') ? '' : ':' + ENV['SERVER_PORT'].to_s
+	  @base_url = "https://#{ ENV['SERVER_NAME'] }#{ port }#{File::dirname(ENV['SCRIPT_NAME'])}/".sub(%r|/+$|, '/')
+	else
+	  port = (ENV['SERVER_PORT'] == '80') ? '' : ':' + ENV['SERVER_PORT'].to_s
+	  @base_url = "http://#{ ENV['SERVER_NAME'] }#{ port }#{File::dirname(ENV['SCRIPT_NAME'])}/".sub(%r|/+$|, '/')
+	end
+      end
+      @base_url
+    end
+
+    def index_url
+      unless @index_url
+	@index_url = (base_url + cgi_name).sub(%r|/\./|, '/')
+      end
+      @index_url
+    end
+    
     private
     # loading hikiconf.rb in current directory
     def load
@@ -59,7 +81,6 @@ module Hiki
       @data_path += '/' if /\/$/ !~ @data_path
 
       # default values
-      @index_page    ||= ''
       @smtp_server   ||= 'localhost'
       @use_plugin    ||= false
       @site_name     ||= 'hoge hoge'

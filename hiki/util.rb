@@ -1,4 +1,4 @@
-# $Id: util.rb,v 1.14 2004-09-10 05:56:17 fdiary Exp $
+# $Id: util.rb,v 1.15 2004-09-13 13:53:11 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'nkf'
@@ -176,7 +176,7 @@ EndOfMail
 #{'-' * 25}
 REMOTE_ADDR = #{ENV['REMOTE_ADDR']}
 REMOTE_HOST = #{ENV['REMOTE_HOST']}
-        URL = #{@conf.index_page}?#{page.escape}
+        URL = #{@conf.index_url}?#{page.escape}
 #{'-' * 25}
 #{text}
 EOS
@@ -200,17 +200,6 @@ EOS
 
     def set_conf(conf)
       @conf = conf
-    end
-
-    def base_url
-      return '' unless ENV['SCRIPT_NAME']
-      if ENV['HTTPS']
-	port = (ENV['SERVER_PORT'] == '443') ? '' : ':' + ENV['SERVER_PORT'].to_s
-	"https://#{ ENV['SERVER_NAME'] }#{ port }#{File::dirname(ENV['SCRIPT_NAME'])}/"
-      else
-	port = (ENV['SERVER_PORT'] == '80') ? '' : ':' + ENV['SERVER_PORT'].to_s
-	"http://#{ ENV['SERVER_NAME'] }#{ port }#{File::dirname(ENV['SCRIPT_NAME'])}/"
-      end.sub(%r|/+$|, '/')
     end
   end
 end

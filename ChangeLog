@@ -1,3 +1,14 @@
+2004-09-13  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/config.rb, hiki/util.rb: Hiki::Util::base_url から 
+	Hiki::Config::base_url に移動
+
+	* hiki/config.rb: index_page を廃止し、かわりに index_url を追加。
+	base_url と cgi_name から自動生成
+
+	* hikiconf.rb.sample, misc/hikifarm/hiki.conf,
+	misc/plugin/attach/attach.cgi, misc/plugin/rss.rb,
+	misc/plugin/trackback.rb: 上記の変更に伴う修正
+
 2004-09-10  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki.cgi, misc/plugin/trackback.rb: {{trackback}} と書いたページ
 	に trackback URI を表示するように変更
@@ -12,7 +23,7 @@
 	* misc/plugin/trackback.rb: TrackBack プラグインの追加
 
 	* hiki/util.rb (Hiki::Util::set_conf): @conf 設定用メソッドを追加
-	(Hiki::Util::base_url): @conf.index_page の代わりのメソッドを追加
+	(Hiki::Util::base_url): 追加
 
 	* misc/plugin/attach/attach.rb: [重要] HikiFarm 使用時に、個別の 
 	Hiki 毎に attach.cgi を設置するように変更。hidden 属性の 

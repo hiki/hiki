@@ -1,11 +1,11 @@
-# $Id: trackback.rb,v 1.3 2004-09-10 13:41:36 fdiary Exp $
+# $Id: trackback.rb,v 1.4 2004-09-13 13:53:11 fdiary Exp $
 # Copyright (C) 2004 Kazuhiko <kazuhiko@fdiary.net>
 
 require 'uconv'
 
 def trackback
   <<-EOF
-<div class="caption">TrackBack URL: <a href="#{File.basename(ENV['SCRIPT_NAME'])}/tb/#{@page.escape}">#{base_url}#{File.basename(ENV['SCRIPT_NAME'])}/tb/#{@page.escape}</a></div>
+<div class="caption">TrackBack URL: <a href="#{File.basename(ENV['SCRIPT_NAME'])}/tb/#{@page.escape}">#{@conf.base_url}#{File.basename(ENV['SCRIPT_NAME'])}/tb/#{@page.escape}</a></div>
 EOF
 end
 
@@ -13,7 +13,7 @@ def trackback_post
   params     = @cgi.params
   url = params['url'][0]
   unless /POST/i === @cgi.request_method && url
-    redirect(@cgi, "#{@conf.index_page}?#{@page.escapeHTML}")
+    redirect(@cgi, "#{@conf.index_url}?#{@page.escapeHTML}")
     return
   end
   blog_name = force_to_euc( params['blog_name'][0] || '' )

@@ -1,4 +1,4 @@
-# $Id: hikiconf.rb.sample,v 1.5 2004-06-26 14:12:27 fdiary Exp $
+# $Id: hikiconf.rb.sample,v 1.6 2004-09-13 13:53:10 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #============================
@@ -12,10 +12,6 @@
 #   このディレクトリの「全ファイル」と「全ディレクトリ」は、WWWサーバの
 #   権限で書き込めるパーミッションにしておく必要があります。
 @data_path       = 'path to data'
-
-# トップページの URL【オプション】
-#   トップページのURLを指定します。
-@index_page      = 'http://www.example.net/hiki/'
 
 # メールサーバ名【オプション】
 #   メールサーバ名を指定します。@mail_on_updateがtrueの場合に有効です。

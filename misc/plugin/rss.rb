@@ -1,4 +1,4 @@
-# $Id: rss.rb,v 1.6 2004-09-07 07:45:52 fdiary Exp $
+# $Id: rss.rb,v 1.7 2004-09-13 13:53:11 fdiary Exp $
 # Copyright (C) 2003-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 def rss_recent_label
@@ -20,9 +20,9 @@ def rss_body(page_num = 10)
   items = <<EOS
 <?xml version="1.0" encoding="#{@conf.charset}" standalone="yes"?>
 <rdf:RDF xmlns="http://purl.org/rss/1.0/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <channel rdf:about="#{@conf.index_page}?c=recent">
+  <channel rdf:about="#{@conf.index_url}?c=recent">
     <title>#{CGI::escapeHTML(@conf.site_name)} : #{rss_recent_label}</title>
-    <link>#{@conf.index_page}?c=recent</link>
+    <link>#{@conf.index_url}?c=recent</link>
     <description>#{CGI::escapeHTML(@conf.site_name)} #{rss_recent_label}</description>
     <language>ja</language>
     <copyright>Copyright (C) #{CGI::escapeHTML(@conf.author_name)}</copyright>
@@ -36,7 +36,7 @@ EOS
     name = p.keys[0]
     items << '        '
 
-    uri = "#{@conf.index_page}?#{name.escape}"
+    uri = "#{@conf.index_url}?#{name.escape}"
     items << %Q!<rdf:li resource="#{uri}"/>\n!
 
     item_list << <<EOS
