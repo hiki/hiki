@@ -1,4 +1,4 @@
-# $Id: config.rb,v 1.20 2005-01-07 12:47:24 fdiary Exp $
+# $Id: config.rb,v 1.21 2005-01-07 15:31:47 fdiary Exp $
 # Copyright (C) 2004 Kazuhiko <kazuhiko@fdiary.net>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
@@ -47,7 +47,7 @@ module Hiki
         )
       end
 
-      bot = ["googlebot", "Hatena Antenna", "moget@goo.ne.jp", "w3m"]
+      bot = ["googlebot", "Hatena Antenna", "moget@goo.ne.jp"]
       bot += @options['bot'] || []
       @bot = Regexp::new( "(#{bot.uniq.join( '|' )})", true )
     end
