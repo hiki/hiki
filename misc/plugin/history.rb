@@ -3,7 +3,7 @@
 == plugin/history.rb - CVS の編集履歴を表示するプラグイン
 
   Copyright (C) 2003 Hajime BABA <baba.hajime@nifty.com>
-  $Id: history.rb,v 1.2 2004-03-01 09:50:45 hitoshi Exp $
+  $Id: history.rb,v 1.3 2004-04-07 06:36:06 fdiary Exp $
   You can redistribute and/or modify this file under the terms of the LGPL.
 
   Copyright (C) 2003 Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
@@ -123,11 +123,11 @@ module Hiki
     # Subroutine to invoke external command using `` sequence.
     def history_exec_command (cmd_string)
       cmdlog = ''
-      oldpwd = Dir.pwd
+      oldpwd = Dir.pwd.untaint
       begin
 	Dir.chdir( "#{$pages_path}" )
 	# うーん... まあとりあえず。
-	cmdlog = `#{cmd_string}`
+	cmdlog = `#{cmd_string.untaint}`
       ensure
 	Dir.chdir( oldpwd )
       end

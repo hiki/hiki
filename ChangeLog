@@ -1,6 +1,7 @@
 2004-04-07  Kazuhiko  <kazuhiko@fdiary.net>
-	* misc/plugin/history.rb (Hiki::History::history_exec_command): $SAFE=1 向けの修正 by Kouhei Sutou <kou@cozmixng.org>
-	* misc/plugin/cvs.rb (cvs_delete): $SAFE=1 向けの修正
+	* misc/plugin/history.rb: $SAFE=1 向けの修正 by Kouhei Sutou <kou@cozmixng.org>
+	* misc/plugin/cvs.rb: $SAFE=1 向けの修正
+	* misc/plugin/svn.rb: $SAFE=1 向けの修正
 
 	* hiki/pluginutil.rb: プラグイン評価用ファイル by Masao Mutoh
 	* style/rd+/rd2html.rb: セキュリティバグの修正 by Masao Mutoh
