@@ -328,7 +328,7 @@ def pagerank_page
   header['Content-Language'] = $lang
   header['Pragma']           = 'no-cache'
   header['Cache-Control']    = 'no-cache'
-  puts @cgi.header(header)
+  print @cgi.header(header)
   
   options = PageRank.default_options
   options.update(@options)

@@ -1,3 +1,6 @@
+2004-06-11  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/pagerank.rb, misc/plugin/rss.rb, misc/plugin/src.rb: CGI ヘッダの後に不要な改行の出力をしないように修正
+
 2004-06-10  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/util.rb (save_config): エスケープして保存するように修正
 

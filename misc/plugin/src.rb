@@ -1,4 +1,4 @@
-# $Id: src.rb,v 1.2 2004-02-15 02:48:35 hitoshi Exp $
+# $Id: src.rb,v 1.3 2004-06-10 17:13:18 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 def src_label
@@ -34,7 +34,7 @@ EOS
   header['Content-Language'] = $lang
   header['Pragma']           = 'no-cache'
   header['Cache-Control']    = 'no-cache'
-  puts @cgi.header(header)
+  print @cgi.header(header)
   puts sources
 
   nil # Don't move to the 'FrontPage'
