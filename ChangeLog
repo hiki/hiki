@@ -1,3 +1,8 @@
+2004-12-07  Kazuhiko  <kazuhiko@fdiary.net>
+	* data/text/EnglishTextFormattingRules,
+	misc/text/default/EnglishTextFormattingRules: 英語版の追加 thanks
+	to Steve Brumbaugh
+
 2004-11-15  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/util.rb (Hiki::Util::sendmail): Content-Type ヘッダの追加 
 	thanks to vette
