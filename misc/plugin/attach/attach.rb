@@ -1,4 +1,4 @@
-# $Id: attach.rb,v 1.3 2004-03-06 01:02:08 hitoshi Exp $
+# $Id: attach.rb,v 1.4 2004-03-17 13:31:55 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 #
 # thanks to Kazuhiko, Masao Mutoh, SHIMADA Mitsunobu, Yoshimi, ¤ê¤¿
@@ -133,7 +133,7 @@ def attach_download
 
   print "Content-Type: #{mime_type}\n"
   print %Q!Content-Disposition: filename="#{file_name.to_sjis}"\n\n!
-  print open(attach_file, "rb").read
+  print open(attach_file.untaint, "rb").read
   nil
 end
 

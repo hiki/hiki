@@ -1,3 +1,6 @@
+2004-03-17  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/attach/attach.rb: $SAFE=1 向けの修正 by HOSONO Hidetomo <h12o@h12o.org>
+
 2004-03-16  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/amazon.rb: $SAFE=1 向けの修正
 
