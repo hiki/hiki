@@ -1,4 +1,4 @@
-# $Id: plugin.rb,v 1.13 2005-03-08 05:19:34 fdiary Exp $
+# $Id: plugin.rb,v 1.14 2005-03-08 09:48:23 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
@@ -263,7 +263,6 @@ module Hiki
 	rescue IOError, Errno::ENOENT
 	end
       end
-      STDERR.puts( file )
       load( file )
     end
 
