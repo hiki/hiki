@@ -1,3 +1,15 @@
+2005-01-07  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/docdiff/charstring.rb: 今のところ Hiki では不要な require
+	'iconv' を削除
+
+	* hiki/config.rb (Hiki::Config::bot?): 追加
+	* plugin/00default.rb (hiki_menu): bot アクセス時はページ一覧以外の
+	メニューを出さないように変更
+
+	* template/en/view.html, template/fr/view.html,
+	template/it/view.html, template/ja/view.html: page_title のリンクを
+	削除
+
 2005-01-06  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/docdiff: 追加 <http://raa.ruby-lang.org/project/docdiff/>
 	* hiki/util.rb (Hiki::Util::word_diff): 追加

@@ -3,7 +3,7 @@
 # To use, include to String, or extend String.
 # 2003- Hisashi MORITA
 
-require 'iconv'
+#require 'iconv'
 module CharString
 
   Encodings = Hash.new

@@ -1,4 +1,4 @@
-# $Id: 00default.rb,v 1.14 2004-12-14 16:12:33 fdiary Exp $
+# $Id: 00default.rb,v 1.15 2005-01-07 12:47:24 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #==============================
@@ -153,25 +153,29 @@ def hiki_menu(data, command)
   menu = []
   editable = %w(view edit diff)
 
-  menu << %Q!<a accesskey="c" href="#{@conf.cgi_name}?c=create">#{@conf.msg_create}</a>!
-  menu << %Q!<a accesskey="e" href="#{@conf.cgi_name}?c=edit;p=#{@page.escape}">#{@conf.msg_edit}</a>! if editable.index(command) && @page
-  menu << %Q!<a accesskey="d" href="#{@conf.cgi_name}?c=diff;p=#{@page.escape}">#{@conf.msg_diff}</a>! if editable.index(command) && @page
-  menu << %Q!#{hiki_anchor( 'FrontPage', page_name('FrontPage') )}!
-  menu << %Q!<a accesskey="i" href="#{@conf.cgi_name}?c=index">#{@conf.msg_index}</a>!
-  menu << %Q!<a accesskey="s" href="#{@conf.cgi_name}?c=search">#{@conf.msg_search}</a>!
-  menu << %Q!<a accesskey="r" href="#{@conf.cgi_name}?c=recent">#{@conf.msg_recent_changes}</a>!
-  @plugin_menu.each do |c|
-    next if c[:option].has_key?('p') && !editable.index(command)
-    cmd =  %Q!<a href="#{@conf.cgi_name}?c=#{c[:command]}!
-    c[:option].each do |key, value|
-      value = @page.escape if key == 'p'
-      cmd << %Q!;#{key}=#{value}!
+  if @conf.bot?
+    menu << %Q!<a accesskey="i" href="#{@conf.cgi_name}?c=index">#{@conf.msg_index}</a>!
+  else
+    menu << %Q!<a accesskey="c" href="#{@conf.cgi_name}?c=create">#{@conf.msg_create}</a>!
+    menu << %Q!<a accesskey="e" href="#{@conf.cgi_name}?c=edit;p=#{@page.escape}">#{@conf.msg_edit}</a>! if editable.index(command) && @page
+    menu << %Q!<a accesskey="d" href="#{@conf.cgi_name}?c=diff;p=#{@page.escape}">#{@conf.msg_diff}</a>! if editable.index(command) && @page
+    menu << %Q!#{hiki_anchor( 'FrontPage', page_name('FrontPage') )}!
+    menu << %Q!<a accesskey="i" href="#{@conf.cgi_name}?c=index">#{@conf.msg_index}</a>!
+    menu << %Q!<a accesskey="s" href="#{@conf.cgi_name}?c=search">#{@conf.msg_search}</a>!
+    menu << %Q!<a accesskey="r" href="#{@conf.cgi_name}?c=recent">#{@conf.msg_recent_changes}</a>!
+    @plugin_menu.each do |c|
+      next if c[:option].has_key?('p') && !editable.index(command)
+      cmd =  %Q!<a href="#{@conf.cgi_name}?c=#{c[:command]}!
+      c[:option].each do |key, value|
+        value = @page.escape if key == 'p'
+        cmd << %Q!;#{key}=#{value}!
+      end
+      cmd << %Q!">#{c[:display_text]}</a>!
+      menu << cmd
     end
-    cmd << %Q!">#{c[:display_text]}</a>!
-    menu << cmd
+    menu_proc.each {|i| menu << i}
+    menu << %Q!<a accesskey="m" href="#{@conf.cgi_name}?c=admin">#{@conf.msg_admin}</a>!
   end
-  menu_proc.each {|i| menu << i}
-  menu << %Q!<a accesskey="m" href="#{@conf.cgi_name}?c=admin">#{@conf.msg_admin}</a>!
 
   data[:tools] = menu.collect! {|i| %Q!<span class="adminmenu">#{i}</span>! }.join("&nbsp;\n").sanitize
 end
