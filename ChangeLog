@@ -1,4 +1,6 @@
 2004-09-28  Kazuhiko  <kazuhiko@fdiary.net>
+	* theme/hiki/hiki.css: IE5 向けに @media screen に div.main を追加
+
 	* misc/plugin/rss.rb: RSS Auto Discovery に対応 by 柳田
 	* misc/hikifarm/index.cgi: $SAFE = 1 の追加 by 柳田
 
