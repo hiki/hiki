@@ -1,3 +1,6 @@
+2005-03-24  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* misc/hikifarm/hiki.conf: hikifarm.conf の data_path の値を使うように修正
+
 2005-03-22  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/xmlrpc/xmlrpc.cgi: options['params'] の初期化のバグを修正
 	report by Yoshikazu TAKATA
