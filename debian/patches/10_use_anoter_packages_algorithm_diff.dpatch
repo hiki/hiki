@@ -251,12 +251,12 @@ diff -urNad hiki.old/hiki/algorithm/diff.rb hiki/hiki/algorithm/diff.rb
 diff -urNad hiki.old/hiki/util.rb hiki/hiki/util.rb
 --- hiki.old/hiki/util.rb	2003-02-26 21:02:16.000000000 +0900
 +++ hiki/hiki/util.rb	2003-06-28 14:17:15.000000000 +0900
-@@ -5,7 +5,7 @@
- require 'cgi'
+@@ -6,7 +6,7 @@
  require 'net/smtp'
+ require 'time'
  require 'amrita/template'
 -require 'hiki/algorithm/diff'
 +require 'algorithm/diff'
- require 'hiki/parser'
- require 'hiki/html_formatter'
  
+ class String
+   def to_euc
