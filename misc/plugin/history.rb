@@ -3,7 +3,7 @@
 == plugin/history.rb - CVS §Œ ‘Ω∏Õ˙ŒÚ§Ú…Ωº®§π§Î•◊•È•∞•§•Û
 
   Copyright (C) 2003 Hajime BABA <baba.hajime@nifty.com>
-  $Id: history.rb,v 1.17 2005-02-08 07:20:35 fdiary Exp $
+  $Id: history.rb,v 1.18 2005-02-08 20:14:13 fdiary Exp $
   You can redistribute and/or modify this file under the terms of the LGPL.
 
   Copyright (C) 2003 Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
@@ -109,7 +109,7 @@ module Hiki
     end
 
     def history_view_this_version_src_label
-      '$B$3$N%P!<%8%g%s$N%=!<%9$r8+$k(B'
+      '§≥§Œ•–°º•∏•Á•Û§Œ•Ω°º•π§Ú∏´§Î'
     end
 
     def history_backto_summary_label
@@ -406,4 +406,3 @@ module Hiki
     end
   end
 end
-
