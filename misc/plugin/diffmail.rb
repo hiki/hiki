@@ -1,4 +1,4 @@
-# $Id: diffmail.rb,v 1.2 2004-02-15 02:48:35 hitoshi Exp $
+# $Id: diffmail.rb,v 1.3 2004-09-06 15:08:44 fdiary Exp $
 # Copyright (C) 2003 SHIMADA Mitsunobu <simm@fan.jp>
 
 require 'hiki/algorithm/diff'
