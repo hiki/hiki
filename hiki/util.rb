@@ -1,4 +1,4 @@
-# $Id: util.rb,v 1.19 2004-12-17 16:56:01 fdiary Exp $
+# $Id: util.rb,v 1.20 2004-12-18 17:01:55 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'nkf'
@@ -224,14 +224,18 @@ EndOfMail
     end
 
     def send_updating_mail(page, type, text='')
-      sendmail("[Hiki] #{type} - #{page}", <<EOS)
+      body = <<EOS
 #{'-' * 25}
 REMOTE_ADDR = #{ENV['REMOTE_ADDR']}
 REMOTE_HOST = #{ENV['REMOTE_HOST']}
+EOS
+      body << "REMOTE_USER = #{ENV['REMOTE_HOST']}" if ENV['REMOTE_HOST']
+      body << <<EOS
         URL = #{@conf.index_url}?#{page.escape}
 #{'-' * 25}
 #{text}
 EOS
+      sendmail("[Hiki] #{type} - #{page}", body)
     end
 
     def theme_url

@@ -1,3 +1,7 @@
+2004-12-19  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/util.rb (Hiki::Util::send_updating_mail): HTTP 認証時は
+	REMOTE_USER 情報を付加するように変更 by Zaki
+
 2004-12-18  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/attach/attach.cgi: アップロードするファイルサイズの最
 	大値を @options['attach_size'] で指定できるように修正 (無指定時は
