@@ -1,4 +1,4 @@
-# $Id: pluginutil.rb,v 1.2 2004-06-26 14:12:28 fdiary Exp $
+# $Id: pluginutil.rb,v 1.3 2004-08-12 07:47:03 fdiary Exp $
 #
 # apply_plugin(str):
 #  Eval the string as a plugin.
@@ -37,7 +37,7 @@ module Hiki
       args= String.new(args) rescue 
       raise(ArgumentError, "Argument must be a string")
       
-      args.lstrip!
+      args.sub!(/\A\s+/, '')
       words = []
       is_ary = false
       until args.empty?
@@ -65,7 +65,7 @@ module Hiki
 	  elsif args.sub!(/\A([^\s\\'"\(\),\]]+)/, '') then
 	    snippet = $1
 	  else
-	    args.lstrip!
+	    args.sub!(/\A\s+/, '')
 	    break
 	  end
 	  field.concat(snippet) if snippet
@@ -84,7 +84,7 @@ module Hiki
       line = String.new(line) rescue 
       raise(ArgumentError, "Argument must be a string")
       
-      line.lstrip!
+      line.sub!(/\A\s+/, '')
       words = []
       meth = ''
       while ! line.empty?
