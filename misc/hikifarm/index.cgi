@@ -65,7 +65,7 @@ end
 
 #--------------------------------------------------------------------
 
-HIKIFARM_VERSION = '0.3.0.20040906'
+HIKIFARM_VERSION = '0.3.0.20040923'
 
 def index( wiki )
 <<-INDEX
@@ -331,7 +331,7 @@ msg = nil
 
 @repos.setup()
 
-if cgi.params['wiki'][0] and cgi.params['wiki'][0].length > 0 then
+if /post/i =~ cgi.request_method and cgi.params['wiki'][0] and cgi.params['wiki'][0].length > 0
    begin
       wiki = cgi.params['wiki'][0]
       raise '英数字のみ指定できます' unless /\A[a-zA-Z0-9]+\z/ =~ wiki

@@ -1,3 +1,6 @@
+2004-09-23  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/hikifarm/index.cgi: POST メソッドか判定するように修正
+
 2004-09-22  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/attach/attach.cgi: ページ名の escape しすぎを修正
 	$defout.binmode の追加
