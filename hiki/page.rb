@@ -1,10 +1,17 @@
-# $Id: page.rb,v 1.5 2004-06-26 14:12:28 fdiary Exp $
+# $Id: page.rb,v 1.6 2005-01-28 04:35:29 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+# Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 
 require 'cgi'
 
 module Hiki
   class Page
+    begin
+      require 'erb_fast'
+    rescue LoadError
+      require 'erb'
+    end
+
     attr_accessor :template, :contents
     
     def initialize(cgi, conf)
@@ -15,25 +22,20 @@ module Hiki
     end
 
     def to_html
-      tmpl = TemplateFile.new @template
-      html = ''
-#      tmpl = TemplateFileWithCache[@template]
-#      tmpl.use_compiler = true
-#      tmpl.set_hint_by_sample_data(@contents)
-      tmpl.expand_attr = true
-      tmpl.expand(html, @contents)
-      html
+      ERB::new( File::open( @template ){|f| f.read}.untaint ).result( binding )
     end
 
     def page( plugin )
       plugin.title = @contents[:title]
+      @plugin = plugin
+      @contents[:lang]           = @conf.lang
       @contents[:header]         = plugin.header_proc.sanitize
       @contents[:body_leave]     = plugin.body_leave_proc.sanitize
       @contents[:footer]         = plugin.footer_proc.sanitize
       
       html = to_html
+      @conf.save_config if @cgi.params['saveconf'][0]
       header = Hash::new
-
       if @contents[:last_modified] and /HEAD/i =~ @cgi.request_method
 	header['Last-Modified']    = CGI::rfc1123_date(@contents[:last_modified])
       end

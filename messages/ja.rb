@@ -1,4 +1,4 @@
-# $Id: ja.rb,v 1.5 2004-12-14 16:12:33 fdiary Exp $
+# $Id: ja.rb,v 1.6 2005-01-28 04:35:29 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # You can redistribute it and/or modify it under the terms of
 # the Ruby's licence.
@@ -48,5 +48,23 @@ module Hiki
     def msg_match_keyword; '[キーワードに一致]' end
     def msg_duplicate_page_title; '指定したタイトルは既に存在しています。' end
     def msg_missing_anchor_title; 'ページ %s を新規作成し、編集します。' end
+    # (config)
+    def msg_config; 'Hiki 環境設定'; end
+    # (diff)
+    def msg_diff_add; '最後の更新で追加された部分は<ins class="added">このように</ins>表示します。'; end
+    def msg_diff_del; '最後の更新で削除された部分は<del class="deleted">このように</del>表示します。'; end
+    # (edit)
+    def msg_title; 'タイトル'; end
+    def msg_keyword_form; 'キーワード(1行に1つ記述してください)'; end
+    def msg_freeze_checkbox; 'ページの凍結'; end
+    def msg_password_form; 'パスワード'; end
+    def msg_preview_button; 'プレビュー'; end
+    def msg_save; '保存'; end
+    def msg_latest; '最新版を参照'; end
+    def msg_rules; %Q|書き方がわからない場合は<a href="#{@cgi_name}?TextFormattingRules">TextFormattingRules</a>を参照してください。|; end
+    # (view)
+    def msg_last_modified; '更新日時'; end
+    def msg_keyword; 'キーワード'; end
+    def msg_reference; '参照'; end
   end
 end

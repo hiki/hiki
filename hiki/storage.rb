@@ -1,4 +1,4 @@
-# $Id: storage.rb,v 1.5 2004-12-14 16:12:32 fdiary Exp $
+# $Id: storage.rb,v 1.6 2005-01-28 04:35:29 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'md5'
@@ -52,18 +52,6 @@ module Hiki
     def md5hex( page )
       s = load( page )
       MD5.new( s || '' ).hexdigest
-    end
-
-    def diff( page )
-      latest = (f = load( page )) ? f : ''
-
-      if backup_exist?( page )
-        old = load_backup( page )
-      else
-        old = ''
-      end
-
-      diff_t( old, latest )
     end
 
     def search( w )

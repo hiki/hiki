@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.17 2005-01-28 04:02:23 fdiary Exp $
+# $Id: html_formatter.rb,v 1.18 2005-01-28 04:35:30 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -257,7 +257,6 @@ EOS
 
     def auto_link(text)
       return text if @auto_links.size == 0
-
       text.gsub(@auto_links_re) {|matched|
         page = @auto_links.assoc($&).size > 2 ? @auto_links.assoc($&)[2] : $&
         title = @auto_links.assoc($&)[1]

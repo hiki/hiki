@@ -1,0 +1,36 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="<%= @contents[:lang] %>">
+<head>
+<%= @contents[:header] %>
+</head>
+
+<body>
+<div class="adminmenu"><%= @contents[:tools] %></div>
+<h1 class="header"><%=@conf.msg_config%></h1>
+<div class="sidebar">
+<ul style="margin-top: 5em;">
+<% @plugin.each_conf_key do |key|%>
+  <li><a href="<%=@contents[:cgi_name]%>?c=admin;conf=<%=key%>;session_id=<%=@contents[:session_id]%>"><%=@plugin.conf_label( key )%></a></li>
+<% end %>
+</ul>
+</div>
+<div class="main">
+<form method="post" action="<%= @contents[:cgi_name] %>">
+<div class="conf day">
+  <input type="hidden" value="admin" name="c">
+  <input type="hidden" name="session_id" value="<%=@contents[:session_id]%>">
+  <input type="hidden" name="conf" value="<%=@contents[:key]%>">
+  <h2><span class="title"><%=@conf.msg_conf( @contents[:key] )%></span></h2>
+  <div class="body">
+    <%=@plugin.conf_proc( @contents[:key] )%>
+    <div><input type="submit" name="saveconf" value="OK"></div>
+  </div>
+</div>
+</form>
+<hr class="sep">
+</div>
+<div class="footer"><%= @contents[:footer] %></div>
+</body>
+</html>

@@ -1,15 +1,13 @@
-# $Id: util.rb,v 1.25 2005-01-14 01:39:46 fdiary Exp $
+# $Id: util.rb,v 1.26 2005-01-28 04:35:29 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'nkf'
 require 'cgi'
 require 'net/smtp'
 require 'time'
-require 'amrita/template'
-require 'algorithm/diff'
-require 'docdiff/difference'
-require 'docdiff/document'
-require 'docdiff/view'
+
+autoload( :Document, 'docdiff' )
+autoload( :DocDiff, 'docdiff' )
 
 class String
   def to_euc
@@ -41,7 +39,7 @@ class String
   end
 
   def sanitize
-    SanitizedString::new(self)
+    self
   end
 end
 
@@ -110,7 +108,7 @@ module Hiki
     end
 
     def title( s )
-      "#{@conf.site_name} - #{s}"
+      CGI::escapeHTML( "#{@conf.site_name} - #{s}" )
     end
 
     def view_title( s )
@@ -124,90 +122,20 @@ module Hiki
     def get_common_data( db, plugin, conf )
       data = Hash::new
       data[:author_name] = conf.author_name
-      data[:view_style]  = conf.use_sidebar ? conf.main_class : 'hiki' # for tDiary theme
+      data[:view_style]  = conf.use_sidebar ? CGI::escapeHTML( conf.main_class ) : 'hiki' # for tDiary theme
       data[:cgi_name]    = conf.cgi_name
       if conf.use_sidebar
         parser = conf.parser.new( conf )
         m = db.load( conf.side_menu ) || ''
         t = parser.parse( m )
         f = conf.formatter.new( t, db, plugin, conf, 's' )
-        data[:sidebar]   =  {:menu => f.to_s.sanitize}
+        data[:sidebar]   = f.to_s.sanitize
         data[:main_class]    = conf.main_class
-        data[:sidebar_class] = conf.sidebar_class
+        data[:sidebar_class] = CGI::escapeHTML( conf.sidebar_class )
       else
         data[:sidebar] = nil
       end
       data
-    end
-
-    def diff_t( s1 , s2 )
-      s1 = s1 || ''
-      s2 = s2 || ''
-      a1 = s1.split( "\n" ).collect! {|s| "#{s}\n"}
-      a2 = s2.split( "\n" ).collect! {|s| "#{s}\n"}
-      Diff.diff(a1, a2) 
-    end
-
-    def diff( src, dst, html = true )
-      diff = diff_t( src, dst )
-      text = ''
-      if html || true
-        src = src.split("\n").collect{|s| "#{s.escapeHTML}"}
-      else
-        src = src.split("\n").collect{|s| "#{s}"}
-      end
-      si = 0
-      di = 0
-
-      diff.each do |action,position,elements|
-        case action
-        when :-
-            while si < position
-              if html
-                text << "#{src[si]}\n"
-              else
-                text << "  #{src[si]}\n"
-              end
-              si += 1
-              di += 1
-            end
-          si += elements.length
-          elements.each do |l|
-            if html
-              text << "<del class=\"deleted\">#{l.escapeHTML.chomp}</del>\n"
-            else
-              text << "- #{l}"
-            end
-          end
-        when :+
-            while di < position
-              if html
-                text << "#{src[si]}\n"
-              else
-                text << "  #{src[si]}\n"
-              end
-              si += 1
-              di += 1
-            end
-          di += elements.length
-          elements.each do |l|
-            if html
-              text << "<ins class=\"added\">#{l.escapeHTML.chomp}</ins>\n"
-            else
-              text << "+ #{l}"
-            end
-          end
-        end
-      end
-      while si < src.length
-        if html
-          text << "#{src[si]}\n"
-        else
-          text << "  #{src[si]}\n"
-        end
-        si += 1
-      end
-      text
     end
 
     def word_diff( src, dst, html = true )
@@ -233,83 +161,8 @@ module Hiki
       end	
     end
 
-    def unified_diff( src, dst, unified = 3 )
-      r = ''
-      diff = diff_t( src, dst )
-      src = src.split("\n").collect{|s| "#{s}\n"}
-      si = 0
-      di = 0
-      sibak = nil
-      dibak = nil
-      diff.each do |action, position, elements|
-
-        # difference
-        case action
-        when :-
-          # postfix
-          if unified and sibak then
-            while( (si < sibak + unified) and (si < position) )
-              r << "  #{src[si]}"
-              si += 1
-              di += 1
-            end
-            r << "---\n" if si < position - 1
-          end
-          # prefix
-          while si < position
-            if( (not unified) or (position - unified <= si) )
-              r << "  #{src[si]}"
-            end
-            si += 1
-            di += 1
-          end
-          si += elements.length
-          elements.each do |l|
-            r << "- #{l}"
-          end
-        when :+
-          # postfix
-          if unified and dibak then
-            while( (di < dibak + unified) and (di < position) )
-              r << "  #{src[si]}"
-              si += 1
-              di += 1
-            end
-            r << "---\n" if di < position - 1
-          end
-          # prefix
-          while di < position
-            if( (not unified) or (position - unified <= di) )
-              r << "  #{src[si]}"
-            end
-            si += 1
-            di += 1
-          end
-          di += elements.length
-          elements.each do |l|
-            r << "+ #{l}"
-          end
-        end
-
-        # record for the next
-        sibak = si
-        dibak = di
-      end
-
-      # postfix
-      if unified and sibak then
-        while( (si < sibak + unified) and (si < src.length) )
-          r << "  #{src[si]}"
-          si += 1
-          di += 1
-        end
-      elsif !r.empty?
-        while si < src.length
-          r << "  #{src[si]}"
-          si += 1
-        end
-      end
-      r
+    def unified_diff( src, dst, context_lines = 3 )
+      return DocDiff.new(src.to_a, dst.to_a).ses.unidiff( '', context_lines )
     end
 
     def redirect(cgi, url)

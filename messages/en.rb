@@ -1,4 +1,4 @@
-# $Id: en.rb,v 1.5 2004-12-14 16:12:33 fdiary Exp $
+# $Id: en.rb,v 1.6 2005-01-28 04:35:29 fdiary Exp $
 # en.rb
 #
 # Copyright (C) 2003 Masao Mutoh <mutoh@highway.ne.jp>
@@ -56,5 +56,23 @@ module Hiki
     def msg_match_keyword; '[matched in keyword]' end
     def msg_duplicate_page_title; 'The page title has already been existed.' end
     def msg_missing_anchor_title; 'Create new %s and edit.' end
+    # (config)
+    def config_label; 'Hiki Configurations'; end
+    # (diff)
+    def diff_add_label; 'Added words are showed as <ins class="added">here</ins>.'; end
+    def diff_del_label; 'Removed words are showed as <del class="deleted">here</del>.'; end
+    # (edit)
+    def msg_title; 'Title'; end
+    def msg_keyword_form; 'Keyword (one keyword per line)'; end
+    def msg_freeze_checkbox; 'Freeze the current page.'; end
+    def msg_password_form; 'Password'; end
+    def msg_preview_button; 'Preview'; end
+    def msg_save; 'Save'; end
+    def msg_latest; 'Refer recent version'; end
+    def msg_rules; %Q|See <a href="#{@cgi_name}?TextFormattingRules">TextFormattingRules</a> if you need.|; end
+    # (view)
+    def msg_last_modified; 'Last Modified'; end
+    def msg_keyword; 'Keyword'; end
+    def msg_reference; 'References'; end
   end
 end

@@ -1,4 +1,4 @@
-# $Id: test_util.rb,v 1.1 2005-01-09 15:59:35 fdiary Exp $
+# $Id: test_util.rb,v 1.2 2005-01-28 04:35:32 fdiary Exp $
 
 $KCODE = 'e'
 
@@ -22,22 +22,6 @@ class TMarshal_Unit_Tests < Test::Unit::TestCase
     @d5 = Document.new( @t5, 'EUC-JP', 'LF' )
   end
 
-  def test_diff_t
-    assert_equal( [[:+, 0, ["123\n", "456\n"]]] , diff_t( nil, @t1 ) )
-    assert_equal( [[:+, 1, ["abc\n"]]] , diff_t( @t1, @t2 ) )
-    assert_equal( [[:-, 1, ["abc\n"]] ,[:+, 2, ["def\n"]]] , diff_t( @t2, @t3 ) )
-  end
-
-  def test_diff_html
-    assert_equal( "123\n<ins class=\"added\">abc</ins>\n456\n", diff( @t1, @t2 ) )
-    assert_equal( "123\n<del class=\"deleted\">abc</del>\n456\n", diff( @t2, @t1 ) )
-  end
-
-  def test_diff_txt
-    assert_equal( "  123\n+ abc\n  456\n", diff( @t1, @t2, false) )
-    assert_equal( "  123\n- abc\n  456\n", diff( @t2, @t1, false ) )
-  end
-
   def test_word_diff_html
     assert_equal( "123\n<ins class=\"added\">abc</ins>\n456\n", word_diff( @t1, @t2 ) )
     assert_equal( "<del class=\"deleted\">こんにちは</del><ins class=\"added\">こんばんは</ins>、私の<del class=\"deleted\">名前はわたなべです</del><ins class=\"added\">名前はまつもとです</ins>。\n<ins class=\"added\">Rubyを作ったのは私です。</ins>私は<del class=\"deleted\">Just Another </del>Ruby <del class=\"deleted\">Porter</del><ins class=\"added\">Hacker</ins>です。", word_diff( @t4, @t5) )
@@ -46,6 +30,11 @@ class TMarshal_Unit_Tests < Test::Unit::TestCase
   def test_word_diff_txt
     assert_equal( "123\n{+abc+}\n456\n", word_diff( @t1, @t2, false ) )
     assert_equal( "[-こんにちは-]{+こんばんは+}、私の[-名前はわたなべです-]{+名前はまつもとです+}。\n{+Rubyを作ったのは私です。+}私は[-Just Another -]Ruby [-Porter-]{+Hacker+}です。", word_diff( @t4, @t5, false ) )
+  end
+
+  def test_unified_diff
+    assert_equal( "@@ -1,2 +1,3 @@\n 123\n+abc\n 456\n", unified_diff( @t1, @t2 ) )
+    assert_equal( "@@ -1,3 +1,2 @@\n 123\n-abc\n 456\n", unified_diff( @t2, @t1 ) )
   end
 
   def test_euc_to_utf8

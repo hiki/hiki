@@ -1,14 +1,12 @@
-# $Id: command.rb,v 1.26 2005-01-08 05:55:51 fdiary Exp $
+# $Id: command.rb,v 1.27 2005-01-28 04:35:29 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
-
-require 'amrita/template'
 
 require 'hiki/page'
 require 'hiki/util'
 require 'hiki/plugin'
 require 'hiki/aliaswiki'
+require 'hiki/session'
 
-include Amrita
 include Hiki::Util
 
 module Hiki
@@ -134,10 +132,18 @@ module Hiki
         end
       end
 
-      html = nil
-      text = @db.load( @p )
-      parser = @conf.parser::new( @conf )
-      tokens = parser.parse( text )
+      prepare_cache_dir
+      cache_file = "#{@conf.cache_path}/parser/#{@p.escape}".untaint
+      begin
+	tokens = Marshal::load( File.read( cache_file ) )
+      rescue
+	text = @db.load( @p )
+	parser = @conf.parser::new( @conf )
+	tokens = parser.parse( text )
+	File.open(cache_file, 'wb') do |f|
+	  Marshal::dump(tokens, f)
+	end
+      end
       formatter = @conf.formatter::new( tokens, @db, @plugin, @conf )
       contents, toc = formatter.to_s, formatter.toc
       if @conf.hilight_keys
@@ -264,7 +270,7 @@ module Hiki
       elsif @cmd == 'conflict'
 	old = text.gsub(/\r/, '')
 	new = @db.load( page ) || ''
-	differ = diff( old, new )
+	differ = word_diff( old, new )
         link = @plugin.hiki_anchor( page.escape, page.escapeHTML )
       end
       
@@ -278,21 +284,21 @@ module Hiki
       @plugin.text = text
 
       data[:title]          = title( page )
-      data[:pagename]       = a( :value => page.escapeHTML )
-      data[:md5hex]         = a( :value => md5hex )
+      data[:pagename]       = page.escapeHTML
+      data[:md5hex]         = md5hex
       data[:edit_proc]      = @plugin.edit_proc.sanitize
       data[:contents]       = @plugin.text.escapeHTML
       data[:msg]            = msg
       data[:button]         = save_button
       data[:preview_button] = save_button
-      data[:link]           = link ? {:p => link.sanitize} : nil
+      data[:link]           = link
       data[:differ]         = differ ? differ.sanitize : nil
       data[:preview]        = preview_text ? formatter.apply_tdiary_theme(preview_text).sanitize :  nil
       data[:keyword]        = @db.get_attribute(page, :keyword).join("\n")
       data[:page_title]     = page_title
       
       f = @db.is_frozen?( page ) || @conf.options['freeze']
-      data[:freeze]         = a(:checked => f ? 'on': nil)
+      data[:freeze]         = f ? ' checked="on"' : ''
       data[:freeze_msg]     = @conf.msg_freeze if f
       data[:form_proc]      = @plugin.form_proc.sanitize
 
@@ -356,13 +362,18 @@ module Hiki
         end  
       end
 
+      prepare_cache_dir
+      begin
+	File.unlink("#{@conf.cache_path}/parser/#{@p.escape}".untaint)
+      rescue Errno::ENOENT
+      end
+
       if text.size == 0 && pass_check
         data             = get_common_data( @db, @plugin, @conf )
         @plugin.hiki_menu(data, @cmd)
 
         data[:title]     = @conf.msg_delete
         data[:msg]       = @conf.msg_delete_page
-        data[:msg2]      = nil
         data[:link]      = page.escapeHTML
         generate_page(data)
       else
@@ -382,15 +393,15 @@ module Hiki
         data             = get_common_data( @db, @plugin, @conf )
         @plugin.hiki_menu(data, @cmd)
 
-        data[:cmd]       = a( :value => 'search' )
+        data[:cmd]       = 'search'
         data[:title]     = title( @conf.msg_search_result )
         data[:msg2]      = @conf.msg_search + ': '
-        data[:button]    = a( :value =>@conf.msg_search )
-        data[:key]       = a( :value => word )
+        data[:button]    = @conf.msg_search
+        data[:key]       = %Q|value="#{word.escapeHTML}"|
         word2            = word.split.join("', '")
         if l.size > 0
           data[:msg1]    = sprintf( @conf.msg_search_hits, word2.escapeHTML, total, l.size )
-          data[:list]    = {:listitem => l.collect! {|i| i.sanitize}}
+          data[:list]    = l.collect! {|i| i.sanitize}
         else
           data[:msg1]    = sprintf( @conf.msg_search_not_found, word2.escapeHTML )
           data[:list]    = nil
@@ -398,12 +409,12 @@ module Hiki
       else
         data             = get_common_data( @db, @plugin, @conf )
         @plugin.hiki_menu(data, @cmd)
-        data[:cmd]       = a( :value => 'search' )
+        data[:cmd]       = 'search'
         data[:title]     = title( @conf.msg_search )
         data[:msg1]      = @conf.msg_search_comment
         data[:msg2]      = @conf.msg_search + ': '
-        data[:button]    = a( :value => @conf.msg_search )
-        data[:key]       = a( :value => '' )
+        data[:button]    = @conf.msg_search
+        data[:key]       = 'value=""'
         data[:list]      = nil
         data[:method]  = 'get'
       end
@@ -433,12 +444,12 @@ module Hiki
       else
         data           = get_common_data( @db, @plugin, @conf )
         @plugin.hiki_menu(data, @cmd)
-        data[:cmd]     = a( :value => 'create' )
+        data[:cmd]     =  'create'
         data[:title]   = title( @conf.msg_create )
         data[:msg1]    = msg
         data[:msg2]    = @conf.msg_create + ': '
-        data[:button]  = a( :value => @conf.msg_newpage )
-        data[:key]     = msg ? a( :value => @p ) : a( :value => '' )
+        data[:button]  = @conf.msg_newpage
+        data[:key]     = %Q|value="#{msg ?  @p :  ''}"|
         data[:list]    = nil
         data[:method]  = 'get'
         
@@ -447,25 +458,25 @@ module Hiki
     end
 
     def cmd_admin
-      if @params['saveconf'][0]
-          admin_save_config
-      else
-        if @conf.password.size > 0
-          key = @params['key'][0]
-          if !key || (key && key.crypt( @conf.password ) != @conf.password)
-            admin_enter_password
-            return
-          end
-        end
-        require 'hiki/session'
-        session = Hiki::Session::new( @conf )
-        admin_config( session.session_id )
+      session_id = @params['session_id'][0]
+      if session_id && Hiki::Session::new( @conf, session_id ).check
+	admin_config( session_id )
+	return
+      elsif @conf.password.size > 0
+	key = @params['key'][0]
+	if !key || (key && key.crypt( @conf.password ) != @conf.password)
+	  admin_enter_password
+	  return
+	end
       end
+      session = Hiki::Session::new( @conf )
+      admin_config( session.session_id )
     end
     
     def admin_config( session_id, msg=nil )
       data = get_common_data( @db, @plugin, @conf )
       @plugin.hiki_menu(data, @cmd)
+      data[:key]            = @cgi.params['conf'][0] || 'default'
 
       data[:title]          = title( @conf.msg_admin )
       data[:session_id]     = session_id
@@ -476,23 +487,20 @@ module Hiki
       s = @conf.mail_on_update ? :mail_on_update : :no_mail
       data[:mail_on_update] = @conf.msg_mail_on
       data[:no_mail]        = @conf.msg_mail_off
-      data[s]               = a( :selected => "selected" )
 
       s = @conf.use_sidebar ? :use_sidebar : :no_sidebar
       data[:use_sidebar]    = @conf.msg_use
       data[:no_sidebar]     = @conf.msg_unuse
-      data[s]               = a( :selected => "selected" )
 
       s = @conf.auto_link ? :use_auto_link : :no_auto_link
       data[:use_auto_link]  = @conf.msg_use
       data[:no_auto_link]   = @conf.msg_unuse
-      data[s]               = a( :selected => "selected" )
 
       data[:theme]          = themes.collect! do |t|
                                 if @conf.theme == t
-                                  a(:value => t, :selected => "selected") {t}
+                                  [t, true]
                                 else
-                                  a(:value => t) {t}
+                                  [t, false]
                                 end
                               end
       data[:theme_url]      = @conf.theme_url
@@ -504,52 +512,15 @@ module Hiki
       data           = get_common_data( @db, @plugin, @conf )
       @plugin.hiki_menu(data, @cmd)
 
-      data[:cmd]     = a( :value => 'admin' )
+      data[:cmd]     = 'admin'
       data[:title]   = title( @conf.msg_password_title )
       data[:msg2]    = @conf.msg_password + ': '
-      data[:button]  = a( :value => @conf.msg_ok )
-      data[:key]     = a( :type  => 'password' )
+      data[:button]  = @conf.msg_ok
+      data[:key]     = 'type="password"'
       data[:list]    = nil
       data[:method]  = 'post'
       @cmd = 'password'
       generate_page( data )
-    end
-
-    def admin_save_config
-      require 'hiki/session'
-      session_id = @params['session_id'][0]
-      if !session_id || !Hiki::Session::new( @conf, session_id ).check
-        admin_enter_password
-        return
-      end
-      @conf.site_name      = @params['site_name'][0]
-      @conf.author_name    = @params['author_name'][0]
-      @conf.mail           = @params['mail'][0]
-      old_password    = @params['old_password'][0]
-      password1       = @params['password1'][0]
-      password2       = @params['password2'][0]
-      @conf.mail_on_update = @params['mail_on_update'][0] == "true"
-      @conf.theme          = @params['theme'][0]
-      @conf.use_sidebar    = @params['sidebar'][0] == "true"
-      @conf.main_class     = @params['main_class'][0]
-      @conf.main_class     = 'main' if @conf.main_class == ''
-      @conf.sidebar_class  = @params['sidebar_class'][0]
-      @conf.sidebar_class  = 'sidebar' if @conf.sidebar_class == ''
-      @conf.auto_link      = @params['auto_link'][0] == "true"
-      @conf.theme_url      = @params['theme_url'][0]
-      @conf.theme_path     = @params['theme_path'][0]
-
-      if password1.size > 0
-        if (@conf.password.size > 0 && old_password.crypt( @conf.password ) != @conf.password) ||
-           (password1 != password2)
-          admin_config( nil, @conf.msg_invalid_password )
-          return
-        end
-        salt = [rand(64),rand(64)].pack("C*").tr("\x00-\x3f","A-Za-z0-9./")
-        @conf.password = password1.crypt( salt )
-      end
-      @conf.save_config
-      admin_config( session_id, @conf.msg_save_config )
     end
 
     def load_plugin( plugin )
@@ -599,6 +570,14 @@ module Hiki
       if redirect_mode and result
         redirect(@cgi, @plugin.hiki_url(@p))
       end
+    end
+
+    private
+
+    def prepare_cache_dir
+      Dir.mkdir( @conf.cache_path ) unless test( ?e, @conf.cache_path )
+      cache_path = "#{@conf.cache_path}/parser"
+      Dir.mkdir( cache_path ) unless test( ?e, cache_path )
     end
   end
 end

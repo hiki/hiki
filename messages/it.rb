@@ -1,4 +1,4 @@
-# $Id: it.rb,v 1.4 2004-12-14 16:12:33 fdiary Exp $
+# $Id: it.rb,v 1.5 2005-01-28 04:35:29 fdiary Exp $
 # it.rb
 #
 # Copyright (C) 2003 Luigi Maselli <metnik@tiscali.it>
@@ -56,5 +56,23 @@ module Hiki
     def msg_match_keyword; '[corrispondente nella chiave di ricerca]' end
     def msg_duplicate_page_title; 'Titolo della pagina gi? esistente.' end
     def msg_missing_anchor_title; 'Create new %s and edit.' end
+    # (config)
+    def config_label; 'Configurazione Hiki'; end
+    # (diff)
+    def diff_add_label; 'Le linee aggiunte sono mostrate come <ins class="added">qui</ins>.'; end
+    def diff_del_label; 'Le linee rimosse sono mostrate come <del class="deleted">qui</del>.'; end
+    # (edit)
+    def msg_title; 'Titolo pagina'; end
+    def msg_keyword_form; 'Parole chiave (Scrivile una ogni riga)'; end
+    def msg_freeze_checkbox; 'Blocca la pagina corrente.'; end
+    def msg_password_form; 'Password'; end
+    def msg_preview_button; 'Anteprima'; end
+    def msg_save; 'Salva'; end
+    def msg_latest; 'Riferimento versione recente'; end
+    def msg_rules; %Q|Vedi <a href="#{@cgi_name}?TextFormattingRules">TextFormattingRules</a> se serve.|; end
+    # (view)
+    def msg_last_modified; 'Ultima modifica'; end
+    def msg_keyword; 'Parola chiave'; end
+    def msg_reference; 'Referenze'; end
   end
 end

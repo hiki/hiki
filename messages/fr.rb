@@ -1,4 +1,4 @@
-# $Id: fr.rb,v 1.4 2004-12-14 16:12:33 fdiary Exp $
+# $Id: fr.rb,v 1.5 2005-01-28 04:35:29 fdiary Exp $
 # fr.rb
 #
 # Copyright (C) 2003 Laurent Sansonetti <laurent@datarescue.be>
@@ -56,5 +56,23 @@ module Hiki
     def msg_match_keyword; '[correspondance dans un mot clef]' end
     def msg_duplicate_page_title; 'Une page portant le même nom existe déjà.' end
     def msg_missing_anchor_title; 'Create new %s and edit.' end
+    # (config)
+    def config_label; 'Configuration du Hiki'; end
+    # (diff)
+    def diff_add_label; 'Les lignes ajoutées sont affichées <ins class="added">comme ceci</ins>.'; end
+    def diff_del_label; 'Les lignes retirées sont affichées <del class="deleted">comme cela</del>.'; end
+    # (edit)
+    def msg_title; 'Titre de la page'; end
+    def msg_keyword_form; 'Mot clef (veuillez entrer distinctement chaque mot sur une ligne à part)'; end
+    def msg_freeze_checkbox; 'Geler la page courante.'; end
+    def msg_password_form; 'Mot de passe'; end
+    def msg_preview_button; 'Prévisualiser'; end
+    def msg_save; 'Sauver'; end
+    def msg_latest; 'Référencie version récente'; end
+    def msg_rules; %Q|Consultez <a href="#{@cgi_name}?ReglesDeFormatageDuTexte">ReglesDeFormatageDuTexte</a> si nécessaire.|; end
+    # (view)
+    def msg_last_modified; 'Dernière modification'; end
+    def msg_keyword; 'Mots clef'; end
+    def msg_reference; 'Références'; end
   end
 end

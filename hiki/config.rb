@@ -1,9 +1,9 @@
-# $Id: config.rb,v 1.21 2005-01-07 15:31:47 fdiary Exp $
+# $Id: config.rb,v 1.22 2005-01-28 04:35:29 fdiary Exp $
 # Copyright (C) 2004 Kazuhiko <kazuhiko@fdiary.net>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
 
-HIKI_VERSION  = '0.7-devel-20050106'
+HIKI_VERSION  = '0.7-devel-20050127'
 
 require 'cgi'
 require 'hiki/command'
@@ -155,7 +155,7 @@ module Hiki
     end
 
     def default
-      @template_path   = "#{PATH}/template/#{@lang}"
+      @template_path   = "#{PATH}/template"
       @plugin_path     = "#{PATH}/plugin"
       @config_file     = "#{@data_path}/hiki.conf"
 
@@ -173,7 +173,8 @@ module Hiki
                           'create'  => 'form.html',
                           'admin'   => 'adminform.html',
                           'save'    => 'success.html',
-                          'password'=> 'form.html'
+                          'password'=> 'form.html',
+                          'plugin'  => 'plugin.html'
       }
                   
       @max_name_size   = 50 

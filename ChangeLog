@@ -8,6 +8,25 @@
 	* data/text/InterWikiName, misc/text/default/InterWikiName,
 	misc/text/rd+/InterWikiName: RWiki のリンクを更新 by す
 
+2005-01-27  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/diffmail.rb: diffmail2.rb の内容で上書き
+	* hiki/command.rb (cmd_edit): conflict 時の diff を word_diff に変更
+	* hiki/util.rb (diff_t, diff): 削除
+	(unified_diff): DocDiff::EditScript#unidiff に変更
+	* hiki/storage.rb (diff): 削除
+
+2005-01-26  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/command.rb (cmd_view): parser の出力をキャッシュ
+	(cmd_save): parser キャッシュを削除
+
+2005-01-24  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/command.rb, hiki/page.rb, hiki/util.rb: Amrita の代わりに
+	erb を使用するように変更
+	* hiki/config.rb: lang 設定によらず共通のテンプレートファイルを使用
+	するように変更
+	* hiki/plugin.rb, plugin/00default.rb: conf_proc に対応
+	* plugin/en/00default.rb, plugin/ja/00default.rb: 追加
+
 2005-01-23  Kazuhiko  <kazuhiko@fdiary.net>
 	* style/default/html_formatter.rb (apply_tdiary_theme): 見出し行連
 	続時に出力されない不具合の修正 by す

@@ -1,4 +1,4 @@
-# $Id: plugin.rb,v 1.5 2004-07-26 07:53:43 fdiary Exp $
+# $Id: plugin.rb,v 1.6 2005-01-28 04:35:29 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
@@ -27,6 +27,9 @@ module Hiki
       @edit_procs       = []
       @form_procs       = []
       @menu_procs       = []
+      @conf_keys        = []
+      @conf_procs       = {}
+      @mode             = ''
 
       options.each_key do |opt|
         eval("@#{opt} = options['#{opt}']") unless opt.index('.')
@@ -36,6 +39,9 @@ module Hiki
       @plugin_command   = []
       @plugin_menu      = []
       @text             = ''
+
+      @mode = 'conf' if options['cgi'].params['c'][0] == 'admin'
+      @mode = 'saveconf' if options['cgi'].params['saveconf'][0]
     end
 
     def header_proc
@@ -203,6 +209,24 @@ module Hiki
       end
     end
 
+    def each_conf_key
+      @conf_keys.each do |key|
+	yield key
+      end
+    end
+
+    def conf_proc( key )
+      r = ''
+      label, block = @conf_procs[key]
+      r = block.call if block
+      r
+    end
+
+    def conf_label( key )
+      label, block = @conf_procs[key]
+      label
+    end
+
   private
     def export_plugin_methods(*names)
       @export_method_list = names.collect do |name|
@@ -260,6 +284,12 @@ module Hiki
                           :display_text => display_text,
                           :option => option}
       nil
+    end
+
+    def add_conf_proc( key, label, block = Proc::new )
+      return unless @mode =~ /^(conf|saveconf)$/
+      @conf_keys << key unless @conf_keys.index( key )
+      @conf_procs[key] = [label, block]
     end
 
     def set_tdiary_env

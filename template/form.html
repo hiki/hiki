@@ -1,0 +1,37 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="<%= @contents[:lang] %>">
+<head>
+<%= @contents[:header] %>
+</head>
+
+<body>
+<div class="<%= @contents[:view_style] %>">
+  <div class="adminmenu"><%= @contents[:tools] %></div>
+  <h1 class="header"><%= @contents[:title] %></h1>
+
+  <div class="day">
+    <div class="body">
+      <div class="section">
+        <% if @contents[:list] %><ul>
+          <% @contents[:list].each do |i| %><li><%= i %></li><% end %>
+        </ul><% end %>
+        <% if @contents[:msg1] %><div><%= @contents[:msg1] %></div><% end %>
+        <form action="<%= @contents[:cgi_name] %>" method="<%= @contents[:method] %>">
+          <input type="hidden" value="<%= @contents[:cmd] %>" name="c">
+          <%= @contents[:msg2] %><input size="30" maxlength="50" name="key" <%= @contents[:key] %>>
+          <input type="submit" value="<%= @contents[:button] %>"> 
+       </form>
+      </div>
+    </div>
+  </div>
+</div>
+<% if @contents[:sidebar_class] %>
+<div class="<%= @contents[:sidebar_class] %>">
+  <%= @contents[:sidebar] %>
+</div>
+<% end %>
+<div class="footer"><%= @contents[:footer] %></div>
+</body>
+</html>
