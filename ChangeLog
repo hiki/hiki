@@ -1,3 +1,6 @@
+2005-02-08  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/history.rb: リンクの追加 by Kouhei Sutou
+
 2005-02-01  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/diffmail.rb: プラグインによる更新時に、タイトルやキー
 	ワードが変化したように報告される不具合を修正
