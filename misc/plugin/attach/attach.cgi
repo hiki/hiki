@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# $Id: attach.cgi,v 1.13 2005-01-10 14:45:59 fdiary Exp $
+# $Id: attach.cgi,v 1.14 2005-03-14 13:11:17 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 BEGIN { $defout.binmode }
@@ -43,7 +43,7 @@ def attach_file
       Dir.mkdir(cache_path) unless test(?e, cache_path.untaint)
       attach_path = "#{cache_path}/#{page.escape}"
       Dir.mkdir(attach_path) unless test(?e, attach_path.untaint)
-      path = "#{attach_path}/#{filename.to_euc}"
+      path = "#{attach_path}/#{filename.to_euc.escape}"
       if params['attach_file'][0].size > max_size
 	raise "File size is larger than limit (#{max_size} bytes)."
       end

@@ -1,3 +1,7 @@
+2005-03-14  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/attach/attach.cgi: ファイル名を保存時にエスケープする
+	ように修正 by Yazawa
+
 2005-03-06  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/auth_typekey.rb: token を設定するまでは auth が true
 	になるように修正
