@@ -1,3 +1,25 @@
+22 Mar 2003 17:45:22 +0900	TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+
+ * charset出力のバグFix
+ * サイドバーの送出順を変更（メインコンテンツの後へ）
+ * 英語版テンプレート、メッセージの取り込み
+ * mailto: にもアンカが設定されるように変更
+ * 1行に[hoge]と[[hoge|http://www.hoge.com/]]があるパターンのレンダリングバグFix
+ * ページ名に+などがある場合のバグFix
+ * TextFormattingRulesの記述変更（強調の記述誤り）
+
+01 Mar 2003 17:25:15 +0900	TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+
+ * blockquoteの終了条件に関するバグFix
+ * [や]があるパラグラフ展開に関するバグFix
+ * emとstrongの解釈をtDiaryのWikiモードに合わせた
+
+26 Feb 2003 23:46:15 +0900	TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+
+  * ページの削除機能
+  * blockquoteの扱いをtDiaryのWikiスタイルに合わせた
+  * ul,ol中のliに関するバグFix
+
 26 Feb 2003 20:21:14 +0900	TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
   * 0.4.1.1

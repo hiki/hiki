@@ -1,11 +1,11 @@
-# $Id: interwiki.rb,v 1.3 2003-02-22 13:04:21 hitoshi Exp $
+# $Id: interwiki.rb,v 1.4 2003-03-23 03:37:12 hitoshi Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 module Hiki
   class InterWiki
     require 'hiki/util'
     
-    URL  = '(?:http|https|ftp):\/\/[a-zA-Z0-9;/?:@&=+$,\-_.!~*\'()%#]+'
+    URL  = '(?:http|https|ftp|mailto):[a-zA-Z0-9;/?:@&=+$,\-_.!~*\'()#%]+'
     INTERWIKI_NAME_RE =  /\[\[([^|]+)\|(#{URL})\]\](?:\s+(sjis|euc))?/
 
     attr_reader :interwiki_names

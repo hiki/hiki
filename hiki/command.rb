@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.4 2003-02-26 00:59:23 hitoshi Exp $
+# $Id: command.rb,v 1.5 2003-03-23 03:37:12 hitoshi Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'amrita/template'
@@ -28,7 +28,7 @@ module Hiki
            else
              @params['p'][0] ? @params['p'][0] : nil
            end
-      @p = @p.unescape.to_euc if @p
+      @p = @p.to_euc if @p
       
       @page   = Hiki::Page::new( cgi )
       options = $options || Hash.new( '' )
@@ -106,7 +106,7 @@ module Hiki
         cmd_create( msg_page_not_exist )
         return
       end
-      
+
       html = nil
       text = @db.load( @p )
       
@@ -224,7 +224,8 @@ module Hiki
       generate_page( data )
     end
 
-    def cmd_save( page, text, md5hex )
+    def cmd_save( p, text, md5hex )
+      page = p.unescape
       last_text = @db.load( page ) || ''
 
       pass_check = false
@@ -232,36 +233,52 @@ module Hiki
         pass_check = true if $password.size == 0 || p.crypt( $password ) == $password
       end
 
-      if @db.is_frozen?( page )
-        unless pass_check
-          @cmd = 'edit'
-          cmd_edit( page, text )
+      subject = ''
+      if text.size == 0 && pass_check
+        @db.delete( page )
+        subject = 'delete'
+      else
+        if @db.is_frozen?( page )
+          unless pass_check
+            @cmd = 'edit'
+            cmd_edit( page, text )
+            return
+          end
+        end
+        
+        unless @db.save( page, text.gsub(/\r/, ''), md5hex )
+          @cmd = 'conflict'
+          cmd_edit( page, text, msg_save_conflict.sanitize )
           return
         end
-      end
-        
-      unless @db.save( page, text.gsub(/\r/, ''), md5hex )
-        @cmd = 'conflict'
-        cmd_edit( page, text, msg_save_conflict.sanitize )
-        return
-      end
       
-      if pass_check 
-        @db.freeze_page( page, @params['freeze'][0] ? true : false)
-      end  
+        if pass_check 
+          @db.freeze_page( page, @params['freeze'][0] ? true : false)
+        end  
 
-      @db.set_last_update( page, Time::now )
+        @db.set_last_update( page, Time::now )
+        subject = 'update'
+      end
       
       begin
-        Hiki::Util::sendmail("[Hiki] update - #{page}",
+        Hiki::Util::sendmail("[Hiki] #{subject} - #{page}",
                  "#{'-' * 25}\n#{last_text}\n#{'-' * 25}\n#{text}") if $mail_on_update
       rescue
       end
 
-      data             = get_common_data( @db, @plugin )
-      data[:title]     = msg_thanks
-      data[:msg]       = msg_thanks
-      data[:link]      = anchor(page).sanitize
+      if text.size == 0 && pass_check
+        data             = get_common_data( @db, @plugin )
+        data[:title]     = msg_delete
+        data[:msg]       = msg_delete_page
+        data[:msg2]      = nil
+        data[:link]      = page.escapeHTML
+      else
+        data             = get_common_data( @db, @plugin )
+        data[:title]     = msg_thanks
+        data[:msg]       = msg_thanks
+        data[:msg2]      = msg_follow_link
+        data[:link]      = anchor(page).sanitize
+      end
 
       generate_page(data)
       
@@ -304,7 +321,7 @@ module Hiki
     def cmd_create( msg = nil )
       p = @params['key'][0]
       if p
-        @p = p.unescape.to_euc
+        @p = p.to_euc
         if /^\./ =~ @p || @p.size > $max_name_size
           @params['key'][0] = nil
           cmd_create( msg_invalid_filename( $max_name_size) )

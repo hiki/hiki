@@ -1,4 +1,4 @@
-# $Id: 00default.rb,v 1.3 2003-02-22 13:04:21 hitoshi Exp $
+# $Id: 00default.rb,v 1.4 2003-03-23 03:37:13 hitoshi Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 def anchor( s )
@@ -27,11 +27,11 @@ def recent( n = 20 )
   end
 
   s = ''
-  c = 1
+  c = 0
   d = nil
   
   l.each do |a|
-    break if c > n
+    break if (c += 1) > n
     name = a.keys[0]
     p = a[name]
     

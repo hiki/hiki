@@ -1,4 +1,4 @@
-# $Id: ja.rb,v 1.1.1.1 2003-02-22 04:39:31 hitoshi Exp $
+# $Id: ja.rb,v 1.2 2003-03-23 03:37:13 hitoshi Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # You can redistribute it and/or modify it under the terms of
 # the Ruby's licence.
@@ -40,5 +40,8 @@ module Hiki
     def msg_already_exist; '指定のページはすでに存在しています。' end
     def msg_page_not_exist; '指定のページは存在しません。ぜひ、作成してください:-)' end
     def msg_invalid_filename(s); "不正な文字が含まれているか、最大長(#{s}バイト)を超えています。ページ名を修正してください。" end
+    def msg_delete; 'ページを削除しました' end
+    def msg_delete_page; '以下のページを削除しました。' end
+    def msg_follow_link; '以下のリンクをたどってください: ' end
   end
 end

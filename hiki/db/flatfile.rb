@@ -1,4 +1,4 @@
-# $Id: flatfile.rb,v 1.2 2003-02-22 06:18:00 hitoshi Exp $
+# $Id: flatfile.rb,v 1.3 2003-03-23 03:37:12 hitoshi Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'ftools'
@@ -29,6 +29,17 @@ module Hiki
       true
     end
 
+    def delete( page )
+      filename = textdir( page )
+      if exist?( page )
+        begin
+          delete_info( page )
+          File::unlink( filename )
+        rescue
+        end
+      end
+    end
+    
     def touch( page )
       create_info_default( page ) unless info_exist? ( page )
       filename = textdir( page )
@@ -152,6 +163,16 @@ module Hiki
     end
 
   private
+    def delete_info(p)
+      f = p.escape
+      begin
+        @info.transaction do
+          @info.delete(f)
+        end
+      rescue
+      end
+    end
+    
     def create_info_default(p)
       f = p.escape
       @info.transaction do

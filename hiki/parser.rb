@@ -1,4 +1,4 @@
-# $Id: parser.rb,v 1.7 2003-02-26 02:02:01 hitoshi Exp $
+# $Id: parser.rb,v 1.8 2003-03-23 03:37:12 hitoshi Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 module Hiki
@@ -23,21 +23,22 @@ module Hiki
     REF_OPEN   = "[["
     REF_CLOSE  = "]]"
     BAR        = "|"
-    EMPHASIS   = "'''"
-    STRONG     = "''"
+    EMPHASIS   = "''"
+    STRONG     = "'''"
     DELETE     = "=="
-    URL        = '(?:http|https|ftp):\/\/[a-zA-Z0-9;/?:@&=+$,\-_.!~*\'()#%]+'
+    URL        = '(?:http|https|ftp|mailto):[a-zA-Z0-9;/?:@&=+$,\-_.!~*\'()#%]+'
     REF1       = '\[\[([^\]|]+?)\|([^\]]+?)\]\]'
-    REF2       =  '\[\[([^\]]+?)\]\]'
+    REF2       =  '\[\[([^\]|]+?)\]\]'
     INTERWIKI  = '\[\[([^:]+?):([^\]]+)\]\]'
     WIKINAME   = '((?:[A-Z][a-z0-9]+){2,})([^A-Za-z0-9])?'
     IMAGE      = '\.(?:jpg|jpeg|png|gif)'
     PLUGIN     = '\{\{(.+?)(?:\((.*?)\))?\s*\}\}'
+    SPECIAL    = '^\[\]\'=\{\}'
 
     EMPHASIS_RE    = /^#{EMPHASIS}/
     STRONG_RE      = /^#{STRONG}(?!:')/
     DELETE_RE      = /^#{DELETE}/
-    NORMAL_TEXT_RE = /^[^\[\]'=\{\}]+/
+    NORMAL_TEXT_RE = /^[^#{SPECIAL}]+/
     URL_RE         = /^#{URL}/
     WIKINAME_RE    = /^#{WIKINAME}/
     REF1_RE        = /^#{REF1}/
@@ -69,8 +70,7 @@ module Hiki
           inline( $2 )
           @cur_stack.push( {:e => :ordered_listitem_close} )
         when /^""(.*)$/
-          @cur_stack.push( {:e => :blockquote} )
-          inline( $1 )
+          @cur_stack.push( {:e => :blockquote, :s => $1} )
         when /^:(.+?):(.+)$/
           @cur_stack.push( {:e => :definition_list_open} )
           @cur_stack.push( {:e => :definition_term_open} )
@@ -106,15 +106,6 @@ module Hiki
       
       while str.size > 0 do
         case str
-        when EMPHASIS_RE
-          if a.index( :emphasis_close )
-            @cur_stack.push ( {:e => :emphasis_close} )
-            a.delete( :emphasis_close )
-          else
-            @cur_stack.push ( {:e => :emphasis_open} )
-            a << :emphasis_close
-          end
-          str = $'
         when STRONG_RE
           if a.index( :strong_close )
             @cur_stack.push ( {:e => :strong_close} )
@@ -122,6 +113,15 @@ module Hiki
           else
             @cur_stack.push ( {:e => :strong_open} )
             a << :strong_close
+          end
+          str = $'
+        when EMPHASIS_RE
+          if a.index( :emphasis_close )
+            @cur_stack.push ( {:e => :emphasis_close} )
+            a.delete( :emphasis_close )
+          else
+            @cur_stack.push ( {:e => :emphasis_open} )
+            a << :emphasis_close
           end
           str = $'
         when DELETE_RE
@@ -133,6 +133,9 @@ module Hiki
             a << :delete_close
           end
           str = $'
+        when REF2_RE
+          str = $'
+          @cur_stack.push ( {:e => :wikiname, :s => $1} )
         when REF1_RE
           href = $2
           s    = $1
@@ -155,9 +158,6 @@ module Hiki
         when INTERWIKI_RE
           @cur_stack.push ( {:e => :interwiki, :href => $1, :s => $2} )
           str = $'
-        when REF2_RE
-          str = $'
-          @cur_stack.push ( {:e => :wikiname, :s => $1} )
         when PLUGIN_RE
           if $use_plugin
             @cur_stack.push( {:e => :inline_plugin, :method => $1, :param => $2} )
@@ -180,8 +180,13 @@ module Hiki
             str = after
           end
         else
-          @cur_stack.push ( {:e => :normal_text, :s => str} )
-          str = ''
+          if /^(.+?)([#{SPECIAL}])/ =~ str
+            @cur_stack.push ( {:e => :normal_text, :s => $1} )
+            str = $2 + $'
+          else
+            @cur_stack.push ( {:e => :normal_text, :s => str} )
+            str = ''
+          end
         end
       end
     end
@@ -215,6 +220,7 @@ module Hiki
           close_blocks( ns, block_level ) if t != @last_blocktype.last
           cur_lv = e[:lv]
           blk_lv = block_level[t]
+
           if cur_lv > blk_lv
             (cur_lv - blk_lv).times do
               ns.push( {:e => "#{t}_open".intern})
@@ -222,32 +228,56 @@ module Hiki
             end
           elsif cur_lv < blk_lv
             (blk_lv - cur_lv).times { ns.push({:e => "#{t}_close".intern}) }
+            ns.push( {:e => :listitem_open} )
           else
             ns.push( {:e => :listitem_open} )
           end
+          
           @last_blocktype.push t
           block_level[t] = cur_lv
         when :unordered_listitem_close, :ordered_listitem_close
           ns.push ( {:e => :listitem_close} )
-        when :pre, :p, :blockquote
+        when :blockquote
+          if !@last_blocktype.index(type)
+            close_blocks( ns, block_level )
+            ns.push( {:e => "#{type}_open".intern} )
+            @last_blocktype.push type
+          end
+
+          if @last_blocktype.last != :p
+            ns.push( {:e => :p_open} )
+            @last_blocktype.push :p
+          end
+
+          e[:e] = :normal_text
+          ns.push( e )
+
+          if e[:s].size == 0
+            ns.push( {:e => :p_close} )
+            @last_blocktype.pop
+          end
+        when :pre
           if type != @last_blocktype.last
             close_blocks( ns, block_level )
             ns.push( {:e => "#{type}_open".intern} )
             @last_blocktype.push type
           end
-          e[:e] = :normal_text if type == :pre
-          ns.push( e ) 
-          @last_blocktype.push(type) if @last_blocktype.last != type
+          e[:e] = :normal_text
+          ns.push( e )
         when :emphasis_close, :strong_close, :delete_close
           ns.push ( e )
-        when :blockquote_close
         else
+          if @last_blocktype.index(:pre) || @last_blocktype.index(:blockquote)
+            close_blocks( ns, block_level )
+          end
           if @last_blocktype.empty?
             ns.push( {:e => :p_open} )
             @last_blocktype.push :p
           end
+
           ns.push ( e )
         end
+
         last_type = e[:e]
       end
       close_blocks( ns, block_level )

@@ -1,4 +1,4 @@
-# $Id: page.rb,v 1.2 2003-02-22 06:18:00 hitoshi Exp $
+# $Id: page.rb,v 1.3 2003-03-23 03:37:12 hitoshi Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'cgi'
@@ -30,7 +30,7 @@ module Hiki
       html = to_html
       header = Hash::new
       header['Last-Modified']    = CGI::rfc1123_date(last_modified) if last_modified
-      header['Content-Type']     = 'text/html'
+      header['type']     = 'text/html'
       header['charset']          = $charset
       header['Content-Length']   = html.size.to_s
       header['Content-Language'] = $lang
