@@ -1,5 +1,8 @@
-2005-01-07  Kazuhiko  <kazuhiko@fdiary.net>
+2005-01-08  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/command.rb (Hiki::Command::cmd_edit): コンフリクト時の
+	バグの修正
 
+2005-01-07  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/footnote.rb (render): footnote プラグイン内部ではプラ
 	グインを無効にするように修正
 
