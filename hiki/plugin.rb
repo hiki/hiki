@@ -1,4 +1,4 @@
-# $Id: plugin.rb,v 1.7 2005-01-29 03:34:35 fdiary Exp $
+# $Id: plugin.rb,v 1.8 2005-01-30 07:34:36 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
@@ -244,11 +244,14 @@ module Hiki
 
     def load_plugin( file )
       @resource_loaded = false
-      file.untaint
-      begin   
-	load( File::dirname( file ) + "/#{@conf.lang}/" + File::basename( file ) )
-	@resource_loaded = true
-      rescue IOError, Errno::ENOENT
+      dirname, basename = File.split( file.untaint )
+      [@conf.lang, 'en', 'ja'].uniq.each do |lang|
+	begin
+	  load( File.join( dirname, lang, basename ) )
+	  @resource_loaded = true
+	  break
+	rescue IOError, Errno::ENOENT
+	end
       end
       load( file )
     end

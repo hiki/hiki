@@ -1,3 +1,13 @@
+2005-01-30  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/html_formatter.rb (apply_tdiary_theme): H2 がない場
+	合に本文が出力されない不具合の修正 report by kdmsnr
+
+	* hiki/plugin.rb (load_plugin): 言語リソースがない時に英語または日
+	本語のリソースをロードするように変更
+
+	* template/hiki.conf: options2 の保存に TMarshal::dump を使うように
+	変更
+
 2005-01-29  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/command.rb (load_plugin): Hiki::Plugin クラスに移動
 

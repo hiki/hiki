@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.19 2005-01-28 12:23:58 fdiary Exp $
+# $Id: html_formatter.rb,v 1.20 2005-01-30 07:34:36 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -127,7 +127,7 @@ module Hiki
 
       orig_html.each do |line|
         if /^<h2>/ =~ line
-          html << tdiary_section(title, section) unless title.empty?
+          html << tdiary_section(title, section) unless title.empty? # && section.empty?
           section = ''
           title = line
         else
