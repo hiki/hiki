@@ -1,3 +1,7 @@
+2004-06-30  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/config.rb (load_cgi_conf): Thread を join するように修正 thanks
+	to yoggy
+
 2004-06-28  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
         * misc/plugin/history.rb: r を escapeHTML するように修正 thanks to
 	Kouhei Sutou
