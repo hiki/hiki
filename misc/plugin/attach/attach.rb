@@ -1,4 +1,4 @@
-# $Id: attach.rb,v 1.4 2004-03-17 13:31:55 fdiary Exp $
+# $Id: attach.rb,v 1.5 2004-03-17 16:02:44 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 #
 # thanks to Kazuhiko, Masao Mutoh, SHIMADA Mitsunobu, Yoshimi, ¤ê¤¿
@@ -158,10 +158,10 @@ end
 
 def attach_page_files
   result = Array::new
-  attach_path = "#{@cache_path}/attach/#{@page.escape}"
+  attach_path = "#{@cache_path}/attach/#{@page.escape}".untaint
   if FileTest::directory?(attach_path)
     Dir.entries(attach_path).collect do |file_name|
-      result << file_name if FileTest::file?("#{attach_path}/#{file_name}")
+      result << file_name if FileTest::file?("#{attach_path}/#{file_name}".untaint)
     end
   end
   result
