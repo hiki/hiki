@@ -1,4 +1,4 @@
-# $Id: config.rb,v 1.3 2004-06-27 08:54:57 fdiary Exp $
+# $Id: config.rb,v 1.4 2004-06-27 10:55:27 fdiary Exp $
 # Copyright (C) 2004 Kazuhiko <kazuhiko@fdiary.net>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
@@ -34,7 +34,7 @@ module Hiki
           case eval(c).class.to_s
           when "String"
             f.puts( %Q|@#{c} = #{eval(c).dump}| )
-          when "TrueClass", "FalseClass"
+          when "TrueClass", "FalseClass", "NilClass"
             f.puts( %Q|@#{c} = #{eval(c).inspect}| )
           else
             raise SecurityError, "Invalid configuration"
@@ -89,7 +89,7 @@ module Hiki
 		   :mail_on_update, :use_sidebar, :auto_link]
       begin
 	cgi_conf = File::open( "#{@data_path}hiki.conf" ){|f| f.read }.untaint
-	cgi_conf.gsub!( /^@/, '' )
+	cgi_conf.gsub!( /^[@$]/, '' )
 	def_vars = ''
 	variables.each do |var| def_vars << "#{var} = nil\n" end
 	eval( def_vars )
