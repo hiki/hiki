@@ -1,4 +1,4 @@
-# $Id: attach.rb,v 1.12 2004-09-14 06:04:26 fdiary Exp $
+# $Id: attach.rb,v 1.13 2004-12-14 05:34:57 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 #
 # thanks to Kazuhiko, Masao Mutoh, SHIMADA Mitsunobu, Yoshimi, ¤ê¤¿
@@ -119,6 +119,8 @@ def attach_download
     "doc"   => "application/msword",
     "xls"   => "application/vnd.ms-excel",
     "pdf"   => "application/pdf",
+    "sql"   => "text/plain",
+    "yaml"  => "text/plain", 
   }
   mime_types.default = "application/octet-stream"
 
@@ -141,7 +143,7 @@ end
 def attach_src(file_name, page=@page)
   tabstop = ' ' * (@options['attach.tabstop'] ? @options['attach.tabstop'].to_i : 2)
   
-  if file_name =~ /\.(txt|rd|rb|c|pl|py|sh|java|html|htm|css|xml|xsl)\z/i
+  if file_name =~ /\.(txt|rd|rb|c|pl|py|sh|java|html|htm|css|xml|xsl|sql|yaml)\z/i
     file = "#{@conf.cache_path}/attach/#{page.untaint.escape}/#{file_name.untaint.escape}"
     s = %Q!<pre>!
     content = File::readlines(file)

@@ -1,3 +1,8 @@
+2004-12-14  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/attach/attach.cgi: $SAFE = 1 向け修正 by KAKUTANI
+	Shintaro
+	* misc/plugin/attach/attach.rb: 拡張子に sql と yaml を追加
+
 2004-12-07  Kazuhiko  <kazuhiko@fdiary.net>
 	* data/text/EnglishTextFormattingRules,
 	misc/text/default/EnglishTextFormattingRules: 英語版の追加 thanks
