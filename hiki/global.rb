@@ -1,4 +1,4 @@
-# $Id: global.rb,v 1.3 2004-02-15 02:48:35 hitoshi Exp $
+# $Id: global.rb,v 1.4 2004-06-18 13:59:32 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 $template_path   = "#{$path}/template/#{$lang}"
@@ -29,3 +29,13 @@ $template        = {'view'    => 'view.html',
                   
 $max_name_size   = 50 
 $password        = ''
+
+$theme_url     ||= 'theme'
+$theme_path    ||= 'theme'
+$main_class    ||= 'main'
+$sidebar_class ||= 'sidebar'
+$auto_link     ||= false
+$style         ||= 'default'
+$hilight_keys  ||= true
+$cgi_name      ||= 'hiki.cgi'
+$plugin_debug  ||= false

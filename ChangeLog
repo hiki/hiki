@@ -1,4 +1,7 @@
 2004-06-18  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/global.rb: Version 0.4 にない設定項目のデフォルト値を用意す
+	るように修正
+
 	* plugin/00default.rb (hiki_header): title 出力を escapeHTMLするよ
 	うに修正
 
