@@ -1,0 +1,16 @@
+! 機能
+
+XMLRPC で Hiki にアクセスできます。
+
+! インストール方法
+
+xmlrpc.cgi を Hiki のインストールされているディレクトリ (hiki.cgi などと
+同じディレクトリ)にコピーし、WWW サーバの権限で実行可能なようにパーミッショ
+ンを設定してください。
+
+! 参考
+
+http://www.hyuki.com/yukiwiki/wiki.cgi?WikiRPC
+
+ただし、現在のところ getPage と putPage のみの実装で、入出力は EUC-JP に
+なります。

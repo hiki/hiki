@@ -1,3 +1,6 @@
+2005-03-17  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/xmlrpc/xmlrpc.cgi: XMLRPC サーバを追加
+
 2005-03-15  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
 	* misc/plugin/00default.rb, misc/plugin/*/00default.rb: パスワード変更時、
 	パスワード間違っている場合にエラーメッセージを表示するように修正 thanks to Kouhei Yanagita
