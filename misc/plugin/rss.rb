@@ -1,11 +1,11 @@
-# $Id: rss.rb,v 1.5 2004-06-26 14:12:29 fdiary Exp $
+# $Id: rss.rb,v 1.6 2004-09-07 07:45:52 fdiary Exp $
 # Copyright (C) 2003-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 def rss_recent_label
   '更新日時順'
 end
 
-def rss(page_num = 10)
+def rss_body(page_num = 10)
 
   pages = @db.page_info.sort do |a, b|
     k1 = a.keys[0]
@@ -55,7 +55,11 @@ EOS
 EOS
 
   items << item_list << '</rdf:RDF>'
+  return( [items, last_modified] )
+end
 
+def rss
+  body, last_modified = rss_body
   header = Hash::new
   header['Last-Modified'] = CGI::rfc1123_date(last_modified)
   header['type']          = 'text/xml'
@@ -64,15 +68,10 @@ EOS
   header['Pragma']           = 'no-cache'
   header['Cache-Control']    = 'no-cache'
   print @cgi.header(header)
-  puts items
+  puts body
 
   nil # Don't move to the 'FrontPage'
 end
-
-def rss_anchor(display_text = 'RSS')
-  %Q!<a href="?c=rss">#{display_text}</a>!
-end
-
 add_body_enter_proc(Proc.new do
   add_plugin_command('rss', 'RSS')
 end)

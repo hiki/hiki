@@ -1,3 +1,7 @@
+2004-09-07  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/rss.rb: rss_anchor の削除、rss の body 作成を 
+	rss_body に分離
+
 2004-09-06  Kazuhiko  <kazuhiko@fdiary.net>
 	* plugin/00default.rb (hiki_anchor): FrontPage の場合はページ名を 
 	URI に付加しないように変更
