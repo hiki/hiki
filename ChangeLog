@@ -1,3 +1,8 @@
+2004-12-24  KOMATSU Shinichiro  <koma2@ms.u-tokyo.ac.jp>
+	* misc/plugin/quote_page.rb: s/Parser/@conf.parser/; s/HTMLFormatter/@conf.formatter/
+	* misc/plugin/about.rb: s/Parser/Parser_default/; s/HTMLFormatter/HTMLFormatter_default/
+	reported by Kouhei Yanagita ([Hiki-dev:00615])
+
 2004-12-22  Kazuhiko  <kazuhiko@fdiary.net>
 	* style/default/html_formatter.rb, style/default/parser.rb: コード
 	の整理 by Kenta MURATA

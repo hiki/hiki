@@ -1,24 +1,26 @@
-# $Id: about.rb,v 1.2 2004-03-01 09:50:45 hitoshi Exp $
+# $Id: about.rb,v 1.3 2004-12-24 16:53:33 koma2 Exp $
 # Copyright (C) 2003 OZAWA Sakuro <crouton@users.sourceforge.jp>
+
+require 'style/default/html_formatter'
+require 'style/default/parser'
 
 def about_not_found_label; 'Documentation not found.'; end
 
 def about(plugin_name, top_wanted=1)
   about_plugin = 'about_' + plugin_name
   text = respond_to?(about_plugin) ? send(about_plugin) : about_not_found_label
-  tokens = Parser.new.parse(text)
-  HTMLFormatter.new(remap_headings(tokens, top_wanted), @db, self).to_s
+  tokens = Parser_default.new(@conf).parse(text)
+  HTMLFormatter_default.new(remap_headings(tokens, top_wanted), @db, self, @conf).to_s
 end
 
 def about_plugins(top=1)
   abouts = methods.select {|m| /^about_/ =~ m }
   abouts.reject! {|m| m == 'about_plugins' || m == 'about_not_found_label' }
-  parser = Parser.new
   result = ''
   abouts.collect do |m|
     heading = m.sub(/^about_/, 'About ')   
     name = m.sub(/^about_/, '')   
-    result << HTMLFormatter.new(parser.parse('!' * top + heading + "\n"), @db, self).to_s
+    result << HTMLFormatter_default.new(Parser_default.new(@conf).parse('!' * top + heading + "\n"), @db, self, @conf).to_s
     result << about(name, top + 1)
   end
   result
