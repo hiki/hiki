@@ -1,4 +1,4 @@
-# $Id: note.rb,v 1.1 2005-02-28 12:28:56 fdiary Exp $
+# $Id: note.rb,v 1.2 2005-03-05 15:24:28 hitoshi Exp $
 # Copyright (C) 2005 Kazuhiko <kazuhiko@fdiary.net>
 # based on joesaisan's idea <http://joesaisan.tdiary.net/20050222.html#p02>
 
@@ -21,7 +21,7 @@ add_menu_proc do
       hiki_anchor( CGI::escape( page ), CGI::escapeHTML( label_note_link ) )
     end
   end
-end if @page
+end if @page and auth?
 
 def saveconf_note
   if @mode == 'saveconf' then

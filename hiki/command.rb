@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.35 2005-03-02 04:32:39 fdiary Exp $
+# $Id: command.rb,v 1.36 2005-03-05 15:24:28 hitoshi Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -60,10 +60,11 @@ module Hiki
       @cmd = 'view' unless @cmd
       begin
         raise if !@p && ['view', 'edit', 'diff', 'save'].index( @cmd )
-        case @cmd
-        when 'edit'
+		  if @cmd == 'edit'
+			 raise 'Permission denied' unless @plugin.auth?
           cmd_edit( @p )
-        when 'save'
+		  elsif @cmd == 'save'
+			 raise 'Permission denied' unless @plugin.auth?
           if @params['save'][0]
             cmd_save(@p, @params['contents'][0], @params['md5hex'][0] )
           elsif @params['preview'][0]
@@ -73,6 +74,9 @@ module Hiki
             cmd_plugin(false)
             cmd_edit( @p, @plugin.text )
           end
+        elsif @cmd == 'create'  
+			 raise 'Permission denied' unless @plugin.auth?
+          send( "cmd_#{@cmd}" )
         else
 	  if @conf.use_plugin and @plugin.plugin_command.index(@cmd) and @plugin.respond_to?(@cmd)
 	    @plugin.send( @cmd )
@@ -80,11 +84,11 @@ module Hiki
 	    send( "cmd_#{@cmd}" )
           end
         end
-#      rescue Exception
-#        @cmd = 'view'
-#        @p = 'FrontPage'
-#        cmd_view
-      end
+		  #     rescue Exception
+		  #@cmd = 'view'
+		  #@p = 'FrontPage'
+		  #cmd_view
+     end
     end
 
   private
@@ -188,9 +192,10 @@ module Hiki
         title_a.downcase <=> title_b.downcase
       }.collect {|f|
         k = f.keys[0]
+        editor = f[k][:editor] ? "by #{f[k][:editor]}" : ''
         display_text = ((f[k][:title] and f[k][:title].size > 0) ? f[k][:title] : k).escapeHTML
         display_text << " [#{@aliaswiki.aliaswiki(k)}]" if k != @aliaswiki.aliaswiki(k)
-        %Q!#{@plugin.hiki_anchor(k.escape, display_text)}: #{format_date(f[k][:last_modified] )}#{@conf.msg_freeze_mark if f[k][:freeze]}!
+        %Q!#{@plugin.hiki_anchor(k.escape, display_text)}: #{format_date(f[k][:last_modified] )} #{editor}#{@conf.msg_freeze_mark if f[k][:freeze]}!
       }
 
       data = Hiki::Util::get_common_data( @db, @plugin, @conf )
@@ -227,10 +232,11 @@ module Hiki
       list.collect! {|f|
         k = f.keys[0]
         tm = f[k][:last_modified]
+        editor = f[k][:editor] ? "by #{f[k][:editor]}" : ''
         display_text = (f[k][:title] and f[k][:title].size > 0) ? f[k][:title] : k
         display_text = display_text.escapeHTML
         display_text << " [#{@aliaswiki.aliaswiki(k)}]" if k != @aliaswiki.aliaswiki(k)
-        %Q|#{format_date( tm )}: #{@plugin.hiki_anchor( k.escape, display_text )} (<a href="#{@conf.cgi_name}#{cmdstr('diff',"p=#{k.escape}")}">#{@conf.msg_diff}</a>)|
+        %Q|#{format_date( tm )}: #{@plugin.hiki_anchor( k.escape, display_text )} #{editor.escapeHTML} (<a href="#{@conf.cgi_name}#{cmdstr('diff',"p=#{k.escape}")}">#{@conf.msg_diff}</a>)|
       }
       [list, last_modified]
     end
@@ -338,8 +344,10 @@ module Hiki
         if @db.save( page, text.gsub(/\r/, ''), md5hex )
           keyword = @params['keyword'][0].split("\n").collect {|k|
             k.chomp.strip}.delete_if{|k| k.size == 0}
-          @db.set_attribute(page, [[:keyword, keyword.uniq],
-                                   [:title, title]])
+          name = @cgi.cookies['auth_name'][0]
+          attr = [[:keyword, keyword.uniq], [:title, title]]
+          attr << [:editor, name] if name 
+          @db.set_attribute(page, attr)
         else
           @cmd = 'conflict'
           cmd_edit( page, text, @conf.msg_save_conflict.sanitize )
@@ -443,14 +451,14 @@ module Hiki
     def cmd_admin
       session_id = @cgi.cookies['session_id'][0]
       if session_id && Hiki::Session::new( @conf, session_id ).check
-	admin_config( session_id )
-	return
+        admin_config( session_id )
+        return
       elsif @conf.password.size > 0
-	key = @params['key'][0]
-	if !key || (key && key.crypt( @conf.password ) != @conf.password)
-	  admin_enter_password
-	  return
-	end
+        key = @params['key'][0]
+          if !key || (key && key.crypt( @conf.password ) != @conf.password)
+            admin_enter_password
+            return
+          end
       end
       session = Hiki::Session::new( @conf )
       @plugin.cookies << session_cookie( session.session_id )

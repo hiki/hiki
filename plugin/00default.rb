@@ -1,4 +1,4 @@
-# $Id: 00default.rb,v 1.19 2005-03-02 04:32:39 fdiary Exp $
+# $Id: 00default.rb,v 1.20 2005-03-05 15:24:29 hitoshi Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #==============================
@@ -150,16 +150,16 @@ add_edit_proc {
 }
 
 #===== menu
-def hiki_menu(data, command)
+def create_menu(data, command)
   menu = []
   editable = %w(view edit diff)
 
   if @conf.bot?
     menu << %Q!<a accesskey="i" href="#{@conf.cgi_name}?c=index">#{@conf.msg_index}</a>!
   else
-    menu << %Q!<a accesskey="c" href="#{@conf.cgi_name}?c=create">#{@conf.msg_create}</a>!
-    menu << %Q!<a accesskey="e" href="#{@conf.cgi_name}?c=edit;p=#{@page.escape}">#{@conf.msg_edit}</a>! if editable.index(command) && @page
-    menu << %Q!<a accesskey="d" href="#{@conf.cgi_name}?c=diff;p=#{@page.escape}">#{@conf.msg_diff}</a>! if editable.index(command) && @page
+    menu << %Q!<a accesskey="c" href="#{@conf.cgi_name}?c=create">#{@conf.msg_create}</a>! if auth?
+    menu << %Q!<a accesskey="e" href="#{@conf.cgi_name}?c=edit;p=#{@page.escape}">#{@conf.msg_edit}</a>! if editable.index(command) && @page && auth?
+    menu << %Q!<a accesskey="d" href="#{@conf.cgi_name}?c=diff;p=#{@page.escape}">#{@conf.msg_diff}</a>! if editable.index(command) && @page && auth?
     menu << %Q!#{hiki_anchor( 'FrontPage', page_name('FrontPage') )}!
     menu << %Q!<a accesskey="i" href="#{@conf.cgi_name}?c=index">#{@conf.msg_index}</a>!
     menu << %Q!<a accesskey="s" href="#{@conf.cgi_name}?c=search">#{@conf.msg_search}</a>!
@@ -175,9 +175,14 @@ def hiki_menu(data, command)
       menu << cmd
     end
     menu_proc.each {|i| menu << i}
-    menu << %Q!<a accesskey="m" href="#{@conf.cgi_name}?c=admin">#{@conf.msg_admin}</a>!
+    menu << %Q!<a accesskey="m" href="#{@conf.cgi_name}?c=admin">#{@conf.msg_admin}</a>! 
     menu << %Q!<a accesskey="l" href="#{@conf.cgi_name}?c=logout">#{@conf.msg_logout}</a>! if cookies.find{|i| i.name = 'session_id'} || @cgi.cookies['session_id'][0]
   end
+  menu
+end
+
+def hiki_menu(data, command)
+  menu = create_menu(data, command)
   data[:tools] = menu.collect! {|i| %Q!<span class="adminmenu">#{i}</span>! }.join("&nbsp;\n").sanitize
 end
 
@@ -234,4 +239,8 @@ if @cgi.params['conf'][0] == 'theme'
     name = theme.split( /_/ ).collect{|s| s.capitalize}.join( ' ' )
     @conf_theme_list << [theme,name]
   end
+end
+
+def auth?
+  true
 end

@@ -1,6 +1,6 @@
 /*
 Title: Hiki
-$Revision: 1.6 $
+$Revision: 1.7 $
 Author: TAKEUCHI Hitoshi
 Access: hitoshi@namaraii.com
 License: GPL
@@ -640,4 +640,10 @@ div.comment form {
 	div.footer { display: block; }
 	div.footer div { display: block; }
 	div.referer { display: block;}
+}
+
+div.hello {
+	text-align: right;
+	font-size: x-small;
+	margin-top: 0px;
 }

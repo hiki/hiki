@@ -1,3 +1,10 @@
+2005-03-05  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
+	* hiki/command.rb hiki/config.rb plugin/00default.rb
+	style/default/html_formatter.rb theme/hiki/hiki.css
+	misc/plugin/auth_typekey.rb hiki/auth/typekey.rb: TypeKey 認証の
+	サポート。
+	* misc/plugin/note.rb: 認証されていない場合はメニューを出さない
+
 2005-03-04  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/ja/attach.rb misc/plugin/ja/bbs.rb
 	misc/plugin/ja/comment.rb misc/plugin/ja/frozenmark.rb
