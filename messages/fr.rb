@@ -1,4 +1,4 @@
-# $Id: fr.rb,v 1.5 2005-01-28 04:35:29 fdiary Exp $
+# $Id: fr.rb,v 1.6 2005-02-14 07:51:09 fdiary Exp $
 # fr.rb
 #
 # Copyright (C) 2003 Laurent Sansonetti <laurent@datarescue.be>
@@ -57,10 +57,10 @@ module Hiki
     def msg_duplicate_page_title; 'Une page portant le même nom existe déjà.' end
     def msg_missing_anchor_title; 'Create new %s and edit.' end
     # (config)
-    def config_label; 'Configuration du Hiki'; end
+    def msg_config; 'Configuration du Hiki'; end
     # (diff)
-    def diff_add_label; 'Les lignes ajoutées sont affichées <ins class="added">comme ceci</ins>.'; end
-    def diff_del_label; 'Les lignes retirées sont affichées <del class="deleted">comme cela</del>.'; end
+    def msg_diff_add; 'Les lignes ajoutées sont affichées <ins class="added">comme ceci</ins>.'; end
+    def msg_diff_del; 'Les lignes retirées sont affichées <del class="deleted">comme cela</del>.'; end
     # (edit)
     def msg_title; 'Titre de la page'; end
     def msg_keyword_form; 'Mot clef (veuillez entrer distinctement chaque mot sur une ligne à part)'; end

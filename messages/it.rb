@@ -1,4 +1,4 @@
-# $Id: it.rb,v 1.5 2005-01-28 04:35:29 fdiary Exp $
+# $Id: it.rb,v 1.6 2005-02-14 07:51:09 fdiary Exp $
 # it.rb
 #
 # Copyright (C) 2003 Luigi Maselli <metnik@tiscali.it>
@@ -57,10 +57,10 @@ module Hiki
     def msg_duplicate_page_title; 'Titolo della pagina gi? esistente.' end
     def msg_missing_anchor_title; 'Create new %s and edit.' end
     # (config)
-    def config_label; 'Configurazione Hiki'; end
+    def msg_config; 'Configurazione Hiki'; end
     # (diff)
-    def diff_add_label; 'Le linee aggiunte sono mostrate come <ins class="added">qui</ins>.'; end
-    def diff_del_label; 'Le linee rimosse sono mostrate come <del class="deleted">qui</del>.'; end
+    def msg_diff_add; 'Le linee aggiunte sono mostrate come <ins class="added">qui</ins>.'; end
+    def msg_diff_del; 'Le linee rimosse sono mostrate come <del class="deleted">qui</del>.'; end
     # (edit)
     def msg_title; 'Titolo pagina'; end
     def msg_keyword_form; 'Parole chiave (Scrivile una ogni riga)'; end

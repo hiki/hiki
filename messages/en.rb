@@ -1,4 +1,4 @@
-# $Id: en.rb,v 1.6 2005-01-28 04:35:29 fdiary Exp $
+# $Id: en.rb,v 1.7 2005-02-14 07:51:09 fdiary Exp $
 # en.rb
 #
 # Copyright (C) 2003 Masao Mutoh <mutoh@highway.ne.jp>
@@ -57,10 +57,10 @@ module Hiki
     def msg_duplicate_page_title; 'The page title has already been existed.' end
     def msg_missing_anchor_title; 'Create new %s and edit.' end
     # (config)
-    def config_label; 'Hiki Configurations'; end
+    def msg_config; 'Hiki Configurations'; end
     # (diff)
-    def diff_add_label; 'Added words are showed as <ins class="added">here</ins>.'; end
-    def diff_del_label; 'Removed words are showed as <del class="deleted">here</del>.'; end
+    def msg_diff_add; 'Added words are showed as <ins class="added">here</ins>.'; end
+    def msg_diff_del; 'Removed words are showed as <del class="deleted">here</del>.'; end
     # (edit)
     def msg_title; 'Title'; end
     def msg_keyword_form; 'Keyword (one keyword per line)'; end
