@@ -195,7 +195,7 @@ module Diffable
 	if kindofstring
 	  newary << elements
 	else
-	  newary.push *elements
+	  newary.push(*elements)
 	end
 	bi += elements.length
       else

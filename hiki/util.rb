@@ -1,4 +1,4 @@
-# $Id: util.rb,v 1.7 2003-02-26 12:02:16 hitoshi Exp $
+# $Id: util.rb,v 1.8 2004-02-15 02:48:35 hitoshi Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'nkf'
@@ -6,8 +6,8 @@ require 'cgi'
 require 'net/smtp'
 require 'amrita/template'
 require 'hiki/algorithm/diff'
-require 'hiki/parser'
-require 'hiki/html_formatter'
+require "style/#{$style}/parser"
+require "hiki/hiki_formatter"
 
 class String
   def to_euc
@@ -47,14 +47,13 @@ module Hiki
   class PluginException < Exception; end
 
   module Util
-    TOOLS = [:create, :index, :FrontPage, :search, :recent, :admin]
-    CONF_S = %w($site_name $author_name $mail $theme $password)
-    CONF_F = %w($mail_on_update $use_sidebar)
+    CONF_S = %w($site_name $author_name $mail $theme $password $theme_url $sidebar_class $main_class $theme_path)
+    CONF_F = %w($mail_on_update $use_sidebar $auto_link)
     
     def csv_split( source, delimiter = ',' )
       status = :IN_FIELD
       csv = []
-      csv.push (last = "")
+      csv.push(last = "")
       while !source.empty?
         case status
         when :IN_FIELD
@@ -98,7 +97,9 @@ module Hiki
     end
 
     def plugin_error( method, e )
-      "<strong>#{e.class}(#{e.message}): #{method.escapeHTML}</strong><br>"
+      msg = "<strong>#{e.class}(#{e.message}): #{method.escapeHTML}</strong><br>"
+      msg << "<strong>#{e.backtrace.join("<br>\n")}</strong>" if $plugin_debug
+      msg
     end
 
     def save_config
@@ -115,21 +116,13 @@ module Hiki
     def load_config
       begin
         conf = File::readlines( $config_file ).join
-        eval( conf.untaint )
+        eval( conf.untaint, binding, $config_file, 1 )
       rescue
       end
     end
 
-    def cmdhref( cmd, page )
-      "#{$cgi_name }?c=#{cmd};p=#{page.escape}"
-    end
-
     def cmdstr( cmd, param )
-      "#{$cgi_name }?c=#{cmd};#{param}"
-    end
-
-    def anchor( page )
-      "<a href=\"#{$cgi_name}?#{page.escape}\">#{page.escapeHTML}</a>"
+      "?c=#{cmd};#{param}"
     end
 
     def title( s )
@@ -137,46 +130,27 @@ module Hiki
     end
 
     def view_title( s )
-      t = %Q!<a href="#{ cmdstr('search', "key=#{s.escape}") }">#{s.escapeHTML}</a>!
-#      "#{$site_name.escapeHTML} - #{t}"
-    end
-
-    def make_link( links )
-      s = ''
-      links.each do |l|
-        s << "[#{anchor( l )}] "
-      end
-      s
+      %Q!<a href="#{$cgi_name}#{cmdstr('search', "key=#{s.escape}") }">#{s.escapeHTML}</a>!
     end
 
     def format_date( tm )
       tm.strftime(msg_time_format).sub(/#DAY#/, "(#{msg_day[tm.wday]})")
     end
 
-    def tools
-      h = Hash::new
-      TOOLS.each do |i|
-        cmd = (i == :FrontPage) ? '' : 'c='
-        h[i] = a(:href=>"#{$cgi_name }?#{cmd}#{i.to_s}")
-      end
-      h
-    end
-
     def get_common_data( db, plugin )
       data = Hash::new
-      data[:version]     = HIKI_VERSION
-      data[:ruby_ver]    = "Ruby #{RUBY_VERSION}"
-      data[:amrita_ver]  = "Amrita"
-      data[:generator]   = "Hiki #{HIKI_VERSION}"
-      data[:tools]       = tools
+      $generator         = "Hiki #{HIKI_VERSION}"
       data[:author_name] = $author_name
-      data[:view_style]  = $use_sidebar ? 'main' : 'hiki' # for tDiary theme
+      data[:view_style]  = $use_sidebar ? $main_class : 'hiki' # for tDiary theme
+      data[:cgi_name]    = $cgi_name
       if $use_sidebar
         parser = Parser::new
         m = db.load( $side_menu ) || ''
         t = parser.parse( m )
-        f = HTMLFormatter::new( t, db, plugin, 's' )
-        data[:sidebar] = {:menu => f.to_s.sanitize}
+        f = HikiFormatter::new( t, db, plugin, 's' )
+        data[:sidebar]   =  {:menu => f.to_s.sanitize}
+        data[:main_class]    = $main_class
+        data[:sidebar_class] = $sidebar_class
       else
         data[:sidebar] = nil
       end
@@ -190,23 +164,62 @@ module Hiki
       a2 = s2.split( "\n" ).collect! {|s| "#{s}\n"}
       Diff.diff(a1, a2) 
     end
-    
+
+    def redirect(cgi, url)
+      head = {
+               'type' => 'text/html',
+             }
+      print cgi.header(head)
+      print %Q[
+               <html>
+               <head>
+               <meta http-equiv="refresh" content="0;url=#{url}">
+               <title>moving...</title>
+               </head>
+               <body>Wait or <a href="#{url}">Click here!</a></body>
+               </html>]
+    end
+
     def sendmail(subject, body)
       return unless $mail || $smtp_server
       Net::SMTP.start($smtp_server, 25) {|smtp|
         smtp.send_mail <<EndOfMail, $mail, $mail
-From: #{$mail}
+From: #{$mail_from ? $mail_from : $mail}
 To: #{$mail}
 Subject: #{subject.to_jis}
 Date: #{Time.now.rfc2822}
 X-Mailer: Hiki #{HIKI_VERSION}
 
--------------------------
-REMOTE_ADDR = #{ENV['REMOTE_ADDR']}
-REMOTE_HOST = #{ENV['REMOTE_HOST']}
 #{body.to_jis}
 EndOfMail
       }
+    end
+
+    def send_updating_mail(page, type, text='')
+      sendmail("[Hiki] #{type} - #{page}", <<EOS)
+#{'-' * 25}
+REMOTE_ADDR = #{ENV['REMOTE_ADDR']}
+REMOTE_HOST = #{ENV['REMOTE_HOST']}
+        URL = #{$index_page}?#{page.escape}
+#{'-' * 25}
+#{text}
+EOS
+    end
+
+    def theme_url
+      if /\.css\Z/i =~ $theme_url
+        $theme_url
+      else
+       "#{$theme_url}/#{$theme}/#{$theme}.css"
+      end
+    end
+
+    def base_css_url
+      if /\.css\Z/i =~ $theme_url
+        "#{File.dirname($theme_url)}/../hiki_base.css"
+      else
+       "#{$theme_url}/hiki_base.css"
+      end
     end
   end
 end

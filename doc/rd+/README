@@ -1,0 +1,34 @@
+= rd+ style
+rd+ styleを使えば、HikiでRDを使って文章を書くことができます。
+
+元々、Ruby-GNOME2 Project Site(http://ruby-gnome2.sourceforge.jp/)で使うことを想定して作成しており、APIリファレンスを書きやすいようにオリジナルのRDを若干拡張しています。
+＃それらの機能を使わなければほぼ純粋なRDとしても使えます。
+
+なお、書き方についてはTextFormattingRulesを参照してください。
+
+== RDとは
+RDとはRubyスクリプトファイルの中に埋め込む事を意図して定義されたドキュメントフォーマットです。
+単純な割には高度な記述力を持つため、非常に使いやすいと思います。HikiデフォルトのWikiフォーマットがしっくり来ない方は是非試してみてください。
+
+== インストール方法
+(1) RDTool(http://raa.ruby-lang.org/list.rhtml?name=rdtool)をインストールする
+    (RDToolが必要とするライブラリもインストールしておく)
+(2) Hikiをインストールする(Hikiが必要とするライブラリもインストールしておく)
+(3) Hikiの動作確認
+(4) hikiconf.rbの$styleを以下のように変更する
+        $style = 'rd+'
+(5) rd+ styleの動作確認
+
+== オプション
+RDスタイルでは以下のオプションを用意しています。hikiconf.rbに記述してください。
+
+--- $options['rd.header_depth'] 
+    ヘッダの階層を指定できます。'='がh2に、'=='がh3にしたい場合は以下のようにします。
+
+     $options['rd.header_depth'] = 2
+
+    なお、デフォルトで'='がh1になります。タイトル表示部分もh1ですので表示上、バランスを調整するときに使いましょう。
+
+== 作者
+Masao Mutoh<mutoh@highwhay.ne.jp>
+

@@ -1,0 +1,9 @@
+! attach plugin for HikiFarm
+Hikiに標準で含まれるattachプラグインをHikiFarmに対応させました.
+
+! 使い方
+* プラグインディレクトリにattach.rbを
+* HikiFarmのトップディレクトリにattach.cgiを
+それぞれ置いてください. あとはHiki標準のattachプラグインと同じです.
+
+

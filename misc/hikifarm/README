@@ -1,0 +1,65 @@
+! HikiFarmとは
+
+単一のサイトで複数のWikiを提供するWikiFarmというサービスがあります。こ
+れをHikiで簡単に実現するためのCGIがHikiFarmです。WikiFarmができると、
+以下のような嬉しさがあります。
+
+* 自力でWikiを設置できない人に、Wikiサイトを貸し出せるようになります
+* 同じWikiサイト内に共存させるには無理があるページを、簡単に分離できるようになります
+** 違う内容なのに同じページ名が必要、といった名前空間の衝突がなくなります
+** 「ジャンル」のような無理な概念を導入する必要がなくなります
+** ページデザインをサイトごとに変更できるようになります
+
+HikiFarmは、HikiFarmのCGIの下にディレクトリを作成し、その下にHiki実行
+環境を生成することで複数Hikiの管理を行います。例えば、HikiFarmのURLが
+以下のような場合、
+
+ http://example.com/hiki/
+
+「sample」というHikiサイトを生成すると以下のようなURLになります。
+
+ http://example.com/hiki/sample/
+
+! HikiFarmの作り方
+
+!! 下準備
+
+Hikiは好きなところに展開します(例: /home/foo/src/hiki)。複数運用するた
+め、開発版であるv0_5_branchである必要があります。このディレクトリは別
+にWebから見える必要はありません。
+
+CGIを設置するディレクトリを決め、そこをWebサーバの権限で書き込み可能に
+します。また、デフォルトのインデックス(ApacheならDefaultDirectory)を、
+index.cgiにします(HikiFarmはindex.cgiを自動生成します)。
+
+ # Apacheの場合の.htaccess(またはhttpd.conf)
+ AddHandler cgi-script .cgi
+ DirectoryIndex index.cgi
+
+テーマのディレクトリ(theme)も、CGIを設置するディレクトリに置いておくと
+良いでしょう。
+
+データを保存するディレクトリを決め(例: /home/foo/var/hiki)、そこをWeb
+サーバの権限で書き込み可能にします。
+
+!! インストール
+
+index.cgiとhikifarm.confは、CGIを設置するディレクトリにコピーします。
+index.cgiには実行権限を付け、hikifarm.confは自分の環境に合わせて書き換
+えておきます。
+
+Hikiインストールディレクトリにあるhiki.cgiを、hiki.rbにリネームします(もしくはhiki.rbという名前でsymlinkを生成しても良い)。
+
+次に、hiki.confもHikiインストールディレクトリに置いて、環境に合わせて
+書き換えます。このファイルは本質的にhikiconf.rbと同じものですが、
+「__my_wiki_name__」というキーワードが生成されたWikiサイト名に置き変わ
+るようになっているところがミソです。
+
+また、$mailに「Wiki名@hikifarm.quickml.com」が入っています。更新情報を
+[[QuickML|http://www.quickml.com/]]で配信するための設定です。必要に応
+じて書き換えてください(配信無用ならnilにする)。
+
+! 実行
+
+CGIを設置したディレクトリにブラウザからアクセスすれば、HikiFarmの画面
+が現れます。

@@ -2,13 +2,13 @@ Source: hiki
 Section: web
 Priority: optional
 Maintainer: Taku YASUI <tach@debian.or.jp>
-Build-Depends-Indep: debhelper (>> 4.0.0), ruby
-Standards-Version: 3.5.8
+Build-Depends-Indep: debhelper (>> 4.0.0), ruby1.6
+Standards-Version: 3.6.1
 
 Package: hiki
 Architecture: all
-Depends: ruby, libalgorithm-diff-ruby, libstrscan-ruby, amrita
-Suggests: httpd
+Depends: ruby1.6, libalgorithm-diff-ruby1.6, libstrscan-ruby1.6, libamrita-ruby1.6
+Suggests: httpd, tdiary-theme
 Description: Wiki Engine written in Ruby
  Hiki is one of WikiWiki Web clone (Wiki Engine) written in programming
  language Ruby.  WikiWikiWeb is web base collaboration tool.  Hiki has

@@ -1,526 +1,335 @@
 /*
-Title: Hiki default
-Revision: $Revision: 1.2 $
+Title: Hiki
+$Revision: 1.3 $
 Author: TAKEUCHI Hitoshi
 Access: hitoshi@namaraii.com
 License: GPL
-Comment: Hiki デフォルトテーマ
+Comment: Hikiのデフォルトテーマ
 
+tDiaryのcloverテーマをベースに作成しました。
+オリジナルテーマ作者のただただしさん、NTさんに感謝します。
+
+Copyright 2002 (C) by TADA Tadashi <sho@spc.gr.jp>
+Copyright 2002 (C) by NT <nt@24i.net>
+Copyright 2004 (C) by TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 validated by W3C.
 */
+/* ChangeLog
+2004-01-23 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* modified for Hiki
 
-/*
-共通設定の読み込み
+2002-09-14 NT <nt@24i.net>
+        * convert for 1.5 series.
+
+2002-05-07 TADA Tadashi <sho@spc.gr.jp>
+	* remove overflow from pre.
+	* line-height of body upto 150%.
+
+2002-03-28 TADA Tadashi <sho@spc.gr.jp>
+	* image color down to 7bit.
+	* no underline for links.
+
+2002-03-28 TADA Tadashi <sho@spc.gr.jp>
+	* support new amazon plugin.
+
+2002-03-27 TADA Tadashi <sho@spc.gr.jp>
+	* fix textarea biyo--n problem.
 */
-/*@import url(../base.css);*/
-/*
-ページ全体の基本的な設定。背景色や文字色など
-*/
+
 body {
 	background-color: #fff;
 	color: #000;
+	font-family: Arial,Verdana,Helvetica,'MS UI Gothic',sans-serif;
 }
 
-/*
-リンク文字列に関する設定
-*/
 a:link {
+	color: #000077;
+	background-color: transparent;
 	text-decoration: none;
 }
 
 a:visited {
+	color: #002288;
 	background-color: transparent;
 	text-decoration: none;
 }
 
-a:hover {
-	text-decoration: underline;
-}
-
-/*
-ページトップにある操作ボタンの並ぶ行の設定
-*/
 div.adminmenu {
 	text-align: right;
-	font-size: 90%;
+	margin-top: 0px;
 }
 
-/*
-ページトップにある操作ボタン自体の設定
-*/
+div.adminmenu {
+	padding-right: 0.5em;
+	font-size: x-small;
+}
+
 span.adminmenu {
-	background-color: #EEE;
-	color: #000;
+	background-color: #f0f0ff;
+	color: #ffffff;
 	border-style: solid;
-	border-color: #EEE #EEE #EEE #EEE;
-	border-width: 1px;
-	padding: 2px;
+	border-width: 0px 1px 1px 0px;
+	padding: 1px;
 }
-
-/*
-日記タイトルの設定
-*/
 
 h1 {
-	color: #000;
-	background-color: transparent;
-	background-image: url(hiki.png);
-	background-position: left;
-	background-repeat: no-repeat;
-	height: 60px; 
-	line-height: 32px;
-	text-align: left;
-	padding-left: 88px;
-	padding-bottom: 0px;
+	height: 64px;
+	line-height: 64px;
+	text-align: right;
+	padding-bottom: 5px;
 }
 
-/*
-カレンダーの設定
-*/
-div.calendar {
-	background-color: #fff;
-	color: #000;
-	border-style: solid;
-	border-color: #ddd;
-	border-width: 2px;
-	padding: 2px;
-	margin-top: 0.5em;
-	margin-bottom: 0.5em;
-	line-height: 110%;
-	font-size: 90%;
-}
-
-div.calendar div.year {
-}
-
-/*
-1日の日記全体を囲む枠の設定
-*/
-div.day {
-	background-color: #eee;
-	color: #000;
-	border-style: solid;
-	border-color: #ddd;
-	border-width: 2px;
-	padding-bottom: 0.5em;
-	margin-bottom: 0.5em;
-}
-
-/*
-タイトル行全体の設定
-*/
 h2 {
+	font-size: large;
 	border-style: solid;
-	border-color: #ddd;
+	border-color: #00bbbb;
 	border-width: 0px 0px 1px 0px;
+}
+
+div.day h2 {
+	font-size: large;
+	border-style: solid;
+	border-color: #00bbbb;
+	border-width: 0px 0px 1px 0px;
+	padding-left: 8px;
 	padding-bottom: 4px;
 }
 
-/*
-日付の設定
-*/
-h2 span.date {
-	font-size: medium;
-	margin-right: 0.5em;
-}
-
-/*
-タイトルの設定
-*/
-h2 span.title {
-	font-size: large;
-}
-
-/*
-タイトルを除いた1日の日記本文全体の設定
-*/
 div.body {
-	background-color: #fff;
-	color: #000;
-	border-style: solid;
-	border-color: #ddd;
-	border-width: 1px;
-	padding: 4px;
-	margin-left: 0.5em;
-	margin-right: 0.5em;
-	margin-top: 0.5em;
-	margin-bottom: 0.5em;
+	margin-left: 1em;
+	line-height: 120%;
 }
 
-/*
-サブタイトルを含むセクションの設定
-*/
-div.section {
-	margin-top: 0.5em;
-	margin-bottom: 0.5em;
-}
-
-/*
-サブタイトルの設定
-*/
-h3 {
+div.body h3 {
+	font-size: large;
 	border-style: dashed;
-	border-color: #ddd;
+	border-color: #00bbbb;
 	border-width: 0px 0px 1px 0px;
 	margin-top: 1.5em;
 	margin-bottom: 0.5em;
 	padding: 4px;
 }
 
-/*
-イメージアンカーの設定
-ただしDefaultテーマではイメージアンカーは使っていないのでコメントにしてある
-指定のコツは以下の通り
-  - span.sanchorはセクションアンカー、span.canchorはツッコミアンカー
-  - background-imageにアンカー画像を指定
-  - paddingのtop(最初)とright(2番目)に画像の縦横サイズを指定
-  - colorに背景色と同じ色を指定(文字を見えなくするため)
-*/
-/*
-div.day span.sanchor {
-	background-image: url(default_sanchor.png);
-	background-position: bottom right;
-	background-repeat: no-repeat;
-	padding: 16px 16px 0px 0px;
-	color: #fff;
-	background-color: transparent;
-	font-size: 1px;
+div.body h4 h5 h6 {
+	margin-top: 1.5em;
+	margin-bottom: 0.5em;
+	padding: 4px;
 }
 
-div.day span.canchor {
-	background-image: url(default_canchor.png);
-	background-position: bottom right;
-	background-repeat: no-repeat;
-	padding: 16px 16px 0px 0px;
-	color: #fff;
-	background-color: transparent;
-	font-size: 1px;
+div.body h4 {
+	font-size: medium;
 }
-*/
-
-/*
-日記の本文(段落)の設定
-*/
-div.section p {
-	margin: 0.5em 1em 0.5em 1em;
-	line-height: 150%;
+div.body h5 {
+	font-size: small;
 }
-ul, ol {
-	margin-left: 0em;
-	padding-left: 0em;
+div.body h6 {
+	font-size: x-small;
 }
 
-/*
-ツッコミ/フォーム/リンク元のキャプション設定
-*/
-div.caption {
-	font-size: 90%;
-	border-style: solid;
-	border-color: #ddd;
-	border-width: 0px 0px 1px 0px;
-	margin: 0.5em;
-}
-
-/*
-ツッコミ欄全体の設定
-*/
-div.comment {
-	background-color: #fff;
-	color: #000;
-	border-style: solid;
-	border-color: #ddd;
-	border-width: 1px;
-	padding: 2px;
-	padding-bottom: 1px;
-	margin-top: 0.5em;
-	margin-left: 2em;
-	margin-right: 1em;
-}
-
-/*
-ツッコミ省略版本文
-*/
-div.commentshort {
-	font-size: 90%;
-	margin-left: 0.5em;
-}
-span.commentator {
-	font-weight: bold;
-}
-div.commentshort p {
-	margin-top: 0.2em;
-	margin-bottom: 0.2em;
-	line-height: 120%;
-}
-
-/*
-ツッコミ本体
-*/
-div.commentbody {
-	font-size: 90%;
-	margin: 0.5em;
-	line-height: 120%;
-}
-
-/*
-ツッコミした人の情報
-*/
-div.commentator {
-	border-style: solid;
-	border-color: #000;
-	border-width: 0px 0px 1px 0px;
-	line-height: 150%;
-}
-
-/*
-ツッコミ本文
-*/
-div.commentbody p {
-	margin: 0.5em;
-	margin-left: 2em;
-}
-
-/*
-フォーム全体を囲む枠の設定
-*/
-div.form {
-	background-color: #fff;
-	color: #000;
-	border-style: solid;
-	border-color: #ddd;
-	border-width: 1px;
-	padding: 2px;
-	margin: 0.5em 1em 0.5em 2em;
-}
-
-/*
-フォームの設定
-*/
-div.form form {
-	margin: 0em 0em 0em 2em;
-}
-
-div.form form.comment {
-	font-size: 90%;
-}
-
-div.field {
-	display: inline;
-	margin-right: 2em;
-}
-form.comment input {
-	background-color: #ddd;
-	color: #000;
-	margin-left: 1em;
-}
-
-div.textarea {
-	display: block;
-	vertical-align: top;
-}
-form.comment textarea {
-	display: block;
-	background-color: #ddd;
-	color: #000;
-	margin-left: 3em;
-	width: 30em;
-	height: 5em;
-}
-
-div.button {
-	display: block;
-	margin-left: 3em;
-}
-
-/*
-リンク元リスト(Month/Latestモード)の設定
-*/
-div.referer {
-	text-align: right;
-	font-size: 90%;
-	background-color: #ddd;
-	color: #000000;
-	padding: 2px;
-	padding-bottom: 1px;
-	margin: 0.5em 1em 0em 2em;
-}
-
-/*
-リンク元リスト(Dayモード)の設定
-*/
-div.refererlist {
-	background-color: #fff;
-	color: #000;
-	border-style: solid;
-	border-color: #ddd;
-	border-width: 1px;
-	padding: 2px;
-	padding-bottom: 1px;
-	margin-top: 0.5em;
-	margin-left: 2em;
-	margin-right: 1em;
-}
-
-/*
-リンク元リスト一覧の設定
-*/
-div.refererlist ul {
-	font-size: 90%;
-	margin: 0.5em 1em 0.5em 3em;
-	line-height: 120%;
-}
-
-/*
-罫線の設定
-*/
-hr {
-	border-style: solid;
-	border-width: 2px 0px 0px 0px;
-	border-color: #ddd;
-}
-
-/*
-日々の日記のセパレータに使われる罫線の設定
-*/
-hr.sep {
-	display: none;
-}
-
-/*
-フッタの設定
-*/
-div.footer {
-	font-size: 90%;
-	text-align: right;
+div.body p {
 	margin-top: 0px;
-}
-
-/*
-更新フォーム
-*/
-form.update {
-	padding-top: 0.5em;
-	padding-bottom: 0.5em;
-}
-form.update input, form.update textarea, form.commentstat input {
-	background-color: #ddd;
-	color: #000;
-}
-
-form.update span.field {
-	display: inline;
-	margin-left: 0em;
-	margin-right: 0.5em;
-}
-
-form.update div.field.title {
-	display: block;
-	margin-top: 1em;
-}
-form.update div.field.title input {
-	margin-left: 0.5em;
-}
-
-form.update div.textarea {
-	display: block;
-	margin-top: 1em;
-}
-form.update textarea {
-	display: block;
-	margin-left: 2em;
-	margin-bottom: 1em;
-	width: 35em;
-	height: 15em;
-}
-
-form.update span.checkbox.hidediary {
+	margin-bottom: 0.5em;
 	margin-left: 1em;
-}
-
-/*
-ツッコミ状態変更フォーム
-*/
-div.comment form {
-	margin-top: 0em;
-}
-
-/*
-エラーメッセージ表示の設定
-*/
-p.message {
-	text-align: center;
-	font-size: large;
-	background-color: #ddd;
-	color: #fff;
-	padding: 8px;
-}
-
-/*
-整形済みテキスト(preタグ)の設定
-*/
-pre {
 	color: #000;
-	background-color: #EEE;
+	background-color: transparent;
+	line-height: 150%;
+}
+
+div.body pre {
+	color: #000;
+	background-color: #f0f0ff;
 	border-style: solid;
 	border-width: 1px 1px 1px 6px;
-	border-color: #aaa;
-	/*overflow: auto;*/
+	border-color: #cccccc;
 	padding: 8px;
 	margin-left: 2em;
 }
 
-/*
-引用(blockquoteタグ)の設定
-*/
-div.body blockquote {
+blockquote {
 	color: #000;
-	background-color: #EEE;
+	background-color: #f0f0ff;
 	border-style: solid;
-	border-color: #ddd;
+	border-color: #cccccc;
 	border-width: 2px 0px 2px 0px;
 	padding: 4px;
 	margin-left: 3em;
 	margin-right: 3em;
 }
+
 div.body blockquote p {
-	margin: 0.5em 0em 0.5em 0em;
+	margin-left: 0em;
 }
 
-/*
-箇条書きの設定
-*/
-div.body ul, div.body ol {
-	margin-left: 3em;
-	margin-right: 2em;
+div.body li {
+	margin-left: 2em;
 }
 
-/*
-項目リストの設定
-*/
 div.body dl {
 	margin-left: 2em;
 }
 
 div.body dt {
-	margin-bottom: 0.2em;
-	font-weight: bold;
+	border-style: solid;
+	border-color: #eef;
+	border-width: 0px 0px 1px 0px;
+	margin-top: 0.7em;
 }
 
 div.body dd {
-	margin: 0em 3em 0.5em 1em;
+	margin-top: 0.3em;
+	margin-bottom: 0.5em;
+	margin-left: 2em;
+}
+
+div.comment {
+	border-style: solid;
+	border-color: #ccc;
+	border-width: 1px;
+	color: #000;
+	background-color: #eef;
+	margin-top: 1em;
+	margin-bottom: 0.5em;
+	margin-left: 2em;
+	padding: 4px;
+	font-size: small;
+}
+
+div.form div.comment {
+	margin-right: 1em;
+	color: #000;
+	background-color: #fff;
+}
+
+div.comment p {
+	margin-top: 0px;
+	margin-bottom: 0.5em;
+}
+
+div.comment p.commenttitle {
+	border-style: dashed;
+	border-color: #ccc;
+	border-width: 0px 0px 1px 0px;
+}
+
+
+div.form {
+	border-style: solid;
+	border-color: #c0c0c0;
+	border-width: 1px;
+	color: #000;
+	background-color: #f0f0ff;
+}
+
+div.day div.form {
+	margin-top: 0px;
+	margin-bottom: 0.5em;
+	margin-left: 2em;
+	font-size: small;
+}
+
+div.form form {
+	margin: 0;
+	padding: 4px 4px 4px 4px;
+	width: 100%;
+}
+
+div.form p {
+	margin-top: 0px;
+	margin-bottom: 0.5em;
+	padding-left: 4px;
+}
+
+div.form textarea {
+	margin-left: 2em;
+}
+
+div.referer {
+	text-align: right;
+	font-size: x-small;
+	margin-top: 0px;
+}
+
+div.refererlist {
+	border-style: solid;
+	color: #000;
+	border-color: #c0c0c0;
+	border-width: 1px;
+	background-color: #f0f0ff;
+	margin-top: 0px;
+	margin-left: 2em;
+	margin-bottom: 0.5em;
+	font-size: small;
+}
+
+div.refererlist ul {
+	margin-left: 2em;
+}
+
+div.form div.refererlist {
+	margin-right: 1em;
+	color: #000;
+	background-color: #fff;
+}
+
+div.refererlist p, div.refererlist ul {
+	margin-top: 0px;
+	margin-bottom: 0em;
+	padding: 4px 4px 4px 4px;
+}
+
+hr {
+	margin-top: 0.5em;
+	border-style: solid;
+	border-width: 2px 0px 0px 0px;
+	border-color: #ccc;
+}
+
+hr.sep {
+	display: none;
+}
+
+div.footer {
+	text-align: right;
+	font-size: x-small;
+}
+
+form div.body {
+	border-style: solid;
+	border-color: #c0c0c0;
+	border-width: 1px;
+	color: #000;
+	background-color: #f0f0ff;
+	padding: 0px 4px 4px 4px;
+}
+
+table {
+	border-color: #ccc;
+	border-width: 1px;
+	padding: 0px;
+	border-collapse: collapse;
+}
+th, tr, td {
+	border-style: solid;
+	border-color: #ccc;
+	border-width: 1px;
+	padding-top: 4px;
+	padding-left: 4px;
 }
 
 /*
- いくつかのメジャーなプラグイン対応
+ for plugins
  */
+
+/* calendar */
+div.calendar {
+	font-size: x-small;
+}
 
 /* calendar2 */
 table.calendar {
 	font-size: x-small;
-	line-height: 110%;
-	border-style: solid;
-	border-color: #000;
-	border-width: 1px;
+	line-height: 100%;
+	border-width: 0px;
 }
 
 table.calendar td {
@@ -536,13 +345,13 @@ table.calendar td.calendar-prev-month, table.calendar td.calendar-current-month,
 
 /* recent_list */
 p.recentitem {
-	font-size: 90%;
+	font-size: small;
 	margin-top: 0px;
 	margin-bottom: 0px;
 }
 
 div.recentsubtitles {
-	font-size: 90%;
+	font-size: x-small;
 	margin-top: 0px;
 	margin-bottom: 1em;
 	margin-left: 1em;
@@ -551,68 +360,211 @@ div.recentsubtitles {
 /* footnote */
 div.body span.footnote {
 	vertical-align: super;
-	font-size: 0.7em;
+	font-size: xx-small;
 }
 
 div.footnote {
-	font-size: 90%;
 	border-style: solid;
-	border-color: #ddd;
+	border-color: #c0c0c0;
 	border-width: 1px 0px 0px 0px;
-	padding: 0em;
-	margin-left: 6em;
-}
-
-p.footnote {
-	margin: 0.5em;
-	padding: 0em;
+	margin-left: 3em;
+	font-size: small;
 }
 
 /* amazon plugin */
 img.left {
 	border-width: 1px;
-	border-color: #888;
+	border-color: #000080;
 	float: left;
-	margin: 0.5em;
 }
 
 img.right {
 	border-width: 1px;
-	border-color: #888;
+	border-color: #000080;
 	float: right;
-	margin: 0.5em;
 }
 
-div.section, div.comment {
+div.section {
 	clear: both;
 }
 
-/*
-サイドバー関連
-*/
 div.main {
-	margin-left: 21%;
+	margin-left: 20%;
 }
 
 div.sidebar {
-	background-color: #eee;
-	color: #000;
 	position: absolute;
 	top: 0px;
 	left: 0px;
 	width: 20%;
+	font-size: x-small;
 	padding: 2px 2px 100% 2px;
 	border-style: solid;
-	border-color: #ddd;
-	border-width: 0px 2px 2px 0px;
-	padding-top: 0.5em;
+	border-color: #c0c0c0;
+	border-width: 1px;
+	color: #000;
+	background-color: #f0f0ff;
 }
 
-div.sidebar p {
-	line-height: 120%;
-	text-align: center;
-	border-style: solid;
-	border-color: #aaa;
-	border-width: 0px 0px 1px 0px;
-	margin: 2px 4px 2px 4px;
+div.sidebar ul {
+	margin: 20px;
+	padding: 0px;
+}
+
+div.sidebar form {
+	margin: 0em 0em 0.5em 0em;
+	padding: 0px;
+}
+
+
+/*
+ツッコミ省略版本文
+*/
+div.commentshort {
+        font-size: 0.9em;
+        margin-left: 0.5em;
+}
+
+span.commentator {
+        font-weight: bold;
+}
+
+div.commentshort p {
+        margin-top: 0.5em;
+        margin-bottom: 0.2em;
+        line-height: 1.2em;
+}
+
+/*
+ツッコミ本体
+*/
+div.commentbody {
+        font-size: 0.9em;
+        margin: 0.5em;
+        line-height: 1.2em;
+}
+
+/*
+ツッコミした人の情報
+*/
+div.commentator {
+        line-height: 1.5em;
+}
+
+/*
+ツッコミ本文
+*/
+div.commentbody p {
+        margin: 0.5em;
+        margin-left: 2em;
+}
+
+/*
+フォームの設定
+*/
+div.form form {
+        margin: 0em 0em 0em 2em;
+}
+
+div.form div.caption {
+        font-size: 0.9em;
+        margin: 0.5em;
+}
+
+div.form form.comment {
+        font-size: 0.9em;
+}
+
+div.field {
+        display: inline;
+        margin-right: 2em;
+}
+
+form.comment input {
+        margin-left: 1em;
+}
+
+div.textarea {
+        display: block;
+        vertical-align: top;
+}
+
+form.comment textarea {
+        display: block;
+        margin-left: 3em;
+        width: 30em;
+        height: 5em;
+}
+
+div.button {
+        display: block;
+        margin-left: 3em;
+}
+
+/*
+更新フォーム
+*/
+form.update {
+        padding-top: 0.5em;
+        padding-bottom: 0.5em;
+}
+
+form.update input, form.update textarea, form.commentstat input {
+}
+
+form.update span.field {
+        display: inline;
+        margin-left: 0em;
+        margin-right: 0.5em;
+}
+
+form.update div.field.title {
+        display: block;
+        margin-top: 1em;
+}
+
+form.update div.field.title input {
+        margin-left: 0.5em;
+}
+
+form.update div.textarea {
+        display: block;
+        margin-top: 1em;
+}
+
+form.update textarea {
+        display: block;
+        margin-left: 3em;
+        margin-bottom: 1em;
+        width: 35em;
+        height: 15em;
+}
+
+form.update span.checkbox.hidediary {
+        margin-left: 1em;
+}
+
+/*
+ツッコミ状態変更フォーム
+*/
+div.comment form {
+        margin-top: 0em;
+}
+
+@media print {
+	div.main { margin-left: 0%;}
+	div.adminmenu { display: none; }
+	div.sidebar { display: none; }
+	div.comment   { display: none; }
+	div.footer    { display: none; }
+	div.referer   { display: none; }
+}
+
+@media screen {
+	div.adminmenu { display: block;	}
+	div.sidebar { display: block; }
+	div.comment { display: block; }
+	div.footer { display: block; }
+	div.footer div { display: block; }
+	div.referer { display: block;}
 }

@@ -12,52 +12,7 @@
 UPSTREAM = hiki
 UPSTREAM_VERSION = 0.4.2a
 
-# all patches we want to apply
-PATCHES := $(sort $(subst debian/patches/,,$(wildcard debian/patches/*.dpatch)))
-
-unpack: unpack-stamp
-unpack-stamp:
-	[ -d "build" ] || mkdir build
-
-	# unpack to build/upstream
-	cd $(CURDIR)/build && \
-	tar xzf $(CURDIR)/$(UPSTREAM)-$(UPSTREAM_VERSION).tar.gz
-
-	touch unpack-stamp
-
-patch: patch-stamp
-patch-stamp: unpack-stamp
-	[ -d patches-stamp ] || mkdir -p patches-stamp
-	echo "Patches applied in the Debian version of ${PACKAGE}:" \ > $@TMP
-	cd $(CURDIR)/build/$(UPSTREAM)/ && \
-	S=$(CURDIR)/$@TMP && \
-	for patch in $(PATCHES); do \
-		stamp=$(CURDIR)/patches-stamp/$$patch; \
-		patch_short=$$patch; \
-		patch=$(CURDIR)/debian/patches/$$patch; \
-		test -e $$patch || ( echo $$patch not found; exit 1 ); \
-		test -x $$patch || chmod +x $$patch; \
-		if test -f $$stamp; then \
-			echo "$$patch_short already applied."; \
-			echo -e "\n$$patch_short:" >> $$S; \
-			sed -n 's/^## *DP: */  /p' $$patch >> $$S; \
-		else \
-			echo -n "applying patch $$patch_short..."; \
-			if $$patch -patch >$$stamp.new 2>&1; then \
-				mv $$stamp.new $$stamp; \
-				touch $$stamp; \
-				echo -e "\n$$patch_short:" >> $$S; \
-				sed -n 's/^## *DP: */  /p' $$patch >> $$S; \
-				echo " ok."; \
-			else \
-				echo " failed."; \
-				exit 1; \
-			fi; \
-		fi; \
-	done
-	mv -f $@TMP $@
-
-build: unpack patch
+build:
 	# noting to do
 
 clean:
@@ -77,20 +32,24 @@ install: build
 	dh_installdirs
 
 	# Add here commands to install the package into debian/hiki.
-	find build/$(UPSTREAM) -name \*.rb -print | xargs chmod 644
-	cd build/$(UPSTREAM) && \
-	mv hikiconf.rb.sample hikiconf.rb && \
-	DESTDIR=$(CURDIR)/debian/hiki ruby $(CURDIR)/debian/install.rb && \
-	install -m 755 hiki.cgi $(CURDIR)/debian/hiki/usr/lib/cgi-bin/hiki.cgi && \
-	cp -r data messages misc plugin template theme $(CURDIR)/debian/hiki/usr/share/hiki
+	#mv hikiconf.rb.sample hikiconf.rb
+	DESTDIR=$(CURDIR)/debian/hiki ruby1.6 $(CURDIR)/debian/install.rb
+	cp -r data messages misc plugin style template theme $(CURDIR)/debian/hiki/usr/share/hiki
+	find $(CURDIR)/debian/hiki -type d -name CVS -print | xargs rm -rf
+	find $(CURDIR)/debian/hiki -name \*.rb -print | xargs chmod 644
+	find $(CURDIR)/debian/hiki -type d -path '*/hiki/algorithm' -print | xargs rm -rf
+	install -m 755 hiki.cgi $(CURDIR)/debian/hiki/usr/share/hiki/hiki.cgi
+	install -m 644 hikiconf.rb.sample $(CURDIR)/debian/hiki/usr/share/hiki/hikiconf.rb
 	install -m 755 debian/hikisetup $(CURDIR)/debian/hiki/usr/bin/hikisetup
+	perl -i -npe 's!hiki/algorithm/diff!algorithm/diff!' `find $(CURDIR)/debian/hiki -name '*.rb' -print`
+	perl -i -npe 's!/usr/bin/env ruby!/usr/bin/ruby1.6!' `find $(CURDIR)/debian/hiki -name '*.cgi' -print`
 
 
 # Build architecture-independent files here.
 binary-indep: build install
 	dh_testdir
 	dh_testroot
-	dh_installchangelogs -i build/hiki/ChangeLog
+	dh_installchangelogs -i ChangeLog
 	dh_installdocs -i
 	dh_installexamples -i
 #	dh_install -i

@@ -1,4 +1,4 @@
-# $Id: ja.rb,v 1.2 2003-03-23 03:37:13 hitoshi Exp $
+# $Id: ja.rb,v 1.3 2004-02-15 02:48:35 hitoshi Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # You can redistribute it and/or modify it under the terms of
 # the Ruby's licence.
@@ -9,10 +9,11 @@ module Hiki
     def msg_diff; '差分' end
     def msg_edit; '編集' end
     def msg_search; '検索' end
+    def msg_admin; '管理' end
     def msg_search_result; '検索結果' end
     def msg_search_hits; '\'%s\'を含むページは全%dページ中、%dページ見つかりました。' end
     def msg_search_not_found; '\'%s\'を含むページは見つかりませんでした。' end
-    def msg_search_comment; '全てのページから単語を検索します。大文字と小文字は区別されません。' end
+    def msg_search_comment; '全てのページから単語を検索します。大文字と小文字は区別されません。半角スペースで単語を区切ると指定した単語を全て含むページを検索します。' end
     def msg_frontpage; 'トップ' end
     def msg_hitory; '更新履歴' end
     def msg_index; 'ページ一覧' end
@@ -43,5 +44,8 @@ module Hiki
     def msg_delete; 'ページを削除しました' end
     def msg_delete_page; '以下のページを削除しました。' end
     def msg_follow_link; '以下のリンクをたどってください: ' end
+    def msg_match_title; '[タイトルに一致]' end
+    def msg_match_keyword; '[キーワードに一致]' end
+    def msg_duplicate_page_title; '指定したタイトルは既に存在しています。' end
   end
 end

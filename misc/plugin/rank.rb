@@ -1,4 +1,4 @@
-# $Id: rank.rb,v 1.3 2003-02-22 13:04:21 hitoshi Exp $
+# $Id: rank.rb,v 1.4 2004-02-15 02:48:35 hitoshi Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 def rank( n = 20 )
@@ -16,8 +16,8 @@ def rank( n = 20 )
     name = a.keys[0]
     p = a[name]
     
-    t = "#{name.escapeHTML} (#{p[:count]})"
-    an = "<a href=\"#{$cgi_name }?#{name.escape}\" title=\"#{name.escapeHTML}\">#{t}</a>"
+    t = "#{page_name(name)} (#{p[:count]})"
+    an = hiki_anchor( name.escape, t )
     s << "<li>#{an}\n"
     c = c + 1
   end

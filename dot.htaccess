@@ -1,12 +1,8 @@
 Options +ExecCGI
 
 AddHandler cgi-script .cgi
-DirectoryIndex hiki.cgi
+DirectoryIndex hiki.cgi index.html index.html.var
 
-<Files "*.rb">
-	deny from all
-</Files>
-
-<Files "data/*">
+<Files "hikiconf.rb">
 	deny from all
 </Files>

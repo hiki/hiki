@@ -1,21 +1,25 @@
 #!/usr/bin/env ruby
-# $Id: hiki.cgi,v 1.9 2003-03-24 08:10:48 hitoshi Exp $
-# Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+# $Id: hiki.cgi,v 1.10 2004-02-15 02:48:35 hitoshi Exp $
+# Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
-$SAFE     = 1
+BEGIN { $defout.binmode }
+
+$SAFE     = 0
 $KCODE    = 'e'
 
-HIKI_VERSION  = '0.4.2a'
+$path  = File::dirname(__FILE__)
 
-require 'cgi'
-require 'hikiconf'
-require 'hiki/global'
-require 'hiki/command'
-require 'hiki/util'
-require "hiki/db/#{$database_type}"
-include Hiki::Util
+HIKI_VERSION  = '0.6beta1'
 
 begin
+  require 'cgi'
+  require './hikiconf'
+  require 'hiki/global'
+  require 'hiki/command'
+  require 'hiki/util'
+  require "hiki/db/#{$database_type}"
+  include Hiki::Util
+
   load_config
 
   cgi = CGI::new

@@ -1,2 +1,2 @@
-build/hiki/dot.htaccess
-build/hiki/hikiconf.rb
+dot.htaccess
+hikiconf.rb.sample

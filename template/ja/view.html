@@ -2,66 +2,35 @@
     PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="ja">
-<head>
-  <meta http-equiv="Content-Language" content="ja">
-  <meta http-equiv="Content-Type" content="text/html; charset=EUC-JP">
-  <meta name="generator" content="@generator">
-  <title id=title></title>
-  <link rel="stylesheet" type="text/css" href="theme/hiki_base.css">
-  <link rel="stylesheet" type="text/css" href="@stylesheet">
+<head id=header>
 </head>
 
 <body>
+<a name="top"> </a>
 <div class="@view_style">
-  <div class="adminmenu" id=tools>
-    <span class="adminmenu">
-      [
-      <a id=create>新規作成</a> | 
-      <a id=edit>編集</a> | 
-      <a id=diff>差分</a>
-      ] 
-      [
-      <a id=FrontPage> FrontPage</a> | 
-      <a id=index>一覧</a> | 
-      <a id=search>検索</a> | 
-      <a id=recent>更新履歴 </a>
-      ]
-      [
-      <a id=admin>管理</a>
-      ]
-    </span>
-  </div>
+  <div class="adminmenu" id=tools></div>
+  <div class="adminmenu" id=page_title></div>
   <h1 class="header" id=view_title></h1>
-
+  <div id=body_enter></div>
+  <div id=toc></div>
+  <div id=body></div>
   <div class="day">
-    <div class="body">
-      <div class="section">
-        <div id=toc></div>
-        <div id=body_enter></div>
-        <div id=body></div>
-        <div id=body_leave></div>
+    <div class="comment">
+      <div class="caption">
+        更新日時:<span id=last_modified></span><br>
+        キーワード:<span id=keyword></span><br>
+        参照:<span id=references></span><br>
+        <div id=page_attribute></div>
       </div>
     </div>
-  </div>
-  <div class="comment">
-    <div class="caption">
-      <small>
-      最終更新:<span id=modified></span><br>
-      参照:<span id=references></span><br>
-      </small>
-    </div>
+    <div id=body_leave></div>
   </div>
 </div>
 
-<div class="sidebar" id="sidebar">
+<div class=@sidebar_class id="sidebar">
   <div id="menu" class="recentsubtitles"></div>
 </div>
 
-<div class="footer">
-  <a href="http://www.namaraii.com/hiki/">Hiki</a> <span id=version>0.0.1</span>
-  &copy; 2002-2003 by <a href="http://www.namaraii.com/">TAKEUCHI Hitoshi</a>.<br>
-  Powered by <span id=ruby_ver></span> and <span id=amrita_ver></span>.<br>
-  Modified by <span id=author_name></span>.<br>
-</div>
+<div class="footer" id=footer></div>
 </body>
 </html>

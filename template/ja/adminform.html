@@ -2,39 +2,18 @@
     PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="ja">
-<head>
-  <meta http-equiv="Content-Language" content="ja">
-  <meta http-equiv="Content-Type" content="text/html; charset=EUC-JP">
-  <title>Hiki環境設定</title>
-  <link rel="stylesheet" type="text/css" href="theme/hiki_base.css">
-  <link rel="stylesheet" type="text/css" href="@stylesheet">
+<head id=header>
 </head>
 
 <body>
-<div class="@view_style">
-<div class="adminmenu" id=tools>
-  <span class="adminmenu">
-    [
-    <a id=create>新規作成</a> 
-    ]
-    [
-    <a id=FrontPage>FrontPage</a> | 
-    <a id=index>一覧</a> | 
-    <a id=search>検索</a> | 
-    <a id=recent>更新履歴</a>
-    ]
-    [
-    <a id=admin>管理</a>
-    ]
-  </span>
-</div>
+<div class="hiki">
+  <div class="adminmenu" id=tools></div>
 <h1>Hiki環境設定</h1>
 
-<p id=msg></p>
-
-<form method="post" action="hiki.cgi">
+<form method="post" action="@cgi_name">
   <input type=hidden value=admin name=c>
-  <div class="conf_day">
+  <p id=msg></p>
+  <div class="conf day">
     <h2><span class="title">基本設定</span></h2>
     <div class="body">
       <h3 class="subtitle">サイト名</h3>
@@ -50,7 +29,7 @@
     </div>
   </div>
 
-  <div class="conf_day">
+  <div class="conf day">
     <h2><span class="title">管理設定</span></h2>
     <div class="body">
       <h3 class="password">パスワード</h3>
@@ -69,18 +48,36 @@
     </div>
   </div>
 
-  <div class="conf_day">
+  <div class="conf day">
     <h2><span class="title">表示設定</span></h2>
     <div class="body">
       <h3 class="subtitle">テーマの指定</h3>
-      <p>表示に使用するテーマを選択することができます。
+      <p>表示に使用するテーマを選択することができます。</p>
       <p><select name="theme">
          <option id="theme"></option></select></p>
+      <h3 class="subtitle">テーマURLの指定</h3>
+      <p>テーマがあるURLを指定することができます。直接CSSを指定した場合、上の「テーマの指定」で選択したテーマは無視され、指定したCSSが使われます。</p>
+      <p><input name="theme_url" value="@theme_url" size="60"></p>
+      <h3 class="subtitle">テーマディレクトリの指定</h3>
+      <p>テーマがあるディレクトリを指定することができます。（複数設置時に使用）</p>
+      <p><input name="theme_path" value="@theme_path" size="60"></p>
       <h3 class="subtitle">サイドバーの利用</h3>
       <p>テーマによってはサイドバーを利用すると表示が乱れるものがあります。その場合、サイドバーの表示をオフにすることができます。</p>
       <p><select name="sidebar">
          <option id=use_sidebar value="true">使用する</option>
          <option id=no_sidebar value="false">使用しない</option>
+         </select></p>
+      <h3 class="subtitle">メインエリアのクラス名(CSS)の指定</h3>
+      <p>デフォルトでは本文部分のクラス名として'main'を使用しますが、それ以外のクラス名を使用したい場合に指定します。</p>
+      <p><input name="main_class" value="@main_class" size="20"></p>
+      <h3 class="subtitle">サイドバーのクラス名(CSS)の指定</h3>
+      <p>デフォルトではサイドバーのクラス名として'sidebar'を使用しますが、それ以外のクラス名を使用したい場合に指定します。</p>
+      <p><input name="sidebar_class" value="@sidebar_class" size="20"></p>
+      <h3 class="subtitle">オートリンクの利用</h3>
+      <p>既存のページに自動的にリンクを設定するオートリンク機能を使用するかどうか指定します。</p>
+      <p><select name="auto_link">
+         <option id=use_auto_link value="true">使用する</option>
+         <option id=no_auto_link value="false">使用しない</option>
          </select></p>
       <p><input type="submit" name="saveconf" value="OK"></p>
     </div>
@@ -89,15 +86,6 @@
 </form>
 </div>
 
-<div class="sidebar" id="sidebar">
-  <div id="menu"   class="recentsubtitles"></div>
-</div>
-
-<div class="footer">
-  <a href="http://www.namaraii.com/hiki/">Hiki</a> <span id=version>0.0.1</span>
-  &copy; 2002-2003 by <a href="http://www.namaraii.com/">TAKEUCHI Hitoshi</a>.<br>
-  Powered by <span id=ruby_ver></span> and <span id=amrita_ver></span>.<br>
-  Modified by <span id=author_name></span>.
-</div>
+<div class="footer" id=footer></div>
 </body>
 </html>

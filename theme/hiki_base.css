@@ -1,7 +1,12 @@
-span.added {
+ins.added {
 	font-weight: bold;
 }
 
-span.deleted {
+del.deleted {
 	text-decoration: line-through;
+}
+
+form.update textarea.keyword {
+        width: 15em;
+        height: 3em;
 }

@@ -1,4 +1,4 @@
-# $Id: todo.rb,v 1.4 2003-02-23 02:20:08 hitoshi Exp $
+# $Id: todo.rb,v 1.5 2004-02-15 02:48:35 hitoshi Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 def todo(p, num = 8)
@@ -17,7 +17,7 @@ def todo(p, num = 8)
   c = 0
   todo_list.each do |t|
     break if (c += 1) > num
-    s << "#{\"%02d\" % t[:priority]} #{t[:todo].escapeHTML}<br>\n"
+    s << "#{'%02d' % t[:priority]} #{t[:todo].escapeHTML}<br>\n"
   end
   s
 end

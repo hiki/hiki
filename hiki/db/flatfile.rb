@@ -1,4 +1,4 @@
-# $Id: flatfile.rb,v 1.3 2003-03-23 03:37:12 hitoshi Exp $
+# $Id: flatfile.rb,v 1.4 2004-02-15 02:48:35 hitoshi Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'ftools'
@@ -14,7 +14,7 @@ module Hiki
       @info = PTStore::new( $info_db )
     end
     
-    def save( page, text, md5 )
+    def store( page, text, md5 )
       filename = textdir( page )
 
       if exist?( page )
@@ -26,10 +26,11 @@ module Hiki
       File::open( filename, "w" ) do |f|
         f.write( text )
       end
+      set_last_update( page, Time::now )
       true
     end
 
-    def delete( page )
+    def unlink( page )
       filename = textdir( page )
       if exist?( page )
         begin
@@ -41,7 +42,7 @@ module Hiki
     end
     
     def touch( page )
-      create_info_default( page ) unless info_exist? ( page )
+      create_info_default( page ) unless info_exist?( page )
       filename = textdir( page )
       File::open( filename, "w" ) {|f|}
     end
@@ -69,7 +70,9 @@ module Hiki
     end
 
     def pages
-      Dir.glob( "#{$pages_path}/*" ).collect! {|f| File::basename( f ).unescape}
+      Dir.glob( "#{$pages_path}/*" ).delete_if {|f| !test(?f, f)}.collect! {|f|
+        File::basename( f ).unescape
+      }
     end
 
     # ==============
@@ -97,48 +100,13 @@ module Hiki
       test( ?e, $info_db )
     end
 
-    def increment_hitcount ( p )
-      f = p.escape
-      @info.transaction do
-        @info[f][:count] = @info[f][:count] + 1
-      end
-    end
-
-    def get_hitcount( p )
+    def info( p )
       f = p.escape
       @info.transaction(true) do
-        @info.root?(f) ? @info[f][:count] : default[:count]
+        @info.root?(f) ? @info[f] : nil
       end
     end
-      
-    def freeze_page ( p, freeze )
-      f = p.escape
-      @info.transaction do
-        @info[f][:freeze] = freeze
-      end
-    end
-
-    def is_frozen? ( p )
-      f = p.escape
-      @info.transaction(true) do
-        @info.root?(f) ? @info[f][:freeze] : default[:freeze]
-      end
-    end
-
-    def set_last_update ( p, t )
-      f = p.escape
-      @info.transaction do
-        @info[f][:last_modified] = t
-      end
-    end
-
-    def get_last_update( p )
-      f = p.escape
-      @info.transaction(true) do
-        @info.root?(f) ? @info[f][:last_modified] : default[:last_modified]
-      end
-    end
-
+    
     def page_info
       h = Array::new
       @info.transaction(true) do
@@ -147,11 +115,65 @@ module Hiki
       h
     end
 
-    def set_references(p, r)
+    def set_attribute(p, attr)
       f = p.escape
       @info.transaction do
-        @info[f][:references] = r.join(',')
+        attr.each do |attribute, value|
+          @info[f][attribute] = value
+        end
       end
+    end
+
+    def get_attribute(p, attribute)
+      f = p.escape
+      @info.transaction(true) do
+        if @info.root?(f)
+          @info[f][attribute] || default[attribute]
+        else
+          default[attribute]
+        end
+      end
+    end
+
+    def select
+      result = []
+      @info.transaction(true) do
+        @info.roots.each do |a|
+          result << a.unescape if yield(@info[a])
+        end
+      end
+      result
+    end
+    
+    def increment_hitcount ( p )
+      f = p.escape
+      @info.transaction do
+        @info[f][:count] = @info[f][:count] + 1
+      end
+    end
+
+    def get_hitcount( p )
+      get_attribute(p, :count)
+    end
+
+    def freeze_page ( p, freeze )
+      set_attribute(p, [[:freeze, freeze]])
+    end
+
+    def is_frozen? ( p )
+      get_attribute(p, :freeze)
+    end
+
+    def set_last_update ( p, t )
+      set_attribute(p, [[:last_modified, t]])
+    end
+
+    def get_last_update( p )
+      get_attribute(p, :last_modified)
+    end
+
+    def set_references(p, r)
+      set_attribute(p, [[:references, r.join(',')]])
     end
 
     def get_references(p)
@@ -184,16 +206,18 @@ module Hiki
       { :count          => 0,
         :last_modified  => Time::now,
         :freeze         => false,
-        :references     => ''
+        :references     => '',
+        :keyword        => [],
+        :title          => '',
       }
     end
 
     def textdir(s)
-      ( $pages_path  + '/' + s.escape ).untaint
+      ( $pages_path + '/' + s.escape ).untaint
     end
 
     def backupdir(s)
-     ( $backup_path  + '/' + s.escape).untaint
+     ( $backup_path  + '/' + s.escape ).untaint
     end
   end
 end

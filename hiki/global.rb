@@ -1,15 +1,13 @@
-# $Id: global.rb,v 1.2 2003-02-22 06:18:00 hitoshi Exp $
+# $Id: global.rb,v 1.3 2004-02-15 02:48:35 hitoshi Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
-$cgi_name        = 'hiki.cgi'
-$template_path   = "template/#{$lang}"
-$plugin_path     = 'plugin'
-$theme_path      = 'theme'
-$cache_path      = "#{$data_path}/cache"
+$template_path   = "#{$path}/template/#{$lang}"
+$plugin_path     = "#{$path}/plugin"
 $config_file     = "#{$data_path}/hiki.conf"
 
 $side_menu       = 'SideMenu'
 $interwiki_name  = 'InterWikiName' 
+$aliaswiki_name  = 'AliasWikiName' 
 $formatting_rule = 'TextFormattingRules'
 
 # 'flat file database'

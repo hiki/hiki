@@ -1,0 +1,32 @@
+2003-11-16  Kazuhiko  <kazuhiko@fdiary.net>
+
+	* attach.rb: 例外を無視するように修正 by Hajime BABA
+
+2003-11-13  Kazuhiko  <kazuhiko@fdiary.net>
+
+	* attach.rb: プラグインの使い方の表示、attach_view で Flash に対応 
+	(image_size.rb が使えるならサイズを埋め込む) by たむらけんいち
+	XSS 脆弱性の修正、日本語ファイル名の扱いの修正 by Hajime BABA
+
+2003-06-07  SHIMADA Mitsunobu  <simm@isoternet.org>
+
+	* attach.cgi: 自動リロード先を $cgi_name を用いて決定するよう変更
+
+2003-06-06  SHIMADA Mitsunobu  <simm@isoternet.org>
+
+	* attach.cgi, attach.rb: 添付ファイル削除対応
+
+2003-06-05  SHIMADA Mitsunobu  <simm@isoternet.org>
+
+	* attach.rb(attach_anchor_string): 新規作成
+
+	* attach.cgi: 添付後自動的に元ページ戻る際のURLがおかしかったので修正
+
+2003-06-03  SHIMADA Mitsunobu  <simm@isoternet.org>
+
+	* attach.rb: 添付ファイル転送時に適用するattach.cgiのパスを変更できるようにした
+
+	* attach.cgi, attach.rb: 辻褄があうようパスを変更
+
+	* README: 新規作成
+
