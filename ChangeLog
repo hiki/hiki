@@ -1,3 +1,7 @@
+2004-08-09  Kazuhiko  <kazuhiko@fdiary.net>
+	* template/: <div class="recentsubtitles">〜</div> を削除 by
+	MACHIDA Hideki
+
 2004-08-07  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/attach/attach.rb: page を escapeHTML するように修正 
 	thanks to yoggy
