@@ -1,3 +1,7 @@
+2005-03-18  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* plugin/00default.rb, style/default/html_formatter.rb,
+	style/rd+/rd2html.rb: URL 形式のリンクに class="external" を付けた。
+
 2005-03-17  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/xmlrpc/xmlrpc.cgi: XMLRPC サーバを追加
 

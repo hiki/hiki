@@ -222,7 +222,7 @@ module Hiki
       if /\.(jpg|jpeg|png|gif)/ =~ url
         %Q[<img src="#{meta_char_escape(url)}" title="#{content.join("")}" alt="#{content.join("")}" />]
       else
-        %Q[<a href="#{meta_char_escape(url)}">#{content.join("")}</a>]
+        %Q[<a href="#{meta_char_escape(url)}" class="external">#{content.join("")}</a>]
       end
     end
 

@@ -1,4 +1,4 @@
-# $Id: 00default.rb,v 1.21 2005-03-15 07:43:26 hitoshi Exp $
+# $Id: 00default.rb,v 1.22 2005-03-18 11:31:32 yanagita Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #==============================
@@ -33,8 +33,12 @@ def hiki_anchor( page, display_text )
 end
 
 #===== make_anchor
-def make_anchor(url, display_text)
-  %Q!<a href="#{url}">#{display_text}</a>!
+def make_anchor(url, display_text, a_class = nil)
+  if a_class
+    %Q!<a href="#{url}" class="#{a_class}">#{display_text}</a>!
+  else
+    %Q!<a href="#{url}">#{display_text}</a>!
+  end
 end
 
 #===== page_name

@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.22 2005-03-05 15:24:29 hitoshi Exp $
+# $Id: html_formatter.rb,v 1.23 2005-03-18 11:31:32 yanagita Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -150,7 +150,7 @@ module Hiki
           s[:toc_title] << t[:s]
         end
       when :reference
-        s[:html] << @plugin.make_anchor( t[:href], t[:s].escapeHTML )
+        s[:html] << @plugin.make_anchor( t[:href], t[:s].escapeHTML, 'external' )
         s[:toc_title] << t[:s] if s[:toc_level] > 0
       when :wikiname, :bracketname
         disp = t[:s]
