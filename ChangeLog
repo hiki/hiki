@@ -1,4 +1,7 @@
 2004-10-31  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/history.rb (Hiki::History::history_diff): svn での不
+	具合の修正 by zaki
+
 	* misc/plugin/history.rb (Hiki::History::history): svn での不具合
 	の修正 by 滝沢
 
