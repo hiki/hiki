@@ -1,3 +1,6 @@
+2005-03-20  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/interwiki.rb: utf8 に対応 report by Zeus
+
 2005-03-18  Kouhei Yanagita <sugi@dream.big.or.jp>
 	* plugin/00default.rb, style/default/html_formatter.rb,
 	style/rd+/rd2html.rb: URL 形式のリンクに class="external" を付けた。

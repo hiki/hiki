@@ -1,4 +1,4 @@
-# $Id: interwiki.rb,v 1.6 2004-06-26 14:12:28 fdiary Exp $
+# $Id: interwiki.rb,v 1.7 2005-03-20 01:48:11 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 module Hiki
@@ -6,7 +6,7 @@ module Hiki
     require 'hiki/util'
     
     URL  = '(?:http|https|ftp|mailto|file):[a-zA-Z0-9;/?:@&=+$,\-_.!~*\'()#%]+'
-    INTERWIKI_NAME_RE =  /\[\[([^|]+)\|(#{URL})\]\](?:\s+(sjis|euc|alias))?/
+    INTERWIKI_NAME_RE =  /\[\[([^|]+)\|(#{URL})\]\](?:\s+(sjis|euc|utf8|alias))?/
 
     attr_reader :interwiki_names
     
@@ -27,6 +27,8 @@ module Hiki
                  p.to_sjis.escape
                when 'euc'
                  p.to_euc.escape
+               when 'utf8'
+                 euc_to_utf8(p).escape
                else
                  p
                end
