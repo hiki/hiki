@@ -1,4 +1,4 @@
-# $Id: session.rb,v 1.2 2004-06-26 14:12:28 fdiary Exp $
+# $Id: session.rb,v 1.3 2004-08-09 06:44:49 fdiary Exp $
 # Copyright (C) 2004 Kazuhiko <kazuhiko@fdiary.net>
 
 module Hiki
@@ -29,6 +29,7 @@ module Hiki
       return false unless @session_id
       # a session will expire in 10 minutes
       if test( ?e, session_file ) && Time.now - File.mtime( session_file ) < 600
+        File.new( session_file, 'w' ).close
         return true
       end
       false

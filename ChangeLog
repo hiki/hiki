@@ -1,4 +1,8 @@
 2004-08-09  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/session.rb (check): 「最初に認証した時から 10 分ではなく、
+	最後にそのセッションが有効だと確認してから 10 分」に変更 by
+	FUKUOKA Tomoyuki
+	
 	* template/: <div class="recentsubtitles">〜</div> を削除 by
 	MACHIDA Hideki
 
