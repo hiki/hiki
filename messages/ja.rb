@@ -1,4 +1,4 @@
-# $Id: ja.rb,v 1.3 2004-02-15 02:48:35 hitoshi Exp $
+# $Id: ja.rb,v 1.4 2004-04-02 00:45:01 hitoshi Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # You can redistribute it and/or modify it under the terms of
 # the Ruby's licence.
@@ -47,5 +47,6 @@ module Hiki
     def msg_match_title; '[タイトルに一致]' end
     def msg_match_keyword; '[キーワードに一致]' end
     def msg_duplicate_page_title; '指定したタイトルは既に存在しています。' end
+    def msg_missing_anchor_title; 'ページ %s を新規作成し、編集します。' end
   end
 end

@@ -1,4 +1,4 @@
-# $Id: en.rb,v 1.3 2004-03-01 04:06:11 fdiary Exp $
+# $Id: en.rb,v 1.4 2004-04-02 00:45:01 hitoshi Exp $
 # en.rb
 #
 # Copyright (C) 2003 Masao Mutoh <mutoh@highway.ne.jp>
@@ -55,5 +55,6 @@ module Hiki
     def msg_match_title; '[matched in title]' end
     def msg_match_keyword; '[matched in keyword]' end
     def msg_duplicate_page_title; 'The page title has already been existed.' end
+    def msg_missing_anchor_title; 'Create new %s and edit.' end
   end
 end
