@@ -1,3 +1,7 @@
+2004-12-26  KOMATSU Shinichiro  <koma2@ms.u-tokyo.ac.jp>
+	* hiki/command.rb: hiki/hiki_formatter.rb は使われていないので、
+	require しない。
+
 2004-12-25  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/parser.rb: 使われていないので削除
 

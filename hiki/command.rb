@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.21 2004-12-17 16:56:01 fdiary Exp $
+# $Id: command.rb,v 1.22 2004-12-26 02:44:53 koma2 Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'amrita/template'
@@ -7,7 +7,6 @@ require 'hiki/page'
 require 'hiki/util'
 require 'hiki/plugin'
 require 'hiki/aliaswiki'
-require "hiki/hiki_formatter"
 
 include Amrita
 include Hiki::Util
