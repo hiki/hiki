@@ -1,4 +1,7 @@
 2005-02-14  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/command.rb (cmd_edit, cmd_diff), template/diff.html,
+	template/edit.html: diff 表示を <pre> から <div> に変更
+
 	* hiki/pluginutil.rb (Hiki::Util::methodwords): パースの修正 by
 	Masao Mutoh
 
