@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.11 2004-12-17 16:56:01 fdiary Exp $
+# $Id: html_formatter.rb,v 1.12 2004-12-22 04:43:03 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -76,90 +76,25 @@ module Hiki
     private :flush_normal_text
 
     def to_s
-      html        = ''
-      toc_level   = 0
-      toc_title   = ''
-      normal_text = ''
-      pre         = false
+      s = {
+        :html        => '',
+        :toc_level   => 0,
+        :toc_title   => '',
+        :normal_text => '',
+        :pre         => false,
+      }
       
       @tokens.each do |t|
-        if (normal_text.size > 0 && t[:e] != :normal_text)
-          html << flush_normal_text(normal_text, pre)
-          normal_text = ''
+        if (s[:normal_text].size > 0 && t[:e] != :normal_text)
+          s[:html] << flush_normal_text(s[:normal_text], s[:pre])
+          s[:normal_text] = ''
         end
-        case t[:e]
-        when :normal_text
-          normal_text << "#{t[:s].escapeHTML}"
-          if not pre and toc_level > 0
-            toc_title << t[:s]
-          end
-        when :reference
-          html << @plugin.make_anchor( t[:href], t[:s].escapeHTML )
-          toc_title << t[:s] if toc_level > 0
-        when :wikiname, :bracketname
-          disp = t[:s]
-          t[:href] = @aliaswiki.aliaswiki_names.index(t[:href]) || t[:href]
-          if t[:e] == :bracketname
-            orig = @db.select {|p| p[:title] == t[:href]}
-            t[:href] = orig[0] if orig[0]
-          end
-          if !@conf.use_wikiname and t[:e] == :wikiname
-            html << disp.escapeHTML
-          elsif @db.exist?( t[:href] )
-             html << @plugin.hiki_anchor(t[:href].escape, disp.escapeHTML)
-            @references << t[:href]
-          else
-            missing_anchor_title = @conf.msg_missing_anchor_title % [ disp.escapeHTML ]
-            outer_alias = @interwiki.outer_alias(t[:href]) || "#{disp.escapeHTML}<a class=\"nodisp\" href=\"#{@conf.cgi_name}?c=edit;p=#{t[:href].escape}\" title=\"#{missing_anchor_title}\">?</a>"
-            html << outer_alias
-          end
-          toc_title << t[:href] if toc_level > 0
-        when :interwiki
-          html << @interwiki.interwiki(t[:href], t[:p], t[:s])
-        when :empty
-          html << "\n"
-        when :heading1_open, :heading2_open, :heading3_open, :heading4_open, :heading5_open
-          toc_level = t[:lv]
-          html << %Q!#{MAP[t[:e]]}<a name="#{@suffix}#{@toc_cnt}"> </a>!
-        when :heading1_close, :heading2_close, :heading3_close, :heading4_close, :heading5_close
-          add_toc( toc_level, toc_title )
-          toc_level = 0
-          toc_title = ''
-          html << "#{MAP[t[:e]]}\n"
-#          html << %Q!<a href="#top"><span class="top_anchor">[TOP]</span></a>! if t[:e] == :heading1_close
-        when :image
-          html << %Q!<img src = "#{t[:href]}" alt = "#{File.basename( t[:s].escapeHTML )}">!
-        when :plugin, :inline_plugin
-          begin
-            s = call_plugin_method( t )
-            if s.class == String
-              html << s
-            end
-          rescue Exception => e
-            if @conf.plugin_debug
-              html << e.message
-            else
-              html << plugin_error( t[:method], $! )
-            end
-          end
-        else
-          if t[:e] == :pre_open
-            pre = true
-          elsif t[:e] == :pre_close
-            pre = false
-          end
-
-          html << "#{MAP[t[:e]]}"
-          if [:emphasis_close, :strong_close, :delete_close].index(t[:e]) == nil and
-            /_close\z/ =~ t[:e].to_s
-            html <<  "\n"
-          end
-        end
+        token_to_s( t, s )
       end
-      if (normal_text.size > 0)
-        html << flush_normal_text(normal_text, pre)
+      if (s[:normal_text].size > 0)
+        s[:html] << flush_normal_text(s[:normal_text], s[:pre])
       end
-      html
+      s[:html]
     end
 
     def references
@@ -168,19 +103,19 @@ module Hiki
 
     def toc
       s = %Q!<div class="day"><div class="body"><div class="section">!
-      s << "#{MAP[:unordered_list_open]}\n"
+      s << "#{map(:unordered_list_open)}\n"
       lv = 1
       @toc.each do |h|
         if h['level'] > lv
-          s << ( "#{MAP[:unordered_list_open]}\n" * ( h['level'] - lv ) )
+          s << ( "#{map(:unordered_list_open)}\n" * ( h['level'] - lv ) )
           lv = h['level']
         elsif h['level'] < lv
-          s << ( "#{MAP[:unordered_list_close]}\n" * ( lv - h['level'] ) )
+          s << ( "#{map(:unordered_list_close)}\n" * ( lv - h['level'] ) )
           lv = h['level']
         end
-        s << %Q!#{MAP[:listitem_open]}<a href="#l#{h['index']}">#{h['title'].escapeHTML}</a>#{MAP[:listitem_close]}\n!
+        s << %Q!#{map(:listitem_open)}<a href="#l#{h['index']}">#{h['title'].escapeHTML}</a>#{map(:listitem_close)}\n!
       end
-      s << ("#{MAP[:unordered_list_close]}\n" * lv)
+      s << ("#{map(:unordered_list_close)}\n" * lv)
       s << "</div></div></div>"
     end
     
@@ -204,6 +139,80 @@ module Hiki
     end
 
     private
+    def map(key)
+      MAP[key]
+    end
+
+    def token_to_s( t, s )
+      case t[:e]
+      when :normal_text
+        s[:normal_text] << "#{t[:s].escapeHTML}"
+        if not s[:pre] and s[:toc_level] > 0
+          s[:toc_title] << t[:s]
+        end
+      when :reference
+        s[:html] << @plugin.make_anchor( t[:href], t[:s].escapeHTML )
+        s[:toc_title] << t[:s] if s[:toc_level] > 0
+      when :wikiname, :bracketname
+        disp = t[:s]
+        t[:href] = @aliaswiki.aliaswiki_names.index(t[:href]) || t[:href]
+        if t[:e] == :bracketname
+          orig = @db.select {|p| p[:title] == t[:href]}
+          t[:href] = orig[0] if orig[0]
+        end
+        if !@conf.use_wikiname and t[:e] == :wikiname
+          s[:html] << disp.escapeHTML
+        elsif @db.exist?( t[:href] )
+           s[:html] << @plugin.hiki_anchor(t[:href].escape, disp.escapeHTML)
+          @references << t[:href]
+        else
+          missing_anchor_title = @conf.msg_missing_anchor_title % [ disp.escapeHTML ]
+          outer_alias = @interwiki.outer_alias(t[:href]) || "#{disp.escapeHTML}<a class=\"nodisp\" href=\"#{@conf.cgi_name}?c=edit;p=#{t[:href].escape}\" title=\"#{missing_anchor_title}\">?</a>"
+          s[:html] << outer_alias
+        end
+        s[:toc_title] << t[:href] if s[:toc_level] > 0
+      when :interwiki
+        s[:html] << @interwiki.interwiki(t[:href], t[:p], t[:s])
+      when :empty
+        s[:html] << "\n"
+      when :heading1_open, :heading2_open, :heading3_open, :heading4_open, :heading5_open
+        s[:toc_level] = t[:lv]
+        s[:html] << %Q!#{map(t[:e])}<a name="#{@suffix}#{@toc_cnt}"> </a>!
+      when :heading1_close, :heading2_close, :heading3_close, :heading4_close, :heading5_close
+        add_toc( s[:toc_level], s[:toc_title] )
+        s[:toc_level] = 0
+        s[:toc_title] = ''
+        s[:html] << "#{map(t[:e])}\n"
+#        s[:html] << %Q!<a href="#top"><span class="top_anchor">[TOP]</span></a>! if t[:e] == :heading1_close
+      when :image
+        s[:html] << %Q!<img src = "#{t[:href]}" alt = "#{File.basename( t[:s].escapeHTML )}">!
+      when :plugin, :inline_plugin
+        begin
+          str = call_plugin_method( t )
+          if str.class == String
+            s[:html] << str
+          end
+        rescue Exception => e
+          if @conf.plugin_debug
+            s[:html] << e.message
+          else
+            s[:html] << plugin_error( t[:method], $! )
+          end
+        end
+      else
+        if t[:e] == :pre_open
+          s[:pre] = true
+        elsif t[:e] == :pre_close
+          s[:pre] = false
+        end
+        s[:html] << "#{map(t[:e])}"
+        if [:emphasis_close, :strong_close, :delete_close].index(t[:e]) == nil and
+          /_close\z/ =~ t[:e].to_s
+          s[:html] <<  "\n"
+        end
+      end
+    end
+
     def add_toc( level, title )
       @toc << {"level" => level, "title" => title, "index" => @toc_cnt}
       @toc_cnt = @toc_cnt + 1
