@@ -1,3 +1,7 @@
+2004-07-01  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
+
+	* hiki/db/flatfile.rb, ptstore.rb: mod_ruby時のキャッシュファイル開放漏れ修正
+	
 2004-06-30  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
 
 	* hiki/db/ptstore.rb: 読み込み時のキャッシュ対応 by matsui

@@ -1,4 +1,4 @@
-# $Id: ptstore.rb,v 1.3 2004-06-30 10:26:39 hitoshi Exp $
+# $Id: ptstore.rb,v 1.4 2004-07-01 09:21:36 hitoshi Exp $
 #
 # ptstore.rb
 #   converts pstore.rb contained in Ruby 1.8.0 Preview 1.
@@ -95,6 +95,10 @@ class PTStore
     in_transaction
     @abort = true
     throw :ptstore_abort_transaction
+  end
+
+  def close_cache
+    @file_cache.close if @file_cache
   end
 
   def transaction(read_only=false)

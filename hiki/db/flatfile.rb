@@ -1,4 +1,4 @@
-# $Id: flatfile.rb,v 1.7 2004-06-26 14:12:29 fdiary Exp $
+# $Id: flatfile.rb,v 1.8 2004-07-01 09:21:36 hitoshi Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'ftools'
@@ -15,6 +15,11 @@ module Hiki
       @info = PTStore::new( @conf.info_db )
     end
     
+    def close_db
+      @info.close_cache
+      true
+    end
+
     def store( page, text, md5 )
       filename = textdir( page )
 
