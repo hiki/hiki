@@ -1,7 +1,5 @@
-# $Id: diffmail.rb,v 1.3 2004-09-06 15:08:44 fdiary Exp $
+# $Id: diffmail.rb,v 1.4 2005-01-04 14:11:51 fdiary Exp $
 # Copyright (C) 2003 SHIMADA Mitsunobu <simm@fan.jp>
-
-require 'hiki/algorithm/diff'
 
 #----- send a mail on updating
 def updating_mail
@@ -12,38 +10,9 @@ def updating_mail
       text = "#{latest_text}\n"
     elsif type == 'update'
       text = ''
-      src = @db.text.split("\n").collect{|s| "#{s}\n"}
-      dst = latest_text.split("\n").collect{|s| "#{s}\n"}
-      si = 0
-      di = 0
-      Diff.diff(src,dst).each do |action,position,elements|
-        case action
-        when :-
-          while si < position
-            text << "  #{src[si]}"
-            si += 1
-            di += 1
-          end
-          si += elements.length
-          elements.each do |l|
-            text << "- #{l}"
-          end
-        when :+
-          while di < position
-            text << "  #{src[si]}"
-            si += 1
-            di += 1
-          end
-          di += elements.length
-          elements.each do |l|
-            text << "+ #{l}"
-          end
-        end
-      end
-      while si < src.length
-        text << "  #{src[si]}"
-        si += 1
-      end
+      src = @db.text
+      dst = latest_text
+      r = diff( src, dst, unified )
     end
     send_updating_mail(@page, type, text)
   rescue

@@ -1,4 +1,4 @@
-# $Id: util.rb,v 1.20 2004-12-18 17:01:55 fdiary Exp $
+# $Id: util.rb,v 1.21 2005-01-04 14:11:51 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'nkf'
@@ -141,7 +141,8 @@ module Hiki
       Diff.diff(a1, a2) 
     end
 
-    def diff( d, src, html = true )
+    def diff( src, dst, html = true )
+      diff = diff_t( src, dst )
       text = ''
       if html || true
         src = src.split("\n").collect{|s| "#{s.escapeHTML}"}
@@ -151,11 +152,15 @@ module Hiki
       si = 0
       di = 0
 
-      d.each do |action,position,elements|
+      diff.each do |action,position,elements|
         case action
         when :-
             while si < position
-              text << "#{src[si]}\n"
+              if html
+                text << "#{src[si]}\n"
+              else
+                text << "  #{src[si]}\n"
+              end
               si += 1
               di += 1
             end
@@ -164,12 +169,16 @@ module Hiki
             if html
               text << "<del class=deleted>#{l.escapeHTML.chomp}</del>\n"
             else
-              text << "---#{l}"
+              text << "- #{l}"
             end
           end
         when :+
             while di < position
-              text << "#{src[si]}\n"
+              if html
+                text << "#{src[si]}\n"
+              else
+                text << "  #{src[si]}\n"
+              end
               si += 1
               di += 1
             end
@@ -178,16 +187,99 @@ module Hiki
             if html
               text << "<ins class=added>#{l.escapeHTML.chomp}</ins>\n"
             else
-              text << "+++#{l}"
+              text << "+ #{l}"
             end
           end
         end
       end
       while si < src.length
-        text << "#{src[si]}\n"
+        if html
+          text << "#{src[si]}\n"
+        else
+          text << "  #{src[si]}\n"
+        end
         si += 1
       end
       text
+    end
+
+    def unified_diff( src, dst, unified = 3 )
+      r = ''
+      diff = diff_t( src, dst )
+      src = src.split("\n").collect{|s| "#{s}\n"}
+      si = 0
+      di = 0
+      sibak = nil
+      dibak = nil
+      diff.each do |action, position, elements|
+
+        # difference
+        case action
+        when :-
+          # postfix
+          if unified and sibak then
+            while( (si < sibak + unified) and (si < position) )
+              r << "  #{src[si]}"
+              si += 1
+              di += 1
+            end
+            r << "---\n" if si < position - 1
+          end
+          # prefix
+          while si < position
+            if( (not unified) or (position - unified <= si) )
+              r << "  #{src[si]}"
+            end
+            si += 1
+            di += 1
+          end
+          si += elements.length
+          elements.each do |l|
+            r << "- #{l}"
+          end
+        when :+
+          # postfix
+          if unified and dibak then
+            while( (di < dibak + unified) and (di < position) )
+              r << "  #{src[si]}"
+              si += 1
+              di += 1
+            end
+            r << "---\n" if di < position - 1
+          end
+          # prefix
+          while di < position
+            if( (not unified) or (position - unified <= di) )
+              r << "  #{src[si]}"
+            end
+            si += 1
+            di += 1
+          end
+          di += elements.length
+          elements.each do |l|
+            r << "+ #{l}"
+          end
+        end
+
+        # record for the next
+        sibak = si
+        dibak = di
+      end
+
+      # postfix
+      if unified and sibak then
+        while( (si < sibak + unified) and (si < src.length) )
+          r << "  #{src[si]}"
+          si += 1
+          di += 1
+        end
+      elsif !r.empty?
+        while si < src.length
+          r << "  #{src[si]}"
+          si += 1
+        end
+      end
+      r
     end
 
     def redirect(cgi, url)

@@ -1,4 +1,17 @@
 2005-01-04  Kazuhiko  <kazuhiko@fdiary.net>
+
+	* hiki/util.rb (Hiki::Util::diff): 引数を「差分、旧、HTML フラグ」
+	から「旧、新、HTML フラグ」に変更
+	* hiki/command.rb (Hiki::Command::cmd_edit,
+	Hiki::Command::cmd_diff): Hiki::Util::diff の仕様にあわせて変更
+
+	* hiki/util.rb (Hiki::Util::unified_diff): 追加
+	* misc/plugin/diffmail2.rb (updating_mail):
+	Hiki::Util::unified_diff を使うように変更
+
+	* misc/plugin/diffmail.rb (updating_mail): Hiki::Util::diff を使う
+	ように変更
+
 	* hiki/db/ptstore.rb: ruby-1.8.2 の pstore.rb に追従
 
 2005-01-03  Kazuhiko  <kazuhiko@fdiary.net>

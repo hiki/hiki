@@ -1,7 +1,5 @@
-# $Id: diffmail2.rb,v 1.2 2004-09-10 06:37:42 fdiary Exp $
+# $Id: diffmail2.rb,v 1.3 2005-01-04 14:11:51 fdiary Exp $
 # Copyright (C) 2003 SHIMADA Mitsunobu <simm@fan.jp>
-
-require 'hiki/algorithm/diff'
 
 #----- send a mail on updating
 def updating_mail
@@ -28,82 +26,9 @@ def updating_mail
       head << "-------------------------\n" unless head.empty?
 
       unified = @options['diffmail.lines'] || 3
-      r = ''
-      src = @db.text.split("\n").collect{|s| "#{s}\n"}
-      dst = latest_text.split("\n").collect{|s| "#{s}\n"}
-      si = 0
-      di = 0
-      sibak = nil
-      dibak = nil
-      Diff.diff( src, dst ).each do |action, position, elements|
-
-        # difference
-        case action
-        when :-
-          # postfix
-          if unified and sibak then
-            while( (si < sibak + unified) and (si < position) )
-              r << "  #{src[si]}"
-              si += 1
-              di += 1
-            end
-            r << "---\n" if si < position - 1
-          end
-          # prefix
-          while si < position
-            if( (not unified) or (position - unified <= si) )
-              r << "  #{src[si]}"
-            end
-            si += 1
-            di += 1
-          end
-          si += elements.length
-          elements.each do |l|
-            r << "- #{l}"
-          end
-        when :+
-          # postfix
-          if unified and dibak then
-            while( (di < dibak + unified) and (di < position) )
-              r << "  #{dst[di]}"
-              si += 1
-              di += 1
-            end
-            r << "---\n" if di < position - 1
-          end
-          # prefix
-          while di < position
-            if( (not unified) or (position - unified <= di) )
-              r << "  #{dst[di]}"
-            end
-            si += 1
-            di += 1
-          end
-          di += elements.length
-          elements.each do |l|
-            r << "+ #{l}"
-          end
-        end
-
-        # record for the next
-        sibak = si
-        dibak = di
-      end
-
-      # postfix
-      if unified and sibak then
-        while( (si < sibak + unified) and (si < src.length) )
-          r << "  #{src[si]}"
-          si += 1
-          di += 1
-        end
-      elsif !r.empty?
-        while si < src.length
-          r << "  #{src[si]}"
-          si += 1
-        end
-      end
-      r
+      src = @db.text
+      dst = latest_text
+      r = unified_diff( src, dst, unified )
     end
     send_updating_mail(@page, type, head + r) unless (head + r).empty?
   rescue

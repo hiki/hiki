@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.22 2004-12-26 02:44:53 koma2 Exp $
+# $Id: command.rb,v 1.23 2005-01-04 14:11:51 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'amrita/template'
@@ -262,9 +262,9 @@ module Hiki
         preview_text = formatter.to_s
         save_button = ''
       elsif @cmd == 'conflict'
-        t = @db.load( page ) || ''
-        d = diff_t( text.gsub!(/\r/, ''), t )
-        differ = diff( d, text )
+	old = text.gsub!(/\r/, '')
+	new = @db.load( @page ) || ''
+	differ = diff( old, new )
         link = @plugin.hiki_anchor( page.escape, page.escapeHTML )
       end
       
@@ -300,8 +300,9 @@ module Hiki
     end
 
     def cmd_diff
-      diff = @db.diff( @p )
-      differ = diff ? diff( diff, @db.load_backup(@p) || '' ) : @conf.msg_no_recent
+      old = @db.load_backup( @p ) || ''
+      new = @db.load( @p ) || ''
+      differ = diff( old, new )
       
       data = Hiki::Util::get_common_data( @db, @plugin, @conf )
       @plugin.hiki_menu(data, @cmd)
