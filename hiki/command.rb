@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.25 2005-01-08 05:34:45 fdiary Exp $
+# $Id: command.rb,v 1.26 2005-01-08 05:55:51 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'amrita/template'
@@ -262,7 +262,7 @@ module Hiki
         preview_text = formatter.to_s
         save_button = ''
       elsif @cmd == 'conflict'
-	old = text.gsub!(/\r/, '')
+	old = text.gsub(/\r/, '')
 	new = @db.load( page ) || ''
 	differ = diff( old, new )
         link = @plugin.hiki_anchor( page.escape, page.escapeHTML )
