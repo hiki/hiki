@@ -1,3 +1,12 @@
+2004-09-06  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/hikifarm/index.cgi (ReposSvn::import): svn import の前に 
+	svnadmin create を呼ぶように修正
+	(ReposSvn::imported): trunk/ 以外のディレクトリが含まれていても動
+	作するように修正
+
+	* misc/plugin/history.rb (Hiki::History::history): time のパースで 
+	locale による出力を削除するように修正
+
 2004-09-01  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/command.rb, hiki/util.rb, misc/plugin/history.rb: eval では
 	なく Mudule#const_get を使用するように変更

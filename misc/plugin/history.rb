@@ -3,7 +3,7 @@
 == plugin/history.rb - CVS の編集履歴を表示するプラグイン
 
   Copyright (C) 2003 Hajime BABA <baba.hajime@nifty.com>
-  $Id: history.rb,v 1.8 2004-09-01 07:33:21 fdiary Exp $
+  $Id: history.rb,v 1.9 2004-09-06 03:04:14 fdiary Exp $
   You can redistribute and/or modify this file under the terms of the LGPL.
 
   Copyright (C) 2003 Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
@@ -186,7 +186,7 @@ module Hiki
       when 'svn'
         diffrevs = ''
         cmdlog.split(/------------------------------------------------------------------------/).each do |tmp|
-          if /(?:\D+)(\d+?)[\s:\|]+[(?:\s)*](?:.*?) \| (.*?) \| (.*?)\n(.*?)\n/m =~ tmp then
+          if /(?:\D+)(\d+?)[\s:\|]+[(?:\s)*](?:.*?) \| (.*?)(?: \(.+\))? \| (.*?)\n(.*?)\n/m =~ tmp then
 	    revisions << [$1.to_i, $2, $3, $4]
             diffrevs << $1.to_i
 	  end
@@ -308,7 +308,6 @@ module Hiki
       sources << "<span class=\"add_line\">#{history_add_line_label.escapeHTML}</span><br>\n"
       sources << "<span class=\"del_line\">#{history_delete_line_label.escapeHTML}</span><br>\n"
       sources << "<pre class=\"diff\">\n"
-#     sources << cmdlog.escapeHTML
       diffsrc = cmdlog.escapeHTML
       cmdlog = nil
       diffsrc.each do |tmp|

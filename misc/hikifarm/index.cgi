@@ -65,7 +65,7 @@ end
 
 #--------------------------------------------------------------------
 
-HIKIFARM_VERSION = '0.3.0.20040831'
+HIKIFARM_VERSION = '0.3.0.20040906'
 
 def index( wiki )
 <<-INDEX
@@ -179,7 +179,7 @@ class ReposSvn < ReposDefault
          s << (f.gets( nil ) ? $_ : '')
       end
 
-      if s == "trunk/\n" then
+      if %r|^trunk/$| =~ s then
          return true
       else
          return false
@@ -189,6 +189,7 @@ class ReposSvn < ReposDefault
       oldpwd = Dir.pwd
       begin
          Dir.chdir( "#{@data_path}/#{wiki}/text" )
+         system( "svnadmin create #{@root}/#{wiki} > /dev/null 2>&1" )
          system( "svn import -m 'Starting #{wiki}' . file://#{@root}/#{wiki}/trunk > /dev/null 2>&1" )
          Dir.chdir( '..' )
          rmdir( 'text' )
