@@ -1,4 +1,4 @@
-# $Id: en.rb,v 1.4 2004-04-02 00:45:01 hitoshi Exp $
+# $Id: en.rb,v 1.5 2004-12-14 16:12:33 fdiary Exp $
 # en.rb
 #
 # Copyright (C) 2003 Masao Mutoh <mutoh@highway.ne.jp>
@@ -11,7 +11,7 @@
 # the Ruby's licence.
 #
 module Hiki
-  module Messages
+  module Messages_en
     def msg_recent; ' Recent' end
     def msg_create; 'Create' end
     def msg_diff; 'Diff' end

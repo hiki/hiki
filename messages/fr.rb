@@ -1,4 +1,4 @@
-# $Id: fr.rb,v 1.3 2004-04-02 00:51:24 hitoshi Exp $
+# $Id: fr.rb,v 1.4 2004-12-14 16:12:33 fdiary Exp $
 # fr.rb
 #
 # Copyright (C) 2003 Laurent Sansonetti <laurent@datarescue.be>
@@ -11,7 +11,7 @@
 # the Ruby's licence.
 #
 module Hiki
-  module Messages
+  module Messages_fr
     def msg_recent; ' Modifications récentes' end
     def msg_create; 'Créer' end
     def msg_diff; 'Différences' end

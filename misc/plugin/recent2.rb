@@ -1,4 +1,4 @@
-# $Id: recent2.rb,v 1.2 2004-03-01 09:50:45 hitoshi Exp $
+# $Id: recent2.rb,v 1.3 2004-12-14 16:12:33 fdiary Exp $
 # Copyright (C) 2003 not <not@cds.ne.jp>
 
 def recent2( n = 20 )
@@ -28,7 +28,7 @@ def recent2( n = 20 )
       ps = "#{(tp / 86400).to_i}d"
     end
 
-    cur_date = tm.strftime( msg_date_format )
+    cur_date = tm.strftime( @conf.msg_date_format )
     t = page_name(name)
     an = hiki_anchor(name.escape, t)
     s << "<li title=\"#{cur_date}\">#{an} <span class=\"recent2\">(#{ps})</span>\n"

@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.19 2004-09-10 06:51:50 fdiary Exp $
+# $Id: command.rb,v 1.20 2004-12-14 16:12:32 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'amrita/template'
@@ -11,7 +11,6 @@ require "hiki/hiki_formatter"
 
 include Amrita
 include Hiki::Util
-include Hiki::Messages
 
 module Hiki
   class Command
@@ -20,6 +19,14 @@ module Hiki
       @params = cgi.params
       @cgi    = cgi
       @conf   = conf
+
+      # for TrackBack
+      if %r|/tb/(.+)$| =~ ENV['REQUEST_URI']
+	@cgi.params['p'] = [CGI::unescape($1)]
+	@cgi.params['c'] = ['plugin']
+	@cgi.params['plugin'] = ['trackback_post']
+      end
+
       @cmd    = @params['c'][0]
       @p = case @params.keys.size
            when 0
@@ -38,7 +45,7 @@ module Hiki
 
       @p = @aliaswiki.original_name(@p).to_euc if @p
       
-      options = @conf.options || Hash.new( '' )
+      options = @conf.options || Hash::new( '' )
       options['page'] = @p
       options['db']   = @db
       options['cgi']  = cgi
@@ -116,23 +123,23 @@ module Hiki
 
     def cmd_preview
       @cmd = 'preview'
-      cmd_edit( @p, @params['contents'][0], msg_preview.sanitize, @params['page_title'][0] )
+      cmd_edit( @p, @params['contents'][0], @conf.msg_preview.sanitize, @params['page_title'][0] )
     end
     
     def cmd_view
       if /^\./ =~ @p || !@db.exist?( @p )
         if !@db.exist?( @p )
           @cmd = 'create'
-          cmd_create( msg_page_not_exist )
+          cmd_create( @conf.msg_page_not_exist )
           return
         end
       end
 
       html = nil
       text = @db.load( @p )
-      parser = Hiki::const_get( @conf.parser )::new( @conf )
+      parser = @conf.parser::new( @conf )
       tokens = parser.parse( text )
-      formatter = Hiki::const_get( @conf.formatter )::new( tokens, @db, @plugin, @conf )
+      formatter = @conf.formatter::new( tokens, @db, @plugin, @conf )
       contents, toc = formatter.to_s, formatter.toc
       if @conf.hilight_keys
         word = @params['key'][0]
@@ -167,7 +174,7 @@ module Hiki
     def hilighten(str, keywords)
       hilighted = str.dup
       keywords.each do |key|
-        re = Regexp.new('(' << Regexp.escape(key) << ')', Regexp::IGNORECASE)
+        re = Regexp::new('(' << Regexp.escape(key) << ')', Regexp::IGNORECASE)
         hilighted.gsub!(/([^<]*)(<[^>]*>)?/) {
           body, tag = $1, $2
           body.gsub(re) {
@@ -189,13 +196,13 @@ module Hiki
         k = f.keys[0]
         display_text = ((f[k][:title] and f[k][:title].size > 0) ? f[k][:title] : k).escapeHTML
         display_text << " [#{@aliaswiki.aliaswiki(k)}]" if k != @aliaswiki.aliaswiki(k)
-        %Q!#{@plugin.hiki_anchor(k.escape, display_text)}: #{format_date(f[k][:last_modified] )}#{msg_freeze_mark if f[k][:freeze]}!
+        %Q!#{@plugin.hiki_anchor(k.escape, display_text)}: #{format_date(f[k][:last_modified] )}#{@conf.msg_freeze_mark if f[k][:freeze]}!
       }
 
       data = Hiki::Util::get_common_data( @db, @plugin, @conf )
       @plugin.hiki_menu(data, @cmd)
       
-      data[:title]     = title( msg_index )
+      data[:title]     = title( @conf.msg_index )
       data[:updatelist] = list.collect! {|i| i.sanitize}
       
       generate_page( data )
@@ -207,7 +214,7 @@ module Hiki
       data = Hiki::Util::get_common_data( @db, @plugin, @conf )
       @plugin.hiki_menu(data, @cmd)
 
-      data[:title]      = title( msg_recent )
+      data[:title]      = title( @conf.msg_recent )
       data[:updatelist] = list.collect! {|i| i.sanitize}
       data[:last_modified] = last_modified
 
@@ -229,7 +236,7 @@ module Hiki
         display_text = (f[k][:title] and f[k][:title].size > 0) ? f[k][:title] : k
         display_text = display_text.escapeHTML
         display_text << " [#{@aliaswiki.aliaswiki(k)}]" if k != @aliaswiki.aliaswiki(k)
-        %Q|#{format_date( tm )}: #{@plugin.hiki_anchor( k.escape, display_text )} (<a href="#{@conf.cgi_name}#{cmdstr('diff',"p=#{k.escape}")}">#{msg_diff}</a>)|
+        %Q|#{format_date( tm )}: #{@plugin.hiki_anchor( k.escape, display_text )} (<a href="#{@conf.cgi_name}#{cmdstr('diff',"p=#{k.escape}")}">#{@conf.msg_diff}</a>)|
       }
       [list, last_modified]
     end
@@ -251,14 +258,14 @@ module Hiki
       formatter    = nil
 
       if @cmd == 'preview'
-        p = Hiki::const_get( @conf.parser )::new( @conf ).parse( text.gsub(/\r\n/, "\n") )
-        formatter = Hiki::const_get( @conf.formatter ).new( p, @db, @plugin, @conf )
+        p = @conf.parser::new( @conf ).parse( text.gsub(/\r\n/, "\n") )
+        formatter = @conf.formatter::new( p, @db, @plugin, @conf )
         preview_text = formatter.to_s
         save_button = ''
       elsif @cmd == 'conflict'
         t = @db.load( page ) || ''
         d = diff_t( text.gsub!(/\r/, ''), t )
-        differ = Hiki::const_get( @conf.formatter )::diff( d, text )
+        differ = @conf.formatter::diff( d, text )
         link = @plugin.hiki_anchor( page.escape, page.escapeHTML )
       end
       
@@ -287,7 +294,7 @@ module Hiki
       
       f = @db.is_frozen?( page ) || @conf.options['freeze']
       data[:freeze]         = a(:checked => f ? 'on': nil)
-      data[:freeze_msg]     = msg_freeze if f
+      data[:freeze_msg]     = @conf.msg_freeze if f
       data[:form_proc]      = @plugin.form_proc.sanitize
 
       generate_page( data )
@@ -295,12 +302,12 @@ module Hiki
 
     def cmd_diff
       diff = @db.diff( @p )
-      differ = diff ? Hiki::const_get( @conf.formatter )::diff( diff, @db.load_backup(@p) || '' ) : msg_no_recent
+      differ = diff ? @conf.formatter::diff( diff, @db.load_backup(@p) || '' ) : @conf.msg_no_recent
       
       data = Hiki::Util::get_common_data( @db, @plugin, @conf )
       @plugin.hiki_menu(data, @cmd)
 
-      data[:title]        = title("#{@p} #{msg_diff}")
+      data[:title]        = title("#{@p} #{@conf.msg_diff}")
       data[:differ]       = differ.sanitize
       generate_page( data )
     end
@@ -329,7 +336,7 @@ module Hiki
 
         if exist?(title)
           @cmd = 'edit'
-          cmd_edit( page, text, msg_duplicate_page_title )
+          cmd_edit( page, text, @conf.msg_duplicate_page_title )
           return
         end
         
@@ -340,7 +347,7 @@ module Hiki
                                    [:title, title]])
         else
           @cmd = 'conflict'
-          cmd_edit( page, text, msg_save_conflict.sanitize )
+          cmd_edit( page, text, @conf.msg_save_conflict.sanitize )
           return
         end
 
@@ -353,8 +360,8 @@ module Hiki
         data             = get_common_data( @db, @plugin, @conf )
         @plugin.hiki_menu(data, @cmd)
 
-        data[:title]     = msg_delete
-        data[:msg]       = msg_delete_page
+        data[:title]     = @conf.msg_delete
+        data[:msg]       = @conf.msg_delete_page
         data[:msg2]      = nil
         data[:link]      = page.escapeHTML
         generate_page(data)
@@ -376,26 +383,26 @@ module Hiki
         @plugin.hiki_menu(data, @cmd)
 
         data[:cmd]       = a( :value => 'search' )
-        data[:title]     = title( msg_search_result )
-        data[:msg2]      = msg_search + ': '
-        data[:button]    = a( :value =>msg_search )
+        data[:title]     = title( @conf.msg_search_result )
+        data[:msg2]      = @conf.msg_search + ': '
+        data[:button]    = a( :value =>@conf.msg_search )
         data[:key]       = a( :value => word )
         word2            = word.split.join("', '")
         if l.size > 0
-          data[:msg1]    = sprintf( msg_search_hits, word2.escapeHTML, total, l.size )
+          data[:msg1]    = sprintf( @conf.msg_search_hits, word2.escapeHTML, total, l.size )
           data[:list]    = {:listitem => l.collect! {|i| i.sanitize}}
         else
-          data[:msg1]    = sprintf( msg_search_not_found, word2.escapeHTML )
+          data[:msg1]    = sprintf( @conf.msg_search_not_found, word2.escapeHTML )
           data[:list]    = nil
         end
       else
         data             = get_common_data( @db, @plugin, @conf )
         @plugin.hiki_menu(data, @cmd)
         data[:cmd]       = a( :value => 'search' )
-        data[:title]     = title( msg_search )
-        data[:msg1]      = msg_search_comment
-        data[:msg2]      = msg_search + ': '
-        data[:button]    = a( :value => msg_search )
+        data[:title]     = title( @conf.msg_search )
+        data[:msg1]      = @conf.msg_search_comment
+        data[:msg2]      = @conf.msg_search + ': '
+        data[:button]    = a( :value => @conf.msg_search )
         data[:key]       = a( :value => '' )
         data[:list]      = nil
         data[:method]  = 'get'
@@ -410,7 +417,7 @@ module Hiki
         @p = @aliaswiki.original_name(p).to_euc
         if /^\./ =~ @p || @p.size > @conf.max_name_size || @p.size == 0
           @params['key'][0] = nil
-          cmd_create( msg_invalid_filename( @conf.max_name_size) )
+          cmd_create( @conf.msg_invalid_filename( @conf.max_name_size) )
           return
         end
         
@@ -419,7 +426,7 @@ module Hiki
         orig_page = exist?(@p)
         if orig_page or @db.exist?(@p)
           s = @db.load( @p )
-          cmd_edit( orig_page || @p, s, msg_already_exist )
+          cmd_edit( orig_page || @p, s, @conf.msg_already_exist )
         else
           cmd_edit( @p )
         end
@@ -427,10 +434,10 @@ module Hiki
         data           = get_common_data( @db, @plugin, @conf )
         @plugin.hiki_menu(data, @cmd)
         data[:cmd]     = a( :value => 'create' )
-        data[:title]   = title( msg_create )
+        data[:title]   = title( @conf.msg_create )
         data[:msg1]    = msg
-        data[:msg2]    = msg_create + ': '
-        data[:button]  = a( :value => msg_newpage )
+        data[:msg2]    = @conf.msg_create + ': '
+        data[:button]  = a( :value => @conf.msg_newpage )
         data[:key]     = msg ? a( :value => @p ) : a( :value => '' )
         data[:list]    = nil
         data[:method]  = 'get'
@@ -451,7 +458,7 @@ module Hiki
           end
         end
         require 'hiki/session'
-        session = Hiki::Session.new( @conf )
+        session = Hiki::Session::new( @conf )
         admin_config( session.session_id )
       end
     end
@@ -460,25 +467,25 @@ module Hiki
       data = get_common_data( @db, @plugin, @conf )
       @plugin.hiki_menu(data, @cmd)
 
-      data[:title]          = title( msg_admin )
+      data[:title]          = title( @conf.msg_admin )
       data[:session_id]     = session_id
       data[:site_name]      = @conf.site_name || ''
       data[:author_name]    = @conf.author_name || ''
       data[:mail]           = @conf.mail || ''
       data[:msg]            = msg
       s = @conf.mail_on_update ? :mail_on_update : :no_mail
-      data[:mail_on_update] = msg_mail_on
-      data[:no_mail]        = msg_mail_off
+      data[:mail_on_update] = @conf.msg_mail_on
+      data[:no_mail]        = @conf.msg_mail_off
       data[s]               = a( :selected => "selected" )
 
       s = @conf.use_sidebar ? :use_sidebar : :no_sidebar
-      data[:use_sidebar]    = msg_use
-      data[:no_sidebar]     = msg_unuse
+      data[:use_sidebar]    = @conf.msg_use
+      data[:no_sidebar]     = @conf.msg_unuse
       data[s]               = a( :selected => "selected" )
 
       s = @conf.auto_link ? :use_auto_link : :no_auto_link
-      data[:use_auto_link]  = msg_use
-      data[:no_auto_link]   = msg_unuse
+      data[:use_auto_link]  = @conf.msg_use
+      data[:no_auto_link]   = @conf.msg_unuse
       data[s]               = a( :selected => "selected" )
 
       data[:theme]          = themes.collect! do |t|
@@ -498,9 +505,9 @@ module Hiki
       @plugin.hiki_menu(data, @cmd)
 
       data[:cmd]     = a( :value => 'admin' )
-      data[:title]   = title( msg_password_title )
-      data[:msg2]    = msg_password + ': '
-      data[:button]  = a( :value => msg_ok )
+      data[:title]   = title( @conf.msg_password_title )
+      data[:msg2]    = @conf.msg_password + ': '
+      data[:button]  = a( :value => @conf.msg_ok )
       data[:key]     = a( :type  => 'password' )
       data[:list]    = nil
       data[:method]  = 'post'
@@ -511,7 +518,7 @@ module Hiki
     def admin_save_config
       require 'hiki/session'
       session_id = @params['session_id'][0]
-      if !session_id || !Hiki::Session.new( @conf, session_id ).check
+      if !session_id || !Hiki::Session::new( @conf, session_id ).check
         admin_enter_password
         return
       end
@@ -535,14 +542,14 @@ module Hiki
       if password1.size > 0
         if (@conf.password.size > 0 && old_password.crypt( @conf.password ) != @conf.password) ||
            (password1 != password2)
-          admin_config( nil, msg_invalid_password )
+          admin_config( nil, @conf.msg_invalid_password )
           return
         end
         salt = [rand(64),rand(64)].pack("C*").tr("\x00-\x3f","A-Za-z0-9./")
         @conf.password = password1.crypt( salt )
       end
       @conf.save_config
-      admin_config( session_id, msg_save_config )
+      admin_config( session_id, @conf.msg_save_config )
     end
 
     def load_plugin( plugin )

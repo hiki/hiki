@@ -1,4 +1,4 @@
-# $Id: 00default.rb,v 1.13 2004-12-14 11:11:21 koma2 Exp $
+# $Id: 00default.rb,v 1.14 2004-12-14 16:12:33 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #==============================
@@ -66,7 +66,7 @@ def recent( n = 20 )
     p = a[name]
     
     tm = p[:last_modified ] 
-    cur_date = tm.strftime( msg_date_format )
+    cur_date = tm.strftime( @conf.msg_date_format )
 
     if ddd != cur_date
       s << "</ul>\n" if ddd
@@ -153,13 +153,13 @@ def hiki_menu(data, command)
   menu = []
   editable = %w(view edit diff)
 
-  menu << %Q!<a accesskey="c" href="#{@conf.cgi_name}?c=create">#{msg_create}</a>!
-  menu << %Q!<a accesskey="e" href="#{@conf.cgi_name}?c=edit;p=#{@page.escape}">#{msg_edit}</a>! if editable.index(command) && @page
-  menu << %Q!<a accesskey="d" href="#{@conf.cgi_name}?c=diff;p=#{@page.escape}">#{msg_diff}</a>! if editable.index(command) && @page
+  menu << %Q!<a accesskey="c" href="#{@conf.cgi_name}?c=create">#{@conf.msg_create}</a>!
+  menu << %Q!<a accesskey="e" href="#{@conf.cgi_name}?c=edit;p=#{@page.escape}">#{@conf.msg_edit}</a>! if editable.index(command) && @page
+  menu << %Q!<a accesskey="d" href="#{@conf.cgi_name}?c=diff;p=#{@page.escape}">#{@conf.msg_diff}</a>! if editable.index(command) && @page
   menu << %Q!#{hiki_anchor( 'FrontPage', page_name('FrontPage') )}!
-  menu << %Q!<a accesskey="i" href="#{@conf.cgi_name}?c=index">#{msg_index}</a>!
-  menu << %Q!<a accesskey="s" href="#{@conf.cgi_name}?c=search">#{msg_search}</a>!
-  menu << %Q!<a accesskey="r" href="#{@conf.cgi_name}?c=recent">#{msg_recent_changes}</a>!
+  menu << %Q!<a accesskey="i" href="#{@conf.cgi_name}?c=index">#{@conf.msg_index}</a>!
+  menu << %Q!<a accesskey="s" href="#{@conf.cgi_name}?c=search">#{@conf.msg_search}</a>!
+  menu << %Q!<a accesskey="r" href="#{@conf.cgi_name}?c=recent">#{@conf.msg_recent_changes}</a>!
   @plugin_menu.each do |c|
     next if c[:option].has_key?('p') && !editable.index(command)
     cmd =  %Q!<a href="#{@conf.cgi_name}?c=#{c[:command]}!
@@ -171,7 +171,7 @@ def hiki_menu(data, command)
     menu << cmd
   end
   menu_proc.each {|i| menu << i}
-  menu << %Q!<a accesskey="m" href="#{@conf.cgi_name}?c=admin">#{msg_admin}</a>!
+  menu << %Q!<a accesskey="m" href="#{@conf.cgi_name}?c=admin">#{@conf.msg_admin}</a>!
 
   data[:tools] = menu.collect! {|i| %Q!<span class="adminmenu">#{i}</span>! }.join("&nbsp;\n").sanitize
 end

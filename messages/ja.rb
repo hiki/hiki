@@ -1,9 +1,9 @@
-# $Id: ja.rb,v 1.4 2004-04-02 00:45:01 hitoshi Exp $
+# $Id: ja.rb,v 1.5 2004-12-14 16:12:33 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # You can redistribute it and/or modify it under the terms of
 # the Ruby's licence.
 module Hiki
-  module Messages
+  module Messages_ja
     def msg_recent; ' ππø∑Õ˙ŒÚ' end
     def msg_create; 'ø∑µ¨∫Ó¿Æ' end
     def msg_diff; '∫π ¨' end

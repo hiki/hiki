@@ -3,7 +3,7 @@
 == plugin/history.rb - CVS の編集履歴を表示するプラグイン
 
   Copyright (C) 2003 Hajime BABA <baba.hajime@nifty.com>
-  $Id: history.rb,v 1.12 2004-10-31 10:45:37 fdiary Exp $
+  $Id: history.rb,v 1.13 2004-12-14 16:12:33 fdiary Exp $
   You can redistribute and/or modify this file under the terms of the LGPL.
 
   Copyright (C) 2003 Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
@@ -71,7 +71,7 @@ def history_diff
   h.history_diff
 end
 
-add_body_enter_proc(Proc.new do
+add_body_enter_proc(Proc::new do
   if @conf.repos_root then
     add_plugin_command('history', history_label, {'p' => true})
   else
@@ -137,9 +137,9 @@ module Hiki
     # Subroutine to output proper HTML for Hiki.
     def history_output (s)
       # Imported codes from hiki/command.rb::cmd_view()
-      parser = ::Hiki::const_get( @conf.parser )::new( @conf )
+      parser = @conf.parser::new( @conf )
       tokens = parser.parse( s )
-      formatter = ::Hiki::const_get( @conf.formatter )::new( tokens, @db, @plugin, @conf )
+      formatter = @conf.formatter::new( tokens, @db, @plugin, @conf )
       @page  = Page::new( @cgi, @conf )
       data   = Util::get_common_data( @db, @plugin, @conf )
       @plugin.hiki_menu(data, @cmd)

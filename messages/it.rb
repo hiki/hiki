@@ -1,4 +1,4 @@
-# $Id: it.rb,v 1.3 2004-04-02 00:51:24 hitoshi Exp $
+# $Id: it.rb,v 1.4 2004-12-14 16:12:33 fdiary Exp $
 # it.rb
 #
 # Copyright (C) 2003 Luigi Maselli <metnik@tiscali.it>
@@ -11,7 +11,7 @@
 # the Ruby's licence.
 #
 module Hiki
-  module Messages
+  module Messages_it
     def msg_recent; ' Recente' end
     def msg_create; 'Crea' end
     def msg_diff; 'Differenze' end

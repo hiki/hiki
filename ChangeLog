@@ -1,14 +1,27 @@
+2004-12-14  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki.cgi: コードの整理
+
+	* messages/en.rb, messages/fr.rb, messages/it.rb, messages/ja.rb:
+	個別のモジュール名で定義するように変更
+	* hiki/command.rb, hiki/config.rb, hiki/storage.rb, hiki/util.rb,
+	misc/plugin/recent2.rb: それにあわせた変更
+
+	* hiki/command.rb, hiki/config.rb, misc/plugin/footnote.rb,
+	misc/plugin/history.rb: conf.parser と conf.formatter を String で
+	はなく Class で保存するように変更
+
+	* misc/plugin/footnote.rb: 脚注の中身をパースするように変更
+
+	* misc/plugin/attach/attach.cgi: $SAFE = 1 向け修正 by KAKUTANI
+	Shintaro
+	* misc/plugin/attach/attach.rb: 拡張子に sql と yaml を追加
+
 2004-12-14  KOMATSU Shinichiro  <koma2@ms.u-tokyo.ac.jp>
 
 	* misc/hikifarm/index.cgi, hiki/config.rb, 
 	hiki/repos/cvs.rb hiki/repos/default.rb hiki/repos/svn.rb, 
 	hiki.cgi, plugin/00default.rb: hikifarm と plugin の中の
 	リポジトリ回りのコードを hiki/repos/ に移動 ([Hiki-dev:00600])。
-
-2004-12-14  Kazuhiko  <kazuhiko@fdiary.net>
-	* misc/plugin/attach/attach.cgi: $SAFE = 1 向け修正 by KAKUTANI
-	Shintaro
-	* misc/plugin/attach/attach.rb: 拡張子に sql と yaml を追加
 
 2004-12-07  Kazuhiko  <kazuhiko@fdiary.net>
 	* data/text/EnglishTextFormattingRules,

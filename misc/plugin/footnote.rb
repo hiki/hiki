@@ -1,4 +1,4 @@
-# footnote.rb $Revision: 1.2 $
+# footnote.rb $Revision: 1.3 $
 #
 # fn: 脚注plugin
 #   パラメタ:
@@ -40,7 +40,15 @@ def fn(text, mark = '*')
 	end
 end
 
-add_body_enter_proc(Proc.new do |date|
+
+def render( text )
+	parser = @conf.parser::new( @conf )
+	tokens = parser.parse( text.unescapeHTML )
+	formatter = @conf.formatter::new( tokens, @db, @plugin, @conf )
+	formatter.to_s.gsub(/\A<p>/,'').gsub(/\Z<\/p>/,'')
+end
+
+add_body_enter_proc(Proc::new do |date|
 	date = date.strftime("%Y%m%d")
 	@footnote_name.replace "f%02d"
 	@footnote_url.replace "#{@index}#{anchor date}##{@footnote_name}"
@@ -51,11 +59,11 @@ add_body_enter_proc(Proc.new do |date|
 	""
 end)
 
-add_body_leave_proc(Proc.new do |date|
+add_body_leave_proc(Proc::new do |date|
 	if @footnote_name and @footnotes.size > 0
 		%Q|<div class="footnote">\n| +
 		@footnotes.collect do |fn|
-			%Q|  <p class="footnote"><a name="#{@footnote_name % fn[0]}" href="#{@footnote_mark_url % fn[0]}">#{fn[2]}#{fn[0]}</a>&nbsp;#{fn[1]}</p>|
+			%Q|  <p class="footnote"><a name="#{@footnote_name % fn[0]}" href="#{@footnote_mark_url % fn[0]}">#{fn[2]}#{fn[0]}</a>&nbsp;#{render(fn[1])}</p>|
 		end.join("\n") +
 		%Q|\n</div>\n|
 	else

@@ -1,4 +1,4 @@
-# $Id: util.rb,v 1.17 2004-11-15 14:45:23 fdiary Exp $
+# $Id: util.rb,v 1.18 2004-12-14 16:12:32 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'nkf'
@@ -111,7 +111,7 @@ module Hiki
     end
 
     def format_date( tm )
-      tm.strftime(msg_time_format).sub(/#DAY#/, "(#{msg_day[tm.wday]})")
+      tm.strftime(@conf.msg_time_format).sub(/#DAY#/, "(#{@conf.msg_day[tm.wday]})")
     end
 
     def get_common_data( db, plugin, conf )
@@ -120,10 +120,10 @@ module Hiki
       data[:view_style]  = conf.use_sidebar ? conf.main_class : 'hiki' # for tDiary theme
       data[:cgi_name]    = conf.cgi_name
       if conf.use_sidebar
-        parser = Hiki::const_get( conf.parser )::new( conf )
+        parser = conf.parser.new( conf )
         m = db.load( conf.side_menu ) || ''
         t = parser.parse( m )
-        f = Hiki::const_get( conf.formatter )::new( t, db, plugin, conf, 's' )
+        f = conf.formatter.new( t, db, plugin, conf, 's' )
         data[:sidebar]   =  {:menu => f.to_s.sanitize}
         data[:main_class]    = conf.main_class
         data[:sidebar_class] = conf.sidebar_class

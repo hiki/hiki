@@ -1,9 +1,12 @@
-# $Id: config.rb,v 1.15 2004-12-14 11:11:20 koma2 Exp $
+# $Id: config.rb,v 1.16 2004-12-14 16:12:32 fdiary Exp $
 # Copyright (C) 2004 Kazuhiko <kazuhiko@fdiary.net>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
 
-HIKI_VERSION  = '0.7-devel-20040909'
+HIKI_VERSION  = '0.7-devel-20041214'
+
+require 'cgi'
+require 'hiki/command'
 
 module Hiki
   PATH  = "#{File::dirname(File::dirname(__FILE__))}"
@@ -17,10 +20,18 @@ module Hiki
       require "style/#{@style}/parser"
       require "style/#{@style}/html_formatter"
       require "hiki/repos/#{@repos_type}"
+      require "messages/#{@lang}"
+      require "hiki/db/#{@database_type}"
 
+      # parser class and formatter class
       style = @style.gsub( /\+/, '' )
-      @parser = "Parser_#{style}"
-      @formatter = "HTMLFormatter_#{style}"
+      @parser = Hiki::const_get( "Parser_#{style}" )
+      @formatter = Hiki::const_get( "HTMLFormatter_#{style}" )
+
+      # message module
+      extend(Hiki::const_get( "Messages_#{@lang}" ))
+
+      # repository class
       @repos = Hiki::const_get("Repos#{@repos_type.capitalize}").new(@repos_root, @data_path)
 
       instance_variables.each do |v|

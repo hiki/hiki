@@ -1,4 +1,4 @@
-# $Id: rss.rb,v 1.8 2004-09-28 13:31:52 fdiary Exp $
+# $Id: rss.rb,v 1.9 2004-12-14 16:12:33 fdiary Exp $
 # Copyright (C) 2003-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 def rss_recent_label
@@ -40,7 +40,7 @@ EOS
     items << %Q!<rdf:li resource="#{uri}"/>\n!
 
     item_list << <<EOS
-    <item rdf:about="#{uri}">
+  <item rdf:about="#{uri}">
     <title>#{CGI::escapeHTML(page_name(name))}</title>
     <link>#{uri}</link>
     <dc:date>#{p[name][:last_modified].utc.strftime("%Y-%m-%dT%H:%M:%S+00:00")}</dc:date>
