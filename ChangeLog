@@ -1,3 +1,6 @@
+2004-06-10  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/util.rb (save_config): エスケープして保存するように修正
+
 2004-05-12  Kazuhiko  <kazuhiko@fdiary.net>
 	* attach.rb: $SAFE=1 向けの修正
 
@@ -32,7 +35,7 @@
 	* template/en/edit.html: 英語テンプレートの修正 by mput<webmaster@mput.dip.jp>
 
 2004-03-09  Kazuhiko  <kazuhiko@fdiary.net>
-	* plugin/00default.rb(hiki_footer): 不要な <div> の削除
+	* plugin/00default.rb (hiki_footer): 不要な <div> の削除
 
 2004-03-05  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
 	* misc/plugin/pagerank.rb: 追加 by ichiyama ryoichi <ir@bellbind.net>

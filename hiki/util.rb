@@ -1,4 +1,4 @@
-# $Id: util.rb,v 1.8 2004-02-15 02:48:35 hitoshi Exp $
+# $Id: util.rb,v 1.9 2004-06-10 14:37:45 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'nkf'
@@ -47,9 +47,6 @@ module Hiki
   class PluginException < Exception; end
 
   module Util
-    CONF_S = %w($site_name $author_name $mail $theme $password $theme_url $sidebar_class $main_class $theme_path)
-    CONF_F = %w($mail_on_update $use_sidebar $auto_link)
-    
     def csv_split( source, delimiter = ',' )
       status = :IN_FIELD
       csv = []
@@ -104,11 +101,8 @@ module Hiki
 
     def save_config
       File::open($config_file, "w") do |f|
-        CONF_S.each do |c|
-          f.puts( %Q|#{c} = "#{eval(c)}"| ) if c
-        end
-        CONF_F.each do |c|
-          f.puts( "#{c} = #{eval(c)}" )
+        %w($site_name $author_name $mail $theme $password $theme_url $sidebar_class $main_class $theme_path $mail_on_update $use_sidebar $auto_link).each do |c|
+          f.puts( %Q|#{c} = #{eval(c).inspect}| ) if c
         end
       end
     end
