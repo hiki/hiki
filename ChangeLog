@@ -1,3 +1,8 @@
+26 Feb 2003 20:21:14 +0900	TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+
+  * 0.4.1.1
+  * 更新時の送信メールにREMOTE_ADDR,REMOTE_HOSTが入らないバグの修正
+
 26 Feb 2003 12:48:14 +0900	TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
   * 0.4.1
