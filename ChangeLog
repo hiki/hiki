@@ -1,3 +1,7 @@
+2004-09-08  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/command.rb (Hiki::Command::cmd_edit): @options['freeeze'] 
+	が true の場合、強制的に凍結されるように変更
+
 2004-09-07  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/rss.rb: rss_anchor の削除、rss の body 作成を 
 	rss_body に分離

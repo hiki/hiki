@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.16 2004-09-01 13:19:25 fdiary Exp $
+# $Id: command.rb,v 1.17 2004-09-08 15:42:49 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'amrita/template'
@@ -285,7 +285,7 @@ module Hiki
       data[:keyword]        = @db.get_attribute(page, :keyword).join("\n")
       data[:page_title]     = page_title
       
-      f = @db.is_frozen?( page )
+      f = @db.is_frozen?( page ) || @conf.options['freeze']
       data[:freeze]         = a(:checked => f ? 'on': nil)
       data[:freeze_msg]     = msg_freeze if f
       data[:form_proc]      = @plugin.form_proc.sanitize
