@@ -4,6 +4,8 @@
 	misc/plugin/auth_typekey.rb hiki/auth/typekey.rb: TypeKey 認証の
 	サポート。
 	* misc/plugin/note.rb: 認証されていない場合はメニューを出さない
+	* misc/plugin/bbs.rb misc/plugin/comment.rb: 認証されている場合
+	名前欄に設定。
 
 2005-03-04  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/ja/attach.rb misc/plugin/ja/bbs.rb

@@ -1,4 +1,4 @@
-# $Id: bbs.rb,v 1.5 2005-03-03 15:53:55 fdiary Exp $
+# $Id: bbs.rb,v 1.6 2005-03-05 15:40:15 hitoshi Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 add_body_enter_proc(Proc.new do
@@ -8,10 +8,12 @@ end)
 
 def bbs
   @bbs_num += 1
+  name = @cgi.cookies['auth_name'][0] || ''
+
   <<EOS
 <form action="#{@conf.cgi_name}" method="post">
   <div>
-    #{bbs_name_label}: <input type="text" name="name" size="10">
+    #{bbs_name_label}: <input type="text" name="name" value="#{name.escapeHTML}" size="10">
     #{bbs_subject_label}: <input type="text" name="subject" size="40"><br>
     <textarea cols="60" rows="8" name="msg" size="40"></textarea><br>
     <input type="submit" name="comment" value="#{bbs_post_label}">
