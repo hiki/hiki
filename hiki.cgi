@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
-# $Id: hiki.cgi,v 1.2 2003-02-22 05:15:41 hitoshi Exp $
+# $Id: hiki.cgi,v 1.3 2003-02-22 06:18:00 hitoshi Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
-# You can redistribute it and/or modify it under the terms of
-# the Ruby's licence.
 
 $SAFE     = 1
 $KCODE    = 'e'

@@ -1,7 +1,5 @@
-# $Id: 00default.rb,v 1.1.1.1 2003-02-22 04:39:31 hitoshi Exp $
+# $Id: 00default.rb,v 1.2 2003-02-22 06:18:00 hitoshi Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
-# You can redistribute it and/or modify it under the terms of
-# the Ruby's licence.#
 
 def anchor( s )
   s.sub!(/^\d+$/, '')
