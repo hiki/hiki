@@ -1,9 +1,10 @@
-# $Id: util.rb,v 1.13 2004-09-01 07:33:21 fdiary Exp $
+# $Id: util.rb,v 1.14 2004-09-10 05:56:17 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'nkf'
 require 'cgi'
 require 'net/smtp'
+require 'time'
 require 'amrita/template'
 require 'hiki/algorithm/diff'
 
@@ -195,6 +196,21 @@ EOS
       else
        "#{@conf.theme_url}/hiki_base.css"
       end
+    end
+
+    def set_conf(conf)
+      @conf = conf
+    end
+
+    def base_url
+      return '' unless ENV['SCRIPT_NAME']
+      if ENV['HTTPS']
+	port = (ENV['SERVER_PORT'] == '443') ? '' : ':' + ENV['SERVER_PORT'].to_s
+	"https://#{ ENV['SERVER_NAME'] }#{ port }#{File::dirname(ENV['SCRIPT_NAME'])}/"
+      else
+	port = (ENV['SERVER_PORT'] == '80') ? '' : ':' + ENV['SERVER_PORT'].to_s
+	"http://#{ ENV['SERVER_NAME'] }#{ port }#{File::dirname(ENV['SCRIPT_NAME'])}/"
+      end.sub(%r|/+$|, '/')
     end
   end
 end
