@@ -1,4 +1,4 @@
-# $Id: attach.rb,v 1.10 2004-08-06 15:31:57 fdiary Exp $
+# $Id: attach.rb,v 1.11 2004-09-10 06:51:51 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 #
 # thanks to Kazuhiko, Masao Mutoh, SHIMADA Mitsunobu, Yoshimi, ¤ê¤¿
@@ -27,12 +27,10 @@ def attach_form(s = '')
   command = @command == 'create' ? 'edit' : @command
   <<EOS
 <div class="form">
-<form class="nodisp" method="post" enctype="multipart/form-data" action="#{@conf.farm_page or "./"}attach.cgi">
+<form class="nodisp" method="post" enctype="multipart/form-data" action="attach.cgi">
   <div>
     <input type="hidden" name="p" value="#{@page.escapeHTML}">
-    <input type="hidden" name="cache_path" value="#{@cache_path}">
     <input type="hidden" name="command" value="#{command}">
-    <input type="hidden" name="refresh" value="#{@conf.index_page}">
     <input type="file" name="attach_file">
     <input type="submit" name="attach" value="#{attach_upload_label}">
   </div>
@@ -205,11 +203,9 @@ end
 def attach_show_page_files_checkbox
   s =  ''
   if (files = attach_page_files).size > 0
-    s << %Q!<form method="post" enctype="multipart/form-data" action="#{@conf.farm_page or "./"}attach.cgi">
+    s << %Q!<form method="post" enctype="multipart/form-data" action="attach.cgi">
   <input type="hidden" name="p" value="#{@page.escapeHTML}">
-  <input type="hidden" name="cache_path" value="#{@cache_path}">
   <input type="hidden" name="command" value="#{@command == 'create' ? 'edit' : @command}">
-  <input type="hidden" name="refresh" value="#{@conf.index_page}">
   <p>#{attach_files_label}: 
 !
     files.each do |file_name|

@@ -1,3 +1,18 @@
+2004-09-10  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/command.rb (Hiki::Command::get_recent): 各ページの差分への
+	リンクを追加
+
+	* hiki.cgi: TrackBack 向けの変更
+	* misc/plugin/trackback.rb: TrackBack プラグインの追加
+
+	* hiki/util.rb (Hiki::Util::set_conf): @conf 設定用メソッドを追加
+	(Hiki::Util::base_url): @conf.index_page の代わりのメソッドを追加
+
+	* attach.rb: [重要] HikiFarm 使用時に、個別の Hiki 毎に attach.cgi 
+	を設置するように変更。hidden 属性の cache_path と index_page を廃
+	止。
+	* attach.cgi: config を読むように変更。
+
 2004-09-09  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/history.rb (Hiki::History::history_diff): ヘッダを除
 	く処理が gsub! だったのを sub! に修正

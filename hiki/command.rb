@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.18 2004-09-09 05:03:31 fdiary Exp $
+# $Id: command.rb,v 1.19 2004-09-10 06:51:50 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'amrita/template'
@@ -229,7 +229,7 @@ module Hiki
         display_text = (f[k][:title] and f[k][:title].size > 0) ? f[k][:title] : k
         display_text = display_text.escapeHTML
         display_text << " [#{@aliaswiki.aliaswiki(k)}]" if k != @aliaswiki.aliaswiki(k)
-        "#{format_date( tm )}: #{@plugin.hiki_anchor( k.escape, display_text )}"
+        %Q|#{format_date( tm )}: #{@plugin.hiki_anchor( k.escape, display_text )} (<a href="#{@conf.cgi_name}#{cmdstr('diff',"p=#{k.escape}")}">#{msg_diff}</a>)|
       }
       [list, last_modified]
     end
