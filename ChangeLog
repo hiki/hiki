@@ -1,4 +1,7 @@
 2004-09-06  Kazuhiko  <kazuhiko@fdiary.net>
+	* plugin/00default.rb (hiki_anchor): FrontPage の場合はページ名を 
+	URI に付加しないように変更
+
 	* misc/hikifarm/index.cgi (ReposSvn::import): svn import の前に 
 	svnadmin create を呼ぶように修正
 	(ReposSvn::imported): trunk/ 以外のディレクトリが含まれていても動
