@@ -1,4 +1,4 @@
-# $Id: parser.rb,v 1.4 2003-02-22 08:28:47 hitoshi Exp $
+# $Id: parser.rb,v 1.5 2003-02-22 13:04:21 hitoshi Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 module Hiki
@@ -69,9 +69,8 @@ module Hiki
           inline( $2 )
           @cur_stack.push( {:e => :ordered_listitem_close} )
         when /^""(.*)$/
-          @cur_stack.push( {:e => :blockquote_open} )
+          @cur_stack.push( {:e => :blockquote} )
           inline( $1 )
-          @cur_stack.push( {:e => :blockquote_close} )
         when /^:(.+?):(.+)$/
           @cur_stack.push( {:e => :definition_list_open} )
           @cur_stack.push( {:e => :definition_term_open} )
@@ -217,17 +216,20 @@ module Hiki
           cur_lv = e[:lv]
           blk_lv = block_level[t]
           if cur_lv > blk_lv
-            (cur_lv - blk_lv).times { ns.push( {:e => "#{t}_open".intern}) }
-            @last_blocktype.push t
+            (cur_lv - blk_lv).times do
+              ns.push( {:e => "#{t}_open".intern})
+              ns.push( {:e => :listitem_open} )
+            end
           elsif cur_lv < blk_lv
             (blk_lv - cur_lv).times { ns.push({:e => "#{t}_close".intern}) }
+          else
+            ns.push( {:e => :listitem_open} )
           end
+          @last_blocktype.push t
           block_level[t] = cur_lv
-          e[:e] = :listitem_open
-          ns.push( e )
         when :unordered_listitem_close, :ordered_listitem_close
           ns.push ( {:e => :listitem_close} )
-        when :pre, :p
+        when :pre, :p, :blockquote
           if type != @last_blocktype.last
             close_blocks( ns, block_level )
             ns.push( {:e => "#{type}_open".intern} )
@@ -236,16 +238,13 @@ module Hiki
           e[:e] = :normal_text if type == :pre
           ns.push( e ) 
           @last_blocktype.push(type) if @last_blocktype.last != type
-        when :blockquote_open
-          if @last_blocktype.last != :blockquote
-            close_blocks( ns, block_level ) unless @last_blocktype.last
-            ns.push ( e )
-            @last_blocktype.push :blockquote
-          end
         when :emphasis_close, :strong_close, :delete_close
           ns.push ( e )
         when :blockquote_close
-        else # :strong, :emphasis, :delete, :normal_text
+        when :plugin
+          close_blocks( ns, block_level )
+          ns.push ( e )
+        else
           if @last_blocktype.empty?
             ns.push( {:e => :p_open} )
             @last_blocktype.push :p

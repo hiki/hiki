@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.3 2003-02-22 08:28:47 hitoshi Exp $
+# $Id: html_formatter.rb,v 1.4 2003-02-22 13:04:21 hitoshi Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -24,7 +24,7 @@ module Hiki
     MAP[:ordered_list_open]    = '<ol>'
     MAP[:ordered_list_close]   = '</ol>'
     MAP[:listitem_open]        = '<li>'
-    MAP[:listitem_close]       = '</li>'
+    MAP[:listitem_close]       = ''
     MAP[:blockquote_open]      = '<blockquote>'
     MAP[:blockquote_close]     = '</blockquote>'
     MAP[:definition_list_open] = '<dl>'
@@ -100,7 +100,7 @@ module Hiki
             html << "<a href=\"#{$cgi_name }?#{t[:s].escape}\">#{t[:s].escapeHTML}</a>"
             @references << t[:s]
           else
-            html <<  "#{t[:s].escapeHTML}<a href=\"#{$cgi_name }?c=edit&p=#{t[:s].escape}\">?</a>"
+            html <<  "#{t[:s].escapeHTML}<a href=\"#{$cgi_name }?c=edit;p=#{t[:s].escape}\">?</a>"
           end
           toc_title << t[:s] if toc_level > 0
         when :interwiki
@@ -122,9 +122,9 @@ module Hiki
           begin
             s = call_plugin_method( t )
             if s.class == String
-              html << %Q!<#{tag} class = "plugin">!
+              html << %Q!<#{tag} class = "plugin">\n!
               html << s
-              html << "</#{tag}>"
+              html << "</#{tag}>\n"
             end
           rescue Exception
             html << plugin_error( t[:method], $! )

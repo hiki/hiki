@@ -1,4 +1,4 @@
-# $Id: 00default.rb,v 1.2 2003-02-22 06:18:00 hitoshi Exp $
+# $Id: 00default.rb,v 1.3 2003-02-22 13:04:21 hitoshi Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 def anchor( s )
@@ -26,7 +26,7 @@ def recent( n = 20 )
     b[b.keys[0]][:last_modified] <=> a[a.keys[0]][:last_modified]
   end
 
-  s = '<ul>'
+  s = ''
   c = 1
   d = nil
   
@@ -39,15 +39,15 @@ def recent( n = 20 )
     cur_date = tm.strftime( msg_date_format )
 
     if d != cur_date
-      s << "<h5>#{cur_date}</h5>"
+      s << "</ul>\n" if d
+      s << "<h5>#{cur_date}</h5>\n<ul>\n"
       d = cur_date
     end
     t = name.escapeHTML
     an = "<a href=\"#{$cgi_name }?#{name.escape}\" title=\"#{name.escapeHTML}\">#{t}</a>"
-    s << "<li>#{an}</li>"
-    c = c + 1
+    s << "<li>#{an}\n"
   end
-  s << '</ul>'
+  s << "</ul>\n"
   s
 end
 
