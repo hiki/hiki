@@ -1,6 +1,6 @@
 ! 使い方
-hiki.cgi のあるディレクトリに attach.cgi を、
-plugin ディレクトリに attach.rb を、
+hiki.cgi のあるディレクトリに misc/plugin/attach/attach.cgi を、
+plugin ディレクトリに misc/plugin/attach/attach.rb を、
 それぞれコピーします。
 
 !! HikiFarm 時

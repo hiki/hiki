@@ -1,3 +1,7 @@
+2004-12-31  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/attach/attach.rb: 強制的にダウンロードされるように修
+	正 report by Kazuhiro NISHIYAMA
+
 2004-12-26  KOMATSU Shinichiro  <koma2@ms.u-tokyo.ac.jp>
 	* hiki/command.rb: hiki/hiki_formatter.rb は使われていないので、
 	require しない。
@@ -84,9 +88,19 @@
 	misc/text/default/EnglishTextFormattingRules: 英語版の追加 thanks
 	to Steve Brumbaugh
 
+2003-11-16  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/attach/attach.rb: 例外を無視するように修正
+          by Hajime BABA
+
 2004-11-15  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/util.rb (Hiki::Util::sendmail): Content-Type ヘッダの追加 
 	thanks to vette
+
+2003-11-13  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/attach/attach.rb: プラグインの使い方の表示、
+          attach_view で Flash に対応
+	(image_size.rb が使えるならサイズを埋め込む) by たむらけんいち
+	XSS 脆弱性の修正、日本語ファイル名の扱いの修正 by Hajime BABA
 
 2004-10-31  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/history.rb (Hiki::History::history_diff): svn での不
@@ -361,6 +375,23 @@
 
 2004-06-10  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/util.rb (save_config): エスケープして保存するように修正
+
+2003-06-07  SHIMADA Mitsunobu  <simm@isoternet.org>
+	* misc/plugin/attach/attach.cgi: 自動リロード先を
+          $cgi_name を用いて決定するよう変更
+
+2003-06-06  SHIMADA Mitsunobu  <simm@isoternet.org>
+	* misc/plugin/attach/attach.cgi, attach.rb: 添付ファイル削除対応
+
+2003-06-05  SHIMADA Mitsunobu  <simm@isoternet.org>
+	* misc/plugin/attach/attach.rb(attach_anchor_string): 新規作成
+	* misc/plugin/attach/attach.cgi: 添付後自動的に元ページ戻
+          る際のURLがおかしかったので修正
+
+2003-06-03  SHIMADA Mitsunobu  <simm@isoternet.org>
+	* misc/plugin/attach/attach.rb: 添付ファイル転送時に適用す
+          るattach.cgiのパスを変更できるようにした
+	* misc/plugin/attach/attach.cgi, attach.rb: 辻褄があうようパスを変更
 
 2004-05-12  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/attach/attach.rb: $SAFE=1 向けの修正
