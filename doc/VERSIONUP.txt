@@ -1,12 +1,11 @@
 ![重要] 0.6.x 以前および 0.7-devel-20040618 以前からのバージョンアップ
 
-設定ファイルの書式が変更になりました。hikiconf.rbおよびdata_path内の
-hiki.confの「$変数名」をすべて「@変数名」に変更してください。
+設定ファイルの書式が変更になりました。hikiconf.rbの「$変数名」をすべて
+「@変数名」に変更してください。
 
-hikifarmを使っている人は、hikifarm用のhiki.confと各hikiのデータディレク
-トリのhiki.confも同様に変更した上で、hikifarmによって作られたhikiのCGIが
-あるディレクトリのindex.cgiとhikiconf.rbを、それぞれ以下のように変更して
-ください。
+hikifarmを使っている人は、hikifarm用のhiki.confも同様に変更した上で、
+hikifarmによって作られたhikiのCGIがあるディレクトリのindex.cgiと
+hikiconf.rbを、それぞれ以下のように変更してください。
 
 ●index.cgi
  #!/usr/bin/ruby
