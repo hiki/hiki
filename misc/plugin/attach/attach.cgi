@@ -1,10 +1,18 @@
 #!/usr/bin/env ruby
 
-# $Id: attach.cgi,v 1.4 2004-09-10 06:51:51 fdiary Exp $
+# $Id: attach.cgi,v 1.5 2004-09-10 06:59:32 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'cgi'
 require 'nkf'
+
+if FileTest::symlink?( __FILE__ ) then
+  org_path = File::dirname( File::readlink( __FILE__ ) )
+else
+  org_path = File::dirname( __FILE__ )
+end
+$:.unshift( org_path.untaint )
+
 require 'hiki/config'
 require 'hiki/util'
 

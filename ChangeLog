@@ -8,10 +8,10 @@
 	* hiki/util.rb (Hiki::Util::set_conf): @conf 設定用メソッドを追加
 	(Hiki::Util::base_url): @conf.index_page の代わりのメソッドを追加
 
-	* attach.rb: [重要] HikiFarm 使用時に、個別の Hiki 毎に attach.cgi 
-	を設置するように変更。hidden 属性の cache_path と index_page を廃
-	止。
-	* attach.cgi: config を読むように変更。
+	* misc/plugin/attach/attach.rb: [重要] HikiFarm 使用時に、個別の 
+	Hiki 毎に attach.cgi を設置するように変更。hidden 属性の 
+	cache_path と index_page を廃止。
+	* misc/plugin/attach/attach.cgi: config を読むように変更。
 
 2004-09-09  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/history.rb (Hiki::History::history_diff): ヘッダを除
