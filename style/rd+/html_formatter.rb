@@ -26,43 +26,6 @@ module Hiki
       @visitor = Hiki::RD2HTMLVisitor.new(@plugin, @db, @conf)
     end
 
-    def HTMLFormatter_rd::diff( d, src )
-      text = ''
-      src = src.split("\n").collect{|s| "#{s.escapeHTML}"}
-      si = 0
-      di = 0
-
-      d.each do |action,position,elements|
-        case action
-        when :-
-          while si < position
-            text << "#{src[si]} <br>"
-            si += 1
-            di += 1
-          end
-          si += elements.length
-          elements.each do |l|
-            text << "<del class=deleted>#{l.escapeHTML}</del>"
-          end
-        when :+
-          while di < position
-            text << "#{src[si]} <br>"
-            si += 1
-            di += 1
-          end
-          di += elements.length
-          elements.each do |l|
-            text << "<ins class=added>#{l.escapeHTML}</ins>"
-          end
-        end
-      end
-      while si < src.length
-        text << "#{src[si]} <br>"
-        si += 1
-      end
-      text
-    end
-
     def to_s 
       @references = @visitor.references
       begin

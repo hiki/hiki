@@ -1,4 +1,4 @@
-# $Id: util.rb,v 1.18 2004-12-14 16:12:32 fdiary Exp $
+# $Id: util.rb,v 1.19 2004-12-17 16:56:01 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'nkf'
@@ -141,6 +141,55 @@ module Hiki
       Diff.diff(a1, a2) 
     end
 
+    def diff( d, src, html = true )
+      text = ''
+      if html || true
+        src = src.split("\n").collect{|s| "#{s.escapeHTML}"}
+      else
+        src = src.split("\n").collect{|s| "#{s}"}
+      end
+      si = 0
+      di = 0
+
+      d.each do |action,position,elements|
+        case action
+        when :-
+            while si < position
+              text << "#{src[si]}\n"
+              si += 1
+              di += 1
+            end
+          si += elements.length
+          elements.each do |l|
+            if html
+              text << "<del class=deleted>#{l.escapeHTML.chomp}</del>\n"
+            else
+              text << "---#{l}"
+            end
+          end
+        when :+
+            while di < position
+              text << "#{src[si]}\n"
+              si += 1
+              di += 1
+            end
+          di += elements.length
+          elements.each do |l|
+            if html
+              text << "<ins class=added>#{l.escapeHTML.chomp}</ins>\n"
+            else
+              text << "+++#{l}"
+            end
+          end
+        end
+      end
+      while si < src.length
+        text << "#{src[si]}\n"
+        si += 1
+      end
+      text
+    end
+
     def redirect(cgi, url)
       head = {
                'type' => 'text/html',
@@ -208,9 +257,9 @@ EOS
     def shorten(str, len = 200)
       arr = str.split(//)
       if arr.length <= len - 2
-	str
+        str
       else
-	arr[0...len-2].join('') + '..'
+        arr[0...len-2].join('') + '..'
       end
     end
   end

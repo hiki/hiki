@@ -1,3 +1,10 @@
+2004-12-18  Kazuhiko  <kazuhiko@fdiary.net>
+
+	* hiki/util.rb (Hiki::Util::diff): テキスト用の差分出力に対応
+
+	* style/default/html_formatter.rb, style/rd+/html_formatter.rb:
+	diff メソッドを Hiki::Util モジュールに移動
+
 2004-12-16  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/db/ptstore.rb (PTStore::transaction): 確実にアンロックするよ
 	うに修正

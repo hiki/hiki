@@ -1,4 +1,4 @@
-# $Id: ptstore.rb,v 1.5 2004-12-16 14:04:45 fdiary Exp $
+# $Id: ptstore.rb,v 1.6 2004-12-17 16:56:01 fdiary Exp $
 #
 # ptstore.rb
 #   converts pstore.rb contained in Ruby 1.8.0 Preview 1.
@@ -76,6 +76,7 @@ class PTStore
     in_transaction
     @table.keys
   end
+
   def root?(name)
     in_transaction
     @table.key? name

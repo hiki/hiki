@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.10 2004-12-14 16:12:33 fdiary Exp $
+# $Id: html_formatter.rb,v 1.11 2004-12-17 16:56:01 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -64,43 +64,6 @@ module Hiki
       @interwiki  = InterWiki::new( @db, plugin, @conf )
       @aliaswiki  = AliasWiki::new( @db, @conf )
       @auto_links  = get_auto_links if @conf.auto_link
-    end
-
-    def HTMLFormatter_default::diff( d, src )
-      text = ''
-      src = src.split("\n").collect{|s| "#{s.escapeHTML}"}
-      si = 0
-      di = 0
-
-      d.each do |action,position,elements|
-        case action
-        when :-
-          while si < position
-            text << "#{src[si]} <br>"
-            si += 1
-            di += 1
-          end
-          si += elements.length
-          elements.each do |l|
-            text << "<del class=deleted>#{l.escapeHTML}</del>"
-          end
-        when :+
-          while di < position
-            text << "#{src[si]} <br>"
-            si += 1
-            di += 1
-          end
-          di += elements.length
-          elements.each do |l|
-            text << "<ins class=added>#{l.escapeHTML}</ins>"
-          end
-        end
-      end
-      while si < src.length
-        text << "#{src[si]} <br>"
-        si += 1
-      end
-      text
     end
 
     def flush_normal_text(text, pre)
