@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.9 2004-03-06 01:02:07 hitoshi Exp $
+# $Id: command.rb,v 1.10 2004-06-18 03:29:01 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'amrita/template'
@@ -451,14 +451,18 @@ module Hiki
             return
           end
         end
-        admin_config
+        require 'hiki/session'
+        session = Hiki::Session.new
+        admin_config( session.session_id )
       end
     end
     
-    def admin_config( msg=nil )
+    def admin_config( session_id, msg=nil )
       data = get_common_data( @db, @plugin )
       @plugin.hiki_menu(data, @cmd)
 
+      data[:title]          = title( msg_admin )
+      data[:session_id]     = session_id
       data[:site_name]      = $site_name || ''
       data[:author_name]    = $author_name || ''
       data[:mail]           = $mail || ''
@@ -523,17 +527,25 @@ module Hiki
       $theme_url      = @params['theme_url'][0]
       $theme_path     = @params['theme_path'][0]
 
+      if $password.size > 0
+        require 'hiki/session'
+        session_id = @params['session_id'][0]
+        if !session_id || !Hiki::Session.new( session_id ).check
+          admin_enter_password
+          return
+        end
+      end
       if password1.size > 0
         if ($password.size > 0 && old_password.crypt( $password ) != $password) ||
            (password1 != password2)
-          admin_config( msg_invalid_password )
+          admin_config( nil, msg_invalid_password )
           return
         end
         salt = [rand(64),rand(64)].pack("C*").tr("\x00-\x3f","A-Za-z0-9./")
         $password = password1.crypt( salt )
       end
       save_config
-      admin_config( msg_save_config )
+      admin_config( session_id, msg_save_config )
     end
 
     def load_plugin( plugin )

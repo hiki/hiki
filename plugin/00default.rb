@@ -1,4 +1,4 @@
-# $Id: 00default.rb,v 1.6 2004-03-09 14:41:26 fdiary Exp $
+# $Id: 00default.rb,v 1.7 2004-06-18 03:29:01 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #==============================
@@ -106,7 +106,7 @@ def hiki_header
   <meta http-equiv="Content-Language" content="#{$lang}">
   <meta http-equiv="Content-Type" content="text/html; charset=#{$charset}">
   <meta name="generator" content="#{$generator}">
-  <title>#{$title}</title>
+  <title>#{$title.escapeHTML}</title>
   <link rel="stylesheet" type="text/css" href="#{base_css_url}" media="all">
   <link rel="stylesheet" type="text/css" href="#{theme_url}" media="all">
 EOS

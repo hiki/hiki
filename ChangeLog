@@ -1,3 +1,20 @@
+2004-06-18  Kazuhiko  <kazuhiko@fdiary.net>
+	* plugin/00default.rb (hiki_header): title 出力を escapeHTMLするよ
+	うに修正
+
+2004-06-17  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/session.rb: 新ファイル
+	* hiki/command.rb, template/en/adminform.html,
+	template/fr/adminform.html, it/adminform.html,
+	template/ja/adminform.html: 管理モードでセッション管理するように修
+	正
+
+	* hiki/command.rb (admin_config): title をつけるように修正
+
+2004-06-16  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/hikifarm/index.cgi: title 取得の修正、title 出力を 
+	escapeHTMLするように修正
+
 2004-06-11  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/rss.rb: site_name, author_name をエスケープするように修正
 	* misc/plugin/pagerank.rb, misc/plugin/rss.rb, misc/plugin/src.rb: CGI ヘッダの後に不要な改行の出力をしないように修正

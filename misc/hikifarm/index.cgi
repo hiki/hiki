@@ -261,8 +261,8 @@ def body( data_path )
       file = ''
       begin
          File::open( "#{data_path}/#{wiki}/hiki.conf" ) do |conf|
-            if /^\$site_name\s*=\s*"([^"]*)"$/ =~ conf.read then
-               title = $1
+            if /^\$site_name\s*=\s*(".*")\s*$/ =~ conf.read then
+               title = eval($1)
             end
          end
       rescue
@@ -281,7 +281,7 @@ def body( data_path )
       page = CGI.escapeHTML(CGI.unescape(wiki.file))
       r << %Q|<tr>|
       r << %Q|<td><a href="#{wiki.name}/">#{wiki.name}</a></td>|
-      r << %Q|<td>#{wiki.title}</td>|
+      r << %Q|<td>#{CGI::escapeHTML(wiki.title)}</td>|
       r << %Q|<td>#{wiki.mtime.strftime("%Y/%m/%d %H:%M:%S")}|
       r << %Q| (<a href="#{wiki.name}/?#{wiki.file}">#{page}</a>)</td></tr>\n|
    end
