@@ -1,4 +1,4 @@
-# footnote.rb $Revision: 1.3 $
+# footnote.rb $Revision: 1.4 $
 #
 # fn: 脚注plugin
 #   パラメタ:
@@ -40,11 +40,10 @@ def fn(text, mark = '*')
 	end
 end
 
-
 def render( text )
 	parser = @conf.parser::new( @conf )
 	tokens = parser.parse( text.unescapeHTML )
-	formatter = @conf.formatter::new( tokens, @db, @plugin, @conf )
+	formatter = @conf.formatter::new( tokens, @db, self, @conf )
 	formatter.to_s.gsub(/\A<p>/,'').gsub(/\Z<\/p>/,'')
 end
 

@@ -1,3 +1,7 @@
+2004-12-15  Kazuhiko  <kazuhiko@fdiary.net>
+
+	* misc/plugin/footnote.rb: 不具合の修正
+
 2004-12-14  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki.cgi: コードの整理
 
