@@ -1,3 +1,8 @@
+2005-02-16  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/rss.rb (rss_body), misc/plugin/src.rb (src),
+	misc/plugin/history.rb (history_src): 空白を '&nbsp;' で出力する用
+	に修正
+
 2005-02-15  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/src.rb (src), misc/plugin/history.rb (history_src,
 	history_diff): 出力を <pre> から <div> に変更
