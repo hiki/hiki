@@ -1,4 +1,4 @@
-# $Id: config.rb,v 1.6 2004-07-01 09:21:36 hitoshi Exp $
+# $Id: config.rb,v 1.7 2004-08-31 07:25:46 fdiary Exp $
 # Copyright (C) 2004 Kazuhiko <kazuhiko@fdiary.net>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
@@ -13,6 +13,11 @@ module Hiki
       load
       default
       load_cgi_conf
+
+      @style.untaint
+      style = @style.gsub( /\+/, '' )
+      @parser = "Parser_#{style}"
+      @formatter = "HTMLFormatter_#{style}"
 
       instance_variables.each do |v|
         v.sub!( /@/, '' )
@@ -86,7 +91,7 @@ module Hiki
 
       variables = [:site_name, :author_name, :mail, :theme, :password,
 		   :theme_url, :sidebar_class, :main_class, :theme_path,
-		   :mail_on_update, :use_sidebar, :auto_link]
+		   :mail_on_update, :use_sidebar, :auto_link, :style]
       begin
 	cgi_conf = File::open( "#{@data_path}hiki.conf" ){|f| f.read }.untaint
 	cgi_conf.gsub!( /^[@$]/, '' )

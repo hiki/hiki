@@ -1,4 +1,4 @@
-# $Id: parser.rb,v 1.4 2004-06-26 14:12:30 fdiary Exp $
+# $Id: parser.rb,v 1.5 2004-08-31 07:25:47 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 module Hiki
@@ -20,7 +20,7 @@ module Hiki
     end
   end
     
-  class Parser
+  class Parser_default
     attr_reader :stack
 
     REF_OPEN   = "[["

@@ -12,10 +12,11 @@
 
 require 'hiki/util'
 require 'hiki/interwiki'
+require 'hiki/hiki_formatter'
 require 'style/rd+/rd2html.rb'
 
 module Hiki
-  class HTMLFormatter
+  class HTMLFormatter_rd < HikiFormatter
     def initialize( s, db, plugin, conf, suffix = 'l')
       @tokens     = s
       @db         = db
@@ -25,7 +26,7 @@ module Hiki
       @visitor = Hiki::RD2HTMLVisitor.new(@plugin, @db, @conf)
     end
 
-    def HTMLFormatter::diff( d, src )
+    def HTMLFormatter_rd::diff( d, src )
       text = ''
       src = src.split("\n").collect{|s| "#{s.escapeHTML}"}
       si = 0

@@ -9,7 +9,7 @@ require 'rd/rdfmt'
 require 'cgi'
 
 module Hiki
-  class Parser
+  class Parser_rd
     def initialize( conf )
     end
 

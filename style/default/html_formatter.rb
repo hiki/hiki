@@ -1,13 +1,14 @@
-# $Id: html_formatter.rb,v 1.7 2004-06-26 14:12:30 fdiary Exp $
+# $Id: html_formatter.rb,v 1.8 2004-08-31 07:25:46 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
 require 'hiki/interwiki'
 require 'hiki/aliaswiki'
+require 'hiki/hiki_formatter'
 
 module Hiki
     
-  class HTMLFormatter
+  class HTMLFormatter_default < HikiFormatter
     MAP = Hash::new
     MAP[:heading1_open]        = '<h2><span class="date"></span><span class="title">'
     MAP[:heading1_close]       = '</span></h2>'
@@ -65,7 +66,7 @@ module Hiki
       @auto_links  = get_auto_links if @conf.auto_link
     end
 
-    def HTMLFormatter::diff( d, src )
+    def HTMLFormatter_default::diff( d, src )
       text = ''
       src = src.split("\n").collect{|s| "#{s.escapeHTML}"}
       si = 0

@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.11 2004-06-26 14:12:28 fdiary Exp $
+# $Id: command.rb,v 1.12 2004-08-31 07:25:46 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'amrita/template'
@@ -130,9 +130,9 @@ module Hiki
 
       html = nil
       text = @db.load( @p )
-      parser = Parser::new( @conf )
+      parser = eval( @conf.parser )::new( @conf )
       tokens = parser.parse( text )
-      formatter = HikiFormatter::new( tokens, @db, @plugin, @conf )
+      formatter = eval( @conf.formatter )::new( tokens, @db, @plugin, @conf )
       contents, toc = formatter.to_s, formatter.toc
       if @conf.hilight_keys
         word = @params['key'][0]
