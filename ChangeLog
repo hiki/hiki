@@ -1,3 +1,7 @@
+2004-06-28  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
+        * misc/plugin/history.rb: r を escapeHTML するように修正 thanks to
+	Kouhei Sutou
+
 2004-06-27  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/config.rb (load_cgi_conf): $SAFE=4 で評価するように変更
 
