@@ -1,4 +1,4 @@
-# ajaxsearch.rb $Revision: 1.3 $
+# ajaxsearch.rb $Revision: 1.1 $
 # Copyright (C) 2005 Michitaka Ohno <elpeo@mars.dti.ne.jp>
 # 
 # This program is free software; you can redistribute it and/or
