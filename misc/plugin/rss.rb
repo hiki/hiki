@@ -1,4 +1,4 @@
-# $Id: rss.rb,v 1.11 2005-01-14 01:39:46 fdiary Exp $
+# $Id: rss.rb,v 1.12 2005-02-14 08:30:34 fdiary Exp $
 # Copyright (C) 2003-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 def rss_recent_label
@@ -26,7 +26,7 @@ def rss_body(page_num = 10)
     <description>#{CGI::escapeHTML(@conf.site_name)} #{rss_recent_label}</description>
     <dc:language>ja</dc:language>
     <dc:rights>Copyright (C) #{CGI::escapeHTML(@conf.author_name)}</dc:rights>
-    <dc:date>#{last_modified.utc.strftime("%Y-%m-%dT%H:%M:%S+00:00")}</dc:date>
+    <dc:date>#{last_modified.utc.strftime('%Y-%m-%dT%H:%M:%S+00:00')}</dc:date>
     <items>
       <rdf:Seq>
 EOS
@@ -47,8 +47,8 @@ EOS
   <item rdf:about="#{uri}">
     <title>#{CGI::escapeHTML(page_name(name))}</title>
     <link>#{uri}</link>
-    <dc:date>#{p[name][:last_modified].utc.strftime("%Y-%m-%dT%H:%M:%S+00:00")}</dc:date>
-    <content:encoded><![CDATA[<pre>\n#{CGI::escapeHTML(content)}</pre>]]></content:encoded>
+    <dc:date>#{p[name][:last_modified].utc.strftime('%Y-%m-%dT%H:%M:%S+00:00')}</dc:date>
+    <content:encoded><![CDATA[<div>#{CGI::escapeHTML(content).gsub(/\n/, '<br>')}</div>]]></content:encoded>
   </item>
 EOS
   end
