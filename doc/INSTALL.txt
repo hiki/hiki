@@ -1,46 +1,45 @@
 {{toc}}
 
-!Hiki‚ÌƒCƒ“ƒXƒg[ƒ‹‚ÆÝ’è
+!Hiki¤Î¥¤¥ó¥¹¥È¡¼¥ë¤ÈÀßÄê
 
-Hiki‚ð“®‚©‚·‚½‚ß‚É‚Í‰½‚Í‚È‚­‚Æ‚àA‚Ü‚¸Ruby‚ª•K—v‚Å‚·B¡‚Ì‚Æ‚±‚ëA
-ˆÈ‰º‚Ìƒo[ƒWƒ‡ƒ“‚Å‚Ì“®ìŽÀÑ‚ª‚ ‚è‚Ü‚·B(2003-2-22Œ»Ý)
+Hiki¤òÆ°¤«¤¹¤¿¤á¤Ë¤Ï²¿¤Ï¤Ê¤¯¤È¤â¡¢¤Þ¤ºRuby¤¬É¬Í×¤Ç¤¹¡£
+[[Ruby¥Û¡¼¥à¥Ú¡¼¥¸|http://www.ruby-lang.org/ja/]]¤«¤é¥À¥¦¥ó¥í¡¼¥É¤·¤Æ
+¥¤¥ó¥¹¥È¡¼¥ë¤·¤Æ¤¯¤À¤µ¤¤¡£
 
-*1.6.6 by RubyƒXƒŒ‚Ì202‚³‚ñ
-*1.6.7 by [[‚½‚¯‚¤‚¿]]
-*1.6.8 by [[‚½‚¯‚¤‚¿]]
- 
+¤Þ¤¿¡¢[[¤³¤³|http://www.namaraii.com/hiki/hiki.cgi?%28Hiki%29%C6%B0%BA%EE%B4%C4%B6%AD]]¤Ë
+¼ÂºÝ¤ËÆ°ºî¤·¤¿´Ä¶­¤¬¤Þ¤È¤á¤é¤ì¤Æ¤¤¤Þ¤¹¤Î¤Ç¡¢¤´»²¾È¤¯¤À¤µ¤¤¡£
 
-!!‘O’ñƒ‰ƒCƒuƒ‰ƒŠ‚ÌƒCƒ“ƒXƒg[ƒ‹
-Hiki‚ÍˆÈ‰º‚Ìƒ‰ƒCƒuƒ‰ƒŠ‚ªƒCƒ“ƒXƒg[ƒ‹‚³‚ê‚Ä‚¢‚é‚±‚Æ‚ð‘O’ñ‚É‚µ‚Ä‚¢‚Ü‚·B
+!!Á°Äó¥é¥¤¥Ö¥é¥ê¤Î¥¤¥ó¥¹¥È¡¼¥ë
+Hiki¤Ï°Ê²¼¤Î¥é¥¤¥Ö¥é¥ê¤¬¥¤¥ó¥¹¥È¡¼¥ë¤µ¤ì¤Æ¤¤¤ë¤³¤È¤òÁ°Äó¤Ë¤·¤Æ¤¤¤Þ¤¹¡£
 
-:strscan (0.6.5ˆÈ~j:http://raa.ruby-lang.org/list.rhtml?name=strscan
+:strscan (0.6.5°Ê¹ß¡Ë:http://raa.ruby-lang.org/list.rhtml?name=strscan
 :Amrita 1.0.2:http://raa.ruby-lang.org/list.rhtml?name=amrita
 
-‚±‚ê‚ç‚É‚Â‚¢‚Ä‚Íã‹L‚ÌURL‚©‚çƒ_ƒEƒ“ƒ[ƒhŒãA“Y•tƒhƒLƒ…ƒƒ“ƒg‚ðŽQl‚É
-ƒCƒ“ƒXƒg[ƒ‹‚µ‚Ä‚­‚¾‚³‚¢B
+¤³¤ì¤é¤Ë¤Ä¤¤¤Æ¤Ï¾åµ­¤ÎURL¤«¤é¥À¥¦¥ó¥í¡¼¥É¸å¡¢ÅºÉÕ¥É¥­¥å¥á¥ó¥È¤ò»²¹Í¤Ë
+¥¤¥ó¥¹¥È¡¼¥ë¤·¤Æ¤¯¤À¤µ¤¤¡£
 
-!!ƒCƒ“ƒXƒg[ƒ‹—á‚Å‘O’ñ‚Æ‚·‚éŠÂ‹«
+!!¥¤¥ó¥¹¥È¡¼¥ëÎã¤ÇÁ°Äó¤È¤¹¤ë´Ä¶­
 
-ˆê”Ê“I‚ÈCGI‚ÌŽÀs‚ð‹–‰Â‚µ‚Ä‚¢‚éISP‚âƒŒƒ“ƒ^ƒ‹ƒT[ƒoã‚Å—˜—p‚·‚éê‡‚ð‘z’è‚µA
-ˆÈ‰º‚Ì‚æ‚¤‚ÈŠÂ‹«‚ð—á‚Éà–¾‚µ‚Ü‚·B
+°ìÈÌÅª¤ÊCGI¤Î¼Â¹Ô¤òµö²Ä¤·¤Æ¤¤¤ëISP¤ä¥ì¥ó¥¿¥ë¥µ¡¼¥Ð¾å¤ÇÍøÍÑ¤¹¤ë¾ì¹ç¤òÁÛÄê¤·¡¢
+°Ê²¼¤Î¤è¤¦¤Ê´Ä¶­¤òÎã¤ËÀâÌÀ¤·¤Þ¤¹¡£
 
-*WWWƒT[ƒo: Apache 1.3.x
-*ƒ†[ƒU–¼: foo
-*Hiki‚ÌURL: http://www.hoge.example.org/~foo/hiki/
-*ã‹LURL‚ÌƒpƒX: /home/foo/public_html/hiki/
-*ƒf[ƒ^Ši”[—p‚ÌƒpƒX: /home/foo/hiki/
+*WWW¥µ¡¼¥Ð: Apache 1.3.x
+*¥æ¡¼¥¶Ì¾: foo
+*Hiki¤ÎURL: http://www.hoge.example.org/~foo/hiki/
+*¾åµ­URL¤Î¥Ñ¥¹: /home/foo/public_html/hiki/
+*¥Ç¡¼¥¿³ÊÇ¼ÍÑ¤Î¥Ñ¥¹: /home/foo/hiki/
 
-!!CGIƒXƒNƒŠƒvƒg‚ÌÝ’è
-”z•zƒA[ƒJƒCƒu‚ð“WŠJ‚µA’†g‚ð‚·‚×‚Ä/home/foo/public_html/hiki/‚ÉƒRƒs[‚µ‚Ü‚·B
-hiki.cgi‚ªCGIƒXƒNƒŠƒvƒg–{‘Ì‚È‚Ì‚ÅAWWWƒT[ƒo‚ÌŒ ŒÀ‚ÅŽÀs‰Â”\‚È‚æ‚¤‚É
-ƒp[ƒ~ƒbƒVƒ‡ƒ“‚ðÝ’è‚µ‚Ä‚­‚¾‚³‚¢B
+!!CGI¥¹¥¯¥ê¥×¥È¤ÎÀßÄê
+ÇÛÉÛ¥¢¡¼¥«¥¤¥Ö¤òÅ¸³«¤·¡¢Ãæ¿È¤ò¤¹¤Ù¤Æ/home/foo/public_html/hiki/¤Ë¥³¥Ô¡¼¤·¤Þ¤¹¡£
+hiki.cgi¤¬CGI¥¹¥¯¥ê¥×¥ÈËÜÂÎ¤Ê¤Î¤Ç¡¢WWW¥µ¡¼¥Ð¤Î¸¢¸Â¤Ç¼Â¹Ô²ÄÇ½¤Ê¤è¤¦¤Ë
+¥Ñ¡¼¥ß¥Ã¥·¥ç¥ó¤òÀßÄê¤·¤Æ¤¯¤À¤µ¤¤¡£
 
-‚Ü‚½A/usr/bin/env‚ðŽg‚Á‚½‹N“®‚ª‚Å‚«‚È‚¢ŠÂ‹«‚Å‚ÍAŠeƒtƒ@ƒCƒ‹‚Ìæ“ª‚ðRuby‚ÌƒpƒX‚É
-‘‚«Š·‚¦‚é•K—v‚ª‚ ‚é‚Å‚µ‚å‚¤B
+¤Þ¤¿¡¢/usr/bin/env¤ò»È¤Ã¤¿µ¯Æ°¤¬¤Ç¤­¤Ê¤¤´Ä¶­¤Ç¤Ï¡¢³Æ¥Õ¥¡¥¤¥ë¤ÎÀèÆ¬¤òRuby¤Î¥Ñ¥¹¤Ë
+½ñ¤­´¹¤¨¤ëÉ¬Í×¤¬¤¢¤ë¤Ç¤·¤ç¤¦¡£
 
-!!.htaccess‚Ìì¬
-‘±‚¢‚ÄACGI‚ÌŽÀsŠÂ‹«‚ð®‚¦‚Ü‚·B''dot.htaccess''‚ð''.htaccess''‚ÉƒŠƒl[ƒ€‚µ‚ÄA
-ŠÂ‹«‚É‡‚í‚¹‚Ä‘‚«Š·‚¦‚Ü‚·B“Y•t‚ÌƒTƒ“ƒvƒ‹‚ÍˆÈ‰º‚Ì‚æ‚¤‚É‚È‚Á‚Ä‚¢‚Ü‚·B
+!!.htaccess¤ÎºîÀ®
+Â³¤¤¤Æ¡¢CGI¤Î¼Â¹Ô´Ä¶­¤òÀ°¤¨¤Þ¤¹¡£''dot.htaccess''¤ò''.htaccess''¤Ë¥ê¥Í¡¼¥à¤·¤Æ¡¢
+´Ä¶­¤Ë¹ç¤ï¤»¤Æ½ñ¤­´¹¤¨¤Þ¤¹¡£ÅºÉÕ¤Î¥µ¥ó¥×¥ë¤Ï°Ê²¼¤Î¤è¤¦¤Ë¤Ê¤Ã¤Æ¤¤¤Þ¤¹¡£
 
  Options +ExecCGI
  
@@ -51,102 +50,102 @@ hiki.cgi‚ªCGIƒXƒNƒŠƒvƒg–{‘Ì‚È‚Ì‚ÅAWWWƒT[ƒo‚ÌŒ ŒÀ‚ÅŽÀs‰Â”\‚È‚æ‚¤‚É
         deny from all
  </Files>
 
-‚±‚±‚Å‚ÍA
-*CGI‚ÌŽÀs‚ð‰Â”\‚É‚µA
-*ƒTƒtƒBƒbƒNƒXu.cgiv‚Ìƒtƒ@ƒCƒ‹‚ðCGI‚Æ”FŽ¯‚³‚¹A
-*hiki.cgi‚ðƒfƒtƒHƒ‹ƒg‚Ìƒtƒ@ƒCƒ‹‚ÉÝ’è‚µA
-* *.rb‚Ìƒtƒ@ƒCƒ‹‚ÌŽQÆ‚ð‹ÖŽ~
+¤³¤³¤Ç¤Ï¡¢
+*CGI¤Î¼Â¹Ô¤ò²ÄÇ½¤Ë¤·¡¢
+*¥µ¥Õ¥£¥Ã¥¯¥¹¡Ö.cgi¡×¤Î¥Õ¥¡¥¤¥ë¤òCGI¤ÈÇ§¼±¤µ¤»¡¢
+*hiki.cgi¤ò¥Ç¥Õ¥©¥ë¥È¤Î¥Õ¥¡¥¤¥ë¤ËÀßÄê¤·¡¢
+* *.rb¤Î¥Õ¥¡¥¤¥ë¤Î»²¾È¤ò¶Ø»ß
 
-‚Æ‚¢‚¤Ý’è‚É‚È‚Á‚Ä‚¢‚Ü‚·B
+¤È¤¤¤¦ÀßÄê¤Ë¤Ê¤Ã¤Æ¤¤¤Þ¤¹¡£
 
-!!ƒf[ƒ^Ši”[—pƒfƒBƒŒƒNƒgƒŠ‚Ìì¬
-!!!data”z‰º‚ÌƒRƒs[‚Æƒp[ƒ~ƒVƒ‡ƒ“‚ÌÝ’è
-“WŠJ‚µ‚½ƒfƒBƒŒƒNƒgƒŠ‚Ì’†‚Édata‚Æ‚¢‚¤ƒfƒBƒŒƒNƒgƒŠ‚ª‚ ‚è‚Ü‚·B‚±‚ÌƒfƒBƒŒƒNƒgƒŠ‚ð
-‚Ç‚±‚©‚ÖˆÚ“®‚µ‚Ä‚­‚¾‚³‚¢B
-‚±‚ÌƒfƒBƒŒƒNƒgƒŠ‚ÌêŠ‚ÍAWWWŒo—R‚ÅƒAƒNƒZƒX‚Å‚«‚È‚¢(''public_html''”z‰º‚Å‚È‚¢)
-êŠ‚ª—Ç‚¢‚Å‚µ‚å‚¤B
+!!¥Ç¡¼¥¿³ÊÇ¼ÍÑ¥Ç¥£¥ì¥¯¥È¥ê¤ÎºîÀ®
+!!!dataÇÛ²¼¤Î¥³¥Ô¡¼¤È¥Ñ¡¼¥ß¥·¥ç¥ó¤ÎÀßÄê
+Å¸³«¤·¤¿¥Ç¥£¥ì¥¯¥È¥ê¤ÎÃæ¤Ëdata¤È¤¤¤¦¥Ç¥£¥ì¥¯¥È¥ê¤¬¤¢¤ê¤Þ¤¹¡£¤³¤Î¥Ç¥£¥ì¥¯¥È¥ê¤ò
+¤É¤³¤«¤Ø°ÜÆ°¤·¤Æ¤¯¤À¤µ¤¤¡£
+¤³¤Î¥Ç¥£¥ì¥¯¥È¥ê¤Î¾ì½ê¤Ï¡¢WWW·ÐÍ³¤Ç¥¢¥¯¥»¥¹¤Ç¤­¤Ê¤¤(''public_html''ÇÛ²¼¤Ç¤Ê¤¤)
+¾ì½ê¤¬ÎÉ¤¤¤Ç¤·¤ç¤¦¡£
 
  $ mv data /home/foo/hiki
 
-ƒf[ƒ^Ši”[—p‚ÌƒfƒBƒŒƒNƒgƒŠ‚ÍAWWWƒT[ƒo‚ÌŒ ŒÀ‚Å‘‚«ž‚ß‚éƒp[ƒ~ƒbƒVƒ‡ƒ“‚É
-‚µ‚Ä‚¨‚­•K—v‚ª‚ ‚è‚Ü‚·B
+¥Ç¡¼¥¿³ÊÇ¼ÍÑ¤Î¥Ç¥£¥ì¥¯¥È¥ê¤Ï¡¢WWW¥µ¡¼¥Ð¤Î¸¢¸Â¤Ç½ñ¤­¹þ¤á¤ë¥Ñ¡¼¥ß¥Ã¥·¥ç¥ó¤Ë
+¤·¤Æ¤ª¤¯É¬Í×¤¬¤¢¤ê¤Þ¤¹¡£
 
-!!hikiconf.rb‚Ìì¬
-ŽŸ‚ÉA''hikiconf.sample''‚ð''hikiconf.rb''‚ÉƒŠƒl[ƒ€‚µ‚ÄA“à—e‚ð‘‚«Š·‚¦‚Ü‚·B
-‚±‚ê‚ÍRubyƒXƒNƒŠƒvƒg‚Æ‚µ‚ÄACGI‚É’¼Ú“Ç‚Ýž‚Ü‚ê‚Ü‚·B(require‚³‚ê‚Ü‚·j
-Hiki‚ÌŽå—v‚ÈÝ’è‚ÍCGIŒo—R‚Ås‚¦‚é‚Ì‚ÅAÅ’áŒÀ‘‚«Š·‚¦‚é‚×‚«‚È‚Ì‚ÍÅ‰‚Éo‚Ä‚­‚é
-''$data_path''‚¾‚¯‚Å‚·B
+!!hikiconf.rb¤ÎºîÀ®
+¼¡¤Ë¡¢''hikiconf.sample''¤ò''hikiconf.rb''¤Ë¥ê¥Í¡¼¥à¤·¤Æ¡¢ÆâÍÆ¤ò½ñ¤­´¹¤¨¤Þ¤¹¡£
+¤³¤ì¤ÏRuby¥¹¥¯¥ê¥×¥È¤È¤·¤Æ¡¢CGI¤ËÄ¾ÀÜÆÉ¤ß¹þ¤Þ¤ì¤Þ¤¹¡£(require¤µ¤ì¤Þ¤¹¡Ë
+Hiki¤Î¼çÍ×¤ÊÀßÄê¤ÏCGI·ÐÍ³¤Ç¹Ô¤¨¤ë¤Î¤Ç¡¢ºÇÄã¸Â½ñ¤­´¹¤¨¤ë¤Ù¤­¤Ê¤Î¤ÏºÇ½é¤Ë½Ð¤Æ¤¯¤ë
+''$data_path''¤À¤±¤Ç¤¹¡£
 
  $data_path = '/home/foo/hiki'
 
-''hikiconf.rb''‚É‚ÍA‘¼‚É‚à‚¢‚ë‚¢‚ë‚ÈÝ’è€–Ú‚ð‹Lq‚Å‚«‚Ü‚·BÚ×‚É‚Â‚¢‚Ä‚ÍA
-''hikiconf.rb.sample''’†‚ÌƒRƒƒ“ƒg‚ðŽQÆ‚µ‚Ä‚­‚¾‚³‚¢B
+''hikiconf.rb''¤Ë¤Ï¡¢Â¾¤Ë¤â¤¤¤í¤¤¤í¤ÊÀßÄê¹àÌÜ¤òµ­½Ò¤Ç¤­¤Þ¤¹¡£¾ÜºÙ¤Ë¤Ä¤¤¤Æ¤Ï¡¢
+''hikiconf.rb.sample''Ãæ¤Î¥³¥á¥ó¥È¤ò»²¾È¤·¤Æ¤¯¤À¤µ¤¤¡£
 
-!Hiki‚ÌŽÀs
+!Hiki¤Î¼Â¹Ô
 
-Hiki‚ðƒCƒ“ƒXƒg[ƒ‹‚µ‚½URLi‚±‚±‚Å‚Íhttp://www.hoge.example.org/~foo/hiki/j‚ð
-ƒuƒ‰ƒEƒU‚ÅŠJ‚¢‚Ä‚Ý‚Ä‚­‚¾‚³‚¢BFrontPage‚ª•\Ž¦‚³‚ê‚ê‚ÎƒCƒ“ƒXƒg[ƒ‹‚Í¬Œ÷‚Å‚·B
+Hiki¤ò¥¤¥ó¥¹¥È¡¼¥ë¤·¤¿URL¡Ê¤³¤³¤Ç¤Ïhttp://www.hoge.example.org/~foo/hiki/¡Ë¤ò
+¥Ö¥é¥¦¥¶¤Ç³«¤¤¤Æ¤ß¤Æ¤¯¤À¤µ¤¤¡£FrontPage¤¬É½¼¨¤µ¤ì¤ì¤Ð¥¤¥ó¥¹¥È¡¼¥ë¤ÏÀ®¸ù¤Ç¤¹¡£
 
-ƒy[ƒW‚Ìã•”‚É‚ÍˆÈ‰º‚Ì‚æ‚¤‚Èƒƒjƒ…[‚ª•\Ž¦‚³‚ê‚Ä‚¢‚é‚Í‚¸‚Å‚·B
+¥Ú¡¼¥¸¤Î¾åÉô¤Ë¤Ï°Ê²¼¤Î¤è¤¦¤Ê¥á¥Ë¥å¡¼¤¬É½¼¨¤µ¤ì¤Æ¤¤¤ë¤Ï¤º¤Ç¤¹¡£
 
- [ V‹Kì¬ | •ÒW | ·•ª ] [ FrontPage | ˆê—— | ŒŸõ | XV—š—ð ] [ ŠÇ— ] 
+ [ ¿·µ¬ºîÀ® | ÊÔ½¸ | º¹Ê¬ ] [ FrontPage | °ìÍ÷ | ¸¡º÷ | ¹¹¿·ÍúÎò ] [ ´ÉÍý ] 
 
-ˆÈ‰ºA‚±‚ê‚ç‚Ìƒƒjƒ…[‚É‚Â‚¢‚Äà–¾‚µ‚Ü‚·B
+°Ê²¼¡¢¤³¤ì¤é¤Î¥á¥Ë¥å¡¼¤Ë¤Ä¤¤¤ÆÀâÌÀ¤·¤Þ¤¹¡£
 
-!!V‹Kì¬
+!!¿·µ¬ºîÀ®
 
-uV‹Kì¬v‚ÌƒAƒ“ƒJ‚ðƒNƒŠƒbƒN‚·‚é‚ÆuV‹Kì¬v‰æ–Ê‚Ö‘JˆÚ‚µV‚µ‚­ƒy[ƒW‚ð’Ç‰Á‚·‚é
-‚±‚Æ‚ª‚Å‚«‚Ü‚·B
+¡Ö¿·µ¬ºîÀ®¡×¤Î¥¢¥ó¥«¤ò¥¯¥ê¥Ã¥¯¤¹¤ë¤È¡Ö¿·µ¬ºîÀ®¡×²èÌÌ¤ØÁ«°Ü¤·¿·¤·¤¯¥Ú¡¼¥¸¤òÄÉ²Ã¤¹¤ë
+¤³¤È¤¬¤Ç¤­¤Þ¤¹¡£
 
-!!•ÒW
+!!ÊÔ½¸
 
-u•ÒWv‚ÌƒAƒ“ƒJ‚ðƒNƒŠƒbƒN‚·‚é‚ÆŽQÆ‚µ‚Ä‚¢‚éƒy[ƒW‚Ì“à—e‚ð•ÒW‚·‚é‚±‚Æ‚ª‚Å‚«‚Ü‚·B
+¡ÖÊÔ½¸¡×¤Î¥¢¥ó¥«¤ò¥¯¥ê¥Ã¥¯¤¹¤ë¤È»²¾È¤·¤Æ¤¤¤ë¥Ú¡¼¥¸¤ÎÆâÍÆ¤òÊÔ½¸¤¹¤ë¤³¤È¤¬¤Ç¤­¤Þ¤¹¡£
 
-Hiki‚É‚Íƒy[ƒW’PˆÊ‚Ìu“€Œ‹v‚Æ‚¢‚¤l‚¦•û‚ª‚ ‚è‚Ü‚·B
-ŠÇ—ŽÒ‚ªƒy[ƒW‚ð•ÒW‚µ‚Ä•Û‘¶‚·‚éÛ‚Éuƒy[ƒW‚Ì“€Œ‹v‚Æ‚¢‚¤ƒ`ƒFƒbƒNƒ{ƒbƒNƒX‚ðƒ`ƒFƒbƒN‚µA
-ŠÇ—ŽÒ—pƒpƒXƒ[ƒh‚ð“ü—Í‚·‚é‚±‚Æ‚É‚æ‚èA‚»‚Ìƒy[ƒW‚Í“€Œ‹‚³‚ê‚Ü‚·B“€Œ‹‚³‚ê‚½ƒy[ƒW‚ð
-•ÒW‚·‚é‚É‚ÍŠÇ—ŽÒ—p‚ÌƒpƒXƒ[ƒh‚ð“ü—Í‚·‚é•K—v‚ª‚ ‚è‚Ü‚·B
+Hiki¤Ë¤Ï¥Ú¡¼¥¸Ã±°Ì¤Î¡ÖÅà·ë¡×¤È¤¤¤¦¹Í¤¨Êý¤¬¤¢¤ê¤Þ¤¹¡£
+´ÉÍý¼Ô¤¬¥Ú¡¼¥¸¤òÊÔ½¸¤·¤ÆÊÝÂ¸¤¹¤ëºÝ¤Ë¡Ö¥Ú¡¼¥¸¤ÎÅà·ë¡×¤È¤¤¤¦¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤ò¥Á¥§¥Ã¥¯¤·¡¢
+´ÉÍý¼ÔÍÑ¥Ñ¥¹¥ï¡¼¥É¤òÆþÎÏ¤¹¤ë¤³¤È¤Ë¤è¤ê¡¢¤½¤Î¥Ú¡¼¥¸¤ÏÅà·ë¤µ¤ì¤Þ¤¹¡£Åà·ë¤µ¤ì¤¿¥Ú¡¼¥¸¤ò
+ÊÔ½¸¤¹¤ë¤Ë¤Ï´ÉÍý¼ÔÍÑ¤Î¥Ñ¥¹¥ï¡¼¥É¤òÆþÎÏ¤¹¤ëÉ¬Í×¤¬¤¢¤ê¤Þ¤¹¡£
 
-!!·•ª
+!!º¹Ê¬
 
-u·•ªv‚ÌƒAƒ“ƒJ‚ðƒNƒŠƒbƒN‚·‚é‚ÆŽQÆ‚µ‚Ä‚¢‚éƒy[ƒW‚ÌÅV”Å‚ÆA‚P‚Â‘O‚Ì”Å‚Æ‚Ì“à—e‚Ì
-·•ª‚ðŽQÆ‚·‚é‚±‚Æ‚ª‚Å‚«‚Ü‚·B
+¡Öº¹Ê¬¡×¤Î¥¢¥ó¥«¤ò¥¯¥ê¥Ã¥¯¤¹¤ë¤È»²¾È¤·¤Æ¤¤¤ë¥Ú¡¼¥¸¤ÎºÇ¿·ÈÇ¤È¡¢£±¤ÄÁ°¤ÎÈÇ¤È¤ÎÆâÍÆ¤Î
+º¹Ê¬¤ò»²¾È¤¹¤ë¤³¤È¤¬¤Ç¤­¤Þ¤¹¡£
 
 !!FrontPage
 
-uFrontPagev‚ÌƒAƒ“ƒJ‚ðƒNƒŠƒbƒN‚·‚é‚ÆHiki‚Ìƒgƒbƒvƒy[ƒW‚É‘JˆÚ‚µ‚Ü‚·B
+¡ÖFrontPage¡×¤Î¥¢¥ó¥«¤ò¥¯¥ê¥Ã¥¯¤¹¤ë¤ÈHiki¤Î¥È¥Ã¥×¥Ú¡¼¥¸¤ËÁ«°Ü¤·¤Þ¤¹¡£
 
-!!ˆê——
+!!°ìÍ÷
 
-uˆê——v‚ÌƒAƒ“ƒJ‚ðƒNƒŠƒbƒN‚·‚é‚Æì¬‚³‚ê‚½‘S‚Ä‚Ìƒy[ƒW‚ðˆê——‚Å•\Ž¦‚µ‚Ü‚·Bˆê——‰æ–Ê‚Å‚ÍA
-Šeƒy[ƒW‚ÌÅIXV“úŽžA“€Œ‹‚³‚ê‚Ä‚¢‚é‚©”Û‚©‚ðŽQÆ‚·‚é‚±‚Æ‚ª‚Å‚«‚Ü‚·B
+¡Ö°ìÍ÷¡×¤Î¥¢¥ó¥«¤ò¥¯¥ê¥Ã¥¯¤¹¤ë¤ÈºîÀ®¤µ¤ì¤¿Á´¤Æ¤Î¥Ú¡¼¥¸¤ò°ìÍ÷¤ÇÉ½¼¨¤·¤Þ¤¹¡£°ìÍ÷²èÌÌ¤Ç¤Ï¡¢
+³Æ¥Ú¡¼¥¸¤ÎºÇ½ª¹¹¿·Æü»þ¡¢Åà·ë¤µ¤ì¤Æ¤¤¤ë¤«ÈÝ¤«¤ò»²¾È¤¹¤ë¤³¤È¤¬¤Ç¤­¤Þ¤¹¡£
 
-!!ŒŸõ
+!!¸¡º÷
 
-uŒŸõv‚ÌƒAƒ“ƒJ‚ðƒNƒŠƒbƒN‚·‚é‚ÆuŒŸõv‰æ–Ê‚É‘JˆÚ‚µ‚Ü‚·BŒŸõ‰æ–Ê‚ÅŒŸõ‚µ‚½‚¢
-ƒL[ƒ[ƒh‚ð“ü—Í‚µAuŒŸõvƒ{ƒ^ƒ“‚ð‰Ÿ‰º‚·‚é‚ÆA‘S‚Ä‚Ìƒy[ƒW’†‚©‚ç“ü—Í‚µ‚½ƒL[ƒ[ƒh‚ð
-ŠÜ‚Þƒy[ƒW‚ªˆê——‚³‚ê‚Ü‚·B
+¡Ö¸¡º÷¡×¤Î¥¢¥ó¥«¤ò¥¯¥ê¥Ã¥¯¤¹¤ë¤È¡Ö¸¡º÷¡×²èÌÌ¤ËÁ«°Ü¤·¤Þ¤¹¡£¸¡º÷²èÌÌ¤Ç¸¡º÷¤·¤¿¤¤
+¥­¡¼¥ï¡¼¥É¤òÆþÎÏ¤·¡¢¡Ö¸¡º÷¡×¥Ü¥¿¥ó¤ò²¡²¼¤¹¤ë¤È¡¢Á´¤Æ¤Î¥Ú¡¼¥¸Ãæ¤«¤éÆþÎÏ¤·¤¿¥­¡¼¥ï¡¼¥É¤ò
+´Þ¤à¥Ú¡¼¥¸¤¬°ìÍ÷¤µ¤ì¤Þ¤¹¡£
 
-!!XV—š—ð
+!!¹¹¿·ÍúÎò
 
-uXV—š—ðv‚ÌƒAƒ“ƒJ‚ðƒNƒŠƒbƒN‚·‚é‚Æì¬‚³‚ê‚½‘S‚Ä‚Ìƒy[ƒW‚ðXV“úŽž‚ªV‚µ‚¢‡‚É
-•À‚Ñ‘Ö‚¦‚Äˆê——•\Ž¦‚µ‚Ü‚·B
+¡Ö¹¹¿·ÍúÎò¡×¤Î¥¢¥ó¥«¤ò¥¯¥ê¥Ã¥¯¤¹¤ë¤ÈºîÀ®¤µ¤ì¤¿Á´¤Æ¤Î¥Ú¡¼¥¸¤ò¹¹¿·Æü»þ¤¬¿·¤·¤¤½ç¤Ë
+ÊÂ¤ÓÂØ¤¨¤Æ°ìÍ÷É½¼¨¤·¤Þ¤¹¡£
 
-!!ŠÇ—
+!!´ÉÍý
 
-uŠÇ—v‚ÌƒAƒ“ƒJ‚ðƒNƒŠƒbƒN‚·‚é‚ÆŠÇ—ŽÒ—pƒy[ƒW‚É‘JˆÚ‚µAˆÈ‰º‚Ì€–Ú‚ðÝ’è‚·‚é‚±‚Æ‚ª
-‚Å‚«‚Ü‚·B
+¡Ö´ÉÍý¡×¤Î¥¢¥ó¥«¤ò¥¯¥ê¥Ã¥¯¤¹¤ë¤È´ÉÍý¼ÔÍÑ¥Ú¡¼¥¸¤ËÁ«°Ü¤·¡¢°Ê²¼¤Î¹àÌÜ¤òÀßÄê¤¹¤ë¤³¤È¤¬
+¤Ç¤­¤Þ¤¹¡£
 
-*ƒTƒCƒg–¼
-*’˜ŽÒ–¼iƒTƒCƒgŠÇ—ŽÒ–¼j
-*ƒ[ƒ‹ƒAƒhƒŒƒXiƒTƒCƒgŠÇ—ŽÒj
-*ŠÇ—ŽÒ—pƒpƒXƒ[ƒh
-*XVŽž‚Ìƒ[ƒ‹’Ê’m—L–³
-*ƒe[ƒ}
-*ƒTƒCƒhƒo[‚Ì—˜—p—L–³
+*¥µ¥¤¥ÈÌ¾
+*Ãø¼ÔÌ¾¡Ê¥µ¥¤¥È´ÉÍý¼ÔÌ¾¡Ë
+*¥á¡¼¥ë¥¢¥É¥ì¥¹¡Ê¥µ¥¤¥È´ÉÍý¼Ô¡Ë
+*´ÉÍý¼ÔÍÑ¥Ñ¥¹¥ï¡¼¥É
+*¹¹¿·»þ¤Î¥á¡¼¥ëÄÌÃÎÍ­Ìµ
+*¥Æ¡¼¥Þ
+*¥µ¥¤¥É¥Ð¡¼¤ÎÍøÍÑÍ­Ìµ
 
-''yd—vzƒCƒ“ƒXƒg[ƒ‹‚ª¬Œ÷‚µ‚½‚çA‚·‚®‚ÉuŠÇ—v‰æ–Ê‚ÅŠÇ—ŽÒ—pƒpƒXƒ[ƒh‚ðÝ’è‚µ‚Ä‚­‚¾‚³‚¢B''
+''¡Ú½ÅÍ×¡Û¥¤¥ó¥¹¥È¡¼¥ë¤¬À®¸ù¤·¤¿¤é¡¢¤¹¤°¤Ë¡Ö´ÉÍý¡×²èÌÌ¤Ç´ÉÍý¼ÔÍÑ¥Ñ¥¹¥ï¡¼¥É¤òÀßÄê¤·¤Æ¤¯¤À¤µ¤¤¡£''
 
-!‚¨‚í‚è‚É
-‚±‚ÌƒhƒLƒ…ƒƒ“ƒg‚ÍtDiary”z•zƒpƒbƒP[ƒW‚Ìdoc/README.html‚ðŽQl‚É‚³‚¹‚Ä
-‚¢‚½‚¾‚«‚Ü‚µ‚½BtDiary‚ÌìŽÒA‚½‚¾‚³‚ñ‚ÉŠ´ŽÓ‚µ‚Ü‚·B
+!¤ª¤ï¤ê¤Ë
+¤³¤Î¥É¥­¥å¥á¥ó¥È¤ÏtDiaryÇÛÉÛ¥Ñ¥Ã¥±¡¼¥¸¤Îdoc/README.html¤ò»²¹Í¤Ë¤µ¤»¤Æ
+¤¤¤¿¤À¤­¤Þ¤·¤¿¡£tDiary¤Îºî¼Ô¡¢¤¿¤À¤µ¤ó¤Ë´¶¼Õ¤·¤Þ¤¹¡£
