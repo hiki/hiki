@@ -3,7 +3,7 @@
 == plugin/history.rb - CVS の編集履歴を表示するプラグイン
 
   Copyright (C) 2003 Hajime BABA <baba.hajime@nifty.com>
-  $Id: history.rb,v 1.9 2004-09-06 03:04:14 fdiary Exp $
+  $Id: history.rb,v 1.10 2004-09-09 08:45:40 fdiary Exp $
   You can redistribute and/or modify this file under the terms of the LGPL.
 
   Copyright (C) 2003 Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
@@ -297,7 +297,7 @@ module Hiki
 
       # invoke external command
       cmdlog = history_exec_command(hstcmd)
-      cmdlog.gsub!(/(?:.*?)---/m, '---') # Get rid of header
+      cmdlog.sub!(/(?:.*?)---/m, '---') # Get rid of header
       cmdlog = "*** no diff ***" if cmdlog.empty?
 
       # construct output sources

@@ -1,4 +1,10 @@
 2004-09-09  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/history.rb (Hiki::History::history_diff): ヘッダを除
+	く処理が gsub! だったのを sub! に修正。
+
+	* hiki/db/flatfile.rb (Hiki::HikiDB::set_attribute): db に情報が内
+	場合にエラーにならないように修正。
+
 	* hiki/command.rb (Hiki::Command::cmd_save): @options['freeeze'] 
 	も参照するように修正。
 

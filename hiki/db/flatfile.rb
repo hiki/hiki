@@ -1,4 +1,4 @@
-# $Id: flatfile.rb,v 1.8 2004-07-01 09:21:36 hitoshi Exp $
+# $Id: flatfile.rb,v 1.9 2004-09-09 08:45:40 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'ftools'
@@ -124,6 +124,7 @@ module Hiki
     def set_attribute(p, attr)
       f = p.escape
       @info.transaction do
+	@info[f] = default unless @info[f]
         attr.each do |attribute, value|
           @info[f][attribute] = value
         end
