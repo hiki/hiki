@@ -1,26 +1,34 @@
-# $Id: diffmail.rb,v 1.7 2005-01-30 11:50:55 fdiary Exp $
+# $Id: diffmail.rb,v 1.8 2005-02-01 13:10:47 fdiary Exp $
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 
 #----- send a mail on updating
 def updating_mail
   begin
     latest_text = @db.load(@page) || ''
-    title = @params['page_title'][0] ? @params['page_title'][0].strip : @page
-    keyword = (@params['keyword'][0]||'').split("\n").collect {|k|
-      k.chomp.strip}.delete_if{|k| k.empty?}.join(' / ')
+    if @params['page_title'][0]
+      title = @params['page_title'][0].empty? ? @page : @params['page_title'][0].strip
+    else
+      title = nil
+    end
+    if @params['keyword'][0]
+      keyword = (@params['keyword'][0]||'').split("\n").collect {|k|
+	k.chomp.strip}.delete_if{|k| k.empty?}.join(' / ')
+    else
+      keyword = nil
+    end
     head = ''
     type = (!@db.text or @db.text.empty?) ? 'create' : 'update'
     if type == 'create' then
-      head << "TITLE       = #{title}\n"
-      head << "KEYWORD     = #{keyword}\n"
+      head << "TITLE       = #{title}\n" if title
+      head << "KEYWORD     = #{keyword}\n" if keyword
       r = "#{latest_text}\n"
     elsif type == 'update'
       title_old = CGI::unescapeHTML( page_name( @page ) )
       keyword_old = @db.get_attribute(@page, :keyword).join(' / ')
-      unless title == title_old
+      if title && title != title_old
 	head << "TITLE       = #{title_old} -> #{title}\n"
       end
-      unless keyword == keyword_old
+      if keyword && keyword != keyword_old
 	head << "KEYWORD     = #{keyword_old} -> #{keyword}\n"
       end
       head << "-------------------------\n" unless head.empty?
@@ -29,7 +37,6 @@ def updating_mail
       src = @db.text
       dst = latest_text
       r = unified_diff( src, dst, unified )
-STDERR.puts r
     end
     send_updating_mail(@page, type, head + r) unless (head + r).empty?
   rescue
