@@ -3,7 +3,7 @@
 == plugin/history.rb - CVS の編集履歴を表示するプラグイン
 
   Copyright (C) 2003 Hajime BABA <baba.hajime@nifty.com>
-  $Id: history.rb,v 1.22 2005-03-03 15:53:55 fdiary Exp $
+  $Id: history.rb,v 1.23 2005-04-10 09:34:55 yanagita Exp $
   You can redistribute and/or modify this file under the terms of the LGPL.
 
   Copyright (C) 2003 Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
@@ -80,7 +80,7 @@ module Hiki
     private
 
     def history_repos_type
-      @conf.repos_type # 'cvs' or 'svn'
+      @conf.repos_type # 'cvs' or 'svn' or 'svnsingle'
     end
 
     def history_repos_root
@@ -88,21 +88,14 @@ module Hiki
     end
 
     # Subroutine to invoke external command using `` sequence.
-    def history_exec_command (cmd_string)
-      cmdlog = ''
-      oldpwd = Dir.pwd.untaint
-      begin
-	Dir.chdir( "#{@db.pages_path}" )
-	# うーん... まあとりあえず。
-	cmdlog = `#{cmd_string.untaint}`
-      ensure
-	Dir.chdir( oldpwd )
+    def history_exec_command(cmd_string)
+      Dir.chdir("#{@db.pages_path}") do
+        `#{cmd_string.untaint}`
       end
-      cmdlog
     end
 
     # Subroutine to output proper HTML for Hiki.
-    def history_output (s)
+    def history_output(s)
       # Imported codes from hiki/command.rb::cmd_view()
       parser = @conf.parser::new( @conf )
       tokens = parser.parse( s )
@@ -123,11 +116,11 @@ module Hiki
       # make command string
       case history_repos_type
       when 'cvs'
-	hstcmd = "cvs -Q -d #{history_repos_root} log #{@p.escape}"
-      when 'svn'
-	hstcmd = "svn log #{@p.escape}"
+        hstcmd = "cvs -Q -d #{history_repos_root} log #{@p.escape}"
+      when 'svn', 'svnsingle'
+        hstcmd = "svn log #{@p.escape}"
       else
-	raise
+        raise
       end
       
       # invoke external command
@@ -144,17 +137,17 @@ module Hiki
       case history_repos_type
       when 'cvs'
         cmdlog.split(/----------------------------/).each do |tmp|
-	  if /revision 1.(\d+?)\ndate: (.*?);  author: (?:.*?);  state: (?:.*?);(.*?)?\n(.*)/m =~ tmp then
-	    revs << [$1.to_i, Time.parse("#{$2}Z").localtime.to_s, $3, $4]
-	  end
-	end
-      when 'svn'
+          if /revision 1.(\d+?)\ndate: (.*?);  author: (?:.*?);  state: (?:.*?);(.*?)?\n(.*)/m =~ tmp then
+            revs << [$1.to_i, Time.parse("#{$2}Z").localtime.to_s, $3, $4]
+          end
+        end
+      when 'svn', 'svnsingle'
         cmdlog.split(/------------------------------------------------------------------------/).each do |tmp|
-          if /(?:\D+)(\d+?)[\s:\|]+[(?:\s)*](?:.*?) \| (.*?)(?: \(.+\))? \| (.*?)\n(.*?)\n/m =~ tmp then
-	    revs << [$1.to_i, Time.parse("#{$2}Z").localtime.to_s, $3, $4]
+          if /(?:\D+)(\d+?)[\s:\|]+[(?:\s)*](?:.*?) \| (.*?)(?: \(.+\))? \| (.*?)\n\n(.*?)\n/m =~ tmp then
+            revs << [$1.to_i, Time.parse("#{$2}Z").localtime.to_s, $3, $4]
             diffrevs << $1.to_i
-	  end
-	end
+          end
+        end
       end
       [revs, diffrevs]
     end
@@ -164,9 +157,9 @@ module Hiki
       prev_rev = revs[ind + 1]
       prev2_rev = revs[ind + 2]
       if ind - 1 >= 0
-	next_rev = revs[ind - 1]
+        next_rev = revs[ind - 1]
       else
-	next_rev = nil
+        next_rev = nil
       end
       [prev2_rev, prev_rev, revs[ind], next_rev]
     end
@@ -183,13 +176,13 @@ module Hiki
       
       rv = "["
       if do_link
-	rev_param = "r=#{rev1[0]}"
-	rev_param << ";r2=#{rev2[0]}" if rev2
-	rv << %Q[<a href="#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{@p.escape};#{rev_param}")}" title="#{title}">]
+        rev_param = "r=#{rev1[0]}"
+        rev_param << ";r2=#{rev2[0]}" if rev2
+        rv << %Q[<a href="#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{@p.escape};#{rev_param}")}" title="#{title}">]
       end
       rv << title
       if do_link
-	rv << "</a>"
+        rv << "</a>"
       end
       rv << "]\n"
       rv
@@ -200,58 +193,51 @@ module Hiki
     # Output summary of change history
     def history
       unless history_repos_root then
-	return history_output(history_not_supported_label)
+        return history_output(history_not_supported_label)
       end
 
-      unless %w(cvs svn).include?(history_repos_type)
-	return history_output(history_not_supported_label)
+      unless %w(cvs svn svnsingle).include?(history_repos_type)
+        return history_output(history_not_supported_label)
       end
 
       # parse the result and make revisions array
       revs, diffrevs = revisions
 
       # construct output sources
-      if history_repos_type == 'svn' then
-        prevdiff = 1
-      end
+      prevdiff = 1 if %w(svn svnsingle).include?(history_repos_type)
       sources = ''
-      #  sources << "<pre>\n"
-      #  sources << cmdlog
-      #  sources << "</pre>\n"
       sources << @plugin.hiki_anchor(@p.escape, @plugin.page_name(@p))
       sources << "\n<br>\n"
       sources << "\n<table border=\"1\">\n"
       if @conf.options['history.hidelog']
-	sources << " <tr><th>#{history_th_label[0].escapeHTML}</th><th>#{history_th_label[1].escapeHTML}</th><th>#{history_th_label[2].escapeHTML}</th><th>#{history_th_label[3].escapeHTML}</th></tr>\n"
+        sources << " <tr><th>#{history_th_label[0].escapeHTML}</th><th>#{history_th_label[1].escapeHTML}</th><th>#{history_th_label[2].escapeHTML}</th><th>#{history_th_label[3].escapeHTML}</th></tr>\n"
       else
-	sources << " <tr><th rowspan=\"2\">#{history_th_label[0].escapeHTML}</th><th>#{history_th_label[1].escapeHTML}</th><th>#{history_th_label[2].escapeHTML}</th><th>#{history_th_label[3].escapeHTML}</th></tr><tr><th colspan=\"3\">#{history_th_label[4].escapeHTML}</th></tr>\n"
+        sources << " <tr><th rowspan=\"2\">#{history_th_label[0].escapeHTML}</th><th>#{history_th_label[1].escapeHTML}</th><th>#{history_th_label[2].escapeHTML}</th><th>#{history_th_label[3].escapeHTML}</th></tr><tr><th colspan=\"3\">#{history_th_label[4].escapeHTML}</th></tr>\n"
       end
       revs.each do |rev,time,changes,log|
-	#    time << " GMT"
+        #    time << " GMT"
         op = "[<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_src;p=#{@p.escape};r=#{rev}")}\">View</a> this version] "
-	op << "[Diff to "
+        op << "[Diff to "
         case history_repos_type
         when 'cvs'
           op << "<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{@p.escape};r=#{rev}")}\">current</a>" unless revs.size == rev
-	op << " | " unless (revs.size == rev || rev == 1)
+          op << " | " unless (revs.size == rev || rev == 1)
           op << "<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{@p.escape};r=#{rev};r2=#{rev-1}")}\">previous</a>" unless rev == 1
-        when 'svn'
+        when 'svn', 'svnsingle'
           op << "<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{@p.escape};r=#{rev}")}\">current</a>" unless prevdiff == 1
           op << " | " unless (prevdiff == 1 || prevdiff >= diffrevs.size)
           op << "<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{@p.escape};r=#{rev};r2=#{diffrevs[prevdiff]}")}\">previous</a>" unless prevdiff >= diffrevs.size
         end
-	op << "]"
-	if @conf.options['history.hidelog']
-	  sources << " <tr><td>#{rev}</td><td>#{time.escapeHTML}</td><td>#{changes.escapeHTML}</td><td align=right>#{op}</td></tr>\n"
-	else
-	  log.gsub!(/=============================================================================/, '')
-	  log.chomp!
-	  log = "*** no log message ***" if log.empty?
-	  sources << " <tr><td rowspan=\"2\">#{rev}</td><td>#{time.escapeHTML}</td><td>#{changes.escapeHTML}</td><td align=right>#{op}</td></tr><tr><td colspan=\"3\">#{log.escapeHTML}</td></tr>\n"
-	end
-        if history_repos_type == 'svn' then
-          prevdiff += 1
+        op << "]"
+        if @conf.options['history.hidelog']
+          sources << " <tr><td>#{rev}</td><td>#{time.escapeHTML}</td><td>#{changes.escapeHTML}</td><td align=right>#{op}</td></tr>\n"
+        else
+          log.gsub!(/=============================================================================/, '')
+          log.chomp!
+          log = "*** no log message ***" if log.empty?
+          sources << " <tr><td rowspan=\"2\">#{rev}</td><td>#{time.escapeHTML}</td><td>#{changes.escapeHTML}</td><td align=right>#{op}</td></tr><tr><td colspan=\"3\">#{log.escapeHTML}</td></tr>\n"
         end
+        prevdiff += 1 if %w(svn svnsingle).include?(history_repos_type)
       end
       sources << "</table>\n"
 
@@ -261,18 +247,18 @@ module Hiki
     # Output source at an arbitrary revision
     def history_src
       unless history_repos_root then
-	return history_output(history_not_supported_label)
+        return history_output(history_not_supported_label)
       end
 
       # make command string
       r = @cgi.params['r'][0] || '1'
       case history_repos_type
       when 'cvs'
-	hstcmd = "cvs -Q up -p -r 1.#{r.to_i} #{@p.escape}"
-      when 'svn'
+        hstcmd = "cvs -Q up -p -r 1.#{r.to_i} #{@p.escape}"
+      when 'svn', 'svnsingle'
         hstcmd = "svn cat -r #{r.to_i} #{@p.escape}"
       else
-	return history_output(history_not_supported_label)
+        return history_output(history_not_supported_label)
       end
 
       # invoke external command
@@ -297,11 +283,11 @@ module Hiki
     # Output diff between two arbitrary revisions
     def history_diff
       unless history_repos_root then
-	return history_output(history_not_supported_label)
+        return history_output(history_not_supported_label)
       end
 
-      unless %w(cvs svn).include?(history_repos_type)
-	return history_output(history_not_supported_label)
+      unless %w(cvs svn svnsingle).include?(history_repos_type)
+        return history_output(history_not_supported_label)
       end
 
       # make command string
@@ -309,28 +295,28 @@ module Hiki
       r2 = @cgi.params['r2'][0]
       case history_repos_type
       when 'cvs'
-	if r2.nil? || r2.to_i == 0
-	  new = @db.load(@p)
-	  old = history_exec_command("cvs -Q up -p -r 1.#{r.to_i} #{@p.escape}")
-	else
-	  new = history_exec_command("cvs -Q up -p -r 1.#{r.to_i} #{@p.escape}")
-	  old = history_exec_command("cvs -Q up -p -r 1.#{r2.to_i} #{@p.escape}")
-	end	  
-      when 'svn'
-	if r2.nil? || r2.to_i == 0
-	  new = @db.load(@p)
-	  old = history_exec_command("svn cat -r #{r.to_i} #{@p.escape}")
-	else
-	  new = history_exec_command("svn cat -r #{r.to_i} #{@p.escape}")
-	  old = history_exec_command("svn cat -r #{r2.to_i} #{@p.escape}")
-	end	  
+        if r2.nil? || r2.to_i == 0
+          new = @db.load(@p)
+          old = history_exec_command("cvs -Q up -p -r 1.#{r.to_i} #{@p.escape}")
+        else
+          new = history_exec_command("cvs -Q up -p -r 1.#{r.to_i} #{@p.escape}")
+          old = history_exec_command("cvs -Q up -p -r 1.#{r2.to_i} #{@p.escape}")
+        end
+      when 'svn', 'svnsingle'
+        if r2.nil? || r2.to_i == 0
+          new = @db.load(@p)
+          old = history_exec_command("svn cat -r #{r.to_i} #{@p.escape}")
+        else
+          new = history_exec_command("svn cat -r #{r.to_i} #{@p.escape}")
+          old = history_exec_command("svn cat -r #{r2.to_i} #{@p.escape}")
+        end
       else
-	return history_output(history_not_supported_label)
+        return history_output(history_not_supported_label)
       end
 
       # parse the result and make revisions array
       revs, diffrevs = revisions
-			
+      
       prev2_rev, prev_rev, curr_rev, next_rev = recent_revs(revs, r.to_i)
       last_rev = revs[0]
 
@@ -346,15 +332,15 @@ module Hiki
       sources << "\n"
 
       if prev_rev
-	do_link = (last_rev and prev_rev and last_rev[0] != prev_rev[0])
-	sources << diff_link(prev_rev, nil, nil, "HEAD", do_link)
+        do_link = (last_rev and prev_rev and last_rev[0] != prev_rev[0])
+        sources << diff_link(prev_rev, nil, nil, "HEAD", do_link)
       end
       if prev_rev and prev2_rev
-	sources << diff_link(prev_rev, prev2_rev, nil, nil, true)
+        sources << diff_link(prev_rev, prev2_rev, nil, nil, true)
       end
       sources << diff_link(curr_rev, r2.nil? ? nil : prev_rev, nil, nil, false)
       if next_rev
-	sources << diff_link(next_rev, curr_rev, nil, nil, true)
+        sources << diff_link(next_rev, curr_rev, nil, nil, true)
       end
       do_link = (r2 and last_rev and last_rev[0] != curr_rev[0])
       sources << diff_link(curr_rev, nil, nil, "HEAD", do_link)

@@ -99,21 +99,6 @@ eval( File::open( "\#{hiki}/hiki.conf" ){|f| f.read.untaint} )
 CONF
 end
 
-def rmdir( dir )
-   dirlist = Dir::glob(dir + "**/").sort {
-      |a,b| b.split('/').size <=> a.split('/').size
-   }
-
-   dirlist.each {|d|
-      d.untaint
-      Dir::foreach(d) {|f|
-         f.untaint
-         File::delete(d+f) if ! (/\.+$/ =~ f)
-      }
-      Dir::rmdir(d)
-   }
-end
-
 
 def create_wiki( wiki, hiki, cgi_name, data_path )
    Dir.mkdir( wiki.untaint )
@@ -141,54 +126,54 @@ def create_wiki( wiki, hiki, cgi_name, data_path )
 end
 
 def body( data_path )
-   wikilist = []
-   wikis = 0
-   pages = 0
-   Dir['*'].each do |wiki|
-      next unless FileTest::directory?( wiki.untaint )
-      next if FileTest::symlink?( wiki )
-      next unless FileTest::file?( "#{wiki}/hikiconf.rb" )
-      if not @repos.imported?( wiki ) then
-         @repos.import( wiki )
+  wikilist = []
+  wikis = 0
+  pages = 0
+  Dir['*'].each do |wiki|
+    next unless FileTest::directory?( wiki.untaint )
+    next if FileTest::symlink?( wiki )
+    next unless FileTest::file?( "#{wiki}/hikiconf.rb" )
+    if not @repos.imported?( wiki ) then
+      @repos.import( wiki )
+    end
+
+    title = wiki
+    mtime = nil
+    file = ''
+    begin
+      File::open( "#{data_path}/#{wiki}/hiki.conf" ) do |conf|
+        if /^@?site_name\s*=\s*(".*")\s*$/ =~ conf.read then
+          title = eval($1.untaint)
+        end
       end
-#      @repos.update( wiki )
-      title = wiki
-      mtime = nil
-      file = ''
-      begin
-         File::open( "#{data_path}/#{wiki}/hiki.conf" ) do |conf|
-            if /^@?site_name\s*=\s*(".*")\s*$/ =~ conf.read then
-               title = eval($1.untaint)
-            end
-         end
-      rescue
-      	 title = "#{wiki}'s Wiki"
-      end
-      pages += Dir["#{data_path}/#{wiki}/text/*"].size
-      Dir["#{data_path}/#{wiki}/text/*"].sort{ |a,b| File.mtime(a.untaint) <=> File.mtime(b.untaint) }.reverse.each do |f|
-         next if File.basename(f) == "CVS" || !File.size?(f)
-	 mtime = File.mtime(f)
-	 file = f.gsub(/.*\//, '')
-	 break
-      end
-      wikilist.push( WikiList.new(wiki, title, mtime, file) ) if mtime
-      wikis += 1
-   end
-   r = "<p>全 #{wikis} Wiki / #{pages} ページ (* は差分へのリンク)</p>\n"
-   r << "<table>\n"
-   r << %Q|<tr><th>Wiki の名前</th><th>タイトル</th><th>最終更新時刻</th></tr>|
-   wikilist = wikilist.sort{ |a,b| a.mtime <=> b.mtime }.reverse
-   wikilist.each do |wiki|
-      page = CGI.escapeHTML(CGI.unescape(wiki.file))
-      r << %Q|<tr>|
-      r << %Q|<td><a href="#{wiki.name}/">#{wiki.name}</a></td>|
-      r << %Q|<td>#{CGI::escapeHTML(wiki.title)}</td>|
-      r << %Q|<td>#{wiki.mtime.strftime("%Y/%m/%d %H:%M")}|
-      r << %Q| <a href="#{wiki.name}/?c=diff;p=#{wiki.file}">*</a>\n|
-      r << %Q| <a href="#{wiki.name}/?#{wiki.file}">#{page}</a></td></tr>\n|
-   end
-   @head['Last-Modified'] = CGI::rfc1123_date( wikilist[0].mtime ) unless wikilist.empty?
-r << "</table>\n"
+    rescue
+      title = "#{wiki}'s Wiki"
+    end
+    pages += Dir["#{data_path}/#{wiki}/text/*"].size
+    Dir["#{data_path}/#{wiki}/text/*"].sort{ |a,b| File.mtime(a.untaint) <=> File.mtime(b.untaint) }.reverse.each do |f|
+      next if File.basename(f) == "CVS" || !File.size?(f)
+      mtime = File.mtime(f)
+      file = f.gsub(/.*\//, '')
+      break
+    end
+    wikilist.push( WikiList.new(wiki, title, mtime, file) ) if mtime
+    wikis += 1
+  end
+  r = "<p>全 #{wikis} Wiki / #{pages} ページ (* は差分へのリンク)</p>\n"
+  r << "<table>\n"
+  r << %Q|<tr><th>Wiki の名前</th><th>タイトル</th><th>最終更新時刻</th></tr>|
+  wikilist = wikilist.sort{ |a,b| a.mtime <=> b.mtime }.reverse
+  wikilist.each do |wiki|
+    page = CGI.escapeHTML(CGI.unescape(wiki.file))
+    r << %Q|<tr>|
+    r << %Q|<td><a href="#{wiki.name}/">#{wiki.name}</a></td>|
+    r << %Q|<td>#{CGI::escapeHTML(wiki.title)}</td>|
+    r << %Q|<td>#{wiki.mtime.strftime("%Y/%m/%d %H:%M")}|
+    r << %Q| <a href="#{wiki.name}/?c=diff;p=#{wiki.file}">*</a>\n|
+    r << %Q| <a href="#{wiki.name}/?#{wiki.file}">#{page}</a></td></tr>\n|
+  end
+  @head['Last-Modified'] = CGI::rfc1123_date( wikilist[0].mtime ) unless wikilist.empty?
+  r << "</table>\n"
 end
 
 def form

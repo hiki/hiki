@@ -1,3 +1,8 @@
+2005-04-10  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* hiki/repos/svn.rb, hiki/repos/svnsingle.rb, misc/hikifarm/index.cgi,
+	misc/hikifarm/hikifarm.conf: svn バックエンドで、リポジトリの作り方が変だったのを修正。
+	* misc/plugin/history.rb: svn バックエンドで、ログが表示されていなかったのを修正。
+
 2005-04-05  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/hikifarm/index.cgi: fix a bug in collecting site_name
 	(reported by kdmsnr). remove the current directory from $: when it
