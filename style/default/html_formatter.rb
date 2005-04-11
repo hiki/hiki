@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.23 2005-03-18 11:31:32 yanagita Exp $
+# $Id: html_formatter.rb,v 1.24 2005-04-11 10:43:08 yanagita Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -179,7 +179,7 @@ module Hiki
       when :heading1_open, :heading2_open, :heading3_open, :heading4_open, :heading5_open
         s[:toc_level] = t[:lv]
         if t[:e] == :heading2_open
-          link_label = %Q[<span class="sanchor">_</span>]
+          link_label = %Q[<span class="sanchor">&nbsp;</span>]
         else
           link_label = ' '
         end

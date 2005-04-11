@@ -1,3 +1,7 @@
+2005-04-11  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* hiki/style/default/html_formatter.rb (HTMLFormatter_default::token_to_s):
+	h2 の span.sanchor に `_' を入れていたのをやめて、&nbsp; にした。
+
 2005-04-10  Kouhei Yanagita <sugi@dream.big.or.jp>
 	* hiki/repos/svn.rb, hiki/repos/svnsingle.rb, misc/hikifarm/index.cgi,
 	misc/hikifarm/hikifarm.conf: svn バックエンドで、リポジトリの作り方が変だったのを修正。
