@@ -1,3 +1,6 @@
+2005-04-20  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* hiki/misc/hiki-mode/*: hiki-mode.el を Attic から復活。
+
 2005-04-11  Kouhei Yanagita <sugi@dream.big.or.jp>
 	* hiki/style/default/html_formatter.rb (HTMLFormatter_default::token_to_s):
 	h2 の span.sanchor に `_' を入れていたのをやめて、&nbsp; にした。
