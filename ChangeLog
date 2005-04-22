@@ -1,3 +1,12 @@
+2005-04-22  Kazuhiko  <kazuhiko@fdiary.net>
+	* template/adminform.html: output a correct <h2> header (by
+	Yazawa).
+	* hiki/command.rb (Command::cmd_edit), template/edit.html,
+	template/view.html: output more valid HTML (by Yazawa).
+
+	* hiki.cgi: remove the current directory from $: when it is
+	writable.
+
 2005-04-20  Kouhei Yanagita <sugi@dream.big.or.jp>
 	* hiki/misc/hiki-mode/*: hiki-mode.el を Attic から復活。
 

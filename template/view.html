@@ -20,10 +20,10 @@
         <%=@conf.msg_last_modified%>:<%= @contents[:last_modified] %><br>
         <%=@conf.msg_keyword%>:<%= @contents[:keyword] %><br>
         <%=@conf.msg_reference%>:<%= @contents[:references] %><br>
-        <div><%= @contents[:page_attribute] %></div>
+        <% unless @contents[:page_attribute].empty? %><div><%= @contents[:page_attribute] %></div><% end %>
       </div>
     </div>
-    <div><%= @contents[:body_leave] %></div>
+    <% unless @contents[:body_leave].empty? %><div><%= @contents[:body_leave] %></div><% end %>
   </div>
 </div>
 <% if @contents[:sidebar_class] %>

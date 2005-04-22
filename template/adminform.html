@@ -21,7 +21,7 @@
 <div class="conf day">
   <input type="hidden" value="admin" name="c">
   <input type="hidden" name="conf" value="<%=@contents[:key]%>">
-  <h2><span class="title"><%=@conf.msg_conf( @contents[:key] )%></span></h2>
+  <h2><span class="title"><%=@plugin.conf_label( @contents[:key] )%></span></h2>
   <div class="body">
     <%=@plugin.conf_proc( @contents[:key] )%>
     <div><input type="submit" name="saveconf" value="OK"></div>

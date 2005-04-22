@@ -31,7 +31,7 @@
       <textarea cols="15" rows="3" name="keyword" class="keyword" accesskey="K"><%= @contents[:keyword] %></textarea>
     </p>
     <p>
-      <input type="checkbox" name="freeze"<%= @contents[:freeze] %>><%=@conf.msg_freeze_checkbox%> 
+      <input type="checkbox" name="freeze" value="on"<%= @contents[:freeze] %>><%=@conf.msg_freeze_checkbox%> 
       <%=@conf.msg_password_form%> <input type="password" name="password" size="20">
     </p>
     <div><%= @contents[:edit_proc] %></div>
@@ -48,7 +48,7 @@
 
 <hr class="sep">
 
-<div class="update day"><%= @contents[:form_proc] %></div>
+<% unless @contents[:form_proc].empty? %><div class="update day"><%= @contents[:form_proc] %></div><% end %>
 
 <div class="update day">
 <div class="comment">

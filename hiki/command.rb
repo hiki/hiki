@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.38 2005-04-01 07:44:28 fdiary Exp $
+# $Id: command.rb,v 1.39 2005-04-22 01:22:31 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -293,7 +293,7 @@ module Hiki
       data[:page_title]     = page_title
       
       f = @db.is_frozen?( page ) || @conf.options['freeze']
-      data[:freeze]         = f ? ' checked="on"' : ''
+      data[:freeze]         = f ? ' checked' : ''
       data[:freeze_msg]     = @conf.msg_freeze if f
       data[:form_proc]      = @plugin.form_proc.sanitize
 

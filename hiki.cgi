@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# $Id: hiki.cgi,v 1.24 2005-01-06 10:08:58 fdiary Exp $
+# $Id: hiki.cgi,v 1.25 2005-04-22 01:22:30 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 BEGIN { $defout.binmode }
@@ -14,6 +14,7 @@ begin
     org_path = File::dirname( __FILE__ )
   end
   $:.unshift( org_path.untaint, "#{org_path.untaint}/hiki" )
+  $:.delete(".") if File.writable?(".")
 
   require 'hiki/config'
   conf = Hiki::Config::new
