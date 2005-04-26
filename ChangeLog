@@ -1,3 +1,9 @@
+2005-04-26  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/rss-show.rb (rss_parse): revise a regexp of rss (by
+	kdnsmr).
+	* hiki/storage.rb (HikiDBBase::load_cache): read cache files by
+	binary mode.
+
 2005-04-22  Kazuhiko  <kazuhiko@fdiary.net>
 	* template/adminform.html: output a correct <h2> header (by
 	Yazawa).

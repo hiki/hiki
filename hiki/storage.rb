@@ -1,4 +1,4 @@
-# $Id: storage.rb,v 1.8 2005-01-30 15:25:21 fdiary Exp $
+# $Id: storage.rb,v 1.9 2005-04-26 14:00:44 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'digest/md5'
@@ -93,7 +93,7 @@ module Hiki
       cache_path = "#{@conf.cache_path}/parser"
       Dir.mkdir( cache_path ) unless test( ?e, cache_path )
       begin
-	return Marshal::load( File.read( "#{cache_path}/#{CGI::escape( page )}" ) )
+	return Marshal::load( File.open( "#{cache_path}/#{CGI::escape( page )}", 'rb' ) {|f| f.read} )
       rescue
 	return nil
       end

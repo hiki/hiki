@@ -1,4 +1,4 @@
-# $Id: rss-show.rb,v 1.3 2004-04-03 14:33:58 fdiary Exp $
+# $Id: rss-show.rb,v 1.4 2005-04-26 14:00:44 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 #
 #   MoonWolf holds the copyright of the following methods.
@@ -63,7 +63,7 @@ def rss_recent_cache(url, cache_file, cache_time)
 end
 
 def rss_parse(rss)
-  rss_re = /<item[^>]*?>.*?<title[^>]*?>(.*?)<\/title>.*?<link[^>]*?>(.*?)<\/link>.*?<\/item>/mi
+  rss_re = /<item(?!s)[^>]*?>.*?<title[^>]*?>(.*?)<\/title>.*?<link[^>]*?>(.*?)<\/link>.*?<\/item>/mi
   force_to_euc(rss).scan(rss_re)
 end
 
