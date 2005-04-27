@@ -1,4 +1,4 @@
-# $Id: util.rb,v 1.29 2005-03-03 12:56:53 fdiary Exp $
+# $Id: util.rb,v 1.30 2005-04-27 00:15:29 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'nkf'
@@ -213,7 +213,7 @@ EndOfMail
 REMOTE_ADDR = #{ENV['REMOTE_ADDR']}
 REMOTE_HOST = #{ENV['REMOTE_HOST']}
 EOS
-      body << "REMOTE_USER = #{ENV['REMOTE_USER']}" if ENV['REMOTE_USER']
+      body << "REMOTE_USER = #{ENV['REMOTE_USER']}\n" if ENV['REMOTE_USER']
       body << <<EOS
         URL = #{@conf.index_url}?#{page.escape}
 #{'-' * 25}
