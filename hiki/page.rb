@@ -1,4 +1,4 @@
-# $Id: page.rb,v 1.8 2005-03-02 04:32:39 fdiary Exp $
+# $Id: page.rb,v 1.9 2005-04-27 00:00:50 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 
@@ -31,6 +31,7 @@ module Hiki
       @contents[:lang]           = @conf.lang
       @contents[:header]         = plugin.header_proc.sanitize
       @contents[:body_leave]     = plugin.body_leave_proc.sanitize
+      @contents[:page_attribute] ||= ''
       @contents[:footer]         = plugin.footer_proc.sanitize
       
       html = to_html

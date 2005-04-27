@@ -1,3 +1,6 @@
+2005-04-27  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/page.rb (Page::page): set an empty 'page_attribute' if nil.
+
 2005-04-26  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/rss-show.rb (rss_parse): revise a regexp of rss (by
 	kdnsmr).
