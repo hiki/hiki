@@ -4,7 +4,7 @@
 
 ;; Author: Hideaki Hori <yowaken@cool.ne.jp>
 
-;; $Id: hiki-mode.el,v 1.2 2005-04-20 13:49:29 yanagita Exp $
+;; $Id: hiki-mode.el,v 1.3 2005-05-02 12:26:42 fdiary Exp $
 ;;
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
@@ -44,7 +44,7 @@
 (require 'derived)
 
 (defconst hiki-mode-version
-  (let ((revision "$Revision: 1.2 $"))
+  (let ((revision "$Revision: 1.3 $"))
     (string-match "\\([0-9.]+\\)" revision)
     (match-string 1 revision)))
 
@@ -725,7 +725,7 @@ REFETCH が nil ですでにバッファが存在するなら、HTTP GET しない。"
 	  (setq end (match-beginning 0))
 	  (setq result (cons (cons 'keyword (hiki-replace-entity-refs (buffer-substring start end))) result)))
 	;; frozen?
-	(if (re-search-forward "<input type=\"checkbox\" name=\"freeze\" checked=\"on\">" nil t nil)
+	(if (re-search-forward "<input type=\"checkbox\" name=\"freeze\" value=\"on\" checked>" nil t nil)
 	    (setq result (cons (cons 'password t) result))
 	  (setq result (cons (cons 'password nil) result)))))
     result))
