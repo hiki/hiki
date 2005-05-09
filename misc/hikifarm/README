@@ -14,22 +14,23 @@ HikiFarmは、HikiFarmのCGIの下にディレクトリを作成し、その下にHiki実行
 環境を生成することで複数Hikiの管理を行います。例えば、HikiFarmのURLが
 以下のような場合、
 
- http://example.com/hiki/
+ http://example.com/hikifarm/
 
 「sample」というHikiサイトを生成すると以下のようなURLになります。
 
- http://example.com/hiki/sample/
+ http://example.com/hikifarm/sample/
 
-! HikiFarmの作り方
 
-!! 下準備
 
-Hikiは好きなところに展開します(例: /home/foo/src/hiki)。複数運用するた
-め、開発版であるv0_5_branchである必要があります。このディレクトリは別
-にWebから見える必要はありません。
+! HikiFarm の設置方法
 
-CGIを設置するディレクトリを決め、そこをWebサーバの権限で書き込み可能に
-します。また、デフォルトのインデックス(ApacheならDefaultDirectory)を、
+Hikiは好きなところに展開します(例: /home/foo/src/hiki)。
+ここを、Hiki インストールディレクトリと呼びます。
+このディレクトリはWebから見える必要はありません。
+
+CGIを設置するディレクトリを決め(例: /home/foo/public_html/hikifarm)、
+そこをWebサーバの権限で書き込み可能にします。
+また、デフォルトのインデックス(ApacheならDefaultDirectory)を、
 index.cgiにします(HikiFarmはindex.cgiを自動生成します)。
 
  # Apacheの場合の.htaccess(またはhttpd.conf)
@@ -37,18 +38,17 @@ index.cgiにします(HikiFarmはindex.cgiを自動生成します)。
  DirectoryIndex index.cgi
 
 テーマのディレクトリ(theme)も、CGIを設置するディレクトリに置いておくと
-良いでしょう。
+良いでしょう。(例: /home/foo/public_html/hikifarm/theme)
 
-データを保存するディレクトリを決め(例: /home/foo/var/hiki)、そこをWeb
-サーバの権限で書き込み可能にします。
-
-!! インストール
+データを保存するディレクトリを決め(例: /home/foo/var/hiki)、
+そこをWebサーバの権限で書き込み可能にします。
+このディレクトリはWebから見える必要はありません。
 
 index.cgiとhikifarm.confは、CGIを設置するディレクトリにコピーします。
 index.cgiには実行権限を付け、hikifarm.confは自分の環境に合わせて書き換
 えておきます。
 
-次に、hiki.confもHikiインストールディレクトリに置いて、環境に合わせて
+次に、hiki.confをHikiインストールディレクトリに置いて、環境に合わせて
 書き換えます。このファイルは本質的にhikiconf.rbと同じものですが、
 「__my_wiki_name__」というキーワードが生成されたWikiサイト名に置き変わ
 るようになっているところがミソです。
@@ -57,7 +57,25 @@ index.cgiには実行権限を付け、hikifarm.confは自分の環境に合わせて書き換
 [[QuickML|http://www.quickml.com/]]で配信するための設定です。必要に応
 じて書き換えてください(配信無用ならnilにする)。
 
-! 実行
-
 CGIを設置したディレクトリにブラウザからアクセスすれば、HikiFarmの画面
 が現れます。
+
+CVS/Subversion バックエンドを用いる場合は、vc-backend-setup.cgi
+を実行してください。
+
+
+!! CVS/Subversion バックエンドについて
+Hikifarm では、バージョン管理のバックエンドとして
+CVS もしくは Subversion を使うことができます。
+CVS を用いる場合は repos_type を 'cvs' に、
+Subversion を各 Wiki ごとのリポジトリで使用する場合は repos_type を 'svn' に、
+Subversion を Hikifarm 全体で単一リポジトリで使用する場合は repos_type を
+'svnsingle' に設定してください。
+
+なお、CVS/Subversion バックエンドを用いる場合は、
+Hikifarm 設置完了後に vc-backend-setup.cgi を実行してください。
+これを実行しないと、バージョン管理が正しくなされません。
+
+実行方法は、vc-backend-setup.cgi を Hikifarm の index.cgi を設置したディレクトリに
+コピーし、CGI としてアクセスすれば OK です。
+(シェルが使える場合は、コマンドラインから実行してもかまいません)

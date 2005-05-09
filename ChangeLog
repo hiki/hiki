@@ -1,3 +1,9 @@
+2005-05-09  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* misc/hikifarm/*: Hikifarm のコードを書き直し、
+	バージョン管理バックエンドのセットアップを分離した。
+	* test/test_hikifarm.rb: Hikifarm の Test Case
+	を追加した。
+
 2005-05-09  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/storage.rb (HikiDBBase::save_cache): revise for mod_ruby.
 

@@ -1,76 +1,162 @@
 #!/usr/bin/env ruby
-# Copyright (C) 2003, TADA Tadashi <sho@spc.gr.jp>
-# Copyright (C) 2003, Kazuhiko <kazuhiko@fdiary.net>
-# Copyright (C) 2003, Koichiro Ohba <koichiro@meadowy.org>
-# Copyright (C) 2003, Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
-# You can distribute this under GPL.
 
-$SAFE = 1
+HIKIFARM_VERSION = '0.4.0.20050509'
 
-#--- Default Settings -----------------------------------------------
-ruby = '/usr/bin/env ruby'
-hiki = ''
-default_pages = "#{hiki}/text"
-data_path = ''
-cvsroot = nil
-hikifarm_path = './'
+class HikifarmConfig
+  attr_reader :ruby, :hiki, :hikifarm_path, :default_pages, :data_path, :repos_type, :repos_root
+  attr_reader :title, :css, :author, :mail, :cgi_name, :header, :footer
+  
+  def initialize
+    load
+  end
 
-title = ''
-css = 'theme/hiki/hiki.css'
+  def load
+    # デフォルト設定
+    # 前もって定義してないと eval しても残らない
+    ruby = '/usr/bin/env ruby'
+    hiki = ''
+    hikifarm_path = ''
+    default_pages = ''
+    data_path = ''
+    repos_type = nil
+    repos_root = nil
+    cvsroot = nil
+    title = ''
+    css = 'theme/hiki/hiki.css'
+    author = ''
+    mail = ''
+    header = nil
+    footer = nil
+    cgi_name = 'index.cgi'
 
-header = nil
-footer = nil
+    eval(File.read('hikifarm.conf').untaint)
 
-cgi_name = 'index.cgi'
+    @ruby = ruby
+    @hiki = hiki
+    @hikifarm_path = hikifarm_path
+    @default_pages = default_pages
+    @data_path = data_path
 
-author = ''
-mail = ''
+    @repos_type = repos_type || 'default'
+    @repos_root = repos_root
 
-eval( open( 'hikifarm.conf' ){|f|f.read.untaint} )
-@ruby = ruby
-@hiki = hiki
-@default_pages = default_pages
+    @title = title
+    @css = css
+    @author = author
+    @mail = mail
+    @header = header
+    @footer = footer
+    @cgi_name = cgi_name
 
-repos_type ||= 'default'
-repos_root ||= nil
+    # Support depracated configuration
+    if cvsroot then
+      @repos_type = 'cvs'
+      @repos_root = cvsroot
+    end
 
-# Support depracated configuration
-if cvsroot then
-   repos_type = 'cvs'
-   repos_root = cvsroot
+
+    if @repos_root =~ /:/ and @repos_root.split(/:/)[1] != "local"
+      msg = "Hiki does not support remote repository now." + 
+        "You should modify &quot;repos_root&quot; entry of &quot;hikifarm.conf&quot; file."
+      page = ErrorPage.new(@author, @mail, @css, @title, msg)
+      print page.to_s
+      exit 1
+    end
+
+  end
 end
 
-if repos_root =~ /:/ and repos_root.split(/:/)[1] != "local" then
-  print <<ERROR
-Content-Type: text/html; charset=EUC-JP
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="ja-JP">
-<head>
-   <meta http-equiv="Content-Type" content="text/html; charset=EUC-JP">
-   <meta name="generator" content="HikiFarm">
-   <meta http-equiv="Content-Script-Type" content="text/javascript; charset=EUC-JP">
-   <meta name="author" content="#{author}">
-   <link rev="made" href="mailto:#{mail}">
-   <meta http-equiv="content-style-type" content="text/css">
-   <link rel="stylesheet" href="#{css}" title="tada" type="text/css" media="all">
-   <title>#{title}</title>
-</head>
-<body>
-<h1>Error</h1>
-<p class="message">Hiki does not support remote repository now.
-You should modify &quot;repos_root&quot; entry of &quot;hikifarm.conf&quot; file.</p>
-</body>
-</html>
-ERROR
-  exit 1
+
+class Wiki
+  attr_reader :name, :title, :mtime, :last_modified_page, :pages_num
+  def initialize(name, data_path)
+    @name = name
+    @pages_num = 0
+
+    begin
+      File.readlines("#{data_path}/#{name}/hiki.conf").each do |line|
+        if line =~ /^@?site_name\s*=\s*(".*")\s*$/
+          @title = eval($1.untaint)
+        end
+      end
+    rescue
+      @title = "#{name}'s Wiki"
+    end
+
+    pages = Dir["#{data_path}/#{name}/text/*"]
+    pages.delete_if{|f| File.basename(f) == 'CVS' or File.basename(f) == '.svn' or File.size?(f.untaint).nil?}
+    pages = pages.sort_by{|f| File.mtime(f)}
+    @last_modified_page = File.basename(pages[-1])
+    @mtime = File.mtime(pages[-1])
+    @pages_num = pages.size
+  end
 end
 
-#--------------------------------------------------------------------
+class Hikifarm
+  attr_reader :wikilist
+  
+  def initialize(farm_pub_path, ruby, repos_type, repos_root, data_path)
+    require "hiki/repos/#{repos_type}"
+    @repos = Hiki::const_get("Repos#{repos_type.capitalize}").new(repos_root, data_path)
+    @ruby = ruby
+    @wikilist = []
+    @farm_pub_path = farm_pub_path
 
-HIKIFARM_VERSION = '0.3.0.20041214'
+    Dir["#{farm_pub_path}/*"].each do |wiki|
+      wiki.untaint
+      next if not FileTest.directory?(wiki)
+      next if FileTest.symlink?(wiki)
+      next if not FileTest.file?("#{wiki}/hikiconf.rb")
 
-def index( wiki )
+      @wikilist << Wiki.new(File.basename(wiki), data_path)
+    end
+  end
+
+  def wikis_num
+    @wikilist.size
+  end
+
+  def pages_num
+    @wikilist.inject(0){|result, wiki| result + wiki.pages_num}
+  end
+
+  def create_wiki(name, hiki, cgi_name, data_path, default_pages_path)
+    Dir.mkdir("#{@farm_pub_path}/#{name.untaint}")
+
+    File.open("#{@farm_pub_path}/#{name}/#{cgi_name}", 'w') do |f|
+      f.puts(index(name, hiki)) # fix me
+      f.chmod(0744)
+    end
+
+    File.open("#{@farm_pub_path}/#{name}/hikiconf.rb", 'w') do |f|
+      f.puts(conf(name, hiki)) # fix me
+    end
+
+    Dir.mkdir("#{data_path}/#{name}")
+    Dir.mkdir("#{data_path}/#{name}/text")
+    Dir.mkdir("#{data_path}/#{name}/backup")
+    Dir.mkdir("#{data_path}/#{name}/cache")
+    require 'fileutils'
+    Dir["#{default_pages_path}/*"].each do |f|
+      f.untaint
+      FileUtils.cp(f, "#{data_path}/#{name}/text/#{File.basename(f)}") if File.file?(f)
+    end
+
+    @repos.import(name)
+  end
+
+  private
+  def conf(wiki, hiki)
+<<CONF
+hiki=''
+eval( open( '../hikifarm.conf' ){|f|f.read.untaint} )
+__my_wiki_name__ = '#{wiki}'
+eval( File::open( "\#{hiki}/hiki.conf" ){|f| f.read.untaint} )
+CONF
+  end
+
+  def index(wiki, hiki)
 <<-INDEX
 #!#{@ruby}
 hiki=''
@@ -78,202 +164,222 @@ eval( open( '../hikifarm.conf' ){|f|f.read.untaint} )
 $:.unshift "\#{hiki}"
 load "\#{hiki}/hiki.cgi"
 INDEX
-end
-
-class WikiList
-   attr_reader :name, :title, :mtime, :file
-   def initialize(name, title, mtime, file)
-      @name = name
-      @title = title
-      @mtime = mtime
-      @file = file
-   end
-end
-
-def conf( wiki )
-<<CONF
-hiki=''
-eval( open( '../hikifarm.conf' ){|f|f.read.untaint} )
-__my_wiki_name__ = '#{wiki}'
-eval( File::open( "\#{hiki}/hiki.conf" ){|f| f.read.untaint} )
-CONF
-end
-
-
-def create_wiki( wiki, hiki, cgi_name, data_path )
-   Dir.mkdir( wiki.untaint )
-   File.open( "#{wiki}/#{cgi_name}", 'w' ) do |f|
-      f.puts( index( wiki ) )
-      f.chmod( 0744 )
-   end
-   File::open( "#{wiki}/hikiconf.rb", 'w' ) do |f|
-      f.puts( conf( wiki ) )
-   end
-
-   Dir.mkdir( "#{data_path}/#{wiki}" )
-   Dir.mkdir( "#{data_path}/#{wiki}/text" )
-   Dir.mkdir( "#{data_path}/#{wiki}/backup" )
-   Dir.mkdir( "#{data_path}/#{wiki}/cache" )
-   Dir["#{@default_pages}/*"].each do |file|
-      next unless File.file?( file.untaint )
-      File.open( file ) do |i|
-         File.open( "#{data_path}/#{wiki}/text/#{File.basename file}", 'w' ) do |o|
-            o.write( i.read )
-         end
-      end
-   end
-   @repos.import( wiki )
-end
-
-def body( data_path )
-  wikilist = []
-  wikis = 0
-  pages = 0
-  Dir['*'].each do |wiki|
-    next unless FileTest::directory?( wiki.untaint )
-    next if FileTest::symlink?( wiki )
-    next unless FileTest::file?( "#{wiki}/hikiconf.rb" )
-    if not @repos.imported?( wiki ) then
-      @repos.import( wiki )
-    end
-
-    title = wiki
-    mtime = nil
-    file = ''
-    begin
-      File::open( "#{data_path}/#{wiki}/hiki.conf" ) do |conf|
-        if /^@?site_name\s*=\s*(".*")\s*$/ =~ conf.read then
-          title = eval($1.untaint)
-        end
-      end
-    rescue
-      title = "#{wiki}'s Wiki"
-    end
-    pages += Dir["#{data_path}/#{wiki}/text/*"].size
-    Dir["#{data_path}/#{wiki}/text/*"].sort{ |a,b| File.mtime(a.untaint) <=> File.mtime(b.untaint) }.reverse.each do |f|
-      next if File.basename(f) == "CVS" || !File.size?(f)
-      mtime = File.mtime(f)
-      file = f.gsub(/.*\//, '')
-      break
-    end
-    wikilist.push( WikiList.new(wiki, title, mtime, file) ) if mtime
-    wikis += 1
   end
-  r = "<p>全 #{wikis} Wiki / #{pages} ページ (* は差分へのリンク)</p>\n"
-  r << "<table>\n"
-  r << %Q|<tr><th>Wiki の名前</th><th>タイトル</th><th>最終更新時刻</th></tr>|
-  wikilist = wikilist.sort{ |a,b| a.mtime <=> b.mtime }.reverse
-  wikilist.each do |wiki|
-    page = CGI.escapeHTML(CGI.unescape(wiki.file))
-    r << %Q|<tr>|
-    r << %Q|<td><a href="#{wiki.name}/">#{wiki.name}</a></td>|
-    r << %Q|<td>#{CGI::escapeHTML(wiki.title)}</td>|
-    r << %Q|<td>#{wiki.mtime.strftime("%Y/%m/%d %H:%M")}|
-    r << %Q| <a href="#{wiki.name}/?c=diff;p=#{wiki.file}">*</a>\n|
-    r << %Q| <a href="#{wiki.name}/?#{wiki.file}">#{page}</a></td></tr>\n|
+
+
+end
+
+
+
+class ErbPage
+  def initialize
+    @headings = {
+      'Content-Type' => 'text/html; charset=EUC-JP'
+    }
   end
-  @head['Last-Modified'] = CGI::rfc1123_date( wikilist[0].mtime ) unless wikilist.empty?
-  r << "</table>\n"
+
+  def to_s
+    b = body
+    h = header
+    h + b
+  end
+
+  def header
+    s = ''
+    @headings.each do |key, value|
+      s << key + ': ' + value + "\r\n"
+    end
+    s + "\r\n\r\n"
+  end
+
+  def body
+    require 'erb'
+    erb = ERB.new(template)
+    erb.result
+  end
 end
 
-def form
-   <<-FORM
-   <div>
-   作成したい Wiki サイトの名称を指定します。
-   これは URL に含まれるので、できるだけ短く、
-   かつ Wiki の目的をよく表現したものが良いでしょう。
-   </div>
-   <div class="field title">
-      Wiki の名前 (英数字のみ):
-      <input class="field" name="wiki" size="20" value="">
-      <input class="submit" type="submit" value="作成">
-   </div>
-   FORM
-end
+class ErrorPage < ErbPage
+  def initialize(author, mail, css, title, msg)
+    super()
+    @author = author
+    @mail = mail
+    @css = css
+    @title = title
+    @msg = msg
+  end
 
-def error( msg )
-   if msg then
-      %Q|<p class="message">#{msg}</p>\n|
-   else
-      ''
-   end
-end
-
-#--- main -----------------------------------------------------------
-
-$:.unshift(hiki)
-$:.delete(".") if File.writable?(".")
-require 'cgi'
-require "hiki/repos/#{repos_type}"
-
-cgi = CGI::new
-msg = nil
-
-@repos = Hiki::const_get("Repos#{repos_type.capitalize}").new(repos_root, data_path)
-
-@repos.setup()
-
-if /post/i =~ cgi.request_method and cgi.params['wiki'][0] and cgi.params['wiki'][0].length > 0
-   begin
-      wiki = cgi.params['wiki'][0]
-      raise '英数字のみ指定できます' unless /\A[a-zA-Z0-9]+\z/ =~ wiki
-      create_wiki( wiki, hiki, cgi_name, data_path )
-   rescue
-      msg = %Q|#{$!.to_s}\n#{$@.join("\n")}|
-   end
-end
-
-@head = {
-   'type' => 'text/html; charset=EUC-JP'
-}
-
-@body = body( data_path )
-header_content = File::open( header ) do |f| f.read end if header
-footer_content = File::open( footer ) do |f| f.read end if footer
-print cgi.header( @head )
-print <<PAGE
+  private
+  def template
+<<ERROR
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="ja-JP">
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=EUC-JP">
    <meta name="generator" content="HikiFarm">
    <meta http-equiv="Content-Script-Type" content="text/javascript; charset=EUC-JP">
-   <meta name="author" content="#{author}">
-   <link rev="made" href="mailto:#{mail}">
+   <meta name="author" content="#{@author}">
+   <link rev="made" href="mailto:#{@mail}">
    <meta http-equiv="content-style-type" content="text/css">
-   <link rel="stylesheet" href="#{css}" title="tada" type="text/css" media="all">
-   <title>#{title}</title>
+   <link rel="stylesheet" href="#{@css}" title="tada" type="text/css" media="all">
+   <title>#{@title}</title>
 </head>
 <body>
-#{error( msg )}
-<h1>#{title}</h1>
-   #{header_content if header_content}
+<h1>Error</h1>
+<p class="message">#{@msg}</p>
+</body>
+</html>
+ERROR
+  end
+end
+
+class HikifarmIndexPage < ErbPage
+  def initialize(farm, hikifarm_path, author, mail, css, title, header_file, footer_file, msg)
+    super()
+    @farm = farm
+    @hikifarm_path = hikifarm_path
+    @author = author
+    @mail = mail
+    @css = css
+    @title = title
+    @header_content = if header_file
+                        File.exist?(header_file) ? File.read(header_file).untaint : error_msg("!! #{header_file} が存在しません !!")
+                      end
+    @footer_content = if footer_file
+                        File.exist?(footer_file) ? File.read(footer_file).untaint : error_msg("!! #{footer_file} が存在しません !!")
+                      end
+    @msg = msg
+  end
+
+  private
+  def error_msg(msg)
+    if msg then
+      %Q|<p class="message">#{msg}</p>\n|
+    else
+      ''
+    end
+  end
+  
+  def template
+<<PAGE
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=EUC-JP">
+   <meta name="generator" content="HikiFarm">
+   <meta http-equiv="Content-Script-Type" content="text/javascript; charset=EUC-JP">
+   <meta name="author" content="#{@author}">
+   <link rev="made" href="mailto:#{@mail}">
+   <meta http-equiv="content-style-type" content="text/css">
+   <link rel="stylesheet" href="#{@css}" title="tada" type="text/css" media="all">
+   <title>#{@title}</title>
+</head>
+<body>
+#{error_msg(@msg)}
+<h1>#{@title}</h1>
+   #{@header_content if @header_content}
 
    <hr class="sep">
 
    <div class="day">
       <h2><span class="title">現在運用中の Wiki サイト</span></h2>
       <div class="body"><div class="section">
-      #{@body}
+      #{wikilist_table}
       </div></div>
    </div>
 
    <hr class="sep">
 
    <div class="update day">
-      <h2><span class="title">新しい Wiki サイトの作成</span></h2>
-      <div class="form">
-         <form class="update" method="post" action="#{hikifarm_path}">
-         #{form}
-         </form>
-      </div>
+     <h2><span class="title">新しい Wiki サイトの作成</span></h2>
+     <div class="form">
+       <form class="update" method="post" action="#{@hikifarm_path}">
+         <div>
+           作成したい Wiki サイトの名称を指定します。
+           これは URL に含まれるので、できるだけ短く、
+           かつ Wiki の目的をよく表現したものが良いでしょう。
+         </div>
+         <div class="field title">
+           Wiki の名前 (英数字のみ):
+           <input class="field" name="wiki" size="20" value="">
+           <input class="submit" type="submit" value="作成">
+         </div>
+       </form>
+     </div>
    </div>
    <hr class="sep">
-   #{footer_content if footer_content}
+   #{@footer_content if @footer_content}
    <div class="footer">
-      Generated by <a href="http://www.namaraii.com/hiki/?HikiFarm">HikiFarm</a> version #{HIKIFARM_VERSION}<br>
-      Powered by <a href="http://www.ruby-lang.org/">Ruby</a> version #{RUBY_VERSION}#{if /ruby/i =~ ENV['GATEWAY_INTERFACE'] then ' with <a href="http://www.modruby.net/">mod_ruby</a>' end}
+     #{footer}
    </div>
 </body>
 </html>
 PAGE
+  end
+
+  def wikilist_table
+    r = ''
+    r = "<p>全 #{@farm.wikis_num} Wiki / #{@farm.pages_num} ページ (* は差分へのリンク)</p>\n"
+    r << "<table>\n"
+    r << %Q!<tr><th>Wiki の名前</th><th>タイトル</th><th>最終更新時刻</th></tr>!
+    wikilist = @farm.wikilist.sort{ |a,b| a.mtime <=> b.mtime }.reverse
+    wikilist.each do |wiki|
+      page = CGI.escapeHTML(CGI.unescape(wiki.last_modified_page))
+      r << %Q!<tr>!
+      r << %Q!<td><a href="#{wiki.name}/">#{wiki.name}</a></td>!
+      r << %Q!<td>#{CGI::escapeHTML(wiki.title)}</td>!
+      r << %Q!<td>#{wiki.mtime.strftime("%Y/%m/%d %H:%M")}!
+      r << %Q! <a href="#{wiki.name}/?c=diff;p=#{wiki.last_modified_page}">*</a>\n!
+      r << %Q! <a href="#{wiki.name}/?#{wiki.last_modified_page}">#{page}</a></td></tr>\n!
+    end
+    @headings['Last-Modified'] = CGI::rfc1123_date( wikilist[0].mtime ) unless wikilist.empty?
+    r << "</table>\n"
+  end
+
+  def footer
+    %Q!Generated by <a href="http://www.namaraii.com/hiki/?HikiFarm">HikiFarm</a> version ! + HIKIFARM_VERSION + '<br>' +
+      %Q!Powered by <a href="http://www.ruby-lang.org/">Ruby</a> version ! + RUBY_VERSION +
+      (/ruby/i =~ ENV['GATEWAY_INTERFACE']  ? ' with <a href="http://www.modruby.net/">mod_ruby</a>' : '')
+  end
+end
+
+class App
+  def initialize(conf)
+    @conf = conf
+    @farm = Hikifarm.new(File.dirname(__FILE__), @conf.ruby, @conf.repos_type, @conf.repos_root, @conf.data_path)
+    require 'cgi'
+    @cgi = CGI.new
+  end
+
+  def run
+    msg = nil
+    if /post/i =~ @cgi.request_method and @cgi.params['wiki'][0] and @cgi.params['wiki'][0].length > 0
+      begin
+        name = @cgi.params['wiki'][0]
+        raise '英数字のみ指定できます' if /\A[a-zA-Z0-9]+\z/ !~ name
+        @farm.create_wiki(name, @conf.hiki, @conf.cgi_name, @conf.data_path, @conf.default_pages)
+
+        require 'hiki/util'
+        Hiki::Util.module_eval('module_function :redirect')
+        Hiki::Util.redirect(@cgi, @conf.cgi_name)
+        exit
+      rescue
+        msg = %Q|#{$!.to_s}\n#{$@.join("\n")}|
+      end
+    end
+    page = HikifarmIndexPage.new(@farm, @conf.hikifarm_path, @conf.author, @conf.mail, @conf.css, @conf.title,
+                                 @conf.header, @conf.footer, msg)
+    print page.to_s
+  end
+end
+
+
+
+# main ###############
+if __FILE__ == $0
+  $SAFE = 1
+  conf = HikifarmConfig.new
+  $:.unshift(conf.hiki)
+  $:.delete(".") if File.writable?(".")
+  App.new(conf).run
+end
