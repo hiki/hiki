@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# $Id: hiki.cgi,v 1.25 2005-04-22 01:22:30 fdiary Exp $
+# $Id: hiki.cgi,v 1.26 2005-05-09 11:54:36 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 BEGIN { $defout.binmode }
@@ -9,7 +9,7 @@ $KCODE    = 'e'
 
 begin
   if FileTest::symlink?( __FILE__ ) then
-    org_path = File::dirname( File::readlink( __FILE__ ) )
+    org_path = File::dirname( File::expand_path( File::readlink( __FILE__ ) ) )
   else
     org_path = File::dirname( __FILE__ )
   end

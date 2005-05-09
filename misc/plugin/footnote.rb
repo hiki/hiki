@@ -1,4 +1,4 @@
-# footnote.rb $Revision: 1.6 $
+# footnote.rb $Revision: 1.7 $
 #
 # fn: 脚注plugin
 #   パラメタ:
@@ -34,7 +34,7 @@ def fn(text, mark = '*')
 	if @footnote_name
 		@footnote_index[0] += 1
 		@footnotes << [@footnote_index[0], text, mark]
-		%Q|<span class="footnote"><a name="#{@footnote_mark_name % @footnote_index[0]}" href="#{@footnote_url % @footnote_index[0]}" title="#{CGI::escapeHTML text}">#{mark}#{@footnote_index[0]}</a></span>|
+		%Q|<span class="footnote"><a name="#{@footnote_mark_name % @footnote_index[0]}" href="#{@footnote_url % @footnote_index[0]}" title="#{text}">#{mark}#{@footnote_index[0]}</a></span>|
 	else
  		""
 	end

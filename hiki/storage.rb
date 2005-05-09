@@ -1,4 +1,4 @@
-# $Id: storage.rb,v 1.9 2005-04-26 14:00:44 fdiary Exp $
+# $Id: storage.rb,v 1.10 2005-05-09 11:54:37 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'digest/md5'
@@ -101,7 +101,7 @@ module Hiki
 
     def save_cache( page, tokens )
       begin
-	File.open( "#{@conf.cache_path}/parser/#{CGI::escape( page )}", 'wb') do |f|
+	File.open( "#{@conf.cache_path}/parser/#{CGI::escape( page )}".untaint, 'wb') do |f|
 	  Marshal::dump(tokens, f)
 	end
       rescue

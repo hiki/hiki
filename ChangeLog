@@ -1,3 +1,15 @@
+2005-05-09  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/storage.rb (HikiDBBase::save_cache): revise for mod_ruby.
+
+	* style/default/parser.rb (parse_line): not make empty <dt> tags. 
+
+2005-05-08  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/footnote.rb (fn): fix a multiple escapeHTML problem.
+
+2005-05-06  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki.cgi, misc/plugin/attach/attach.cgi: support a relative
+	symlink link.
+
 2005-04-27  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/page.rb (Page::page): set an empty 'page_attribute' if nil.
 

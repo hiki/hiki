@@ -1,4 +1,4 @@
-# $Id: parser.rb,v 1.6 2004-12-22 04:43:03 fdiary Exp $
+# $Id: parser.rb,v 1.7 2005-05-09 11:54:37 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 module Hiki
@@ -104,16 +104,18 @@ module Hiki
         @cur_stack.push( {:e => :blockquote, :s => $1} )
       when /^:(.+)$/
         @cur_stack.push( {:e => :definition_list} )
-        @cur_stack.push( {:e => :definition_term_open} )
+	str = $1
+        term_flag = /^:/ !~ str
+        @cur_stack.push( {:e => :definition_term_open} ) if term_flag
         cur_stack_backup = @cur_stack     
         @cur_stack = HikiStack::new       
-        inline( $1 )
+        inline( str )
         tmp_stack = @cur_stack
         @cur_stack = cur_stack_backup
         tmp_stack.each do |elem|
           if elem[:e] == :normal_text && /^(.*?):(.*)$/ =~ elem[:s]
-            @cur_stack.push( {:e => :normal_text, :s => $1 } )
-            @cur_stack.push( {:e => :definition_term_close} )
+            @cur_stack.push( {:e => :normal_text, :s => $1 } ) unless $1.empty?
+            @cur_stack.push( {:e => :definition_term_close} ) if term_flag
             @cur_stack.push( {:e => :definition_desc_open} )
             @cur_stack.push( {:e => :normal_text, :s => $2 } )
           else
@@ -187,7 +189,7 @@ module Hiki
           else
             h = {:e => :bracketname, :href => href}
           end
-          h[:s] = s || href unless h.key?(:s)            
+          h[:s] = s || href unless h.key?(:s)
           @cur_stack.push( h )
         end
       when URL_RE

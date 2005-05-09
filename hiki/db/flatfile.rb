@@ -1,4 +1,4 @@
-# $Id: flatfile.rb,v 1.12 2005-01-29 14:44:01 fdiary Exp $
+# $Id: flatfile.rb,v 1.13 2005-05-09 11:54:37 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'fileutils'
@@ -177,7 +177,7 @@ module Hiki
   private
     def create_missing_dirs
       [@pages_path, @backup_path].each {|d|
-	Dir.mkdir d unless FileTest::exists?(d)
+	FileUtils.mkdir_p(d) unless FileTest::exists?(d)
       }
     end
 

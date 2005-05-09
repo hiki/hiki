@@ -1,20 +1,20 @@
 #!/usr/bin/env ruby
-# $Id: attach.cgi,v 1.14 2005-03-14 13:11:17 fdiary Exp $
+# $Id: attach.cgi,v 1.15 2005-05-09 11:54:37 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 BEGIN { $defout.binmode }
 
 $SAFE     = 1
 
-require 'cgi'
-
 if FileTest::symlink?( __FILE__ ) then
-  org_path = File::dirname( File::readlink( __FILE__ ) )
+  org_path = File::dirname( File::expand_path( File::readlink( __FILE__ ) ) )
 else
   org_path = File::dirname( __FILE__ )
 end
 $:.unshift( org_path.untaint, "#{org_path.untaint}/hiki" )
+$:.delete(".") if File.writable?(".")
 
+require 'cgi'
 require 'hiki/config'
 require 'hiki/util'
 
