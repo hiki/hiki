@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# $Id: hiki.cgi,v 1.26 2005-05-09 11:54:36 fdiary Exp $
+# $Id: hiki.cgi,v 1.27 2005-05-10 09:23:25 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 BEGIN { $defout.binmode }
@@ -11,7 +11,7 @@ begin
   if FileTest::symlink?( __FILE__ ) then
     org_path = File::dirname( File::expand_path( File::readlink( __FILE__ ) ) )
   else
-    org_path = File::dirname( __FILE__ )
+    org_path = File::dirname( File::expand_path( __FILE__ ) )
   end
   $:.unshift( org_path.untaint, "#{org_path.untaint}/hiki" )
   $:.delete(".") if File.writable?(".")

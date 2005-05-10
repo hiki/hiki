@@ -1,3 +1,7 @@
+2005-05-10  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki.cgi, misc/plugin/attach/attach.cgi: use absolute paths for
+	load paths.
+
 2005-05-09  Kouhei Yanagita <sugi@dream.big.or.jp>
 	* misc/hikifarm/*: Hikifarm のコードを書き直し、
 	バージョン管理バックエンドのセットアップを分離した。

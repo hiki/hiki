@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# $Id: attach.cgi,v 1.15 2005-05-09 11:54:37 fdiary Exp $
+# $Id: attach.cgi,v 1.16 2005-05-10 09:23:25 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 BEGIN { $defout.binmode }
@@ -9,7 +9,7 @@ $SAFE     = 1
 if FileTest::symlink?( __FILE__ ) then
   org_path = File::dirname( File::expand_path( File::readlink( __FILE__ ) ) )
 else
-  org_path = File::dirname( __FILE__ )
+  org_path = File::dirname( File::expand_path( __FILE__ ) )
 end
 $:.unshift( org_path.untaint, "#{org_path.untaint}/hiki" )
 $:.delete(".") if File.writable?(".")
