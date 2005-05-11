@@ -1,3 +1,8 @@
+2005-05-11  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/html_formatter.rb
+	(HTMLFormatter_default::token_to_s): display page's title if
+	available.
+
 2005-05-10  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki.cgi, misc/plugin/attach/attach.cgi: use absolute paths for
 	load paths.
