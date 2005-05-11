@@ -1,4 +1,7 @@
 2005-05-11  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/hikifarm/index.cgi: revise for mod_ruby. support a wiki
+	without any page.
+
 	* style/default/html_formatter.rb
 	(HTMLFormatter_default::token_to_s): display page's title if
 	available.

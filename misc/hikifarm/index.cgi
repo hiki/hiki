@@ -1,13 +1,15 @@
 #!/usr/bin/env ruby
 
-HIKIFARM_VERSION = '0.4.0.20050509'
+HIKIFARM_VERSION = '0.4.0.20050511'
 
 class HikifarmConfig
   attr_reader :ruby, :hiki, :hikifarm_path, :default_pages, :data_path, :repos_type, :repos_root
-  attr_reader :title, :css, :author, :mail, :cgi_name, :header, :footer
+  attr_reader :title, :css, :author, :mail, :cgi_name, :header, :footer, :cgi
   
   def initialize
     load
+    require 'cgi'
+    @cgi = CGI.new
   end
 
   def load
@@ -59,7 +61,9 @@ class HikifarmConfig
       msg = "Hiki does not support remote repository now." + 
         "You should modify &quot;repos_root&quot; entry of &quot;hikifarm.conf&quot; file."
       page = ErrorPage.new(@author, @mail, @css, @title, msg)
-      print page.to_s
+      body = page.to_s
+      print @cgi.header(page.headings)
+      print body
       exit 1
     end
 
@@ -109,7 +113,10 @@ class Hikifarm
       next if FileTest.symlink?(wiki)
       next if not FileTest.file?("#{wiki}/hikiconf.rb")
 
-      @wikilist << Wiki.new(File.basename(wiki), data_path)
+      begin
+        @wikilist << Wiki.new(File.basename(wiki), data_path)
+      rescue
+      end
     end
   end
 
@@ -172,27 +179,15 @@ end
 
 
 class ErbPage
+  attr_reader :headings
+
   def initialize
     @headings = {
-      'Content-Type' => 'text/html; charset=EUC-JP'
+      'type' => 'text/html; charset=EUC-JP'
     }
   end
 
   def to_s
-    b = body
-    h = header
-    h + b
-  end
-
-  def header
-    s = ''
-    @headings.each do |key, value|
-      s << key + ': ' + value + "\r\n"
-    end
-    s + "\r\n\r\n"
-  end
-
-  def body
     require 'erb'
     erb = ERB.new(template)
     erb.result
@@ -347,8 +342,7 @@ class App
   def initialize(conf)
     @conf = conf
     @farm = Hikifarm.new(File.dirname(__FILE__), @conf.ruby, @conf.repos_type, @conf.repos_root, @conf.data_path)
-    require 'cgi'
-    @cgi = CGI.new
+    @cgi = conf.cgi
   end
 
   def run
@@ -369,17 +363,19 @@ class App
     end
     page = HikifarmIndexPage.new(@farm, @conf.hikifarm_path, @conf.author, @conf.mail, @conf.css, @conf.title,
                                  @conf.header, @conf.footer, msg)
-    print page.to_s
+    body = page.to_s
+    print @cgi.header(page.headings)
+    print body
   end
 end
 
 
 
 # main ###############
-if __FILE__ == $0
+if __FILE__ == $0 || ENV['MOD_RUBY']
   $SAFE = 1
+  $:.delete(".") if File.writable?(".")
   conf = HikifarmConfig.new
   $:.unshift(conf.hiki)
-  $:.delete(".") if File.writable?(".")
   App.new(conf).run
 end
