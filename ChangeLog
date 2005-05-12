@@ -17,7 +17,8 @@
 	を追加した。
 
 2005-05-09  Kazuhiko  <kazuhiko@fdiary.net>
-	* hiki/storage.rb (HikiDBBase::save_cache): revise for mod_ruby.
+	* hiki/storage.rb (HikiDBBase::save_cache): revise for mod_ruby
+	(by Yazawa).
 
 	* style/default/parser.rb (parse_line): not make empty <dt> tags. 
 
