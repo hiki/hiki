@@ -259,6 +259,21 @@ module Hiki
         end
       end
     end
+
+    def apply_to_Verbatim(element)
+      begin
+        require 'rt/rt2html-lib'
+        content = element.content
+        if /\A#\s*RT\s*/ =~ content[0]
+          content.shift
+          rt_visitor = ::RT::RT2HTMLVisitor.new
+          return rt_visitor.visit(::RT::RTParser.parse(content.join))
+        end
+      rescue LoadError
+        $stderr.puts "RTtool cannot be load"
+      end
+      super(element)
+    end
   end
 end 
 

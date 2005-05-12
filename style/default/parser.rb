@@ -1,4 +1,4 @@
-# $Id: parser.rb,v 1.7 2005-05-09 11:54:37 fdiary Exp $
+# $Id: parser.rb,v 1.8 2005-05-12 01:26:22 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 module Hiki
@@ -136,6 +136,12 @@ module Hiki
           @cur_stack.push( {:e => :table_data_close} )
         end
         @cur_stack.push( {:e => :table_row_close} )
+      when /#{PLUGIN_RE}$/
+        if @conf.use_plugin
+          @cur_stack.push( {:e => :plugin, :method => $1, :param => $2} )
+        else
+          inline( line )
+        end
       else
         inline( line )
       end
@@ -320,6 +326,9 @@ module Hiki
           @last_blocktype.push(type)
         end
       when :emphasis_close, :strong_close, :delete_close
+        ns.push( e )
+      when :plugin
+        close_blocks( ns, block_level )
         ns.push( e )
       else
         if (@last_blocktype.index(:pre) || @last_blocktype.index(:blockquote) ||
