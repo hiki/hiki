@@ -1,4 +1,4 @@
-# $Id: attach.rb,v 1.15 2005-03-03 15:53:55 fdiary Exp $
+# $Id: attach.rb,v 1.16 2005-05-12 07:51:00 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 #
 # thanks to Kazuhiko, Masao Mutoh, SHIMADA Mitsunobu, Yoshimi, ¤ê¤¿
@@ -64,7 +64,6 @@ end
 def attach_image_anchor(file_name, page=@page)
   s =  %Q!<img alt="#{file_name.escapeHTML}" src="!
   s << %Q!#{@conf.cgi_name}#{cmdstr('plugin', "plugin=attach_download;p=#{page.escape};file_name=#{file_name.escape}")}">!
-  s << %Q!</img>!
 end
 
 def attach_flash_anchor(file_name, page=@page)

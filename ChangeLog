@@ -1,4 +1,7 @@
 2005-05-12  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/attach/attach.rb (attach_image_anchor): remove a
+	needless tag (report by 7743).
+
 	* style/rd+/rd2html.rb (RD2HTMLVisitor::apply_to_Verbatim):
 	support tables if RTtool is available (by GOTOU Yuuzou).
 
