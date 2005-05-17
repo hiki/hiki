@@ -1,29 +1,45 @@
-![重要] 0.6.x 以前および 0.7-devel-20040618 以前からのバージョンアップ
+! 0.6.x 以前および 0.7-devel-20040618 以前からのバージョンアップ
+
+!! 設定ファイル
 
 設定ファイルの書式が変更になりました。hikiconf.rbの「$変数名」をすべて
 「@変数名」に変更してください。
+
+!! プラグイン
+
+自作のプラグイン等については、「$変数名」をすべて「@conf.変数名」に変更し
+てください。
+
+!! テンプレート
+
+テンプレートエンジンが Amrita から ERB に変更になったのに伴い、テンプレー
+トファイルも大きく変更されました。
+
+また、0.6 系では template/ja/view.html のように言語別になっていましたが、
+template/view.html のように言語をとわず同じテンプレートファイルを使うよう
+になりました。テンプレートをカスタマイズする場合は、0.6 系の時のものを修
+正するよりは 0.8 標準のテンプレートを元に作りなおす方が確実だと思います。
+
+!! CGI の変更 (hikifarm 使用時のみ)
 
 hikifarmを使っている人は、hikifarm用のhiki.confも同様に変更した上で、
 hikifarmによって作られたhikiのCGIがあるディレクトリのindex.cgiと
 hikiconf.rbを、それぞれ以下のように変更してください。
 
-●index.cgi
+* index.cgi
  #!/usr/bin/ruby
  hiki=''
  eval( open( '../hikifarm.conf' ){|f|f.read.untaint} )
  $:.unshift "#{hiki}"
  load "#{hiki}/hiki.cgi"
 
-●hikiconf.rb
+* hikiconf.rb
  hiki=''
  eval( open( '../hikifarm.conf' ){|f|f.read.untaint} )
  __my_wiki_name__ = '「wikiの名前」'
  eval( File::open( "#{hiki}/hiki.conf" ){|f| f.read.untaint} )
 
-また、自作のプラグイン等については、「$変数名」をすべて「@conf.変数名」
-に変更してください。
-
-!バージョンアップの一般的な手順
+! バージョンアップの一般的な手順
 
 バージョンアップの方法は比較的簡単ですが、操作ミスなどで貴重なデータを
 失わないようhikiconf.rbの@data_pathで指定したディレクトリ配下のファイルは
@@ -31,14 +47,14 @@ hikiconf.rbを、それぞれ以下のように変更してください。
 
 では、バージョンアップの手順を示します。
 
-!!アーカイブの展開
+!! アーカイブの展開
 
  $ tar zxf hiki-0.x.x.tar.gz
 
 などとしてアーカイブを展開してください。
 アーカイブを展開するとhikiというディレクトリができるはずです。
 
-!!新しいHikiのコピー
+!! 新しいHikiのコピー
 
 展開したアーカイブをすでにインストールしてある古いHikiの上へ上書きします。
 ここでは、/home/foo/public_html/hiki/に古いHikiがインストールされている
@@ -47,7 +63,7 @@ hikiconf.rbを、それぞれ以下のように変更してください。
  $ cd hiki
  $ cp -R * /home/foo/public_html/hiki
 
-!!データ格納用ディレクトリへのコピー
+!! データ格納用ディレクトリへのコピー
 
 アーカイブ中のdata/text/TextFormattingRulesというファイルは書式の変更や
 追加などで変更される可能性があります。このため、このファイルはhikiconf.rb
@@ -59,7 +75,7 @@ hikiconf.rbを、それぞれ以下のように変更してください。
 
 のようになります。
 
-!!hikiconf.rbの修正
+!! hikiconf.rbの修正
 
 まず、現状のhikiconf.rbをどこかにバックアップしてください。
 
@@ -69,7 +85,7 @@ hikiconf.rbを、それぞれ以下のように変更してください。
 これは、バージョンアップに伴いhikiconf.rbでの設定項目が増減する可能性が
 あるためです。
 
-!!トラブルシュート
+!! トラブルシュート
 !!! バージョンアップしたらInternal Server Errorになってしまう
 hiki.cgiの1行目を確認してください。サーバによっては/usr/bin/envが使えない
 ケースがあります。その場合、
