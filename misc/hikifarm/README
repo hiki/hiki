@@ -22,23 +22,24 @@ HikiFarmは、HikiFarmのCGIの下にディレクトリを作成し、その下にHiki実行
 
 ! HikiFarm の設置方法
 
-Hikiは好きなところに展開します(例: /home/foo/src/hiki)。
+Hikiは好きなところに展開します (例: /home/foo/src/hiki)。
 ここを、Hiki インストールディレクトリと呼びます。
 このディレクトリはWebから見える必要はありません。
 
-CGIを設置するディレクトリを決め(例: /home/foo/public_html/hikifarm)、
+CGIを設置するディレクトリを決め (例: /home/foo/public_html/hikifarm)、
 そこをWebサーバの権限で書き込み可能にします。
-また、デフォルトのインデックス(ApacheならDefaultDirectory)を、
-index.cgiにします(HikiFarmはindex.cgiを自動生成します)。
+また、デフォルトのインデックス (ApacheならDefaultDirectory) を、
+index.cgiにします (HikiFarmはindex.cgiを自動生成します)。
 
- # Apacheの場合の.htaccess(またはhttpd.conf)
+ # Apacheの場合の.htaccess (またはhttpd.conf) の例
+ Options +ExecCGI +FollowSymLinks
  AddHandler cgi-script .cgi
  DirectoryIndex index.cgi
 
-テーマのディレクトリ(theme)も、CGIを設置するディレクトリに置いておくと
+テーマのディレクトリ (theme) も、CGIを設置するディレクトリに置いておくと
 良いでしょう。(例: /home/foo/public_html/hikifarm/theme)
 
-データを保存するディレクトリを決め(例: /home/foo/var/hiki)、
+データを保存するディレクトリを決め (例: /home/foo/var/hiki)、
 そこをWebサーバの権限で書き込み可能にします。
 このディレクトリはWebから見える必要はありません。
 
@@ -53,7 +54,7 @@ index.cgiには実行権限を付け、hikifarm.confは自分の環境に合わせて書き換
 
 また、@mailに「Wiki名@hikifarm.quickml.com」が入っています。更新情報を
 [[QuickML|http://www.quickml.com/]]で配信するための設定です。必要に応
-じて書き換えてください(配信無用ならnilにする)。
+じて書き換えてください (配信無用ならnilにする)。
 
 CGIを設置したディレクトリにブラウザからアクセスすれば、HikiFarmの画面
 が現れます。
@@ -74,5 +75,5 @@ Hikifarm 設置完了後に vc-backend-setup.cgi を実行してください。
 これを実行しないと、バージョン管理が正しくなされません。
 
 実行方法は、vc-backend-setup.cgi を Hikifarm の index.cgi を設置したディ
-レクトリにコピーし、CGI としてアクセスすれば OK です。(シェルが使える場合
-は、コマンドラインから実行してもかまいません)
+レクトリにコピーし、CGI としてアクセスすれば OK です (シェルが使える場合
+は、コマンドラインから実行してもかまいません)。
