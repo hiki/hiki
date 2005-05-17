@@ -20,8 +20,6 @@ HikiFarmは、HikiFarmのCGIの下にディレクトリを作成し、その下にHiki実行
 
  http://example.com/hikifarm/sample/
 
-
-
 ! HikiFarm の設置方法
 
 Hikiは好きなところに展開します(例: /home/foo/src/hiki)。
@@ -63,7 +61,6 @@ CGIを設置したディレクトリにブラウザからアクセスすれば、HikiFarmの画面
 CVS/Subversion バックエンドを用いる場合は、vc-backend-setup.cgi
 を実行してください。
 
-
 !! CVS/Subversion バックエンドについて
 Hikifarm では、バージョン管理のバックエンドとして
 CVS もしくは Subversion を使うことができます。
@@ -76,6 +73,6 @@ Subversion を Hikifarm 全体で単一リポジトリで使用する場合は repos_type を
 Hikifarm 設置完了後に vc-backend-setup.cgi を実行してください。
 これを実行しないと、バージョン管理が正しくなされません。
 
-実行方法は、vc-backend-setup.cgi を Hikifarm の index.cgi を設置したディレクトリに
-コピーし、CGI としてアクセスすれば OK です。
-(シェルが使える場合は、コマンドラインから実行してもかまいません)
+実行方法は、vc-backend-setup.cgi を Hikifarm の index.cgi を設置したディ
+レクトリにコピーし、CGI としてアクセスすれば OK です。(シェルが使える場合
+は、コマンドラインから実行してもかまいません)
