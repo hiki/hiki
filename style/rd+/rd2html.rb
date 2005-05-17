@@ -77,9 +77,9 @@ module Hiki
       #Eval Plugin
       content = content.gsub(EVAL_PLUGIN_RE) do |match|
         method = $1
-	ret = ''
-	begin
-	  ret = Hiki::Util.apply_plugin(method, @plugin, @conf)
+        ret = ''
+        begin
+          ret = Hiki::Util.apply_plugin(method, @plugin, @conf)
           ret.gsub!(@regex_modulenames, "\\&#{ESC_WORD}") if @regex_modulenames
         rescue Exception
           err = "Plugin Error: #{$!}" #<pre>#{match.to_s.escapeHTML}</pre>"
@@ -187,10 +187,10 @@ module Hiki
       content = content.join("")
       content = special_parse(content)
       if (is_this_textblock_only_one_block_of_parent_listitem?(element) or
-	  is_this_textblock_only_one_block_other_than_sublists_in_parent_listitem?(element))
-	content.chomp
+          is_this_textblock_only_one_block_other_than_sublists_in_parent_listitem?(element))
+        content.chomp
       else
-	%Q[<p>#{content.chomp}</p>]
+        %Q[<p>#{content.chomp}</p>]
       end
     end
 

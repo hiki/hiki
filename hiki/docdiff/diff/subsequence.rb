@@ -9,18 +9,18 @@ class DocDiff
 
       if @list.empty?
         @list << [i, j, len]
-	return
+        return
       end
 
       i0, j0, len0 = @list.last
 
       if i0 + len0 == i && j0 + len0 == j
         @list.last[2] += len
-	return
+        return
       end
 
       if i0 + len0 > i || j0 + len0 > j
-	raise ArgumentError.new("additional common sequence overlapped.")
+        raise ArgumentError.new("additional common sequence overlapped.")
       end
 
       @list << [i, j, len]

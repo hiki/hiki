@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.39 2005-04-22 01:22:31 fdiary Exp $
+# $Id: command.rb,v 1.40 2005-05-17 05:33:07 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -19,9 +19,9 @@ module Hiki
 
       # for TrackBack
       if %r|/tb/(.+)$| =~ ENV['REQUEST_URI']
-	@cgi.params['p'] = [CGI::unescape($1)]
-	@cgi.params['c'] = ['plugin']
-	@cgi.params['plugin'] = ['trackback_post']
+        @cgi.params['p'] = [CGI::unescape($1)]
+        @cgi.params['c'] = ['plugin']
+        @cgi.params['plugin'] = ['trackback_post']
       end
 
       @cmd    = @params['c'][0]
@@ -60,11 +60,11 @@ module Hiki
       @cmd = 'view' unless @cmd
       begin
         raise if !@p && ['view', 'edit', 'diff', 'save'].index( @cmd )
-		  if @cmd == 'edit'
-			 raise 'Permission denied' unless @plugin.auth?
+        if @cmd == 'edit'
+          raise 'Permission denied' unless @plugin.auth?
           cmd_edit( @p )
-		  elsif @cmd == 'save'
-			 raise 'Permission denied' unless @plugin.auth?
+        elsif @cmd == 'save'
+          raise 'Permission denied' unless @plugin.auth?
           if @params['save'][0]
             cmd_save(@p, @params['contents'][0], @params['md5hex'][0] )
           elsif @params['preview'][0]
@@ -75,19 +75,19 @@ module Hiki
             cmd_edit( @p, @plugin.text )
           end
         elsif @cmd == 'create'  
-			 raise 'Permission denied' unless @plugin.auth?
+          raise 'Permission denied' unless @plugin.auth?
           send( "cmd_#{@cmd}" )
         else
-	  if @conf.use_plugin and @plugin.plugin_command.index(@cmd) and @plugin.respond_to?(@cmd)
-	    @plugin.send( @cmd )
-	  else
-	    send( "cmd_#{@cmd}" )
+          if @conf.use_plugin and @plugin.plugin_command.index(@cmd) and @plugin.respond_to?(@cmd)
+            @plugin.send( @cmd )
+          else
+            send( "cmd_#{@cmd}" )
           end
         end
-		  #     rescue Exception
-		  #@cmd = 'view'
-		  #@p = 'FrontPage'
-		  #cmd_view
+        #     rescue Exception
+        #@cmd = 'view'
+        #@p = 'FrontPage'
+        #cmd_view
      end
     end
 
@@ -132,10 +132,10 @@ module Hiki
 
       tokens = @db.load_cache( @p )
       unless tokens
-	text = @db.load( @p )
-	parser = @conf.parser::new( @conf )
-	tokens = parser.parse( text )
-	@db.save_cache( @p, tokens )
+        text = @db.load( @p )
+        parser = @conf.parser::new( @conf )
+        tokens = parser.parse( text )
+        @db.save_cache( @p, tokens )
       end
       formatter = @conf.formatter::new( tokens, @db, @plugin, @conf )
       contents, toc = formatter.to_s, formatter.toc
@@ -263,9 +263,9 @@ module Hiki
         preview_text = formatter.to_s
         save_button = ''
       elsif @cmd == 'conflict'
-	old = text.gsub(/\r/, '')
-	new = @db.load( page ) || ''
-	differ = word_diff( old, new ).gsub( /\n/, "<br>\n" )
+        old = text.gsub(/\r/, '')
+        new = @db.load( page ) || ''
+        differ = word_diff( old, new ).gsub( /\n/, "<br>\n" )
         link = @plugin.hiki_anchor( page.escape, page.escapeHTML )
       end
       
@@ -531,8 +531,8 @@ module Hiki
 
     def cmd_logout
       if session_id = @cgi.cookies['session_id'][0]
-	cookies = [session_cookie(session_id, -1)]
-	Hiki::Session::new( @conf, session_id ).delete
+        cookies = [session_cookie(session_id, -1)]
+        Hiki::Session::new( @conf, session_id ).delete
       end
       redirect(@cgi, @conf.cgi_name, cookies)
     end

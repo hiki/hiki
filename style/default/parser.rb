@@ -1,4 +1,4 @@
-# $Id: parser.rb,v 1.8 2005-05-12 01:26:22 fdiary Exp $
+# $Id: parser.rb,v 1.9 2005-05-17 05:33:10 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 module Hiki
@@ -104,7 +104,7 @@ module Hiki
         @cur_stack.push( {:e => :blockquote, :s => $1} )
       when /^:(.+)$/
         @cur_stack.push( {:e => :definition_list} )
-	str = $1
+        str = $1
         term_flag = /^:/ !~ str
         @cur_stack.push( {:e => :definition_term_open} ) if term_flag
         cur_stack_backup = @cur_stack     

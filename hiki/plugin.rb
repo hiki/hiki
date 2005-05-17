@@ -1,4 +1,4 @@
-# $Id: plugin.rb,v 1.14 2005-03-08 09:48:23 fdiary Exp $
+# $Id: plugin.rb,v 1.15 2005-05-17 05:33:07 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
@@ -52,13 +52,13 @@ module Hiki
       plugin_path = @conf.plugin_path || "#{PATH}/plugin"
       plugin_file = ''
       begin
-	Dir::glob( "#{plugin_path}/*.rb" ).sort.each do |file|
+        Dir::glob( "#{plugin_path}/*.rb" ).sort.each do |file|
           plugin_file = file
-	  load_plugin( file )
-	  @plugin_files << file
-	end
+          load_plugin( file )
+          @plugin_files << file
+        end
       rescue Exception
-	raise PluginError, "Plugin error in '#{File::basename( plugin_file )}'.\n#{$!}\n#{$!.backtrace[0]}"
+        raise PluginError, "Plugin error in '#{File::basename( plugin_file )}'.\n#{$!}\n#{$!.backtrace[0]}"
       end
     end
 
@@ -235,7 +235,7 @@ module Hiki
 
     def each_conf_key
       @conf_keys.each do |key|
-	yield key
+        yield key
       end
     end
 
@@ -256,12 +256,12 @@ module Hiki
       @resource_loaded = false
       dirname, basename = File.split( file )
       [@conf.lang, 'en', 'ja'].uniq.each do |lang|
-	begin
-	  load( File.join( dirname, lang, basename ) )
-	  @resource_loaded = true
-	  break
-	rescue IOError, Errno::ENOENT
-	end
+        begin
+          load( File.join( dirname, lang, basename ) )
+          @resource_loaded = true
+          break
+        rescue IOError, Errno::ENOENT
+        end
       end
       load( file )
     end

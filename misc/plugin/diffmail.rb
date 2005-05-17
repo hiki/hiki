@@ -1,4 +1,4 @@
-# $Id: diffmail.rb,v 1.8 2005-02-01 13:10:47 fdiary Exp $
+# $Id: diffmail.rb,v 1.9 2005-05-17 05:33:08 fdiary Exp $
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 
 #----- send a mail on updating
@@ -12,7 +12,7 @@ def updating_mail
     end
     if @params['keyword'][0]
       keyword = (@params['keyword'][0]||'').split("\n").collect {|k|
-	k.chomp.strip}.delete_if{|k| k.empty?}.join(' / ')
+        k.chomp.strip}.delete_if{|k| k.empty?}.join(' / ')
     else
       keyword = nil
     end
@@ -26,10 +26,10 @@ def updating_mail
       title_old = CGI::unescapeHTML( page_name( @page ) )
       keyword_old = @db.get_attribute(@page, :keyword).join(' / ')
       if title && title != title_old
-	head << "TITLE       = #{title_old} -> #{title}\n"
+        head << "TITLE       = #{title_old} -> #{title}\n"
       end
       if keyword && keyword != keyword_old
-	head << "KEYWORD     = #{keyword_old} -> #{keyword}\n"
+        head << "KEYWORD     = #{keyword_old} -> #{keyword}\n"
       end
       head << "-------------------------\n" unless head.empty?
 

@@ -1,4 +1,4 @@
-# $Id: util.rb,v 1.30 2005-04-27 00:15:29 fdiary Exp $
+# $Id: util.rb,v 1.31 2005-05-17 05:33:07 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'nkf'
@@ -141,21 +141,21 @@ module Hiki
       dst_doc = Document.new( dst, 'EUC-JP', CharString.guess_eol($/) )
       diff = compare_by_line_word( src_doc, dst_doc )
       overriding_tags = {
-	:start_common => '',
-	:end_common => '',
-	:start_del           => '<del class="deleted">',
-	:end_del             => '</del>',
-	:start_add           => '<ins class="added">',
-	:end_add             => '</ins>',
-	:start_before_change => '<del class="deleted">',
-	:end_before_change   => '</del>',
-	:start_after_change  => '<ins class="added">',
-	:end_after_change    => '</ins>',
+        :start_common => '',
+        :end_common => '',
+        :start_del           => '<del class="deleted">',
+        :end_del             => '</del>',
+        :start_add           => '<ins class="added">',
+        :end_add             => '</ins>',
+        :start_before_change => '<del class="deleted">',
+        :end_before_change   => '</del>',
+        :start_after_change  => '<ins class="added">',
+        :end_after_change    => '</ins>',
       }
       if digest
-	return View.new( diff, src.encoding, src.eol ).to_html_digest(overriding_tags, false).to_s.gsub( %r|<br />|, '' ).gsub( %r|\n</ins>|, "</ins>\n" )
+        return View.new( diff, src.encoding, src.eol ).to_html_digest(overriding_tags, false).to_s.gsub( %r|<br />|, '' ).gsub( %r|\n</ins>|, "</ins>\n" )
       else
-	return View.new( diff, src.encoding, src.eol ).to_html(overriding_tags, false).to_s.gsub( %r|<br />|, '' ).gsub( %r|\n</ins>|, "</ins>\n" )
+        return View.new( diff, src.encoding, src.eol ).to_html(overriding_tags, false).to_s.gsub( %r|<br />|, '' ).gsub( %r|\n</ins>|, "</ins>\n" )
       end
     end
 
@@ -253,19 +253,19 @@ EOS
 
     def euc_to_utf8(str)
       if NKF::const_defined?(:UTF8)
-	return NKF::nkf('-m0 -w', str)
+        return NKF::nkf('-m0 -w', str)
       else
-	require 'uconv'
-	return Uconv.euctou8(str)
+        require 'uconv'
+        return Uconv.euctou8(str)
       end
     end
   
     def utf8_to_euc(str)
       if NKF::const_defined?(:UTF8)
-	return NKF::nkf('-m0 -e', str)
+        return NKF::nkf('-m0 -e', str)
       else
-	require 'uconv'
-	return Uconv.u8toeuc(str)
+        require 'uconv'
+        return Uconv.u8toeuc(str)
       end
     end
 
@@ -277,18 +277,18 @@ EOS
       lines = compare_by_line(doc1, doc2)
       words = Difference.new
       lines.each{|line|
-	if line.first == :change_elt
-	  before_change = Document.new(line[1].to_s,
-				       doc1.encoding, doc1.eol)
-	  after_change  = Document.new(line[2].to_s,
-				       doc2.encoding, doc2.eol)
-	  Difference.new(before_change.split_to_word,
-			 after_change.split_to_word).each{|word|
-	    words << word
-	  }
-	else  # :common_elt_elt, :del_elt, or :add_elt
-	  words << line
-	end
+        if line.first == :change_elt
+          before_change = Document.new(line[1].to_s,
+                                       doc1.encoding, doc1.eol)
+          after_change  = Document.new(line[2].to_s,
+                                       doc2.encoding, doc2.eol)
+          Difference.new(before_change.split_to_word,
+                         after_change.split_to_word).each{|word|
+            words << word
+          }
+        else  # :common_elt_elt, :del_elt, or :add_elt
+          words << line
+        end
       }
       words
     end

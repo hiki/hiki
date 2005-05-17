@@ -1,4 +1,4 @@
-# $Id: attach.rb,v 1.16 2005-05-12 07:51:00 fdiary Exp $
+# $Id: attach.rb,v 1.17 2005-05-17 05:33:08 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 #
 # thanks to Kazuhiko, Masao Mutoh, SHIMADA Mitsunobu, Yoshimi, ¤ê¤¿
@@ -183,9 +183,9 @@ def attach_show_page_files
       f = file_name.unescape
       case @conf.charset
       when 'EUC-JP'
-	f = file_name.unescape.to_euc
+        f = file_name.unescape.to_euc
       when 'Shift_JIS'
-	f = file_name.unescape.to_sjis
+        f = file_name.unescape.to_sjis
       end
       s << %Q! [#{attach_anchor(f)}] !
     end
@@ -206,9 +206,9 @@ def attach_show_page_files_checkbox
       f = file_name.unescape
       case @conf.charset
       when 'EUC-JP'
-	f = file_name.unescape.to_euc
+        f = file_name.unescape.to_euc
       when 'Shift_JIS'
-	f = file_name.unescape.to_sjis
+        f = file_name.unescape.to_sjis
       end
       s << %Q! [<input type="checkbox" name="file_#{file_name}">#{attach_anchor(f)}] \n!
     end

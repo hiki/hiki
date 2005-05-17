@@ -1,4 +1,4 @@
-# $Id: storage.rb,v 1.10 2005-05-09 11:54:37 fdiary Exp $
+# $Id: storage.rb,v 1.11 2005-05-17 05:33:07 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'digest/md5'
@@ -32,7 +32,7 @@ module Hiki
       result = store(page, src, md5)
       
       if result
-	delete_cache( page )
+        delete_cache( page )
         begin
           @plugin.update_proc
         rescue Exception
@@ -67,22 +67,22 @@ module Hiki
         info = i.values[0]
         keyword  = info[:keyword]
         title    = info[:title]
-	status   = ''
+        status   = ''
         
-	keys.each do |key|
-	  quoted_key = Regexp::quote(key)
-	  if keyword and keyword.join("\n").index(/#{quoted_key}/i)
-	    status << @conf.msg_match_keyword.gsub(/\]/, " <strong>#{key.escapeHTML}</strong>]")
-	  elsif title and title.index(/#{quoted_key}/i)
-	    status << @conf.msg_match_title.gsub(/\]/, " <strong>#{key.escapeHTML}</strong>]")
-	  elsif load( page ).index(/^.*#{quoted_key}.*$/i)
-	    status << '[' + $&.escapeHTML.gsub(/#{Regexp::quote(key.escapeHTML)}/i) { "<strong>#{$&}</strong>"} + ']'
-	  else
-	    status = nil
-	    break
-	  end
+        keys.each do |key|
+          quoted_key = Regexp::quote(key)
+          if keyword and keyword.join("\n").index(/#{quoted_key}/i)
+            status << @conf.msg_match_keyword.gsub(/\]/, " <strong>#{key.escapeHTML}</strong>]")
+          elsif title and title.index(/#{quoted_key}/i)
+            status << @conf.msg_match_title.gsub(/\]/, " <strong>#{key.escapeHTML}</strong>]")
+          elsif load( page ).index(/^.*#{quoted_key}.*$/i)
+            status << '[' + $&.escapeHTML.gsub(/#{Regexp::quote(key.escapeHTML)}/i) { "<strong>#{$&}</strong>"} + ']'
+          else
+            status = nil
+            break
+          end
         end
-	result << [page, status] if status
+        result << [page, status] if status
       end
 
       [total, result]
@@ -93,24 +93,24 @@ module Hiki
       cache_path = "#{@conf.cache_path}/parser"
       Dir.mkdir( cache_path ) unless test( ?e, cache_path )
       begin
-	return Marshal::load( File.open( "#{cache_path}/#{CGI::escape( page )}", 'rb' ) {|f| f.read} )
+        return Marshal::load( File.open( "#{cache_path}/#{CGI::escape( page )}", 'rb' ) {|f| f.read} )
       rescue
-	return nil
+        return nil
       end
     end
 
     def save_cache( page, tokens )
       begin
-	File.open( "#{@conf.cache_path}/parser/#{CGI::escape( page )}".untaint, 'wb') do |f|
-	  Marshal::dump(tokens, f)
-	end
+        File.open( "#{@conf.cache_path}/parser/#{CGI::escape( page )}".untaint, 'wb') do |f|
+          Marshal::dump(tokens, f)
+        end
       rescue
       end
     end
 
     def delete_cache( page )
       begin
-	File.unlink("#{@conf.cache_path}/parser/#{CGI::escape( page )}".untaint)
+        File.unlink("#{@conf.cache_path}/parser/#{CGI::escape( page )}".untaint)
       rescue Errno::ENOENT
       end
     end

@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.25 2005-05-11 03:00:21 fdiary Exp $
+# $Id: html_formatter.rb,v 1.26 2005-05-17 05:33:10 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -168,7 +168,7 @@ module Hiki
         else
           missing_anchor_title = @conf.msg_missing_anchor_title % [ disp.escapeHTML ]
           wikiname_anchor = @plugin.auth? ? "#{disp.escapeHTML}<a class=\"nodisp\" href=\"#{@conf.cgi_name}?c=edit;p=#{t[:href].escape}\" title=\"#{missing_anchor_title}\">?</a>" : disp.escapeHTML
-			 #   outer_alias = @interwiki.outer_alias(t[:href]) || "#{disp.escapeHTML}<a class=\"nodisp\" href=\"#{@conf.cgi_name}?c=edit;p=#{t[:href].escape}\" title=\"#{missing_anchor_title}\">?</a>"
+                         #   outer_alias = @interwiki.outer_alias(t[:href]) || "#{disp.escapeHTML}<a class=\"nodisp\" href=\"#{@conf.cgi_name}?c=edit;p=#{t[:href].escape}\" title=\"#{missing_anchor_title}\">?</a>"
           outer_alias = @interwiki.outer_alias(t[:href]) || wikiname_anchor
           s[:html] << outer_alias
         end
@@ -212,7 +212,7 @@ module Hiki
         elsif t[:e] == :pre_close
           s[:pre] = false
         elsif t[:e] == :p_close
-	  s[:html].chomp!
+          s[:html].chomp!
         end
         s[:html] << "#{map(t[:e])}"
         if [:emphasis_close, :strong_close, :delete_close].index(t[:e]) == nil and /_close\z/ =~ t[:e].to_s

@@ -1,4 +1,4 @@
-# $Id: config.rb,v 1.39 2005-05-17 04:13:44 fdiary Exp $
+# $Id: config.rb,v 1.40 2005-05-17 05:33:07 fdiary Exp $
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
@@ -75,28 +75,28 @@ module Hiki
 
     def save_config
       File::open(self.config_file, "w") do |f|
-	f.print ERB::new( File::open( "#{@template_path}/hiki.conf" ){|f| f.read }.untaint ).result( binding )
+        f.print ERB::new( File::open( "#{@template_path}/hiki.conf" ){|f| f.read }.untaint ).result( binding )
       end
     end
 
     def base_url
       unless @base_url
-	if !ENV['SCRIPT_NAME']
-	  @base_url = ''
-	elsif ENV['HTTPS']
-	  port = (ENV['SERVER_PORT'] == '443') ? '' : ':' + ENV['SERVER_PORT'].to_s
-	  @base_url = "https://#{ ENV['SERVER_NAME'] }#{ port }#{File::dirname(ENV['SCRIPT_NAME'])}/".sub(%r|/+$|, '/')
-	else
-	  port = (ENV['SERVER_PORT'] == '80') ? '' : ':' + ENV['SERVER_PORT'].to_s
-	  @base_url = "http://#{ ENV['SERVER_NAME'] }#{ port }#{File::dirname(ENV['SCRIPT_NAME'])}/".sub(%r|/+$|, '/')
-	end
+        if !ENV['SCRIPT_NAME']
+          @base_url = ''
+        elsif ENV['HTTPS']
+          port = (ENV['SERVER_PORT'] == '443') ? '' : ':' + ENV['SERVER_PORT'].to_s
+          @base_url = "https://#{ ENV['SERVER_NAME'] }#{ port }#{File::dirname(ENV['SCRIPT_NAME'])}/".sub(%r|/+$|, '/')
+        else
+          port = (ENV['SERVER_PORT'] == '80') ? '' : ':' + ENV['SERVER_PORT'].to_s
+          @base_url = "http://#{ ENV['SERVER_NAME'] }#{ port }#{File::dirname(ENV['SCRIPT_NAME'])}/".sub(%r|/+$|, '/')
+        end
       end
       @base_url
     end
 
     def index_url
       unless @index_url
-	@index_url = (base_url + cgi_name).sub(%r|/\./|, '/')
+        @index_url = (base_url + cgi_name).sub(%r|/\./|, '/')
       end
       @index_url
     end
@@ -145,25 +145,25 @@ module Hiki
       raise 'Do not set @data_path as same as Hiki system directory.' if @data_path == "#{PATH}/"
 
       variables = [:site_name, :author_name, :mail, :theme, :password,
-		   :theme_url, :sidebar_class, :main_class, :theme_path,
-		   :mail_on_update, :use_sidebar, :auto_link, :options2]
+                   :theme_url, :sidebar_class, :main_class, :theme_path,
+                   :mail_on_update, :use_sidebar, :auto_link, :options2]
       begin
-	cgi_conf = File::open( "#{@data_path}hiki.conf" ){|f| f.read }.untaint
-	cgi_conf.gsub!( /^[@$]/, '' )
-	def_vars = ''
-	variables.each do |var| def_vars << "#{var} = nil\n" end
-	eval( def_vars )
-	Thread.start {
-	  $SAFE = 4
-	  eval( cgi_conf, binding, "(hiki.conf)", 1 )
-	}.join
-	variables.each do |var| eval "@#{var} = #{var} if #{var} != nil" end
+        cgi_conf = File::open( "#{@data_path}hiki.conf" ){|f| f.read }.untaint
+        cgi_conf.gsub!( /^[@$]/, '' )
+        def_vars = ''
+        variables.each do |var| def_vars << "#{var} = nil\n" end
+        eval( def_vars )
+        Thread.start {
+          $SAFE = 4
+          eval( cgi_conf, binding, "(hiki.conf)", 1 )
+        }.join
+        variables.each do |var| eval "@#{var} = #{var} if #{var} != nil" end
       rescue IOError, Errno::ENOENT
       end
       if @options2 then
-	@options.update( @options2 )
+        @options.update( @options2 )
       else
-	@options2 = {}.taint
+        @options2 = {}.taint
       end
       formaterror if $site_name
     end

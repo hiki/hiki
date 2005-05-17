@@ -1,4 +1,4 @@
-# $Id: 00default.rb,v 1.26 2005-05-17 04:43:14 fdiary Exp $
+# $Id: 00default.rb,v 1.27 2005-05-17 05:33:09 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #==============================
@@ -208,7 +208,7 @@ def saveconf_password
     password2       = @cgi.params['password2'][0]
     if password1 and password1.size > 0
       if (@conf.password.size > 0 && old_password.crypt( @conf.password ) != @conf.password) ||
-	  (password1 != password2)
+          (password1 != password2)
          return false
       end
       salt = [rand(64),rand(64)].pack("C*").tr("\x00-\x3f","A-Za-z0-9./")

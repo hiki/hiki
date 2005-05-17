@@ -1,4 +1,4 @@
-# $Id: flatfile.rb,v 1.13 2005-05-09 11:54:37 fdiary Exp $
+# $Id: flatfile.rb,v 1.14 2005-05-17 05:33:07 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'fileutils'
@@ -107,7 +107,7 @@ module Hiki
     def set_attribute(p, attr)
       f = p.escape
       @info.transaction do
-	@info[f] = default unless @info[f]
+        @info[f] = default unless @info[f]
         attr.each do |attribute, value|
           @info[f][attribute] = value
         end
@@ -177,7 +177,7 @@ module Hiki
   private
     def create_missing_dirs
       [@pages_path, @backup_path].each {|d|
-	FileUtils.mkdir_p(d) unless FileTest::exists?(d)
+        FileUtils.mkdir_p(d) unless FileTest::exists?(d)
       }
     end
 

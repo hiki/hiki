@@ -1,4 +1,4 @@
-# English resources of 01sp.rb $Revision: 1.1 $
+# English resources of 01sp.rb $Revision: 1.2 $
 
 =begin
 = Select-plugin plugin
@@ -23,13 +23,13 @@ You can use this plugin in a secure diary.
 
 == Options
 :@options['sp.path']
-	Directory name where the optional plugins are, relative from the
+        Directory name where the optional plugins are, relative from the
   directory where tdiary.rb is or absolute.
 
 :@options['sp.usenew']
   Define true if you want to the users to try a newly installed plugin.
-	Newly installed plugins are detected next time when the user configures
-	this plugin.
+        Newly installed plugins are detected next time when the user configures
+        this plugin.
 
 == Copyright notice
 Copyright (C) 2003 zunda <zunda at freeshell.org>

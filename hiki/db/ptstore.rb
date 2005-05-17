@@ -1,4 +1,4 @@
-# $Id: ptstore.rb,v 1.7 2005-01-04 08:43:22 fdiary Exp $
+# $Id: ptstore.rb,v 1.8 2005-05-17 05:33:07 fdiary Exp $
 #
 # ptstore.rb
 #   based on pstore.rb contained in Ruby 1.8.2
@@ -144,7 +144,7 @@ class PTStore
         else
           @table = {}
         end
-        content = nil		# unreference huge data
+        content = nil                # unreference huge data
       end
 
       begin
@@ -166,7 +166,7 @@ class PTStore
             File.rename(tmp_file, new_file)
             commit_new(file)
           end
-	  content = nil		# unreference huge data
+          content = nil                # unreference huge data
         end
       end
     ensure

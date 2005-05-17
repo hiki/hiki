@@ -1,4 +1,4 @@
-# $Id: pluginutil.rb,v 1.4 2005-02-14 07:28:28 fdiary Exp $
+# $Id: pluginutil.rb,v 1.5 2005-05-17 05:33:07 fdiary Exp $
 #
 # apply_plugin(str):
 #  Eval the string as a plugin.
@@ -69,8 +69,8 @@ module Hiki
       words = []
       is_ary = false
       until args.empty?
-	field = ''
-	loop do
+        field = ''
+        loop do
           if args.sub!(ARG_REG_A, '') then
             child_words, args = argwords(args)
             words << child_words
@@ -94,12 +94,12 @@ module Hiki
           elsif args.sub!(ARG_REG_J, '') then
             snippet = $1
           else
-	    args.sub!(LSTRIP_RE, '')
+            args.sub!(LSTRIP_RE, '')
             break
           end
           field.concat(snippet) if snippet
         end
-	val = convert_value(field, escape)
+        val = convert_value(field, escape)
         words.push(val) unless val == :no_data
       end
       [words, args]
@@ -115,14 +115,14 @@ module Hiki
       words = []
       meth = ''
       while ! line.empty?
-	if line.sub!(METHOD_REG_A, '') then
-	  meth.concat($1)
-	  words.push(meth)
-	else
-	  child_words, = argwords(line)
-	  words += child_words
-	  break
-	end
+        if line.sub!(METHOD_REG_A, '') then
+          meth.concat($1)
+          words.push(meth)
+        else
+          child_words, = argwords(line)
+          words += child_words
+          break
+        end
       end
       words
     end

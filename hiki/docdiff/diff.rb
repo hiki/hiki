@@ -77,45 +77,45 @@ class DocDiff
       flag = false
 
       while beg_a < end_a && beg_b < end_b && a[beg_a].eql?(b[beg_b])
-	@prefix_lcs << [beg_a, beg_b]
-	count_a[a[beg_a]] -= 1
-	count_b[b[beg_b]] -= 1
-	beg_a += 1
-	beg_b += 1
-	flag = true
+        @prefix_lcs << [beg_a, beg_b]
+        count_a[a[beg_a]] -= 1
+        count_b[b[beg_b]] -= 1
+        beg_a += 1
+        beg_b += 1
+        flag = true
       end
 
       while beg_a < end_a && beg_b < end_b && a[end_a - 1].eql?(b[end_b - 1])
         @suffix_lcs << [end_a - 1, end_b - 1]
-	count_a[a[end_a - 1]] -= 1
-	count_b[b[end_b - 1]] -= 1
-	end_a -= 1
-	end_b -= 1
-	flag = true
+        count_a[a[end_a - 1]] -= 1
+        count_b[b[end_b - 1]] -= 1
+        end_a -= 1
+        end_b -= 1
+        flag = true
       end
 
       while beg_a < end_a && count_b[a[beg_a]] == 0
-	count_a[a[beg_a]] -= 1
+        count_a[a[beg_a]] -= 1
         beg_a += 1
-	flag = true
+        flag = true
       end
 
       while beg_b < end_b && count_a[b[beg_b]] == 0
-	count_b[b[beg_b]] -= 1
+        count_b[b[beg_b]] -= 1
         beg_b += 1
-	flag = true
+        flag = true
       end
 
       while beg_a < end_a && count_b[a[end_a - 1]] == 0
-	count_a[a[end_a - 1]] -= 1
+        count_a[a[end_a - 1]] -= 1
         end_a -= 1
-	flag = true
+        flag = true
       end
 
       while beg_b < end_b && count_a[b[end_b - 1]] == 0
-	count_b[b[end_b - 1]] -= 1
+        count_b[b[end_b - 1]] -= 1
         end_b -= 1
-	flag = true
+        flag = true
       end
     end
 
@@ -125,8 +125,8 @@ class DocDiff
     @revert_index_a = []
     (beg_a...end_a).each {|i|
       if count_b[a[i]] != 0
-	@a << @alphabet.add(a[i])
-	@revert_index_a << i
+        @a << @alphabet.add(a[i])
+        @revert_index_a << i
       end
     }
 
@@ -134,8 +134,8 @@ class DocDiff
     @revert_index_b = []
     (beg_b...end_b).each {|i|
       if count_a[b[i]] != 0
-	@b << @alphabet.add(b[i])
-	@revert_index_b << i
+        @b << @alphabet.add(b[i])
+        @revert_index_b << i
       end
     }
   end
@@ -198,9 +198,9 @@ class DocDiff
 
     def add(v)
       if @hash.include? v
-	return @hash[v]
+        return @hash[v]
       else
-	return @hash[v] = @hash.size
+        return @hash[v] = @hash.size
       end
     end
 
