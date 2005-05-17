@@ -1,3 +1,6 @@
+2005-05-17  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/config.rb: add a new constant 'HIKI_RELEASE_DATE'.
+
 2005-05-12  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/attach/attach.rb (attach_image_anchor): remove a
 	needless tag (report by 7743).
