@@ -46,7 +46,7 @@ Also in Nordic Journal of Computing (NJC), Vol. 2, No. 4, Winter 1995, 444 - 461
 http://web.informatik.uni-bonn.de/IV/Mitarbeiter/rick/lcs.dvi.Z
 =end
 
-class DocDiff
+class Diff
   class Contours
     def initialize(a, b)
       @a = a

@@ -1,7 +1,7 @@
 require 'docdiff/diff/rcsdiff'
 require 'docdiff/diff/unidiff'
 
-class DocDiff
+class Diff
   class EditScript
     def initialize
       @chunk_common = nil

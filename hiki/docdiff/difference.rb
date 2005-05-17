@@ -17,7 +17,7 @@ class Difference < Array
     if (array1 == nil) && (array2 == nil)
       return []
     end
-    diff = DocDiff.new(array1, array2)
+    diff = Diff.new(array1, array2)
     @raw_list = []
     diff.ses.each{|block|  # Diff::EditScript does not have each_with_index()
       @raw_list << block

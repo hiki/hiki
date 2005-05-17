@@ -1,10 +1,10 @@
-class DocDiff
-  def DocDiff.unidiff(a, b, algorithm=nil)
+class Diff
+  def Diff.unidiff(a, b, algorithm=nil)
     al = []
     a.each_line {|l| al << l}
     bl = []
     b.each_line {|l| bl << l}
-    return DocDiff.new(al, bl).ses(algorithm).unidiff
+    return Diff.new(al, bl).ses(algorithm).unidiff
   end
 
   class EditScript

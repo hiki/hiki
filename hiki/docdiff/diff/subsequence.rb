@@ -1,4 +1,4 @@
-class DocDiff
+class Diff
   class Subsequence
     def initialize
       @list = []

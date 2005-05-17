@@ -1,11 +1,11 @@
-# $Id: util.rb,v 1.31 2005-05-17 05:33:07 fdiary Exp $
+# $Id: util.rb,v 1.32 2005-05-17 06:11:23 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'nkf'
 require 'cgi'
 
 autoload( :Document, 'docdiff' )
-autoload( :DocDiff, 'docdiff' )
+autoload( :Diff, 'docdiff' )
 
 class String
   def to_euc
@@ -167,7 +167,7 @@ module Hiki
     end
 
     def unified_diff( src, dst, context_lines = 3 )
-      return DocDiff.new(src.to_a, dst.to_a).ses.unidiff( '', context_lines )
+      return Diff.new(src.to_a, dst.to_a).ses.unidiff( '', context_lines )
     end
 
     def redirect(cgi, url, cookies = nil)

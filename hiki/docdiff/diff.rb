@@ -1,6 +1,6 @@
 =begin
 = Diff
---- DocDiff.new(seq_a, seq_b)
+--- Diff.new(seq_a, seq_b)
 --- Diff#ses([algorithm=:speculative])
 --- Diff#lcs([algorithm=:speculative])
 
@@ -50,7 +50,7 @@ So, reduced input has following properties:
 * Any elemnt in B is also exist in A.
 
 =end
-class DocDiff
+class Diff
   def initialize(a, b)
     @original_a = a
     @original_b = b
@@ -140,7 +140,7 @@ class DocDiff
     }
   end
 
-  def DocDiff.algorithm(algorithm)
+  def Diff.algorithm(algorithm)
     case algorithm
     when :shortestpath
       return ShortestPath
@@ -154,7 +154,7 @@ class DocDiff
   end
 
   def lcs(algorithm=:speculative) # longest common subsequence
-    klass = DocDiff.algorithm(algorithm)
+    klass = Diff.algorithm(algorithm)
     reduced_lcs = klass.new(@a, @b).lcs
 
     lcs = Subsequence.new
