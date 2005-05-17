@@ -1,7 +1,9 @@
 ! 使い方
-hiki.cgi のあるディレクトリに misc/plugin/attach/attach.cgi を、
-plugin ディレクトリに misc/plugin/attach/attach.rb を、
-それぞれコピーします。
+hiki.cgi のあるディレクトリに misc/plugin/attach/attach.cgi を
+コピーします。また、
+misc/plugin ディレクトリに misc/plugin/attach/attach.rb を
+コピーするか、symlink を張ります。
+その後、「管理」->「プラグイン選択」で attach.rb を有効にして下さい。
 
 !! HikiFarm 時
 上記の手順に加えて、次のいずれかの方法で使います。
