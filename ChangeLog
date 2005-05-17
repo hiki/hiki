@@ -1,4 +1,5 @@
 2005-05-17  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/util.rb: change the class name from 'DocDiff' to 'Diff'.
 	* hiki/config.rb: add a new constant 'HIKI_RELEASE_DATE'.
 
 2005-05-12  Kazuhiko  <kazuhiko@fdiary.net>
