@@ -1,4 +1,6 @@
 2005-05-17  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/local_css.rb: remove. use 'append-css.rb' instead.
+
 	* hiki/util.rb: change the class name from 'DocDiff' to 'Diff'.
 	* hiki/config.rb: add a new constant 'HIKI_RELEASE_DATE'.
 
