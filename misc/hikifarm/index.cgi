@@ -81,7 +81,7 @@ class Wiki
 
     begin
       File.readlines("#{data_path}/#{name}/hiki.conf").each do |line|
-        if line =~ /^@?site_name\s*=\s*(".*")\s*$/
+        if line =~ /^[@\$]?site_name\s*=\s*(".*")\s*$/
           @title = eval($1.untaint)
         end
       end
