@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# $Id: hiki.cgi,v 1.29 2005-05-19 12:52:31 yanagita Exp $
+# $Id: hiki.cgi,v 1.30 2005-05-19 13:25:48 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 BEGIN { $defout.binmode }
@@ -34,8 +34,8 @@ rescue Exception
   end
 
   require 'cgi'
-  puts "<html><head></head><body><pre>"
-  puts CGI.escapeHTML("#$! (#{$!.class})\n")
-  puts CGI.escapeHTML($@.join( "\n" ))
-  puts "</pre></body></html>"
+  puts '<html><head><title>Hiki Error</title></head><body><pre>'
+  puts CGI.escapeHTML( "#$! (#{$!.class})\n" )
+  puts CGI.escapeHTML( $@.join( "\n" ) )
+  puts '</pre></body></html>'
 end
