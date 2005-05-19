@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# $Id: hiki.cgi,v 1.27 2005-05-10 09:23:25 fdiary Exp $
+# $Id: hiki.cgi,v 1.28 2005-05-19 12:26:44 yanagita Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 BEGIN { $defout.binmode }
@@ -28,10 +28,29 @@ begin
   }
 rescue Exception
   if cgi then
-    print cgi.header( 'type' => 'text/plain' )
+    print cgi.header( 'type' => 'text/html' )
   else
-    print "Content-Type: text/plain\n\n"
+    print "Content-Type: text/html\n\n"
   end
-  puts "#$! (#{$!.class})\n"
-  puts $@.join( "\n" )
+
+  puts <<_E
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ja">
+<head>
+  <meta http-equiv="Content-Language" content="ja">
+  <meta http-equiv="Content-Type" content="text/html; charset=EUC-JP">
+  <title>Error</title>
+</head>
+<body>
+<pre>
+_E
+  def escape(string)
+    string.gsub(/&/n, '&amp;').gsub(/\"/n, '&quot;').gsub(/>/n, '&gt;').gsub(/</n, '&lt;')
+  end
+
+  puts escape("#$! (#{$!.class})\n")
+  puts escape($@.join( "\n" ))
+  puts "</pre></body></html>"
 end
