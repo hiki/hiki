@@ -1,4 +1,7 @@
 2005-05-19  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* hiki.cgi: use CGI.escapeHTML.
+
+2005-05-19  Kouhei Yanagita <sugi@dream.big.or.jp>
 	* hiki/hiki.cgi: use text/html (not text/plain) to show error page
 	when an exception is raised.
 
