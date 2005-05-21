@@ -42,7 +42,7 @@ class ImageSize
     @img_height = nil
 
     if @img_data.is_a?(IO)
-      @img_top = @img_data.read(256)
+      @img_top = @img_data.read(512)
       @img_data.seek(0, 0)
 # define Singleton-method definition to IO (byte, offset)
       def @img_data.read_o(length = 1, offset = nil)
@@ -52,7 +52,7 @@ class ImageSize
         ret
       end
     elsif @img_data.is_a?(String)
-      @img_top = @img_data[0, 256]
+      @img_top = @img_data[0, 512]
 # define Singleton-method definition to String (byte, offset)
       def @img_data.read_o(length = 1, offset = nil)
         @img_offset = 0 if !(defined?(@img_offset))
@@ -110,7 +110,7 @@ class ImageSize
   end    
 
   def check_type()
-    if /<script\b/ =~ @img_top                        then Type::OTHER
+    if /<[a-z]+/i =~ @img_top                         then Type::OTHER # html?
     elsif @img_top =~ /^GIF8[7,9]a/                   then Type::GIF
     elsif @img_top[0, 8] == "\x89PNG\x0d\x0a\x1a\x0a" then Type::PNG
     elsif @img_top[0, 2] == "\xFF\xD8"                then Type::JPEG
@@ -286,7 +286,7 @@ end
 if __FILE__ == $0
   print "TypeList: #{ImageSize.type.inspect}\n"
 
-  Dir.glob("*").each do |file|
+  ARGV.each do |file|
     print "#{file} (string)\n"
     open(file, "rb") do |fh|
       img = ImageSize.new(fh)
@@ -298,4 +298,3 @@ height: #{img.get_height.inspect}
     end
   end
 end
-

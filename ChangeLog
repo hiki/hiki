@@ -1,4 +1,7 @@
 2005-05-21  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/image_size.rb (ImageSize::check_type): revise HTML
+	detection algorithm.
+
 	* misc/plugin/attach/attach.rb (attach_download): use 'image_size'
 	library and set 'Content-Disposition: inline' if an attached file
 	is an image.
