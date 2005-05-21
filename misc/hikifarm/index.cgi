@@ -32,7 +32,11 @@ class HikifarmConfig
     header = nil
     footer = nil
     cgi_name = 'index.cgi'
-    hikifarm_template_dir = File.expand_path(File.dirname(__FILE__)) + '/template'
+    if FileTest::symlink?( __FILE__ ) then
+      hikifarm_template_dir = File::dirname( File::expand_path( File::readlink( __FILE__ ) ) ) + '/template'
+    else
+      hikifarm_template_dir = File::dirname( File::expand_path( __FILE__ ) ) + '/template'
+    end
 
     eval(File.read('hikifarm.conf').untaint)
 
