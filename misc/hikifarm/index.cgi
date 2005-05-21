@@ -557,8 +557,7 @@ class App
     msg = nil
     page = nil
     if command_name == HikifarmRSSPage.command_name
-      require "time"
-      require "uri"
+      require 'time'
       page = HikifarmRSSPage.new(@farm, hikifarm_uri,
                                  @conf.hikifarm_description,
                                  @conf.author, @conf.mail, @conf.title)
@@ -606,6 +605,7 @@ class App
     request_uri = ENV['REQUEST_URI']
     script_name = ENV['SCRIPT_NAME'] || ''
     if request_uri
+      require 'uri'
       path = URI.parse(request_uri).path
       path = nil if /\A\s*\z/ =~ path
     end
