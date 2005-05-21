@@ -6,12 +6,12 @@ HIKIFARM_RELEASE_DATE = '2005-05-21'
 class HikifarmConfig
   attr_reader :ruby, :hiki, :hikifarm_description
   attr_reader :default_pages, :data_path, :repos_type, :repos_root
-  attr_reader :title, :css, :author, :mail, :cgi_name, :header, :footer, :cgi
+  attr_reader :title, :css, :author, :mail, :cgi_name, :header, :footer, :cgi, :hikifarm_template_dir
   
   def initialize
-    load
     require 'cgi'
     @cgi = CGI.new
+    load
   end
 
   def load
@@ -32,6 +32,7 @@ class HikifarmConfig
     header = nil
     footer = nil
     cgi_name = 'index.cgi'
+    hikifarm_template_dir = File.expand_path(File.dirname(__FILE__)) + '/template'
 
     eval(File.read('hikifarm.conf').untaint)
 
@@ -51,6 +52,7 @@ class HikifarmConfig
     @header = header
     @footer = footer
     @cgi_name = cgi_name
+    @hikifarm_template_dir = hikifarm_template_dir
 
     # Support depracated configuration
     if cvsroot then
@@ -62,7 +64,7 @@ class HikifarmConfig
     if @repos_root =~ /:/ and @repos_root.split(/:/)[1] != "local"
       msg = "Hiki does not support remote repository now." + 
         "You should modify &quot;repos_root&quot; entry of &quot;hikifarm.conf&quot; file."
-      page = ErrorPage.new(@author, @mail, @css, @title, msg)
+      page = ErrorPage.new(@hikifarm_template_dir, @author, @mail, @css, @title, msg)
       body = page.to_s
       print @cgi.header(page.headings)
       print body
@@ -202,22 +204,29 @@ end
 class ErbPage
   attr_reader :headings
 
-  def initialize
+  def initialize(template_dir)
     @headings = {
       'type' => 'text/html; charset=EUC-JP'
     }
+
+    @template_dir = template_dir
   end
 
   def to_s
     require 'erb'
-    erb = ERB.new(template)
-    erb.result
+    erb = ERB.new(template.untaint)
+    erb.result(binding)
+  end
+
+  private
+  def template
+    File.read("#{@template_dir}/#{template_name}".untaint)
   end
 end
 
 class ErrorPage < ErbPage
-  def initialize(author, mail, css, title, msg)
-    super()
+  def initialize(template_dir, author, mail, css, title, msg)
+    super(template_dir)
     @author = author
     @mail = mail
     @css = css
@@ -226,32 +235,14 @@ class ErrorPage < ErbPage
   end
 
   private
-  def template
-<<ERROR
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="ja-JP">
-<head>
-   <meta http-equiv="Content-Type" content="text/html; charset=EUC-JP">
-   <meta name="generator" content="HikiFarm">
-   <meta http-equiv="Content-Script-Type" content="text/javascript; charset=EUC-JP">
-   <meta name="author" content="#{@author}">
-   <link rev="made" href="mailto:#{@mail}">
-   <meta http-equiv="content-style-type" content="text/css">
-   <link rel="stylesheet" href="#{@css}" title="tada" type="text/css" media="all">
-   <title>#{@title}</title>
-</head>
-<body>
-<h1>Error</h1>
-<p class="message">#{@msg}</p>
-</body>
-</html>
-ERROR
+  def template_name
+    'error.html'
   end
 end
 
 class HikifarmIndexPage < ErbPage
-  def initialize(farm, hikifarm_uri, author, mail, css, title, header_file, footer_file, msg)
-    super()
+  def initialize(farm, hikifarm_uri, template_dir, author, mail, css, title, header_file, footer_file, msg)
+    super(template_dir)
     @farm = farm
     @hikifarm_uri = hikifarm_uri
     @author = author
@@ -280,62 +271,8 @@ class HikifarmIndexPage < ErbPage
     "#{@hikifarm_uri}#{@farm.command_query(HikifarmRSSPage.command_name)}"
   end
 
-  def template
-<<PAGE
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="ja-JP">
-<head>
-   <meta http-equiv="Content-Type" content="text/html; charset=EUC-JP">
-   <meta name="generator" content="HikiFarm">
-   <meta http-equiv="Content-Script-Type" content="text/javascript; charset=EUC-JP">
-   <meta name="author" content="#{@author}">
-   <link rev="made" href="mailto:#{@mail}">
-   <meta http-equiv="content-style-type" content="text/css">
-   <link rel="stylesheet" href="#{@css}" title="tada" type="text/css" media="all">
-   <link rel="alternate" type="application/rss+xml" title="RSS" href="#{rss_href}">
-   <title>#{@title}</title>
-</head>
-<body>
-#{error_msg(@msg)}
-<h1>#{@title}</h1>
-   #{@header_content if @header_content}
-
-   <hr class="sep">
-
-   <div class="day">
-      <h2><span class="title">現在運用中の Wiki サイト <a href="#{rss_href}">[RDF]</a></span></h2>
-      <div class="body"><div class="section">
-      #{wikilist_table}
-      </div></div>
-   </div>
-
-   <hr class="sep">
-
-   <div class="update day">
-     <h2><span class="title">新しい Wiki サイトの作成</span></h2>
-     <div class="form">
-       <form class="update" method="post" action="#{@hikifarm_uri}">
-         <div>
-           作成したい Wiki サイトの名称を指定します。
-           これは URL に含まれるので、できるだけ短く、
-           かつ Wiki の目的をよく表現したものが良いでしょう。
-         </div>
-         <div class="field title">
-           Wiki の名前 (英数字のみ):
-           <input class="field" name="wiki" size="20" value="">
-           <input class="submit" type="submit" value="作成">
-         </div>
-       </form>
-     </div>
-   </div>
-   <hr class="sep">
-   #{@footer_content if @footer_content}
-   <div class="footer">
-     #{footer}
-   </div>
-</body>
-</html>
-PAGE
+  def template_name
+    'index.html'
   end
 
   def wikilist_table
@@ -356,13 +293,6 @@ PAGE
     @headings['Last-Modified'] = CGI::rfc1123_date( wikilist[0].mtime ) unless wikilist.empty?
     r << "</table>\n"
   end
-
-  def footer
-    <<-EOS
-Generated by <a href="http://www.namaraii.com/hiki/?HikiFarm">HikiFarm</a> version #{HIKIFARM_VERSION} (#{HIKIFARM_RELEASE_DATE}).<br>
-Powered by <a href="http://www.ruby-lang.org/">Ruby</a> #{RUBY_VERSION} (#{RUBY_RELEASE_DATE})#{if /ruby/i =~ ENV['GATEWAY_INTERFACE'] then ' with <a href="http://www.modruby.net/">mod_ruby</a>' end}.
-    EOS
-  end
 end
 
 class HikifarmRSSPage < ErbPage
@@ -373,9 +303,9 @@ class HikifarmRSSPage < ErbPage
     end
   end
   
-  def initialize(farm, hikifarm_uri, hikifarm_description,
+  def initialize(farm, hikifarm_uri, template_dir, hikifarm_description,
                  author, mail, title)
-    super()
+    super(template_dir)
     @farm = farm
     @hikifarm_uri = hikifarm_uri
     @hikifarm_base_uri = @hikifarm_uri.sub(%r|[^/]*$|, '')
@@ -388,7 +318,10 @@ class HikifarmRSSPage < ErbPage
   end
 
   private
-
+  def template_name
+    'rss.rdf'
+  end
+  
   def setup_headings
     @headings['type'] = 'text/xml'
     @headings['charset'] = 'EUC-JP'
@@ -407,35 +340,6 @@ class HikifarmRSSPage < ErbPage
     end
   end
   
-  def template
-<<PAGE
-<?xml version="1.0" encoding="EUC-JP"?>
-<rdf:RDF
-  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-  xmlns="http://purl.org/rss/1.0/"
-  xmlns:#{dc_prefix}="http://purl.org/dc/elements/1.1/"
-  xmlns:#{content_prefix}="http://purl.org/rss/1.0/modules/content/"
-  xml:lang="ja-JP">
-  <channel rdf:about="#{rss_uri}">
-    #{tag("title", @title)}
-    #{tag("link", @hikifarm_uri)}
-    #{tag("description", @hikifarm_description)}
-    <items>
-      <rdf:Seq>
-#{rdf_lis("  " * 4)}
-      </rdf:Seq>
-    </items>
-    #{dc_language}
-    #{dc_creator}
-    #{dc_publisher}
-    #{dc_rights}
-    #{dc_date(last_modified)}
-  </channel>
-#{rdf_items("  ")}
-</rdf:RDF>
-PAGE
-  end
-
   def rss_uri
     "#{@hikifarm_uri}#{@farm.command_query(self.class.command_name)}"
   end
@@ -558,7 +462,7 @@ class App
     page = nil
     if command_name == HikifarmRSSPage.command_name
       require 'time'
-      page = HikifarmRSSPage.new(@farm, hikifarm_uri,
+      page = HikifarmRSSPage.new(@farm, hikifarm_uri, @conf.hikifarm_template_dir,
                                  @conf.hikifarm_description,
                                  @conf.author, @conf.mail, @conf.title)
     elsif /post/i =~ @cgi.request_method and @cgi.params['wiki'][0] and @cgi.params['wiki'][0].length > 0
@@ -575,7 +479,7 @@ class App
         msg = %Q|#{$!.to_s}\n#{$@.join("\n")}|
       end
     end
-    page ||= HikifarmIndexPage.new(@farm, hikifarm_uri, @conf.author, @conf.mail, @conf.css, @conf.title,
+    page ||= HikifarmIndexPage.new(@farm, hikifarm_uri, @conf.hikifarm_template_dir, @conf.author, @conf.mail, @conf.css, @conf.title,
                                    @conf.header, @conf.footer, msg)
     body = page.to_s
     print @cgi.header(page.headings)
