@@ -110,7 +110,7 @@ class ImageSize
   end    
 
   def check_type()
-    if /<[a-z]+/i =~ @img_top                         then Type::OTHER # html?
+    if /<\s*[a-z]+/i =~ @img_top                      then Type::OTHER # html?
     elsif @img_top =~ /^GIF8[7,9]a/                   then Type::GIF
     elsif @img_top[0, 8] == "\x89PNG\x0d\x0a\x1a\x0a" then Type::PNG
     elsif @img_top[0, 2] == "\xFF\xD8"                then Type::JPEG
