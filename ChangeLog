@@ -3,6 +3,9 @@
 	library and set 'Content-Disposition: inline' if an attached file
 	is an image.
 	* hiki/image_size.rb: add a new file made by Keisuke Minami.
+	(ImageSize::mime_type): add a new method.
+	(ImageSize::check_type): treat as non-image file if 'script' tags
+	are included.
 
 	* misc/hikifarm/index.cgi: support symlinks.
 
