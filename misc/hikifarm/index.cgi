@@ -303,7 +303,7 @@ class HikifarmIndexPage < ErbPage
    <hr class="sep">
 
    <div class="day">
-      <h2><span class="title">現在運用中の Wiki サイト</span> <a href="#{rss_href}">[RDF]</a></h2>
+      <h2><span class="title">現在運用中の Wiki サイト <a href="#{rss_href}">[RDF]</a></span></h2>
       <div class="body"><div class="section">
       #{wikilist_table}
       </div></div>
