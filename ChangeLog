@@ -1,9 +1,14 @@
 2005-05-21  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/attach/attach.rb (attach_download): use 'image_size'
+	library and set 'Content-Disposition: inline' if an attached file
+	is an image.
+	* hiki/image_size.rb: add a new file made by Keisuke Minami.
+
 	* misc/hikifarm/index.cgi: support symlinks.
 
 2005-05-21  Kouhei Yanagita <sugi@dream.big.or.jp>
-	* misc/hikifarm/{index.cgi,hikifarm.conf,template/*}: separate template files
-	of Hikifarm.
+	* misc/hikifarm/{index.cgi,hikifarm.conf,template/*}: separate
+	template files of Hikifarm.
 
 2005-05-21  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/hikifarm/index.cgi: support RSS output and add a link to a

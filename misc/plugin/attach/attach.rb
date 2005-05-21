@@ -1,4 +1,4 @@
-# $Id: attach.rb,v 1.17 2005-05-17 05:33:08 fdiary Exp $
+# $Id: attach.rb,v 1.18 2005-05-21 07:57:02 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 #
 # thanks to Kazuhiko, Masao Mutoh, SHIMADA Mitsunobu, Yoshimi, ¤ê¤¿
@@ -75,55 +75,36 @@ def attach_flash_anchor(file_name, page=@page)
       [is.get_width, is.get_height]
     }
   rescue
+    img_size = nil
   end
   s =  %Q!<embed type="application/x-shockwave-flash" src="!
   s << %Q!#{@conf.cgi_name}#{cmdstr('plugin', "plugin=attach_download;p=#{page.escape};file_name=#{file_name}")}" !
-  s << %Q! width="#{img_size[0]}" height="#{img_size[1]}" ! unless img_size.nil?
+  s << %Q! width="#{img_size[0]}" height="#{img_size[1]}" ! if img_size
   s << %Q!>!
 end
 
 def attach_download
-  mime_types = 
-  {
-    "gif"   => "image/gif",
-    "txt"   => "text/plain",
-    "rb"    => "text/plain",
-    "rd"    => "text/plain",
-    "c"     => "text/plain",
-    "pl"    => "text/plain", 
-    "py"    => "text/plain", 
-    "sh"    => "text/plain", 
-    "java"  => "text/plain",
-    "html"  => "text/html",
-    "htm"   => "text/html",
-    "css"   => "text/css",
-    "xml"   => "text/xml",
-    "xsl"   => "text/xsl",
-    "jpeg"  => "image/jpeg",
-    "jpg"   => "image/jpeg",
-    "png"   => "image/png",
-    "bmp"   => "image/bmp",
-    "doc"   => "application/msword",
-    "xls"   => "application/vnd.ms-excel",
-    "pdf"   => "application/pdf",
-    "sql"   => "text/plain",
-    "yaml"  => "text/plain", 
-  }
-  mime_types.default = "application/octet-stream"
-
+  require 'image_size'
   params      = @cgi.params
   page        = (params['p'][0] || '')
   file_name   = (params['file_name'][0] || '')
   attach_file = "#{@cache_path}/attach/#{page.escape}/#{file_name.escape}"
   extname     =  /\.([^.]+)$/.match(file_name.downcase).to_a[1]
-  mime_type   = mime_types[extname]
+  mime_type = nil
+  File.open(attach_file.untaint, 'rb') do |fh|
+    mime_type = ImageSize.new(fh).mime_type
+  end
 
   header = Hash::new
   header['Content-Type'] = mime_type
   header['Last-Modified'] = CGI::rfc1123_date(File.mtime(attach_file.untaint))
-  header['Content-Disposition'] = %Q|attachment; filename="#{file_name.to_sjis}"; modification-date="#{header['Last-Modified']}";|
+  if %r|^image/| =~ mime_type
+    header['Content-Disposition'] = %Q|inline; filename="#{file_name.to_sjis}"; modification-date="#{header['Last-Modified']}";|
+  else
+    header['Content-Disposition'] = %Q|attachment; filename="#{file_name.to_sjis}"; modification-date="#{header['Last-Modified']}";|
+  end
   print @cgi.header(header)
-  print open(attach_file.untaint, "rb").read
+  print File.open(attach_file.untaint, 'rb').read
   nil
 end
 

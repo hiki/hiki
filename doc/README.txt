@@ -51,8 +51,9 @@ Hikiは作者であるたけうちひとし(hitoshi@namaraii.com)がGPL2で配布、改変を
 
 ただし、配布ファイルのうち以下のものはそれぞれの原作者が著作権を有します。
 
-:hiki/db/tmarshal.rb:るびきちさんがruby-list:30305にポストしたスクリプトを若干修正したもの。Ruby'sで配布。 
-:hiki/docdiff/*:森田尚氏作。修正BSDライセンスで配布。
+:hiki/db/tmarshal.rb:るびきちさんがruby-list:30305にポストしたスクリプトを若干修正したもの。Ruby ライセンスで配布。 
+:hiki/docdiff/*:森田尚さん作。修正BSDライセンスで配布。
+:hiki/image_size.rb:Keisuke Minami さん作。Ruby ライセンスで配布
 
 Hikiはhttp://www.namaraii.com/hiki/でサポートを行っています。
 ご意見・ご要望はこちらへどうぞ。
