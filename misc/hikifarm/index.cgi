@@ -1,10 +1,11 @@
 #!/usr/bin/env ruby
 
 HIKIFARM_VERSION = '0.8.0'
-HIKIFARM_RELEASE_DATE = '2005-05-17'
+HIKIFARM_RELEASE_DATE = '2005-05-21'
 
 class HikifarmConfig
-  attr_reader :ruby, :hiki, :hikifarm_path, :default_pages, :data_path, :repos_type, :repos_root
+  attr_reader :ruby, :hiki, :hikifarm_description
+  attr_reader :default_pages, :data_path, :repos_type, :repos_root
   attr_reader :title, :css, :author, :mail, :cgi_name, :header, :footer, :cgi
   
   def initialize
@@ -18,7 +19,7 @@ class HikifarmConfig
     # 前もって定義してないと eval しても残らない
     ruby = '/usr/bin/env ruby'
     hiki = ''
-    hikifarm_path = ''
+    hikifarm_description = nil
     default_pages = ''
     data_path = ''
     repos_type = nil
@@ -36,7 +37,7 @@ class HikifarmConfig
 
     @ruby = ruby
     @hiki = hiki
-    @hikifarm_path = hikifarm_path
+    @hikifarm_description = hikifarm_description || title
     @default_pages = default_pages
     @data_path = data_path
 
@@ -74,7 +75,7 @@ end
 
 
 class Wiki
-  attr_reader :name, :title, :mtime, :last_modified_page, :pages_num
+  attr_reader :name, :title, :mtime, :last_modified_page, :pages_num, :pages
   def initialize(name, data_path)
     @name = name
     @pages_num = 0
@@ -92,9 +93,20 @@ class Wiki
     pages = Dir["#{data_path}/#{name}/text/*"]
     pages.delete_if{|f| File.basename(f) == 'CVS' or File.basename(f) == '.svn' or File.size?(f.untaint).nil?}
     pages = pages.sort_by{|f| File.mtime(f)}
-    @last_modified_page = File.basename(pages[-1])
-    @mtime = File.mtime(pages[-1])
+    if pages.empty?
+      @last_modified_page = "FrontPage"
+      @mtime = Time.at(0)
+    else
+      @last_modified_page = File.basename(pages[-1])
+      @mtime = File.mtime(pages[-1])
+    end
     @pages_num = pages.size
+    @pages = pages.reverse[0..9].collect do |page|
+      {
+        :name => File.basename(page),
+        :mtime => File.mtime(page),
+      }
+    end
   end
 end
 
@@ -154,6 +166,14 @@ class Hikifarm
     @repos.import(name)
   end
 
+  def command_key
+    "c"
+  end
+    
+  def command_query(name)
+    "?#{command_key}=#{CGI.escape(name)}"
+  end
+  
   private
   def conf(wiki, hiki)
 <<CONF
@@ -230,10 +250,10 @@ ERROR
 end
 
 class HikifarmIndexPage < ErbPage
-  def initialize(farm, hikifarm_path, author, mail, css, title, header_file, footer_file, msg)
+  def initialize(farm, hikifarm_uri, author, mail, css, title, header_file, footer_file, msg)
     super()
     @farm = farm
-    @hikifarm_path = hikifarm_path
+    @hikifarm_uri = hikifarm_uri
     @author = author
     @mail = mail
     @css = css
@@ -255,7 +275,11 @@ class HikifarmIndexPage < ErbPage
       ''
     end
   end
-  
+
+  def rss_href
+    "#{@hikifarm_uri}#{@farm.command_query(HikifarmRSSPage.command_name)}"
+  end
+
   def template
 <<PAGE
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
@@ -268,6 +292,7 @@ class HikifarmIndexPage < ErbPage
    <link rev="made" href="mailto:#{@mail}">
    <meta http-equiv="content-style-type" content="text/css">
    <link rel="stylesheet" href="#{@css}" title="tada" type="text/css" media="all">
+   <link rel="alternate" type="application/rss+xml" title="RSS" href="#{rss_href}">
    <title>#{@title}</title>
 </head>
 <body>
@@ -278,7 +303,7 @@ class HikifarmIndexPage < ErbPage
    <hr class="sep">
 
    <div class="day">
-      <h2><span class="title">現在運用中の Wiki サイト</span></h2>
+      <h2><span class="title">現在運用中の Wiki サイト</span> <a href="#{rss_href}">[RDF]</a></h2>
       <div class="body"><div class="section">
       #{wikilist_table}
       </div></div>
@@ -289,7 +314,7 @@ class HikifarmIndexPage < ErbPage
    <div class="update day">
      <h2><span class="title">新しい Wiki サイトの作成</span></h2>
      <div class="form">
-       <form class="update" method="post" action="#{@hikifarm_path}">
+       <form class="update" method="post" action="#{@hikifarm_uri}">
          <div>
            作成したい Wiki サイトの名称を指定します。
            これは URL に含まれるので、できるだけ短く、
@@ -340,6 +365,187 @@ Powered by <a href="http://www.ruby-lang.org/">Ruby</a> #{RUBY_VERSION} (#{RUBY_
   end
 end
 
+class HikifarmRSSPage < ErbPage
+
+  class << self
+    def command_name
+      'rss'
+    end
+  end
+  
+  def initialize(farm, hikifarm_uri, hikifarm_description,
+                 author, mail, title)
+    super()
+    @farm = farm
+    @hikifarm_uri = hikifarm_uri
+    @hikifarm_base_uri = @hikifarm_uri.sub(%r|[^/]*$|, '')
+    @hikifarm_description = hikifarm_description
+    @author = author
+    @mail = mail
+    @title = title
+    @wikilist = @farm.wikilist.sort_by{|x| x.mtime}.reverse[0..14]
+    setup_headings
+  end
+
+  private
+
+  def setup_headings
+    @headings['type'] = 'text/xml'
+    @headings['charset'] = 'EUC-JP'
+    @headings['Content-Language'] = 'ja'
+    @headings['Pragma'] = 'no-cache'
+    @headings['Cache-Control'] = 'no-cache'
+    lm = last_modified
+    @headings['Last-Modified'] = CGI.rfc1123_date(lm) if lm
+  end
+
+  def last_modified
+    if @wikilist.empty?
+      nil
+    else
+      @wikilist.first.mtime
+    end
+  end
+  
+  def template
+<<PAGE
+<?xml version="1.0" encoding="EUC-JP"?>
+<rdf:RDF
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns="http://purl.org/rss/1.0/"
+  xmlns:#{dc_prefix}="http://purl.org/dc/elements/1.1/"
+  xmlns:#{content_prefix}="http://purl.org/rss/1.0/modules/content/"
+  xml:lang="ja-JP">
+  <channel rdf:about="#{rss_uri}">
+    #{tag("title", @title)}
+    #{tag("link", @hikifarm_uri)}
+    #{tag("description", @hikifarm_description)}
+    <items>
+      <rdf:Seq>
+#{rdf_lis("  " * 4)}
+      </rdf:Seq>
+    </items>
+    #{dc_language}
+    #{dc_creator}
+    #{dc_publisher}
+    #{dc_rights}
+    #{dc_date(last_modified)}
+  </channel>
+#{rdf_items("  ")}
+</rdf:RDF>
+PAGE
+  end
+
+  def rss_uri
+    "#{@hikifarm_uri}#{@farm.command_query(self.class.command_name)}"
+  end
+    
+  def tag(name, content)
+    "<#{name}>#{CGI.escapeHTML(content)}</#{name}>"
+  end
+  
+  def dc_prefix
+    "dc"
+  end
+  
+  def content_prefix
+    "content"
+  end
+  
+  def dc_tag(name, content)
+    tag("#{dc_prefix}:#{name}", content)
+  end
+  
+  def content_tag(name, content)
+    tag("#{content_prefix}:#{name}", content)
+  end
+  
+  def dc_language
+    dc_tag("language", "ja-JP")
+  end
+    
+  def dc_creator
+    version = "#{HIKIFARM_VERSION} (#{HIKIFARM_RELEASE_DATE})"
+    creator = "HikiFarm version #{version}"
+    dc_tag("creator", creator)
+  end
+  
+  def dc_publisher
+    dc_tag("publisher", "#{@author} <#{@mail}>")
+  end
+  
+  def dc_rights
+    dc_tag("rights", "Copyright (C) #{@author} <#{@mail}>")
+  end
+  
+  def dc_date(date)
+    if date
+      dc_tag("date", date.iso8601)
+    else
+      ""
+    end
+  end
+  
+  def rdf_lis(indent='')
+    @wikilist.collect do |wiki|
+      %Q[#{indent}<rdf:li rdf:resource="#{wiki_uri(wiki)}"/>]
+    end.join("\n")
+  end
+  
+  def rdf_items(indent="")
+    @wikilist.collect do |wiki|
+      <<-ITEM
+#{indent}<item rdf:about="#{wiki_uri(wiki)}">
+#{indent}  #{tag('title', wiki.title)}
+#{indent}  #{tag('link', wiki_uri(wiki))}
+#{indent}  #{tag('description', wiki_description(wiki))}
+#{indent}  #{dc_date(wiki.mtime)}
+#{indent}  #{content_encoded(wiki)}
+#{indent}</item>
+      ITEM
+    end.join("\n")
+  end
+
+  def wiki_uri(wiki)
+    "#{@hikifarm_base_uri}#{wiki.name}/"
+  end
+
+  def wiki_description(wiki)
+    "「#{CGI.unescape(wiki.last_modified_page)}」ページが変更されました．"
+  end
+
+  def content_encoded(wiki)
+    return '' if wiki.pages.empty?
+    base_uri = wiki_uri(wiki)
+    content = "<div class='recent-changes'>\n"
+    content << "  <ol>\n"
+    wiki.pages.each do |page|
+      content << "    <li>"
+      content << "<a href='#{base_uri}?c=diff;p=#{page[:name]}'>"
+      content << "*</a>\n"
+      content << "<a href='#{base_uri}?#{page[:name]}'>"
+      content << "#{CGI.escapeHTML(CGI.unescape(page[:name]))}</a>"
+      content << "(#{CGI.escapeHTML(modified(page[:mtime]))})"
+      content << "</li>\n"
+    end
+    content << "  </ol>\n"
+    content << "</div>\n"
+    content_tag("encoded", content)
+  end
+
+  # from RWiki
+  def modified(t)
+    return '-' unless t
+    dif = (Time.now - t).to_i
+    dif = dif / 60
+    return "#{dif}m" if dif <= 60
+    dif = dif / 60
+    return "#{dif}h" if dif <= 24
+    dif = dif / 24
+    return "#{dif}d"
+  end
+end
+
 class App
   def initialize(conf)
     @conf = conf
@@ -349,7 +555,14 @@ class App
 
   def run
     msg = nil
-    if /post/i =~ @cgi.request_method and @cgi.params['wiki'][0] and @cgi.params['wiki'][0].length > 0
+    page = nil
+    if command_name == HikifarmRSSPage.command_name
+      require "time"
+      require "uri"
+      page = HikifarmRSSPage.new(@farm, hikifarm_uri,
+                                 @conf.hikifarm_description,
+                                 @conf.author, @conf.mail, @conf.title)
+    elsif /post/i =~ @cgi.request_method and @cgi.params['wiki'][0] and @cgi.params['wiki'][0].length > 0
       begin
         name = @cgi.params['wiki'][0]
         raise '英数字のみ指定できます' if /\A[a-zA-Z0-9]+\z/ !~ name
@@ -357,17 +570,52 @@ class App
 
         require 'hiki/util'
         Hiki::Util.module_eval('module_function :redirect')
-        Hiki::Util.redirect(@cgi, @conf.cgi_name)
+        Hiki::Util.redirect(@cgi, hikifarm_uri)
         exit
       rescue
         msg = %Q|#{$!.to_s}\n#{$@.join("\n")}|
       end
     end
-    page = HikifarmIndexPage.new(@farm, @conf.hikifarm_path, @conf.author, @conf.mail, @conf.css, @conf.title,
-                                 @conf.header, @conf.footer, msg)
+    page ||= HikifarmIndexPage.new(@farm, hikifarm_uri, @conf.author, @conf.mail, @conf.css, @conf.title,
+                                   @conf.header, @conf.footer, msg)
     body = page.to_s
     print @cgi.header(page.headings)
     print body
+  end
+
+  private
+  def command_name
+    @cgi.params[@farm.command_key][0]
+  end
+  
+  def hikifarm_uri
+    server_name = ENV['SERVER_NAME']
+    server_port = ENV['SERVER_PORT']
+    path = hikifarm_absolute_path
+    if /on/i =~ ENV['HTTPS']
+      scheme = "https"
+      default_port = '443'
+    else
+      scheme = "http"
+      default_port = '80'
+    end
+    build_uri(scheme, server_name, server_port, default_port, path)
+  end
+
+  def hikifarm_absolute_path
+    request_uri = ENV['REQUEST_URI']
+    script_name = ENV['SCRIPT_NAME'] || ''
+    if request_uri
+      path = URI.parse(request_uri).path
+      path = nil if /\A\s*\z/ =~ path
+    end
+    path ||= script_name
+    path.dup.untaint
+  end
+  
+  def build_uri(scheme, name, actual_port, default_port, path)
+    port = (actual_port == default_port) ? '' : ":#{actual_port}"
+    "#{scheme}://#{name}#{port}#{path}".untaint
   end
 end
 
