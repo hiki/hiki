@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# $Id: attach.cgi,v 1.16 2005-05-10 09:23:25 fdiary Exp $
+# $Id: attach.cgi,v 1.17 2005-05-22 14:49:13 koma2 Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 BEGIN { $defout.binmode }
@@ -48,12 +48,17 @@ def attach_file
 	raise "File size is larger than limit (#{max_size} bytes)."
       end
       unless filename.empty?
-	open(path.untaint, "wb") do |f|
-	  f.print params['attach_file'][0].read
+	content = params['attach_file'][0].read
+	if (!@conf.options['attach.allow_script']) && (/<script\b/i =~ content)
+	  raise "You cannot attach a file that contains scripts."
+	else
+	  open(path.untaint, "wb") do |f|
+	    f.print content
+	  end
+	  r << "FILE        = #{path}\n"
+	  r << "SIZE        = #{File.size(path)} bytes\n"
+	  send_updating_mail(page, 'attach', r) if @conf.mail_on_update
 	end
-	r << "FILE        = #{path}\n"
-	r << "SIZE        = #{File.size(path)} bytes\n"
-	send_updating_mail(page, 'attach', r) if @conf.mail_on_update
       end
       redirect(cgi, "#{@conf.index_url}?c=#{command}&p=#{page.escape}")
     rescue Exception => ex
