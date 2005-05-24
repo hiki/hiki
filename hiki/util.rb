@@ -1,4 +1,4 @@
-# $Id: util.rb,v 1.32 2005-05-17 06:11:23 fdiary Exp $
+# $Id: util.rb,v 1.33 2005-05-24 09:28:49 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'nkf'
@@ -195,7 +195,7 @@ module Hiki
         smtp.send_mail <<EndOfMail, @conf.mail.untaint, @conf.mail
 From: #{@conf.mail_from ? @conf.mail_from : @conf.mail}
 To: #{@conf.mail}
-Subject: #{subject.to_jis}
+Subject: #{NKF::nkf('-M', subject)}
 Date: #{Time.now.rfc2822}
 MIME-Version: 1.0
 Content-Type: text/plain; charset="iso-2022-jp"
@@ -219,7 +219,7 @@ EOS
 #{'-' * 25}
 #{text}
 EOS
-      sendmail("[Hiki] #{type} - #{page}", body)
+      sendmail("[#{@conf.site_name}] #{type} - #{page}", body)
     end
 
     def theme_url

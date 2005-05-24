@@ -1,3 +1,8 @@
+2005-05-24  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/util.rb (Util::sendmail): make a MIME encoded subject.
+	(Util::send_updating_mail): use 'site_name' as a prefix of a
+	subject (by kdmsnr).
+
 2005-05-22  KOMATSU Shinichiro <koma2@lovepeers.org>
 	* misc/plugin/attach/attach.cgi (attach_file): If the attached file 
 	contains scripts, deny it. ([Hiki-dev:00747])
@@ -92,7 +97,7 @@
 
 2005-04-26  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/rss-show.rb (rss_parse): revise a regexp of rss (by
-	kdnsmr).
+	kdmsnr).
 	* hiki/storage.rb (HikiDBBase::load_cache): read cache files by
 	binary mode.
 
