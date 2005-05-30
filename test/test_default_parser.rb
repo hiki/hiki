@@ -1,4 +1,4 @@
-# $Id: test_default_parser.rb,v 1.2 2005-05-17 05:33:10 fdiary Exp $
+# $Id: test_default_parser.rb,v 1.3 2005-05-30 06:11:10 fdiary Exp $
 
 require 'test/unit'
 require 'style/default/parser'
@@ -69,5 +69,16 @@ class Default_Parser_Unit_Tests < Test::Unit::TestCase
   def test_block_plugin
     assert_equal([{:method=>"hoge", :param=>nil, :e=>:plugin}],
                  @parser.parse( "{{hoge}}" ) )
+  end
+
+  def test_link
+    assert_equal([{:e=>:p_open},
+		   {:s=>"str", :e=>:reference, :href=>"../data/"},
+		   {:e=>:p_close}],
+		 @parser.parse( "[[str|:../data/]]" ) )
+    assert_equal([{:e=>:p_open},
+		   {:s=>"../data/", :e=>:reference, :href=>"../data/"},
+		   {:e=>:p_close}],
+		 @parser.parse( "[[:../data/]]" ) )
   end
 end

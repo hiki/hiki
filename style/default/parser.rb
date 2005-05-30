@@ -1,5 +1,7 @@
-# $Id: parser.rb,v 1.9 2005-05-17 05:33:10 fdiary Exp $
+# $Id: parser.rb,v 1.10 2005-05-30 06:11:10 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+
+require 'cgi'
 
 module Hiki
   class HikiStack < Array
@@ -185,13 +187,16 @@ module Hiki
           href = $2
           if URL_RE =~ href
             if IMAGE_RE =~ href
-              h = {:e => :image, :href => href.escapeHTML} 
+              h = {:e => :image, :href => CGI::escapeHTML(href)}
             else
-              h = {:e => :reference, :href => href.escapeHTML} 
+              h = {:e => :reference, :href => CGI::escapeHTML(href)}
             end
           elsif /\A(.+?):(.+)\z/ =~ href
             disp = s ? s : "#{$1}:#{$2}"
-            h = {:e => :interwiki, :href => $1, :p => $2, :s => disp }
+            h = {:e => :interwiki, :href => $1, :p => $2, :s => disp}
+          elsif /\A:(.+)\z/ =~ href
+            s = s ? s : $1
+            h = {:e => :reference, :href => CGI::escapeHTML($1)}
           else
             h = {:e => :bracketname, :href => href}
           end

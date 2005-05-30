@@ -1,3 +1,7 @@
+2005-05-30  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/parser.rb (Parser_default::inline_impl): treat as
+	'reference' if interwiki's name is empty.
+
 2005-05-24  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/util.rb (Util::sendmail): make a MIME encoded subject.
 	(Util::send_updating_mail): use 'site_name' as a prefix of a
