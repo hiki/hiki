@@ -1,4 +1,4 @@
-# $Id: rss-show.rb,v 1.4 2005-04-26 14:00:44 fdiary Exp $
+# $Id: rss-show.rb,v 1.5 2005-06-02 18:02:31 kdmsnr Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 #
 #   MoonWolf holds the copyright of the following methods.
@@ -10,10 +10,10 @@ require 'uconv'
 require 'cgi'
 require 'nkf'
 
-def rss_show(url, cache_time = 1800)
+def rss_show(url, cache_time = 1800, number = 5)
   if rss = rss_get(url.untaint, cache_time)
     items = rss_parse(rss)
-    rss_format_items(items)
+    rss_format_items(items[0...number])
   else
     ''
   end

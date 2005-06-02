@@ -1,3 +1,6 @@
+2005-06-03  Masanori KADO  <QVE02451@nifty.com>
+	* misc/plugin/rss-show.rb (rss_show): add an argument to set the number of items.
+
 2005-05-30  Kazuhiko  <kazuhiko@fdiary.net>
 	* style/default/parser.rb (Parser_default::inline_impl): treat as
 	'reference' if interwiki's name is empty.
