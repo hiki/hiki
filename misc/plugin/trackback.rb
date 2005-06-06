@@ -1,7 +1,5 @@
-# $Id: trackback.rb,v 1.6 2005-06-06 11:58:13 yanagita Exp $
+# $Id: trackback.rb,v 1.7 2005-06-06 12:05:14 yanagita Exp $
 # Copyright (C) 2004 Kazuhiko <kazuhiko@fdiary.net>
-
-require 'uconv'
 
 def trackback
   <<-EOF

@@ -1,10 +1,7 @@
-# $Id: rss-show.rb,v 1.6 2005-06-06 11:58:13 yanagita Exp $
+# $Id: rss-show.rb,v 1.7 2005-06-06 12:05:14 yanagita Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
-#
 
-require 'uconv'
 require 'cgi'
-require 'nkf'
 
 def rss_show(url, cache_time = 1800, number = 5)
   if rss = rss_get(url.untaint, cache_time)
