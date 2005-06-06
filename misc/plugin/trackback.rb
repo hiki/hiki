@@ -1,4 +1,4 @@
-# $Id: trackback.rb,v 1.5 2004-09-13 14:23:16 fdiary Exp $
+# $Id: trackback.rb,v 1.6 2005-06-06 11:58:13 yanagita Exp $
 # Copyright (C) 2004 Kazuhiko <kazuhiko@fdiary.net>
 
 require 'uconv'
@@ -16,9 +16,9 @@ def trackback_post
     redirect(@cgi, "#{@conf.index_url}?#{@page.escapeHTML}")
     return
   end
-  blog_name = force_to_euc( params['blog_name'][0] || '' )
-  title = force_to_euc( params['title'][0] || '' )
-  excerpt = force_to_euc( params['excerpt'][0] || '' )
+  blog_name = Hiki::Util::utf8_to_euc( params['blog_name'][0] || '' )
+  title = Hiki::Util::utf8_to_euc( params['title'][0] || '' )
+  excerpt = Hiki::Util::utf8_to_euc( params['excerpt'][0] || '' )
 
   lines = @db.load( @page )
   md5hex = @db.md5hex( @page )
@@ -53,13 +53,4 @@ END
   head['Cache-Control'] = 'no-cache'
   print @cgi.header( head )
   print response
-end
-
-def force_to_euc(str)
-  begin
-    str2 = Uconv.u8toeuc(str)
-  rescue Uconv::Error
-    str2 = NKF::nkf("-e", str)
-  end
-  return str2
 end

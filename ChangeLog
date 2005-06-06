@@ -1,3 +1,7 @@
+2005-06-06  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* misc/plugin/rss-show.rb (rss_parse): use Hiki::Util::utf8_to_euc.
+	* misc/plugin/trackback.rb (trackback_post): use Hiki::Util::utf8_to_euc.
+
 2005-06-03  Masanori KADO  <QVE02451@nifty.com>
 	* misc/plugin/rss-show.rb (rss_show): add an argument to set the number of items.
 

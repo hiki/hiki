@@ -1,10 +1,6 @@
-# $Id: rss-show.rb,v 1.5 2005-06-02 18:02:31 kdmsnr Exp $
+# $Id: rss-show.rb,v 1.6 2005-06-06 11:58:13 yanagita Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 #
-#   MoonWolf holds the copyright of the following methods.
-#     http://rwiki.jin.gr.jp/cgi-bin/rw-cgi.rb?cmd=view;name=MoonWolf;em=moonwolf
-#     * Uconv.unknown.unicode_handler
-#     * force_to_euc
 
 require 'uconv'
 require 'cgi'
@@ -64,7 +60,7 @@ end
 
 def rss_parse(rss)
   rss_re = /<item(?!s)[^>]*?>.*?<title[^>]*?>(.*?)<\/title>.*?<link[^>]*?>(.*?)<\/link>.*?<\/item>/mi
-  force_to_euc(rss).scan(rss_re)
+  Hiki::Util::utf8_to_euc(rss).scan(rss_re)
 end
 
 def rss_format_items(items)
@@ -84,15 +80,3 @@ def rss_write_cache(cache_file, rss)
   end
 end
 
-def Uconv.unknown_unicode_handler(unicode)
-  raise Uconv::Error
-end
-
-def force_to_euc(str)
-  begin
-    str2 = Uconv.u8toeuc(str)
-  rescue Uconv::Error
-    str2 = NKF::nkf("-e", str)
-  end
-  return str2
-end
