@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.41 2005-06-07 09:10:54 fdiary Exp $
+# $Id: command.rb,v 1.42 2005-06-07 13:09:20 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -123,7 +123,7 @@ module Hiki
     end
     
     def cmd_view
-      if /\./ =~ @p
+      if /^\./ =~ @p
 	redirect(@cgi, @conf.cgi_name) 
 	return
       end
