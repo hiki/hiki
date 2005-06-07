@@ -1,4 +1,4 @@
-# $Id: trackback.rb,v 1.8 2005-06-07 01:42:36 fdiary Exp $
+# $Id: trackback.rb,v 1.9 2005-06-07 09:10:55 fdiary Exp $
 # Copyright (C) 2004 Kazuhiko <kazuhiko@fdiary.net>
 
 def trackback
@@ -34,7 +34,7 @@ def trackback_post
     end
   end
 
-  @db.save( @page, content, md5hex )
+  save( @page, content, md5hex )
 
   response = <<-END
 <?xml version="1.0" encoding="iso-8859-1"?>

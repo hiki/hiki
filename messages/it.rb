@@ -1,4 +1,4 @@
-# $Id: it.rb,v 1.7 2005-03-02 04:32:39 fdiary Exp $
+# $Id: it.rb,v 1.8 2005-06-07 09:10:54 fdiary Exp $
 # it.rb
 #
 # Copyright (C) 2003 Luigi Maselli <metnik@tiscali.it>
@@ -12,12 +12,13 @@
 #
 module Hiki
   module Messages_it
-    def msg_recent; ' Recente' end
+    def msg_recent; 'Recente' end
     def msg_create; 'Crea' end
     def msg_diff; 'Differenze' end
     def msg_edit; 'Modifica' end
     def msg_search; 'Cerca' end
     def msg_admin; 'Amministratore' end
+    def msg_login; 'Login' end
     def msg_logout; 'Logout' end
     def msg_search_result; 'Risultati trovati' end
     def msg_search_hits; '\'%1$s\': %3$d pagina(e) sono trovati in %2$d pagine.' end #da verificare
@@ -39,8 +40,7 @@ module Hiki
     def msg_mail_off; 'Non inviare updated-mail' end #da verificare
     def msg_use; 'Usa' end
     def msg_unuse; 'Non usare' end
-    def msg_password_title; 'Password amministratore' end
-    def msg_password_enter; 'Input Password amministratore.' end
+    def msg_password_title; 'Password' end
     def msg_password; 'Password' end
     def msg_ok; 'OK' end
     def msg_invalid_password; 'Password non corretta. Le tue modifiche non sono ancora state salvate.' end

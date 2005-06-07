@@ -1,15 +1,16 @@
-# $Id: ja.rb,v 1.7 2005-03-02 04:32:39 fdiary Exp $
+# $Id: ja.rb,v 1.8 2005-06-07 09:10:54 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # You can redistribute it and/or modify it under the terms of
 # the Ruby's licence.
 module Hiki
   module Messages_ja
-    def msg_recent; ' 更新履歴' end
+    def msg_recent; '更新履歴' end
     def msg_create; '新規作成' end
     def msg_diff; '差分' end
     def msg_edit; '編集' end
     def msg_search; '検索' end
     def msg_admin; '管理' end
+    def msg_login; 'ログイン' end
     def msg_logout; 'ログアウト' end
     def msg_search_result; '検索結果' end
     def msg_search_hits; '\'%s\'を含むページは全%dページ中、%dページ見つかりました。' end
@@ -31,8 +32,7 @@ module Hiki
     def msg_mail_off; '非通知' end
     def msg_use; '使用する' end
     def msg_unuse; '使用しない' end
-    def msg_password_title; '管理者用パスワード入力' end
-    def msg_password_enter; '管理者用パスワードを入力してください。' end
+    def msg_password_title; 'パスワード入力' end
     def msg_password; 'パスワード' end
     def msg_ok; 'OK' end
     def msg_invalid_password; 'パスワードが間違っています。まだ設定情報は保存されていません。' end

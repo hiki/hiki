@@ -1,4 +1,4 @@
-# $Id: session.rb,v 1.6 2005-03-06 05:00:43 hitoshi Exp $
+# $Id: session.rb,v 1.7 2005-06-07 09:10:54 fdiary Exp $
 # Copyright (C) 2004 Kazuhiko <kazuhiko@fdiary.net>
 
 module Hiki
@@ -6,6 +6,7 @@ module Hiki
     MAX_AGE = 60 * 60
 
     attr_reader :session_id
+    attr_writer :user
 
     def initialize( conf, session_id = nil, max_age = MAX_AGE )
       @conf = conf
@@ -24,16 +25,32 @@ module Hiki
           file.untaint
           File.delete( file ) if Time.now - File.mtime( file ) > @max_age
         end
-        # create a new session file
-        File.new( session_file, 'w' ).close
       end
+    end
+
+    def save
+      return until @user
+      File.open( session_file, 'w' ) do |file|
+	file.print @user
+      end
+    end
+
+    def user
+      return nil unless check
+      begin
+	user = File.read( session_file )
+	user = nil if user.empty?
+      rescue
+	user = nil
+      end
+      user
     end
 
     def check
       return false unless @session_id
       # a session will expire in 10 minutes
       if test( ?e, session_file ) && Time.now - File.mtime( session_file ) < @max_age
-        File.new( session_file, 'w' ).close
+        File.utime( -1, Time.now, session_file )
         return true
       end
       false

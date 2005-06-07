@@ -1,4 +1,4 @@
-# $Id: comment.rb,v 1.7 2005-03-05 15:40:15 hitoshi Exp $
+# $Id: comment.rb,v 1.8 2005-06-07 09:10:55 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 # modified by yoshimi.
@@ -65,7 +65,7 @@ def comment_post
     end
   end
   
-  @db.save( @page, content, md5hex ) if flag
+  save( @page, content, md5hex ) if flag
 end
 
 def rcomment(cols = 60)

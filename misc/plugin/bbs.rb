@@ -1,4 +1,4 @@
-# $Id: bbs.rb,v 1.6 2005-03-05 15:40:15 hitoshi Exp $
+# $Id: bbs.rb,v 1.7 2005-06-07 09:10:55 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 add_body_enter_proc(Proc.new do
@@ -59,5 +59,5 @@ def bbs_post
     end
   end
   
-  @db.save( @page, content, md5hex ) if flag
+  save( @page, content, md5hex ) if flag
 end

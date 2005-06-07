@@ -1,4 +1,4 @@
-# $Id: en.rb,v 1.9 2005-03-02 04:32:39 fdiary Exp $
+# $Id: en.rb,v 1.10 2005-06-07 09:10:54 fdiary Exp $
 # en.rb
 #
 # Copyright (C) 2003 Masao Mutoh <mutoh@highway.ne.jp>
@@ -12,12 +12,13 @@
 #
 module Hiki
   module Messages_en
-    def msg_recent; ' Recent' end
+    def msg_recent; 'Recent' end
     def msg_create; 'Create' end
     def msg_diff; 'Diff' end
     def msg_edit; 'Edit' end
     def msg_search; 'Search' end
     def msg_admin; 'Admin' end
+    def msg_login; 'Login' end
     def msg_logout; 'Logout' end
     def msg_search_result; 'Search Results' end
     def msg_search_hits; '%3$d page(s) containing the phrase \'%1$s\' were found in a set of %2$d pages.' end
@@ -39,8 +40,7 @@ module Hiki
     def msg_mail_off; 'Do not send update e-mails' end
     def msg_use; 'Use' end
     def msg_unuse; 'Don\'t use' end
-    def msg_password_title; 'Admin password' end
-    def msg_password_enter; 'Enter admin password' end
+    def msg_password_title; 'Password' end
     def msg_password; 'Password' end
     def msg_ok; 'OK' end
     def msg_invalid_password; 'Your password is not correct.  Your changes have not yet been saved.' end

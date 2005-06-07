@@ -1,3 +1,32 @@
+2005-06-07  Kazuhiko  <kazuhiko@fdiary.net>
+	* messages/en.rb, messages/fr.rb, messages/it.rb,
+	messages/ja.rb (msg_password_title): remove a needless message.
+	(msg_login): add a new message.
+
+	* misc/plugin/auth_typekey.rb: save 'auth_name' in a session file
+	instead of browser's cookie.
+
+	* hiki/command.rb (Command::cmd_view): redirect to FrontPage if a
+	page name is invalid.
+	(Command::template, Command::themes): remove needless methods.
+
+2005-06-06  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/page.rb (Page::process): rename from 'Page#page'.
+	(Page::out): add a new method.
+
+	* hiki/command.rb (Command::initialize): not put @plugin to @db.
+	(dispatch): redirect to FrontPage if a command is invalid.
+	(Command::themes): remove a needless method.
+
+	* hiki/storage.rb (HikiDBBase::save): move to 'Plugin#save'.
+	* misc/plugin/bbs.rb, misc/plugin/comment.rb,
+	misc/plugin/trackback.rb: use 'Plugin#save' instead of 'DB#save'.
+
+	* hiki/plugin.rb (Plugin::load_file): rename from 'Plugin#load'.
+	* hiki/config.rb (Config::load): fix a typo (main_on_update ->
+	mail_on_update).
+	(Config::read_template): add a new method.
+
 2005-06-06  Kouhei Yanagita <sugi@dream.big.or.jp>
 	* misc/plugin/{rss-show.rb,trackback.rb}: remove needless `require's.
 

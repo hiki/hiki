@@ -1,4 +1,4 @@
-# $Id: storage.rb,v 1.11 2005-05-17 05:33:07 fdiary Exp $
+# $Id: storage.rb,v 1.12 2005-06-07 09:10:54 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'digest/md5'
@@ -6,7 +6,7 @@ require 'hiki/util'
 
 module Hiki
   class HikiDBBase
-    attr_accessor :plugin, :text
+    attr_accessor :text
     include Hiki::Util
 
     def open_db
@@ -25,20 +25,6 @@ module Hiki
     
     def pages
       ['page1', 'page2', 'page3']
-    end
-
-    def save( page, src, md5 )
-      @text = load(page) || ''
-      result = store(page, src, md5)
-      
-      if result
-        delete_cache( page )
-        begin
-          @plugin.update_proc
-        rescue Exception
-        end
-      end
-      result
     end
 
     def delete( page )

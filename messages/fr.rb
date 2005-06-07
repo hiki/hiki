@@ -1,4 +1,4 @@
-# $Id: fr.rb,v 1.7 2005-03-02 04:32:39 fdiary Exp $
+# $Id: fr.rb,v 1.8 2005-06-07 09:10:54 fdiary Exp $
 # fr.rb
 #
 # Copyright (C) 2003 Laurent Sansonetti <laurent@datarescue.be>
@@ -12,12 +12,13 @@
 #
 module Hiki
   module Messages_fr
-    def msg_recent; ' Modifications récentes' end
+    def msg_recent; 'Modifications récentes' end
     def msg_create; 'Créer' end
     def msg_diff; 'Différences' end
     def msg_edit; 'Editer' end
     def msg_search; 'Chercher' end
     def msg_admin; 'Administration' end
+    def msg_login; 'Login' end
     def msg_logout; 'Logout' end
     def msg_search_result; 'Résultats de la recherche' end
     def msg_search_hits; '\'%1$s\': %3$d page(s) trouvées dans %2$d pages.' end
@@ -39,8 +40,7 @@ module Hiki
     def msg_mail_off; 'Ne pas envoyer un e-mail de notification' end
     def msg_use; 'Utiliser' end
     def msg_unuse; 'Ne pas utiliser' end
-    def msg_password_title; 'Mot de passe administrateur' end
-    def msg_password_enter; 'Veuillez entrer le mot de passe administrateur.' end
+    def msg_password_title; 'Mot de passe' end
     def msg_password; 'Mot de passe' end
     def msg_ok; 'OK' end
     def msg_invalid_password; 'Mot de passe incorrect.  Vos modifications n\'ont pas encore été sauvegardées.' end

@@ -1,4 +1,4 @@
-# $Id: 00default.rb,v 1.27 2005-05-17 05:33:09 fdiary Exp $
+# $Id: 00default.rb,v 1.28 2005-06-07 09:10:55 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #==============================
@@ -179,8 +179,9 @@ def create_menu(data, command)
       menu << cmd
     end
     menu_proc.each {|i| menu << i}
-    menu << %Q!<a accesskey="m" href="#{@conf.cgi_name}?c=admin">#{@conf.msg_admin}</a>! 
-    menu << %Q!<a accesskey="l" href="#{@conf.cgi_name}?c=logout">#{@conf.msg_logout}</a>! if cookies.find{|i| i.name = 'session_id'} || @cgi.cookies['session_id'][0]
+    menu << %Q!<a accesskey="l" href="#{@conf.cgi_name}?c=login">#{@conf.msg_login}</a>! unless @user
+    menu << %Q!<a accesskey="m" href="#{@conf.cgi_name}?c=admin">#{@conf.msg_admin}</a>! if @user == 'admin'
+    menu << %Q!<a accesskey="l" href="#{@conf.cgi_name}?c=logout">#{@conf.msg_logout}</a>! if @user
   end
   menu
 end

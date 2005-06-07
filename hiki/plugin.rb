@@ -1,4 +1,4 @@
-# $Id: plugin.rb,v 1.15 2005-05-17 05:33:07 fdiary Exp $
+# $Id: plugin.rb,v 1.16 2005-06-07 09:10:54 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
@@ -12,7 +12,7 @@ module Hiki
 
   class Plugin
     attr_reader   :toc_f, :plugin_command
-    attr_accessor :text, :title, :cookies
+    attr_accessor :text, :title, :cookies, :user
     
     def initialize( options, conf )
       @options      = options
@@ -208,7 +208,7 @@ module Hiki
       @defined_method_list.push(name)
     end
 
-    def load(filename)
+    def load_file(filename)
       @defined_method_list = []
       @export_method_list = []
       open(filename) do |src|
@@ -257,13 +257,28 @@ module Hiki
       dirname, basename = File.split( file )
       [@conf.lang, 'en', 'ja'].uniq.each do |lang|
         begin
-          load( File.join( dirname, lang, basename ) )
+          load_file( File.join( dirname, lang, basename ) )
           @resource_loaded = true
           break
         rescue IOError, Errno::ENOENT
         end
       end
-      load( file )
+      load_file( file )
+    end
+
+    def save( page, src, md5 )
+      src.gsub!(/\r/, '')
+      src.strip!
+      src << "\n"
+      result = @db.store(page, src, md5)
+      if result
+        @db.delete_cache( page )
+        begin
+          update_proc
+        rescue Exception
+        end
+      end
+      result
     end
 
     private

@@ -1,10 +1,10 @@
-# $Id: config.rb,v 1.44 2005-05-30 06:11:10 fdiary Exp $
+# $Id: config.rb,v 1.45 2005-06-07 09:10:54 fdiary Exp $
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
 
 HIKI_VERSION  = '0.8.0'
-HIKI_RELEASE_DATE = '2005-05-30'
+HIKI_RELEASE_DATE = '2005-06-07'
 
 require 'cgi'
 require 'hiki/command'
@@ -100,6 +100,10 @@ module Hiki
       end
       @index_url
     end
+
+    def read_template( cmd )
+      File.read( "#{@template_path }/#{@template[cmd]}" ).untaint
+    end
     
     private
 
@@ -118,7 +122,7 @@ module Hiki
       @use_plugin    ||= false
       @site_name     ||= 'hoge hoge'
       @author_name   ||= ''
-      @main_on_update||= false
+      @mail_on_update||= false
       @mail          ||= ''
       @theme         ||= 'hiki'
       @theme_url     ||= 'theme'

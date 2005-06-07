@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.40 2005-05-17 05:33:07 fdiary Exp $
+# $Id: command.rb,v 1.41 2005-06-07 09:10:54 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -29,7 +29,7 @@ module Hiki
            when 0
              'FrontPage'
            when 1
-             @params['c'][0] ? nil : @params.keys[0]
+             @cmd ? nil : @params.keys[0]
            else
              if @cmd == "create"
                @params['key'][0] ? @params['key'][0] : nil
@@ -37,7 +37,6 @@ module Hiki
                @params['p'][0] ? @params['p'][0] : nil
              end
            end
-      @page   = Hiki::Page::new( cgi, @conf )
       @aliaswiki = AliasWiki::new( @db, @conf )
 
       @p = @aliaswiki.original_name(@p).to_euc if @p
@@ -51,8 +50,10 @@ module Hiki
       options['params'] = @params
 
       @plugin = Plugin::new( options, @conf )
-      @db.plugin = @plugin
-      
+      session_id = @cgi.cookies['session_id'][0]
+      if session_id
+	@plugin.user = Hiki::Session::new( @conf, session_id ).user
+      end
       @body_enter = @plugin.body_enter_proc.sanitize
     end
 
@@ -84,30 +85,30 @@ module Hiki
             send( "cmd_#{@cmd}" )
           end
         end
-        #     rescue Exception
-        #@cmd = 'view'
-        #@p = 'FrontPage'
-        #cmd_view
-     end
+#      rescue NoMethodError
+#	redirect(@cgi, @conf.cgi_name)
+      end
     end
 
   private
-    def template( cmd = @cmd )
-      "#{@conf.template_path }/#{@conf.template[cmd]}"
-    end
-
-    def themes
-      Dir::glob("#{@conf.theme_path }/*/*.css".untaint).sort.collect {|t| File::basename(t, '.css')}
-    end
-
     def generate_page( data )
-      data[:cgi_name]   = @conf.cgi_name 
+      @plugin.hiki_menu(data, @cmd)
+      @plugin.title = data[:title]
+      data[:cgi_name] = @conf.cgi_name 
       data[:body_enter] = @body_enter
-      @page.template    = template
-      @page.contents    = data
+      data[:lang] = @conf.lang
+      data[:header] = @plugin.header_proc.sanitize
+      data[:body_leave] = @plugin.body_leave_proc.sanitize
+      data[:page_attribute] ||= ''
+      data[:footer] = @plugin.footer_proc.sanitize
+
+      @page = Hiki::Page::new( @cgi, @conf )
+      @page.template = @conf.read_template( @cmd )
+      @page.contents = data
 
       data[:last_modified] = Time::now unless data[:last_modified]
-      print @page.page( @plugin )
+      @page.process( @plugin )
+      @page.out
     end
 
     def cmd_theme
@@ -122,12 +123,14 @@ module Hiki
     end
     
     def cmd_view
-      if /^\./ =~ @p || !@db.exist?( @p )
-        if !@db.exist?( @p )
-          @cmd = 'create'
-          cmd_create( @conf.msg_page_not_exist )
-          return
-        end
+      if /\./ =~ @p
+	redirect(@cgi, @conf.cgi_name) 
+	return
+      end
+      unless @db.exist?( @p )
+	@cmd = 'create'
+	cmd_create( @conf.msg_page_not_exist )
+	return
       end
 
       tokens = @db.load_cache( @p )
@@ -151,7 +154,6 @@ module Hiki
       ref = @db.get_references( @p )
 
       data = Hiki::Util::get_common_data( @db, @plugin, @conf )
-      @plugin.hiki_menu(data, @cmd)
       
       pg_title = @plugin.page_name(@p)
       
@@ -199,7 +201,6 @@ module Hiki
       }
 
       data = Hiki::Util::get_common_data( @db, @plugin, @conf )
-      @plugin.hiki_menu(data, @cmd)
       
       data[:title]     = title( @conf.msg_index )
       data[:updatelist] = list.collect! {|i| i.sanitize}
@@ -211,7 +212,6 @@ module Hiki
       list, last_modified = get_recent
       
       data = Hiki::Util::get_common_data( @db, @plugin, @conf )
-      @plugin.hiki_menu(data, @cmd)
 
       data[:title]      = title( @conf.msg_recent )
       data[:updatelist] = list.collect! {|i| i.sanitize}
@@ -258,7 +258,7 @@ module Hiki
       formatter    = nil
 
       if @cmd == 'preview'
-        p = @conf.parser::new( @conf ).parse( text.gsub(/\r\n/, "\n") )
+        p = @conf.parser::new( @conf ).parse( text.gsub(/\r/, '') )
         formatter = @conf.formatter::new( p, @db, @plugin, @conf )
         preview_text = formatter.to_s
         save_button = ''
@@ -275,7 +275,6 @@ module Hiki
       md5hex = @params['md5hex'][0] || @db.md5hex( page )
       
       data = Hiki::Util::get_common_data( @db, @plugin, @conf )
-      @plugin.hiki_menu(data, @cmd)
       @plugin.text = text
 
       data[:title]          = title( page )
@@ -306,7 +305,6 @@ module Hiki
       differ = word_diff( old, new ).gsub( /\n/, "<br>\n" )
       
       data = Hiki::Util::get_common_data( @db, @plugin, @conf )
-      @plugin.hiki_menu(data, @cmd)
 
       data[:title]        = title("#{@p} #{@conf.msg_diff}")
       data[:differ]       = differ.sanitize
@@ -341,12 +339,11 @@ module Hiki
           return
         end
         
-        if @db.save( page, text.gsub(/\r/, ''), md5hex )
+        if @plugin.save( page, text, md5hex )
           keyword = @params['keyword'][0].split("\n").collect {|k|
             k.chomp.strip}.delete_if{|k| k.size == 0}
-          name = @cgi.cookies['auth_name'][0]
           attr = [[:keyword, keyword.uniq], [:title, title]]
-          attr << [:editor, name] if name 
+          attr << [:editor, @plugin.user] if @plugin.user
           @db.set_attribute(page, attr)
         else
           @cmd = 'conflict'
@@ -361,8 +358,6 @@ module Hiki
 
       if text.size == 0 && pass_check
         data             = get_common_data( @db, @plugin, @conf )
-        @plugin.hiki_menu(data, @cmd)
-
         data[:title]     = @conf.msg_delete
         data[:msg]       = @conf.msg_delete_page
         data[:link]      = page.escapeHTML
@@ -382,8 +377,6 @@ module Hiki
           l.collect! {|p| @plugin.hiki_anchor( p[0].escape, @plugin.page_name(p[0])) + " - #{p[1]}"}
         end
         data             = get_common_data( @db, @plugin, @conf )
-        @plugin.hiki_menu(data, @cmd)
-
         data[:cmd]       = 'search'
         data[:title]     = title( @conf.msg_search_result )
         data[:msg2]      = @conf.msg_search + ': '
@@ -399,8 +392,7 @@ module Hiki
         end
       else
         data             = get_common_data( @db, @plugin, @conf )
-        @plugin.hiki_menu(data, @cmd)
-        data[:cmd]       = 'search'
+          data[:cmd]       = 'search'
         data[:title]     = title( @conf.msg_search )
         data[:msg1]      = @conf.msg_search_comment
         data[:msg2]      = @conf.msg_search + ': '
@@ -434,8 +426,7 @@ module Hiki
         end
       else
         data           = get_common_data( @db, @plugin, @conf )
-        @plugin.hiki_menu(data, @cmd)
-        data[:cmd]     =  'create'
+	data[:cmd]     =  'create'
         data[:title]   = title( @conf.msg_create )
         data[:msg1]    = msg
         data[:msg2]    = @conf.msg_create + ': '
@@ -448,26 +439,47 @@ module Hiki
       end
     end
 
-    def cmd_admin
-      session_id = @cgi.cookies['session_id'][0]
-      if session_id && Hiki::Session::new( @conf, session_id ).check
-        admin_config
-        return
-      elsif @conf.password.size > 0
-        key = @params['key'][0]
-          if !key || (key && key.crypt( @conf.password ) != @conf.password)
-            admin_enter_password
-            return
-          end
+    def cmd_login
+      if @conf.password.empty?
+	@plugin.user = 'admin'
+	cmd_admin
+	return
       end
-      session = Hiki::Session::new( @conf )
-      @plugin.cookies << session_cookie( session.session_id )
-      admin_config
-    end
-    
-    def admin_config
+
+      if key = @params['key'][0]
+	session = Hiki::Session::new( @conf )
+	if key.crypt( @conf.password ) == @conf.password
+	  user = 'admin'
+	elsif key == 'test' # FIXME
+	  user = 'test'
+	end
+	if user
+	  session.user = user
+	  session.save
+	  redirect(@cgi, @conf.cgi_name, session_cookie( session.session_id )) 
+	  return
+	end
+      end
+
       data = get_common_data( @db, @plugin, @conf )
-      @plugin.hiki_menu(data, @cmd)
+
+      data[:cmd]     = 'login'
+      data[:title]   = title( @conf.msg_password_title )
+      data[:msg2]    = @conf.msg_password + ': '
+      data[:button]  = @conf.msg_ok
+      data[:key]     = 'type="password"'
+      data[:list]    = nil
+      data[:method]  = 'post'
+      @cmd = 'password'
+      generate_page( data )
+    end
+
+    def cmd_admin
+      if @plugin.user != 'admin'
+	cmd_login
+	return
+      end
+      data = get_common_data( @db, @plugin, @conf )
       data[:key]            = @cgi.params['conf'][0] || 'default'
 
       data[:title]          = title( @conf.msg_admin )
@@ -477,7 +489,6 @@ module Hiki
 
     def admin_enter_password
       data = get_common_data( @db, @plugin, @conf )
-      @plugin.hiki_menu(data, @cmd)
 
       data[:cmd]     = 'admin'
       data[:title]   = title( @conf.msg_password_title )
@@ -537,13 +548,17 @@ module Hiki
       redirect(@cgi, @conf.cgi_name, cookies)
     end
 
-    def session_cookie(session_id, max_age = Session::MAX_AGE)
+    def cookie(name, value, max_age = Session::MAX_AGE)
       CGI::Cookie::new( {
-                          'name' => 'session_id',
-                          'value' => session_id,
+                          'name' => name,
+                          'value' => value,
                           'path' => @plugin.cookie_path,
                           'expires' => Time::now.gmtime + max_age
                         } )
+    end
+
+    def session_cookie(session_id, max_age = Session::MAX_AGE)
+      cookie('session_id', session_id, max_age)
     end
   end
 end
