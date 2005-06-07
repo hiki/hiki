@@ -1,4 +1,4 @@
-# $Id: rss-show.rb,v 1.7 2005-06-06 12:05:14 yanagita Exp $
+# $Id: rss-show.rb,v 1.8 2005-06-07 01:42:36 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'cgi'
@@ -57,7 +57,7 @@ end
 
 def rss_parse(rss)
   rss_re = /<item(?!s)[^>]*?>.*?<title[^>]*?>(.*?)<\/title>.*?<link[^>]*?>(.*?)<\/link>.*?<\/item>/mi
-  Hiki::Util::utf8_to_euc(rss).scan(rss_re)
+  utf8_to_euc(rss).scan(rss_re)
 end
 
 def rss_format_items(items)

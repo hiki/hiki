@@ -1,4 +1,4 @@
-# $Id: trackback.rb,v 1.7 2005-06-06 12:05:14 yanagita Exp $
+# $Id: trackback.rb,v 1.8 2005-06-07 01:42:36 fdiary Exp $
 # Copyright (C) 2004 Kazuhiko <kazuhiko@fdiary.net>
 
 def trackback
@@ -14,9 +14,9 @@ def trackback_post
     redirect(@cgi, "#{@conf.index_url}?#{@page.escapeHTML}")
     return
   end
-  blog_name = Hiki::Util::utf8_to_euc( params['blog_name'][0] || '' )
-  title = Hiki::Util::utf8_to_euc( params['title'][0] || '' )
-  excerpt = Hiki::Util::utf8_to_euc( params['excerpt'][0] || '' )
+  blog_name = utf8_to_euc( params['blog_name'][0] || '' )
+  title = utf8_to_euc( params['title'][0] || '' )
+  excerpt = utf8_to_euc( params['excerpt'][0] || '' )
 
   lines = @db.load( @page )
   md5hex = @db.md5hex( @page )

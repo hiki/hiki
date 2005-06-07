@@ -1,4 +1,4 @@
-# $Id: util.rb,v 1.33 2005-05-24 09:28:49 fdiary Exp $
+# $Id: util.rb,v 1.34 2005-06-07 01:42:36 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'nkf'
@@ -255,8 +255,12 @@ EOS
       if NKF::const_defined?(:UTF8)
         return NKF::nkf('-m0 -w', str)
       else
-        require 'uconv'
-        return Uconv.euctou8(str)
+	begin
+	  require 'uconv'
+	rescue LoadError
+	    raise "Please update to Ruby >= 1.8.2, or install either uconv or rbuconv."
+	end
+	return Uconv.euctou8(str)
       end
     end
   
@@ -264,7 +268,11 @@ EOS
       if NKF::const_defined?(:UTF8)
         return NKF::nkf('-m0 -e', str)
       else
-        require 'uconv'
+	begin
+	  require 'uconv'
+	rescue LoadError
+	  raise "Please update to Ruby >= 1.8.2, or install either uconv or rbuconv."
+	end
         return Uconv.u8toeuc(str)
       end
     end
