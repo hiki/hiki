@@ -1,3 +1,9 @@
+2005-06-08  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/parser.rb: support multiple line plugins.
+	* style/default/html_formatter.rb (call_plugin_method): use
+	apply_plugin method in pluginutil.rb.
+	* hiki/util.rb (csv_split): remove a needless method.
+
 2005-06-07  Kazuhiko  <kazuhiko@fdiary.net>
 	* messages/en.rb, messages/fr.rb, messages/it.rb,
 	messages/ja.rb (msg_password_title): remove a needless message.

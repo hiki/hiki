@@ -1,4 +1,4 @@
-# $Id: parser.rb,v 1.10 2005-05-30 06:11:10 fdiary Exp $
+# $Id: parser.rb,v 1.11 2005-06-08 05:12:44 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'cgi'
@@ -36,10 +36,11 @@ module Hiki
     INTERWIKI  = '\[\[([^\]:]+?):([^\]]+)\]\]'
     WIKINAME   = '((?:[A-Z][a-z0-9]+){2,})([^A-Za-z0-9])?'
     IMAGE      = '\.(?:jpg|jpeg|png|gif)'
-    PLUGIN     = '\{\{([^\(\)]+?)(?:\((.*?)\))?\s*\}\}'
+    PLUGIN     = '\{\{(.*?)\}\}'
     SPECIAL    = '^\[\]\'=\{\}'
     TABLE      = '\|\|(.*)'
     DEFLIST    = '^:(.+)'
+    NEWLINE    = "\000\000\000\000"
 
     EMPHASIS_RE    = /^#{EMPHASIS}/
     STRONG_RE      = /^#{STRONG}(?!:')/
@@ -65,6 +66,7 @@ module Hiki
       @cur_stack.clear
       @last_blocktype.clear
 
+      s.gsub!(/#{PLUGIN}/m) {|i| i.gsub(/\n/, NEWLINE)}
       s.each do |line|
         parse_line( line )
         @stack << normalize_line( @cur_stack ).dup
@@ -140,7 +142,7 @@ module Hiki
         @cur_stack.push( {:e => :table_row_close} )
       when /#{PLUGIN_RE}$/
         if @conf.use_plugin
-          @cur_stack.push( {:e => :plugin, :method => $1, :param => $2} )
+          @cur_stack.push( {:e => :plugin, :method => $1.gsub(/#{NEWLINE}/, "\n")} )
         else
           inline( line )
         end
@@ -209,8 +211,8 @@ module Hiki
         @cur_stack.push( {:e => :reference, :href => href, :s => href} )
       when PLUGIN_RE
         if @conf.use_plugin
-          @cur_stack.push( {:e => :inline_plugin, :method => $1, :param => $2} )
           str = $'
+          @cur_stack.push( {:e => :inline_plugin, :method => $1.gsub(/#{NEWLINE}/, "\n")} )
         else
           @cur_stack.push( {:e => :normal_text, :s => str} )
           str = ''

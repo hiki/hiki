@@ -1,7 +1,8 @@
-# $Id: html_formatter.rb,v 1.26 2005-05-17 05:33:10 fdiary Exp $
+# $Id: html_formatter.rb,v 1.27 2005-06-08 05:12:44 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
+require 'hiki/pluginutil'
 require 'hiki/interwiki'
 require 'hiki/aliaswiki'
 require 'hiki/hiki_formatter'
@@ -270,36 +271,8 @@ EOS
       
     def call_plugin_method( t )
       return nil unless @conf.use_plugin
-      
-      method = t[:method]
-      args = nil
-      
-      if t[:param]
-        args = csv_split( t[:param] ).collect! do |a|
-          case a
-          when /^[-+]?\d+(\.\d+)?$/
-            $1 ? a.to_f : a.to_i
-          when /^'(.+)'$/, /^"(.+)"$/
-            $1.escapeHTML
-          else
-            a.escapeHTML
-          end
-        end
-      end
-
-      begin
-        if @plugin.respond_to?( method ) && !Object.method_defined?( method )
-          if args
-            @plugin.send( method, *args )
-          else
-            @plugin.send( method )
-          end
-        else
-          raise PluginException, 'not plugin method'
-        end
-      rescue
-        raise PluginException, plugin_error('inline plugin', $!)
-      end
+      str = t[:method].gsub(/&/, '&amp;').gsub(/</, '&lt;').gsub(/>/, '&gt;')
+      return apply_plugin( str, @plugin, @conf )
     end
   end
 end

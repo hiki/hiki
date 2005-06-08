@@ -1,4 +1,4 @@
-# $Id: test_default_parser.rb,v 1.3 2005-05-30 06:11:10 fdiary Exp $
+# $Id: test_default_parser.rb,v 1.4 2005-06-08 05:12:44 fdiary Exp $
 
 require 'test/unit'
 require 'style/default/parser'
@@ -60,15 +60,28 @@ class Default_Parser_Unit_Tests < Test::Unit::TestCase
   def test_inline_plugin
     assert_equal([{:e=>:p_open},
                    {:s=>"a", :e=>:normal_text},
-                   {:method=>"hoge", :param=>nil, :e=>:inline_plugin},
+                   {:method=>"hoge", :e=>:inline_plugin},
                    {:s=>"b", :e=>:normal_text},
                    {:e=>:p_close}],
                  @parser.parse( "a{{hoge}}b" ) )
   end
 
+  def test_inline_plugin2
+    assert_equal([{:e=>:p_open},
+                   {:method=>"hoge", :e=>:inline_plugin},
+                   {:s=>"a", :e=>:normal_text},
+                   {:e=>:p_close}],
+                 @parser.parse( "{{hoge}}a" ) )
+  end
+
   def test_block_plugin
-    assert_equal([{:method=>"hoge", :param=>nil, :e=>:plugin}],
+    assert_equal([{:method=>"hoge", :e=>:plugin}],
                  @parser.parse( "{{hoge}}" ) )
+  end
+
+  def test_block_plugin2
+    assert_equal([{:method=>"hoge('123\n456')", :e=>:plugin}],
+                 @parser.parse( "{{hoge('123\n456')}}\n" ) )
   end
 
   def test_link
@@ -80,5 +93,13 @@ class Default_Parser_Unit_Tests < Test::Unit::TestCase
 		   {:s=>"../data/", :e=>:reference, :href=>"../data/"},
 		   {:e=>:p_close}],
 		 @parser.parse( "[[:../data/]]" ) )
+  end
+
+  def test_normalize_line
+    assert_equal([{:e=>:p_open},
+                   {:s=>"'''", :e=>:normal_text},
+                   {:s=>"hoge", :e=>:normal_text},
+                   {:e=>:p_close}],
+                 @parser.parse( "'''hoge" ) )
   end
 end

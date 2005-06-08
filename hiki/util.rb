@@ -1,4 +1,4 @@
-# $Id: util.rb,v 1.34 2005-06-07 01:42:36 fdiary Exp $
+# $Id: util.rb,v 1.35 2005-06-08 05:12:43 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'nkf'
@@ -49,52 +49,6 @@ module Hiki
   class PluginException < Exception; end
 
   module Util
-    def csv_split( source, delimiter = ',' )
-      status = :IN_FIELD
-      csv = []
-      csv.push(last = "")
-      while !source.empty?
-        case status
-        when :IN_FIELD
-          case source
-          when /^'/
-            source = $'
-            last.concat "'"
-            status = :IN_QFIELD
-          when /^#{delimiter}/
-            source = $'
-            csv.push(last = "")
-          when /^(\\|\s)/
-            source = $'
-          when /^([^#{delimiter}'\\\s]*)/
-            source = $'
-            last.concat $1
-          end
-        when :IN_QFIELD
-          case source
-          when /^'/
-            source = $'
-            last.concat "'"
-            status = :IN_FIELD
-          when /^(\\)/
-            source = $'
-            last.concat $1
-            status = :IN_ESCAPE
-          when /^([^'\\]*)/
-            source = $'
-            last.concat $1
-          end
-        when :IN_ESCAPE
-          if /^(.)/ =~ source
-            source = $'
-            last.concat $1
-          end
-          status = :IN_QFIELD
-        end
-      end
-      csv
-    end
-
     def plugin_error( method, e )
       msg = "<strong>#{e.class}(#{e.message}): #{method.escapeHTML}</strong><br>"
       msg << "<strong>#{e.backtrace.join("<br>\n")}</strong>" if @conf.plugin_debug
