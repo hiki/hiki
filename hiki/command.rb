@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.42 2005-06-07 13:09:20 fdiary Exp $
+# $Id: command.rb,v 1.43 2005-06-08 08:36:08 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -448,10 +448,13 @@ module Hiki
 
       if key = @params['key'][0]
 	session = Hiki::Session::new( @conf )
+	user = nil
 	if key.crypt( @conf.password ) == @conf.password
 	  user = 'admin'
-	elsif key == 'test' # FIXME
-	  user = 'test'
+	elsif @conf['user.list']
+	  @conf['user.list'].find do |name, pass|
+	    user = name if key == pass
+	  end
 	end
 	if user
 	  session.user = user

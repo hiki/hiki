@@ -1,4 +1,8 @@
 2005-06-08  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/edit_user.rb: add a new plugin.
+	* hiki/command.rb (cmd_login): support @conf['user.list'] that is
+	made by 'edit_user.rb' plugin.
+
 	* misc/plugin/rss.rb: use export_plugin_methods. support hiding
 	RSS menu.
 
