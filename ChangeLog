@@ -1,4 +1,7 @@
 2005-06-08  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/storage.rb (load_cache): only use cache files with same
+	HIKI_RELEASE_DATE.
+
 	* style/default/parser.rb: support multiple line plugins.
 	* style/default/html_formatter.rb (call_plugin_method): use
 	apply_plugin method in pluginutil.rb.

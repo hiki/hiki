@@ -1,4 +1,4 @@
-# $Id: storage.rb,v 1.12 2005-06-07 09:10:54 fdiary Exp $
+# $Id: storage.rb,v 1.13 2005-06-08 05:41:51 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'digest/md5'
@@ -79,7 +79,12 @@ module Hiki
       cache_path = "#{@conf.cache_path}/parser"
       Dir.mkdir( cache_path ) unless test( ?e, cache_path )
       begin
-        return Marshal::load( File.open( "#{cache_path}/#{CGI::escape( page )}", 'rb' ) {|f| f.read} )
+        tmp = Marshal::load( File.open( "#{cache_path}/#{CGI::escape( page )}".untaint, 'rb' ) {|f| f.read} )
+	if tmp[0] == HIKI_RELEASE_DATE
+	  return tmp[1]
+	else
+	  return nil
+	end
       rescue
         return nil
       end
@@ -88,7 +93,7 @@ module Hiki
     def save_cache( page, tokens )
       begin
         File.open( "#{@conf.cache_path}/parser/#{CGI::escape( page )}".untaint, 'wb') do |f|
-          Marshal::dump(tokens, f)
+          Marshal::dump([HIKI_RELEASE_DATE, tokens], f)
         end
       rescue
       end
