@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.43 2005-06-08 08:36:08 fdiary Exp $
+# $Id: command.rb,v 1.44 2005-06-08 13:32:55 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -94,6 +94,7 @@ module Hiki
     def generate_page( data )
       @plugin.hiki_menu(data, @cmd)
       @plugin.title = data[:title]
+      data[:cmd] = @cmd
       data[:cgi_name] = @conf.cgi_name 
       data[:body_enter] = @body_enter
       data[:lang] = @conf.lang
@@ -109,12 +110,6 @@ module Hiki
       data[:last_modified] = Time::now unless data[:last_modified]
       @page.process( @plugin )
       @page.out
-    end
-
-    def cmd_theme
-      @conf.theme = @params['theme'][0]
-      @cmd = 'view'
-      dispatch
     end
 
     def cmd_preview
@@ -377,7 +372,6 @@ module Hiki
           l.collect! {|p| @plugin.hiki_anchor( p[0].escape, @plugin.page_name(p[0])) + " - #{p[1]}"}
         end
         data             = get_common_data( @db, @plugin, @conf )
-        data[:cmd]       = 'search'
         data[:title]     = title( @conf.msg_search_result )
         data[:msg2]      = @conf.msg_search + ': '
         data[:button]    = @conf.msg_search
@@ -392,7 +386,6 @@ module Hiki
         end
       else
         data             = get_common_data( @db, @plugin, @conf )
-          data[:cmd]       = 'search'
         data[:title]     = title( @conf.msg_search )
         data[:msg1]      = @conf.msg_search_comment
         data[:msg2]      = @conf.msg_search + ': '
@@ -426,7 +419,6 @@ module Hiki
         end
       else
         data           = get_common_data( @db, @plugin, @conf )
-	data[:cmd]     =  'create'
         data[:title]   = title( @conf.msg_create )
         data[:msg1]    = msg
         data[:msg2]    = @conf.msg_create + ': '
@@ -466,14 +458,12 @@ module Hiki
 
       data = get_common_data( @db, @plugin, @conf )
 
-      data[:cmd]     = 'login'
       data[:title]   = title( @conf.msg_password_title )
       data[:msg2]    = @conf.msg_password + ': '
       data[:button]  = @conf.msg_ok
       data[:key]     = 'type="password"'
       data[:list]    = nil
       data[:method]  = 'post'
-      @cmd = 'password'
       generate_page( data )
     end
 
@@ -487,20 +477,6 @@ module Hiki
 
       data[:title]          = title( @conf.msg_admin )
       data[:save_config]    = true if @cgi.params['saveconf'][0]
-      generate_page( data )
-    end
-
-    def admin_enter_password
-      data = get_common_data( @db, @plugin, @conf )
-
-      data[:cmd]     = 'admin'
-      data[:title]   = title( @conf.msg_password_title )
-      data[:msg2]    = @conf.msg_password + ': '
-      data[:button]  = @conf.msg_ok
-      data[:key]     = 'type="password"'
-      data[:list]    = nil
-      data[:method]  = 'post'
-      @cmd = 'password'
       generate_page( data )
     end
 

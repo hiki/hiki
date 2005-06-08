@@ -1,4 +1,9 @@
 2005-06-08  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/config.rb (Config::default): add an entry of 'login' in
+	@template.
+	* hiki/command.rb (Command::cmd_theme,
+	Command::admin_enter_password): remove needless methods.
+
 	* misc/plugin/edit_user.rb: add a new plugin.
 	* hiki/command.rb (cmd_login): support @conf['user.list'] that is
 	made by 'edit_user.rb' plugin.
