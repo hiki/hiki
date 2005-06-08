@@ -1,4 +1,4 @@
-# $Id: session.rb,v 1.7 2005-06-07 09:10:54 fdiary Exp $
+# $Id: session.rb,v 1.8 2005-06-08 07:00:45 fdiary Exp $
 # Copyright (C) 2004 Kazuhiko <kazuhiko@fdiary.net>
 
 module Hiki
@@ -31,17 +31,17 @@ module Hiki
     def save
       return until @user
       File.open( session_file, 'w' ) do |file|
-	file.print @user
+        file.print @user
       end
     end
 
     def user
       return nil unless check
       begin
-	user = File.read( session_file )
-	user = nil if user.empty?
+        user = File.read( session_file )
+        user = nil if user.empty?
       rescue
-	user = nil
+        user = nil
       end
       user
     end
@@ -50,7 +50,8 @@ module Hiki
       return false unless @session_id
       # a session will expire in 10 minutes
       if test( ?e, session_file ) && Time.now - File.mtime( session_file ) < @max_age
-        File.utime( -1, Time.now, session_file )
+        now = Time.now
+        File.utime( now, now, session_file )
         return true
       end
       false
