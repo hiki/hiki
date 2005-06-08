@@ -1,4 +1,4 @@
-# $Id: config.rb,v 1.47 2005-06-08 13:32:55 fdiary Exp $
+# $Id: config.rb,v 1.48 2005-06-08 13:57:29 fdiary Exp $
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
@@ -102,7 +102,12 @@ module Hiki
     end
 
     def read_template( cmd )
-      File.read( "#{@template_path }/#{@template[cmd]}" ).untaint
+      template = File.join(@template_path, @template[cmd])
+      if FileTest.file?(template)
+        File.read(template).untaint
+      else
+        raise Errno::ENOENT, "Template file for \"#{cmd}\" not found."
+      end
     end
     
     private
