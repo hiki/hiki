@@ -1,4 +1,7 @@
 2005-06-08  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/rss.rb: use export_plugin_methods. support hiding
+	RSS menu.
+
 	* hiki/storage.rb (load_cache): only use cache files with same
 	HIKI_RELEASE_DATE.
 

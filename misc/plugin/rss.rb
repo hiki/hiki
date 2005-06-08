@@ -1,4 +1,4 @@
-# $Id: rss.rb,v 1.17 2005-03-04 09:29:56 fdiary Exp $
+# $Id: rss.rb,v 1.18 2005-06-08 06:02:37 fdiary Exp $
 # Copyright (C) 2003-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # Copyright (C) 2005 Kazuhiko <kazuhiko@fdiary.net>
 
@@ -88,7 +88,11 @@ end
 
 add_body_enter_proc(Proc.new do
   @conf['rss.mode'] ||= 0
-  add_plugin_command('rss', 'RSS')
+  if @conf['rss.menu'] == 1
+    add_plugin_command('rss', nil)
+  else
+    add_plugin_command('rss', 'RSS')
+  end
 end)
 
 add_header_proc(Proc.new do
@@ -101,6 +105,10 @@ def saveconf_rss
   end
 end
 
+if @cgi.params['conf'][0] == 'rss' && @mode == 'saveconf'
+  @conf['rss.menu'] = @cgi.params['rss.menu'][0].to_i
+end
+
 add_conf_proc('rss', label_rss_config) do
   saveconf_rss
   str = <<-HTML
@@ -111,5 +119,15 @@ add_conf_proc('rss', label_rss_config) do
     str << %Q|<option value="#{i}"#{@conf['rss.mode'] == i ? ' selected' : ''}>#{label_rss_mode_candidate[i]}</option>\n|
   }
   str << "</select></p>\n"
+  str << <<-HTML
+  <h3 class="subtitle">#{label_rss_menu_title}</h3>
+  <p><select name="rss.menu">
+  HTML
+  label_rss_menu_candidate.each_index{ |i|
+    str << %Q|<option value="#{i}"#{@conf['rss.menu'] == i ? ' selected' : ''}>#{label_rss_menu_candidate[i]}</option>\n|
+  }
+  str << "</select></p>\n"
   str
 end
+
+export_plugin_methods(:rss)
