@@ -1,17 +1,17 @@
-# $Id: edit_user.rb,v 1.3 2005-06-09 08:30:57 fdiary Exp $
+# $Id: edit_user.rb,v 1.4 2005-06-09 08:45:17 fdiary Exp $
 # Copyright (C) 2005 Kazuhiko <kazuhiko@fdiary.net>
 
 def saveconf_edit_user
   if @mode == 'saveconf' then
     @conf['user.auth'] = @cgi.params['user.auth'][0].to_i
     user_list = {}
-    (@conf['user.list'] ||= []).sort.each do |user, pass|
-      unless @cgi.params["#{CGI.escape(user)}_remove"][0]
-        password = @cgi.params["#{CGI.escape(user)}_pass"][0]
+    (@conf['user.list'] ||= []).sort.each do |name, pass|
+      unless @cgi.params["#{CGI.escape(name)}_remove"][0]
+        password = @cgi.params["#{CGI.escape(name)}_pass"][0]
         unless password.empty?
-          user_list[user] = crypt_password(password)
+          user_list[name] = crypt_password(password)
         else
-          user_list[user] = pass
+          user_list[name] = pass
         end
       end
     end
@@ -19,10 +19,10 @@ def saveconf_edit_user
 
     @cgi.params['user.list'][0].each do |line|
       if /^([^\s]+)\s+([^\s]+)/ =~ line
-        user = $1
+        name = $1
         pass = $2
-        unless @conf['user.list'].has_key?(user) && /^[\w\d\-]+$/ =~ user
-          @conf['user.list'][user] = crypt_password(pass)
+        unless @conf['user.list'].has_key?(name) && /^[\w\d\-]+$/ =~ name
+          @conf['user.list'][name] = crypt_password(pass)
         end
       end
     end
