@@ -1,4 +1,4 @@
-# $Id: util.rb,v 1.35 2005-06-08 05:12:43 fdiary Exp $
+# $Id: util.rb,v 1.36 2005-06-09 01:22:22 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'nkf'
@@ -125,20 +125,10 @@ module Hiki
     end
 
     def redirect(cgi, url, cookies = nil)
-      header = {
-               'type' => 'text/html',
-             }
+      header = {}
+      header['location'] = url
       header['cookie'] = cookies if cookies
-
       print cgi.header(header)
-      print %Q[
-               <html>
-               <head>
-               <meta http-equiv="refresh" content="0;url=#{url}">
-               <title>moving...</title>
-               </head>
-               <body>Wait or <a href="#{url}">Click here!</a></body>
-               </html>]
     end
 
     def sendmail(subject, body)

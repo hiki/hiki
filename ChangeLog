@@ -1,3 +1,10 @@
+2005-06-09  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/util.rb (Util::redirect): use 'Location' header instead of
+	'meta refresh'.
+
+	* hiki/command.rb (Command::initialize): automatically login as
+	'admin' if admin password is empty.
+
 2005-06-08  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/config.rb (Config::default): add an entry of 'login' in
 	@template.

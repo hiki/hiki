@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.44 2005-06-08 13:32:55 fdiary Exp $
+# $Id: command.rb,v 1.45 2005-06-09 01:22:22 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -53,6 +53,9 @@ module Hiki
       session_id = @cgi.cookies['session_id'][0]
       if session_id
 	@plugin.user = Hiki::Session::new( @conf, session_id ).user
+      end
+      if @conf.password.empty?
+	@plugin.user = 'admin'
       end
       @body_enter = @plugin.body_enter_proc.sanitize
     end
@@ -432,16 +435,10 @@ module Hiki
     end
 
     def cmd_login
-      if @conf.password.empty?
-	@plugin.user = 'admin'
-	cmd_admin
-	return
-      end
-
       if key = @params['key'][0]
 	session = Hiki::Session::new( @conf )
 	user = nil
-	if key.crypt( @conf.password ) == @conf.password
+	if @conf.password.empty? || key.crypt( @conf.password ) == @conf.password
 	  user = 'admin'
 	elsif @conf['user.list']
 	  @conf['user.list'].find do |name, pass|
