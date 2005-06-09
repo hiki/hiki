@@ -1,4 +1,7 @@
 2005-06-09  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/pluginutil.rb (Util::convert_value, Util::argwords): take
+	'0123' as String.
+
 	* hiki/util.rb (Util::redirect): use 'Location' header instead of
 	'meta refresh'.
 

@@ -1,4 +1,4 @@
-# $Id: pluginutil.rb,v 1.6 2005-06-08 05:12:43 fdiary Exp $
+# $Id: pluginutil.rb,v 1.7 2005-06-09 02:15:14 fdiary Exp $
 #
 # apply_plugin(str):
 #  Eval the string as a plugin.
@@ -15,6 +15,7 @@ require 'cgi'
 module Hiki
   module Util
     DIGIT_RE = /^[-+]?\d+(\.\d+)?$/
+    STRING_RE = /\A"(.*)"\z/m
     NIL_RE = /^\s*nil\s*$/
     LSTRIP_RE = /\A\s+/
 
@@ -41,6 +42,8 @@ module Hiki
     def convert_value(field, escape = false)
       if DIGIT_RE =~ field
         $1 ? field.to_f : field.to_i
+      elsif STRING_RE =~ field
+        $1
       elsif NIL_RE =~ field
         nil
       elsif field.size > 0
@@ -80,11 +83,11 @@ module Hiki
             words.push(val) unless val == :no_data
             return [words, args]
           elsif args.sub!(ARG_REG_C, '') then
-            snippet = $1.gsub(ARG_REG_D, '\1')
+            snippet = %Q|"#{$1.gsub(ARG_REG_D, '\1')}"|
           elsif args =~ ARG_REG_E then
             raise ArgumentError, "Unmatched double quote: #{args}"
           elsif args.sub!(ARG_REG_F, '') then
-            snippet = $1
+            snippet = %Q|"#{$1}"|
           elsif args =~ ARG_REG_G then
             raise ArgumentError, "Unmatched single quote: #{args}"
           elsif args.sub!(ARG_REG_H, '') then
