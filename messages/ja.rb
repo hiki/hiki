@@ -1,4 +1,4 @@
-# $Id: ja.rb,v 1.9 2005-06-09 05:35:13 fdiary Exp $
+# $Id: ja.rb,v 1.10 2005-06-09 08:12:38 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # You can redistribute it and/or modify it under the terms of
 # the Ruby's licence.
@@ -32,7 +32,7 @@ module Hiki
     def msg_mail_off; '非通知' end
     def msg_use; '使用する' end
     def msg_unuse; '使用しない' end
-    def msg_password_title; 'パスワード入力' end
+    def msg_name; 'ユーザ名' end
     def msg_password; 'パスワード' end
     def msg_ok; 'OK' end
     def msg_invalid_password; 'パスワードが間違っています。まだ設定情報は保存されていません。' end

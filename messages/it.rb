@@ -1,4 +1,4 @@
-# $Id: it.rb,v 1.9 2005-06-09 05:35:13 fdiary Exp $
+# $Id: it.rb,v 1.10 2005-06-09 08:12:38 fdiary Exp $
 # it.rb
 #
 # Copyright (C) 2003 Luigi Maselli <metnik@tiscali.it>
@@ -40,7 +40,7 @@ module Hiki
     def msg_mail_off; 'Non inviare updated-mail' end #da verificare
     def msg_use; 'Usa' end
     def msg_unuse; 'Non usare' end
-    def msg_password_title; 'Password' end
+    def msg_name; 'Nomare' end
     def msg_password; 'Password' end
     def msg_ok; 'OK' end
     def msg_invalid_password; 'Password non corretta. Le tue modifiche non sono ancora state salvate.' end

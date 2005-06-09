@@ -1,4 +1,4 @@
-# $Id: en.rb,v 1.11 2005-06-09 05:35:13 fdiary Exp $
+# $Id: en.rb,v 1.12 2005-06-09 08:12:38 fdiary Exp $
 # en.rb
 #
 # Copyright (C) 2003 Masao Mutoh <mutoh@highway.ne.jp>
@@ -40,7 +40,7 @@ module Hiki
     def msg_mail_off; 'Do not send update e-mails' end
     def msg_use; 'Use' end
     def msg_unuse; 'Don\'t use' end
-    def msg_password_title; 'Password' end
+    def msg_name; 'Name' end
     def msg_password; 'Password' end
     def msg_ok; 'OK' end
     def msg_invalid_password; 'Your password is not correct.  Your changes have not yet been saved.' end

@@ -1,4 +1,4 @@
-# $Id: config.rb,v 1.49 2005-06-09 05:35:13 fdiary Exp $
+# $Id: config.rb,v 1.50 2005-06-09 08:12:38 fdiary Exp $
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
@@ -196,7 +196,7 @@ module Hiki
                           'create'  => 'form.html',
                           'admin'   => 'adminform.html',
                           'save'    => 'success.html',
-                          'login'   => 'form.html',
+                          'login'   => 'login.html',
                           'plugin'  => 'plugin.html'
       }
                   

@@ -1,4 +1,7 @@
 2005-06-09  Kazuhiko  <kazuhiko@fdiary.net>
+	* template/login.html: add a new template. input name and
+	password.
+
 	* hiki/plugin.rb (Plugin::admin?): add a new method.
 	* template/edit.html: remove a password field. display a checkbox
 	to freeze a page for 'admin' only.

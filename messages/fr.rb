@@ -1,4 +1,4 @@
-# $Id: fr.rb,v 1.9 2005-06-09 05:35:13 fdiary Exp $
+# $Id: fr.rb,v 1.10 2005-06-09 08:12:38 fdiary Exp $
 # fr.rb
 #
 # Copyright (C) 2003 Laurent Sansonetti <laurent@datarescue.be>
@@ -40,7 +40,7 @@ module Hiki
     def msg_mail_off; 'Ne pas envoyer un e-mail de notification' end
     def msg_use; 'Utiliser' end
     def msg_unuse; 'Ne pas utiliser' end
-    def msg_password_title; 'Mot de passe' end
+    def msg_name; 'Nom' end
     def msg_password; 'Mot de passe' end
     def msg_ok; 'OK' end
     def msg_invalid_password; 'Mot de passe incorrect.  Vos modifications n\'ont pas encore été sauvegardées.' end

@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.47 2005-06-09 05:45:32 fdiary Exp $
+# $Id: command.rb,v 1.48 2005-06-09 08:12:38 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -422,15 +422,17 @@ module Hiki
     end
 
     def cmd_login
-      if key = @params['key'][0]
+      name = @params['name'][0]
+      password = @params['password'][0]
+      if name && password
 	session = Hiki::Session::new( @conf )
 	user = nil
-	if @conf.password.empty? || key.crypt( @conf.password ) == @conf.password
+	if @conf.password.empty? || password.crypt( @conf.password ) == @conf.password && name == 'admin'
 	  user = 'admin'
 	elsif @conf['user.list']
-	  @conf['user.list'].find do |name, pass|
-	    user = name if key == pass
-	  end
+          if @conf['user.list'].has_key?(name) && @conf['user.list'][name] == password.crypt(@conf['user.list'][name])
+            user = name
+n	  end
 	end
 	if user
 	  session.user = user
@@ -441,13 +443,8 @@ module Hiki
       end
 
       data = get_common_data( @db, @plugin, @conf )
-
-      data[:title]   = title( @conf.msg_password_title )
-      data[:msg2]    = @conf.msg_password + ': '
+      data[:title]   = title( @conf.msg_login )
       data[:button]  = @conf.msg_ok
-      data[:key]     = 'type="password"'
-      data[:list]    = nil
-      data[:method]  = 'post'
       generate_page( data )
     end
 
