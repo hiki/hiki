@@ -1,11 +1,11 @@
-# $Id: edit_user.rb,v 1.2 2005-06-09 08:12:38 fdiary Exp $
+# $Id: edit_user.rb,v 1.3 2005-06-09 08:30:57 fdiary Exp $
 # Copyright (C) 2005 Kazuhiko <kazuhiko@fdiary.net>
 
 def saveconf_edit_user
   if @mode == 'saveconf' then
     @conf['user.auth'] = @cgi.params['user.auth'][0].to_i
     user_list = {}
-    @conf['user.list'].sort.each do |user, pass|
+    (@conf['user.list'] ||= []).sort.each do |user, pass|
       unless @cgi.params["#{CGI.escape(user)}_remove"][0]
         password = @cgi.params["#{CGI.escape(user)}_pass"][0]
         unless password.empty?
