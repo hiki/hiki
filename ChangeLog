@@ -1,3 +1,6 @@
+2005-06-09  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* misc/plugin/google-sitemaps.rb: add a new plugin.
+
 2005-06-09  Kazuhiko  <kazuhiko@fdiary.net>
 	* template/login.html: add a new template. input name and
 	password.
