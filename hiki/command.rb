@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.48 2005-06-09 08:12:38 fdiary Exp $
+# $Id: command.rb,v 1.49 2005-06-09 08:46:45 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -432,7 +432,7 @@ module Hiki
 	elsif @conf['user.list']
           if @conf['user.list'].has_key?(name) && @conf['user.list'][name] == password.crypt(@conf['user.list'][name])
             user = name
-n	  end
+	  end
 	end
 	if user
 	  session.user = user
