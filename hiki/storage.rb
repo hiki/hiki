@@ -1,4 +1,4 @@
-# $Id: storage.rb,v 1.13 2005-06-08 05:41:51 fdiary Exp $
+# $Id: storage.rb,v 1.14 2005-06-09 02:48:18 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'digest/md5'
@@ -27,9 +27,13 @@ module Hiki
       ['page1', 'page2', 'page3']
     end
 
+    def backup( page )
+      @text = load( page ) || ''
+    end
+
     def delete( page )
-      text = load(page) || ''
-      unlink(page)
+      backup( page )
+      unlink( page )
       delete_cache( page )
       begin
         send_updating_mail(page, 'delete', text) if @conf.mail_on_update

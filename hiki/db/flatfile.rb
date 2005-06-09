@@ -1,4 +1,4 @@
-# $Id: flatfile.rb,v 1.14 2005-05-17 05:33:07 fdiary Exp $
+# $Id: flatfile.rb,v 1.15 2005-06-09 02:48:19 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'fileutils'
@@ -26,6 +26,7 @@ module Hiki
     end
 
     def store( page, text, md5 )
+      backup( page )
       filename = textdir( page )
 
       if exist?( page )

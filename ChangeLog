@@ -1,4 +1,7 @@
 2005-06-09  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/storage.rb (HikiDBBase::backup): add a new method.
+	* hiki/db/flatfile.rb (HikiDB::store): call backup method first.
+
 	* hiki/pluginutil.rb (Util::convert_value, Util::argwords): take
 	'0123' as String.
 
