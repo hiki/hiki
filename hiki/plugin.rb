@@ -1,4 +1,4 @@
-# $Id: plugin.rb,v 1.17 2005-06-09 05:35:13 fdiary Exp $
+# $Id: plugin.rb,v 1.18 2005-06-09 14:17:44 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
@@ -210,23 +210,23 @@ module Hiki
 
     def load_file(filename)
       @defined_method_list = []
-      @export_method_list = []
+      @export_method_list = nil
       open(filename) do |src|
         instance_eval(src.read.untaint, filename, 1)
       end
-      if @export_method_list.empty? then
-        @plugin_method_list.concat(@defined_method_list)
-      else
+      if @export_method_list
         @plugin_method_list.concat(@export_method_list)
+      else
+        @plugin_method_list.concat(@defined_method_list)
       end
     end
 
     def send(name, *args)
       name = name.intern if name.is_a?(String)
-      if not name.is_a?(Symbol) then
+      if not name.is_a?(Symbol)
         raise ArgumentError, "#{name.inspect} is not a symbol"
       end
-      if not @plugin_method_list.include?(name) then
+      if not @plugin_method_list.include?(name)
         method_missing(name, *args)
       else
         __send__(name, *args)
@@ -290,7 +290,7 @@ module Hiki
     def export_plugin_methods(*names)
       @export_method_list = names.collect do |name|
         name = name.intern if name.is_a?(String)
-        if not name.is_a?(Symbol) then
+        if not name.is_a?(Symbol)
           raise TypeError, "#{name.inspect} is not a symbol"
         end
         name

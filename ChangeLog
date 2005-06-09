@@ -1,3 +1,7 @@
+2005-06-09  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/plugin.rb (Plugin::load_file): export no methods if
+	'export_plugin_methods' is called without arguments.
+
 2005-06-09  Kouhei Yanagita <sugi@dream.big.or.jp>
 	* misc/plugin/google-sitemaps.rb: add a new plugin.
 
