@@ -1,4 +1,4 @@
-# $Id: fr.rb,v 1.8 2005-06-07 09:10:54 fdiary Exp $
+# $Id: fr.rb,v 1.9 2005-06-09 05:35:13 fdiary Exp $
 # fr.rb
 #
 # Copyright (C) 2003 Laurent Sansonetti <laurent@datarescue.be>
@@ -66,7 +66,6 @@ module Hiki
     def msg_title; 'Titre de la page'; end
     def msg_keyword_form; 'Mot clef (veuillez entrer distinctement chaque mot sur une ligne à part)'; end
     def msg_freeze_checkbox; 'Geler la page courante.'; end
-    def msg_password_form; 'Mot de passe'; end
     def msg_preview_button; 'Prévisualiser'; end
     def msg_save; 'Sauver'; end
     def msg_latest; 'Référencie version récente'; end

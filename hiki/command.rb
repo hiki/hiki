@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.45 2005-06-09 01:22:22 fdiary Exp $
+# $Id: command.rb,v 1.46 2005-06-09 05:35:13 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -310,22 +310,20 @@ module Hiki
     end
 
     def cmd_save( page, text, md5hex )
-      pass_check = false
-      if p = @params['password'][0]
-        pass_check = true if @conf.password.size == 0 || p.crypt( @conf.password ) == @conf.password
-      end
-
       subject = ''
-      if text.size == 0 && pass_check
+      if text.size == 0 && @plugin.admin?
         @db.delete( page )
         @plugin.delete_proc
+        data             = get_common_data( @db, @plugin, @conf )
+        data[:title]     = @conf.msg_delete
+        data[:msg]       = @conf.msg_delete_page
+        data[:link]      = page.escapeHTML
+        generate_page(data)
       else
-        if @db.is_frozen?( page ) || @conf.options['freeze']
-          unless pass_check
-            @cmd = 'edit'
-            cmd_edit( page, text )
-            return
-          end
+        if (@db.is_frozen?( page ) || @conf.options['freeze']) && !@plugin.admin?
+	  @cmd = 'edit'
+	  cmd_edit( page, text )
+	  return
         end
 
         title = @params['page_title'][0] ? @params['page_title'][0].strip : page
@@ -349,18 +347,7 @@ module Hiki
           return
         end
 
-        if pass_check 
-          @db.freeze_page( page, @params['freeze'][0] ? true : false)
-        end  
-      end
-
-      if text.size == 0 && pass_check
-        data             = get_common_data( @db, @plugin, @conf )
-        data[:title]     = @conf.msg_delete
-        data[:msg]       = @conf.msg_delete_page
-        data[:link]      = page.escapeHTML
-        generate_page(data)
-      else
+	@db.freeze_page( page, @params['freeze'][0] ? true : false) if @plugin.admin?
         redirect(@cgi, @plugin.hiki_url(page))
       end
     end
@@ -465,7 +452,7 @@ module Hiki
     end
 
     def cmd_admin
-      if @plugin.user != 'admin'
+      if @plugin.admin?
 	cmd_login
 	return
       end

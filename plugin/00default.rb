@@ -1,4 +1,4 @@
-# $Id: 00default.rb,v 1.28 2005-06-07 09:10:55 fdiary Exp $
+# $Id: 00default.rb,v 1.29 2005-06-09 05:35:13 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #==============================
@@ -161,9 +161,9 @@ def create_menu(data, command)
   if @conf.bot?
     menu << %Q!<a accesskey="i" href="#{@conf.cgi_name}?c=index">#{@conf.msg_index}</a>!
   else
-    menu << %Q!<a accesskey="c" href="#{@conf.cgi_name}?c=create">#{@conf.msg_create}</a>! if auth?
-    menu << %Q!<a accesskey="e" href="#{@conf.cgi_name}?c=edit;p=#{@page.escape}">#{@conf.msg_edit}</a>! if editable.index(command) && @page && auth?
-    menu << %Q!<a accesskey="d" href="#{@conf.cgi_name}?c=diff;p=#{@page.escape}">#{@conf.msg_diff}</a>! if editable.index(command) && @page && auth?
+    menu << %Q!<a accesskey="c" href="#{@conf.cgi_name}?c=create">#{@conf.msg_create}</a>! if auth? && (!@conf.options['freeze'] || admin?)
+    menu << %Q!<a accesskey="e" href="#{@conf.cgi_name}?c=edit;p=#{@page.escape}">#{@conf.msg_edit}</a>! if editable.index(command) && @page && auth? && ((!@db.is_frozen?( @page ) && !@conf.options['freeze']) || admin?)
+    menu << %Q!<a accesskey="d" href="#{@conf.cgi_name}?c=diff;p=#{@page.escape}">#{@conf.msg_diff}</a>! if editable.index(command) && @page && auth? && ((!@db.is_frozen?( @page ) && !@conf.options['freeze']) || admin?)
     menu << %Q!#{hiki_anchor( 'FrontPage', page_name('FrontPage') )}!
     menu << %Q!<a accesskey="i" href="#{@conf.cgi_name}?c=index">#{@conf.msg_index}</a>!
     menu << %Q!<a accesskey="s" href="#{@conf.cgi_name}?c=search">#{@conf.msg_search}</a>!
@@ -249,3 +249,5 @@ end
 def auth?
   true
 end
+
+export_plugin_methods(:toc, :recent)

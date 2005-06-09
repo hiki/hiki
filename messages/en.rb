@@ -1,4 +1,4 @@
-# $Id: en.rb,v 1.10 2005-06-07 09:10:54 fdiary Exp $
+# $Id: en.rb,v 1.11 2005-06-09 05:35:13 fdiary Exp $
 # en.rb
 #
 # Copyright (C) 2003 Masao Mutoh <mutoh@highway.ne.jp>
@@ -66,7 +66,6 @@ module Hiki
     def msg_title; 'Title'; end
     def msg_keyword_form; 'Keyword(s) (one keyword per line)'; end
     def msg_freeze_checkbox; 'Freeze the current page.'; end
-    def msg_password_form; 'Password'; end
     def msg_preview_button; 'Preview'; end
     def msg_save; 'Save'; end
     def msg_latest; 'Latest version'; end

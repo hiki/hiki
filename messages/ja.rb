@@ -1,4 +1,4 @@
-# $Id: ja.rb,v 1.8 2005-06-07 09:10:54 fdiary Exp $
+# $Id: ja.rb,v 1.9 2005-06-09 05:35:13 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # You can redistribute it and/or modify it under the terms of
 # the Ruby's licence.
@@ -58,7 +58,6 @@ module Hiki
     def msg_title; 'タイトル'; end
     def msg_keyword_form; 'キーワード(1行に1つ記述してください)'; end
     def msg_freeze_checkbox; 'ページの凍結'; end
-    def msg_password_form; 'パスワード'; end
     def msg_preview_button; 'プレビュー'; end
     def msg_save; '保存'; end
     def msg_latest; '最新版を参照'; end

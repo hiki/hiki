@@ -1,4 +1,10 @@
 2005-06-09  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/plugin.rb (Plugin::admin?): add a new method.
+	* template/edit.html: remove a password field. display a checkbox
+	to freeze a page for 'admin' only.
+	* plugin/00default.rb: display acceptable menues only.
+	* hiki/command.rb (Command::cmd_save): use Plugin#admin?.
+
 	* hiki/storage.rb (HikiDBBase::backup): add a new method.
 	* hiki/db/flatfile.rb (HikiDB::store): call backup method first.
 

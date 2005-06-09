@@ -1,4 +1,4 @@
-# $Id: it.rb,v 1.8 2005-06-07 09:10:54 fdiary Exp $
+# $Id: it.rb,v 1.9 2005-06-09 05:35:13 fdiary Exp $
 # it.rb
 #
 # Copyright (C) 2003 Luigi Maselli <metnik@tiscali.it>
@@ -66,7 +66,6 @@ module Hiki
     def msg_title; 'Titolo pagina'; end
     def msg_keyword_form; 'Parole chiave (Scrivile una ogni riga)'; end
     def msg_freeze_checkbox; 'Blocca la pagina corrente.'; end
-    def msg_password_form; 'Password'; end
     def msg_preview_button; 'Anteprima'; end
     def msg_save; 'Salva'; end
     def msg_latest; 'Riferimento versione recente'; end
