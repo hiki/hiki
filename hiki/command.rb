@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.46 2005-06-09 05:35:13 fdiary Exp $
+# $Id: command.rb,v 1.47 2005-06-09 05:45:32 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -452,7 +452,7 @@ module Hiki
     end
 
     def cmd_admin
-      if @plugin.admin?
+      unless @plugin.admin?
 	cmd_login
 	return
       end
