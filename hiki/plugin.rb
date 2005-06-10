@@ -1,4 +1,4 @@
-# $Id: plugin.rb,v 1.18 2005-06-09 14:17:44 fdiary Exp $
+# $Id: plugin.rb,v 1.19 2005-06-10 06:25:06 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
@@ -209,15 +209,8 @@ module Hiki
     end
 
     def load_file(filename)
-      @defined_method_list = []
-      @export_method_list = nil
       open(filename) do |src|
         instance_eval(src.read.untaint, filename, 1)
-      end
-      if @export_method_list
-        @plugin_method_list.concat(@export_method_list)
-      else
-        @plugin_method_list.concat(@defined_method_list)
       end
     end
 
@@ -253,6 +246,8 @@ module Hiki
 
     def load_plugin( file )
       file.untaint
+      @defined_method_list = []
+      @export_method_list = nil
       @resource_loaded = false
       dirname, basename = File.split( file )
       [@conf.lang, 'en', 'ja'].uniq.each do |lang|
@@ -264,6 +259,11 @@ module Hiki
         end
       end
       load_file( file )
+      if @export_method_list
+        @plugin_method_list.concat(@export_method_list)
+      else
+        @plugin_method_list.concat(@defined_method_list)
+      end
     end
 
     def save( page, src, md5 )

@@ -1,4 +1,11 @@
 2005-06-10  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/search.rb (search_form): rename from 'search'. use
+	'export_plugin_methods'. add resource files.
+
+	* hiki/plugin.rb (Plugin::load_plugin): 'export_plugin_methods'
+	now works for not only a plugin but also a plugin and its resource
+	files.
+
 	* misc/plugin/attach/attach.rb: set the default value of
 	'attach.form' to 'edit'.
 
