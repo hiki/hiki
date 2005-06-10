@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.49 2005-06-09 08:46:45 fdiary Exp $
+# $Id: command.rb,v 1.50 2005-06-10 02:47:46 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -52,10 +52,10 @@ module Hiki
       @plugin = Plugin::new( options, @conf )
       session_id = @cgi.cookies['session_id'][0]
       if session_id
-	@plugin.user = Hiki::Session::new( @conf, session_id ).user
+        @plugin.user = Hiki::Session::new( @conf, session_id ).user
       end
       if @conf.password.empty?
-	@plugin.user = 'admin'
+        @plugin.user = 'admin'
       end
       @body_enter = @plugin.body_enter_proc.sanitize
     end
@@ -89,7 +89,7 @@ module Hiki
           end
         end
 #      rescue NoMethodError
-#	redirect(@cgi, @conf.cgi_name)
+#        redirect(@cgi, @conf.cgi_name)
       end
     end
 
@@ -122,13 +122,13 @@ module Hiki
     
     def cmd_view
       if /^\./ =~ @p
-	redirect(@cgi, @conf.cgi_name) 
-	return
+        redirect(@cgi, @conf.cgi_name) 
+        return
       end
       unless @db.exist?( @p )
-	@cmd = 'create'
-	cmd_create( @conf.msg_page_not_exist )
-	return
+        @cmd = 'create'
+        cmd_create( @conf.msg_page_not_exist )
+        return
       end
 
       tokens = @db.load_cache( @p )
@@ -321,9 +321,9 @@ module Hiki
         generate_page(data)
       else
         if (@db.is_frozen?( page ) || @conf.options['freeze']) && !@plugin.admin?
-	  @cmd = 'edit'
-	  cmd_edit( page, text )
-	  return
+          @cmd = 'edit'
+          cmd_edit( page, text )
+          return
         end
 
         title = @params['page_title'][0] ? @params['page_title'][0].strip : page
@@ -347,7 +347,7 @@ module Hiki
           return
         end
 
-	@db.freeze_page( page, @params['freeze'][0] ? true : false) if @plugin.admin?
+        @db.freeze_page( page, @params['freeze'][0] ? true : false) if @plugin.admin?
         redirect(@cgi, @plugin.hiki_url(page))
       end
     end
@@ -425,21 +425,21 @@ module Hiki
       name = @params['name'][0]
       password = @params['password'][0]
       if name && password
-	session = Hiki::Session::new( @conf )
-	user = nil
-	if @conf.password.empty? || password.crypt( @conf.password ) == @conf.password && name == 'admin'
-	  user = 'admin'
-	elsif @conf['user.list']
+        session = Hiki::Session::new( @conf )
+        user = nil
+        if @conf.password.empty? || password.crypt( @conf.password ) == @conf.password && name == 'admin'
+          user = 'admin'
+        elsif @conf['user.list']
           if @conf['user.list'].has_key?(name) && @conf['user.list'][name] == password.crypt(@conf['user.list'][name])
             user = name
-	  end
-	end
-	if user
-	  session.user = user
-	  session.save
-	  redirect(@cgi, @conf.cgi_name, session_cookie( session.session_id )) 
-	  return
-	end
+          end
+        end
+        if user
+          session.user = user
+          session.save
+          redirect(@cgi, @conf.cgi_name, session_cookie( session.session_id )) 
+          return
+        end
       end
 
       data = get_common_data( @db, @plugin, @conf )
@@ -450,8 +450,8 @@ module Hiki
 
     def cmd_admin
       unless @plugin.admin?
-	cmd_login
-	return
+        redirect(@cgi, @conf.cgi_name)
+        return
       end
       data = get_common_data( @db, @plugin, @conf )
       data[:key]            = @cgi.params['conf'][0] || 'default'
