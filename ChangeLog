@@ -1,3 +1,10 @@
+2005-06-10  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/attach/attach.rb: set the default value of
+	'attach.form' to 'edit'.
+
+	* hiki/command.rb (Command::cmd_view): not add a search link to
+	'view_title'.
+
 2005-06-09  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/plugin.rb (Plugin::load_file): export no methods if
 	'export_plugin_methods' is called without arguments.

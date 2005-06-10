@@ -1,7 +1,9 @@
-# $Id: attach.rb,v 1.18 2005-05-21 07:57:02 fdiary Exp $
+# $Id: attach.rb,v 1.19 2005-06-10 04:45:23 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 #
 # thanks to Kazuhiko, Masao Mutoh, SHIMADA Mitsunobu, Yoshimi, ¤ê¤¿
+
+@options['attach.form'] ||= 'edit'
 
 def plugin_usage_label
        '<div><ul>

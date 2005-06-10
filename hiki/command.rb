@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.50 2005-06-10 02:47:46 fdiary Exp $
+# $Id: command.rb,v 1.51 2005-06-10 04:45:23 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -156,7 +156,7 @@ module Hiki
       pg_title = @plugin.page_name(@p)
       
       data[:page_title]   = (@plugin.hiki_anchor( @p.escape, @p.escapeHTML )).sanitize
-      data[:view_title]   = view_title( pg_title.unescapeHTML ).sanitize
+      data[:view_title]   = pg_title
       data[:title]        = title( pg_title )
       data[:toc]          = @plugin.toc_f ? toc.sanitize : nil
       data[:body]         = formatter.apply_tdiary_theme(contents).sanitize
