@@ -14,3 +14,8 @@ EOS
 end
 
 export_plugin_methods( :search_form )
+
+unless respond_to?( :search )
+  alias :search :search_form
+  export_plugin_methods( :search, :search_form )
+end
