@@ -1,4 +1,4 @@
-# $Id: parser.rb,v 1.11 2005-06-08 05:12:44 fdiary Exp $
+# $Id: parser.rb,v 1.12 2005-06-11 10:05:47 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'cgi'
@@ -36,7 +36,7 @@ module Hiki
     INTERWIKI  = '\[\[([^\]:]+?):([^\]]+)\]\]'
     WIKINAME   = '((?:[A-Z][a-z0-9]+){2,})([^A-Za-z0-9])?'
     IMAGE      = '\.(?:jpg|jpeg|png|gif)'
-    PLUGIN     = '\{\{(.*?)\}\}'
+    PLUGIN     = '\{\{((?:(?!\}\}).)+?)\}\}'
     SPECIAL    = '^\[\]\'=\{\}'
     TABLE      = '\|\|(.*)'
     DEFLIST    = '^:(.+)'

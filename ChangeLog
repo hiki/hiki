@@ -1,3 +1,7 @@
+2005-06-11  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/parser.rb: revise the regexp of PLUGIN not to
+	allow '}}' in arguments.
+
 2005-06-10  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/search.rb (search_form): rename from 'search'. use
 	'export_plugin_methods'. add resource files.
