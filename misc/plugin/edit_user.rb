@@ -1,4 +1,4 @@
-# $Id: edit_user.rb,v 1.4 2005-06-09 08:45:17 fdiary Exp $
+# $Id: edit_user.rb,v 1.5 2005-06-11 16:31:04 fdiary Exp $
 # Copyright (C) 2005 Kazuhiko <kazuhiko@fdiary.net>
 
 def saveconf_edit_user
@@ -47,7 +47,7 @@ add_conf_proc('user', label_edit_user_config) do
   <p><textarea name="user.list" cols="40" rows="10"></textarea></p>
   <h3 class="subtitle">#{label_edit_user_auth_title}</h3>
   <p>#{label_edit_user_auth_description}</p>
-  <p><select name="edit.auth">
+  <p><select name="user.auth">
   HTML
   label_edit_user_auth_candidate.each_index{ |i|
     str << %Q|<option value="#{i}"#{@conf['user.auth'] == i ? ' selected' : ''}>#{label_edit_user_auth_candidate[i]}</option>\n|

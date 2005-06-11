@@ -1,3 +1,7 @@
+2005-06-12  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/edit_user.rb (saveconf_edit_user): fix a typo of the
+	field name for user authentication (report by ISOBE, Kazuhiko).
+
 2005-06-11  Kazuhiko  <kazuhiko@fdiary.net>
 	* style/default/parser.rb: revise the regexp of PLUGIN not to
 	allow '}}' in arguments.
