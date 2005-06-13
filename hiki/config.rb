@@ -1,4 +1,4 @@
-# $Id: config.rb,v 1.51 2005-06-11 10:06:39 fdiary Exp $
+# $Id: config.rb,v 1.52 2005-06-13 14:38:28 yanagita Exp $
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
@@ -144,6 +144,7 @@ module Hiki
       @lang          ||= 'ja'
       @database_type ||= 'flatfile'
       @cgi_name      ||= './'
+      @admin_name    ||= 'admin'
       @repos_type    ||= 'default'
       @use_wikiname    = true if @use_wikiname.nil?
       @options         = {} unless @options.class == Hash

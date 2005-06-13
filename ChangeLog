@@ -1,3 +1,7 @@
+2005-06-13  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* hiki/command.rb, hiki/config.rb, hiki/plugin.rb: use Config#admin_name
+	as a admin's login name.
+
 2005-06-13  Kazuhiko  <kazuhiko@fdiary.net>
 	* plugin/00default.rb: use '@user' for a commit message if exists.
 	* hiki/repos/svn.rb (ReposSvnBase::commit, ReposSvnBase::delete):

@@ -1,4 +1,4 @@
-# $Id: plugin.rb,v 1.19 2005-06-10 06:25:06 fdiary Exp $
+# $Id: plugin.rb,v 1.20 2005-06-13 14:38:28 yanagita Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
@@ -282,7 +282,7 @@ module Hiki
     end
 
     def admin?
-      @user == 'admin'
+      @user == @conf.admin_name
     end
 
     private
