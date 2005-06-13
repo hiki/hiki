@@ -1,3 +1,11 @@
+2005-06-13  Kazuhiko  <kazuhiko@fdiary.net>
+	* plugin/00default.rb: use '@user' for a commit message if exists.
+	* hiki/repos/svn.rb (ReposSvnBase::commit, ReposSvnBase::delete):
+	add a second argument for a commit message.
+	* hiki/repos/cvs.rb: ditto.
+	* hiki/repos/default.rb (ReposDefault::default_msg): add a new
+	method for the default commit message.
+
 2005-06-12  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/edit_user.rb (saveconf_edit_user): fix a typo of the
 	field name for user authentication (report by ISOBE, Kazuhiko).

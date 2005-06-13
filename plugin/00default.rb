@@ -1,4 +1,4 @@
-# $Id: 00default.rb,v 1.30 2005-06-09 09:09:51 fdiary Exp $
+# $Id: 00default.rb,v 1.31 2005-06-13 05:49:19 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #==============================
@@ -88,7 +88,11 @@ end
 #===== update_proc
 add_update_proc {
   updating_mail if @conf.mail_on_update
-  @conf.repos.commit(@page)
+  if @user
+    @conf.repos.commit(@page, CGI::escape(@user))
+  else
+    @conf.repos.commit(@page)
+  end
 }
 
 #----- send a mail on updating
