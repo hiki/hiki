@@ -1,0 +1,12 @@
+! Changes in 0.8.0
+
+* support mod_ruby.
+* support TrackBack (trackback.rb plugin).
+* add 'math' style (style/math/).
+* use ERB for the template engine instead of Amrita.
+* support selection and configuration of plugins via web.
+* store session informations in cookies.
+* support authentication of several users (edit_user.rb plugin).
+* the administrator's name becomes 'admin'.
+* support XML-RPC interfaces (misc/xmlrpc/).
+* much more faster.
