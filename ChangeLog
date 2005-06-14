@@ -1,4 +1,7 @@
 2005-06-14  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/en/edit_user.rb (label_edit_user_title): add a
+	missing resource (by GOTO Naohisa).
+
 	* template/login.html, messages/en.rb, messages/fr.rb,
 	messages/it.rb, messages/ja.rb (msg_login_info): add an
 	information about admin login.

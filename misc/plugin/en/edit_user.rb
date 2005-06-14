@@ -1,8 +1,9 @@
-# $Id: edit_user.rb,v 1.2 2005-06-09 08:12:39 fdiary Exp $
+# $Id: edit_user.rb,v 1.3 2005-06-14 13:49:07 fdiary Exp $
 # Copyright (C) 2005 Kazuhiko <kazuhiko@fdiary.net>
 
 def label_edit_user_config; 'Edit users'; end
 def label_edit_user_title; 'Delete users / Change passwords'; end
+def label_edit_user_add_title; 'Add users'; end
 def label_edit_user_description
   'Each line has one user, which is in the form of "name&nbsp;password".'
 end

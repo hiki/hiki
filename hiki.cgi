@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# $Id: hiki.cgi,v 1.30 2005-05-19 13:25:48 fdiary Exp $
+# $Id: hiki.cgi,v 1.31 2005-06-14 13:49:07 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 BEGIN { $defout.binmode }
@@ -8,7 +8,7 @@ $SAFE     = 1
 $KCODE    = 'e'
 
 begin
-  if FileTest::symlink?( __FILE__ ) then
+  if FileTest::symlink?( __FILE__ )
     org_path = File::dirname( File::expand_path( File::readlink( __FILE__ ) ) )
   else
     org_path = File::dirname( File::expand_path( __FILE__ ) )
@@ -26,8 +26,8 @@ begin
     cmd = Hiki::Command::new( cgi, db, conf )
     cmd.dispatch
   }
-rescue Exception
-  if cgi then
+rescue Exception => err
+  if cgi
     print cgi.header( 'type' => 'text/html' )
   else
     print "Content-Type: text/html\n\n"
@@ -35,7 +35,7 @@ rescue Exception
 
   require 'cgi'
   puts '<html><head><title>Hiki Error</title></head><body><pre>'
-  puts CGI.escapeHTML( "#$! (#{$!.class})\n" )
-  puts CGI.escapeHTML( $@.join( "\n" ) )
+  puts CGI.escapeHTML( "#{err} (#{err.class})\n" )
+  puts CGI.escapeHTML( err.backtrace.join( "\n" ) )
   puts '</pre></body></html>'
 end
