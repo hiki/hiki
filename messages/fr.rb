@@ -1,4 +1,4 @@
-# $Id: fr.rb,v 1.10 2005-06-09 08:12:38 fdiary Exp $
+# $Id: fr.rb,v 1.11 2005-06-14 06:03:05 fdiary Exp $
 # fr.rb
 #
 # Copyright (C) 2003 Laurent Sansonetti <laurent@datarescue.be>
@@ -40,6 +40,7 @@ module Hiki
     def msg_mail_off; 'Ne pas envoyer un e-mail de notification' end
     def msg_use; 'Utiliser' end
     def msg_unuse; 'Ne pas utiliser' end
+    def msg_login_info; '(TRANSLATE PLEASE) If you want to login as an administrator, type \'admin\' in the Name field.' end
     def msg_name; 'Nom' end
     def msg_password; 'Mot de passe' end
     def msg_ok; 'OK' end

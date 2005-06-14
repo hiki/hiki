@@ -1,4 +1,8 @@
 2005-06-14  Kazuhiko  <kazuhiko@fdiary.net>
+	* template/login.html, messages/en.rb, messages/fr.rb,
+	messages/it.rb, messages/ja.rb (msg_login_info): add an
+	information about admin login.
+
 	* misc/plugin/history.rb: not display changes in 'svn' or
 	'svnsingle' mode (by ISOBE, Kazuhiko).
 

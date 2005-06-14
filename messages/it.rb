@@ -1,4 +1,4 @@
-# $Id: it.rb,v 1.10 2005-06-09 08:12:38 fdiary Exp $
+# $Id: it.rb,v 1.11 2005-06-14 06:03:05 fdiary Exp $
 # it.rb
 #
 # Copyright (C) 2003 Luigi Maselli <metnik@tiscali.it>
@@ -40,6 +40,7 @@ module Hiki
     def msg_mail_off; 'Non inviare updated-mail' end #da verificare
     def msg_use; 'Usa' end
     def msg_unuse; 'Non usare' end
+    def msg_login_info; '(TRANSLATE PLEASE) If you want to login as an administrator, type \'admin\' in the Name field.' end
     def msg_name; 'Nomare' end
     def msg_password; 'Password' end
     def msg_ok; 'OK' end
