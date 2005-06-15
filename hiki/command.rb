@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.52 2005-06-13 14:38:28 yanagita Exp $
+# $Id: command.rb,v 1.53 2005-06-15 03:10:16 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -37,7 +37,7 @@ module Hiki
                @params['p'][0] ? @params['p'][0] : nil
              end
            end
-      @aliaswiki = AliasWiki::new( @db, @conf )
+      @aliaswiki  = AliasWiki::new( @db.load( @conf.aliaswiki_name ) )
 
       @p = @aliaswiki.original_name(@p).to_euc if @p
       

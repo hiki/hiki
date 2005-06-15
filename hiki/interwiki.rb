@@ -1,4 +1,4 @@
-# $Id: interwiki.rb,v 1.7 2005-03-20 01:48:11 fdiary Exp $
+# $Id: interwiki.rb,v 1.8 2005-06-15 03:10:16 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 module Hiki
@@ -10,13 +10,12 @@ module Hiki
 
     attr_reader :interwiki_names
     
-    def initialize(db, plugin, conf)
-      @db = db
-      @conf = conf
-      @plugin = plugin
+    def initialize( str )
       @interwiki_names = Hash::new
-      
-      load_interwiki_names
+      (str || '').scan( INTERWIKI_NAME_RE ) do |i|
+        e = i.size > 2 ? i[2] : 'none'
+        @interwiki_names[i[0]] = {:url => i[1], :encoding => e}
+      end
     end
 
     def interwiki(s, p, display_text = "#{s}:#{p}".escapeHTML)
@@ -33,39 +32,27 @@ module Hiki
                  p
                end
         if encoding == 'alias'
-          @plugin.make_anchor("#{@interwiki_names[s][:url]}", s.escapeHTML)
+          ["#{@interwiki_names[s][:url]}", s.escapeHTML]
         elsif @interwiki_names[s][:url].index('$1')
-          url = @interwiki_names[s][:url].dup.sub(/\$1/, page)
-          @plugin.make_anchor(url, display_text)
+          [@interwiki_names[s][:url].dup.sub(/\$1/, page), display_text]
         else
-          @plugin.make_anchor("#{@interwiki_names[s][:url]}#{page}", display_text)
+          ["#{@interwiki_names[s][:url]}#{page}", display_text]
         end
       else
-        "#{s}:#{p}".escapeHTML
+        nil
       end
     end
 
     def outer_alias(s)
-      a = nil
-      if @interwiki_names.has_key?(s)
-        if @interwiki_names[s][:encoding] == 'alias'
-          a = @plugin.make_anchor(@interwiki_names[s][:url], s.escapeHTML)
-        end
-      end
-      a
-    end
-    
-    private
-    def load_interwiki_names
-      n = @db.load( @conf.interwiki_name ) || ''
-      n.scan( INTERWIKI_NAME_RE ) do |i|
-        e = i.size > 2 ? i[2] : 'none'
-        @interwiki_names[i[0]] = {:url => i[1], :encoding => e}
+      if @interwiki_names.has_key?(s) && @interwiki_names[s][:encoding] == 'alias'
+	return [@interwiki_names[s][:url], s.escapeHTML]
+      else
+	return nil
       end
     end
   end
 end
 
-# *[[Hiki|http://www.namaraii.com/hiki/hiki.cgi?]] euc
+# *[[Hiki|http://www.namaraii.com/hiki/?]] euc
 # *[[YukiWiki|http://www.hyuki.com/yukiwiki/wiki.cgi?]] euc
 # *[[GoogleJ|http://www.google.co.jp/search?hl=ja&btnG=Google+%8C%9F%8D%F5&lr=lang_ja&q=]] sjis

@@ -11,7 +11,6 @@
 # the Ruby's licence.
 
 require 'hiki/util'
-require 'hiki/interwiki'
 require 'hiki/hiki_formatter'
 require 'style/rd+/rd2html.rb'
 
@@ -22,7 +21,6 @@ module Hiki
       @db         = db
       @plugin     = plugin
       @conf       = conf
-      @interwiki  = InterWiki::new(@db, @plugin, @conf)
       @visitor = Hiki::RD2HTMLVisitor.new(@plugin, @db, @conf)
     end
 

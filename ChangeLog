@@ -1,3 +1,15 @@
+2005-06-15  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/aliaswiki.rb (AliasWiki::initialize): the argument is now
+	contents of the aliaswiki page instead of 'db' and 'conf'.
+	* hiki/interwiki.rb (InterWiki::initialize): the argument is now
+	contents of the aliaswiki page instead of 'db', 'conf' and
+	'plugin'.
+	* style/default/html_formatter.rb: follow changes of
+	aliaswiki.rb and interwiki.rb.
+
+	* style/default/html_formatter.rb: make a normal anchor if a link
+	is missing interwiki link (by Kouhei Sutou).
+
 2005-06-14  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/en/edit_user.rb (label_edit_user_title): add a
 	missing resource (by GOTO Naohisa).

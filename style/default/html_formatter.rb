@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.27 2005-06-08 05:12:44 fdiary Exp $
+# $Id: html_formatter.rb,v 1.28 2005-06-15 03:10:16 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -63,8 +63,8 @@ module Hiki
       @toc_cnt    = 0
       @toc        = Array::new
       @references = Array::new
-      @interwiki  = InterWiki::new( @db, plugin, @conf )
-      @aliaswiki  = AliasWiki::new( @db, @conf )
+      @interwiki  = InterWiki::new( @db.load( @conf.interwiki_name ) )
+      @aliaswiki  = AliasWiki::new( @db.load( @conf.aliaswiki_name ) )
       @auto_links  = get_auto_links if @conf.auto_link
     end
 
@@ -154,28 +154,14 @@ module Hiki
         s[:html] << @plugin.make_anchor( t[:href], t[:s].escapeHTML, 'external' )
         s[:toc_title] << t[:s] if s[:toc_level] > 0
       when :wikiname, :bracketname
-        disp = @db.get_attribute(t[:s], :title)
-        disp = t[:s] if disp.empty?
-        t[:href] = @aliaswiki.aliaswiki_names.key(t[:href]) || t[:href]
-        if t[:e] == :bracketname
-          orig = @db.select {|p| p[:title] == t[:href]}
-          t[:href] = orig[0] if orig[0]
-        end
-        if !@conf.use_wikiname and t[:e] == :wikiname
-          s[:html] << disp.escapeHTML
-        elsif @db.exist?( t[:href] )
-           s[:html] << @plugin.hiki_anchor(t[:href].escape, disp.escapeHTML)
-          @references << t[:href]
-        else
-          missing_anchor_title = @conf.msg_missing_anchor_title % [ disp.escapeHTML ]
-          wikiname_anchor = @plugin.auth? ? "#{disp.escapeHTML}<a class=\"nodisp\" href=\"#{@conf.cgi_name}?c=edit;p=#{t[:href].escape}\" title=\"#{missing_anchor_title}\">?</a>" : disp.escapeHTML
-                         #   outer_alias = @interwiki.outer_alias(t[:href]) || "#{disp.escapeHTML}<a class=\"nodisp\" href=\"#{@conf.cgi_name}?c=edit;p=#{t[:href].escape}\" title=\"#{missing_anchor_title}\">?</a>"
-          outer_alias = @interwiki.outer_alias(t[:href]) || wikiname_anchor
-          s[:html] << outer_alias
-        end
-        s[:toc_title] << t[:href] if s[:toc_level] > 0
+	make_link(t, s)
       when :interwiki
-        s[:html] << @interwiki.interwiki(t[:href], t[:p], t[:s])
+	if inter_link = @interwiki.interwiki(t[:href], t[:p], t[:s])
+	  s[:html] << @plugin.make_anchor(inter_link[0], inter_link[1])
+	else
+	  t[:href] = t[:s]
+	  make_link(t, s)
+	end
       when :empty
         s[:html] << "\n"
       when :heading1_open, :heading2_open, :heading3_open, :heading4_open, :heading5_open
@@ -273,6 +259,31 @@ EOS
       return nil unless @conf.use_plugin
       str = t[:method].gsub(/&/, '&amp;').gsub(/</, '&lt;').gsub(/>/, '&gt;')
       return apply_plugin( str, @plugin, @conf )
+    end
+
+    def make_link(t, s)
+      disp = @db.get_attribute(t[:s], :title)
+      disp = t[:s] if disp.empty?
+      t[:href] = @aliaswiki.aliaswiki_names.key(t[:href]) || t[:href]
+      if t[:e] == :bracketname
+        orig = @db.select {|p| p[:title] == t[:href]}
+        t[:href] = orig[0] if orig[0]
+      end
+      if !@conf.use_wikiname and t[:e] == :wikiname
+        s[:html] << disp.escapeHTML
+      elsif @db.exist?( t[:href] )
+        s[:html] << @plugin.hiki_anchor(t[:href].escape, disp.escapeHTML)
+        @references << t[:href]
+      else
+	if outer_alias = @interwiki.outer_alias(t[:href])
+	  s[:html] << @plugin.make_anchor(outer_alias[0], outer_alias[1])
+	else
+	  missing_anchor_title = @conf.msg_missing_anchor_title % [ disp.escapeHTML ]
+	  wikiname_anchor = @plugin.auth? ? "#{disp.escapeHTML}<a class=\"nodisp\" href=\"#{@conf.cgi_name}?c=edit;p=#{t[:href].escape}\" title=\"#{missing_anchor_title}\">?</a>" : disp.escapeHTML
+	  s[:html] << wikiname_anchor
+	end
+        s[:toc_title] << t[:href] if s[:toc_level] > 0
+      end
     end
   end
 end
