@@ -1,4 +1,7 @@
 2005-06-15  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/attach/attach.rb: use @options['attach.cgi_name']
+	to change the filename of 'attach.cgi' (by Koichiro Ohba).
+
 	* style/default/html_formatter.rb: add 'class="external"' to
 	InterWiki links (report by Kazuhiro NISHIYAMA).
 

@@ -1,4 +1,4 @@
-# $Id: attach.rb,v 1.19 2005-06-10 04:45:23 fdiary Exp $
+# $Id: attach.rb,v 1.20 2005-06-15 08:27:51 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 #
 # thanks to Kazuhiko, Masao Mutoh, SHIMADA Mitsunobu, Yoshimi, ¤ê¤¿
@@ -15,9 +15,10 @@ end
 
 def attach_form(s = '')
   command = @command == 'create' ? 'edit' : @command
+  attach_cgi = @options['attach.cgi_name'] || 'attach.cgi'
   <<EOS
 <div class="form">
-<form class="nodisp" method="post" enctype="multipart/form-data" action="attach.cgi">
+<form class="nodisp" method="post" enctype="multipart/form-data" action="#{attach_cgi}">
   <div>
     <input type="hidden" name="p" value="#{@page.escapeHTML}">
     <input type="hidden" name="command" value="#{command}">
@@ -178,9 +179,10 @@ def attach_show_page_files
 end
 
 def attach_show_page_files_checkbox
+  attach_cgi = @options['attach.cgi_name'] || 'attach.cgi'
   s =  ''
   if (files = attach_page_files).size > 0
-    s << %Q!<form method="post" enctype="multipart/form-data" action="attach.cgi">
+     s << %Q!<form method="post" enctype="multipart/form-data" action="#{attach_cgi}">
   <input type="hidden" name="p" value="#{@page.escapeHTML}">
   <input type="hidden" name="command" value="#{@command == 'create' ? 'edit' : @command}">
   <p>#{attach_files_label}: 
