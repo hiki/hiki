@@ -27,6 +27,10 @@
       <textarea cols="80" rows="20" name="contents" accesskey="C"><%= @contents[:contents] %></textarea>
     </div>
     <p>
+      <% if @contents[:preview_button] %><input type="submit" name="preview" value="<%=@conf.msg_preview_button%>"><% end %>
+      <% if @contents[:button] %><input type="submit" name="save" value="<%=@conf.msg_save%>" accesskey="O"><% end %>
+    </p>
+    <p>
       <%=@conf.msg_keyword_form%>
       <textarea cols="15" rows="3" name="keyword" class="keyword" accesskey="K"><%= @contents[:keyword] %></textarea>
     </p>
@@ -36,10 +40,6 @@
     </p>
     <% end %>
     <div><%= @contents[:edit_proc] %></div>
-    <p>
-      <% if @contents[:preview_button] %><input type="submit" name="preview" value="<%=@conf.msg_preview_button%>"><% end %>
-      <% if @contents[:button] %><input type="submit" name="save" value="<%=@conf.msg_save%>" accesskey="O"><% end %>
-    </p>
   </form>
   <% if @contents[:link] %><div>
     <%=@conf.msg_latest%>: [<%= @contents[:link] %>]

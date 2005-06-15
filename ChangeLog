@@ -1,4 +1,7 @@
 2005-06-15  Kazuhiko  <kazuhiko@fdiary.net>
+	* template/edit.html: move 'preview' and 'save' button just next
+	to the textarea.
+
 	* hiki/aliaswiki.rb (AliasWiki::initialize): the argument is now
 	contents of the aliaswiki page instead of 'db' and 'conf'.
 	* hiki/interwiki.rb (InterWiki::initialize): the argument is now

@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.28 2005-06-15 03:10:16 fdiary Exp $
+# $Id: html_formatter.rb,v 1.29 2005-06-15 04:36:57 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -154,14 +154,14 @@ module Hiki
         s[:html] << @plugin.make_anchor( t[:href], t[:s].escapeHTML, 'external' )
         s[:toc_title] << t[:s] if s[:toc_level] > 0
       when :wikiname, :bracketname
-	make_link(t, s)
+        make_link(t, s)
       when :interwiki
-	if inter_link = @interwiki.interwiki(t[:href], t[:p], t[:s])
-	  s[:html] << @plugin.make_anchor(inter_link[0], inter_link[1])
-	else
-	  t[:href] = t[:s]
-	  make_link(t, s)
-	end
+        if inter_link = @interwiki.interwiki(t[:href], t[:p], t[:s])
+          s[:html] << @plugin.make_anchor(inter_link[0], inter_link[1])
+        else
+          t[:href] = t[:s]
+          make_link(t, s)
+        end
       when :empty
         s[:html] << "\n"
       when :heading1_open, :heading2_open, :heading3_open, :heading4_open, :heading5_open
@@ -275,13 +275,13 @@ EOS
         s[:html] << @plugin.hiki_anchor(t[:href].escape, disp.escapeHTML)
         @references << t[:href]
       else
-	if outer_alias = @interwiki.outer_alias(t[:href])
-	  s[:html] << @plugin.make_anchor(outer_alias[0], outer_alias[1])
-	else
-	  missing_anchor_title = @conf.msg_missing_anchor_title % [ disp.escapeHTML ]
-	  wikiname_anchor = @plugin.auth? ? "#{disp.escapeHTML}<a class=\"nodisp\" href=\"#{@conf.cgi_name}?c=edit;p=#{t[:href].escape}\" title=\"#{missing_anchor_title}\">?</a>" : disp.escapeHTML
-	  s[:html] << wikiname_anchor
-	end
+        if outer_alias = @interwiki.outer_alias(t[:href])
+          s[:html] << @plugin.make_anchor(outer_alias[0], outer_alias[1])
+        else
+          missing_anchor_title = @conf.msg_missing_anchor_title % [ disp.escapeHTML ]
+          wikiname_anchor = @plugin.auth? ? "#{disp.escapeHTML}<a class=\"nodisp\" href=\"#{@conf.cgi_name}?c=edit;p=#{t[:href].escape}\" title=\"#{missing_anchor_title}\">?</a>" : disp.escapeHTML
+          s[:html] << wikiname_anchor
+        end
         s[:toc_title] << t[:href] if s[:toc_level] > 0
       end
     end
