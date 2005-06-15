@@ -1,4 +1,4 @@
-# $Id: svn.rb,v 1.4 2005-06-13 05:49:19 fdiary Exp $
+# $Id: svn.rb,v 1.5 2005-06-15 04:14:04 fdiary Exp $
 # Copyright (C) 2003, Koichiro Ohba <koichiro@meadowy.org>
 # Copyright (C) 2003, Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
 # You can distribute this under GPL.
@@ -43,7 +43,6 @@ module Hiki
     end
 
     def commit(page, msg = default_msg)
-$stderr.puts msg
       Dir.chdir("#{@data_path}/text") do
         system("svn add -- #{page.escape} > /dev/null 2>&1".untaint)
         system("svn propdel svn:mime-type -- #{page.escape} > /dev/null 2>&1".untaint)
