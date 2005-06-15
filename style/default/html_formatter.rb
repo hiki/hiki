@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.29 2005-06-15 04:36:57 fdiary Exp $
+# $Id: html_formatter.rb,v 1.30 2005-06-15 06:28:25 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -157,7 +157,7 @@ module Hiki
         make_link(t, s)
       when :interwiki
         if inter_link = @interwiki.interwiki(t[:href], t[:p], t[:s])
-          s[:html] << @plugin.make_anchor(inter_link[0], inter_link[1])
+          s[:html] << @plugin.make_anchor(inter_link[0], inter_link[1], 'external')
         else
           t[:href] = t[:s]
           make_link(t, s)
@@ -276,7 +276,7 @@ EOS
         @references << t[:href]
       else
         if outer_alias = @interwiki.outer_alias(t[:href])
-          s[:html] << @plugin.make_anchor(outer_alias[0], outer_alias[1])
+          s[:html] << @plugin.make_anchor(outer_alias[0], outer_alias[1], 'external')
         else
           missing_anchor_title = @conf.msg_missing_anchor_title % [ disp.escapeHTML ]
           wikiname_anchor = @plugin.auth? ? "#{disp.escapeHTML}<a class=\"nodisp\" href=\"#{@conf.cgi_name}?c=edit;p=#{t[:href].escape}\" title=\"#{missing_anchor_title}\">?</a>" : disp.escapeHTML

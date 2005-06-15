@@ -1,4 +1,7 @@
 2005-06-15  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/html_formatter.rb: add 'class="external"' to
+	InterWiki links (report by Kazuhiro NISHIYAMA).
+
 	* template/edit.html: move 'preview' and 'save' button just next
 	to the textarea.
 
