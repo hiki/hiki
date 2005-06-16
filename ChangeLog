@@ -1,3 +1,8 @@
+2005-06-16  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* hiki/command.rb (cmd_login), messages/en.rb, messages/fr.rb,
+	messages/it.rb, messages/ja.rb, template/login.html (msg_login_failure):
+	show a message when login failure.
+
 2005-06-16  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/repos/svn.rb (revisions): use Time#strftime instead of
 	Time#to_s since Time#to_s may contains SJIS characters in mingw32

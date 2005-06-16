@@ -1,4 +1,4 @@
-# $Id: ja.rb,v 1.11 2005-06-14 06:03:05 fdiary Exp $
+# $Id: ja.rb,v 1.12 2005-06-16 14:14:28 yanagita Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # You can redistribute it and/or modify it under the terms of
 # the Ruby's licence.
@@ -33,6 +33,7 @@ module Hiki
     def msg_use; '使用する' end
     def msg_unuse; '使用しない' end
     def msg_login_info; '管理者としてログインする際は、ユーザ名に admin と入力してください。' end
+    def msg_login_failure; 'ユーザ名またはパスワードが間違っています。' end
     def msg_name; 'ユーザ名' end
     def msg_password; 'パスワード' end
     def msg_ok; 'OK' end

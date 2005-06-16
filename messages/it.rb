@@ -1,4 +1,4 @@
-# $Id: it.rb,v 1.11 2005-06-14 06:03:05 fdiary Exp $
+# $Id: it.rb,v 1.12 2005-06-16 14:14:28 yanagita Exp $
 # it.rb
 #
 # Copyright (C) 2003 Luigi Maselli <metnik@tiscali.it>
@@ -41,6 +41,7 @@ module Hiki
     def msg_use; 'Usa' end
     def msg_unuse; 'Non usare' end
     def msg_login_info; '(TRANSLATE PLEASE) If you want to login as an administrator, type \'admin\' in the Name field.' end
+    def msg_login_failure; '(TRANSLATE PLEASE) Wrong name or password.'
     def msg_name; 'Nomare' end
     def msg_password; 'Password' end
     def msg_ok; 'OK' end
