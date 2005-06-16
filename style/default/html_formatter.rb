@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.30 2005-06-15 06:28:25 fdiary Exp $
+# $Id: html_formatter.rb,v 1.31 2005-06-16 01:22:18 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -282,8 +282,8 @@ EOS
           wikiname_anchor = @plugin.auth? ? "#{disp.escapeHTML}<a class=\"nodisp\" href=\"#{@conf.cgi_name}?c=edit;p=#{t[:href].escape}\" title=\"#{missing_anchor_title}\">?</a>" : disp.escapeHTML
           s[:html] << wikiname_anchor
         end
-        s[:toc_title] << t[:href] if s[:toc_level] > 0
       end
+      s[:toc_title] << t[:href] if s[:toc_level] > 0
     end
   end
 end
