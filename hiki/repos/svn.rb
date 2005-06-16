@@ -1,4 +1,4 @@
-# $Id: svn.rb,v 1.8 2005-06-16 09:06:38 fdiary Exp $
+# $Id: svn.rb,v 1.9 2005-06-16 17:11:55 fdiary Exp $
 # Copyright (C) 2003, Koichiro Ohba <koichiro@meadowy.org>
 # Copyright (C) 2003, Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
 # You can distribute this under GPL.
@@ -11,7 +11,7 @@ module Hiki
   class ReposSvnBase < ReposDefault
     def initialize(root, data_path)
       super
-      if /^[a-z]:/i =~ @repos_root
+      if /^[a-z]:/i =~ @root
         @win = true
         @base_uri = "file:///#{@root}/"
         @nullify = '> NUL 2>&1'
