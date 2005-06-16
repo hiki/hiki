@@ -11,7 +11,7 @@ module Hiki
     end
 
     def history_th_label
-      ['Rev', 'Time(GMT)', 'Changes', 'Operation', 'Log']
+      ['Rev', 'Time', 'Changes', 'Operation', 'Log']
     end
 
     def history_not_supported_label

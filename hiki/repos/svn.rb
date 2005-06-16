@@ -1,4 +1,4 @@
-# $Id: svn.rb,v 1.7 2005-06-16 08:13:18 fdiary Exp $
+# $Id: svn.rb,v 1.8 2005-06-16 09:06:38 fdiary Exp $
 # Copyright (C) 2003, Koichiro Ohba <koichiro@meadowy.org>
 # Copyright (C) 2003, Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
 # You can distribute this under GPL.
@@ -88,7 +88,7 @@ module Hiki
       end
       log.split(/------------------------------------------------------------------------/).each do |tmp|
         if /(?:\D+)(\d+?)[\s:\|]+[(?:\s)*](?:.*?) \| (.*?)(?: \(.+\))? \| (.*?)\n\n(.*?)\n/m =~ tmp then
-          revs << [$1.to_i, Time.parse("#{$2}Z").localtime.to_s, $3, $4]
+          revs << [$1.to_i, Time.parse("#{$2}Z").localtime.strftime('%Y/%m/%d %H:%M:%S'), $3, $4]
         end
       end
       revs

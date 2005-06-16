@@ -17,7 +17,7 @@
   <div class="day">
     <div class="comment">
       <div class="caption">
-        <%=@conf.msg_last_modified%>:<%= @contents[:last_modified] %><br>
+        <%=@conf.msg_last_modified%>:<%= @contents[:last_modified].strftime('%Y/%m/%d %H:%M:%S') %><br>
         <%=@conf.msg_keyword%>:<%= @contents[:keyword] %><br>
         <%=@conf.msg_reference%>:<%= @contents[:references] %><br>
         <% unless @contents[:page_attribute].empty? %><div><%= @contents[:page_attribute] %></div><% end %>
