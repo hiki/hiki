@@ -57,7 +57,11 @@
 このときURLの末尾がjpg,jpeg,png,gifだとIMGタグに展開されます。（指定した単語がALTに設定される）
 
 *記述例
- [[モナー|http://www.namaraii.com/hiki/theme/hiki/hiki.png]]
+ [[クローバー|http://jp.rubyist.net/theme/clover/clover_h1.png]]
+
+*出力例
+
+[[クローバー|http://jp.rubyist.net/theme/clover/clover_h1.png]]
 
 パラグラフ中にURLっぽいものがあると勝手にリンクがはられます。
 
@@ -81,6 +85,19 @@ InterWikiNameというページを編集します。
 **[[Hiki:逆引きRuby]]
 **[[ruby-list:1]]
 **[[GoogleJ:ruby wiki]]
+
+InterWikiはouter aliasと呼ばれる簡単に外部とリンクする機能にも対応しています。outer aliasを利用するにはInterWikiNameへaliasキーワードを付けてサーバを追加します。
+
+*記述例
+  * [[Ruby|http://www.ruby-lang.org/]] alias
+
+本文中ではaliasに設定した単語を２つのカギカッコで囲むとリンクとなります。
+
+*記述例
+  *[[Ruby]]
+
+*出力例
+**[[Ruby]]
 
 !整形済みテキスト
 *行の先頭がスペースまたはタブで始まっていると、その行は整形済みとして扱われます。
