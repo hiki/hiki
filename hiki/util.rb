@@ -1,4 +1,4 @@
-# $Id: util.rb,v 1.36 2005-06-09 01:22:22 fdiary Exp $
+# $Id: util.rb,v 1.37 2005-06-16 01:28:36 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'nkf'
@@ -77,9 +77,13 @@ module Hiki
       data[:view_style]  = conf.use_sidebar ? CGI::escapeHTML( conf.main_class ) : 'hiki' # for tDiary theme
       data[:cgi_name]    = conf.cgi_name
       if conf.use_sidebar
-        parser = conf.parser.new( conf )
-        m = db.load( conf.side_menu ) || ''
-        t = parser.parse( m )
+        t = db.load_cache( conf.side_menu )
+        unless t
+          m = db.load( conf.side_menu ) || ''
+          parser = conf.parser.new( conf )
+          t = parser.parse( m )
+          db.save_cache( conf.side_menu, t )
+        end
         f = conf.formatter.new( t, db, plugin, conf, 's' )
         data[:sidebar]   = f.to_s.sanitize
         data[:main_class]    = conf.main_class
@@ -199,12 +203,12 @@ EOS
       if NKF::const_defined?(:UTF8)
         return NKF::nkf('-m0 -w', str)
       else
-	begin
-	  require 'uconv'
-	rescue LoadError
-	    raise "Please update to Ruby >= 1.8.2, or install either uconv or rbuconv."
-	end
-	return Uconv.euctou8(str)
+        begin
+          require 'uconv'
+        rescue LoadError
+            raise "Please update to Ruby >= 1.8.2, or install either uconv or rbuconv."
+        end
+        return Uconv.euctou8(str)
       end
     end
   
@@ -212,11 +216,11 @@ EOS
       if NKF::const_defined?(:UTF8)
         return NKF::nkf('-m0 -e', str)
       else
-	begin
-	  require 'uconv'
-	rescue LoadError
-	  raise "Please update to Ruby >= 1.8.2, or install either uconv or rbuconv."
-	end
+        begin
+          require 'uconv'
+        rescue LoadError
+          raise "Please update to Ruby >= 1.8.2, or install either uconv or rbuconv."
+        end
         return Uconv.u8toeuc(str)
       end
     end

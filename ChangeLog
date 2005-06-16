@@ -1,4 +1,7 @@
 2005-06-16  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/util.rb (Util::get_common_data): load a cache of 'SideMenu'
+	if exists (by Yazawa).
+
 	* style/default/html_formatter.rb (HTMLFormatter_default::make_link):
 	fix a bug that loses wikinames in the table of contents.
 
