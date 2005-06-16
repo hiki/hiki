@@ -1,4 +1,4 @@
-# $Id: svn.rb,v 1.5 2005-06-15 04:14:04 fdiary Exp $
+# $Id: svn.rb,v 1.6 2005-06-16 06:04:03 fdiary Exp $
 # Copyright (C) 2003, Koichiro Ohba <koichiro@meadowy.org>
 # Copyright (C) 2003, Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
 # You can distribute this under GPL.
@@ -9,12 +9,22 @@ require 'fileutils'
 # Subversion Repository Backend
 module Hiki
   class ReposSvnBase < ReposDefault
-    def setup
+    def initialize(root, data_path)
+      super
+      if /^[a-z]:/i =~ @repos_root
+	@win = true
+	@base_uri = "file:///#{@root}/"
+	@nullify = '> NUL 2>&1'
+      else
+	@win = false
+	@base_uri = "file://#{@root}/"
+	@nullify = '> /dev/null 2>&1'
+      end
     end
 
     def imported?(wiki)
       s = ''
-      open("|svn ls file://#{@root}/#{wiki}") do |f|
+      open("|svn ls #{@base_uri}#{wiki}") do |f|
         s << (f.gets( nil ) ? $_ : '')
       end
 
@@ -27,33 +37,33 @@ module Hiki
 
     def import(wiki)
       Dir.chdir("#{@data_path}/#{wiki}/text") do
-        system("svn import -m 'Starting #{wiki} from #{ENV['REMOTE_ADDR']} - #{ENV['REMOTE_HOST']}' . file://#{@root}/#{wiki}/trunk > /dev/null 2>&1".untaint)
+        system("svn import -m \"Starting #{wiki} from #{ENV['REMOTE_ADDR']} - #{ENV['REMOTE_HOST']}\" . #{@base_uri}#{wiki}/trunk #{@nullify}".untaint)
       end
       Dir.chdir("#{@data_path}/#{wiki}") do
         FileUtils.rm_rf('text')
-        system("svn checkout file://#{@root}/#{wiki}/trunk text > /dev/null 2>&1")
-        system("svn propdel svn:mime-type -R text > /dev/null 2>&1")
+        system("svn checkout #{@base_uri}#{wiki}/trunk text #{@nullify}")
+        system("svn propdel svn:mime-type -R text #{@nullify}")
       end
     end
 
     def update(wiki)
       Dir.chdir("#{@data_path}/#{wiki}/text") do
-        system("svn update > /dev/null 2>&1")
+        system("svn update #{@nullify}")
       end
     end
 
     def commit(page, msg = default_msg)
       Dir.chdir("#{@data_path}/text") do
-        system("svn add -- #{page.escape} > /dev/null 2>&1".untaint)
-        system("svn propdel svn:mime-type -- #{page.escape} > /dev/null 2>&1".untaint)
-        system("svn ci -m '#{msg}' > /dev/null 2>&1".untaint)
+        system("svn add -- #{page.escape} #{@nullify}".untaint)
+        system("svn propdel svn:mime-type -- #{page.escape} #{@nullify}".untaint)
+        system("svn ci -m \"#{msg}\" #{@nullify}".untaint)
       end
     end
 
     def delete(page, msg = default_msg)
       Dir.chdir("#{@data_path}/text") do
-        system("svn remove -- #{page.escape} > /dev/null 2>&1".untaint)
-        system("svn ci -m '#{msg}' > /dev/null 2>&1".untaint)
+        system("svn remove -- #{page.escape} #{@nullify}".untaint)
+        system("svn ci -m \"#{msg}\" #{@nullify}".untaint)
       end
     end
   end
@@ -69,7 +79,7 @@ module Hiki
     end
 
     def import(wiki)
-      system("svnadmin create #{@root}/#{wiki} > /dev/null 2>&1")
+      system("svnadmin create #{@root}/#{wiki} #{@nullify}")
       super
     end
   end
@@ -77,7 +87,7 @@ module Hiki
   # The hikifarm has only one repository
   class ReposSvnsingle < ReposSvnBase
     def setup
-      system("svnadmin create #{@root} > /dev/null 2>&1")
+      system("svnadmin create #{@root} #{@nullify}")
     end
   end
 end

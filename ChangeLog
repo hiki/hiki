@@ -1,4 +1,6 @@
 2005-06-16  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/repos/svn.rb: support Windows (suggested by Atsushi Koga).
+
 	* hiki/util.rb (Util::get_common_data): load a cache of 'SideMenu'
 	if exists (by Yazawa).
 
