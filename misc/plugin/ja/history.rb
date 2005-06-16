@@ -18,6 +18,10 @@ module Hiki
       '現在の設定では編集履歴はサポートされていません。'
     end
 
+    def history_revert_label
+      'このバージョンに戻す'
+    end
+
     def history_diffto_current_label
       '現在のバージョンとの差分を見る'
     end

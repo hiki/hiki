@@ -1,4 +1,4 @@
-# $Id: svn.rb,v 1.6 2005-06-16 06:04:03 fdiary Exp $
+# $Id: svn.rb,v 1.7 2005-06-16 08:13:18 fdiary Exp $
 # Copyright (C) 2003, Koichiro Ohba <koichiro@meadowy.org>
 # Copyright (C) 2003, Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
 # You can distribute this under GPL.
@@ -12,13 +12,13 @@ module Hiki
     def initialize(root, data_path)
       super
       if /^[a-z]:/i =~ @repos_root
-	@win = true
-	@base_uri = "file:///#{@root}/"
-	@nullify = '> NUL 2>&1'
+        @win = true
+        @base_uri = "file:///#{@root}/"
+        @nullify = '> NUL 2>&1'
       else
-	@win = false
-	@base_uri = "file://#{@root}/"
-	@nullify = '> /dev/null 2>&1'
+        @win = false
+        @base_uri = "file://#{@root}/"
+        @nullify = '> /dev/null 2>&1'
       end
     end
 
@@ -66,8 +66,34 @@ module Hiki
         system("svn ci -m \"#{msg}\" #{@nullify}".untaint)
       end
     end
-  end
 
+    def get_revision(page, revision)
+      ret = ''
+      Dir.chdir("#{@data_path}/text") do
+	open("|svn cat -r #{revision.to_i} #{page.escape.untaint}") do |f|
+	  ret = f.read
+	end
+      end
+      ret
+    end
+
+    def revisions(page)
+      require 'time'
+      log = ''
+      revs = []
+      Dir.chdir("#{@data_path}/text") do
+        open("|svn log #{page.escape.untaint}") do |f|
+          log = f.read
+        end
+      end
+      log.split(/------------------------------------------------------------------------/).each do |tmp|
+        if /(?:\D+)(\d+?)[\s:\|]+[(?:\s)*](?:.*?) \| (.*?)(?: \(.+\))? \| (.*?)\n\n(.*?)\n/m =~ tmp then
+          revs << [$1.to_i, Time.parse("#{$2}Z").localtime.to_s, $3, $4]
+        end
+      end
+      revs
+    end
+  end
 
   # Independent repositories for each wiki
   class ReposSvn < ReposSvnBase
@@ -81,13 +107,6 @@ module Hiki
     def import(wiki)
       system("svnadmin create #{@root}/#{wiki} #{@nullify}")
       super
-    end
-  end
-
-  # The hikifarm has only one repository
-  class ReposSvnsingle < ReposSvnBase
-    def setup
-      system("svnadmin create #{@root} #{@nullify}")
     end
   end
 end

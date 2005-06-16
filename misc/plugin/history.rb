@@ -3,7 +3,7 @@
 == plugin/history.rb - CVS の編集履歴を表示するプラグイン
 
   Copyright (C) 2003 Hajime BABA <baba.hajime@nifty.com>
-  $Id: history.rb,v 1.24 2005-06-14 04:34:37 fdiary Exp $
+  $Id: history.rb,v 1.25 2005-06-16 08:13:19 fdiary Exp $
   You can redistribute and/or modify this file under the terms of the LGPL.
 
   Copyright (C) 2003 Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
@@ -112,46 +112,6 @@ module Hiki
       generate_page(data) # private method inherited from Command class
     end
 
-    def revisions
-      # make command string
-      case history_repos_type
-      when 'cvs'
-        hstcmd = "cvs -Q -d #{history_repos_root} log #{@p.escape}"
-      when 'svn', 'svnsingle'
-        hstcmd = "svn log #{@p.escape}"
-      else
-        raise
-      end
-      
-      # invoke external command
-      cmdlog = history_exec_command(hstcmd)
-      
-      # parse the result and make revisions array
-      parse_history(cmdlog)
-    end
-
-    def parse_history(cmdlog)
-      require 'time'
-      revs = []
-      diffrevs = []
-      case history_repos_type
-      when 'cvs'
-        cmdlog.split(/----------------------------/).each do |tmp|
-          if /revision 1.(\d+?)\ndate: (.*?);  author: (?:.*?);  state: (?:.*?);(.*?)?\n(.*)/m =~ tmp then
-            revs << [$1.to_i, Time.parse("#{$2}Z").localtime.to_s, $3, $4]
-          end
-        end
-      when 'svn', 'svnsingle'
-        cmdlog.split(/------------------------------------------------------------------------/).each do |tmp|
-          if /(?:\D+)(\d+?)[\s:\|]+[(?:\s)*](?:.*?) \| (.*?)(?: \(.+\))? \| (.*?)\n\n(.*?)\n/m =~ tmp then
-            revs << [$1.to_i, Time.parse("#{$2}Z").localtime.to_s, $3, $4]
-            diffrevs << $1.to_i
-          end
-        end
-      end
-      [revs, diffrevs]
-    end
-
     def recent_revs(revs, rev)
       ind = revs.index(revs.assoc(rev)) || 0
       prev_rev = revs[ind + 1]
@@ -201,8 +161,7 @@ module Hiki
       end
 
       # parse the result and make revisions array
-      revs, diffrevs = revisions
-
+      revs = @conf.repos.revisions(@p)
       # construct output sources
       prevdiff = 1 if %w(svn svnsingle).include?(history_repos_type)
       sources = ''
@@ -230,8 +189,8 @@ module Hiki
           op << "<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{@p.escape};r=#{rev};r2=#{rev-1}")}\">previous</a>" unless rev == 1
         when 'svn', 'svnsingle'
           op << "<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{@p.escape};r=#{rev}")}\">current</a>" unless prevdiff == 1
-          op << " | " unless (prevdiff == 1 || prevdiff >= diffrevs.size)
-          op << "<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{@p.escape};r=#{rev};r2=#{diffrevs[prevdiff]}")}\">previous</a>" unless prevdiff >= diffrevs.size
+          op << " | " unless (prevdiff == 1 || prevdiff >= revs.size)
+          op << "<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{@p.escape};r=#{rev};r2=#{revs[prevdiff][0]}")}\">previous</a>" unless prevdiff >= revs.size
         end
         op << "]"
         if @conf.options['history.hidelog']
@@ -267,29 +226,20 @@ module Hiki
 
       # make command string
       r = @cgi.params['r'][0] || '1'
-      case history_repos_type
-      when 'cvs'
-        hstcmd = "cvs -Q up -p -r 1.#{r.to_i} #{@p.escape}"
-      when 'svn', 'svnsingle'
-        hstcmd = "svn cat -r #{r.to_i} #{@p.escape}"
-      else
-        return history_output(history_not_supported_label)
-      end
-
-      # invoke external command
-      cmdlog = history_exec_command(hstcmd)
-      cmdlog = "*** no source ***" if cmdlog.empty?
+      txt = @conf.repos.get_revision(@p, r)
+      txt = "*** no source ***" if txt.empty?
 
       # construct output sources
       sources = ''
       sources << "<div class=\"section\">\n"
       sources << @plugin.hiki_anchor(@p.escape, @plugin.page_name(@p))
       sources << "\n<br>\n"
+      sources << "<a href=\"#{@conf.cgi_name}#{cmdstr('edit', "p=#{@p.escape};r=#{r.escapeHTML}")}\">#{history_revert_label.escapeHTML}</a><br>\n"
       sources << "<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{@p.escape};r=#{r.escapeHTML}")}\">#{history_diffto_current_label.escapeHTML}</a><br>\n"
       sources << "<a href=\"#{@conf.cgi_name}#{cmdstr('history', "p=#{@p.escape}")}\">#{history_backto_summary_label.escapeHTML}</a><br>\n"
       sources << "</div>\n"
       sources << "<div class=\"diff\">\n"
-      sources << cmdlog.escapeHTML.gsub(/\n/, "<br>\n").gsub(/ /, '&nbsp;')
+      sources << txt.escapeHTML.gsub(/\n/, "<br>\n").gsub(/ /, '&nbsp;')
       sources << "</div>\n"
 
       history_output(sources)
@@ -308,29 +258,16 @@ module Hiki
       # make command string
       r = @cgi.params['r'][0] || '1'
       r2 = @cgi.params['r2'][0]
-      case history_repos_type
-      when 'cvs'
-        if r2.nil? || r2.to_i == 0
-          new = @db.load(@p)
-          old = history_exec_command("cvs -Q up -p -r 1.#{r.to_i} #{@p.escape}")
-        else
-          new = history_exec_command("cvs -Q up -p -r 1.#{r.to_i} #{@p.escape}")
-          old = history_exec_command("cvs -Q up -p -r 1.#{r2.to_i} #{@p.escape}")
-        end
-      when 'svn', 'svnsingle'
-        if r2.nil? || r2.to_i == 0
-          new = @db.load(@p)
-          old = history_exec_command("svn cat -r #{r.to_i} #{@p.escape}")
-        else
-          new = history_exec_command("svn cat -r #{r.to_i} #{@p.escape}")
-          old = history_exec_command("svn cat -r #{r2.to_i} #{@p.escape}")
-        end
+      if r2.nil? || r2.to_i == 0
+	new = @db.load(@p)
+	old = @conf.repos.get_revision(@p, r)
       else
-        return history_output(history_not_supported_label)
+	new = @conf.repos.get_revision(@p, r)
+	old = @conf.repos.get_revision(@p, r2)
       end
 
       # parse the result and make revisions array
-      revs, diffrevs = revisions
+      revs = @conf.repos.revisions(@p)
       
       prev2_rev, prev_rev, curr_rev, next_rev = recent_revs(revs, r.to_i)
       last_rev = revs[0]

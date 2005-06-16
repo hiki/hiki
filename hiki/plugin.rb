@@ -1,4 +1,4 @@
-# $Id: plugin.rb,v 1.20 2005-06-13 14:38:28 yanagita Exp $
+# $Id: plugin.rb,v 1.21 2005-06-16 08:13:18 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
@@ -12,7 +12,7 @@ module Hiki
 
   class Plugin
     attr_reader   :toc_f, :plugin_command
-    attr_accessor :text, :title, :cookies, :user
+    attr_accessor :text, :title, :cookies, :user, :data
     
     def initialize( options, conf )
       @options      = options

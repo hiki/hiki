@@ -18,6 +18,10 @@ module Hiki
       'History is not available in current configuration.'
     end
 
+    def history_revert_label
+      'Revert to this version'
+    end
+
     def history_diffto_current_label
       'Diff to current'
     end

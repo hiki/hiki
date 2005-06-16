@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.53 2005-06-15 03:10:16 fdiary Exp $
+# $Id: command.rb,v 1.54 2005-06-16 08:13:18 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -105,6 +105,7 @@ module Hiki
       data[:body_leave] = @plugin.body_leave_proc.sanitize
       data[:page_attribute] ||= ''
       data[:footer] = @plugin.footer_proc.sanitize
+      data.update (@plugin.data) if @plugin.data
 
       @page = Hiki::Page::new( @cgi, @conf )
       @page.template = @conf.read_template( @cmd )
@@ -269,7 +270,12 @@ module Hiki
       
       @cmd = 'edit'
 
-      text = ( @db.load( page ) || '' ) unless text
+      if rev = @params['r'][0]
+	text = @conf.repos.get_revision(page, rev.to_i)
+	raise 'No such revision.' if text.empty?
+      else
+	text = ( @db.load( page ) || '' ) unless text
+      end
       md5hex = @params['md5hex'][0] || @db.md5hex( page )
       
       data = Hiki::Util::get_common_data( @db, @plugin, @conf )

@@ -1,4 +1,4 @@
-# $Id: cvs.rb,v 1.4 2005-06-13 05:49:19 fdiary Exp $
+# $Id: cvs.rb,v 1.5 2005-06-16 08:13:18 fdiary Exp $
 # Copyright (C) 2003, Koichiro Ohba <koichiro@meadowy.org>
 # Copyright (C) 2003, Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
 # You can distribute this under GPL.
@@ -69,6 +69,33 @@ module Hiki
       ensure
         Dir.chdir( oldpwd )
       end
+    end
+
+    def get_revision(page, revision)
+      ret = ''
+      Dir.chdir("#{@data_path}/text") do
+	open("|cvs -Q up -p -r 1.#{revision.to_i} #{page.escape.untaint}") do |f|
+	  ret = f.read
+	end
+      end
+      ret
+    end
+
+    def revisions(page)
+      require 'time'
+      log = ''
+      revs = []
+      Dir.chdir("#{@data_path}/text") do
+	open("|cvs -Q log #{page.escape.untaint}") do |f|
+	  log = f.read
+	end
+      end
+      log.split(/----------------------------/).each do |tmp|
+        if /revision 1.(\d+?)\ndate: (.*?);  author: (?:.*?);  state: (?:.*?);(.*?)?\n(.*)/m =~ tmp then
+          revs << [$1.to_i, Time.parse("#{$2}Z").localtime.to_s, $3, $4.chomp]
+        end
+      end
+      revs
     end
   end
 end

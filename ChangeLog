@@ -1,4 +1,17 @@
 2005-06-16  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/command.rb (Command::cmd_edit): support editing with a
+	specified revision.
+	* misc/plugin/history.rb: add a link to revert to a specified
+	revision.
+
+	* hiki/repos/cvs.rb (get_revision, revisions): add new methods.
+	* hiki/repos/svn.rb (get_revision, revisions): ditto.
+	* misc/plugin/history.rb: follow the changes.
+
+	* hiki/plugin.rb (Hiki::Plugin): add new instance variable @data.
+	* hiki/command.rb (generate_page): merge @plugin.data to control
+	parameters from plugins.
+
 	* hiki/repos/svn.rb: support Windows (suggested by Atsushi Koga).
 
 	* hiki/util.rb (Util::get_common_data): load a cache of 'SideMenu'
