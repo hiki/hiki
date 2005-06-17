@@ -1,4 +1,4 @@
-# $Id: flatfile.rb,v 1.15 2005-06-09 02:48:19 fdiary Exp $
+# $Id: flatfile.rb,v 1.16 2005-06-17 05:06:01 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'fileutils'
@@ -31,11 +31,11 @@ module Hiki
 
       if exist?( page )
         return nil if md5 != md5hex( page )
-        FileUtils.copy( filename, backupdir( page ) )
+        FileUtils.copy( filename, backupdir( page ), {:preserve => true} )
       end
       create_info_default( page ) unless info_exist?( page )
 
-      File::open( filename, "w" ) do |f|
+      File::open( filename, 'wb' ) do |f|
         f.write( text.gsub(/\r\n/, "\n") )
       end
       set_last_update( page, Time::now )
@@ -60,6 +60,10 @@ module Hiki
     def load_backup( page )
       return nil unless backup_exist?( page )
       File::read( backupdir( page ) )
+    end
+
+    def save( page, src, md5 )
+      raise 'DB#save is obsoleted. Please use Plugin#save instead.'
     end
 
     def exist?( page )

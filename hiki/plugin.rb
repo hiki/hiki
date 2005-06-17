@@ -1,4 +1,4 @@
-# $Id: plugin.rb,v 1.21 2005-06-16 08:13:18 fdiary Exp $
+# $Id: plugin.rb,v 1.22 2005-06-17 05:06:00 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
@@ -264,6 +264,14 @@ module Hiki
       else
         @plugin_method_list.concat(@defined_method_list)
       end
+    end
+
+    def load( page )
+      @db.load( page )
+    end
+
+    def load_backup( page )
+      @db.load_backup( page )
     end
 
     def save( page, src, md5 )
