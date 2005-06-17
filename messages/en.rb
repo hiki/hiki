@@ -1,4 +1,4 @@
-# $Id: en.rb,v 1.14 2005-06-16 14:14:28 yanagita Exp $
+# $Id: en.rb,v 1.15 2005-06-17 01:19:26 fdiary Exp $
 # en.rb
 #
 # Copyright (C) 2003 Masao Mutoh <mutoh@highway.ne.jp>
@@ -41,7 +41,7 @@ module Hiki
     def msg_use; 'Use' end
     def msg_unuse; 'Don\'t use' end
     def msg_login_info; 'If you want to login as an administrator, type \'admin\' in the Name field.' end
-    def msg_login_failure; 'Wrong name or password.'
+    def msg_login_failure; 'Wrong name or password.' end
     def msg_name; 'Name' end
     def msg_password; 'Password' end
     def msg_ok; 'OK' end
