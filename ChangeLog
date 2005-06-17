@@ -1,4 +1,9 @@
 2005-06-17  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/page.rb (out): accept headers hash as an argument.
+	* hiki/command.rb (generate_error_page): add a new method to
+	display an error page.
+	* template/error.html: add a new template file.
+
 	* misc/plugin/attach/attach.rb (attach_download): display an error
 	message if the file does not exist. use
 	'export_plugin_methods' (by Yazawa).

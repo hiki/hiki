@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.55 2005-06-16 14:14:28 yanagita Exp $
+# $Id: command.rb,v 1.56 2005-06-17 06:28:55 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -88,8 +88,9 @@ module Hiki
             send( "cmd_#{@cmd}" )
           end
         end
-#      rescue NoMethodError
-#        redirect(@cgi, @conf.cgi_name)
+      rescue NoMethodError
+	data = get_common_data( @db, @plugin, @conf )
+	generate_error_page( data )
       end
     end
 
@@ -114,6 +115,20 @@ module Hiki
       data[:last_modified] = Time::now unless data[:last_modified]
       @page.process( @plugin )
       @page.out
+    end
+
+    def generate_error_page( data )
+      @plugin.hiki_menu(data, @cmd)
+      @plugin.title = title( 'Error' )
+      data[:cgi_name] = @conf.cgi_name 
+      data[:view_title] = 'Error'
+      data[:header] = @plugin.header_proc.sanitize
+      data[:frontpage] = @plugin.page_name( 'FrontPage' )
+      @page = Hiki::Page::new( @cgi, @conf )
+      @page.template = @conf.read_template( 'error' )
+      @page.contents = data
+      @page.process( @plugin )
+      @page.out( 'status' => 'NOT_FOUND' )
     end
 
     def cmd_preview
@@ -152,7 +167,7 @@ module Hiki
       @db.increment_hitcount( @p )
       ref = @db.get_references( @p )
 
-      data = Hiki::Util::get_common_data( @db, @plugin, @conf )
+      data = get_common_data( @db, @plugin, @conf )
       
       pg_title = @plugin.page_name(@p)
       
@@ -199,7 +214,7 @@ module Hiki
         %Q!#{@plugin.hiki_anchor(k.escape, display_text)}: #{format_date(f[k][:last_modified] )} #{editor}#{@conf.msg_freeze_mark if f[k][:freeze]}!
       }
 
-      data = Hiki::Util::get_common_data( @db, @plugin, @conf )
+      data = get_common_data( @db, @plugin, @conf )
       
       data[:title]     = title( @conf.msg_index )
       data[:updatelist] = list.collect! {|i| i.sanitize}
@@ -210,7 +225,7 @@ module Hiki
     def cmd_recent
       list, last_modified = get_recent
       
-      data = Hiki::Util::get_common_data( @db, @plugin, @conf )
+      data = get_common_data( @db, @plugin, @conf )
 
       data[:title]      = title( @conf.msg_recent )
       data[:updatelist] = list.collect! {|i| i.sanitize}
@@ -278,7 +293,7 @@ module Hiki
       end
       md5hex = @params['md5hex'][0] || @db.md5hex( page )
       
-      data = Hiki::Util::get_common_data( @db, @plugin, @conf )
+      data = get_common_data( @db, @plugin, @conf )
       @plugin.text = text
 
       data[:title]          = title( page )
@@ -308,7 +323,7 @@ module Hiki
       new = @db.load( @p ) || ''
       differ = word_diff( old, new ).gsub( /\n/, "<br>\n" )
       
-      data = Hiki::Util::get_common_data( @db, @plugin, @conf )
+      data = get_common_data( @db, @plugin, @conf )
 
       data[:title]        = title("#{@p} #{@conf.msg_diff}")
       data[:differ]       = differ.sanitize

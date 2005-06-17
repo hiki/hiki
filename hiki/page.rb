@@ -1,4 +1,4 @@
-# $Id: page.rb,v 1.11 2005-06-07 09:10:54 fdiary Exp $
+# $Id: page.rb,v 1.12 2005-06-17 06:28:55 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 
@@ -43,8 +43,9 @@ module Hiki
       @headers['cookie']           = @plugin.cookies unless @plugin.cookies.empty?
     end
 
-    def out
-      print @cgi.header(@headers)
+    def out( headers = nil )
+      @headers.update( headers ) if headers
+      print @cgi.header( @headers )
       if @cgi.request_method != 'HEAD'
 	print @body
       end
