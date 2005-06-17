@@ -1,4 +1,4 @@
-# $Id: attach.rb,v 1.21 2005-06-17 05:03:43 fdiary Exp $
+# $Id: attach.rb,v 1.22 2005-06-17 06:37:59 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 #
 # thanks to Kazuhiko, Masao Mutoh, SHIMADA Mitsunobu, Yoshimi, ¤ê¤¿
@@ -102,8 +102,8 @@ def attach_download
     print @cgi.header(header)
     print File.open(attach_file.untaint, 'rb').read
   else
-    print @cgi.header( 'type' => 'text/plain' )
-    print 'File not exists.'
+    data = get_common_data( @db, @plugin, @conf )
+    generate_error_page( data )
   end
   nil
 end
