@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# $Id: attach.cgi,v 1.17 2005-05-22 14:49:13 koma2 Exp $
+# $Id: attach.cgi,v 1.18 2005-06-17 05:03:43 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 BEGIN { $defout.binmode }
@@ -85,20 +85,6 @@ def attach_file
       puts ex.message
     end
   end
-end
-
-def redirect(cgi, url)
-  head = {'type' => 'text/html',
-         }
-   print cgi.header(head)
-   print %Q[
-            <html>
-            <head>
-            <meta http-equiv="refresh" content="0;url=#{url}">
-            <title>moving...</title>
-            </head>
-            <body>Wait or <a href="#{url}">Click here!</a></body>
-            </html>]
 end
 
 attach_file

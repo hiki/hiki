@@ -1,9 +1,25 @@
+2005-06-17  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/attach/attach.rb (attach_download): display an error
+	message if the file does not exist. use
+	'export_plugin_methods' (by Yazawa).
+	* misc/plugin/attach/attach.cgi: use Hiki::Utils::redirect (by
+	Yazawa).
+
 2005-06-16  Kouhei Yanagita <sugi@dream.big.or.jp>
 	* hiki/command.rb (cmd_login), messages/en.rb, messages/fr.rb,
-	messages/it.rb, messages/ja.rb, template/login.html (msg_login_failure):
-	show a message when login failure.
+	messages/it.rb, messages/ja.rb,
+	template/login.html (msg_login_failure): show a message when login
+	failure.
 
 2005-06-16  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/db/flatfile.rb (save): raise an exception with informations
+	about the incompatibility.
+	* hiki/plugin.rb (load, load_backup): add methods which are
+	aliases of HikiDB#load and HikiDB#load_backup.
+
+	* hiki/db/flatfile.rb (store): add 'preserve' option to keep
+	modified time.
+
 	* hiki/repos/svn.rb (revisions): use Time#strftime instead of
 	Time#to_s since Time#to_s may contains SJIS characters in mingw32
 	ruby (suggest by Atsushi Koga).

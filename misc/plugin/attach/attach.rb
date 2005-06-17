@@ -1,17 +1,9 @@
-# $Id: attach.rb,v 1.20 2005-06-15 08:27:51 fdiary Exp $
+# $Id: attach.rb,v 1.21 2005-06-17 05:03:43 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 #
 # thanks to Kazuhiko, Masao Mutoh, SHIMADA Mitsunobu, Yoshimi, りた
 
 @options['attach.form'] ||= 'edit'
-
-def plugin_usage_label
-       '<div><ul>
-   <li>添付ファイルへのアンカは、{{attach_anchor(ファイル名 [, ページ名])}}</li>
-   <li>添付したファイルの表示は、{{attach_view(ファイル名 [, ページ名])}}</li>
-   <li>添付ページとファイルの一覧は、{{attach_map}}</li>
-   </ul></div>'
-end
 
 def attach_form(s = '')
   command = @command == 'create' ? 'edit' : @command
@@ -28,7 +20,7 @@ def attach_form(s = '')
   <div>
     #{s}
   </div>
-  #{plugin_usage_label}
+  #{attach_usage}
 </form>
 </div>
 EOS
@@ -42,7 +34,7 @@ def attach_map
   attach_files.sort do |a, b|
     a[0].unescape <=> b[0].unescape
   end.each do |attach_info|
-    s << "<li>#{hiki_anchor(attach_info[0], attach_info[0].unescape.escapeHTML)}\n"
+    s << "<li>#{hiki_anchor(attach_info[0], page_name(attach_info[0]))}\n"
     s << "<ul>\n"
     attach_info[1].each do |f|
       s << "<li>#{attach_anchor(f, attach_info[0].unescape)}\n"
@@ -93,21 +85,26 @@ def attach_download
   file_name   = (params['file_name'][0] || '')
   attach_file = "#{@cache_path}/attach/#{page.escape}/#{file_name.escape}"
   extname     =  /\.([^.]+)$/.match(file_name.downcase).to_a[1]
-  mime_type = nil
-  File.open(attach_file.untaint, 'rb') do |fh|
-    mime_type = ImageSize.new(fh).mime_type
-  end
+  if File::exist?( attach_file.untaint )
+    mime_type = nil
+    File.open(attach_file.untaint, 'rb') do |fh|
+      mime_type = ImageSize.new(fh).mime_type
+    end
 
-  header = Hash::new
-  header['Content-Type'] = mime_type
-  header['Last-Modified'] = CGI::rfc1123_date(File.mtime(attach_file.untaint))
-  if %r|^image/| =~ mime_type
-    header['Content-Disposition'] = %Q|inline; filename="#{file_name.to_sjis}"; modification-date="#{header['Last-Modified']}";|
+    header = Hash::new
+    header['Content-Type'] = mime_type
+    header['Last-Modified'] = CGI::rfc1123_date(File.mtime(attach_file.untaint))
+    if %r|^image/| =~ mime_type
+      header['Content-Disposition'] = %Q|inline; filename="#{file_name.to_sjis}"; modification-date="#{header['Last-Modified']}";|
+    else
+      header['Content-Disposition'] = %Q|attachment; filename="#{file_name.to_sjis}"; modification-date="#{header['Last-Modified']}";|
+    end
+    print @cgi.header(header)
+    print File.open(attach_file.untaint, 'rb').read
   else
-    header['Content-Disposition'] = %Q|attachment; filename="#{file_name.to_sjis}"; modification-date="#{header['Last-Modified']}";|
+    print @cgi.header( 'type' => 'text/plain' )
+    print 'File not exists.'
   end
-  print @cgi.header(header)
-  print File.open(attach_file.untaint, 'rb').read
   nil
 end
 
@@ -148,7 +145,7 @@ end
 
 def attach_all_files
   attach_files = Hash.new([])
-  return [] unless test(?e, "#{@cache_path}/attach/")
+  return [] unless File::exist?("#{@cache_path}/attach/")
 
   Dir.foreach("#{@cache_path}/attach/") do |dir|
     next if /^\./ =~ dir
@@ -226,3 +223,5 @@ add_form_proc {
   rescue Exception
   end
 }
+
+export_plugin_methods(:attach_map, :attach_anchor_string, :attach_anchor, :attach_image_anchor, :attach_flash_anchor, :attach_download, :attach_src, :attach_view)
