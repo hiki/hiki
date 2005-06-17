@@ -1,4 +1,4 @@
-# $Id: readlirs.rb,v 1.4 2005-05-17 05:33:08 fdiary Exp $
+# $Id: readlirs.rb,v 1.5 2005-06-17 05:49:17 fdiary Exp $
 # Copyright (C) 2003 yoshimi <yoshimik@iris.dti.ne.jp>
 
 require 'cgi'
@@ -41,7 +41,7 @@ def readlirs_get(url, cache_time)
                 
                 begin
                         readlirs_recent_cache(url, cache_file, cache_time)
-                        raise unless test(?r, cache_file)
+                        raise unless File.readable?(cache_file)
                         open(cache_file).read
                 rescue Exception
                         nil

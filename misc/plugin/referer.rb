@@ -1,4 +1,4 @@
-# $Id: referer.rb,v 1.8 2005-03-15 07:43:25 hitoshi Exp $
+# $Id: referer.rb,v 1.9 2005-06-17 05:49:17 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/db/ptstore'
@@ -64,7 +64,7 @@ end
 def referer_map
   path = referer_path
   s = ''
-  return s unless test(?e, path)
+  return s unless File.exist?(path)
 
   s << "<ul>\n"
 
@@ -102,8 +102,8 @@ end
 
 add_body_leave_proc(Proc.new do
   begin
-    Dir.mkdir(@cache_path) unless test(?e, @cache_path)
-    Dir.mkdir(referer_path) unless test(?e, referer_path)
+    Dir.mkdir(@cache_path) unless File.exist?(@cache_path)
+    Dir.mkdir(referer_path) unless File.exist?(referer_path)
 
     file_name = "#{referer_path}/#{@page.escape.to_euc}"
     db = PTStore::new(file_name)

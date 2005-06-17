@@ -1,4 +1,4 @@
-# $Id: rss-show.rb,v 1.8 2005-06-07 01:42:36 fdiary Exp $
+# $Id: rss-show.rb,v 1.9 2005-06-17 05:49:17 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'cgi'
@@ -17,7 +17,7 @@ def rss_get(url, cache_time)
 
   begin
     rss_recent_cache(url, cache_file, cache_time)
-    raise unless test(?r, cache_file)
+    raise unless File.readable?(cache_file)
     open(cache_file).read
   rescue Exception
     nil
