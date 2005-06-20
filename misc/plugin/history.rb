@@ -3,7 +3,7 @@
 == plugin/history.rb - CVS の編集履歴を表示するプラグイン
 
   Copyright (C) 2003 Hajime BABA <baba.hajime@nifty.com>
-  $Id: history.rb,v 1.25 2005-06-16 08:13:19 fdiary Exp $
+  $Id: history.rb,v 1.26 2005-06-20 01:31:32 fdiary Exp $
   You can redistribute and/or modify this file under the terms of the LGPL.
 
   Copyright (C) 2003 Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
@@ -152,18 +152,10 @@ module Hiki
 
     # Output summary of change history
     def history
-      unless history_repos_root then
-        return history_output(history_not_supported_label)
-      end
-
-      unless %w(cvs svn svnsingle).include?(history_repos_type)
-        return history_output(history_not_supported_label)
-      end
-
       # parse the result and make revisions array
       revs = @conf.repos.revisions(@p)
       # construct output sources
-      prevdiff = 1 if %w(svn svnsingle).include?(history_repos_type)
+      prevdiff = 1
       sources = ''
       sources << @plugin.hiki_anchor(@p.escape, @plugin.page_name(@p))
       sources << "\n<br>\n"
@@ -174,30 +166,25 @@ module Hiki
 	case history_repos_type
 	when 'cvs'
 		sources << " <tr><th rowspan=\"2\">#{history_th_label[0].escapeHTML}</th><th>#{history_th_label[1].escapeHTML}</th><th>#{history_th_label[2].escapeHTML}</th><th>#{history_th_label[3].escapeHTML}</th></tr><tr><th colspan=\"3\">#{history_th_label[4].escapeHTML}</th></tr>\n"
-	when 'svn', 'svnsingle'
+	else
 		sources << " <tr><th rowspan=\"2\">#{history_th_label[0].escapeHTML}</th><th>#{history_th_label[1].escapeHTML}</th><th>#{history_th_label[3].escapeHTML}</th></tr><tr><th colspan=\"2\">#{history_th_label[4].escapeHTML}</th></tr>\n"
 	end
       end
       revs.each do |rev,time,changes,log|
         #    time << " GMT"
         op = "[<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_src;p=#{@p.escape};r=#{rev}")}\">View</a> this version] "
-        op << "[Diff to "
-        case history_repos_type
-        when 'cvs'
-          op << "<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{@p.escape};r=#{rev}")}\">current</a>" unless revs.size == rev
-          op << " | " unless (revs.size == rev || rev == 1)
-          op << "<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{@p.escape};r=#{rev};r2=#{rev-1}")}\">previous</a>" unless rev == 1
-        when 'svn', 'svnsingle'
-          op << "<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{@p.escape};r=#{rev}")}\">current</a>" unless prevdiff == 1
-          op << " | " unless (prevdiff == 1 || prevdiff >= revs.size)
-          op << "<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{@p.escape};r=#{rev};r2=#{revs[prevdiff][0]}")}\">previous</a>" unless prevdiff >= revs.size
-        end
-        op << "]"
+	if revs.size != 1
+	  op << "[Diff to "
+	  op << "<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{@p.escape};r=#{rev}")}\">current</a>" unless prevdiff == 1
+	  op << " | " unless (prevdiff == 1 || prevdiff >= revs.size)
+	  op << "<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{@p.escape};r=#{rev};r2=#{revs[prevdiff][0]}")}\">previous</a>" unless prevdiff >= revs.size
+	  op << "]"
+	end
         if @conf.options['history.hidelog']
 	  case history_repos_type
 	  when 'cvs' 
             sources << " <tr><td>#{rev}</td><td>#{time.escapeHTML}</td><td>#{changes.escapeHTML}</td><td align=right>#{op}</td></tr>\n"
-	  when 'svn', 'svnsingle'
+	  else
             sources << " <tr><td>#{rev}</td><td>#{time.escapeHTML}</td><td align=right>#{op}</td></tr>\n"
 	  end
         else
@@ -207,11 +194,11 @@ module Hiki
 	  case history_repos_type
 	  when 'cvs'
             sources << " <tr><td rowspan=\"2\">#{rev}</td><td>#{time.escapeHTML}</td><td>#{changes.escapeHTML}</td><td align=right>#{op}</td></tr><tr><td colspan=\"3\">#{log.escapeHTML}</td></tr>\n"
-	  when 'svn', 'svnsingle'
+	  else
             sources << " <tr><td rowspan=\"2\">#{rev}</td><td>#{time.escapeHTML}</td><td align=right>#{op}</td></tr><tr><td colspan=\"2\">#{log.escapeHTML}</td></tr>\n"
 	  end
         end
-        prevdiff += 1 if %w(svn svnsingle).include?(history_repos_type)
+        prevdiff += 1
       end
       sources << "</table>\n"
 
@@ -247,14 +234,6 @@ module Hiki
 
     # Output diff between two arbitrary revisions
     def history_diff
-      unless history_repos_root then
-        return history_output(history_not_supported_label)
-      end
-
-      unless %w(cvs svn svnsingle).include?(history_repos_type)
-        return history_output(history_not_supported_label)
-      end
-
       # make command string
       r = @cgi.params['r'][0] || '1'
       r2 = @cgi.params['r2'][0]
