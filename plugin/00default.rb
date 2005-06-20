@@ -1,4 +1,4 @@
-# $Id: 00default.rb,v 1.31 2005-06-13 05:49:19 fdiary Exp $
+# $Id: 00default.rb,v 1.32 2005-06-20 01:40:14 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #==============================
@@ -8,7 +8,7 @@ def anchor( s )
   s.sub!(/^\d+$/, '')
   p = @page.escape.escapeHTML
   p.gsub!(/%/, '%%')
-  %Q[?#{p}#{s}]
+  %Q[#{@conf.cgi_name}?#{p}#{s}]
 end
 
 def my( a, str )

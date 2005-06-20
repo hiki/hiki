@@ -1,4 +1,7 @@
 2005-06-20  Kazuhiko  <kazuhiko@fdiary.net>
+	* plugin/00default.rb (anchor): add cgi_name for valid html
+	outputs.
+
 	* hiki/repos/default.rb (get_revision, revisions): add new
 	methods.
 	* misc/plugin/history.rb: support default repos. not display
