@@ -1,4 +1,4 @@
-# $Id: parser.rb,v 1.13 2005-06-21 05:48:15 fdiary Exp $
+# $Id: parser.rb,v 1.14 2005-06-21 06:16:12 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'cgi'
@@ -88,6 +88,8 @@ module Hiki
     private
     def parse_line( line )
       case line
+      when %r|^//|
+	# comment
       when /^(\!{1,5})(.+)$/
         @cur_stack.push( {:e => :heading_open, :lv => $1.size} )
         inline( $2 )

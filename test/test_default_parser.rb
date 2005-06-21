@@ -1,4 +1,4 @@
-# $Id: test_default_parser.rb,v 1.6 2005-06-21 05:48:15 fdiary Exp $
+# $Id: test_default_parser.rb,v 1.7 2005-06-21 06:16:12 fdiary Exp $
 
 require 'test/unit'
 require 'style/default/parser'
@@ -159,5 +159,12 @@ class Default_Parser_Unit_Tests < Test::Unit::TestCase
 		   {:e=>:table_row_close},
 		   {:e=>:table_close}],
                  @parser.parse( "||>1||^2\n||^3||4\n||>5" ) )
+  end
+
+  def test_comment
+    assert_equal([],
+                 @parser.parse( "//comment" ) )
+    assert_equal(@parser.parse( "aaa\nbbb" ),
+                 @parser.parse( "aaa\n//comment\nbbb" ) )
   end
 end

@@ -1,4 +1,6 @@
 2005-06-21  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/parser.rb: support comments.
+
 	* util/plugin.rb, style/default/html_formatter.rb: support
 	inline/block contexts (by Kenta MURATA).
 
