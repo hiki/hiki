@@ -3,7 +3,7 @@
 == plugin/history.rb - CVS の編集履歴を表示するプラグイン
 
   Copyright (C) 2003 Hajime BABA <baba.hajime@nifty.com>
-  $Id: history.rb,v 1.26 2005-06-20 01:31:32 fdiary Exp $
+  $Id: history.rb,v 1.27 2005-06-21 08:49:53 fdiary Exp $
   You can redistribute and/or modify this file under the terms of the LGPL.
 
   Copyright (C) 2003 Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
@@ -68,11 +68,7 @@ def history_diff
 end
 
 add_body_enter_proc(Proc::new do
-  if @conf.repos_root then
-    add_plugin_command('history', history_label, {'p' => true})
-  else
-    ''
-  end
+  add_plugin_command('history', history_label, {'p' => true})
 end)
 
 module Hiki
@@ -207,10 +203,6 @@ module Hiki
 
     # Output source at an arbitrary revision
     def history_src
-      unless history_repos_root then
-        return history_output(history_not_supported_label)
-      end
-
       # make command string
       r = @cgi.params['r'][0] || '1'
       txt = @conf.repos.get_revision(@p, r)

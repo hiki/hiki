@@ -1,4 +1,7 @@
 2005-06-21  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/history.rb: fix bugs with default repos (reported by
+	Yazawa).
+
 	* hiki/plugin.rb (admin?): return true if the admin password is
 	empty.
 	* hiki/command.rb (initialize): not set @user if the admin
