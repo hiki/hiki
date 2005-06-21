@@ -1,3 +1,6 @@
+2005-06-22  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* theme/hiki_base.css: add CSS for printing.
+
 2005-06-21  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/history.rb: fix bugs with default repos (reported by
 	Yazawa).

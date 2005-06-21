@@ -10,3 +10,15 @@ form.update textarea.keyword {
         width: 15em;
         height: 3em;
 }
+
+@media print{
+  div.adminmenu{
+    display: none;
+  }
+  div.main{
+    margin-left: 0;
+  }
+  div.sidebar{
+    display: none;
+  }
+}
