@@ -1,4 +1,4 @@
-# $Id: plugin.rb,v 1.22 2005-06-17 05:06:00 fdiary Exp $
+# $Id: plugin.rb,v 1.23 2005-06-21 05:48:15 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
@@ -40,6 +40,7 @@ module Hiki
       end
       
       @toc_f            = false
+      @context          = nil
       @plugin_command   = []
       @plugin_menu      = []
       @text             = ''
@@ -60,6 +61,22 @@ module Hiki
       rescue Exception
         raise PluginError, "Plugin error in '#{File::basename( plugin_file )}'.\n#{$!}\n#{$!.backtrace[0]}"
       end
+    end
+
+    def block_context?
+      @context == :block
+    end
+
+    def inline_context?
+      @context == :inline
+    end
+
+    def block_context
+      in_context( :block, &proc )
+    end
+
+    def inline_context
+      in_context( :inline, &proc )
     end
 
     def cookie_path
@@ -294,6 +311,15 @@ module Hiki
     end
 
     private
+
+    def in_context(context)
+      begin
+        @context = context
+        yield
+      ensure
+        @context = nil
+      end
+    end
 
     def export_plugin_methods(*names)
       @export_method_list = names.collect do |name|

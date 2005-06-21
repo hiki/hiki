@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.31 2005-06-16 01:22:18 fdiary Exp $
+# $Id: html_formatter.rb,v 1.32 2005-06-21 05:48:15 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -51,6 +51,8 @@ module Hiki
     MAP[:table_close]          = '</table>'
     MAP[:table_row_open]       = '<tr>'
     MAP[:table_row_close]      = '</tr>'
+    MAP[:table_head_open]      = '<th>'
+    MAP[:table_head_close]     = '</th>'
     MAP[:table_data_open]      = '<td>'
     MAP[:table_data_close]     = '</td>'
 
@@ -193,6 +195,22 @@ module Hiki
             s[:html] << plugin_error( t[:method], $! )
           end
         end
+      when :table_head_open, :table_data_open
+        rws = ''
+        cls = ''
+        mp = map(t[:e])
+        len = mp.size
+        if t[:row] > 1
+          rws = %Q| rowspan="#{t[:row]}"|
+        end
+        if t[:col] > 1
+          cls = %Q| colspan=#{t[:col]}"|
+        end
+        str = mp[0,len-1]
+        str << rws
+        str << cls
+        str << mp[len-1,1]
+        s[:html] << str 
       else
         if t[:e] == :pre_open
           s[:pre] = true
@@ -258,7 +276,12 @@ EOS
     def call_plugin_method( t )
       return nil unless @conf.use_plugin
       str = t[:method].gsub(/&/, '&amp;').gsub(/</, '&lt;').gsub(/>/, '&gt;')
-      return apply_plugin( str, @plugin, @conf )
+      case t[:e]
+      when :inline_plugin
+	@plugin.inline_context{ apply_plugin( str, @plugin, @conf ) }
+      else
+        @plugin.block_context{ apply_plugin( str, @plugin, @conf ) }
+      end
     end
 
     def make_link(t, s)

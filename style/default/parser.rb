@@ -1,4 +1,4 @@
-# $Id: parser.rb,v 1.12 2005-06-11 10:05:47 fdiary Exp $
+# $Id: parser.rb,v 1.13 2005-06-21 05:48:15 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'cgi'
@@ -21,7 +21,7 @@ module Hiki
       super(e)
     end
   end
-    
+
   class Parser_default
     attr_reader :stack
 
@@ -78,7 +78,7 @@ module Hiki
     def inline( str )
       return unless str
       a = []
-      
+
       while str.size > 0 do
         str = inline_impl( str, a )
       end
@@ -111,8 +111,8 @@ module Hiki
         str = $1
         term_flag = /^:/ !~ str
         @cur_stack.push( {:e => :definition_term_open} ) if term_flag
-        cur_stack_backup = @cur_stack     
-        @cur_stack = HikiStack::new       
+        cur_stack_backup = @cur_stack
+        @cur_stack = HikiStack::new
         inline( str )
         tmp_stack = @cur_stack
         @cur_stack = cur_stack_backup
@@ -135,10 +135,32 @@ module Hiki
         @cur_stack.push( {:e => :table} )
         @cur_stack.push( {:e => :table_row_open} )
         $1.split( /\|\|/ ).each do |s|
-          @cur_stack.push( {:e => :table_data_open} )
-          inline(s)
-          @cur_stack.push( {:e => :table_data_close} )
-        end
+          rw = 1
+          cl = 1
+          case s
+          when /\A\~(.*)/
+            s = $1
+            t = 'th'
+          else
+            t = 'td'
+          end
+          case s
+          when /\A([\^>]+)(.*)/
+            rw = $1.count("^") + 1
+            cl = $1.count(">") + 1
+            s = $2
+          end
+          case t
+          when 'th'
+            @cur_stack.push( {:e => :table_head_open, :row => rw, :col => cl} )
+            inline(s)
+            @cur_stack.push( {:e => :table_head_close} )
+          else
+            @cur_stack.push( {:e => :table_data_open, :row => rw, :col => cl} )
+            inline(s)
+            @cur_stack.push( {:e => :table_data_close} )
+          end
+       end
         @cur_stack.push( {:e => :table_row_close} )
       when /#{PLUGIN_RE}$/
         if @conf.use_plugin
@@ -276,7 +298,7 @@ module Hiki
         close_blocks( ns, block_level ) if type != @last_blocktype.last
         cur_lv = e[:lv]
         blk_lv = block_level[type]
-    
+
         if cur_lv > blk_lv
           (cur_lv - blk_lv).times do
             ns.push( {:e => "#{type}_open".intern})
@@ -284,7 +306,7 @@ module Hiki
         elsif cur_lv < blk_lv
           (blk_lv - cur_lv).times { ns.push({:e => "#{type}_close".intern}) }
         end
-        
+
         @last_blocktype.push(type)
         block_level[type] = cur_lv
       when :listitem_open
@@ -299,15 +321,15 @@ module Hiki
           ns.push( {:e => "#{type}_open".intern} )
           @last_blocktype.push(type)
         end
-    
+
         if @last_blocktype.last != :p
           ns.push( {:e => :p_open} )
           @last_blocktype.push(:p)
         end
-    
+
         e[:e] = :normal_text
         ns.push( e )
-    
+
         if e[:s].size == 0
           ns.push( {:e => :p_close} )
           @last_blocktype.pop
@@ -343,10 +365,10 @@ module Hiki
            (@last_blocktype.index(:table) && last_type == :table_row_close) ||
            (@last_blocktype.index(:definition_list) && last_type == :definition_desc_close) ||
            (@last_blocktype.index(:ordered_list) && @last_blocktype.last != :listitem_open) ||
-           (@last_blocktype.index(:unordered_list) && @last_blocktype.last != :listitem_open)) 
+           (@last_blocktype.index(:unordered_list) && @last_blocktype.last != :listitem_open))
           close_blocks( ns, block_level )
         end
-    
+
         if @last_blocktype.empty?
           ns.push( {:e => :p_open} )
           @last_blocktype.push(:p)
@@ -356,7 +378,7 @@ module Hiki
     end
 
     def close_blocks( ns, lv )
-      while b = @last_blocktype.pop do 
+      while b = @last_blocktype.pop do
         case b
         when nil
         when :unordered_list, :ordered_list
@@ -386,7 +408,7 @@ module Hiki
     def normalize_delete(s)
       normalize_esd(s, :delete_open, :delete_close, DELETE)
     end
-    
+
     def normalize_esd(s, e1, e2, to)
       eo = s.find( :e => e1 )
       ec = s.find( :e => e2 )

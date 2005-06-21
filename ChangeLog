@@ -1,3 +1,11 @@
+2005-06-21  Kazuhiko  <kazuhiko@fdiary.net>
+	* util/plugin.rb, style/default/html_formatter.rb: support
+	inline/block contexts (by Kenta MURATA).
+
+	* style/default/parser.rb, style/default/html_formatter.rb:
+	support table headers and cell connections (by fumifumi and
+	NAGASAKI).
+
 2005-06-20  Kazuhiko  <kazuhiko@fdiary.net>
 	* plugin/00default.rb (anchor): add cgi_name for valid html
 	outputs.

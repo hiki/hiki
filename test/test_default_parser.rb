@@ -1,4 +1,4 @@
-# $Id: test_default_parser.rb,v 1.5 2005-06-11 10:05:47 fdiary Exp $
+# $Id: test_default_parser.rb,v 1.6 2005-06-21 05:48:15 fdiary Exp $
 
 require 'test/unit'
 require 'style/default/parser'
@@ -83,6 +83,14 @@ class Default_Parser_Unit_Tests < Test::Unit::TestCase
                  @parser.parse( "{{hoge}} {{hoge}}" ) )
   end
 
+  def test_inline_plugin4
+    assert_equal([{:e=>:p_open},
+		   {:method=>"hoge", :e=>:inline_plugin},
+		   {:s=>" ", :e=>:normal_text},
+		   {:e=>:p_close}],
+                 @parser.parse( "{{hoge}} " ) )
+  end
+
   def test_block_plugin
     assert_equal([{:method=>"hoge", :e=>:plugin}],
                  @parser.parse( "{{hoge}}" ) )
@@ -110,5 +118,46 @@ class Default_Parser_Unit_Tests < Test::Unit::TestCase
                    {:s=>"hoge", :e=>:normal_text},
                    {:e=>:p_close}],
                  @parser.parse( "'''hoge" ) )
+  end
+
+  def test_table_head
+    assert_equal([{:e=>:table_open},
+		   {:e=>:table_row_open},
+		   {:row=>1, :col=>1, :e=>:table_head_open},
+		   {:s=>"hoge", :e=>:normal_text},
+		   {:e=>:table_head_close},
+		   {:row=>1, :col=>1, :e=>:table_data_open},
+		   {:s=>"fuga", :e=>:normal_text},
+		   {:e=>:table_data_close},
+		   {:e=>:table_row_close},
+		   {:e=>:table_close}],
+                 @parser.parse( '||~hoge||fuga' ) )
+  end
+
+  def test_table_span
+    assert_equal([{:e=>:table_open},
+		   {:e=>:table_row_open},
+		   {:row=>1, :col=>2, :e=>:table_data_open},
+		   {:s=>"1", :e=>:normal_text},
+		   {:e=>:table_data_close},
+		   {:row=>2, :col=>1, :e=>:table_data_open},
+		   {:s=>"2", :e=>:normal_text},
+		   {:e=>:table_data_close},
+		   {:e=>:table_row_close},
+		   {:e=>:table_row_open},
+		   {:row=>2, :col=>1, :e=>:table_data_open},
+		   {:s=>"3", :e=>:normal_text},
+		   {:e=>:table_data_close},
+		   {:row=>1, :col=>1, :e=>:table_data_open},
+		   {:s=>"4", :e=>:normal_text},
+		   {:e=>:table_data_close},
+		   {:e=>:table_row_close},
+		   {:e=>:table_row_open},
+		   {:row=>1, :col=>2, :e=>:table_data_open},
+		   {:s=>"5", :e=>:normal_text},
+		   {:e=>:table_data_close},
+		   {:e=>:table_row_close},
+		   {:e=>:table_close}],
+                 @parser.parse( "||>1||^2\n||^3||4\n||>5" ) )
   end
 end
