@@ -1,4 +1,9 @@
 2005-06-21  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/plugin.rb (admin?): return true if the admin password is
+	empty.
+	* hiki/command.rb (initialize): not set @user if the admin
+	password is empty (suggested by Kouhei Sutou).
+
 	* style/default/parser.rb: support comments.
 
 	* util/plugin.rb, style/default/html_formatter.rb: support
@@ -46,7 +51,7 @@
 
 	* hiki/repos/svn.rb (revisions): use Time#strftime instead of
 	Time#to_s since Time#to_s may contains SJIS characters in mingw32
-	ruby (suggest by Atsushi Koga).
+	ruby (suggested by Atsushi Koga).
 	* view/template.html: ditto.
 
 	* hiki/command.rb (cmd_edit): support editing with a specified

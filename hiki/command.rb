@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.57 2005-06-17 08:38:50 fdiary Exp $
+# $Id: command.rb,v 1.58 2005-06-21 08:24:22 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -53,9 +53,6 @@ module Hiki
       session_id = @cgi.cookies['session_id'][0]
       if session_id
         @plugin.user = Hiki::Session::new( @conf, session_id ).user
-      end
-      if @conf.password.empty?
-        @plugin.user = @conf.admin_name
       end
       @body_enter = @plugin.body_enter_proc.sanitize
     end
