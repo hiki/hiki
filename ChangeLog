@@ -1,3 +1,6 @@
+2005-06-22  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* theme/hiki/hiki.css: revise the default theme.
+
 2005-06-22  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/command.rb (cmd_edit), template/edit.html: support
 	'{{toc}}' in the preview mode.
