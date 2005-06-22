@@ -1,4 +1,7 @@
 2005-06-22  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/command.rb (cmd_edit), template/edit.html: support
+	'{{toc}}' in the preview mode.
+
 	* plugin/00default.rb (toc), hiki/command.rb (generate_page),
 	template/view.html: display table of contents where '{{toc}}'
 	appears.

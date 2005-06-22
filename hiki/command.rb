@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.59 2005-06-22 03:09:49 fdiary Exp $
+# $Id: command.rb,v 1.60 2005-06-22 04:47:41 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -272,7 +272,7 @@ module Hiki
       if @cmd == 'preview'
         p = @conf.parser::new( @conf ).parse( text.gsub(/\r/, '') )
         formatter = @conf.formatter::new( p, @db, @plugin, @conf )
-        preview_text = formatter.to_s
+        preview_text, toc = formatter.to_s, formatter.toc
         save_button = ''
       elsif @cmd == 'conflict'
         old = text.gsub(/\r/, '')
@@ -295,6 +295,7 @@ module Hiki
       @plugin.text = text
 
       data[:title]          = title( page )
+      data[:toc]            = @plugin.toc_f ? toc.sanitize : nil
       data[:pagename]       = page.escapeHTML
       data[:md5hex]         = md5hex
       data[:edit_proc]      = @plugin.edit_proc.sanitize
@@ -304,7 +305,7 @@ module Hiki
       data[:preview_button] = save_button
       data[:link]           = link
       data[:differ]         = differ ? differ.sanitize : nil
-      data[:preview]        = preview_text ? formatter.apply_tdiary_theme(preview_text).sanitize :  nil
+      data[:body]        = preview_text ? formatter.apply_tdiary_theme(preview_text).sanitize :  nil
       data[:keyword]        = @db.get_attribute(page, :keyword).join("\n")
       data[:page_title]     = page_title
       

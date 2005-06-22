@@ -14,7 +14,7 @@
 <div class="form">
   <% if @contents[:msg] %><div class="msg"><%= @contents[:msg] %></div><% end %>
   <% if @contents[:freeze_msg] %><div class="msg"><%= @contents[:freeze_msg] %></div><% end %>
-  <% if @contents[:preview] %><div><%= @contents[:preview] %></div><% end %>
+  <% if @contents[:body] %><div><%= @contents[:body] %></div><% end %>
   <% if @contents[:differ] %><div><%= @contents[:differ] %></div><% end %>
   <form class="update" action="<%= @contents[:cgi_name] %>" method="POST">
     <input type="hidden" name="p" value="<%= @contents[:pagename] %>">
