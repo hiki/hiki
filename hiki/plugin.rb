@@ -1,4 +1,4 @@
-# $Id: plugin.rb,v 1.24 2005-06-21 08:24:22 fdiary Exp $
+# $Id: plugin.rb,v 1.25 2005-06-22 03:09:49 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
@@ -13,6 +13,8 @@ module Hiki
   class Plugin
     attr_reader   :toc_f, :plugin_command
     attr_accessor :text, :title, :cookies, :user, :data
+
+    TOC_STRING = "\000\000[Table of Contents]\000\000"
     
     def initialize( options, conf )
       @options      = options

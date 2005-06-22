@@ -1,3 +1,8 @@
+2005-06-22  Kazuhiko  <kazuhiko@fdiary.net>
+	* plugin/00default.rb (toc), hiki/command.rb (generate_page),
+	template/view.html: display table of contents where '{{toc}}'
+	appears.
+
 2005-06-22  Kouhei Yanagita <sugi@dream.big.or.jp>
 	* theme/hiki_base.css: add CSS for printing.
 

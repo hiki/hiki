@@ -1,4 +1,4 @@
-# $Id: 00default.rb,v 1.33 2005-06-21 08:24:23 fdiary Exp $
+# $Id: 00default.rb,v 1.34 2005-06-22 03:09:50 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #==============================
@@ -50,6 +50,7 @@ end
 #===== toc
 def toc
   @toc_f = true
+  TOC_STRING
 end
 
 #===== recent
