@@ -1,4 +1,4 @@
-# $Id: 00default.rb,v 1.36 2005-06-23 13:58:26 fdiary Exp $
+# $Id: 00default.rb,v 1.37 2005-06-23 14:03:58 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #==============================
@@ -53,7 +53,7 @@ def toc
 end
 
 def toc_here
-  @toc_f = :here
+  @toc_f ||= :here
   TOC_STRING
 end
 

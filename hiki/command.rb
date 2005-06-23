@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.62 2005-06-23 13:58:25 fdiary Exp $
+# $Id: command.rb,v 1.63 2005-06-23 14:03:57 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -86,8 +86,8 @@ module Hiki
           end
         end
       rescue NoMethodError
-	data = get_common_data( @db, @plugin, @conf )
-	generate_error_page( data )
+        data = get_common_data( @db, @plugin, @conf )
+        generate_error_page( data )
       end
     end
 
@@ -105,12 +105,8 @@ module Hiki
       data[:footer] = @plugin.footer_proc.sanitize
       data.update( @plugin.data ) if @plugin.data
       if data[:toc]
-	case @plugin.toc_f
-	when :top
-	  data[:body] = data[:toc] + data[:body]
-	when :here
-	  data[:body].gsub!( Regexp.new( Regexp.quote( Plugin::TOC_STRING ) ), data[:toc] )
-	end
+        data[:body] = data[:toc] + data[:body] if @plugin.toc_f == :top
+        data[:body].gsub!( Regexp.new( Regexp.quote( Plugin::TOC_STRING ) ), data[:toc] )
       end
 
       @page = Hiki::Page::new( @cgi, @conf )
@@ -294,10 +290,10 @@ module Hiki
       @cmd = 'edit'
 
       if rev = @params['r'][0]
-	text = @conf.repos.get_revision(page, rev.to_i)
-	raise 'No such revision.' if text.empty?
+        text = @conf.repos.get_revision(page, rev.to_i)
+        raise 'No such revision.' if text.empty?
       else
-	text = ( @db.load( page ) || '' ) unless text
+        text = ( @db.load( page ) || '' ) unless text
       end
       md5hex = @params['md5hex'][0] || @db.md5hex( page )
       
