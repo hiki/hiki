@@ -1,4 +1,7 @@
 2005-06-23  Kazuhiko  <kazuhiko@fdiary.net>
+	* data/text/TextFormattingRules,
+	misc/text/default/TextFormattingRules: update (by fumifumi).
+
 	* style/default/parser.rb (parse): fix a bug in parsing plugins in
 	pre-formatted texts.
 
