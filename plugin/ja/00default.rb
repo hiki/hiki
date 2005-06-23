@@ -77,7 +77,9 @@ add_conf_proc( 'theme', '表示設定' ) do
          </select></p>
       <h3 class="subtitle">WikiName によるリンク機能の利用</h3>
       <p>WikiName によるリンク機能を使用するかどうか指定します。</p>
-      <p><select name="use_wikiname">+         <option value="true"#{@conf.use_wikiname ? ' selected' : ''}>使用する</option>+         <option value="false"#{@conf.use_wikiname ? '' : ' selected'}>使用しな>い</option>
+      <p><select name="use_wikiname">
+         <option value="true"#{@conf.use_wikiname ? ' selected' : ''}>使用する</option>
+         <option value="false"#{@conf.use_wikiname ? '' : ' selected'}>使用しな>い</option>
          </select></p>
   HTML
 end
