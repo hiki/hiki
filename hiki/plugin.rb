@@ -1,4 +1,4 @@
-# $Id: plugin.rb,v 1.26 2005-06-23 03:14:06 fdiary Exp $
+# $Id: plugin.rb,v 1.27 2005-06-23 06:12:44 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
@@ -73,11 +73,11 @@ module Hiki
       @context == :inline
     end
 
-    def block_context
+    def block_context( &proc )
       in_context( :block, &proc )
     end
 
-    def inline_context
+    def inline_context( &proc )
       in_context( :inline, &proc )
     end
 
