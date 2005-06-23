@@ -1,4 +1,4 @@
-# $Id: 00default.rb,v 1.35 2005-06-23 09:27:19 fdiary Exp $
+# $Id: 00default.rb,v 1.36 2005-06-23 13:58:26 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #==============================
@@ -49,7 +49,11 @@ end
 
 #===== toc
 def toc
-  @toc_f = true
+  @toc_f = :top
+end
+
+def toc_here
+  @toc_f = :here
   TOC_STRING
 end
 
@@ -256,4 +260,4 @@ def auth?
   true
 end
 
-export_plugin_methods(:toc, :recent)
+export_plugin_methods(:toc, :toc_here, :recent)

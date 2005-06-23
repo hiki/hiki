@@ -1,3 +1,10 @@
+2005-06-23  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/command.rb (generate_page): support 'toc' and 'toc_here'
+	plugins.
+	* plugin/00default.rb (toc_here): add a new plugin method.
+	(toc): display table of content at the top of the text for
+	backword compatibility.
+
 2005-06-23  Kouhei Yanagita <sugi@dream.big.or.jp>
 	* hiki/config.rb (load), hikiconf.rb.sample: most of the instance variables
 	of Config class are now configurable in hikiconf.rb.

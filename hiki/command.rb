@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.61 2005-06-23 03:14:06 fdiary Exp $
+# $Id: command.rb,v 1.62 2005-06-23 13:58:25 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -104,7 +104,14 @@ module Hiki
       data[:page_attribute] ||= ''
       data[:footer] = @plugin.footer_proc.sanitize
       data.update( @plugin.data ) if @plugin.data
-      data[:body].gsub!( Regexp.new( Regexp.quote( Plugin::TOC_STRING ) ), data[:toc] ) if data[:toc]
+      if data[:toc]
+	case @plugin.toc_f
+	when :top
+	  data[:body] = data[:toc] + data[:body]
+	when :here
+	  data[:body].gsub!( Regexp.new( Regexp.quote( Plugin::TOC_STRING ) ), data[:toc] )
+	end
+      end
 
       @page = Hiki::Page::new( @cgi, @conf )
       @page.template = @conf.read_template( @cmd )
