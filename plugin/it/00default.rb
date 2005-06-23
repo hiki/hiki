@@ -75,5 +75,11 @@ add_conf_proc( 'theme', 'Aspetto' ) do
          <option value="true"#{@conf.auto_link ? ' selected' : ''}>ABILIATO</option>
          <option value="false"#{@conf.auto_link ? '' : ' selected'}>DISABILIATO</option>
          </select></p>
+      <h3 class="subtitle">WikiName</h3>
+      <p>(TRANSLATE PLEASE) If you want to disable WikiName, set this value to off.</p>
+      <p><select name="use_wikiname">
+         <option value="true"#{@conf.use_wikiname ? ' selected' : ''}>ABILIATO</option>
+         <option value="false"#{@conf.use_wikiname ? '' : ' selected'}>DISABILIATO</option>
+         </select></p>
   HTML
 end

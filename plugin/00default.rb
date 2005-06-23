@@ -1,4 +1,4 @@
-# $Id: 00default.rb,v 1.34 2005-06-22 03:09:50 fdiary Exp $
+# $Id: 00default.rb,v 1.35 2005-06-23 09:27:19 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #==============================
@@ -237,6 +237,7 @@ if @cgi.params['conf'][0] == 'theme' && @mode == 'saveconf'
   @conf.sidebar_class  = @cgi.params['sidebar_class'][0]
   @conf.sidebar_class  = 'sidebar' if @conf.sidebar_class == ''
   @conf.auto_link      = @cgi.params['auto_link'][0] == "true"
+  @conf.use_wikiname   = @cgi.params['use_wikiname'][0] == "true"
   @conf.theme_url      = @cgi.params['theme_url'][0]
   @conf.theme_path     = @cgi.params['theme_path'][0]
 end

@@ -1,4 +1,4 @@
-# $Id: config.rb,v 1.55 2005-06-23 07:37:52 fdiary Exp $
+# $Id: config.rb,v 1.56 2005-06-23 09:27:19 fdiary Exp $
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
@@ -156,7 +156,8 @@ module Hiki
 
       variables = [:site_name, :author_name, :mail, :theme, :password,
                    :theme_url, :sidebar_class, :main_class, :theme_path,
-                   :mail_on_update, :use_sidebar, :auto_link, :options2]
+                   :mail_on_update, :use_sidebar, :auto_link, :use_wikiname,
+                   :options2]
       begin
         cgi_conf = File::open( "#{@data_path}hiki.conf" ){|f| f.read }.untaint
         cgi_conf.gsub!( /^[@$]/, '' )

@@ -78,5 +78,11 @@ add_conf_proc( 'theme', 'Appearance' ) do
          <option value="true"#{@conf.auto_link ? ' selected' : ''}>On</option>
          <option value="false"#{@conf.auto_link ? '' : ' selected'}>Off</option>
          </select></p>
+      <h3 class="subtitle">WikiName</h3>
+      <p>If you want to disable WikiName, set this value to off.</p>
+      <p><select name="use_wikiname">
+         <option value="true"#{@conf.use_wikiname ? ' selected' : ''}>On</option>
+         <option value="false"#{@conf.use_wikiname ? '' : ' selected'}>Off</option>
+         </select></p>
   HTML
 end
