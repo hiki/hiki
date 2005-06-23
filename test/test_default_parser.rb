@@ -1,4 +1,4 @@
-# $Id: test_default_parser.rb,v 1.7 2005-06-21 06:16:12 fdiary Exp $
+# $Id: test_default_parser.rb,v 1.8 2005-06-23 04:22:06 fdiary Exp $
 
 require 'test/unit'
 require 'style/default/parser'
@@ -131,7 +131,7 @@ class Default_Parser_Unit_Tests < Test::Unit::TestCase
 		   {:e=>:table_data_close},
 		   {:e=>:table_row_close},
 		   {:e=>:table_close}],
-                 @parser.parse( '||~hoge||fuga' ) )
+                 @parser.parse( '||!hoge||fuga' ) )
   end
 
   def test_table_span

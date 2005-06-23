@@ -1,4 +1,4 @@
-# $Id: parser.rb,v 1.14 2005-06-21 06:16:12 fdiary Exp $
+# $Id: parser.rb,v 1.15 2005-06-23 04:22:05 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'cgi'
@@ -140,7 +140,7 @@ module Hiki
           rw = 1
           cl = 1
           case s
-          when /\A\~(.*)/
+          when /\A!(.*)/
             s = $1
             t = 'th'
           else
