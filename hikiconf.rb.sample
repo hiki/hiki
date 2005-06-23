@@ -1,4 +1,4 @@
-# $Id: hikiconf.rb.sample,v 1.7 2004-09-14 02:21:10 fdiary Exp $
+# $Id: hikiconf.rb.sample,v 1.8 2005-06-23 12:20:33 yanagita Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #============================
@@ -79,6 +79,10 @@
 # キャッシュディレクトリ【オプション】
 #    プラグインで使われるキャッシュ用のディレクトリを指定する
 @cache_path      = "#{@data_path}/cache"
+
+# テンプレートディレクトリ【オプション】
+#    テンプレートファイルが存在するディレクトリを指定する
+#@template_path   = 'template'
 
 # スタイル【オプション】
 #   デフォルト以外のスタイルを使いたい場合は、そのスタイル名を指定します。

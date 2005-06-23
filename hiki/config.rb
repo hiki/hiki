@@ -1,4 +1,4 @@
-# $Id: config.rb,v 1.56 2005-06-23 09:27:19 fdiary Exp $
+# $Id: config.rb,v 1.57 2005-06-23 12:20:33 yanagita Exp $
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
@@ -15,7 +15,6 @@ module Hiki
   class Config
     def initialize
       load
-      default
       load_cgi_conf
 
       require "style/#{@style}/parser"
@@ -74,7 +73,7 @@ module Hiki
     end
 
     def save_config
-      File::open(self.config_file, "w") do |f|
+      File::open(@config_file, "w") do |f|
         f.print ERB::new( File::open( "#{@template_path}/hiki.conf" ){|f| f.read }.untaint ).result( binding )
       end
     end
@@ -148,6 +147,43 @@ module Hiki
       @repos_type    ||= 'default'
       @use_wikiname    = true if @use_wikiname.nil?
       @options         = {} unless @options.class == Hash
+
+
+      @template_path   ||= "#{PATH}/template"
+      @plugin_path     ||= "#{PATH}/plugin"
+
+      @side_menu       ||= 'SideMenu'
+      @interwiki_name  ||= 'InterWikiName' 
+      @aliaswiki_name  ||= 'AliasWikiName' 
+      @formatting_rule ||= 'TextFormattingRules'
+
+      template_default = {
+        'view'    => 'view.html',
+        'index'   => 'list.html',
+        'edit'    => 'edit.html',
+        'recent'  => 'list.html',
+        'diff'    => 'diff.html',
+        'search'  => 'form.html',
+        'create'  => 'form.html',
+        'admin'   => 'adminform.html',
+        'save'    => 'success.html',
+        'login'   => 'login.html',
+        'plugin'  => 'plugin.html',
+        'error'   => 'error.html'
+      }
+      if @template
+        @template.update(template_default){|k, s, o| s}
+      else
+        @template = template_default
+      end
+                  
+      @max_name_size   ||= 50 
+      @password        ||= ''
+      @generator       ||= "Hiki #{HIKI_VERSION}"
+
+
+      # following variables are not configurable.
+      @config_file = "#{@data_path}/hiki.conf"
     end
 
     # loading hiki.conf in @data_path.
@@ -159,7 +195,7 @@ module Hiki
                    :mail_on_update, :use_sidebar, :auto_link, :use_wikiname,
                    :options2]
       begin
-        cgi_conf = File::open( "#{@data_path}hiki.conf" ){|f| f.read }.untaint
+        cgi_conf = File::open( @config_file ){|f| f.read }.untaint
         cgi_conf.gsub!( /^[@$]/, '' )
         def_vars = ''
         variables.each do |var| def_vars << "#{var} = nil\n" end
@@ -177,35 +213,6 @@ module Hiki
         @options2 = {}.taint
       end
       formaterror if $site_name
-    end
-
-    def default
-      @template_path   = "#{PATH}/template"
-      @plugin_path     = "#{PATH}/plugin"
-      @config_file     = "#{@data_path}/hiki.conf"
-
-      @side_menu       = 'SideMenu'
-      @interwiki_name  = 'InterWikiName' 
-      @aliaswiki_name  = 'AliasWikiName' 
-      @formatting_rule = 'TextFormattingRules'
-
-      @template        = {'view'    => 'view.html',
-                          'index'   => 'list.html',
-                          'edit'    => 'edit.html',
-                          'recent'  => 'list.html',
-                          'diff'    => 'diff.html',
-                          'search'  => 'form.html',
-                          'create'  => 'form.html',
-                          'admin'   => 'adminform.html',
-                          'save'    => 'success.html',
-                          'login'   => 'login.html',
-                          'plugin'  => 'plugin.html',
-                          'error'   => 'error.html'
-      }
-                  
-      @max_name_size   = 50 
-      @password        = ''
-      @generator       = "Hiki #{HIKI_VERSION}"
     end
 
     def method_missing( *m )
