@@ -2,7 +2,7 @@
 	* hiki/config.rb, plugin/00default.rb, plugin/en/00default.rb,
 	plugin/fr/00default.rb, plugin/it/00default.rb,
 	plugin/ja/00default.rb, template/hiki.conf: support configuration
-	of using the WikiName feature.
+	of using the WikiName feature (by NAGASAKI).
 
 	* data/text/TextFormattingRules,
 	misc/text/default/TextFormattingRules: update (by fumifumi).
