@@ -1,4 +1,7 @@
 2005-06-23  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/parser.rb (parse): fix a bug in parsing plugins in
+	pre-formatted texts.
+
 	* style/default/parser.rb (parse_line): the format of table
 	headers is changed from '||~' to '||!' (suggested by Kouhei
 	Yanagita).

@@ -1,4 +1,4 @@
-# $Id: parser.rb,v 1.15 2005-06-23 04:22:05 fdiary Exp $
+# $Id: parser.rb,v 1.16 2005-06-23 07:37:52 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'cgi'
@@ -66,7 +66,7 @@ module Hiki
       @cur_stack.clear
       @last_blocktype.clear
 
-      s.gsub!(/#{PLUGIN}/m) {|i| i.gsub(/\n/, NEWLINE)}
+      s.gsub!(/^([^\s][^\n]*|)#{PLUGIN}/m) {|i| i.gsub(/\n/, NEWLINE)}
       s.each do |line|
         parse_line( line )
         @stack << normalize_line( @cur_stack ).dup

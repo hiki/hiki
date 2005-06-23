@@ -1,4 +1,4 @@
-# $Id: test_default_parser.rb,v 1.8 2005-06-23 04:22:06 fdiary Exp $
+# $Id: test_default_parser.rb,v 1.9 2005-06-23 07:37:52 fdiary Exp $
 
 require 'test/unit'
 require 'style/default/parser'
@@ -89,6 +89,26 @@ class Default_Parser_Unit_Tests < Test::Unit::TestCase
 		   {:s=>" ", :e=>:normal_text},
 		   {:e=>:p_close}],
                  @parser.parse( "{{hoge}} " ) )
+  end
+
+  def test_inline_plugin5
+    assert_equal([{:e=>:p_open},
+		   {:s=>"aaa ", :e=>:normal_text},
+		   {:method=>"hoge\nfuga", :e=>:inline_plugin},
+		   {:e=>:p_close}],
+                 @parser.parse( "aaa {{hoge\nfuga}}" ) )
+  end
+
+  def test_not_plugin
+    assert_equal([{:e=>:pre_open},
+		   {:s=>"{{hoge}}", :e=>:normal_text},
+		   {:e=>:pre_close}],
+                 @parser.parse( " {{hoge}}" ) )
+    assert_equal([{:e=>:pre_open},
+		   {:s=>"{{hoge\n", :e=>:normal_text},
+		   {:s=>"fuga}}", :e=>:normal_text},
+		   {:e=>:pre_close}],
+                 @parser.parse( " {{hoge\n fuga}}" ) )
   end
 
   def test_block_plugin
