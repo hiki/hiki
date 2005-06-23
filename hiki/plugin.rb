@@ -1,4 +1,4 @@
-# $Id: plugin.rb,v 1.25 2005-06-22 03:09:49 fdiary Exp $
+# $Id: plugin.rb,v 1.26 2005-06-23 03:14:06 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
@@ -293,11 +293,11 @@ module Hiki
       @db.load_backup( page )
     end
 
-    def save( page, src, md5 )
+    def save( page, src, md5, update_timestamp = true )
       src.gsub!(/\r/, '')
       src.strip!
       src << "\n"
-      result = @db.store(page, src, md5)
+      result = @db.store(page, src, md5, update_timestamp)
       if result
         @db.delete_cache( page )
         begin

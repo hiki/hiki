@@ -1,4 +1,4 @@
-# $Id: en.rb,v 1.15 2005-06-17 01:19:26 fdiary Exp $
+# $Id: en.rb,v 1.16 2005-06-23 03:14:06 fdiary Exp $
 # en.rb
 #
 # Copyright (C) 2003 Masao Mutoh <mutoh@highway.ne.jp>
@@ -70,6 +70,7 @@ module Hiki
     def msg_freeze_checkbox; 'Freeze the current page.'; end
     def msg_preview_button; 'Preview'; end
     def msg_save; 'Save'; end
+    def msg_update_timestamp; 'Update timestamp'; end
     def msg_latest; 'Latest version'; end
     def msg_rules; %Q|See <a href="#{@cgi_name}?EnglishTextFormattingRules">EnglishTextFormattingRules</a> for formatting help.|; end
     # (view)

@@ -1,4 +1,4 @@
-# $Id: it.rb,v 1.12 2005-06-16 14:14:28 yanagita Exp $
+# $Id: it.rb,v 1.13 2005-06-23 03:14:06 fdiary Exp $
 # it.rb
 #
 # Copyright (C) 2003 Luigi Maselli <metnik@tiscali.it>
@@ -70,6 +70,7 @@ module Hiki
     def msg_freeze_checkbox; 'Blocca la pagina corrente.'; end
     def msg_preview_button; 'Anteprima'; end
     def msg_save; 'Salva'; end
+    def msg_update_timestamp; '(TRANSLATE PLEASE) Update timestamp'; end
     def msg_latest; 'Riferimento versione recente'; end
     def msg_rules; %Q|Vedi <a href="#{@cgi_name}?TextFormattingRules">TextFormattingRules</a> se serve.|; end
     # (view)

@@ -1,4 +1,4 @@
-# $Id: ja.rb,v 1.12 2005-06-16 14:14:28 yanagita Exp $
+# $Id: ja.rb,v 1.13 2005-06-23 03:14:06 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # You can redistribute it and/or modify it under the terms of
 # the Ruby's licence.
@@ -62,6 +62,7 @@ module Hiki
     def msg_freeze_checkbox; 'ページの凍結'; end
     def msg_preview_button; 'プレビュー'; end
     def msg_save; '保存'; end
+    def msg_update_timestamp; 'タイムスタンプを更新する'; end
     def msg_latest; '最新版を参照'; end
     def msg_rules; %Q|書き方がわからない場合は<a href="#{@cgi_name}?TextFormattingRules">TextFormattingRules</a>を参照してください。|; end
     # (view)

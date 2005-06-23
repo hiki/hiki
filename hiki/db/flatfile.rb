@@ -1,4 +1,4 @@
-# $Id: flatfile.rb,v 1.16 2005-06-17 05:06:01 fdiary Exp $
+# $Id: flatfile.rb,v 1.17 2005-06-23 03:14:06 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'fileutils'
@@ -25,20 +25,26 @@ module Hiki
       true
     end
 
-    def store( page, text, md5 )
+    def store( page, text, md5, update_timestamp = true )
       backup( page )
       filename = textdir( page )
 
       if exist?( page )
         return nil if md5 != md5hex( page )
-        FileUtils.copy( filename, backupdir( page ), {:preserve => true} )
+        FileUtils.copy( filename, backupdir( page ), {:preserve => true} ) if update_timestamp
       end
       create_info_default( page ) unless info_exist?( page )
 
+      if update_timestamp
+        mtime = Time::now
+        set_last_update( page, mtime )
+      else
+        mtime = File::mtime( filename )
+      end
       File::open( filename, 'wb' ) do |f|
         f.write( text.gsub(/\r\n/, "\n") )
       end
-      set_last_update( page, Time::now )
+      File::utime( mtime, mtime, filename )
       true
     end
 

@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.60 2005-06-22 04:47:41 fdiary Exp $
+# $Id: command.rb,v 1.61 2005-06-23 03:14:06 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -67,7 +67,7 @@ module Hiki
         elsif @cmd == 'save'
           raise 'Permission denied' unless @plugin.auth?
           if @params['save'][0]
-            cmd_save(@p, @params['contents'][0], @params['md5hex'][0] )
+            cmd_save(@p, @params['contents'][0], @params['md5hex'][0], @params['update_timestamp'][0])
           elsif @params['preview'][0]
             cmd_preview
           elsif @params['edit_form_button'][0]
@@ -268,12 +268,15 @@ module Hiki
       differ       = nil
       link         = nil
       formatter    = nil
+      data = get_common_data( @db, @plugin, @conf )
 
       if @cmd == 'preview'
         p = @conf.parser::new( @conf ).parse( text.gsub(/\r/, '') )
         formatter = @conf.formatter::new( p, @db, @plugin, @conf )
         preview_text, toc = formatter.to_s, formatter.toc
         save_button = ''
+        data[:keyword] = CGI.escapeHTML( @params['keyword'][0] || '' )
+        data[:update_timestamp] = @params['update_timestamp'][0] ? ' checked' : ''
       elsif @cmd == 'conflict'
         old = text.gsub(/\r/, '')
         new = @db.load( page ) || ''
@@ -291,7 +294,6 @@ module Hiki
       end
       md5hex = @params['md5hex'][0] || @db.md5hex( page )
       
-      data = get_common_data( @db, @plugin, @conf )
       @plugin.text = text
 
       data[:title]          = title( page )
@@ -306,7 +308,8 @@ module Hiki
       data[:link]           = link
       data[:differ]         = differ ? differ.sanitize : nil
       data[:body]        = preview_text ? formatter.apply_tdiary_theme(preview_text).sanitize :  nil
-      data[:keyword]        = @db.get_attribute(page, :keyword).join("\n")
+      data[:keyword]        ||= CGI.escapeHTML( @db.get_attribute(page, :keyword).join("\n") )
+      data[:update_timestamp] ||= ' checked'
       data[:page_title]     = page_title
       
       f = @db.is_frozen?( page ) || @conf.options['freeze']
@@ -329,7 +332,7 @@ module Hiki
       generate_page( data )
     end
 
-    def cmd_save( page, text, md5hex )
+    def cmd_save( page, text, md5hex, update_timestamp = true )
       subject = ''
       if text.size == 0 && @plugin.admin?
         @db.delete( page )
@@ -355,7 +358,7 @@ module Hiki
           return
         end
         
-        if @plugin.save( page, text, md5hex )
+        if @plugin.save( page, text, md5hex, update_timestamp )
           keyword = @params['keyword'][0].split("\n").collect {|k|
             k.chomp.strip}.delete_if{|k| k.size == 0}
           attr = [[:keyword, keyword.uniq], [:title, title]]

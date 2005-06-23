@@ -1,4 +1,4 @@
-# $Id: fr.rb,v 1.12 2005-06-16 14:14:28 yanagita Exp $
+# $Id: fr.rb,v 1.13 2005-06-23 03:14:06 fdiary Exp $
 # fr.rb
 #
 # Copyright (C) 2003 Laurent Sansonetti <laurent@datarescue.be>
@@ -70,6 +70,7 @@ module Hiki
     def msg_freeze_checkbox; 'Geler la page courante.'; end
     def msg_preview_button; 'Prévisualiser'; end
     def msg_save; 'Sauver'; end
+    def msg_update_timestamp; '(TRANSLATE PLEASE) Update timestamp'; end
     def msg_latest; 'Référencie version récente'; end
     def msg_rules; %Q|Consultez <a href="#{@cgi_name}?ReglesDeFormatageDuTexte">ReglesDeFormatageDuTexte</a> si nécessaire.|; end
     # (view)
