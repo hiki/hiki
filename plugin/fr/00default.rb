@@ -23,19 +23,20 @@ add_conf_proc( 'default', 'Préférences de base' ) do
 end
 
 add_conf_proc( 'password', 'Mot de passe' ) do
-  if saveconf_password
-  <<-HTML
-      <h3 class="password">Mot de passe</h3>
-      <p>Entrez le mots de passe ci-dessous seulement si vous désirez le changer.</p>
+  '<h3 class="password">Mot de passe</h3>' +
+    case saveconf_password
+    when :password_change_success
+      '<p>The admin password has been changed successfully.</p>'
+    when :password_change_failure
+      '<p>Sorry, wrong password.</p>'
+    when nil
+      '<p>You can change the admin password.</p>'
+    end +
+    <<-HTML
       <p>Mot de passe courant: <input type="password" name="old_password" size="40"></p>
       <p>Nouveau mot de passe: <input type="password" name="password1" size="40"></p>
       <p>Nouveau mot de passe (confirmez): <input type="password" name="password2" size="40"></p>
-  HTML
-  else
-  <<-HTML
-      <h3 class="password">Mot de passe</h3>
-      <p>Sorry, wrong password.</p>
-  HTML
+    HTML
 end
 
 add_conf_proc( 'theme', 'Apparence' ) do

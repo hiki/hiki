@@ -23,20 +23,20 @@ add_conf_proc( 'default', '基本' ) do
 end
 
 add_conf_proc( 'password', 'パスワード' ) do
-  if saveconf_password
-  <<-HTML
-      <h3 class="password">パスワード</h3>
-      <p>管理者用パスワードを変更したい場合のみ入力してください。</p>
-      <p>現在のパスワード: <input type="password" name="old_password" size="40"></p>
-      <p>新しいパスワード: <input type="password" name="password1" size="40"></p>
-      <p>新しいパスワード（確認用に再入力してください）: <input type="password" name="password2" size="40"></p>
-  HTML
-  else
-  <<-HTML
-      <h3 class="password">パスワード</h3>
-      <p>管理者用パスワードが間違っているか、パスワードが一致しません。</p>
-  HTML
-  end
+  '<h3 class="password">パスワード</h3>' +
+    case saveconf_password
+    when :password_change_success
+      '<p>管理者用パスワードを変更しました。</p>'
+    when :password_change_failure
+      '<p>管理者用パスワードが間違っているか、パスワードが一致しません。</p>'
+    when nil
+      '<p>管理者用パスワードを変更します。</p>'
+    end +
+    <<-HTML
+        <p>現在のパスワード: <input type="password" name="old_password" size="40"></p>
+        <p>新しいパスワード: <input type="password" name="password1" size="40"></p>
+        <p>新しいパスワード（確認用に再入力してください）: <input type="password" name="password2" size="40"></p>
+    HTML
 end
 
 add_conf_proc( 'theme', '表示設定' ) do

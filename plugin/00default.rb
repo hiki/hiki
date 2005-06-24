@@ -1,4 +1,4 @@
-# $Id: 00default.rb,v 1.38 2005-06-24 09:06:11 fdiary Exp $
+# $Id: 00default.rb,v 1.39 2005-06-24 14:28:54 yanagita Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #==============================
@@ -224,13 +224,14 @@ def saveconf_password
     if password1 and password1.size > 0
       if (@conf.password.size > 0 && old_password.crypt( @conf.password ) != @conf.password) ||
           (password1 != password2)
-         return false
+         return :password_change_failure
       end
       salt = [rand(64),rand(64)].pack("C*").tr("\x00-\x3f","A-Za-z0-9./")
       @conf.password = password1.crypt( salt )
+      return :password_change_success
     end
   end
-  return true
+  return nil
 end
 
 # conf: display

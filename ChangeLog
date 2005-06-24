@@ -1,3 +1,8 @@
+2005-06-24  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* plugin/00default.rb, plugin/en/00default.rb,
+	plugin/fr/00default.rb, plugin/it/00default.rb, plugin/ja/00default.rb:
+	show a result message when admin password is tried to be changed.
+
 2005-06-24  Kazuhiko  <kazuhiko@fdiary.net>
 	* template/success.html: remove a obsolete file.
 
