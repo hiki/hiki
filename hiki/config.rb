@@ -1,4 +1,4 @@
-# $Id: config.rb,v 1.58 2005-06-24 09:06:10 fdiary Exp $
+# $Id: config.rb,v 1.59 2005-06-24 09:08:44 fdiary Exp $
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
@@ -58,7 +58,6 @@ module Hiki
 
     def mobile_agent?
       %r[(DoCoMo|J-PHONE|Vodafone|MOT-|UP\.Browser|DDIPOCKET|ASTEL|PDXGW|Palmscape|Xiino|sharp pda browser|Windows CE|L-mode)]i =~ ENV['HTTP_USER_AGENT']
-true
     end
 
     #
