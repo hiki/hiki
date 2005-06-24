@@ -1,0 +1,17 @@
+<html>
+<head>
+<%= @contents[:header] %>
+</head>
+<body>
+<div><%= @contents[:tools] %></div>
+<h1><%= @contents[:title] %></h1>
+<form action="<%= @contents[:cgi_name] %>" method="post">
+<p><%= @conf.msg_login_info %></p>
+<% if @contents[:login_result] %><p><%= @contents[:login_result] %></p><% end %>
+<input type="hidden" value="<%= @contents[:cmd] %>" name="c">
+<%= @conf.msg_name %>:<input size="30" name="name" type="text"><br>
+<%= @conf.msg_password %>:<input size="30" name="password" type="password"><br>
+<input type="submit" value="<%= @contents[:button] %>"> 
+</form>
+</body>
+</html>
