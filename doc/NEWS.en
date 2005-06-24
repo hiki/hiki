@@ -2,6 +2,7 @@
 
 * support mod_ruby.
 * support TrackBack (trackback.rb plugin).
+* support mobile agents.
 * add 'math' style (style/math/).
 * use ERB for the template engine instead of Amrita.
 * support selection and configuration of plugins via web.
