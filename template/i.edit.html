@@ -1,0 +1,36 @@
+<html>
+<head>
+<%= @contents[:header] %>
+</head>
+<body>
+<div><%= @contents[:tools] %></div>
+<h1><%= @contents[:title] %></h1>
+<% if @contents[:msg] %><div><%= @contents[:msg] %></div><% end %>
+<% if @contents[:freeze_msg] %><div><%= @contents[:freeze_msg] %></div><% end %>
+<% if @contents[:body] %><div><%= @contents[:body] %></div><% end %>
+<% if @contents[:differ] %><div><%= @contents[:differ] %></div><% end %>
+<form action="<%= @contents[:cgi_name] %>" method="POST">
+<input type="hidden" name="p" value="<%= @contents[:pagename] %>">
+<input type="hidden" name="c" value="save">
+<input type="hidden" name="md5hex" value="<%= @contents[:md5hex] %>">
+<p><%=@conf.msg_title%> <input type="text" name="page_title" size="60" accesskey="T" value="<%= @contents[:page_title] %>"></p>
+<div>
+<textarea name="contents" accesskey="C"><%= @contents[:contents] %></textarea>
+</div>
+<p>
+<% if @contents[:preview_button] %><input type="submit" name="preview" value="<%=@conf.msg_preview_button%>"><% end %>
+<% if @contents[:button] %><input type="submit" name="save" value="<%=@conf.msg_save%>" accesskey="O"><% end %>
+<input type="checkbox" name="update_timestamp" value=""<%=@contents[:update_timestamp]%>><%=@conf.msg_update_timestamp%>
+</p>
+<p>
+<%=@conf.msg_keyword_form%>
+<textarea name="keyword" accesskey="K"><%= @contents[:keyword] %></textarea>
+</p>
+<% if @plugin.admin? %>
+<p>
+<input type="checkbox" name="freeze" value="on"<%= @contents[:freeze] %>><%=@conf.msg_freeze_checkbox%> 
+</p>
+<% end %>
+</form>
+</body>
+</html>
