@@ -1,4 +1,4 @@
-# $Id: svn.rb,v 1.9 2005-06-16 17:11:55 fdiary Exp $
+# $Id: svn.rb,v 1.10 2005-06-24 01:52:43 fdiary Exp $
 # Copyright (C) 2003, Koichiro Ohba <koichiro@meadowy.org>
 # Copyright (C) 2003, Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
 # You can distribute this under GPL.
@@ -11,14 +11,14 @@ module Hiki
   class ReposSvnBase < ReposDefault
     def initialize(root, data_path)
       super
-      if /^[a-z]:/i =~ @root
-        @win = true
+      case @root
+      when /^[a-z]:/i
         @base_uri = "file:///#{@root}/"
-        @nullify = '> NUL 2>&1'
-      else
-        @win = false
+      when %r|^/|
         @base_uri = "file://#{@root}/"
-        @nullify = '> /dev/null 2>&1'
+      else
+        @base_uri = @root
+        @base_uri += '/' if %r|/$| !~ @base_uri
       end
     end
 
@@ -37,42 +37,42 @@ module Hiki
 
     def import(wiki)
       Dir.chdir("#{@data_path}/#{wiki}/text") do
-        system("svn import -m \"Starting #{wiki} from #{ENV['REMOTE_ADDR']} - #{ENV['REMOTE_HOST']}\" . #{@base_uri}#{wiki}/trunk #{@nullify}".untaint)
+        system("svn import -q -m \"Starting #{wiki} from #{ENV['REMOTE_ADDR']} - #{ENV['REMOTE_HOST']}\" . #{@base_uri}#{wiki}/trunk".untaint)
       end
       Dir.chdir("#{@data_path}/#{wiki}") do
         FileUtils.rm_rf('text')
-        system("svn checkout #{@base_uri}#{wiki}/trunk text #{@nullify}")
-        system("svn propdel svn:mime-type -R text #{@nullify}")
+        system("svn checkout -q #{@base_uri}#{wiki}/trunk text")
+        system("svn propdel -q svn:mime-type -R text")
       end
     end
 
     def update(wiki)
       Dir.chdir("#{@data_path}/#{wiki}/text") do
-        system("svn update #{@nullify}")
+        system("svn update -q")
       end
     end
 
     def commit(page, msg = default_msg)
       Dir.chdir("#{@data_path}/text") do
-        system("svn add -- #{page.escape} #{@nullify}".untaint)
-        system("svn propdel svn:mime-type -- #{page.escape} #{@nullify}".untaint)
-        system("svn ci -m \"#{msg}\" #{@nullify}".untaint)
+        system("svn add -q -- #{page.escape}".untaint)
+        system("svn propdel -q svn:mime-type -- #{page.escape}".untaint)
+        system("svn ci -q -m \"#{msg}\"".untaint)
       end
     end
 
     def delete(page, msg = default_msg)
       Dir.chdir("#{@data_path}/text") do
-        system("svn remove -- #{page.escape} #{@nullify}".untaint)
-        system("svn ci -m \"#{msg}\" #{@nullify}".untaint)
+        system("svn remove -q -- #{page.escape}".untaint)
+        system("svn ci -q -m \"#{msg}\"".untaint)
       end
     end
 
     def get_revision(page, revision)
       ret = ''
       Dir.chdir("#{@data_path}/text") do
-	open("|svn cat -r #{revision.to_i} #{page.escape.untaint}") do |f|
-	  ret = f.read
-	end
+        open("|svn cat -r #{revision.to_i} #{page.escape.untaint}") do |f|
+          ret = f.read
+        end
       end
       ret
     end
@@ -105,7 +105,7 @@ module Hiki
     end
 
     def import(wiki)
-      system("svnadmin create #{@root}/#{wiki} #{@nullify}")
+      system("svnadmin create #{@root}/#{wiki}")
       super
     end
   end

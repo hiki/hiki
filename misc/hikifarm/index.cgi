@@ -63,18 +63,6 @@ class HikifarmConfig
       @repos_type = 'cvs'
       @repos_root = cvsroot
     end
-
-
-    if @repos_root =~ /:/ and @repos_root.split(/:/)[1] != "local"
-      msg = "Hiki does not support remote repository now." + 
-        "You should modify &quot;repos_root&quot; entry of &quot;hikifarm.conf&quot; file."
-      page = ErrorPage.new(@hikifarm_template_dir, @author, @mail, @css, @title, msg)
-      body = page.to_s
-      print @cgi.header(page.headings)
-      print body
-      exit 1
-    end
-
   end
 end
 

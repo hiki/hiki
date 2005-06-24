@@ -1,4 +1,4 @@
-# $Id: test_default_parser.rb,v 1.9 2005-06-23 07:37:52 fdiary Exp $
+# $Id: test_default_parser.rb,v 1.10 2005-06-24 01:52:44 fdiary Exp $
 
 require 'test/unit'
 require 'style/default/parser'
@@ -186,5 +186,18 @@ class Default_Parser_Unit_Tests < Test::Unit::TestCase
                  @parser.parse( "//comment" ) )
     assert_equal(@parser.parse( "aaa\nbbb" ),
                  @parser.parse( "aaa\n//comment\nbbb" ) )
+  end
+
+  def test_paragraph
+    assert_equal([{:e=>:p_open},
+		   {:s=>"aaa\n", :e=>:normal_text},
+		   {:s=>"bbb", :e=>:normal_text},
+		   {:e=>:p_close}],
+                 @parser.parse( "aaa\nbbb" ) )
+    assert_equal([{:e=>:p_open},
+		   {:s=>"あああ\n", :e=>:normal_text},
+		   {:s=>"いいい", :e=>:normal_text},
+		   {:e=>:p_close}],
+                 @parser.parse( "あああ\nいいい" ) )
   end
 end
