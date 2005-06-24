@@ -1,6 +1,8 @@
 2005-06-24  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/config.rb (mobile_agent): add a new method.
 	* hiki/page.rb, plugin/00default.rb: support mobile agents.
+	* style/default/html_formatter.rb (toc, apply_tdiary_theme):
+	support mobile agents
 
 	* hiki/repos/svn.rb: code cleanup.
 	* misc/hikifarm/index.cgi: revise the condition whether the

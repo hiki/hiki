@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.32 2005-06-21 05:48:15 fdiary Exp $
+# $Id: html_formatter.rb,v 1.33 2005-06-24 09:14:33 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -106,8 +106,7 @@ module Hiki
     end    
 
     def toc
-      s = %Q!<div class="day"><div class="body"><div class="section">!
-      s << "#{map(:unordered_list_open)}\n"
+      s = "#{map(:unordered_list_open)}\n"
       lv = 1
       @toc.each do |h|
         if h['level'] > lv
@@ -120,10 +119,12 @@ module Hiki
         s << %Q!#{map(:listitem_open)}<a href="#l#{h['index']}">#{h['title'].escapeHTML}</a>#{map(:listitem_close)}\n!
       end
       s << ("#{map(:unordered_list_close)}\n" * lv)
-      s << "</div></div></div>"
+      s = %Q!<div class="day"><div class="body"><div class="section">#{s}</div></div></div>! unless @conf.mobile_agent?
+      s
     end
     
     def apply_tdiary_theme(orig_html)
+      return orig_html if @conf.mobile_agent?
       section = ''
       title   = ''
       html    = ''
