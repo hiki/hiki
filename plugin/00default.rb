@@ -1,4 +1,4 @@
-# $Id: 00default.rb,v 1.37 2005-06-23 14:03:58 fdiary Exp $
+# $Id: 00default.rb,v 1.38 2005-06-24 09:06:11 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #==============================
@@ -125,6 +125,7 @@ add_header_proc {
 }
 
 def hiki_header
+  return "<title>#{title}</title>\n" if @conf.mobile_agent?
   s = <<EOS
   <meta http-equiv="Content-Language" content="#{@conf.lang}">
   <meta http-equiv="Content-Type" content="text/html; charset=#{@conf.charset}">
@@ -197,7 +198,11 @@ end
 
 def hiki_menu(data, command)
   menu = create_menu(data, command)
-  data[:tools] = menu.collect! {|i| %Q!<span class="adminmenu">#{i}</span>! }.join("&nbsp;\n").sanitize
+  if @conf.mobile_agent?
+    data[:tools] = menu.join('|')
+  else
+    data[:tools] = menu.collect! {|i| %Q!<span class="adminmenu">#{i}</span>! }.join("&nbsp;\n")
+  end
 end
 
 # conf: default

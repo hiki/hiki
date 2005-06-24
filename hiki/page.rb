@@ -1,8 +1,9 @@
-# $Id: page.rb,v 1.12 2005-06-17 06:28:55 fdiary Exp $
+# $Id: page.rb,v 1.13 2005-06-24 09:06:10 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 
 require 'cgi'
+require 'nkf'
 
 module Hiki
   class Page
@@ -35,11 +36,16 @@ module Hiki
         @headers['Last-Modified']    = CGI::rfc1123_date(@contents[:last_modified])
       end
       @headers['type']     = 'text/html'
-      @headers['charset']          = @conf.charset
+      if @conf.mobile_agent?
+	@body = NKF::nkf( '-sE', @body ) if /EUC-JP/i =~ @conf.charset
+	@headers['charset']          = 'Shift_JIS'
+      else
+	@headers['charset']          = @conf.charset
+	@headers['Content-Language'] = @conf.lang
+	@headers['Pragma']           = 'no-cache'
+	@headers['Cache-Control']    = 'no-cache'
+      end
       @headers['Content-Length']   = @body.size.to_s
-      @headers['Content-Language'] = @conf.lang
-      @headers['Pragma']           = 'no-cache'
-      @headers['Cache-Control']    = 'no-cache'
       @headers['cookie']           = @plugin.cookies unless @plugin.cookies.empty?
     end
 
