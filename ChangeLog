@@ -1,7 +1,7 @@
 2005-06-24  Kazuhiko  <kazuhiko@fdiary.net>
-	* hiki/repos/svn.rb: support remote repositories.
-	* misc/hikifarm/index.cgi: not examine whether the repository is
-	local.
+	* hiki/repos/svn.rb: code cleanup.
+	* misc/hikifarm/index.cgi: revise the condition whether the
+	repository is local.
 
 2005-06-23  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/command.rb (generate_page): support 'toc' and 'toc_here'

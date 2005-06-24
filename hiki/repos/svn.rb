@@ -1,4 +1,4 @@
-# $Id: svn.rb,v 1.10 2005-06-24 01:52:43 fdiary Exp $
+# $Id: svn.rb,v 1.11 2005-06-24 02:05:11 fdiary Exp $
 # Copyright (C) 2003, Koichiro Ohba <koichiro@meadowy.org>
 # Copyright (C) 2003, Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
 # You can distribute this under GPL.
@@ -11,15 +11,12 @@ module Hiki
   class ReposSvnBase < ReposDefault
     def initialize(root, data_path)
       super
-      case @root
-      when /^[a-z]:/i
-        @base_uri = "file:///#{@root}/"
-      when %r|^/|
-        @base_uri = "file://#{@root}/"
+      if /^[a-z]:/i =~ @root
+        @base_uri = "file:///#{@root}"
       else
-        @base_uri = @root
-        @base_uri += '/' if %r|/$| !~ @base_uri
+        @base_uri = "file://#{@root}"
       end
+      @base_uri += '/' if %r|/$| !~ @base_uri
     end
 
     def imported?(wiki)
