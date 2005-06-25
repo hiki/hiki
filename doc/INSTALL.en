@@ -44,6 +44,9 @@ which is recommended not to be accessible from WWW.
 
  $ cp -r data /home/foo/hiki
 
+The `data' directory has Japanese text. If you'd like to use English version,
+copy `misc/text/default.en/*' to `/home/foo/hiki/text/'.
+
 All of the files in the data storing directory should be writable
 by WWW server.
 
