@@ -1,3 +1,7 @@
+2005-06-25  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* misc/text/default.en/*: add English data.
+	* data/text/EnglishTextFormattingRules: moved to `misc/text/default.en/TextFormattingRules'.
+
 2005-06-24  Kouhei Yanagita <sugi@dream.big.or.jp>
 	* plugin/00default.rb, plugin/en/00default.rb,
 	plugin/fr/00default.rb, plugin/it/00default.rb, plugin/ja/00default.rb:
