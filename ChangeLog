@@ -1,3 +1,7 @@
+2005-06-25  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/hikifarm/index.cgi: check the remote repository condition
+	only if @repos_root exists (reported by NAGASAKI).
+
 2005-06-25  Kouhei Yanagita <sugi@dream.big.or.jp>
 	* misc/text/default.en/*: add English data.
 	* data/text/EnglishTextFormattingRules: moved to `misc/text/default.en/TextFormattingRules'.
