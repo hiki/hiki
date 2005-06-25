@@ -56,6 +56,8 @@ by WWW server.
 Next, rename ''hikiconf.rb.sample'' to ''hikiconf.rb'' and modify it.
 This file is directly loaded by CGI as a ruby script.
 
+If you need English version, use `misc/i18n/hikiconf.rb.sample.en'.
+
 Popular settings of Hiki is configurable via web interface, so
 you only need to change ''@data_path'' at least.
 

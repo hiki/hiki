@@ -1,0 +1,105 @@
+# $Id: hikiconf.rb.sample.en,v 1.1 2005-06-25 12:21:51 yanagita Exp $
+# Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+
+#=================================
+#  Items which must be changed.
+#=================================
+
+# Directory where data is stored (Necessary)
+#   The directory where page contents or update time etc is stored.
+#   It is recommended to specify where one can't access via WWW.
+#   All of files and directories in this directory must be writable by WWW server.
+@data_path       = 'path to data'
+
+# Mail server (Optional)
+#   Specify name of the mail server. This may take effect when @mail_on_update is true.
+@smtp_server     = 'localhost'
+
+# Whether to use plugins (Optional)
+@use_plugin      = true
+
+# Whether to make WikiName link (Optional)
+@use_wikiname    = true
+
+#====================================================================
+#  Settings which is modifiable from the administration menu.
+#  Modify if necessary.
+#  If you once change them from the administration menu, 
+#  editing this file takes no effect.
+#====================================================================
+# Site name
+#   Your side name. This is displayed in page title etc.
+@site_name       = 'hoge hoge'
+
+# Site administrator's name
+#   Site administrator's name. This is displayed in footer.
+@author_name     = 'anonymous'
+
+# Whether to mail on update
+#   If you set this true, the server @smtp_server sends mail to the address @mail
+#   when a page is updated.
+@mail_on_update  = false
+
+# Mail address where update information to be sent.
+@mail            = 'hoge@example.net'
+
+# Theme
+#   Theme name.
+@theme           = 'hiki'
+#   URL of the theme.
+@theme_url       = 'theme'
+#   Path of the theme.
+@theme_path      = 'theme'
+
+# Sidebar
+#   Set this false when you use a theme which does not support sidebar.
+@use_sidebar     = true
+
+# CSS class name of the main area.
+@main_class      = 'main'
+
+# CSS class name of the sidebar.
+@sidebar_class   = 'sidebar'
+
+# Auto link
+#   Set this true if you'd like to link to existing pages automatically.
+@auto_link       = false
+
+#=========================================
+#  Items that can be changed.
+#=========================================
+
+# The cache directory. (Optional)
+#    Specify the directory for cache used by plugins.
+@cache_path      = "#{@data_path}/cache"
+
+# The template directory. (Optional)
+#    Specify the directory where template files are in.
+#@template_path   = 'template'
+
+# Formatting Style (Optional)
+#   Specify style name if you'd like to use the style other than default.
+#   'default' or 'rd+' is available now.
+@style           = 'default'
+
+# `From' address of the update notification mail. (Optional)
+#@mail_from      = 'from@mail.address.hoge'
+
+# Keyword highlight (Optional)
+@hilight_keys    = true
+
+@charset         = 'iso-8859-1'
+@lang            = 'en'
+@database_type   = 'flatfile'
+@cgi_name        = 'hiki.cgi'
+@options         = {}                    # DO NOT MODIFY THIS LINE!!
+
+# set this true when you debug plugins.
+@plugin_debug    = false
+
+# Describe options passed to plugins. (Optional)
+#   Some plugins' behavior changes when options are passed.
+#   See the document of the plugin for details.
+#
+# Example:
+# @options['amazon.aid'] = 'amazon-01' 
