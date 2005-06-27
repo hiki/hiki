@@ -1,4 +1,4 @@
-# footnote.rb $Revision: 1.8 $
+# footnote.rb $Revision: 1.9 $
 #
 # fn: 脚注plugin
 #   パラメタ:
@@ -74,3 +74,5 @@ if @options['command'] == 'view'
                 end
         end)
 end
+
+export_plugin_methods(:fn)

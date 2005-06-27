@@ -1,4 +1,9 @@
 2005-06-27  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/footnote.rb, misc/plugin/keyword.rb,
+	misc/plugin/orphan.rb, misc/plugin/pagerank.rb,
+	misc/plugin/referer.rb, misc/plugin/sitemap.rb: use
+	'export_plugin_methods'.
+
 	* misc/plugin/isbn.rb (isbn): revise bk1's uri. remove 'Fujisan'.
 
 	* misc/plugin/rss-show.rb: use 'rss-show/' directory under the

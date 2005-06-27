@@ -1,4 +1,4 @@
-# $Id: orphan.rb,v 1.2 2004-02-15 02:48:35 hitoshi Exp $
+# $Id: orphan.rb,v 1.3 2005-06-27 13:49:57 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 def orphan_pages
@@ -30,3 +30,5 @@ def orphan
 
   s << "</ul>\n"
 end
+
+export_plugin_methods(:orphan)

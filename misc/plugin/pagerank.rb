@@ -318,7 +318,6 @@ class PageRank
   end
 end
 
-
 # show pagerank page: called by hiki menu
 def pagerank_page
   header = Hash::new
@@ -431,4 +430,4 @@ end)
 # 0.1.1: fix link matrix generate method 
 # 0.1:  newly create plugin
 
-
+export_plugin_methods(:pagerank_page)

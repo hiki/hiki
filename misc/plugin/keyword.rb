@@ -1,4 +1,4 @@
-# $Id: keyword.rb,v 1.3 2005-03-15 07:43:25 hitoshi Exp $
+# $Id: keyword.rb,v 1.4 2005-06-27 13:49:57 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 def keyword_list(*key)
@@ -40,3 +40,5 @@ def keywords(*keyword)
   end
   key
 end
+
+export_plugin_methods(:keyword_list)
