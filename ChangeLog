@@ -1,4 +1,7 @@
 2005-06-27  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/about.rb, remap_headings.rb: removed.
+	* misc/plugin/quote_page.rb: merge remap_headings.rb.
+
 	* misc/plugin/template.rb: support configuration via browsers.
 
 2005-06-25  Kazuhiko  <kazuhiko@fdiary.net>
