@@ -1,4 +1,4 @@
-# $Id: rss-show.rb,v 1.9 2005-06-17 05:49:17 fdiary Exp $
+# $Id: rss-show.rb,v 1.10 2005-06-27 07:46:44 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'cgi'
@@ -13,7 +13,8 @@ def rss_show(url, cache_time = 1800, number = 5)
 end
 
 def rss_get(url, cache_time)
-  cache_file = "#{@cache_path}/#{CGI::escape(url)}"
+  Dir.mkdir("#{@cache_path}/rss-show") unless File.exist?("#{@cache_path}/rss-show")
+  cache_file = "#{@cache_path}/rss-show/#{CGI::escape(url)}".untaint
 
   begin
     rss_recent_cache(url, cache_file, cache_time)
@@ -77,3 +78,4 @@ def rss_write_cache(cache_file, rss)
   end
 end
 
+export_plugin_methods(:rss_show)
