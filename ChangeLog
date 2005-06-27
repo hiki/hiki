@@ -1,4 +1,6 @@
 2005-06-27  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/isbn.rb (isbn): revise bk1's uri. remove 'Fujisan'.
+
 	* misc/plugin/rss-show.rb: use 'rss-show/' directory under the
 	cache path.
 
