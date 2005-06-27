@@ -1,6 +1,6 @@
 /*
 Title: Hiki
-$Revision: 1.8 $
+$Revision: 1.9 $
 Author: TAKEUCHI Hitoshi
 Access: hitoshi@namaraii.com
 License: GPL
@@ -42,6 +42,7 @@ body {
 	font-family: Arial,Verdana,Helvetica,'MS UI Gothic',sans-serif;
 	margin: 0;
 	padding: 0.5em;
+	padding-right: 1em;
 }
 
 a{
@@ -63,8 +64,9 @@ a:hover {
 div.adminmenu {
 	text-align: right;
 	margin-top: 0px;
-	padding: 0.5em;
-	font-size: x-small;
+	padding: 0.2em 0.5em 0.5em 0.5em;
+	padding-right: 0;
+	font-size: 75%;
         line-height: 2.5em;
 }
 
@@ -86,31 +88,32 @@ h1 {
 }
 
 h2 {
-	font-size: large;
+	font-size: 160%;
 	border-style: solid;
-	border-color: #00bbbb;
+	border-color: #48c;
 	border-width: 0px 0px 1px 0px;
 }
 
 div.day h2 {
-	font-size: large;
+	font-size: 160%;
 	border-style: solid;
-	border-color: #00bbbb;
-	border-width: 0px 0px 1px 0px;
-	padding-left: 8px;
+	border-color: #48c;
+	border-width: 0px 0px 2px 0px;
+	margin-left: 0.5em;
+	padding-left: 0.5em;
 	padding-bottom: 4px;
 }
 
 div.body {
-	margin-left: 1em;
+	margin-left: 1.8em;
 	line-height: 120%;
 }
 
 div.body h3 {
-	font-size: large;
+	font-size: 140%;
 	border-style: dashed;
-	border-color: #00bbbb;
-	border-width: 0px 0px 1px 0px;
+	border-color: #48c;
+	border-width: 0px 0px 2px 0px;
 	margin-top: 1.5em;
 	margin-bottom: 0.5em;
 	padding: 4px;
@@ -123,19 +126,20 @@ div.body h4 h5 h6 {
 }
 
 div.body h4 {
-	font-size: medium;
+	font-size: 140%;
+	border-left: solid 3px #48c;
+	padding: 0.2em 0.3em;
 }
 div.body h5 {
-	font-size: small;
+	font-size: 140%;
 }
 div.body h6 {
-	font-size: x-small;
+	font-size: 110%;
 }
 
 div.body p {
 	margin-top: 0px;
 	margin-bottom: 0.5em;
-	margin-left: 1em;
 	color: #000;
 	background-color: transparent;
 	line-height: 150%;
@@ -167,11 +171,11 @@ div.body blockquote p {
 }
 
 div.body li {
-	margin-left: 2em;
+	margin-left: 0.5em;
 }
 
 div.body dl {
-	margin-left: 2em;
+	margin-left: 0.5em;
 }
 
 div.body dt {
@@ -195,9 +199,9 @@ div.comment {
 	background-color: #eef;
 	margin-top: 1em;
 	margin-bottom: 0.5em;
-	margin-left: 2em;
+	margin-left: 1em;
 	padding: 4px;
-	font-size: small;
+	font-size: 90%;
 }
 
 div.form div.comment {
@@ -230,7 +234,6 @@ div.day div.form {
 	margin-top: 0px;
 	margin-bottom: 0.5em;
 	margin-left: 2em;
-	font-size: small;
 }
 
 div.form form {
@@ -296,7 +299,8 @@ hr.sep {
 
 div.footer {
 	text-align: right;
-	font-size: x-small;
+	font-size: 80%;
+	color: #444;
 }
 
 form div.body {
@@ -366,7 +370,7 @@ div.recentsubtitles {
 /* footnote */
 div.body span.footnote {
 	vertical-align: super;
-	font-size: xx-small;
+	font-size: 80%;
 }
 
 div.footnote {
@@ -471,7 +475,7 @@ div.sidebar {
 	top: 0px;
 	left: 0px;
 	width: 20%;
-	font-size: x-small;
+	font-size: 75%;
 	padding: 2px 2px 100% 2px;
 	border-style: solid;
 	border-color: #c0c0c0;
@@ -646,6 +650,6 @@ div.comment form {
 
 div.hello {
 	text-align: right;
-	font-size: x-small;
+	font-size: 80%;
 	margin-top: 0px;
 }

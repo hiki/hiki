@@ -1,3 +1,8 @@
+2005-06-28  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* theme/hiki/hiki.css: revise the default theme.
+
+	* data/text/SideMenu, misc/text/rd+/SideMenu: SideMenu should begin with a heading level 1.
+
 2005-06-27  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/footnote.rb, misc/plugin/keyword.rb,
 	misc/plugin/orphan.rb, misc/plugin/pagerank.rb,
