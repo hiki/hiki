@@ -1,4 +1,4 @@
-# $Id: template.rb,v 1.4 2005-03-03 15:53:55 fdiary Exp $
+# $Id: template.rb,v 1.5 2005-06-27 05:21:42 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 #
 
@@ -14,7 +14,7 @@ end
 def template_form
   pages = templates.sort {|a,b| a.downcase <=> b.downcase}
   
-  if pages.size > 0
+  unless pages.empty?
     s = <<EOS
 <div>
   #{template_label}:
@@ -56,3 +56,42 @@ add_edit_proc {
   end
   template_form
 }
+
+export_plugin_methods(:load_template)
+
+def saveconf_template
+  if @mode == 'saveconf' then
+    @conf['template.default'] = @params['template.default'][0] && @params['template.default'][0].empty? ? nil : @params['template.default'][0]
+    @conf['template.keyword'] = @params['template.keyword'][0].empty? ? nil : @params['template.keyword'][0]
+    @conf['template.autoinsert'] = @params['template.autoinsert'][0] ? true : false
+  end
+end
+
+add_conf_proc('template', template_label) do
+  saveconf_template
+
+  str = <<-HTML
+  <h3 class="subtitle">#{label_template_keyword}</h3>
+  <p>#{label_template_keyword_desc}</p>
+  <p><input type="text" name="template.keyword" value="#{@conf['template.keyword']}" size="10"></p>
+  HTML
+
+  pages = templates.sort {|a,b| a.downcase <=> b.downcase}
+  unless pages.empty?
+    str << <<-HTML
+  <h3 class="subtitle">#{label_template_default}</h3>
+  <p>#{label_template_default_desc}</p>
+  <p><select name="template.default">
+    HTML
+    pages.each do |p|
+      str << %Q|<option value="#{CGI::escapeHTML(p)}"#{@conf['template.default'] == p ? ' selected' : ''}>#{CGI::escapeHTML(p)}</option>\n|
+    end
+  end
+
+  str << <<-HTML
+  </select></p>
+  <h3 class="subtitle">#{label_template_autoinsert}</h3>
+  <p><input type="checkbox" name="template.autoinsert" value="true"#{@conf['template.autoinsert'] ? ' checked' : ''}>#{label_template_autoinsert_desc}</p>
+  HTML
+  str
+end
