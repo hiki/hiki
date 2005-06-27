@@ -1,4 +1,4 @@
-# $Id: config.rb,v 1.63 2005-06-25 00:36:46 fdiary Exp $
+# $Id: config.rb,v 1.64 2005-06-27 07:43:18 fdiary Exp $
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
@@ -189,6 +189,7 @@ module Hiki
       @password        ||= ''
       @generator       ||= "Hiki #{HIKI_VERSION}"
 
+      Dir.mkdir(@cache_path) unless File::directory?(@cache_path)
 
       # following variables are not configurable.
       @config_file = "#{@data_path}/hiki.conf"

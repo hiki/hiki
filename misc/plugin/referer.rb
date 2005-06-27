@@ -1,4 +1,4 @@
-# $Id: referer.rb,v 1.9 2005-06-17 05:49:17 fdiary Exp $
+# $Id: referer.rb,v 1.10 2005-06-27 07:43:18 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/db/ptstore'
@@ -102,7 +102,6 @@ end
 
 add_body_leave_proc(Proc.new do
   begin
-    Dir.mkdir(@cache_path) unless File.exist?(@cache_path)
     Dir.mkdir(referer_path) unless File.exist?(referer_path)
 
     file_name = "#{referer_path}/#{@page.escape.to_euc}"

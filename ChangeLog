@@ -1,4 +1,6 @@
 2005-06-27  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/config.rb (load): mkdir a cache path if not exists.
+
 	* misc/plugin/readlirs.rb: use 'readlirs/' directory under the
 	cache path.
 
