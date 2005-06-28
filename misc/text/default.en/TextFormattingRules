@@ -238,17 +238,17 @@ Lines beginning with a colon and have a phrase and explanation separated by anot
 ! Tables
 Tables begin with two vertical bars.
 Leading `!' in a cell means that it is a heading cell.
-To concatnate columns or rows, put `^'(columns) or `>'(rows) at
+To concatenate columns or rows, put `>'(columns) or `^'(rows) at
 head of the cell.
 
 * Example statement
- ||!row heading \ column heading||!column A||!column B||!column C||!>column D (horizontal concatenation)
+ ||!row heading \ column heading||!column A||!column B||!column C||!>column D-E (horizontal concatenation)
  ||!row 1||A1||B1||^C1-C2 (vertical concatenation)||D1||E1
  ||!row 2||A2||B2||^>D2-E2-D3-E3 (vertical and horizontal concatenation)
  ||!row 3||>>A3-C3 (horizontal concatenation)
 
 * Example output
-||!row heading \ column heading||!column A||!column B||!column C||!>column D (horizontal concatenation)
+||!row heading \ column heading||!column A||!column B||!column C||!>column D-E (horizontal concatenation)
 ||!row 1||A1||B1||^C1-C2 (vertical concatenation)||D1||E1
 ||!row 2||A2||B2||^>D2-E2-D3-E3 (vertical and horizontal concatenation)
 ||!row 3||>>A3-C3 (horizontal concatenation)
