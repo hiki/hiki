@@ -1,4 +1,4 @@
-# 01sp.rb - select-plugins plugin $Revision: 1.2 $
+# 01sp.rb - select-plugins plugin $Revision: 1.3 $
 
 =begin ChangeLog
 See ../ChangeLog for changes after this.
@@ -60,7 +60,12 @@ end
 
 # url of the document
 def sp_doc_url( file )
-        "http://www.namaraii.com/hiki/?#{CGI::escape( file )}"
+	case @conf.lang
+	when 'ja'
+	        "http://hikiwiki.org/ja/#{CGI::escape( file )}.html"
+	else
+	        "http://hikiwiki.org/en/#{CGI::escape( file )}.html"
+	end
 end
 
 # <li> list of plugins

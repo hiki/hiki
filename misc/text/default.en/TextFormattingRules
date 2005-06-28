@@ -69,11 +69,11 @@ In this case, if the URL ends with jpg., .jpeg, .png, or .gif, the image is disp
 Text in a paragraph that looks like a URL will automatically become a link.
 
 *Example statement
- Hiki's home page is http://www.namaraii.com/hiki/ (Japanese only).
+ Hiki's home page is http://hikiwiki.org/en/ (English).
 
 *Example output
 
-Hiki's home page is http://www.namaraii.com/hiki/ (Japanese only).
+Hiki's home page is http://hikiwiki.org/en/ (English).
 
 !!InterWiki
 InterWiki is supported using [[Tiki:Tiki]].  To add a server, edit InterWikiName.

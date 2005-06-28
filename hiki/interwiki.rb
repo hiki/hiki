@@ -1,4 +1,4 @@
-# $Id: interwiki.rb,v 1.8 2005-06-15 03:10:16 fdiary Exp $
+# $Id: interwiki.rb,v 1.9 2005-06-28 05:39:08 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 module Hiki
@@ -53,6 +53,6 @@ module Hiki
   end
 end
 
-# *[[Hiki|http://www.namaraii.com/hiki/?]] euc
+# *[[Hiki|http://hikiwiki.org/ja/?]] euc
 # *[[YukiWiki|http://www.hyuki.com/yukiwiki/wiki.cgi?]] euc
 # *[[GoogleJ|http://www.google.co.jp/search?hl=ja&btnG=Google+%8C%9F%8D%F5&lr=lang_ja&q=]] sjis

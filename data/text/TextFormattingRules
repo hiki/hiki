@@ -66,11 +66,11 @@
 パラグラフ中にURLっぽいものがあると勝手にリンクがはられます。
 
 *記述例
- Hikiのページはhttp://www.namaraii.com/hiki/です。
+ Hikiのページはhttp://hikiwiki.org/ja/です。
 
 *出力例
 
-Hikiのページはhttp://www.namaraii.com/hiki/です。
+Hikiのページはhttp://hikiwiki.org/ja/です。
 
 !!InterWiki
 [[Tiki:Tiki]]を参考にInterWikiもサポートしています。サーバの追加は

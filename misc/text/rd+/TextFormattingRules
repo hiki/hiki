@@ -64,7 +64,7 @@ InterWiki¤È¤ÏÍ×¤Ï³°Éô¤Ø¤Î¥ê¥ó¥¯¤ò´ÊÃ±¤Ë¤Ç¤­¤ë¤è¤¦¤Ë¤¹¤ë¤â¤Î¤Ç¡¢((<Hiki>))¼«ÂÎ¤¬»
 Îã¤¨¤Ð¡¢¸å½Ò¤¹¤ëInterWikiName¤ò¤½¤Î¤Þ¤ÞÍøÍÑ¤·¤¿¤È¤¹¤ë¤È°Ê²¼¤Î¤è¤¦¤Ê·ë²Ì¤Ë¤Ê¤ê¤Þ¤¹¡£
 
  ·ë²Ì¡§
- <a href="http://www.namaraii.com/hiki.cgi?">Hiki</a>
+ <a href="http://hikiwiki.org/ja/?">Hiki</a>
  <a href="http://ponx.s5.xrea.com/bibo/?date=20020329">bibo</a>
  <a href="http://ponx.s5.xrea.com/bibo/?date=20020329">Linux¥Ó¥Ü¡Á¤í¤¯</a>
 
@@ -75,5 +75,5 @@ InterWiki¤È¤ÏÍ×¤Ï³°Éô¤Ø¤Î¥ê¥ó¥¯¤ò´ÊÃ±¤Ë¤Ç¤­¤ë¤è¤¦¤Ë¤¹¤ë¤â¤Î¤Ç¡¢((<Hiki>))¼«ÂÎ¤¬»
 ==== InterWikiName¥Ú¡¼¥¸¤Î½ñ¤­Êý
 InterWikiName¥Ú¡¼¥¸¤Ï (('[[keyword|url]]')) charset ¤È¤¤¤¦¥Õ¥©¡¼¥Þ¥Ã¥È¤Ç½ñ¤­¤Þ¤¹¡£
 
- *[[Hiki|http://www.namaraii.com/hiki/hiki.cgi?]] euc
+ *[[Hiki|http://hikiwiki.org/ja/?]] euc
  *[[bibo|http://ponx.s5.xrea.com/bibo/?date=]] euc

@@ -28,12 +28,12 @@ InterWikiをサポートしています。InterWikiとは、もともとはWikiサーバー間を
 書いた後、
 
  *[[ruby-list|http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/]]
- *[[Hiki|http://www.namaraii.com/hiki/?]] euc
+ *[[Hiki|http://hikiwiki.org/ja/?]] euc
 
 任意のページに、
  [[Hiki:HikiFarm]]
 
-と書くとhttp://www.namaraii.com/hiki/の「HikiFarm」という
+と書くとhttp://hikiwiki.org/ja/の「HikiFarm」という
 ページへのリンクになります。
 
 同様に、
@@ -55,5 +55,5 @@ Hikiは作者であるたけうちひとし(hitoshi@namaraii.com)がGPL2で配布、改変を
 :hiki/docdiff/*:森田尚さん作。修正BSDライセンスで配布。
 :hiki/image_size.rb:Keisuke Minami さん作。Ruby ライセンスで配布
 
-Hikiはhttp://www.namaraii.com/hiki/でサポートを行っています。
+Hikiはhttp://hikiwiki.org/ja/でサポートを行っています。
 ご意見・ご要望はこちらへどうぞ。
