@@ -1,4 +1,4 @@
-# $Id: util.rb,v 1.37 2005-06-16 01:28:36 fdiary Exp $
+# $Id: util.rb,v 1.38 2005-06-29 06:23:45 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'nkf'
@@ -85,7 +85,7 @@ module Hiki
           db.save_cache( conf.side_menu, t )
         end
         f = conf.formatter.new( t, db, plugin, conf, 's' )
-        data[:sidebar]   = f.to_s.sanitize
+        data[:sidebar]   = f.to_s
         data[:main_class]    = conf.main_class
         data[:sidebar_class] = CGI::escapeHTML( conf.sidebar_class )
       else
