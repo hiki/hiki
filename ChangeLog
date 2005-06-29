@@ -1,4 +1,6 @@
 2005-06-29  Kazuhiko  <kazuhiko@fdiary.net>
+	* plugin/02help.rb (help_enabled?): add a new method.
+
 	* template/edit.html, template/i.edit.html: set a value in a
 	'update_timestamp' checkbox (reported by KAWAI Masahiro).
 
