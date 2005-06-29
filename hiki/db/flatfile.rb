@@ -1,4 +1,4 @@
-# $Id: flatfile.rb,v 1.17 2005-06-23 03:14:06 fdiary Exp $
+# $Id: flatfile.rb,v 1.18 2005-06-29 05:53:31 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'fileutils'
@@ -39,7 +39,11 @@ module Hiki
         mtime = Time::now
         set_last_update( page, mtime )
       else
-        mtime = File::mtime( filename )
+	begin
+	  mtime = File::mtime( filename )
+	rescue Errno::ENOENT
+	  mtime = Time::now
+	end
       end
       File::open( filename, 'wb' ) do |f|
         f.write( text.gsub(/\r\n/, "\n") )

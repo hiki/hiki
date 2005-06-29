@@ -1,4 +1,7 @@
 2005-06-29  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/db/flatfile.rb (store): fix a bug in making a new page
+	without updating timestamp.
+
 	* misc/plugin/comment.rb (comment_post): not add emphasize and
 	link tags around a name (reported by Kouhei Sutou).
 
