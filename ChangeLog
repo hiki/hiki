@@ -1,4 +1,8 @@
 2005-06-29  Kazuhiko  <kazuhiko@fdiary.net>
+	* plugin/00default.rb (br): add a new plugin method.
+
+	* hiki/command.rb (code_conv): add a new method for mobile agents.
+
 	* misc/plugin/amazon.rb: for a little modified of web site changing.
 
 2005-06-28  Kouhei Yanagita <sugi@dream.big.or.jp>

@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.63 2005-06-23 14:03:57 fdiary Exp $
+# $Id: command.rb,v 1.64 2005-06-29 02:49:50 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -16,6 +16,7 @@ module Hiki
       @params = cgi.params
       @cgi    = cgi
       @conf   = conf
+      code_conv
 
       # for TrackBack
       if %r|/tb/(.+)$| =~ ENV['REQUEST_URI']
@@ -258,13 +259,6 @@ module Hiki
 
     def cmd_edit( page, text=nil, msg=nil, d_title=nil )
       page_title = d_title ? d_title.escapeHTML : @plugin.page_name(page)
-
-      page_title = if d_title
-        d_title
-      else
-        pg_title = @db.get_attribute(page, :title)
-       ((pg_title && pg_title.size > 0) ? pg_title : page).escapeHTML
-      end
 
       save_button = @cmd == 'edit' ? '' : nil
       preview_text = nil
@@ -550,6 +544,16 @@ module Hiki
 
     def session_cookie(session_id, max_age = Session::MAX_AGE)
       cookie('session_id', session_id, max_age)
+    end
+
+    def code_conv
+      if @conf.mobile_agent? && /EUC-JP/i =~ @conf.charset
+        @params.each_key do |k|
+          @params[k].each do |v|
+            v.replace(v.to_euc) if v
+          end
+        end
+      end
     end
   end
 end

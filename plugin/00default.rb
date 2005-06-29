@@ -1,4 +1,4 @@
-# $Id: 00default.rb,v 1.40 2005-06-28 05:39:09 fdiary Exp $
+# $Id: 00default.rb,v 1.41 2005-06-29 02:49:50 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #==============================
@@ -88,6 +88,11 @@ def recent( n = 20 )
   end
   s << "</ul>\n"
   s
+end
+
+#===== br
+def br( n = 1 )
+  '<br>' * n.to_i
 end
 
 #===== update_proc
@@ -266,4 +271,4 @@ def auth?
   true
 end
 
-export_plugin_methods(:toc, :toc_here, :recent)
+export_plugin_methods(:toc, :toc_here, :recent, :br)
