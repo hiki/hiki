@@ -1,4 +1,7 @@
 2005-06-29  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/comment.rb (comment_post): not add emphasize and
+	link tags around a name (reported by Kouhei Sutou).
+
 	* plugin/00default.rb (br): add a new plugin method.
 
 	* hiki/command.rb (code_conv): add a new method for mobile agents.

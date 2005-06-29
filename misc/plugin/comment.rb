@@ -1,4 +1,4 @@
-# $Id: comment.rb,v 1.8 2005-06-07 09:10:55 fdiary Exp $
+# $Id: comment.rb,v 1.9 2005-06-29 04:26:39 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 # modified by yoshimi.
@@ -53,7 +53,7 @@ def comment_post
     if /^\{\{r?comment.*\}\}/ =~ l && flag == false
       if count == comment_no
         content << l if style == 1
-        content << "*#{format_date(Time::now)} \'\'[[#{name}]]\'\' : #{msg}\n"
+        content << "*#{format_date(Time::now)} #{name} : #{msg}\n"
         content << l if style == 0
         flag = true
       else
