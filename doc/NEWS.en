@@ -10,4 +10,4 @@
 * support authentication of several users (edit_user.rb plugin).
 * the administrator's name becomes 'admin'.
 * support XML-RPC interfaces (misc/xmlrpc/).
-* much more faster.
+* much faster.
