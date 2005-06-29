@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.64 2005-06-29 02:49:50 fdiary Exp $
+# $Id: command.rb,v 1.65 2005-06-29 06:10:45 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -55,7 +55,7 @@ module Hiki
       if session_id
         @plugin.user = Hiki::Session::new( @conf, session_id ).user
       end
-      @body_enter = @plugin.body_enter_proc.sanitize
+      @body_enter = @plugin.body_enter_proc
     end
 
     def dispatch
@@ -100,10 +100,10 @@ module Hiki
       data[:cgi_name] = @conf.cgi_name 
       data[:body_enter] = @body_enter
       data[:lang] = @conf.lang
-      data[:header] = @plugin.header_proc.sanitize
-      data[:body_leave] = @plugin.body_leave_proc.sanitize
+      data[:header] = @plugin.header_proc
+      data[:body_leave] = @plugin.body_leave_proc
       data[:page_attribute] ||= ''
-      data[:footer] = @plugin.footer_proc.sanitize
+      data[:footer] = @plugin.footer_proc
       data.update( @plugin.data ) if @plugin.data
       if data[:toc]
         data[:body] = data[:toc] + data[:body] if @plugin.toc_f == :top
@@ -124,7 +124,7 @@ module Hiki
       @plugin.title = title( 'Error' )
       data[:cgi_name] = @conf.cgi_name 
       data[:view_title] = 'Error'
-      data[:header] = @plugin.header_proc.sanitize
+      data[:header] = @plugin.header_proc
       data[:frontpage] = @plugin.page_name( 'FrontPage' )
       @page = Hiki::Page::new( @cgi, @conf )
       @page.template = @conf.read_template( 'error' )
@@ -135,7 +135,7 @@ module Hiki
 
     def cmd_preview
       @cmd = 'preview'
-      cmd_edit( @p, @params['contents'][0], @conf.msg_preview.sanitize, @params['page_title'][0] )
+      cmd_edit( @p, @params['contents'][0], @conf.msg_preview, @params['page_title'][0] )
     end
     
     def cmd_view
@@ -173,16 +173,16 @@ module Hiki
       
       pg_title = @plugin.page_name(@p)
       
-      data[:page_title]   = (@plugin.hiki_anchor( @p.escape, @p.escapeHTML )).sanitize
+      data[:page_title]   = (@plugin.hiki_anchor( @p.escape, @p.escapeHTML ))
       data[:view_title]   = pg_title
       data[:title]        = title( pg_title )
-      data[:toc]          = @plugin.toc_f ? toc.sanitize : nil
-      data[:body]         = formatter.apply_tdiary_theme(contents).sanitize
-      data[:references]   = ref.collect! {|a| "[#{@plugin.hiki_anchor(a.escape, @plugin.page_name(a))}] " }.join.sanitize
-      data[:keyword]      = @db.get_attribute(@p, :keyword).collect {|k| "[#{view_title(k)}]"}.join(' ').sanitize
+      data[:toc]          = @plugin.toc_f ? toc : nil
+      data[:body]         = formatter.apply_tdiary_theme(contents)
+      data[:references]   = ref.collect! {|a| "[#{@plugin.hiki_anchor(a.escape, @plugin.page_name(a))}] " }.join
+      data[:keyword]      = @db.get_attribute(@p, :keyword).collect {|k| "[#{view_title(k)}]"}.join(' ')
 
       data[:last_modified]  = @db.get_last_update( @p )
-      data[:page_attribute] = @plugin.page_attribute_proc.sanitize
+      data[:page_attribute] = @plugin.page_attribute_proc
 
       generate_page( data )
     end
@@ -219,7 +219,7 @@ module Hiki
       data = get_common_data( @db, @plugin, @conf )
       
       data[:title]     = title( @conf.msg_index )
-      data[:updatelist] = list.collect! {|i| i.sanitize}
+      data[:updatelist] = list
       
       generate_page( data )
     end
@@ -230,7 +230,7 @@ module Hiki
       data = get_common_data( @db, @plugin, @conf )
 
       data[:title]      = title( @conf.msg_recent )
-      data[:updatelist] = list.collect! {|i| i.sanitize}
+      data[:updatelist] = list
       data[:last_modified] = last_modified
 
       generate_page( data )
@@ -294,17 +294,17 @@ module Hiki
       @plugin.text = text
 
       data[:title]          = title( page )
-      data[:toc]            = @plugin.toc_f ? toc.sanitize : nil
+      data[:toc]            = @plugin.toc_f ? toc : nil
       data[:pagename]       = page.escapeHTML
       data[:md5hex]         = md5hex
-      data[:edit_proc]      = @plugin.edit_proc.sanitize
+      data[:edit_proc]      = @plugin.edit_proc
       data[:contents]       = @plugin.text.escapeHTML
       data[:msg]            = msg
       data[:button]         = save_button
       data[:preview_button] = save_button
       data[:link]           = link
-      data[:differ]         = differ ? differ.sanitize : nil
-      data[:body]        = preview_text ? formatter.apply_tdiary_theme(preview_text).sanitize :  nil
+      data[:differ]         = differ
+      data[:body]        = preview_text ? formatter.apply_tdiary_theme(preview_text) :  nil
       data[:keyword]        ||= CGI.escapeHTML( @db.get_attribute(page, :keyword).join("\n") )
       data[:update_timestamp] ||= ' checked'
       data[:page_title]     = page_title
@@ -312,7 +312,7 @@ module Hiki
       f = @db.is_frozen?( page ) || @conf.options['freeze']
       data[:freeze]         = f ? ' checked' : ''
       data[:freeze_msg]     = @conf.msg_freeze if f
-      data[:form_proc]      = @plugin.form_proc.sanitize
+      data[:form_proc]      = @plugin.form_proc
 
       generate_page( data )
     end
@@ -325,7 +325,7 @@ module Hiki
       data = get_common_data( @db, @plugin, @conf )
 
       data[:title]        = title("#{@p} #{@conf.msg_diff}")
-      data[:differ]       = differ.sanitize
+      data[:differ]       = differ
       generate_page( data )
     end
 
@@ -363,7 +363,7 @@ module Hiki
           @db.set_attribute(page, attr)
         else
           @cmd = 'conflict'
-          cmd_edit( page, text, @conf.msg_save_conflict.sanitize )
+          cmd_edit( page, text, @conf.msg_save_conflict )
           return
         end
 
@@ -389,7 +389,7 @@ module Hiki
         word2            = word.split.join("', '")
         if l.size > 0
           data[:msg1]    = sprintf( @conf.msg_search_hits, word2.escapeHTML, total, l.size )
-          data[:list]    = l.collect! {|i| i.sanitize}
+          data[:list]    = l
         else
           data[:msg1]    = sprintf( @conf.msg_search_not_found, word2.escapeHTML )
           data[:list]    = nil

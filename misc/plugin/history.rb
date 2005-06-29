@@ -3,7 +3,7 @@
 == plugin/history.rb - CVS の編集履歴を表示するプラグイン
 
   Copyright (C) 2003 Hajime BABA <baba.hajime@nifty.com>
-  $Id: history.rb,v 1.27 2005-06-21 08:49:53 fdiary Exp $
+  $Id: history.rb,v 1.28 2005-06-29 06:10:45 fdiary Exp $
   You can redistribute and/or modify this file under the terms of the LGPL.
 
   Copyright (C) 2003 Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
@@ -102,7 +102,7 @@ module Hiki
       pg_title = @plugin.page_name(@p)
       data[:title]      = title( "#{pg_title} - #{history_label}")
       data[:view_title] = "#{pg_title} - #{history_label}"
-      data[:body]       = formatter.apply_tdiary_theme(s).sanitize
+      data[:body]       = formatter.apply_tdiary_theme(s)
 
       @cmd = 'view' # important!!!
       generate_page(data) # private method inherited from Command class

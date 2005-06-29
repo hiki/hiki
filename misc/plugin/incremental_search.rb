@@ -1,4 +1,4 @@
-# ajaxsearch.rb $Revision: 1.2 $
+# ajaxsearch.rb $Revision: 1.3 $
 # Copyright (C) 2005 Michitaka Ohno <elpeo@mars.dti.ne.jp>
 # 
 # This program is free software; you can redistribute it and/or
@@ -69,7 +69,7 @@ module Hiki
                         </div>
                         HTML
                         data[:title] = data[:view_title] = title( @conf.msg_search )
-                        data[:body] = body.sanitize
+                        data[:body] = body
                         @cmd = 'plugin'
                         generate_page(data)
                 end
