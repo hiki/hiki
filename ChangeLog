@@ -1,4 +1,7 @@
 2005-06-29  Kazuhiko  <kazuhiko@fdiary.net>
+	* plugin/02help.rb, plugin/en/02help.rb, plugin/ja/02help.rb: add
+	a new plugin for support editing (by NAGASAKI).
+
 	* hiki/db/flatfile.rb (store): fix a bug in making a new page
 	without updating timestamp.
 
@@ -14,7 +17,8 @@
 2005-06-28  Kouhei Yanagita <sugi@dream.big.or.jp>
 	* theme/hiki/hiki.css: revise the default theme.
 
-	* data/text/SideMenu, misc/text/rd+/SideMenu: SideMenu should begin with a heading level 1.
+	* data/text/SideMenu, misc/text/rd+/SideMenu: SideMenu should
+	begin with a heading level 1.
 
 	* doc/README.txt, doc/INSTALL.txt: revise the documents.
 
