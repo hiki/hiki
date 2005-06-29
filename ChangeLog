@@ -1,4 +1,7 @@
 2005-06-29  Kazuhiko  <kazuhiko@fdiary.net>
+	* template/edit.html, template/i.edit.html: set a value in a
+	'update_timestamp' checkbox (reported by KAWAI Masahiro).
+
 	* plugin/02help.rb, plugin/en/02help.rb, plugin/ja/02help.rb: add
 	a new plugin for support editing (by NAGASAKI).
 

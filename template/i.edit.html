@@ -20,7 +20,7 @@
 <p>
 <% if @contents[:preview_button] %><input type="submit" name="preview" value="<%=@conf.msg_preview_button%>"><% end %>
 <% if @contents[:button] %><input type="submit" name="save" value="<%=@conf.msg_save%>" accesskey="O"><% end %>
-<input type="checkbox" name="update_timestamp" value=""<%=@contents[:update_timestamp]%>><%=@conf.msg_update_timestamp%>
+<input type="checkbox" name="update_timestamp" value="on"<%=@contents[:update_timestamp]%>><%=@conf.msg_update_timestamp%>
 </p>
 <p>
 <%=@conf.msg_keyword_form%>
