@@ -28,7 +28,7 @@ Hikiは好きなところに展開します (例: /home/foo/src/hiki)。
 
 CGIを設置するディレクトリを決め (例: /home/foo/public_html/hikifarm)、
 そこをWebサーバの権限で書き込み可能にします。
-また、デフォルトのインデックス (ApacheならDefaultDirectory) を、
+また、デフォルトのインデックス (ApacheならDirectoryIndex) を、
 index.cgiにします (HikiFarmはindex.cgiを自動生成します)。
 
  # Apacheの場合の.htaccess (またはhttpd.conf) の例

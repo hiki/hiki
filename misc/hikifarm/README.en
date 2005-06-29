@@ -1,0 +1,62 @@
+! What is HikiFarm?
+
+HikiFarm provides several hikis on a single site.
+
+If your hikifarm is installed at 'http://example.com/hikifarm/' and make
+a new hiki named 'sample', its URI will be
+'http://example.com/hikifarm/sample/'.
+
+! How to install HikiFarm
+
+Extract hiki at any place (eg /home/foo/src/hiki).
+
+Make a hikifarm CGI's directory and allow a web server to write.
+
+(eg)
+  mkdir /home/foo/public_html/hikifarm
+  chown apache /home/foo/public_html/hikifarm
+
+Set 'DirectoryIndex' to 'index.cgi' since HikiFarm will make 'index.cgi'
+at sub directories.
+
+(eg)
+  cat /home/foo/public_html/hikifarm/.htaccess 
+  Options +ExecCGI +FollowSymLinks
+  AddHandler cgi-script .cgi
+  DirectoryIndex index.cgi
+
+
+Make a theme directory.
+
+(eg)
+  ln -s /home/foo/src/hiki/theme /home/foo/public_html/hikifarm/theme
+
+Make a data directory (eg /home/foo/var/hiki) and allow a web server to
+write.
+
+(eg)
+  mkdir /home/foo/var/hiki
+  chown apachr /home/foo/var/hiki
+
+Copy 'index.cgi' and 'hikifarm.conf' to the hikifarm CGI's
+directory. Then edit 'hikifarm.conf'.
+
+(eg)
+  cp /home/foo/src/hiki/misc/hikifarm/index.cgi /home/foo/public_html/hikifarm/
+  cp /home/foo/src/hiki/misc/hikifarm/hikifarm.conf /home/foo/public_html/hikifarm/
+  vi /home/foo/public_html/hikifarm/hikifarm.conf
+
+Copy 'hiki.conf' to hiki's top directory. Then edit 'hiki.conf'.
+
+(eg)
+  cp /home/foo/src/hiki/misc/hikifarm/hiki.conf /home/foo/src/hiki/
+  vi /home/foo/src/hiki/hiki.conf
+
+(OPTIONAL) If you'd like to set up a CVS/Subversion repository for
+backup, copy 'vc-backend-setup.cgi' and invoke it in a web server's uid.
+
+(eg)
+  cp /home/foo/src/hiki/misc/hikifarm/vc-backend-setup.cgi /home/foo/public_html/hikifarm/
+  sudo -u apache /home/foo/public_html/hikifarm/vc-backend-setup.cgi
+
+Now access to hikifarm's index.cgi by any web browser.
