@@ -41,11 +41,11 @@ will be formatted as one paragraph.
 If a page name is surrounded with two pairs of brackets, it becomes a link to that page.
 
 *Example statement
- For example, if you write [[EnglishTextFormattingRules]], it becomes a link to that page.
+ For example, if you write [[TextFormattingRules]], it becomes a link to that page.
 
 *Example output
 
-For example, if you write [[EnglishTextFormattingRules]], it becomes a link to that page.
+For example, if you write [[TextFormattingRules]], it becomes a link to that page.
 
 !!Linking to an arbitrary URL
 If a phrase and URL, separated by a vertical line, are surrounded with two pairs of brackets, it becomes a link to an arbitrary URL.

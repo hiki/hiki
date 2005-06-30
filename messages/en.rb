@@ -1,4 +1,4 @@
-# $Id: en.rb,v 1.16 2005-06-23 03:14:06 fdiary Exp $
+# $Id: en.rb,v 1.17 2005-06-30 07:10:26 fdiary Exp $
 # en.rb
 #
 # Copyright (C) 2003 Masao Mutoh <mutoh@highway.ne.jp>
@@ -72,7 +72,7 @@ module Hiki
     def msg_save; 'Save'; end
     def msg_update_timestamp; 'Update timestamp'; end
     def msg_latest; 'Latest version'; end
-    def msg_rules; %Q|See <a href="#{@cgi_name}?EnglishTextFormattingRules">EnglishTextFormattingRules</a> for formatting help.|; end
+    def msg_rules; %Q|See <a href="#{@cgi_name}?TextFormattingRules">TextFormattingRules</a> for formatting help.|; end
     # (view)
     def msg_last_modified; 'Last modified'; end
     def msg_keyword; 'Keyword(s)'; end
