@@ -44,9 +44,9 @@ server.add_handler('wiki.putPage') do |page, content, attributes|
     options = @conf.options || Hash::new( '' )
     options['page'] = page
     options['cgi']  = @cgi
+    options['db']  = @db
     options['params'] = Hash::new( [] )
     @plugin = Hiki::Plugin::new( options, @conf )
-    @db.plugin = @plugin
 
     pass_check = false
     if p = attributes['password']
@@ -58,7 +58,7 @@ server.add_handler('wiki.putPage') do |page, content, attributes|
     end
 
     md5hex = @db.md5hex( page )
-    @db.save( page, content.gsub(/\r/, ''), md5hex )
+    @plugin.save( page, content.gsub(/\r/, ''), md5hex )
     keyword = attributes['keyword'] || []
     title = attributes['title'] || page
     @db.set_attribute(page, [[:keyword, keyword.uniq], [:title, title]])

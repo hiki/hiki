@@ -1,3 +1,7 @@
+2005-07-01  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/xmlrpc/xmlrpc.cgi: use 'Plugin#save' instead of
+	'HikiDB#save'.
+
 2005-06-29  Kazuhiko  <kazuhiko@fdiary.net>
 	* plugin/02help.rb (help_enabled?): add a new method.
 
