@@ -7,16 +7,16 @@
 </head>
 
 <body>
-<div class="adminmenu"><%= @contents[:tools] %></div>
-<h1 class="header"><%=@conf.msg_config%></h1>
 <div class="sidebar">
-<ul style="margin-top: 5em;">
+<ul>
 <% @plugin.each_conf_key do |key|%>
   <li><a href="<%=@contents[:cgi_name]%>?c=admin;conf=<%=key%>"><%=@plugin.conf_label( key )%></a></li>
 <% end %>
 </ul>
 </div>
 <div class="main">
+<div class="adminmenu"><%= @contents[:tools] %></div>
+<h1 class="header"><%=@conf.msg_config%></h1>
 <form method="post" action="<%= @contents[:cgi_name] %>">
 <div class="conf day">
   <input type="hidden" value="admin" name="c">

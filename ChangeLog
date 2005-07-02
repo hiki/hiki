@@ -1,3 +1,6 @@
+2005-07-02  Kazuhiko  <kazuhiko@fdiary.net>
+	* template/adminform.html: revise HTML (reported by Fu).
+
 2005-07-01  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/xmlrpc/xmlrpc.cgi: use 'Plugin#save' instead of
 	'HikiDB#save'.
