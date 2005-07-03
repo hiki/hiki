@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.33 2005-06-24 09:14:33 fdiary Exp $
+# $Id: html_formatter.rb,v 1.34 2005-07-03 03:30:06 yanagita Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -205,7 +205,7 @@ module Hiki
           rws = %Q| rowspan="#{t[:row]}"|
         end
         if t[:col] > 1
-          cls = %Q| colspan=#{t[:col]}"|
+          cls = %Q| colspan="#{t[:col]}"|
         end
         str = mp[0,len-1]
         str << rws
