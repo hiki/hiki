@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.34 2005-07-03 03:30:06 yanagita Exp $
+# $Id: html_formatter.rb,v 1.35 2005-07-04 05:10:17 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -119,7 +119,6 @@ module Hiki
         s << %Q!#{map(:listitem_open)}<a href="#l#{h['index']}">#{h['title'].escapeHTML}</a>#{map(:listitem_close)}\n!
       end
       s << ("#{map(:unordered_list_close)}\n" * lv)
-      s = %Q!<div class="day"><div class="body"><div class="section">#{s}</div></div></div>! unless @conf.mobile_agent?
       s
     end
     

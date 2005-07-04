@@ -1,4 +1,6 @@
 2005-07-04  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/html_formatter.rb (toc): return more simple HTML.
+
 	* hiki/util.rb (plugin_error): escape exception messages (reported
 	by Kouhei Sutou).
 
