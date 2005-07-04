@@ -1,4 +1,4 @@
-# $Id: pluginutil.rb,v 1.7 2005-06-09 02:15:14 fdiary Exp $
+# $Id: pluginutil.rb,v 1.8 2005-07-04 12:51:21 fdiary Exp $
 #
 # apply_plugin(str):
 #  Eval the string as a plugin.
@@ -34,7 +34,7 @@ module Hiki
         else
           raise PluginException, 'not plugin method'
         end
-      rescue
+      rescue Exception
         raise PluginException, plugin_error('inline plugin', $!)
       end
     end
