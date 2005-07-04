@@ -1,4 +1,4 @@
-# $Id: util.rb,v 1.38 2005-06-29 06:23:45 fdiary Exp $
+# $Id: util.rb,v 1.39 2005-07-04 01:58:08 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'nkf'
@@ -50,7 +50,7 @@ module Hiki
 
   module Util
     def plugin_error( method, e )
-      msg = "<strong>#{e.class}(#{e.message}): #{method.escapeHTML}</strong><br>"
+      msg = "<strong>#{e.class} (#{e.message.escapeHTML}): #{method.escapeHTML}</strong><br>"
       msg << "<strong>#{e.backtrace.join("<br>\n")}</strong>" if @conf.plugin_debug
       msg
     end

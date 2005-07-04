@@ -1,3 +1,7 @@
+2005-07-04  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/util.rb (plugin_error): escape exception messages (reported
+	by Kouhei Sutou).
+
 2005-07-03  Kouhei Yanagita <sugi@dream.big.or.jp>
 	* style/default/html_formatter.rb (token_to_s): a double quote for
 	colspan is lacked.
