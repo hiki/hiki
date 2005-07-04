@@ -1,4 +1,7 @@
 2005-07-04  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/html_formatter.rb (token_to_s): always use the
+	'plugin_error' method (reported by Kouhei Sutou).
+
 	* style/default/html_formatter.rb (toc): return more simple HTML.
 
 	* hiki/util.rb (plugin_error): escape exception messages (reported

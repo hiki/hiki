@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.35 2005-07-04 05:10:17 fdiary Exp $
+# $Id: html_formatter.rb,v 1.36 2005-07-04 08:52:52 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -189,11 +189,7 @@ module Hiki
             s[:html] << str
           end
         rescue Exception => e
-          if @conf.plugin_debug
-            s[:html] << e.message
-          else
-            s[:html] << plugin_error( t[:method], $! )
-          end
+          s[:html] << e.message
         end
       when :table_head_open, :table_data_open
         rws = ''
