@@ -1,4 +1,4 @@
-# $Id: flatfile.rb,v 1.18 2005-06-29 05:53:31 fdiary Exp $
+# $Id: flatfile.rb,v 1.19 2005-07-05 11:55:20 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'fileutils'
@@ -48,7 +48,10 @@ module Hiki
       File::open( filename, 'wb' ) do |f|
         f.write( text.gsub(/\r\n/, "\n") )
       end
-      File::utime( mtime, mtime, filename )
+      begin
+	File::utime( mtime, mtime, filename )
+      rescue Errno::EPERM
+      end
       true
     end
 
