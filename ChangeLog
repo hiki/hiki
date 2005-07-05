@@ -1,3 +1,6 @@
+2005-07-05  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/command.rb (cmd_save): always save the 'editor' attribute.
+
 2005-07-04  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/pluginutil.rb (apply_plugin): catch all exceptions
 	(reported by Kouhei Sutou).

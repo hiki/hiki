@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.65 2005-06-29 06:10:45 fdiary Exp $
+# $Id: command.rb,v 1.66 2005-07-05 02:19:54 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -359,7 +359,7 @@ module Hiki
           keyword = @params['keyword'][0].split("\n").collect {|k|
             k.chomp.strip}.delete_if{|k| k.size == 0}
           attr = [[:keyword, keyword.uniq], [:title, title]]
-          attr << [:editor, @plugin.user] if @plugin.user
+          attr << [:editor, @plugin.user]
           @db.set_attribute(page, attr)
         else
           @cmd = 'conflict'
