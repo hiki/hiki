@@ -1,4 +1,4 @@
-# $Id: hikiconf.rb.sample,v 1.8 2005-06-23 12:20:33 yanagita Exp $
+# $Id: hikiconf.rb.sample,v 1.9 2005-07-06 01:50:07 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #============================
@@ -76,9 +76,17 @@
 #  変更可能項目
 #=========================================
 
+# ベース URL【オプション】
+#    Hiki が置かれる URL から CGI 名を除いたもの。例えば
+#    http://example.com/hiki/hiki.cgi なら http://example.com/hiki/ を指
+#    定します。
+#    通常は自動で設定されますが、リバースプロキシの場合など正しく設定され
+#    ない場合は指定してください。
+#@base_url        = "http://example.com/hiki/"
+
 # キャッシュディレクトリ【オプション】
 #    プラグインで使われるキャッシュ用のディレクトリを指定する
-@cache_path      = "#{@data_path}/cache"
+#@cache_path      = "#{@data_path}/cache"
 
 # テンプレートディレクトリ【オプション】
 #    テンプレートファイルが存在するディレクトリを指定する
@@ -87,23 +95,24 @@
 # スタイル【オプション】
 #   デフォルト以外のスタイルを使いたい場合は、そのスタイル名を指定します。
 #   現状 default と rd+ を指定することができます。
-@style           = 'default'
+#@style           = 'default'
 
 # 更新通知元メールアドレス【オプション】
 #   更新通知メールの From に指定するアドレスです。
 #@mail_from      = 'from@mail.address.hoge'
 
 # キーワードハイライト【オプション】
-@hilight_keys    = true
-
-@charset         = 'EUC-JP'
-@lang            = 'ja'
-@database_type   = 'flatfile'
-@cgi_name        = 'hiki.cgi'
-@options         = {}                    # この行は変更しないでください。
+#@hilight_keys    = true
 
 # プラグインのデバッグ時に true にします。
 @plugin_debug    = false
+
+#@charset         = 'EUC-JP'
+#@lang            = 'ja'
+#@database_type   = 'flatfile'
+#@cgi_name        = 'hiki.cgi'
+
+@options         = {}                    # この行は変更しないでください。
 
 # プラグインに渡すオプションを記述します 【オプション】
 #   プラグインによってはオプションを渡すことで挙動を変えることができます。
