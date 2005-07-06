@@ -1,3 +1,8 @@
+! Changes in 0.8.1
+
+* fix a bug in saving with XML-RPC.
+* fix miscellaneous bugs.
+
 ! Changes in 0.8.0
 
 * support mod_ruby.
