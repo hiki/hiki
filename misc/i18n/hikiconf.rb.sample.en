@@ -1,4 +1,4 @@
-# $Id: hikiconf.rb.sample.en,v 1.1 2005-06-25 12:21:51 yanagita Exp $
+# $Id: hikiconf.rb.sample.en,v 1.2 2005-07-06 13:25:39 yanagita Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #=================================
@@ -68,6 +68,14 @@
 #=========================================
 #  Items that can be changed.
 #=========================================
+# The base URL. (Optional)
+#    The URL excepting the CGI name from the Hiki's one.
+#    (eg. If the hiki is placed on http://example.com/hiki/hiki.cgi,
+#    @base_url should be `http://example.com/hiki/'.)
+#
+#    This is set automatically in most cases, but you should specify it
+#    when it works wrong (for example, in case of a reverse proxy.)
+#@base_url        = "http://example.com/hiki/"
 
 # The cache directory. (Optional)
 #    Specify the directory for cache used by plugins.

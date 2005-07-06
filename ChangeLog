@@ -1,3 +1,6 @@
+2005-07-06  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* misc/i18n/hikiconf.rb.sample.en: add a setting of @base_url.
+
 2005-07-06  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/attach/attach.rb: export 'attach_form' method
 	(reported by Fu).
