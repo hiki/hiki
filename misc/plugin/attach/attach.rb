@@ -1,4 +1,4 @@
-# $Id: attach.rb,v 1.22 2005-06-17 06:37:59 fdiary Exp $
+# $Id: attach.rb,v 1.23 2005-07-06 01:52:08 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 #
 # thanks to Kazuhiko, Masao Mutoh, SHIMADA Mitsunobu, Yoshimi, ¤ê¤¿
@@ -224,4 +224,4 @@ add_form_proc {
   end
 }
 
-export_plugin_methods(:attach_map, :attach_anchor_string, :attach_anchor, :attach_image_anchor, :attach_flash_anchor, :attach_download, :attach_src, :attach_view)
+export_plugin_methods(:attach_form, :attach_map, :attach_anchor_string, :attach_anchor, :attach_image_anchor, :attach_flash_anchor, :attach_download, :attach_src, :attach_view)
