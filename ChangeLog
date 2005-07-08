@@ -1,3 +1,9 @@
+2005-07-08  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* hiki/config.rb (load_messages): change name from guess_lang.
+	use all values in HTTP_ACCEPT_LANGUAGE. use 'en' as @lang when
+	resources of the acceptable languages is not found.
+	set @lang in this function instead of load().
+
 2005-07-08  Kazuhiko  <kazuhiko@fdiary.net>
 	* messages/fr.rb, messages/it.rb (msg_login_failure): add a
 	missing 'end'.

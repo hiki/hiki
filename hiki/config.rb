@@ -1,4 +1,4 @@
-# $Id: config.rb,v 1.67 2005-07-08 05:39:06 fdiary Exp $
+# $Id: config.rb,v 1.68 2005-07-08 14:19:29 yanagita Exp $
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
@@ -17,19 +17,17 @@ module Hiki
       load
       load_cgi_conf
 
+      load_messages
+
       require "style/#{@style}/parser"
       require "style/#{@style}/html_formatter"
       require "hiki/repos/#{@repos_type}"
-      require "messages/#{@lang}"
       require "hiki/db/#{@database_type}"
 
       # parser class and formatter class
       style = @style.gsub( /\+/, '' )
       @parser = Hiki::const_get( "Parser_#{style}" )
       @formatter = Hiki::const_get( "HTMLFormatter_#{style}" )
-
-      # message module
-      extend(Hiki::const_get( "Messages_#{@lang}" ))
 
       # repository class
       @repos = Hiki::const_get("Repos#{@repos_type.capitalize}").new(@repos_root, @data_path)
@@ -148,7 +146,6 @@ module Hiki
       @hilight_keys  ||= true
       @plugin_debug  ||= false
       @charset       ||= 'EUC-JP'
-      @lang          ||= guess_lang
       @database_type ||= 'flatfile'
       @cgi_name      ||= './'
       @admin_name    ||= 'admin'
@@ -239,21 +236,36 @@ module Hiki
       nil
     end
 
-    def guess_lang
-      ret = 'ja'
+    def load_messages
+      candidates = @lang ? [@lang] : []
+
       if ENV['HTTP_ACCEPT_LANGUAGE']
-	ret = ENV['HTTP_ACCEPT_LANGUAGE'].split(',').collect { |entry|
-	  lang, quality = entry.split(';')
-	  lang.strip!
-	  if /^q=(.+)/ =~ quality
-	    quality = $1.to_f
-	  else
-	    quality = 1.0
-	  end
-	  [lang, quality]
-	}.sort_by {|i| -i[1]}.first[0][0...2].untaint
+        accept_language = ENV['HTTP_ACCEPT_LANGUAGE'].split(',').collect{|entry|
+          lang, quality = entry.split(';')
+          lang.strip!
+          if /^q=(.+)/ =~ quality
+            quality = $1.to_f
+          else
+            quality = 1.0
+          end
+          [lang, quality]
+        }.sort_by{|i| -i[1]}.map{|i| i[0][0...2].untaint}
+
+        candidates.concat(accept_language)
       end
-      ret
+
+      candidates << 'en'
+
+      candidates.each do |lang|
+        begin
+          require "messages/#{lang}"
+          extend(Hiki::const_get("Messages_#{lang}"))
+          @lang = lang
+          return
+        rescue LoadError
+        end
+      end
+      raise "No message resource file is found. Please put one in the messages/ directory."
     end
 
     def formaterror
