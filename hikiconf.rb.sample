@@ -1,4 +1,4 @@
-# $Id: hikiconf.rb.sample,v 1.9 2005-07-06 01:50:07 fdiary Exp $
+# $Id: hikiconf.rb.sample,v 1.10 2005-07-08 06:00:21 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #============================
@@ -105,11 +105,9 @@
 #@hilight_keys    = true
 
 # プラグインのデバッグ時に true にします。
-@plugin_debug    = false
+#@plugin_debug    = false
 
 #@charset         = 'EUC-JP'
-#@lang            = 'ja'
-#@database_type   = 'flatfile'
 #@cgi_name        = 'hiki.cgi'
 
 @options         = {}                    # この行は変更しないでください。
