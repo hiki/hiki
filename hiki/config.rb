@@ -1,10 +1,10 @@
-# $Id: config.rb,v 1.66 2005-07-03 03:30:06 yanagita Exp $
+# $Id: config.rb,v 1.67 2005-07-08 05:39:06 fdiary Exp $
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
 
 HIKI_VERSION  = '0.8.0'
-HIKI_RELEASE_DATE = '2005-07-03'
+HIKI_RELEASE_DATE = '2005-07-08'
 
 require 'cgi'
 require 'hiki/command'
@@ -148,7 +148,7 @@ module Hiki
       @hilight_keys  ||= true
       @plugin_debug  ||= false
       @charset       ||= 'EUC-JP'
-      @lang          ||= 'ja'
+      @lang          ||= guess_lang
       @database_type ||= 'flatfile'
       @cgi_name      ||= './'
       @admin_name    ||= 'admin'
@@ -237,6 +237,23 @@ module Hiki
         )
       end
       nil
+    end
+
+    def guess_lang
+      ret = 'ja'
+      if ENV['HTTP_ACCEPT_LANGUAGE']
+	ret = ENV['HTTP_ACCEPT_LANGUAGE'].split(',').collect { |entry|
+	  lang, quality = entry.split(';')
+	  lang.strip!
+	  if /^q=(.+)/ =~ quality
+	    quality = $1.to_f
+	  else
+	    quality = 1.0
+	  end
+	  [lang, quality]
+	}.sort_by {|i| -i[1]}.first[0][0...2].untaint
+      end
+      ret
     end
 
     def formaterror

@@ -1,3 +1,9 @@
+2005-07-08  Kazuhiko  <kazuhiko@fdiary.net>
+	* messages/fr.rb, messages/it.rb (msg_login_failure): add a
+	missing 'end'.
+	* hiki/config.rb (guess_lang): add a new method to detect
+	browsers' accept languages.
+
 2005-07-06  Kouhei Yanagita <sugi@dream.big.or.jp>
 	* misc/i18n/hikiconf.rb.sample.en: add a setting of @base_url.
 
