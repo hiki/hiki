@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.36 2005-07-04 08:52:52 fdiary Exp $
+# $Id: html_formatter.rb,v 1.37 2005-07-09 11:10:05 yanagita Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -11,7 +11,7 @@ module Hiki
     
   class HTMLFormatter_default < HikiFormatter
     MAP = Hash::new
-    MAP[:heading1_open]        = '<h2><span class="date">'
+    MAP[:heading1_open]        = %Q!\n<h2><span class="date">!
     MAP[:heading1_open_end]    = '</span><span class="title">'
     MAP[:heading1_close]       = '</span></h2>'
     MAP[:heading2_open]        = '<h3>'
