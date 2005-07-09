@@ -1,6 +1,7 @@
 2005-07-09  Kouhei Yanagita <sugi@dream.big.or.jp>
 	* style/default/html_formatter.rb: fixed: a block plugin preceding
 	a heading level 1 (!) makes markup wrong.
+	* theme/hiki/hiki.css: widen padding-bottom of 'div.body h3'.
 
 2005-07-08  Kouhei Yanagita <sugi@dream.big.or.jp>
 	* hiki/config.rb (load_messages): change name from guess_lang.
