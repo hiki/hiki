@@ -1,4 +1,7 @@
 2005-07-13  Kazuhiko  <kazuhiko@fdiary.net>
+	* template/view.html: wrap main contents with 'div.main' and wrap
+	preview contents with 'div.preview'.
+
 	* hiki/repos/cvs.rb (import): use 'hiki' as a vendor-tag.
 
 2005-07-12  Kazuhiko  <kazuhiko@fdiary.net>
