@@ -1,4 +1,7 @@
 2005-07-12  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/attach/attach.rb (attach_map): unescape page
+	names (by NAGASAKI).
+
 	* hiki/command.rb (cmd_login): use Plugin#login.
 	* misc/xmlrpc/xmlrpc.cgi: use Plugin#login and Plugin#editable?.
 	save 'editor' and 'title' correctly.

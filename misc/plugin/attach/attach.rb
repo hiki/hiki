@@ -1,4 +1,4 @@
-# $Id: attach.rb,v 1.23 2005-07-06 01:52:08 fdiary Exp $
+# $Id: attach.rb,v 1.24 2005-07-12 08:32:01 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 #
 # thanks to Kazuhiko, Masao Mutoh, SHIMADA Mitsunobu, Yoshimi, ¤ê¤¿
@@ -34,7 +34,7 @@ def attach_map
   attach_files.sort do |a, b|
     a[0].unescape <=> b[0].unescape
   end.each do |attach_info|
-    s << "<li>#{hiki_anchor(attach_info[0], page_name(attach_info[0]))}\n"
+    s << "<li>#{hiki_anchor(attach_info[0], page_name(attach_info[0].unescape))}\n"
     s << "<ul>\n"
     attach_info[1].each do |f|
       s << "<li>#{attach_anchor(f, attach_info[0].unescape)}\n"
