@@ -1,3 +1,6 @@
+2005-07-12  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki-mode.el: support login and logout (by Takeshi UME Imai).
+
 2005-07-09  Kouhei Yanagita <sugi@dream.big.or.jp>
 	* style/default/html_formatter.rb: fixed: a block plugin preceding
 	a heading level 1 (!) makes markup wrong.
@@ -521,6 +524,10 @@
 2005-05-06  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki.cgi, misc/plugin/attach/attach.cgi: support a relative
 	symlink link.
+
+2005-05-02  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki-mode.el (hiki-fetch-source): follow the change of
+	'edit.rhtml'.
 
 2005-04-27  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/page.rb (Page::page): set an empty 'page_attribute' if nil.
@@ -1345,6 +1352,12 @@
 	バー、フッタなどが表示されない問題の対処。cloverテーマをベースに書
 	き直し。
 
+Thu Jan 22 08:22:09 2004  Hideaki Hori  <yowaken@cool.ne.jp>
+
+	* hiki-mode.el (hiki-edit-mode): hiki-site-list で指定したスタイル
+	が反映されていなかったのを修正。
+	http://yowaken.dip.jp/hiki/hiki.cgi?CommentForHikiMode
+
 14 Jan 2004 22:32:15 +0900	TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 	* style/rd+/rd2html.rb: HeadlineでModuleNamesに登録されたモジュー
 	ルが不正に展開されるバグの修正 by Masao Mutoh
@@ -1356,6 +1369,24 @@
 12 Jan 2004 18:52:22 +0900	TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 	* misc/plugin/en/frozenmark.rb, fr/frozenmark.rb: frozenmark.rbの
 	英仏リソースを追加 by OZAWA Sakuro
+
+Sun Jan 11 16:29:09 2004  Hideaki Hori  <yowaken@cool.ne.jp>
+
+	* hiki-mode.el (hiki-read-site-name): ミニバッファに
+	デフォルト値を入れないようにした。
+
+Mon Dec 08 23:06:41 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+
+	* hiki-mode.el (hiki-fetch-source): bug fix.
+
+Wed Dec 03 21:25:16 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+
+	* hiki-mode.el (hiki-fetch-index): bug fix. タイトルとキーワードの
+	実体参照を置換していなかった。
+	* (hiki-fetch-source): ditto.
+
+	* (hiki-replace-entity-refs): &#39; -> '(シングルクォート) を追加。
+	* (hiki-do-replace-entity-ref): (save-match-data ...) でくくった。
 
 16 Nov 2003 09:19:19 +0900	Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/plugin.rb, plugin/00default.rb: menu_proc のサポート
@@ -1382,13 +1413,170 @@
 13 Nov 2003 23:05:05 +0900	Kazuhiko  <kazuhiko@fdiary.net>
 	* plugin/00default.rb: ブラウザキャッシュ無効の META タグ追加 by Hajime BABA
 	* misc/plugin/cvs.rb: $cvsroot -> $repos_root by Hajime BABA
+Wed Nov 12 04:32:09 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+
+	* hiki-mode.el: bug fix. XEmacs での不具合に対応。 by simm
+	<http://pure.fan.gr.jp/simm/d/20031110.html#p02>、
+	<http://yowaken.dip.jp/tdiary/20031111.html#c01>参照。
+
+Mon Nov 10 22:55:59 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+
+	* hiki-mode.el (hiki-index-setup-keys): [RET] を消した。
+	* (require 'poem) するようにした。
+	(http://kitaj.no-ip.com/tdiary/20031110.html#p06 より。Thx.)
+
+Sat Oct 25 10:42:02 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+
+	* hiki-mode.el (hiki-read-char-with-retry): bug fix.
+	navi2ch-read-char -> hiki-read-char 
+	[[yowaHiki:CommentForHikiMode]]のレポートより。Thanks.
+
+Sun Oct 19 00:58:09 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+
+	* hiki-mode.el (hiki-edit-quit): hiki-page-buffer-alist の中身をク
+	リアする。
+
+	* (hiki-index-quit): ditto.
+	表示しているサイト以外のバッファは kill しない。
+
 17 Oct 2003 23:25:27 +0900	Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/storage.rb: 検索結果に表示されるキーワードが Regexp::quote 
 	されていたのを修正 by ょゎ
 
+Thu Oct 16 05:43:59 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+
+	* hiki-mode.el (hiki-edit-mode): case-fold-search をローカル変数に
+	しない。
+
+	* hiki-mode.el (hiki-edit): bug fix. 編集中の hiki-edit がうまく行っ
+	てなかった。
+
+	* hiki-mode.el (hiki-index-refetch-index): 表示位置がリセットされ
+	ていたのを修正。
+	
+	* hiki-mode.el: メッセージ関係。
+	(hiki-display-{page,index}): "Loading... done." を表示。
+	(hiki-index-sort-by): メッセージを削除、↓へ。
+	(hiki-index-sort): "Sorting... done." を表示。
+
+Thu Oct 16 04:21:16 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+
+	* hiki-mode.el (hiki-index-sort-by): bug fix. buffer-modified-p の
+	変更し忘れ。
+
+Thu Oct 16 04:15:46 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+
+	* hiki-mode.el (hiki-display-index): bug fix. ソート時の point 位
+	置がズレていたのを修正。
+
+Thu Oct 16 03:58:51 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+
+	* hiki-mode.el: 一覧のソート。
+	(hiki-index-sort-key): 新変数。ソートのキーを記憶。
+	(hiki-read-char, hiki-read-char-with-retry): 新関数。キー入力。同
+	名の navi2ch-* を参考にした。
+	(hiki-index-sort, hiki-index-sort-by, hiki-index-sort-subr):
+	新関数。ソートする。
+
 16 Oct 2003 07:28:02 +0900	Kazuhiko  <kazuhiko@fdiary.net>
 	* plugin/00default.rb: Content-Language として $lang を返すように
 	修正 by Masao Mutoh
+
+Tue Oct 14 21:31:10 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+
+	* hiki-mode.el (hiki-edit-reload): 新関数。編集中のページをリロード。
+	(hiki-edit): hiki-edit-reload 対応。
+	
+Tue Oct 14 20:15:58 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+
+	* hiki-mode.el (hiki-edit-newpage): 新変数。新規ページ編集中に 
+	non-nil。
+	
+	* hiki-mode.el (hiki-edit-quit): 新規ページを作成した時は index を
+	必ず fetch する。
+
+	* hiki-mode.el: bug fix. hiki-edit がうまく動いてなかった。
+	(hiki-edit, hiki-display-page): 対応。
+	(hiki-index-edit-page-current-line): 新関数。
+	(hiki-index-edit-page): PAGENAME が指定されなければミニバッファか
+	ら読む。
+
+	* hiki-mode.el (hiki-index-page-info): 新関数。page-info を返す。
+
+	* hiki-mode.el (hiki-fetch-index): bug fix. 
+	
+Tue Oct 14 17:54:02 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+
+	* hiki-mode.el: 初期化を必ず行うようにした。
+	(hiki-initialize): 新関数。初期化を行う。
+	(hiki-init): 新変数。初期化してなければ nil。
+
+	* hiki-mode.el (hiki-index-display-page-next): 
+	次行のページへ移動する処理をコメントアウト。
+
+Tue Oct 14 03:41:00 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+
+	* hiki-mode.el (hiki-edit-quit): バッファが変更されてたら警告を出
+	す。
+
+	* hiki-mode.el (hiki-index-display-page):
+	hiki-index-page-info-current-line を使うよう修正。
+	
+	* hiki-mode.el (hiki-index-display-page-next): 新関数。
+	該当行のページを表示。既に表示してあるならスクロール。
+	これ以上スクロール出来ないなら、次行のページを表示。
+
+	* hiki-mode.el (hiki-index-suspend): bug fix.
+
+	* hiki-mode.el (hiki-display-page): 必ずページ先頭に移動する。
+	バッファを hiki-edit-mode にする。
+	
+Tue Oct 14 02:36:16 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+
+	* hiki-mode.el (hiki-site-name-history): 新変数。
+
+	* hiki-mode.el (hiki-read-site-name): hiki-read-site-info から名称
+	変更。
+
+	* hiki-mode.el (hiki-index-suspend): 旧 hiki-index-quit。
+	bury-bufferする。
+	(hiki-index-quit): kill-bufferする。
+	
+Tue Oct 14 01:44:48 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+
+	* hiki-mode.el (hiki-edit-quit): 一覧を表示しているウィンドウが
+	あるならウィンドウ分割を保存。なければ、1-pane で一覧表示。
+
+	* hiki-mode.el (hiki-edit): 2-pane で一覧を表示し、該当行で 
+	recenter 。
+
+	* hiki-mode.el (hiki-index-page-info-string): マイナーチェンジ。
+
+	* hiki-mode.el (hiki-index-edit-page): 一覧表示の表示位置を保持。
+	
+Mon Oct 13 06:46:14 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+
+	* hiki-mode.el (hiki-anchor-regexp-match-beginning,
+	hiki-anchor-regexp-match-end): 使っていないので削除。
+
+	* hiki-mode.el (hiki-edit): bug fix. カッコの対応が変だった。
+
+Sun Oct 12 23:13:14 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+
+	* hiki-mode.el: 変更。
+	hiki-list -> hiki-site-list
+	hiki-index-list -> hiki-index-page-info-list
+	(toggle-read-only 〜) -> (setq buffer-read-only 〜)
+	(recenter) -> (recenter t)
+
+	* hiki-mode.el (hiki-index): 表示を hiki-display-index に分離。
+	(hiki-display-index): 新関数。一覧表示。
+	(hiki-index-get-buffer-create): 新関数。一覧表示用バッファを返す。
+	(hiki-index-page-info-string): 新関数。一覧表示の一行分。
+
+	* hiki-mode.el (hiki-index-edit-page): 一部を 
+	hiki-index-page-info-current-line に追い出した。
+	(hiki-index-page-info-current-line): 新関数。現在行のページ情報を返す。
 
 12 Oct 2003 17:45:28 +0900	Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/hikifarm/index.cgi: 配下の Hiki の中の最新のページの 
@@ -1397,6 +1585,104 @@
 10 Oct 2003 00:06:32 +0900	Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/en/template.rb: 英語リソース追加。
 
+Fri Oct 10 08:25:20 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+
+	* hiki-mode.el: 名称変更。
+	hiki-index-edit -> hiki-index-edit-page
+	hiki-index-refetch -> hiki-index-refetch-index
+
+	* hiki-mode.el (hiki-page-buffer-alist): 新変数。バッファを保持。
+
+	* hiki-mode.el (hiki-index): optional 引数 refetch, pagename 追加。
+
+	* hiki-mode.el (hiki-index-display-page): 新関数。一覧から選んでペー
+	ジを表示。
+
+	* hiki-mode.el (hiki-display-page): 新関数。ページを表示。
+	(hiki-edit-page): fetch 回りを hiki-display-page に移動。
+
+	* hiki-mode.el (hiki-page-buffer-name): 新関数。すでに存在する時、
+	ページ表示バッファ名を返す。
+	(hiki-index-buffer-name): 新関数。一覧表示バッファ名を返す。
+	動作が別なのに名前が対称なのが気になるのでなんとかしたい。
+
+Fri Oct 10 05:44:32 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+
+	* hiki-mode.el: 名称変更。
+	hiki-mode -> hiki-edit-mode
+	hiki-setup-keys -> hiki-edit-setup-keys
+	hiki-next-anchor -> hiki-edit-next-anchor
+	hiki-rename-buffer -> hiki-edit-rename-buffer
+	hiki-save -> hiki-edit-save-page
+	
+Wed Oct  8 16:21:52 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+
+	* hiki-mode.el: キーワード対応。
+	(hiki-keywords): 削除。
+	(hiki-edit-page, hiki-save): キーワード対応。
+
+	* hiki-mode.el (hiki-propertize): 新関数。navi2ch-propertize を参考。
+
+	* hiki-mode.el (hiki-fetch-source): bug fix. 古い(キーワード機能の
+	ない) Hiki 相手の時、キーワードを誤判定していた。
+
+Wed Oct  8 14:38:49 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+
+	* hiki-mode.el (hiki-save): パスワード間違いの検出を行うようにした。
+	1. <pre> があればコンフリクト。
+	2. そうでなくて、<textarea>があればパスワード間違い。
+	3. そうでなければ、送信成功。
+
+Wed Oct  8 04:29:29 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+
+	* hiki-mode.el (hiki-save): 成功時は hiki-edit-quit を呼ぶようにし
+	た。
+
+Wed Oct  8 03:54:33 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+
+	* hiki-mode.el (hiki-index): 引数に site-info を取るようにした。表
+	 示も変更。delete-other-windows するようにした。(うれしいのか？)
+
+	* hiki-mode.el (hiki-index-refetch): 新関数。一覧を再取得する。
+	* hiki-mode.el (hiki-index-quit): 新関数。
+
+	* hiki-mode.el (hiki-edit-quit): 編集モードを抜け、一覧モードへ。
+
+	* hiki-mode.el (hiki-prefix): 新関数。
+
+	* hiki-mode.el (http-url-unhexify-string): bug fix. '+' を SPC に
+	変換していなかった。
+
+Wed Oct  8 01:31:45 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+
+	* hiki-mode.el (hiki-edit-page): bug fix. hiki-read-pagename の 
+	completion でエラーが出ていた(hiki-pagename-history がおかしかった)。
+
+	* hiki-mode.el (hiki-index-edit): 新関数。一覧から選択して編集モー
+	ドへ。
+
+	* hiki-mode.el (hiki-index-setup-keys): 新関数。
+
+	* hiki-mode.el (hiki-index): 同サイトのバッファを上書きするようにした。
+	
+Tue Oct 07 23:21:40 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+
+	* hiki-mode.el (hiki-index): 新関数。一覧を表示する。
+	* (hiki-index-mode): 一部の処理を hiki-index に移動。
+
+Tue Oct  7 03:57:46 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+
+	* hiki-mode.el (hiki-read-site-name): 廃止。hiki-read-site-info へ。
+	* (hiki-read-site-info): 新関数。
+
+	* hiki-mode.el (hiki-http-request): 引数の pagename を省略可に。
+
+	* hiki-mode.el (hiki-fetch-index): 新関数。ページ一覧を取得する。
+
+	* hiki-mode.el (http-url-unhexify-string): bug fix.
+
+	* hiki-mode.el (hiki-index-mode): 一覧用モード。
+	
 02 Sep 2003 21:18:10 +0900	Kazuhiko  <kazuhiko@fdiary.net>
 	* style/default/html_formatter.rb: インライン画像の alt をファイル
 	名だけにした。
@@ -1528,6 +1814,17 @@
 07 Jul 2003 23:06:00 +0900	Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/referer.rb: escape 漏れの修正 by 猫罰
 
+Sun Jul  6 03:43:04 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+
+	* hiki-mode.el:	<http://pure.fan.gr.jp/simm/d/20030703.html#p01> を
+	取り込んだ。内容は以下の通り。
+
+	* 編集ページのレイアウト変更に対応
+	* [bug fix] hiki-edit時のポイント復元
+	* ページ名補完
+	* タイトル変更をモードラインに反映させる対応
+	* [bug fix] WikiName取得
+
 05 Jul 2003 22:54:54 +0900	TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 	* style/default/parser.rb: ブラケットネームのパース方法改善 by ょゎ
 
@@ -1635,6 +1932,24 @@
 	ドを行い、header_proc, footer_procのプラグインは実行するようにした。
 	
 
+Thu Jun 12 04:37:07 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+
+	* hiki-mode.el (hiki-http-request): post-data をまとめて
+	url-hexify することにした。
+	(http-url-hexify-alist): 新関数。
+
+Thu Jun 12 03:27:22 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+
+	* 凍結されているページの更新に対応。
+	<URL:http://pure.fan.gr.jp/simm/d/20030604.html#p03>
+
+	* (hiki-conflict-show-diff): タイミングにより失敗することがあった
+	のを修正。
+	<URL:http://pure.fan.gr.jp/simm/d/20030605.html#p01>
+
+	* ページタイトルとキーワードに対応。(Hiki のCVS先端の機能)
+	<URL:http://pure.fan.gr.jp/simm/d/20030611.html#p03>
+
 12 Jun 2003 05:32:21 +0900	TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 	* style/default/html_formatter.rb, style/rd+/html_formatter.rb,
@@ -1692,6 +2007,12 @@
 
 2003-06-06  SHIMADA Mitsunobu  <simm@isoternet.org>
 	* misc/plugin/attach/attach.cgi, attach.rb: 添付ファイル削除対応
+
+Thu Jun  5 02:36:03 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+
+	* hiki-mode.el: type fix. (hiki-md5sum -> hiki-md5hex)
+	
+	* hiki-mode.el (hiki-edit-page): kill-buffer するタイミングを変更。
 
 2003-06-05  SHIMADA Mitsunobu  <simm@isoternet.org>
 	* misc/plugin/attach/attach.rb(attach_anchor_string): 新規作成
@@ -1824,6 +2145,23 @@
 
 	* theme/hiki/hiki.css: Cloverベースに修正
 
+2003-05-15  Hideaki Hori  <yowaken@cool.ne.jp>
+
+	* hiki-mode.el (hiki-http-request): typo fix.
+
+2003-05-15  Hideaki Hori  <yowaken@cool.ne.jp>
+
+	* hiki-mode.el: サイト情報をバッファローカルにした。
+	  (hiki-site-{url,name,style}}: 削除。
+	  (hiki-site-info): 新変数。
+	  (hiki-site-{url,name,style}}: 新関数。
+
+	* hiki-mode.el: concat -> format に書き換え。("%" を 含む文字列へ
+	  の対応)
+
+	* hiki-mode.el (hiki-edit-page): 存在しないページを編集する時に
+	  新規作成するか確認するようにした。
+	
 11 May 2003 22:27:23 +0900	TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 	* template/*/adminform.html, diff.html, edit.html, form.html,
@@ -1841,11 +2179,51 @@
 	ja/adminform.html, edit.html, form.html: $cgi_nameを変えても反映さ
 	れないテンプレートの修正 by ただただし
 
+2003-05-06  Hideaki Hori  <yowaken@cool.ne.jp>
+
+	* hiki-mode.el: サイト情報関係のコードを整理。
+	  (hiki-site-{name,url,style}): hiki-{name,url,style} から名称変更。
+	  (hiki-setup-url): 削除。
+	  (hiki-read-site-name): 新関数。
+
+	* hiki-mode.el (hiki-edit): 表示しているのと同一ページを
+	  編集する時は、カーソル位置を保存するようにした。
+	
+2003-05-05  Hideaki Hori  <yowaken@cool.ne.jp>
+
+	* hiki-mode.el: コンフリクト時に diff を表示するようになった。
+	(hiki-conflict-show-diff): 新関数。
+
 05 May 2003 16:55:10 +0900	TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 	* misc/plugin/rss.rb, misc/plugin/rss-show.rb: 取得したRSSから得ら
 	れるページ名が自サイトのAliasWikiNameで展開されるバグをFix, RSSで
 	出力するページ名をAliasされたものに変更
+
+2003-05-04  Hideaki Hori  <yowaken@cool.ne.jp>
+
+	* hiki-mode.el (http-url-unhexify-string): 新関数。
+	  (hiki-edit-url): %xx 形式のURLに対応。
+
+2003-05-03  Hideaki Hori  <yowaken@cool.ne.jp>
+
+	* hiki-mode.el: スタイルのアンカーの違いに対応。
+	  (hiki-style, hiki-style-anchor-regexp-alist): 新変数。
+	  (hiki-search-anchor): 新関数。
+	
+2003-05-03  Hideaki Hori  <yowaken@cool.ne.jp>
+
+	* hiki-mode.el (hiki-setup-url): Bug fix. 二回目の hiki-edit で
+	  SITE が変わっていたの訂正。
+
+	* hiki-mode.el (hiki-edit): コードを整理。
+	  (hiki-edit-page, hiki-fetch-source): 新関数。
+
+	* hiki-mode.el (hiki-edit-url): 新関数。 URL を直接指定して編集。
+
+2003-05-03  Hideaki Hori  <yowaken@cool.ne.jp>
+
+	* FONTLOCK をマージ。
 
 02 May 2003 09:42:10 +0900	TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
@@ -1925,6 +2303,17 @@
 
 	* misc/plugin/referer.rb: omit_urlを指定するとrefererが記録されな
 	い不具合の修正
+
+2003-04-28  Hideaki Hori  <yowaken@cool.ne.jp>
+
+	* hiki-mode.el (hiki-current-anchor): Should not use font-lock
+	  feature.
+
+	* hiki-mode.el (hiki-anchor-regexp-match-beginning,
+ 	  hiki-anchor-regexp-match-end): New function.
+
+	* hiki-mode.el (hiki-current-anchor-string): Renamed from
+	  hiki-current-anchor.
 
 27 Apr 2003 23:16:23 +0900	TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 

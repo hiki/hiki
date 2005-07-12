@@ -4,7 +4,7 @@
 
 ;; Author: Hideaki Hori <yowaken@cool.ne.jp>
 
-;; $Id: hiki-mode.el,v 1.3 2005-05-02 12:26:42 fdiary Exp $
+;; $Id: hiki-mode.el,v 1.4 2005-07-12 04:39:00 fdiary Exp $
 ;;
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
@@ -35,8 +35,18 @@
 ;;
 
 ;;; Variable:
+(require 'pces)
 
-(require 'http)
+(defvar hiki-http-proxy-server nil "Proxy server for HTTP.")
+(defvar hiki-http-proxy-port   nil "Proxy port for HTTP.")
+
+(defvar hiki-http-timeout 10
+  "Timeout for HTTP.")
+
+(defvar hiki-http-cookie nil)
+
+(defvar hiki-freeze nil)
+
 (if (or (featurep 'xemacs) (not (boundp 'emacs-major-version)) (< emacs-major-version 21))
     (progn
       (require 'poe)
@@ -44,7 +54,7 @@
 (require 'derived)
 
 (defconst hiki-mode-version
-  (let ((revision "$Revision: 1.3 $"))
+  (let ((revision "$Revision: 1.4 $"))
     (string-match "\\([0-9.]+\\)" revision)
     (match-string 1 revision)))
 
@@ -243,10 +253,10 @@ STRING が non-nil なら、それをサイト名とする。"
   (let (url buf)
     (setq url (concat (format "%s?c=%s" site-url cmd)
 		      (if pagename 
-			  (format ";p=%s" (http-url-hexify-string pagename hiki-coding-system)))
+			  (format ";p=%s" (hiki-http-url-hexify-string pagename hiki-coding-system)))
 		      ""))
-    (setq buf (http-fetch url mode nil nil 
-			  (http-url-hexify-alist post-data hiki-coding-system)))
+    (setq buf (hiki-http-fetch url mode nil nil 
+			  (hiki-http-url-hexify-alist post-data hiki-coding-system)))
     (if (bufferp buf)
 	(save-excursion
 	  (set-buffer buf)
@@ -318,7 +328,7 @@ PREV が non-nil ならば、前のアンカーへ移動する。"
 	(error "Illegal URL. (%s)" str)))
     (setq site-info (list url url))
     (hiki-edit-page 
-     (http-url-unhexify-string pagename hiki-coding-system) site-info)))
+     (hiki-http-url-unhexify-string pagename hiki-coding-system) site-info)))
 
 (defun hiki-edit-quit ()
   (interactive)
@@ -404,6 +414,8 @@ If you want to set up your own key bindings, use `hiki-index-mode-hook'."
   (define-key hiki-index-mode-map "R" 'hiki-index-refetch-index)
   (define-key hiki-index-mode-map "q" 'hiki-index-suspend)
   (define-key hiki-index-mode-map "Q" 'hiki-index-quit)
+  (define-key hiki-index-mode-map "I" 'hiki-index-login)
+  (define-key hiki-index-mode-map "O" 'hiki-index-logout)
   )
 
 (defun hiki-index (&optional site-info refetch pagename)
@@ -599,6 +611,33 @@ REFETCH が nil ですでにバッファが存在するなら、HTTP GET しない。"
     (setq hiki-page-buffer-alist tmp)
     (kill-buffer (current-buffer))))
 
+(defun hiki-index-login ()
+  (interactive)
+  (let (username password post-data buf)
+    (sit-for 0.1)
+    (setq username (read-from-minibuffer (format "Username for %s: " (car hiki-site-info))))
+    (setq password (read-passwd (format "Password for %s: " (car hiki-site-info))))
+    (add-to-list 'post-data (cons "c" "login"))
+    (add-to-list 'post-data (cons "name" username))
+    (add-to-list 'post-data (cons "password" password))
+    (setq buf (hiki-http-request 'post nil nil (hiki-site-url) post-data))
+    (set-buffer buf)
+    (goto-char (point-min))
+    (if (re-search-forward "HTTP/1.[01] \\([0-9][0-9][0-9]\\) \\(.*\\)" nil t)
+	(let ((code (match-string 1))
+	      (desc (match-string 2)))
+	  (cond ((equal code "302")
+		 (message "Logged in."))
+		(t
+		 (message "Username and/or Password is wrong!!.")))))))
+
+(defun hiki-index-logout ()
+  (interactive)
+  (let (post-data buf)
+    (add-to-list 'post-data (cons "c" "logout"))
+    (setq buf (hiki-http-request 'post nil nil (hiki-site-url) post-data))
+    (message "Logged out.")))
+
 ;;; func
 
 (defun hiki-display-page (pagename site-info &optional refetch)
@@ -654,10 +693,6 @@ REFETCH が nil ですでにバッファが存在するなら、HTTP GET しない。"
   "PAGENAME の編集モードに入る。バッファを返す。"
   (let ((result (hiki-display-page pagename site-info t)))
     (when result
-      (if (setq password (cdr (assq 'password result)))
-	  (or (hiki-password-read (car site-info) pagename)
-	      (hiki-password-store  (car site-info) pagename t))
-	(hiki-password-store (car site-info) pagename nil))
       (setq hiki-md5hex (cdr (assq 'md5hex result)))
       (setq hiki-pagename pagename)
       (setq hiki-pagetitle (or (cdr (assq 'pagetitle result)) pagename))
@@ -681,7 +716,7 @@ REFETCH が nil ですでにバッファが存在するなら、HTTP GET しない。"
 	  (re-search-forward "<a[^?]*\\?\\([^\"]*\\)\"[^>]*>\\([^<]*\\)</a>: \\([^<]*\\)</li>" nil t nil)
 	  (setq indexes 
 		(cons
-		 (list i (http-url-unhexify-string (match-string 1) hiki-coding-system)
+		 (list i (hiki-http-url-unhexify-string (match-string 1) hiki-coding-system)
 
 		       (hiki-replace-entity-refs (match-string 2))
 		       (hiki-replace-entity-refs (match-string 3))) indexes))
@@ -726,8 +761,8 @@ REFETCH が nil ですでにバッファが存在するなら、HTTP GET しない。"
 	  (setq result (cons (cons 'keyword (hiki-replace-entity-refs (buffer-substring start end))) result)))
 	;; frozen?
 	(if (re-search-forward "<input type=\"checkbox\" name=\"freeze\" value=\"on\" checked>" nil t nil)
-	    (setq result (cons (cons 'password t) result))
-	  (setq result (cons (cons 'password nil) result)))))
+	    (setq hiki-freeze t)
+	  (setq hiki-freeze nil))))
     result))
 
 (defun hiki-edit-save-page (&optional toggle)
@@ -735,10 +770,6 @@ REFETCH が nil ですでにバッファが存在するなら、HTTP GET しない。"
   (let (buf contents post-data pagetitle password freeze keywords result)
     (message "Sending... ")
     (sit-for 0.1)
-    (setq password (hiki-password-read (car hiki-site-info) hiki-pagename)
-	  freeze (if toggle (not password) (if password t)))
-    (if (or (eq t password) (and freeze (not password)))
-	(setq password (read-passwd (format "Password for [%s] %s: " (car hiki-site-info) hiki-pagename))))
     (setq pagetitle (read-from-minibuffer
 		     (format "Page title for [%s] %s: " (car hiki-site-info) hiki-pagename)
 		     (or hiki-pagetitle hiki-pagename) nil nil nil (or hiki-pagetitle hiki-pagename)))
@@ -755,8 +786,8 @@ REFETCH が nil ですでにバッファが存在するなら、HTTP GET しない。"
     (add-to-list 'post-data (cons "keyword" (or keywords "")))
     (add-to-list 'post-data (cons "md5hex" hiki-md5hex))
     (add-to-list 'post-data (cons "password" password))
-    (and password freeze
-	 (add-to-list 'post-data (cons "freeze" "on")))
+    (if (not (null hiki-freeze))
+	(add-to-list 'post-data (cons "freeze" "on")))
     (add-to-list 'post-data (cons "contents" contents))
     (add-to-list 'post-data (cons "save" "save"))
     (setq buf 
@@ -901,7 +932,6 @@ Otherwise replace all entity references within current buffer."
   "STR の先頭を WIDTH文字を取り出す。
 
 WIDTH に満たない場合は、末尾に空白がパディングされる。"
-
   (let (l (result "")
 	(w (string-width str)))
     (if (< w width)
@@ -916,7 +946,7 @@ WIDTH に満たない場合は、末尾に空白がパディングされる。"
 
 ;;; Util (http-*)
 
-(defun http-url-unhexify-string (str coding)
+(defun hiki-http-url-unhexify-string (str coding)
   "Unescape characters in a string."
   (save-match-data
     (let ((result (string-as-unibyte str)) (pos -1))
@@ -932,11 +962,113 @@ WIDTH に満たない場合は、末尾に空白がパディングされる。"
 	       t t result)))
       (decode-coding-string result coding))))
 
-(defun http-url-hexify-alist (alist coding)
+(defun hiki-http-url-hexify-alist (alist coding)
   (mapcar 
    (lambda (c) 
-     (cons (car c) (and (cdr c) (http-url-hexify-string (cdr c) coding))))
+     (cons (car c) (and (cdr c) (hiki-http-url-hexify-string (cdr c) coding))))
    alist))
+
+;; derived from url.el
+(defconst hiki-http-url-unreserved-chars
+  '(
+    ?a ?b ?c ?d ?e ?f ?g ?h ?i ?j ?k ?l ?m ?n ?o ?p ?q ?r ?s ?t ?u ?v ?w ?x ?y ?z
+    ?A ?B ?C ?D ?E ?F ?G ?H ?I ?J ?K ?L ?M ?N ?O ?P ?Q ?R ?S ?T ?U ?V ?W ?X ?Y ?Z
+    ?0 ?1 ?2 ?3 ?4 ?5 ?6 ?7 ?8 ?9
+    ?$ ?- ?_ ?. ?! ?~ ?* ?' ?\( ?\) ?,)
+  "A list of characters that are _NOT_ reserve in the URL spec.
+This is taken from draft-fielding-url-syntax-02.txt - check your local
+internet drafts directory for a copy.")
+
+;; derived from url.el
+(defun hiki-http-url-hexify-string (str coding)
+  "Escape characters in a string.
+At first, encode STR using CODING, then url-hexify."
+  (mapconcat
+   (function
+    (lambda (char)
+      (if (not (memq char hiki-http-url-unreserved-chars))
+          (if (< char 16)
+              (upcase (format "%%0%x" char))
+            (upcase (format "%%%x" char)))
+        (char-to-string char))))
+   (encode-coding-string str coding) ""))
+
+(defun hiki-http-fetch (url method &optional user pass data)
+  "Fetch via HTTP.
+
+URL is a url to be POSTed.
+METHOD is 'get or 'post.
+USER and PASS must be a valid username and password, if required.  
+DATA is an alist, each element is in the form of (FIELD . DATA).
+
+If no error, return a buffer which contains output from the web server.
+If error, return a cons cell (ERRCODE . DESCRIPTION)."
+  (let (connection server port path buf str len)
+    (string-match "^http://\\([^/:]+\\)\\(:\\([0-9]+\\)\\)?\\(/.*$\\)" url)
+    (setq server (match-string 1 url)
+          port (string-to-int (or (match-string 3 url) "80"))
+          path (if hiki-http-proxy-server url (match-string 4 url)))
+    (setq str (mapconcat
+               '(lambda (x)
+                  (concat (car x) "=" (cdr x)))
+               data "&"))
+    (setq len (length str))
+    (save-excursion
+      (setq buf (get-buffer-create (concat "*result from " server "*")))
+      (set-buffer buf)
+      (erase-buffer)
+      (setq connection
+            (as-binary-process
+             (open-network-stream (concat "*request to " server "*")
+                                  buf
+                                  (or hiki-http-proxy-server server)
+                                  (or hiki-http-proxy-port port))))
+      (process-send-string
+       connection
+       (concat (if (eq method 'post)
+                   (concat "POST " path)
+                 (concat "GET " path (if (> len 0)
+                                         (concat "?" str))))
+               " HTTP/1.0\r\n"
+               (concat "Host: " server "\r\n")
+	       (if (not (null hiki-http-cookie))
+		   (concat "Cookie: session_id=" (cdr (assoc 'session-id hiki-http-cookie))
+			   "\r\n"))
+               "Connection: close\r\n"
+               "Content-type: application/x-www-form-urlencoded\r\n"
+               (if (and user pass)
+                   (concat "Authorization: Basic "
+                           (base64-encode-string
+                            (concat user ":" pass))
+                           "\r\n"))
+               (if (eq method 'post)
+		   (concat "Content-length: " (int-to-string len) "\r\n"
+			   "\r\n"
+			   str))
+               "\r\n"))
+      (goto-char (point-min))
+      (while (not (search-forward "</body>" nil t))
+        (unless (accept-process-output connection hiki-http-timeout)
+          (error "HTTP fetch: Connection timeout!"))
+        (goto-char (point-min)))
+      (goto-char (point-min))
+      (save-excursion
+        (if (re-search-forward "HTTP/1.[01] \\([0-9][0-9][0-9]\\) \\(.*\\)" nil t)
+            (let ((code (match-string 1))
+                  (desc (match-string 2)))
+	      (if (re-search-forward "Set-Cookie: session_id=\\([^;]+\\);.*" nil t)
+		  (let ((session-id (match-string 1)))
+		    (setq hiki-http-cookie (list
+					    (cons 'session-id session-id)))))
+	      (cond ((equal code "200")
+                     buf)
+		    ((equal code "302")
+		     buf)
+		    (t
+                     (cons code desc)))))))))
+
+(defun hiki-http-cookie-expired ()
+  (setq hiki-http-cookie nil))
 
 (provide 'hiki-mode)
 ;;; hiki-mode.el ends here

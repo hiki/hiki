@@ -2,17 +2,11 @@
 
 EmacsでHikiのページを編集するためのmajor modeです。
 
-! 必要なもの
-tdiary-mode の http.el が必要です。
-http://cvs.sourceforge.net/viewcvs.py/tdiary/contrib/util/tdiary-mode/
-
-! インストール
-パスの通っているところにhiki-mode.elとhttp.elを置いた後、~/.hikiに
+!! インストール
+パスの通っているところにhiki-mode.elを置いた後、~/.hikiに
 
  (setq hiki-site-list '(("Hoge-Hiki" "http://example.com/hiki/")
                         ("Fuga-Hiki" "http://example.jp/hiki/hiki.cgi")))
  (require 'hiki-mode)
 
 のように書けばOK。
-
-
