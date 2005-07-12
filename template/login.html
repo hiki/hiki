@@ -18,6 +18,7 @@
           <p><%= @conf.msg_login_info %></p>
           <% if @contents[:login_result] %><p><%= @contents[:login_result] %></p><% end %>
           <input type="hidden" value="<%= @contents[:cmd] %>" name="c">
+          <input type="hidden" value="<%= @contents[:page] %>" name="p">
           <%= @conf.msg_name %>:<input size="30" name="name" type="text"><br>
           <%= @conf.msg_password %>:<input size="30" name="password" type="password"><br>
           <input type="submit" value="<%= @contents[:button] %>"> 

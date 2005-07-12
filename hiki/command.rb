@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.67 2005-07-12 08:13:19 fdiary Exp $
+# $Id: command.rb,v 1.68 2005-07-12 08:34:17 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -444,15 +444,20 @@ module Hiki
     def cmd_login
       name = @params['name'][0]
       password = @params['password'][0]
+      page = @params['p'][0]
       msg_login_result = nil
       if name && password
         session = Hiki::Session::new( @conf )
-	@plugin.login( name, password )
+        @plugin.login( name, password )
 
         if @plugin.user
           session.user = @plugin.user
           session.save
-          redirect(@cgi, @conf.cgi_name, session_cookie( session.session_id )) 
+          if page && !page.empty?
+            redirect(@cgi, @plugin.hiki_url( page ), session_cookie( session.session_id )) 
+          else
+            redirect(@cgi, @conf.cgi_name, session_cookie( session.session_id )) 
+          end
           return
         else
           msg_login_result = @conf.msg_login_failure
@@ -463,6 +468,7 @@ module Hiki
       data[:title]   = title( @conf.msg_login )
       data[:button]  = @conf.msg_ok
       data[:login_result] = msg_login_result
+      data[:page] = page
       generate_page( data )
     end
 
