@@ -1,4 +1,10 @@
 2005-07-12  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/command.rb (cmd_login): use Plugin#login.
+	* misc/xmlrpc/xmlrpc.cgi: use Plugin#login and Plugin#editable?.
+	save 'editor' and 'title' correctly.
+	* plugin/00default.rb (editable?): add a new method.
+	* hiki/plugin.rb (login): add a new method to set '@user'.
+
 	* hiki-mode.el: support login and logout (by Takeshi UME Imai).
 
 2005-07-09  Kouhei Yanagita <sugi@dream.big.or.jp>

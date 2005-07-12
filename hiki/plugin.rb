@@ -1,4 +1,4 @@
-# $Id: plugin.rb,v 1.27 2005-06-23 06:12:44 fdiary Exp $
+# $Id: plugin.rb,v 1.28 2005-07-12 08:13:19 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
@@ -310,6 +310,19 @@ module Hiki
 
     def admin?
       ( @user == @conf.admin_name ) || @conf.password.empty?
+    end
+
+    def login( name, password )
+      return if @user
+      return nil unless password
+      name ||= @conf.admin_name
+      if @conf.password.empty? || password.crypt( @conf.password ) == @conf.password && name == @conf.admin_name
+	@user = @conf.admin_name
+      elsif @conf['user.list']
+	if @conf['user.list'].has_key?(name) && @conf['user.list'][name] == password.crypt(@conf['user.list'][name])
+	  @user = name
+	end
+      end
     end
 
     private

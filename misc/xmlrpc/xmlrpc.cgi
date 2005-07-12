@@ -47,22 +47,18 @@ server.add_handler('wiki.putPage') do |page, content, attributes|
     options['db']  = @db
     options['params'] = Hash::new( [] )
     @plugin = Hiki::Plugin::new( options, @conf )
+    @plugin.login( attributes['name'], attributes['password'] )
 
-    pass_check = false
-    if p = attributes['password']
-      pass_check = true if @conf.password.size == 0 || p.crypt( @conf.password ) == @conf.password
-    end
-
-    if (@db.is_frozen?( page ) || @conf.options['freeze']) && !pass_check
-      raise "can't edit a frozen page."
-    end
+    raise "can't edit this page." unless @plugin.editable?( page )
 
     md5hex = @db.md5hex( page )
     @plugin.save( page, content.gsub(/\r/, ''), md5hex )
     keyword = attributes['keyword'] || []
-    title = attributes['title'] || page
-    @db.set_attribute(page, [[:keyword, keyword.uniq], [:title, title]])
-    if pass_check
+    title = attributes['title']
+    attr = [[:keyword, keyword.uniq], [:editor, @plugin.user]]
+    attr << [:title, title] if title
+    @db.set_attribute(page, attr)
+    if @plugin.admin? && attributes.has_key?( 'freeze' )
       @db.freeze_page( page, attributes['freeze'] ? true : false)
     end
     ret = true
