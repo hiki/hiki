@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.37 2005-07-09 11:10:05 yanagita Exp $
+# $Id: html_formatter.rb,v 1.38 2005-07-12 08:55:36 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -228,12 +228,15 @@ module Hiki
     end
 
     def tdiary_section(title, section)
+      title.strip!
+      section.strip!
+      return '' if title.empty? && section.empty?
 <<"EOS"
 <div class="day">
-  #{title.chomp}
+  #{title}
   <div class="body">
     <div class="section">
-      #{section.chomp}
+      #{section}
     </div>
   </div>
 </div>

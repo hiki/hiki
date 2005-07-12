@@ -1,4 +1,7 @@
 2005-07-12  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/html_formatter.rb (tdiary_section): return empty
+	strings if contents is empty.
+
 	* hiki/command.rb (cmd_login), plugin/00default.rb (create_menu),
 	template/login.html: redirect to the current page (suggested by
 	hadai).
