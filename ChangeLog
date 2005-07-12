@@ -1,3 +1,6 @@
+2005-07-13  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/repos/cvs.rb (import): use 'hiki' as a vendor-tag.
+
 2005-07-12  Kazuhiko  <kazuhiko@fdiary.net>
 	* style/default/html_formatter.rb (tdiary_section): return empty
 	strings if contents is empty.

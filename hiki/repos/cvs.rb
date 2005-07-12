@@ -1,4 +1,4 @@
-# $Id: cvs.rb,v 1.5 2005-06-16 08:13:18 fdiary Exp $
+# $Id: cvs.rb,v 1.6 2005-07-12 16:01:46 fdiary Exp $
 # Copyright (C) 2003, Koichiro Ohba <koichiro@meadowy.org>
 # Copyright (C) 2003, Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
 # You can distribute this under GPL.
@@ -31,7 +31,7 @@ module Hiki
       oldpwd = Dir.pwd
       begin
         Dir.chdir( "#{@data_path}/#{wiki}/text" )
-        system( "cvs -d #{@root} import -m 'Starting #{wiki} from #{ENV['REMOTE_ADDR']} - #{ENV['REMOTE_HOST']}' #{wiki} T#{wiki} start > /dev/null 2>&1".untaint )
+        system( "cvs -d #{@root} import -m 'Starting #{wiki} from #{ENV['REMOTE_ADDR']} - #{ENV['REMOTE_HOST']}' #{wiki} hiki start > /dev/null 2>&1".untaint )
         Dir.chdir( '..' )
         system( "cvs -d #{@root} co -d text #{wiki} > /dev/null 2>&1" )
       ensure
