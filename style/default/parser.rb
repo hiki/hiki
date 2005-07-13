@@ -1,4 +1,4 @@
-# $Id: parser.rb,v 1.17 2005-07-13 05:03:20 fdiary Exp $
+# $Id: parser.rb,v 1.18 2005-07-13 13:44:41 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'cgi'
@@ -34,7 +34,7 @@ module Hiki
       end
 
       def blockquote( str )
-        str.split(/\n/).collect{|s| %Q|""#{s}\n|}
+        str.split(/\n/).collect{|s| %Q|""#{s}\n|}.join
       end
     end
     
