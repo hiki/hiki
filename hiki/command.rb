@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.70 2005-07-13 06:13:34 fdiary Exp $
+# $Id: command.rb,v 1.71 2005-07-13 09:45:45 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -269,6 +269,11 @@ module Hiki
       link         = nil
       formatter    = nil
       data = get_common_data( @db, @plugin, @conf )
+      if @db.is_frozen?( page ) || @conf.options['freeze']
+	data[:freeze] = ' checked'
+      else
+	data[:freeze] = ''
+      end
 
       if @cmd == 'preview'
         p = @conf.parser::new( @conf ).parse( text.gsub(/\r/, '') )
@@ -277,6 +282,7 @@ module Hiki
         save_button = ''
         data[:keyword] = CGI.escapeHTML( @params['keyword'][0] || '' )
         data[:update_timestamp] = @params['update_timestamp'][0] ? ' checked' : ''
+        data[:freeze] = @params['freeze'][0] ? ' checked' : ''
       elsif @cmd == 'conflict'
         old = text.gsub(/\r/, '')
         new = @db.load( page ) || ''
@@ -311,10 +317,6 @@ module Hiki
       data[:keyword]        ||= CGI.escapeHTML( @db.get_attribute(page, :keyword).join("\n") )
       data[:update_timestamp] ||= ' checked'
       data[:page_title]     = page_title
-      
-      f = @db.is_frozen?( page ) || @conf.options['freeze']
-      data[:freeze]         = f ? ' checked' : ''
-      data[:freeze_msg]     = @conf.msg_freeze if f
       data[:form_proc]      = @plugin.form_proc
 
       generate_page( data )
@@ -343,12 +345,6 @@ module Hiki
         data[:link]      = page.escapeHTML
         generate_page(data)
       else
-        if (@db.is_frozen?( page ) || @conf.options['freeze']) && !@plugin.admin?
-          @cmd = 'edit'
-          cmd_edit( page, text )
-          return
-        end
-
         title = @params['page_title'][0] ? @params['page_title'][0].strip : page
         title = title.size > 0 ? title : page
 

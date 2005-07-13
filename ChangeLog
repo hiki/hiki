@@ -1,4 +1,8 @@
 2005-07-13  Kazuhiko  <kazuhiko@fdiary.net>
+	* template/edit.html: remove needless 'freeze_msg'.
+	* hiki/command.rb (cmd_edit): preserve freeze status in preview
+	mode.
+
 	* hiki/util.rb (redirect): use 'meta refresh' if @conf.use_refresh
 	is set (reported by nkoz and 7743).
 
