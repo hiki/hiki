@@ -1,7 +1,7 @@
 2005-07-13  Kazuhiko  <kazuhiko@fdiary.net>
 	* style/default/parser.rb (heading, link, blockquote),
 	style/rd+/parser.rb (heading, link, blockquote): add format
-	methods suggested by Kouhei Sutou). 
+	methods (suggested by Kouhei Sutou). 
 	* misc/plugin/bbs.rb (bbs_post): use 'Parser.heading'.
 	* misc/plugin/trackback.rb (trackback_post): use 'Parser.link' and
 	'Parser.blockquote'.
