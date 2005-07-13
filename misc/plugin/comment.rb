@@ -1,4 +1,4 @@
-# $Id: comment.rb,v 1.9 2005-06-29 04:26:39 fdiary Exp $
+# $Id: comment.rb,v 1.10 2005-07-13 05:03:20 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 # modified by yoshimi.
@@ -14,7 +14,7 @@ def comment(cols = 60, style = 0)
   style = 0 if style != 1
 
   @comment_num += 1
-  name = @cgi.cookies['auth_name'][0] || ''
+  name = @user || ''
   <<EOS
 <form action="#{@conf.cgi_name}" method="post">
   <div>

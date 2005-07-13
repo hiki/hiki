@@ -1,4 +1,4 @@
-# $Id: parser.rb,v 1.16 2005-06-23 07:37:52 fdiary Exp $
+# $Id: parser.rb,v 1.17 2005-07-13 05:03:20 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'cgi'
@@ -23,6 +23,21 @@ module Hiki
   end
 
   class Parser_default
+
+    class << self
+      def heading( str, level = 1 )
+        '!' * level + str
+      end
+
+      def link( link_str, str = nil )
+        str ? "[[#{str}|#{link_str}]]" : "[[#{link_str}]]"
+      end
+
+      def blockquote( str )
+        str.split(/\n/).collect{|s| %Q|""#{s}\n|}
+      end
+    end
+    
     attr_reader :stack
 
     REF_OPEN   = "[["
@@ -89,7 +104,7 @@ module Hiki
     def parse_line( line )
       case line
       when %r|^//|
-	# comment
+        # comment
       when /^(\!{1,5})(.+)$/
         @cur_stack.push( {:e => :heading_open, :lv => $1.size} )
         inline( $2 )

@@ -1,4 +1,4 @@
-# $Id: bbs.rb,v 1.7 2005-06-07 09:10:55 fdiary Exp $
+# $Id: bbs.rb,v 1.8 2005-07-13 05:03:20 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 add_body_enter_proc(Proc.new do
@@ -8,7 +8,7 @@ end)
 
 def bbs
   @bbs_num += 1
-  name = @cgi.cookies['auth_name'][0] || ''
+  name = @user || ''
 
   <<EOS
 <form action="#{@conf.cgi_name}" method="post">
@@ -46,7 +46,7 @@ def bbs_post
     if /^\{\{bbs\}\}/ =~ l && flag == false
       if count == bbs_num
         content << "#{l}\n"
-        content << "!#{subject} - #{name} (#{format_date(Time::now)})\n"
+        content << @conf.parser.heading( "#{subject} - #{name} (#{format_date(Time::now)})\n" )
         content << "#{msg}\n"
         content << "{{comment}}\n"
         flag = true

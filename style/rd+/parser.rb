@@ -7,9 +7,26 @@
 
 require 'rd/rdfmt'
 require 'cgi'
+require 'uri'
 
 module Hiki
   class Parser_rd
+
+    class << self
+      def heading( str, level = 1 )
+        '=' * level + str
+      end
+
+      def link( link_str, str = nil )
+	link_str = "URL:#{link_str}" if link_str.index( URI.regexp ) == 0
+        str ? "((<#{str}|#{link_str}>))" : "((<#{link_str}>))"
+      end
+
+      def blockquote( str )
+        str # RD does not support blockquote.
+      end
+    end
+    
     def initialize( conf )
     end
 
