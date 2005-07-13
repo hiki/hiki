@@ -1,4 +1,12 @@
 2005-07-13  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/text/rd+/TextFormattingRules: revise URIs about the RD
+	format.
+
+	* style/default/parser.rb (Parser_default.heading,
+	Parser_default.link), style/rd+/parser.rb (Parser_rd.heading,
+	Parser_rd.link): add format methods suggested by Kouhei Sutou).
+	* misc/plugin/bbs.rb (bbs_post): use 'Parser.heading'.
+
 	* plugin/00default.rb (create_menu): code cleanup.
 	(creatable?): add a new method.
 	* style/default/html_formatter.rb (make_link): use

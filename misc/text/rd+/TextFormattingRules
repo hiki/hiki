@@ -1,7 +1,7 @@
 = rd+ styleの記述方法
-ドキュメントはRDで記述します。詳しくは((<RDP|URL:http://helium.ruby-lang.org/~rubikitch/RDP.cgi?cmd=view&name=RD>))を参照してください。
+ドキュメントはRDで記述します。詳しくは((<RD事始め|URL:http://www.rubyist.net/~rubikitch/computer/rd-intro/>))を参照してください。
 
-((<RWikiのも|URL:http://rwiki.jin.gr.jp/cgi-bin/rw-cgi.rb?cmd=view;name=RD%A4%CE%BD%F1%A4%AD%CA%FD>))わかりやすいです(他力本願(^^;))。
+((<RWiki:RDの書き方>))わかりやすいです(他力本願(^^;))。
 
 == rd+拡張
 === ModuleNames
