@@ -1,4 +1,4 @@
-# $Id: hikiconf.rb.sample.en,v 1.3 2005-07-08 06:00:22 fdiary Exp $
+# $Id: hikiconf.rb.sample.en,v 1.4 2005-07-13 10:32:33 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #=================================
@@ -76,6 +76,11 @@
 #    This is set automatically in most cases, but you should specify it
 #    when it works wrong (for example, in case of a reverse proxy.)
 #@base_url        = "http://example.com/hiki/"
+
+# The way to redirect. (Optional)
+#    Set true if redirection by the 'Location' header does not work.
+#    (eg. `http://xreafaq.com/cgi.html#37'.)
+#@use_refresh = true
 
 # The cache directory. (Optional)
 #    Specify the directory for cache used by plugins.
