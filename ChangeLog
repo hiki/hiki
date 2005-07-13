@@ -1,3 +1,6 @@
+2005-07-13  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* test/test_repos_default.rb: add unit tests for ReposDefault.
+
 2005-07-13  Kazuhiko  <kazuhiko@fdiary.net>
 	* template/edit.html: remove needless 'freeze_msg'.
 	* hiki/command.rb (cmd_edit): preserve freeze status in preview
