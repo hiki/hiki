@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.69 2005-07-13 01:43:07 fdiary Exp $
+# $Id: command.rb,v 1.70 2005-07-13 06:13:34 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -143,7 +143,7 @@ module Hiki
     
     def cmd_view
       if /^\./ =~ @p
-        redirect(@cgi, @conf.cgi_name) 
+        redirect(@cgi, @conf.index_url) 
         return
       end
       unless @db.exist?( @p )
@@ -371,7 +371,7 @@ module Hiki
         end
 
         @db.freeze_page( page, @params['freeze'][0] ? true : false) if @plugin.admin?
-        redirect(@cgi, @plugin.hiki_url(page))
+        redirect(@cgi, @conf.base_url + @plugin.hiki_url(page))
       end
     end
 
@@ -457,9 +457,9 @@ module Hiki
           session.user = @plugin.user
           session.save
           if page && !page.empty?
-            redirect(@cgi, @plugin.hiki_url( page ), session_cookie( session.session_id )) 
+            redirect(@cgi, @conf.base_url + @plugin.hiki_url( page ), session_cookie( session.session_id )) 
           else
-            redirect(@cgi, @conf.cgi_name, session_cookie( session.session_id )) 
+            redirect(@cgi, @conf.index_url, session_cookie( session.session_id )) 
           end
           return
         else
@@ -477,7 +477,7 @@ module Hiki
 
     def cmd_admin
       unless @plugin.admin?
-        redirect(@cgi, @conf.cgi_name)
+        redirect(@cgi, @conf.index_url)
         return
       end
       data = get_common_data( @db, @plugin, @conf )
@@ -523,7 +523,7 @@ module Hiki
       end
 
       if redirect_mode and result
-        redirect(@cgi, @plugin.hiki_url(@p))
+        redirect(@cgi, @conf.base_url + @plugin.hiki_url(@p))
       end
     end
 
@@ -532,7 +532,7 @@ module Hiki
         cookies = [session_cookie(session_id, -1)]
         Hiki::Session::new( @conf, session_id ).delete
       end
-      redirect(@cgi, @conf.cgi_name, cookies)
+      redirect(@cgi, @conf.index_url, cookies)
     end
 
     def cookie(name, value, max_age = Session::MAX_AGE)

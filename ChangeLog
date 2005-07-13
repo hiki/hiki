@@ -1,4 +1,7 @@
 2005-07-13  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/command.rb: use an absolute path in the 'redirect'
+	method (reported by 7743).
+
 	* style/default/parser.rb (heading, link, blockquote),
 	style/rd+/parser.rb (heading, link, blockquote): add format
 	methods (suggested by Kouhei Sutou). 
