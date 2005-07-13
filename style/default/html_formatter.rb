@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.38 2005-07-12 08:55:36 fdiary Exp $
+# $Id: html_formatter.rb,v 1.39 2005-07-13 01:43:06 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -301,7 +301,7 @@ EOS
           s[:html] << @plugin.make_anchor(outer_alias[0], outer_alias[1], 'external')
         else
           missing_anchor_title = @conf.msg_missing_anchor_title % [ disp.escapeHTML ]
-          wikiname_anchor = @plugin.auth? ? "#{disp.escapeHTML}<a class=\"nodisp\" href=\"#{@conf.cgi_name}?c=edit;p=#{t[:href].escape}\" title=\"#{missing_anchor_title}\">?</a>" : disp.escapeHTML
+          wikiname_anchor = @plugin.creatable? ? "#{disp.escapeHTML}<a class=\"nodisp\" href=\"#{@conf.cgi_name}?c=edit;p=#{t[:href].escape}\" title=\"#{missing_anchor_title}\">?</a>" : disp.escapeHTML
           s[:html] << wikiname_anchor
         end
       end

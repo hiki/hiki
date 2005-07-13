@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.68 2005-07-12 08:34:17 fdiary Exp $
+# $Id: command.rb,v 1.69 2005-07-13 01:43:07 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -10,6 +10,8 @@ require 'hiki/session'
 include Hiki::Util
 
 module Hiki
+  class PermissionError < StandardError; end
+
   class Command
     def initialize(cgi, db, conf)
       @db     = db
@@ -63,10 +65,10 @@ module Hiki
       begin
         raise if !@p && ['view', 'edit', 'diff', 'save'].index( @cmd )
         if @cmd == 'edit'
-          raise 'Permission denied' unless @plugin.auth?
+          raise PermissionError, 'Permission denied' unless @plugin.editable?
           cmd_edit( @p )
         elsif @cmd == 'save'
-          raise 'Permission denied' unless @plugin.auth?
+          raise PermissionError, 'Permission denied' unless @plugin.editable?
           if @params['save'][0]
             cmd_save(@p, @params['contents'][0], @params['md5hex'][0], @params['update_timestamp'][0])
           elsif @params['preview'][0]
@@ -77,7 +79,7 @@ module Hiki
             cmd_edit( @p, @plugin.text )
           end
         elsif @cmd == 'create'  
-          raise 'Permission denied' unless @plugin.auth?
+          raise PermissionError, 'Permission denied' unless @plugin.editable?
           send( "cmd_#{@cmd}" )
         else
           if @conf.use_plugin and @plugin.plugin_command.index(@cmd) and @plugin.respond_to?(@cmd)
@@ -86,8 +88,9 @@ module Hiki
             send( "cmd_#{@cmd}" )
           end
         end
-      rescue NoMethodError
+      rescue NoMethodError, PermissionError
         data = get_common_data( @db, @plugin, @conf )
+        data[:message] = CGI::escapeHTML( $!.message )
         generate_error_page( data )
       end
     end

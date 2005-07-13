@@ -1,4 +1,4 @@
-# $Id: src.rb,v 1.7 2005-03-03 15:53:55 fdiary Exp $
+# $Id: src.rb,v 1.8 2005-07-13 01:43:06 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 def src
@@ -10,7 +10,7 @@ def src
 <head>
   <meta http-equiv="Content-Language" content="ja">
   <meta http-equiv="Content-Type" content="text/html; charset=EUC-JP">
-  <title id=title></title>
+  <title>#{CGI::escapeHTML(page_name(@page))}</title>
 </head>
 <body>
 <div>

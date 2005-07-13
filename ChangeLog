@@ -1,4 +1,15 @@
 2005-07-13  Kazuhiko  <kazuhiko@fdiary.net>
+	* plugin/00default.rb (create_menu): code cleanup.
+	(creatable?): add a new method.
+	* style/default/html_formatter.rb (make_link): use
+	'Plugin#creatable?' instead of 'Plugin#auth?' in missing anchors.
+
+	* misc/plugin/src.rb (src): add a title.
+
+	* hiki/command.rb (PermissionError): add a new exception class.
+	(dispatch): add an error message in the error page.
+	* template/error.html: display an error message.
+
 	* template/view.html: wrap main contents with 'div.main' and wrap
 	preview contents with 'div.preview'.
 

@@ -1,4 +1,4 @@
-# $Id: 00default.rb,v 1.43 2005-07-12 08:34:17 fdiary Exp $
+# $Id: 00default.rb,v 1.44 2005-07-13 01:43:06 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #==============================
@@ -171,20 +171,19 @@ add_edit_proc {
 #===== menu
 def create_menu(data, command)
   menu = []
-  editable = %w(view edit diff)
 
   if @conf.bot?
     menu << %Q!<a accesskey="i" href="#{@conf.cgi_name}?c=index">#{@conf.msg_index}</a>!
   else
-    menu << %Q!<a accesskey="c" href="#{@conf.cgi_name}?c=create">#{@conf.msg_create}</a>! if editable?( nil )
-    menu << %Q!<a accesskey="e" href="#{@conf.cgi_name}?c=edit;p=#{@page.escape}">#{@conf.msg_edit}</a>! if editable.index(command) && @page && editable?
-    menu << %Q!<a accesskey="d" href="#{@conf.cgi_name}?c=diff;p=#{@page.escape}">#{@conf.msg_diff}</a>! if editable.index(command) && @page && editable?
+    menu << %Q!<a accesskey="c" href="#{@conf.cgi_name}?c=create">#{@conf.msg_create}</a>! if creatable?
+    menu << %Q!<a accesskey="e" href="#{@conf.cgi_name}?c=edit;p=#{@page.escape}">#{@conf.msg_edit}</a>! if @page && editable?
+    menu << %Q!<a accesskey="d" href="#{@conf.cgi_name}?c=diff;p=#{@page.escape}">#{@conf.msg_diff}</a>! if @page && editable?
     menu << %Q!#{hiki_anchor( 'FrontPage', page_name('FrontPage') )}!
     menu << %Q!<a accesskey="i" href="#{@conf.cgi_name}?c=index">#{@conf.msg_index}</a>!
     menu << %Q!<a accesskey="s" href="#{@conf.cgi_name}?c=search">#{@conf.msg_search}</a>!
     menu << %Q!<a accesskey="r" href="#{@conf.cgi_name}?c=recent">#{@conf.msg_recent_changes}</a>!
     @plugin_menu.each do |c|
-      next if c[:option].has_key?('p') && !editable.index(command)
+      next if c[:option].has_key?('p') && !(@page && editable?)
       cmd =  %Q!<a href="#{@conf.cgi_name}?c=#{c[:command]}!
       c[:option].each do |key, value|
         value = @page.escape if key == 'p'
@@ -275,8 +274,12 @@ def editable?( page = @page )
   if page
     auth? && ((!@db.is_frozen?( page ) && !@conf.options['freeze']) || admin?)
   else
-    auth? && (!@conf.options['freeze'] || admin?)
+    creatable?
   end
+end
+
+def creatable?
+  auth? && (!@conf.options['freeze'] || admin?)
 end
 
 export_plugin_methods(:toc, :toc_here, :recent, :br)
