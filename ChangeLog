@@ -1,4 +1,7 @@
 2005-07-13  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/util.rb (redirect): use 'meta refresh' if @conf.use_refresh
+	is set (reported by nkoz and 7743).
+
 	* hiki/command.rb: use an absolute path in the 'redirect'
 	method (reported by 7743).
 
