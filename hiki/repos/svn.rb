@@ -1,4 +1,4 @@
-# $Id: svn.rb,v 1.11 2005-06-24 02:05:11 fdiary Exp $
+# $Id: svn.rb,v 1.12 2005-07-14 12:32:07 yanagita Exp $
 # Copyright (C) 2003, Koichiro Ohba <koichiro@meadowy.org>
 # Copyright (C) 2003, Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
 # You can distribute this under GPL.
@@ -8,7 +8,7 @@ require 'fileutils'
 
 # Subversion Repository Backend
 module Hiki
-  class ReposSvnBase < ReposDefault
+  class ReposSvnBase < ReposBase
     def initialize(root, data_path)
       super
       if /^[a-z]:/i =~ @root

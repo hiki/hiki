@@ -1,4 +1,4 @@
-# $Id: cvs.rb,v 1.6 2005-07-12 16:01:46 fdiary Exp $
+# $Id: cvs.rb,v 1.7 2005-07-14 12:32:07 yanagita Exp $
 # Copyright (C) 2003, Koichiro Ohba <koichiro@meadowy.org>
 # Copyright (C) 2003, Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
 # You can distribute this under GPL.
@@ -7,7 +7,7 @@ require 'hiki/repos/default'
 
 # CVS Repository Backend
 module Hiki
-  class ReposCvs < ReposDefault
+  class ReposCvs < ReposBase
     def setup()
       oldpwd = Dir.pwd
       begin

@@ -1,4 +1,4 @@
-# $Id: default.rb,v 1.4 2005-06-20 01:31:32 fdiary Exp $
+# $Id: default.rb,v 1.5 2005-07-14 12:32:07 yanagita Exp $
 # Copyright (C) 2003, Koichiro Ohba <koichiro@meadowy.org>
 # Copyright (C) 2003, Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
 # You can distribute this under GPL.
@@ -12,23 +12,36 @@ module Hiki
       @data_path = data_path
     end
 
-    def setup()
+    def setup
+      raise "Please override this function."
     end
 
     def imported?( wiki )
-      return true
+      raise "Please override this function."
     end
 
     def import( wiki )
+      raise "Please override this function."
     end
 
     def update( wiki )
+      raise "Please override this function."
     end
 
     def commit(page, log = nil)
+      raise "Please override this function."
     end
 
     def delete(page, log = nil)
+      raise "Please override this function."
+    end
+
+    def get_revision(page, revision)
+      raise "Please override this function."
+    end
+
+    def revisions(page)
+      raise "Please override this function."
     end
 
     private
@@ -40,12 +53,31 @@ module Hiki
 
   # Null Repository Backend
   class ReposDefault < ReposBase
+    def setup
+    end
+
+    def imported?(wiki)
+      return true
+    end
+
+    def import(wiki)
+    end
+
+    def update(wiki)
+    end
+
+    def commit(page, log = nil)
+    end
+
+    def delete(page, log = nil)
+    end
+
     def get_revision(page, revision)
       revision = revision.to_i
       begin
-	File::read("#{rev_path(revision)}/#{page.escape.untaint}")
+        File::read("#{rev_path(revision)}/#{page.escape.untaint}")
       rescue
-	''
+        ''
       end
     end
 
@@ -61,9 +93,9 @@ module Hiki
     def rev_path(revision)
       case revision
       when 2
-	"#{@data_path}/text"
+        "#{@data_path}/text"
       when 1
-	"#{@data_path}/backup"
+        "#{@data_path}/backup"
       end
     end
   end

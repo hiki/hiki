@@ -2,6 +2,12 @@
 	* misc/hikifarm/index.cgi (run): not to use Hiki::Util.redirect as
 	a module function to avoid an error.
 
+	* misc/hikifarm/cvs.rb, misc/hikifarm/svn.rb: ReposCvs and ReposSvnBase are
+	derived from ReposBase instead of ReposDefault.
+
+	* misc/hikifarm/default.rb: methods of ReposBase raises an exception because 
+	it should not to be instantiated.
+
 2005-07-14  Kazuhiko  <kazuhiko@fdiary.net>
 	* Hiki 0.8.1 released!
 
