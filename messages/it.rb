@@ -1,4 +1,4 @@
-# $Id: it.rb,v 1.14 2005-07-08 05:39:06 fdiary Exp $
+# $Id: it.rb,v 1.15 2005-07-14 01:50:25 fdiary Exp $
 # it.rb
 #
 # Copyright (C) 2003 Luigi Maselli <metnik@tiscali.it>
@@ -35,7 +35,7 @@ module Hiki
     def msg_time_format; "%d-%m-%Y #DAY# %H:%M:%S" end
     def msg_date_format; "%d-%m-%Y " end
     def msg_day; %w(Dom Lun Mar Mer Gio Ven Sab) end
-    def msg_preview; 'Conferma il risultato sotto e salvalo cliccando sul pulsante Salva se non ci sono errori' end
+    def msg_preview; 'Conferma il risultato sotto e salvalo cliccando sul pulsante Salva se non ci sono errori -&gt;<a href="#form">Modulo</a>' end
     def msg_mail_on; 'Invia updated-mail' end #da verificare
     def msg_mail_off; 'Non inviare updated-mail' end #da verificare
     def msg_use; 'Usa' end

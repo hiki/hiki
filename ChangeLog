@@ -1,3 +1,8 @@
+2005-07-14  Kazuhiko  <kazuhiko@fdiary.net>
+	* messages/en.rb, messages/fr.rb, messages/it.rb,
+	messages/ja.rb (msg_preview), template/edit.html: add a link to
+	the editing form (suggested by Kouhei Sutou).
+
 2005-07-13  Kouhei Yanagita <sugi@dream.big.or.jp>
 	* test/test_repos_default.rb: add unit tests for ReposDefault.
 

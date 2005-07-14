@@ -1,4 +1,4 @@
-# $Id: en.rb,v 1.17 2005-06-30 07:10:26 fdiary Exp $
+# $Id: en.rb,v 1.18 2005-07-14 01:50:25 fdiary Exp $
 # en.rb
 #
 # Copyright (C) 2003 Masao Mutoh <mutoh@highway.ne.jp>
@@ -35,7 +35,7 @@ module Hiki
     def msg_time_format; "%Y-%m-%d #DAY# %H:%M:%S" end
     def msg_date_format; "%Y-%m-%d " end
     def msg_day; %w(Sun Mon Tue Wed Thr Fri Sat) end
-    def msg_preview; 'Confirm the content below.  If there are no problems, save it with the save button.' end
+    def msg_preview; 'Confirm the content below.  If there are no problems, save it with the save button. -&gt;<a href="#form">Form</a>' end
     def msg_mail_on; 'Send update e-mails' end
     def msg_mail_off; 'Do not send update e-mails' end
     def msg_use; 'Use' end

@@ -1,4 +1,4 @@
-# $Id: fr.rb,v 1.14 2005-07-08 05:39:06 fdiary Exp $
+# $Id: fr.rb,v 1.15 2005-07-14 01:50:25 fdiary Exp $
 # fr.rb
 #
 # Copyright (C) 2003 Laurent Sansonetti <laurent@datarescue.be>
@@ -35,7 +35,7 @@ module Hiki
     def msg_time_format; "%Y-%m-%d #DAY# %H:%M:%S" end
     def msg_date_format; "%Y-%m-%d " end
     def msg_day; %w(Dimanche Lundi Mardi Mercredi Jeudi Vendredi Samedi) end
-    def msg_preview; 'Ceci est une prévisualisation de la page.  Si tout est correct, veuillez confirmer en cliquant sur le bouton Sauver.' end
+    def msg_preview; 'Ceci est une prévisualisation de la page.  Si tout est correct, veuillez confirmer en cliquant sur le bouton Sauver. -&gt;<a href="#form">Formulaire</a>' end
     def msg_mail_on; 'Envoyer un e-mail de notification' end
     def msg_mail_off; 'Ne pas envoyer un e-mail de notification' end
     def msg_use; 'Utiliser' end

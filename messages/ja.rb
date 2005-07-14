@@ -1,4 +1,4 @@
-# $Id: ja.rb,v 1.13 2005-06-23 03:14:06 fdiary Exp $
+# $Id: ja.rb,v 1.14 2005-07-14 01:50:25 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # You can redistribute it and/or modify it under the terms of
 # the Ruby's licence.
@@ -27,7 +27,7 @@ module Hiki
     def msg_time_format; "%Y-%m-%d #DAY# %H:%M:%S" end
     def msg_date_format; "%Y-%m-%d " end
     def msg_day; %w(日 月 火 水 木 金 土) end
-    def msg_preview; '以下のプレビューを確認し、問題がなければページの下にある保存ボタンで保存してください' end
+    def msg_preview; '以下のプレビューを確認し、問題がなければページの下にある保存ボタンで保存してください →<a href="#form">編集フォーム</a>' end
     def msg_mail_on; 'メールで通知' end
     def msg_mail_off; '非通知' end
     def msg_use; '使用する' end
