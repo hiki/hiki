@@ -1,4 +1,7 @@
 2005-07-14  Kazuhiko  <kazuhiko@fdiary.net>
+	* template/i.edit.html: remove needless 'freeze_msg'. add a link
+	to the editing form.
+
 	* plugin/00default.rb, template/edit.html, template/i.edit.html:
 	remove 'accesskey' attributes (closes #9).
 
