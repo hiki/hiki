@@ -472,9 +472,7 @@ class App
         raise '英数字のみ指定できます' if /\A[a-zA-Z0-9]+\z/ !~ name
         @farm.create_wiki(name, @conf.hiki, @conf.cgi_name, @conf.data_path, @conf.default_pages)
 
-        require 'hiki/util'
-        Hiki::Util.module_eval('module_function :redirect')
-        Hiki::Util.redirect(@cgi, hikifarm_uri)
+        print @cgi.header({'Location' => hikifarm_uri})
         exit
       rescue
         msg = %Q|#{$!.to_s}\n#{$@.join("\n")}|
