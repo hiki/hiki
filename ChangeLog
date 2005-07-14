@@ -1,4 +1,7 @@
 2005-07-14  Kazuhiko  <kazuhiko@fdiary.net>
+	* plugin/00default.rb, template/edit.html, template/i.edit.html:
+	remove 'accesskey' attributes (closes #9).
+
 	* messages/en.rb, messages/fr.rb, messages/it.rb,
 	messages/ja.rb (msg_preview), template/edit.html: add a link to
 	the editing form (suggested by Kouhei Sutou).

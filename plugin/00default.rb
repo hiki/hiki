@@ -1,4 +1,4 @@
-# $Id: 00default.rb,v 1.44 2005-07-13 01:43:06 fdiary Exp $
+# $Id: 00default.rb,v 1.45 2005-07-14 02:08:34 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #==============================
@@ -173,15 +173,15 @@ def create_menu(data, command)
   menu = []
 
   if @conf.bot?
-    menu << %Q!<a accesskey="i" href="#{@conf.cgi_name}?c=index">#{@conf.msg_index}</a>!
+    menu << %Q!<a href="#{@conf.cgi_name}?c=index">#{@conf.msg_index}</a>!
   else
-    menu << %Q!<a accesskey="c" href="#{@conf.cgi_name}?c=create">#{@conf.msg_create}</a>! if creatable?
-    menu << %Q!<a accesskey="e" href="#{@conf.cgi_name}?c=edit;p=#{@page.escape}">#{@conf.msg_edit}</a>! if @page && editable?
-    menu << %Q!<a accesskey="d" href="#{@conf.cgi_name}?c=diff;p=#{@page.escape}">#{@conf.msg_diff}</a>! if @page && editable?
+    menu << %Q!<a href="#{@conf.cgi_name}?c=create">#{@conf.msg_create}</a>! if creatable?
+    menu << %Q!<a href="#{@conf.cgi_name}?c=edit;p=#{@page.escape}">#{@conf.msg_edit}</a>! if @page && editable?
+    menu << %Q!<a href="#{@conf.cgi_name}?c=diff;p=#{@page.escape}">#{@conf.msg_diff}</a>! if @page && editable?
     menu << %Q!#{hiki_anchor( 'FrontPage', page_name('FrontPage') )}!
-    menu << %Q!<a accesskey="i" href="#{@conf.cgi_name}?c=index">#{@conf.msg_index}</a>!
-    menu << %Q!<a accesskey="s" href="#{@conf.cgi_name}?c=search">#{@conf.msg_search}</a>!
-    menu << %Q!<a accesskey="r" href="#{@conf.cgi_name}?c=recent">#{@conf.msg_recent_changes}</a>!
+    menu << %Q!<a href="#{@conf.cgi_name}?c=index">#{@conf.msg_index}</a>!
+    menu << %Q!<a href="#{@conf.cgi_name}?c=search">#{@conf.msg_search}</a>!
+    menu << %Q!<a href="#{@conf.cgi_name}?c=recent">#{@conf.msg_recent_changes}</a>!
     @plugin_menu.each do |c|
       next if c[:option].has_key?('p') && !(@page && editable?)
       cmd =  %Q!<a href="#{@conf.cgi_name}?c=#{c[:command]}!
@@ -193,9 +193,9 @@ def create_menu(data, command)
       menu << cmd
     end
     menu_proc.each {|i| menu << i}
-    menu << %Q!<a accesskey="l" href="#{@conf.cgi_name}?c=login#{@page ? ";p=#{@page}" : ""}">#{@conf.msg_login}</a>! unless @user || @conf.password.empty?
-    menu << %Q!<a accesskey="m" href="#{@conf.cgi_name}?c=admin">#{@conf.msg_admin}</a>! if admin?
-    menu << %Q!<a accesskey="l" href="#{@conf.cgi_name}?c=logout">#{@conf.msg_logout}</a>! if @user && !@conf.password.empty?
+    menu << %Q!<a href="#{@conf.cgi_name}?c=login#{@page ? ";p=#{@page}" : ""}">#{@conf.msg_login}</a>! unless @user || @conf.password.empty?
+    menu << %Q!<a href="#{@conf.cgi_name}?c=admin">#{@conf.msg_admin}</a>! if admin?
+    menu << %Q!<a href="#{@conf.cgi_name}?c=logout">#{@conf.msg_logout}</a>! if @user && !@conf.password.empty?
   end
   menu
 end
