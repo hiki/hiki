@@ -9,6 +9,7 @@
 <form method="post" action="<%= @contents[:cgi_name] %>">
 <input type="hidden" value="admin" name="c">
 <input type="hidden" name="conf" value="<%=@contents[:key]%>">
+<input type="hidden" name="session_id" value="<%=@contents[:session_id]%>">
 <h2><%=@plugin.conf_label( @contents[:key] )%></h2>
 <%=@plugin.conf_proc( @contents[:key] )%>
 <input type="submit" name="saveconf" value="OK">

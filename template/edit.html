@@ -20,6 +20,7 @@
     <input type="hidden" name="p" value="<%= @contents[:pagename] %>">
     <input type="hidden" name="c" value="save">
     <input type="hidden" name="md5hex" value="<%= @contents[:md5hex] %>">
+    <input type="hidden" name="session_id" value="<%=@contents[:session_id]%>">
     <a name="form"></a>
     <p>
       <%=@conf.msg_title%> <input type="text" name="page_title" size="60" value="<%= @contents[:page_title] %>">

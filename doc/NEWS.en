@@ -1,5 +1,6 @@
 ! Changes in 0.8.1
 
+* fix 'Cross-Site Request Forgeries' vulnerabilities.
 * set @lang automatically when @lang is not set.
 * fix a bug in saving with XML-RPC.
 * fix miscellaneous bugs.

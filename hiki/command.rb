@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.71 2005-07-13 09:45:45 fdiary Exp $
+# $Id: command.rb,v 1.72 2005-07-14 03:31:31 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -53,9 +53,9 @@ module Hiki
       options['params'] = @params
 
       @plugin = Plugin::new( options, @conf )
-      session_id = @cgi.cookies['session_id'][0]
-      if session_id
-        @plugin.user = Hiki::Session::new( @conf, session_id ).user
+      @session_id = @cgi.cookies['session_id'][0]
+      if @session_id
+        @plugin.user = Hiki::Session::new( @conf, @session_id ).user
       end
       @body_enter = @plugin.body_enter_proc
     end
@@ -137,6 +137,7 @@ module Hiki
     end
 
     def cmd_preview
+      raise PermissionError if @session_id && @session_id != @cgi.params['session_id'][0]
       @cmd = 'preview'
       cmd_edit( @p, @params['contents'][0], @conf.msg_preview, @params['page_title'][0] )
     end
@@ -270,9 +271,9 @@ module Hiki
       formatter    = nil
       data = get_common_data( @db, @plugin, @conf )
       if @db.is_frozen?( page ) || @conf.options['freeze']
-	data[:freeze] = ' checked'
+        data[:freeze] = ' checked'
       else
-	data[:freeze] = ''
+        data[:freeze] = ''
       end
 
       if @cmd == 'preview'
@@ -318,6 +319,7 @@ module Hiki
       data[:update_timestamp] ||= ' checked'
       data[:page_title]     = page_title
       data[:form_proc]      = @plugin.form_proc
+      data[:session_id]     = @session_id || ''
 
       generate_page( data )
     end
@@ -335,6 +337,7 @@ module Hiki
     end
 
     def cmd_save( page, text, md5hex, update_timestamp = true )
+      raise PermissionError if @session_id && @session_id != @cgi.params['session_id'][0]
       subject = ''
       if text.size == 0 && @plugin.admin?
         @db.delete( page )
@@ -472,15 +475,17 @@ module Hiki
     end
 
     def cmd_admin
-      unless @plugin.admin?
-        redirect(@cgi, @conf.index_url)
-        return
-      end
+      raise PermissionError, 'Permission denied' unless @plugin.admin?
+
       data = get_common_data( @db, @plugin, @conf )
       data[:key]            = @cgi.params['conf'][0] || 'default'
 
       data[:title]          = title( @conf.msg_admin )
-      data[:save_config]    = true if @cgi.params['saveconf'][0]
+      data[:session_id]     = @session_id
+      if @cgi.params['saveconf'][0]
+        raise PermissionError if @session_id && @session_id != @cgi.params['session_id'][0]
+        data[:save_config]    = true
+      end
       generate_page( data )
     end
 

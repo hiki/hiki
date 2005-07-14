@@ -1,4 +1,15 @@
 2005-07-14  Kazuhiko  <kazuhiko@fdiary.net>
+	* Hiki 0.8.1 released!
+
+	* hiki/command.rb (cmd_preview, cmd_save, cmd_admin),
+	template/adminform.html, template/edit.html,
+	template/i.adminform.html, template/i.edit.html: check the
+	session_id in cgi queries to avoid 'Cross-Site Request Forgeries'
+	vulnerabilities.
+
+	* hiki/command.rb (cmd_admin): raise PermissionError instead of
+	redirection to FrontPage.
+
 	* template/i.edit.html: remove needless 'freeze_msg'. add a link
 	to the editing form.
 
