@@ -1,4 +1,4 @@
-# $Id: plugin.rb,v 1.28 2005-07-12 08:13:19 fdiary Exp $
+# $Id: plugin.rb,v 1.29 2005-07-15 05:02:55 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
@@ -299,6 +299,7 @@ module Hiki
       src << "\n"
       result = @db.store(page, src, md5, update_timestamp)
       if result
+        @db.set_attribute( page, :editor => @user )
         @db.delete_cache( page )
         begin
           update_proc
@@ -317,11 +318,11 @@ module Hiki
       return nil unless password
       name ||= @conf.admin_name
       if @conf.password.empty? || password.crypt( @conf.password ) == @conf.password && name == @conf.admin_name
-	@user = @conf.admin_name
+        @user = @conf.admin_name
       elsif @conf['user.list']
-	if @conf['user.list'].has_key?(name) && @conf['user.list'][name] == password.crypt(@conf['user.list'][name])
-	  @user = name
-	end
+        if @conf['user.list'].has_key?(name) && @conf['user.list'][name] == password.crypt(@conf['user.list'][name])
+          @user = name
+        end
       end
     end
 

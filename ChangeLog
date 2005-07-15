@@ -1,12 +1,17 @@
+2005-07-15  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/config.rb (load): now default vaule of @use_plugin is true.
+	set @cgi_name to './' if it is empty.
+	* hiki/plugin.rb (save): set a ':editor' attribute.
+
 2005-07-14  Kouhei Yanagita <sugi@dream.big.or.jp>
 	* misc/hikifarm/index.cgi (run): not to use Hiki::Util.redirect as
 	a module function to avoid an error.
 
-	* misc/hikifarm/cvs.rb, misc/hikifarm/svn.rb: ReposCvs and ReposSvnBase are
-	derived from ReposBase instead of ReposDefault.
+	* misc/hikifarm/cvs.rb, misc/hikifarm/svn.rb: ReposCvs and
+	ReposSvnBase are derived from ReposBase instead of ReposDefault.
 
-	* misc/hikifarm/default.rb: methods of ReposBase raises an exception because 
-	it should not to be instantiated.
+	* misc/hikifarm/default.rb: methods of ReposBase raises an
+	exception because it should not to be instantiated.
 
 2005-07-14  Kazuhiko  <kazuhiko@fdiary.net>
 	* Hiki 0.8.1 released!

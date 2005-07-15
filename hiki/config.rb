@@ -1,10 +1,10 @@
-# $Id: config.rb,v 1.71 2005-07-14 03:31:31 fdiary Exp $
+# $Id: config.rb,v 1.72 2005-07-15 05:02:55 fdiary Exp $
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
 
 HIKI_VERSION  = '0.8.1'
-HIKI_RELEASE_DATE = '2005-07-14'
+HIKI_RELEASE_DATE = '2005-07-15'
 
 require 'cgi'
 require 'hiki/command'
@@ -129,8 +129,8 @@ module Hiki
 
       # default values
       @smtp_server   ||= 'localhost'
-      @use_plugin    ||= false
-      @site_name     ||= 'hoge hoge'
+      @use_plugin      = true if @use_plugin.nil?
+      @site_name     ||= 'Hiki'
       @author_name   ||= ''
       @mail_on_update||= false
       @mail          ||= ''
@@ -143,11 +143,11 @@ module Hiki
       @auto_link     ||= false
       @cache_path    ||= "#{@data_path}/cache"
       @style         ||= 'default'
-      @hilight_keys  ||= true
+      @hilight_keys    = true if @hilight_keys.nil?
       @plugin_debug  ||= false
       @charset       ||= 'EUC-JP'
       @database_type ||= 'flatfile'
-      @cgi_name      ||= './'
+      @cgi_name        = './' if !@cgi_name || @cgi_name.empty?
       @admin_name    ||= 'admin'
       @repos_type    ||= 'default'
       @use_wikiname    = true if @use_wikiname.nil?
