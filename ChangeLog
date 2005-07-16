@@ -13,6 +13,12 @@
 	* hiki/repos/cvs.rb (setup, import, update, commit, delete,
 	get_revision, revisions): use Dir.chdir with a block.
 
+	* hiki/repos/default.rb, hiki/repos/cvs.rb, hiki/repos/svn.rb,
+	hiki/repos/svnsingle.rb, misc/hikifarm/index.cgi,
+	misc/hikifarm/vc-backend-setup.cgi: separate HikifarmRepos* from Repos*.
+
+	* test/test_hikifarm.rb: change @data_path to @data_root.
+
 2005-07-15  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/en/math.rb: add English resources (by Kashia Buch).
 

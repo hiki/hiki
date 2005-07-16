@@ -1,11 +1,11 @@
 #!/usr/bin/env ruby
 
 HIKIFARM_VERSION = '0.8.1'
-HIKIFARM_RELEASE_DATE = '2005-07-14'
+HIKIFARM_RELEASE_DATE = '2005-07-16'
 
 class HikifarmConfig
   attr_reader :ruby, :hiki, :hikifarm_description
-  attr_reader :default_pages, :data_path, :repos_type, :repos_root
+  attr_reader :default_pages, :data_root, :repos_type, :repos_root
   attr_reader :title, :css, :author, :mail, :cgi_name, :header, :footer, :cgi, :hikifarm_template_dir
   
   def initialize
@@ -44,7 +44,7 @@ class HikifarmConfig
     @hiki = hiki
     @hikifarm_description = hikifarm_description || title
     @default_pages = default_pages
-    @data_path = data_path
+    @data_root = data_path # the name `data_path' is unsuitable. It is different from `data_path' of indivisual Hiki.
 
     @repos_type = repos_type || 'default'
     @repos_root = repos_root
@@ -79,12 +79,12 @@ end
 
 class Wiki
   attr_reader :name, :title, :mtime, :last_modified_page, :pages_num, :pages
-  def initialize(name, data_path)
+  def initialize(name, data_root)
     @name = name
     @pages_num = 0
 
     begin
-      File.readlines("#{data_path}/#{name}/hiki.conf").each do |line|
+      File.readlines("#{data_root}/#{name}/hiki.conf").each do |line|
         if line =~ /^[@\$]?site_name\s*=\s*(".*")\s*$/
           @title = eval($1.untaint)
         end
@@ -93,7 +93,7 @@ class Wiki
       @title = "#{name}'s Wiki"
     end
 
-    pages = Dir["#{data_path}/#{name}/text/*"]
+    pages = Dir["#{data_root}/#{name}/text/*"]
     pages.delete_if{|f| File.basename(f) == 'CVS' or File.basename(f) == '.svn' or File.size?(f.untaint).nil?}
     pages = pages.sort_by{|f| File.mtime(f)}
     if pages.empty?
@@ -116,9 +116,9 @@ end
 class Hikifarm
   attr_reader :wikilist
   
-  def initialize(farm_pub_path, ruby, repos_type, repos_root, data_path)
+  def initialize(farm_pub_path, ruby, repos_type, repos_root, data_root)
     require "hiki/repos/#{repos_type}"
-    @repos = Hiki::const_get("Repos#{repos_type.capitalize}").new(repos_root, data_path)
+    @repos = Hiki::const_get("HikifarmRepos#{repos_type.capitalize}").new(repos_root, data_root)
     @ruby = ruby
     @wikilist = []
     @farm_pub_path = farm_pub_path
@@ -130,7 +130,7 @@ class Hikifarm
       next if not FileTest.file?("#{wiki}/hikiconf.rb")
 
       begin
-        @wikilist << Wiki.new(File.basename(wiki), data_path)
+        @wikilist << Wiki.new(File.basename(wiki), data_root)
       rescue
       end
     end
@@ -144,7 +144,7 @@ class Hikifarm
     @wikilist.inject(0){|result, wiki| result + wiki.pages_num}
   end
 
-  def create_wiki(name, hiki, cgi_name, data_path, default_pages_path)
+  def create_wiki(name, hiki, cgi_name, data_root, default_pages_path)
     Dir.mkdir("#{@farm_pub_path}/#{name.untaint}")
 
     File.open("#{@farm_pub_path}/#{name}/#{cgi_name}", 'w') do |f|
@@ -156,14 +156,14 @@ class Hikifarm
       f.puts(conf(name, hiki)) # fix me
     end
 
-    Dir.mkdir("#{data_path}/#{name}")
-    Dir.mkdir("#{data_path}/#{name}/text")
-    Dir.mkdir("#{data_path}/#{name}/backup")
-    Dir.mkdir("#{data_path}/#{name}/cache")
+    Dir.mkdir("#{data_root}/#{name}")
+    Dir.mkdir("#{data_root}/#{name}/text")
+    Dir.mkdir("#{data_root}/#{name}/backup")
+    Dir.mkdir("#{data_root}/#{name}/cache")
     require 'fileutils'
     Dir["#{default_pages_path}/*"].each do |f|
       f.untaint
-      FileUtils.cp(f, "#{data_path}/#{name}/text/#{File.basename(f)}") if File.file?(f)
+      FileUtils.cp(f, "#{data_root}/#{name}/text/#{File.basename(f)}") if File.file?(f)
     end
 
     @repos.import(name)
@@ -454,7 +454,7 @@ end
 class App
   def initialize(conf)
     @conf = conf
-    @farm = Hikifarm.new(File.dirname(__FILE__), @conf.ruby, @conf.repos_type, @conf.repos_root, @conf.data_path)
+    @farm = Hikifarm.new(File.dirname(__FILE__), @conf.ruby, @conf.repos_type, @conf.repos_root, @conf.data_root)
     @cgi = conf.cgi
   end
 
@@ -470,7 +470,7 @@ class App
       begin
         name = @cgi.params['wiki'][0]
         raise '英数字のみ指定できます' if /\A[a-zA-Z0-9]+\z/ !~ name
-        @farm.create_wiki(name, @conf.hiki, @conf.cgi_name, @conf.data_path, @conf.default_pages)
+        @farm.create_wiki(name, @conf.hiki, @conf.cgi_name, @conf.data_root, @conf.default_pages)
 
         print @cgi.header({'Location' => hikifarm_uri})
         exit

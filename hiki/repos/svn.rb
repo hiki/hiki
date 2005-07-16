@@ -1,4 +1,4 @@
-# $Id: svn.rb,v 1.12 2005-07-14 12:32:07 yanagita Exp $
+# $Id: svn.rb,v 1.13 2005-07-16 04:24:33 yanagita Exp $
 # Copyright (C) 2003, Koichiro Ohba <koichiro@meadowy.org>
 # Copyright (C) 2003, Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
 # You can distribute this under GPL.
@@ -8,8 +8,8 @@ require 'fileutils'
 
 # Subversion Repository Backend
 module Hiki
-  class ReposSvnBase < ReposBase
-    def initialize(root, data_path)
+  class HikifarmReposSvnBase < HikifarmReposBase
+    def initialize(root, data_root)
       super
       if /^[a-z]:/i =~ @root
         @base_uri = "file:///#{@root}"
@@ -33,10 +33,10 @@ module Hiki
     end
 
     def import(wiki)
-      Dir.chdir("#{@data_path}/#{wiki}/text") do
+      Dir.chdir("#{@data_root}/#{wiki}/text") do
         system("svn import -q -m \"Starting #{wiki} from #{ENV['REMOTE_ADDR']} - #{ENV['REMOTE_HOST']}\" . #{@base_uri}#{wiki}/trunk".untaint)
       end
-      Dir.chdir("#{@data_path}/#{wiki}") do
+      Dir.chdir("#{@data_root}/#{wiki}") do
         FileUtils.rm_rf('text')
         system("svn checkout -q #{@base_uri}#{wiki}/trunk text")
         system("svn propdel -q svn:mime-type -R text")
@@ -44,9 +44,36 @@ module Hiki
     end
 
     def update(wiki)
-      Dir.chdir("#{@data_path}/#{wiki}/text") do
+      Dir.chdir("#{@data_root}/#{wiki}/text") do
         system("svn update -q")
       end
+    end
+  end
+
+  # Independent repositories for each wiki
+  class HikifarmReposSvn < HikifarmReposSvnBase
+    def setup
+      begin
+        Dir.mkdir(@root)
+      rescue
+      end
+    end
+
+    def import(wiki)
+      system("svnadmin create #{@root}/#{wiki}")
+      super
+    end
+  end
+
+  class ReposSvn < ReposBase
+    def initialize(root, data_path)
+      super
+      if /^[a-z]:/i =~ @root
+        @base_uri = "file:///#{@root}"
+      else
+        @base_uri = "file://#{@root}"
+      end
+      @base_uri += '/' if %r|/$| !~ @base_uri
     end
 
     def commit(page, msg = default_msg)
@@ -89,21 +116,6 @@ module Hiki
         end
       end
       revs
-    end
-  end
-
-  # Independent repositories for each wiki
-  class ReposSvn < ReposSvnBase
-    def setup
-      begin
-        Dir.mkdir(@root)
-      rescue
-      end
-    end
-
-    def import(wiki)
-      system("svnadmin create #{@root}/#{wiki}")
-      super
     end
   end
 end

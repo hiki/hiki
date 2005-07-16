@@ -1,4 +1,4 @@
-# $Id: cvs.rb,v 1.8 2005-07-16 01:51:52 yanagita Exp $
+# $Id: cvs.rb,v 1.9 2005-07-16 04:24:33 yanagita Exp $
 # Copyright (C) 2003, Koichiro Ohba <koichiro@meadowy.org>
 # Copyright (C) 2003, Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
 # You can distribute this under GPL.
@@ -7,9 +7,9 @@ require 'hiki/repos/default'
 
 # CVS Repository Backend
 module Hiki
-  class ReposCvs < ReposBase
+  class HikifarmReposCvs < HikifarmReposBase
     def setup
-      Dir.chdir( @data_path ) do
+      Dir.chdir( @data_root ) do
         system( "cvs -d #{@root} init > /dev/null 2>&1" )
         if not File.directory?(".CVSROOT")
           system( "cvs -d #{@root} co -d .CVSROOT CVSROOT > /dev/null 2>&1" )
@@ -25,7 +25,7 @@ module Hiki
     end
 
     def import( wiki )
-      Dir.chdir( "#{@data_path}/#{wiki}/text" ) do
+      Dir.chdir( "#{@data_root}/#{wiki}/text" ) do
         system( "cvs -d #{@root} import -m 'Starting #{wiki} from #{ENV['REMOTE_ADDR']} - #{ENV['REMOTE_HOST']}' #{wiki} hiki start > /dev/null 2>&1".untaint )
         Dir.chdir( '..' ) do
           system( "cvs -d #{@root} co -d text #{wiki} > /dev/null 2>&1" )
@@ -34,11 +34,13 @@ module Hiki
     end
 
     def update( wiki )
-      Dir.chdir( "#{@data_path}/#{wiki}/text" ) do
+      Dir.chdir( "#{@data_root}/#{wiki}/text" ) do
         system( "cvs -d #{@root} update > /dev/null 2>&1" )
       end
     end
+  end
 
+  class ReposCvs < ReposBase
     def commit(page, msg = default_msg)
       Dir.chdir( "#{@data_path}/text" ) do
         system( "cvs -d #{@root} add -- #{page.escape} > /dev/null 2>&1".untaint )

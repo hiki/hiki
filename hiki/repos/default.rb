@@ -1,13 +1,13 @@
-# $Id: default.rb,v 1.6 2005-07-16 01:06:56 yanagita Exp $
+# $Id: default.rb,v 1.7 2005-07-16 04:24:33 yanagita Exp $
 # Copyright (C) 2003, Koichiro Ohba <koichiro@meadowy.org>
 # Copyright (C) 2003, Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
 # You can distribute this under GPL.
 
 module Hiki
-  class ReposBase
-    def initialize(root, data_path)
+  class HikifarmReposBase
+    def initialize(root, data_root)
       @root = root
-      @data_path = data_path
+      @data_root = data_root
     end
 
     def setup
@@ -24,6 +24,13 @@ module Hiki
 
     def update( wiki )
       raise "Please override this function."
+    end    
+  end
+
+  class ReposBase
+    def initialize(root, data_path)
+      @root = root
+      @data_path = data_path
     end
 
     def commit(page, log = nil)
@@ -50,7 +57,7 @@ module Hiki
   end
 
   # Null Repository Backend
-  class ReposDefault < ReposBase
+  class HikifarmReposDefault < HikifarmReposBase
     def setup
     end
 
@@ -63,7 +70,9 @@ module Hiki
 
     def update(wiki)
     end
+  end
 
+  class ReposDefault < ReposBase
     def commit(page, log = nil)
     end
 

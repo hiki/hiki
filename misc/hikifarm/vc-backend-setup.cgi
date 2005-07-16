@@ -26,7 +26,7 @@ $:.unshift(hiki)
 $:.delete(".") if File.writable?(".")
 
 require "hiki/repos/#{repos_type}"
-repos = Hiki::const_get("Repos#{repos_type.capitalize}").new(repos_root, data_path)
+repos = Hiki::const_get("HikifarmRepos#{repos_type.capitalize}").new(repos_root, data_path)
 
 repos.setup
 
