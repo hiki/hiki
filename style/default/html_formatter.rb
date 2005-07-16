@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.39 2005-07-13 01:43:06 fdiary Exp $
+# $Id: html_formatter.rb,v 1.40 2005-07-16 03:25:15 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -160,6 +160,7 @@ module Hiki
       when :interwiki
         if inter_link = @interwiki.interwiki(t[:href], t[:p], t[:s])
           s[:html] << @plugin.make_anchor(inter_link[0], inter_link[1], 'external')
+	  s[:toc_title] << t[:s] if s[:toc_level] > 0
         else
           t[:href] = t[:s]
           make_link(t, s)

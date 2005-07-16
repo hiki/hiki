@@ -1,4 +1,7 @@
 2005-07-16  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/html_formatter.rb (token_to_s): add interwiki to
+	toc_title (reported by Kazuhiro NISHIYAMA).
+
 	* misc/plugin/attach/attach.rb (attach_show_page_files_checkbox):
 	escape a filename (reported by Kazuhiro NISHIYAMA).
 	(attach_flash_anchor): escape a filename.
