@@ -1,12 +1,10 @@
-# $Id: default.rb,v 1.5 2005-07-14 12:32:07 yanagita Exp $
+# $Id: default.rb,v 1.6 2005-07-16 01:06:56 yanagita Exp $
 # Copyright (C) 2003, Koichiro Ohba <koichiro@meadowy.org>
 # Copyright (C) 2003, Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
 # You can distribute this under GPL.
 
 module Hiki
   class ReposBase
-    attr_reader :root, :data_path
-
     def initialize(root, data_path)
       @root = root
       @data_path = data_path
