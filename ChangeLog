@@ -1,3 +1,8 @@
+2005-07-16  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/attach/attach.rb (attach_show_page_files_checkbox):
+	escape a filename (reported by Kazuhiro NISHIYAMA).
+	(attach_flash_anchor): escape a filename.
+
 2005-07-16  Kouhei Yanagita <sugi@dream.big.or.jp>
 	* hiki/repos/default.rb: ReposBase#root and ReposBase#data_path are
 	now private.

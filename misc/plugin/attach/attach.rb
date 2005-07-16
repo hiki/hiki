@@ -1,4 +1,4 @@
-# $Id: attach.rb,v 1.24 2005-07-12 08:32:01 fdiary Exp $
+# $Id: attach.rb,v 1.25 2005-07-16 02:33:57 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 #
 # thanks to Kazuhiko, Masao Mutoh, SHIMADA Mitsunobu, Yoshimi, ¤ê¤¿
@@ -73,7 +73,7 @@ def attach_flash_anchor(file_name, page=@page)
     img_size = nil
   end
   s =  %Q!<embed type="application/x-shockwave-flash" src="!
-  s << %Q!#{@conf.cgi_name}#{cmdstr('plugin', "plugin=attach_download;p=#{page.escape};file_name=#{file_name}")}" !
+  s << %Q!#{@conf.cgi_name}#{cmdstr('plugin', "plugin=attach_download;p=#{page.escape};file_name=#{file_name.escape}")}" !
   s << %Q! width="#{img_size[0]}" height="#{img_size[1]}" ! if img_size
   s << %Q!>!
 end
@@ -192,7 +192,7 @@ def attach_show_page_files_checkbox
       when 'Shift_JIS'
         f = file_name.unescape.to_sjis
       end
-      s << %Q! [<input type="checkbox" name="file_#{file_name}">#{attach_anchor(f)}] \n!
+      s << %Q! [<input type="checkbox" name="file_#{file_name.escapeHTML}">#{attach_anchor(f)}] \n!
     end
     s << %Q!<input type="submit" name="detach" value="#{detach_upload_label}">\n</p>\n</form>\n!
   end
