@@ -2,6 +2,9 @@
 	* hiki/repos/default.rb: ReposBase#root and ReposBase#data_path are
 	now private.
 
+	* hiki/repos/cvs.rb (setup, import, update, commit, delete,
+	get_revision, revisions): use Dir.chdir with a block.
+
 2005-07-15  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/en/math.rb: add English resources (by Kashia Buch).
 
