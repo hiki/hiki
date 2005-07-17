@@ -1,3 +1,6 @@
+2005-07-17  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* doc/HACKING.txt, doc/HACKING.en: add HACKING documents.
+
 2005-07-16  Kazuhiko  <kazuhiko@fdiary.net>
 	* style/default/html_formatter.rb (token_to_s): add interwiki to
 	toc_title (reported by Kazuhiro NISHIYAMA).

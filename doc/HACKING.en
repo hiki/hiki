@@ -1,0 +1,32 @@
+! Mailing lists
+
+Mailing lists for talking about Hiki are prepared.
+See their web page to subscribe.
+
+hiki-users
+  A mailing list for Hiki users.
+  http://lists.sourceforge.jp/mailman/listinfo/hiki-users
+
+hiki-dev
+  A mailing list for Hiki developers.
+  http://lists.sourceforge.jp/mailman/listinfo/hiki-dev
+
+
+
+! How to make a patch
+
+Unified diff format is recommended.
+Add a -u option to the diff command.
+
+If you get files via CVS, type the following command.
+  $ cvs diff -u
+
+
+
+! Create the original version control backend
+
+1. put a script to "hiki/repos/#{repos_type}.rb"
+2. Define "HikifarmRepos#{repos_type.capitalize}" class and
+   "Repos#{repos_type.capitalize}" class which is derived from
+   HikifarmReposBase and ReposBase.
+3. Override methods properly.
