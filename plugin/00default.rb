@@ -1,4 +1,4 @@
-# $Id: 00default.rb,v 1.46 2005-07-17 14:28:00 fdiary Exp $
+# $Id: 00default.rb,v 1.47 2005-07-17 14:36:58 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #==============================
@@ -62,7 +62,7 @@ def toc_here( page = nil )
     end
     formatter = @conf.formatter::new( tokens, @db, self, @conf )
     formatter.to_s
-    formatter.toc
+    formatter.toc.gsub( /<a href="/, %Q|<a href="#{hiki_url( page )}| )
   else
     @toc_f ||= :here
     TOC_STRING
