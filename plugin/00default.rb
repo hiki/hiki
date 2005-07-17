@@ -1,4 +1,4 @@
-# $Id: 00default.rb,v 1.45 2005-07-14 02:08:34 fdiary Exp $
+# $Id: 00default.rb,v 1.46 2005-07-17 14:28:00 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #==============================
@@ -52,9 +52,21 @@ def toc
   @toc_f = :top
 end
 
-def toc_here
-  @toc_f ||= :here
-  TOC_STRING
+def toc_here( page = nil )
+  if page
+    tokens = @db.load_cache( page )
+    unless tokens
+      parser = @conf.parser::new( @conf )
+      tokens = parser.parse( @db.load( page ) )
+      @db.save_cache( page, tokens )
+    end
+    formatter = @conf.formatter::new( tokens, @db, self, @conf )
+    formatter.to_s
+    formatter.toc
+  else
+    @toc_f ||= :here
+    TOC_STRING
+  end
 end
 
 #===== recent

@@ -1,4 +1,4 @@
-# $Id: util.rb,v 1.40 2005-07-13 09:35:12 fdiary Exp $
+# $Id: util.rb,v 1.41 2005-07-17 14:28:01 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'nkf'
@@ -117,11 +117,15 @@ module Hiki
       end
     end
 
-    def word_diff_text( src, dst )
+    def word_diff_text( src, dst, digest = false )
       src_doc = Document.new( src, 'EUC-JP' )
       dst_doc = Document.new( dst, 'EUC-JP' )
       diff = compare_by_line_word( src_doc, dst_doc )
-      return View.new( diff, src.encoding, src.eol ).to_wdiff({}, false).join.gsub( %r|\n\+\}|, "+}\n" )
+      if digest
+        return View.new( diff, src.encoding, src.eol ).to_wdiff_digest({}, false).join.gsub( %r|\n\+\}|, "+}\n" )
+      else
+        return View.new( diff, src.encoding, src.eol ).to_wdiff({}, false).join.gsub( %r|\n\+\}|, "+}\n" )
+      end
     end
 
     def unified_diff( src, dst, context_lines = 3 )

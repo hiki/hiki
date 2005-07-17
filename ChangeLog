@@ -1,3 +1,10 @@
+2005-07-17  Kazuhiko  <kazuhiko@fdiary.net>
+	* plugin/00default.rb (toc_here): support a toc of another page.
+
+	* misc/plugin/diffmail.rb (updating_mail): support the word diff
+	format.
+	* hiki/util.rb (word_diff_text): support the digest mode.
+
 2005-07-17  Kouhei Yanagita <sugi@dream.big.or.jp>
 	* doc/HACKING.txt, doc/HACKING.en: add HACKING documents.
 
