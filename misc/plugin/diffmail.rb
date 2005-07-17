@@ -1,4 +1,4 @@
-# $Id: diffmail.rb,v 1.10 2005-07-17 14:28:01 fdiary Exp $
+# $Id: diffmail.rb,v 1.11 2005-07-17 14:29:06 fdiary Exp $
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 
 #----- send a mail on updating
@@ -41,7 +41,7 @@ def updating_mail
 	unified = @options['diffmail.lines'] || 3
 	r = unified_diff( src, dst, unified )
       when 1
-	r = word_diff_text( src, dst )
+	r = word_diff_text( src, dst, true )
       end
     end
     send_updating_mail(@page, type, head + r) unless (head + r).empty?
