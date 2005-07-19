@@ -4,7 +4,7 @@
 
 ;; Author: Hideaki Hori <yowaken@cool.ne.jp>
 
-;; $Id: hiki-mode.el,v 1.4 2005-07-12 04:39:00 fdiary Exp $
+;; $Id: hiki-mode.el,v 1.5 2005-07-19 13:21:11 fdiary Exp $
 ;;
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
@@ -54,7 +54,7 @@
 (require 'derived)
 
 (defconst hiki-mode-version
-  (let ((revision "$Revision: 1.4 $"))
+  (let ((revision "$Revision: 1.5 $"))
     (string-match "\\([0-9.]+\\)" revision)
     (match-string 1 revision)))
 
@@ -78,6 +78,10 @@ Each element looks like (NAME URL STYLE). STYLE is optional.")
 (defvar hiki-pagetitle nil)
 
 (defvar hiki-md5hex nil)
+
+(defvar hiki-session-id nil)
+
+(defvar hiki-update-timestamp nil)
 
 (defvar hiki-edit-newpage nil)
 
@@ -149,6 +153,8 @@ is expected to accept only one argument(URL).")
   (make-local-variable 'hiki-newpage)
   (make-local-variable 'hiki-pagename)
   (make-local-variable 'hiki-md5hex)
+  (make-local-variable 'hiki-session-id)
+  (make-local-variable 'hiki-update-timestamp)
   (setq require-final-newline t
 	indent-tabs-mode nil)
   (hiki-edit-setup-keys)
@@ -694,6 +700,8 @@ REFETCH が nil ですでにバッファが存在するなら、HTTP GET しない。"
   (let ((result (hiki-display-page pagename site-info t)))
     (when result
       (setq hiki-md5hex (cdr (assq 'md5hex result)))
+      (setq hiki-session-id (cdr (assq 'session-id result)))
+      (setq hiki-update-timestamp (cdr (assq 'update-timestamp result)))
       (setq hiki-pagename pagename)
       (setq hiki-pagetitle (or (cdr (assq 'pagetitle result)) pagename))
       (setq hiki-site-info site-info)
@@ -730,9 +738,11 @@ REFETCH が nil ですでにバッファが存在するなら、HTTP GET しない。"
   "Hiki の ソースを取得する。
 
 '((md5hex . \"...\")
+  (session-id . \"...\")
   (body . \"...\")
   (pagetitle . (...)) 
   (keyword . (...)) 
+  (update-timestamp . t/nil)
   (password . t/nil)) を返す。"
   (let (buf start end pt result)
     (setq buf (hiki-http-request 'get "edit" pagename site-url))
@@ -742,9 +752,12 @@ REFETCH が nil ですでにバッファが存在するなら、HTTP GET しない。"
 	;; md5hex
 	(re-search-forward "<input [^>]+name=\"md5hex\" value=\"\\([^>\"]*\\)\">" nil t nil)
 	(setq result (cons (cons 'md5hex (match-string 1)) result))
+	;; session id
+	(re-search-forward "<input [^>]+name=\"session_id\" value=\"\\([^>\"]*\\)\">" nil t nil)
+	(setq result (cons (cons 'session-id (match-string 1)) result))
 	(setq pt (point))
 	;; textarea
-	(re-search-forward "<textarea [^>]+name=\"contents\"[^>]+>" nil t nil)
+	(re-search-forward "<textarea [^>]+name=\"contents\"[^>]*>" nil t nil)
 	(setq start (match-end 0))
 	(re-search-forward "</textarea>" nil t nil)
 	(setq end (match-beginning 0))
@@ -753,6 +766,10 @@ REFETCH が nil ですでにバッファが存在するなら、HTTP GET しない。"
 	(goto-char pt)
 	(re-search-forward "<input [^>]+name=\"page_title\" [^>]+value=\"\\([^>\"]*\\)\">" nil t nil)
 	(setq result (cons (cons 'pagetitle (hiki-replace-entity-refs (match-string 1))) result))
+	;; update timestamp?
+	(if (re-search-forward "<input type=\"checkbox\" name=\"update_timestamp\" value=\"on\" checked>" nil t nil)
+	    (setq result (cons (cons 'update-timestamp t) result))
+	  (setq result (cons (cons 'update-timestamp nil) result)))
 	;; keyword
 	(when (re-search-forward "<textarea [^>]+name=\"keyword\" [^>]+>" nil t nil)
 	  (setq start (match-end 0))
@@ -785,7 +802,9 @@ REFETCH が nil ですでにバッファが存在するなら、HTTP GET しない。"
     (add-to-list 'post-data (cons "page_title" pagetitle))
     (add-to-list 'post-data (cons "keyword" (or keywords "")))
     (add-to-list 'post-data (cons "md5hex" hiki-md5hex))
-    (add-to-list 'post-data (cons "password" password))
+    (add-to-list 'post-data (cons "session_id" hiki-session-id))
+    (if (not (null hiki-update-timestamp))
+	(add-to-list 'post-data (cons "update_timestamp" "on")))
     (if (not (null hiki-freeze))
 	(add-to-list 'post-data (cons "freeze" "on")))
     (add-to-list 'post-data (cons "contents" contents))
@@ -1064,11 +1083,20 @@ If error, return a cons cell (ERRCODE . DESCRIPTION)."
                      buf)
 		    ((equal code "302")
 		     buf)
+		    ((equal code "404")
+		     (cons code (hiki-get-error-message buf)))
 		    (t
                      (cons code desc)))))))))
 
 (defun hiki-http-cookie-expired ()
   (setq hiki-http-cookie nil))
+
+(defun hiki-get-error-message (buf)
+  (set-buffer buf)
+  (re-search-forward "<h1 class=\"header\">Error</h1>" nil t nil)
+  (goto-char (match-end 0))
+  (re-search-forward "<div>\\([^<]+\\)</div>" nil t nil)
+  (match-string 1))
 
 (provide 'hiki-mode)
 ;;; hiki-mode.el ends here

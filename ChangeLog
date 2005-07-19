@@ -1,3 +1,6 @@
+2005-07-19  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki-mode.el: revise for 0.8.1 (by Takeshi UME Imai).
+
 2005-07-17  Kazuhiko  <kazuhiko@fdiary.net>
 	* plugin/00default.rb (toc_here): support a toc of another page.
 
