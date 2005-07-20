@@ -1,4 +1,4 @@
-# $Id: test_pluginutil.rb,v 1.1 2005-06-09 02:15:15 fdiary Exp $
+# $Id: test_pluginutil.rb,v 1.2 2005-07-20 04:26:22 fdiary Exp $
 
 require 'test/unit'
 require 'hiki/pluginutil'
@@ -15,7 +15,7 @@ class TMarshal_Unit_Tests < Test::Unit::TestCase
   def test_methodwords_string
     assert_equal( ['foo', "0123"], Hiki::Util.methodwords( 'foo("0123")' ) )
     assert_equal( ['foo', "0123"], Hiki::Util.methodwords( %q|foo('0123')| ) )
-    assert_equal( ['foo', 'ba"r', %q|a'iueo|], Hiki::Util.methodwords( %Q[foo('ba"r', "a'iueo" )]) )
+    assert_equal( ['foo', 'ba&quot;r', %q|a'iueo|], Hiki::Util.methodwords( %Q[foo('ba"r', "a'iueo" )]) )
   end
 
   def test_methodwords_lines
