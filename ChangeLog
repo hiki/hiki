@@ -2,6 +2,12 @@
 	* misc/hiki-mode/hiki-mode.el (hiki-fetch-index): fixed: FrontPage is not
 	listed in hiki-index.
 
+	* misc/hiki-mode/hiki-mode.el (hiki-edit-save-page): fixed: Can't save keywords
+	when initial keyword is empty. (by Takeshi UME Imai)
+
+	* misc/hiki-mode/hiki-mode.el (hiki-display-page): fixed: Can't input keywords
+	if keywords area is erased once.
+
 2005-07-20  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/attach/attach.cgi: only output basename of attached
 	/ detached files in diff mails.

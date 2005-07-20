@@ -4,7 +4,7 @@
 
 ;; Author: Hideaki Hori <yowaken@cool.ne.jp>
 
-;; $Id: hiki-mode.el,v 1.6 2005-07-20 15:09:38 yanagita Exp $
+;; $Id: hiki-mode.el,v 1.7 2005-07-20 17:15:28 yanagita Exp $
 ;;
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
@@ -54,7 +54,7 @@
 (require 'derived)
 
 (defconst hiki-mode-version
-  (let ((revision "$Revision: 1.6 $"))
+  (let ((revision "$Revision: 1.7 $"))
     (string-match "\\([0-9.]+\\)" revision)
     (match-string 1 revision)))
 
@@ -679,8 +679,9 @@ REFETCH が nil ですでにバッファが存在するなら、HTTP GET しない。"
 	(hiki-edit-rename-buffer (hiki-site-name site-info) pagename pagetitle password)
 	(save-excursion
 	  (when keyword
-	    (insert (hiki-propertize "Keywords:\n" 'read-only t 'front-sticky t 'rear-nonsticky t 'hiki-special t))
-	    (insert (hiki-propertize (format "%s\n" keyword) 'hiki-keywords t 'hiki-special t))
+	    (insert (hiki-propertize "Keywords:" 'read-only t 'front-sticky t 'rear-nonsticky t 'hiki-special t))
+	    (insert (hiki-propertize "\n" 'hiki-special t))
+	    (insert (hiki-propertize (format "%s\n" keyword) 'hiki-special t))
 	    (insert (hiki-propertize "----\n" 'read-only t 'front-sticky t 'rear-nonsticky t 'hiki-special t)))
 	  (setq point (point))
 	  (insert body)
@@ -794,11 +795,14 @@ REFETCH が nil ですでにバッファが存在するなら、HTTP GET しない。"
 		     (or hiki-pagetitle hiki-pagename) nil nil nil (or hiki-pagetitle hiki-pagename)))
     (goto-char (point-min))
     (when (get-text-property (point) 'hiki-special)
-      (goto-char (next-single-property-change (point) 'hiki-keywords))
-      (setq keywords 
-	    (buffer-substring-no-properties (point) (next-single-property-change (point) 'hiki-keywords)))
+      (re-search-forward "^Keywords:$" nil t nil)
+      (let (start end)
+        (setq start (+ (match-end 0) 1))
+        (re-search-forward "^----$" nil t nil)
+        (setq end (match-beginning 0))
+        (setq keywords (buffer-substring-no-properties start end)))
       (goto-char (next-single-property-change (point) 'hiki-special)))
-    (setq contents (buffer-substring (point) (point-max)))
+    (setq contents (buffer-substring-no-properties (point) (point-max)))
     (add-to-list 'post-data (cons "c" "save"))
     (add-to-list 'post-data (cons "p" hiki-pagename))
     (add-to-list 'post-data (cons "page_title" pagetitle))
