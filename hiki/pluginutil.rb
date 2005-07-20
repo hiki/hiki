@@ -1,4 +1,4 @@
-# $Id: pluginutil.rb,v 1.8 2005-07-04 12:51:21 fdiary Exp $
+# $Id: pluginutil.rb,v 1.9 2005-07-20 01:18:54 fdiary Exp $
 #
 # apply_plugin(str):
 #  Eval the string as a plugin.
@@ -83,11 +83,11 @@ module Hiki
             words.push(val) unless val == :no_data
             return [words, args]
           elsif args.sub!(ARG_REG_C, '') then
-            snippet = %Q|"#{$1.gsub(ARG_REG_D, '\1')}"|
+            snippet = %Q|"#{$1.gsub(ARG_REG_D, '\1').gsub(/"/, '&quot;')}"|
           elsif args =~ ARG_REG_E then
             raise ArgumentError, "Unmatched double quote: #{args}"
           elsif args.sub!(ARG_REG_F, '') then
-            snippet = %Q|"#{$1}"|
+            snippet = %Q|"#{$1.gsub(/"/, '&quot;')}"|
           elsif args =~ ARG_REG_G then
             raise ArgumentError, "Unmatched single quote: #{args}"
           elsif args.sub!(ARG_REG_H, '') then

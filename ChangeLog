@@ -1,3 +1,7 @@
+2005-07-20  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/pluginutil.rb (argwords): escape double quotes (reported by
+	Kazuhiro NISHIYAMA).
+
 2005-07-19  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki-mode.el: revise for 0.8.1 (by Takeshi UME Imai).
 
