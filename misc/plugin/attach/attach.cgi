@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# $Id: attach.cgi,v 1.18 2005-06-17 05:03:43 fdiary Exp $
+# $Id: attach.cgi,v 1.19 2005-07-20 12:31:45 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 BEGIN { $defout.binmode }
@@ -55,7 +55,7 @@ def attach_file
 	  open(path.untaint, "wb") do |f|
 	    f.print content
 	  end
-	  r << "FILE        = #{path}\n"
+	  r << "FILE        = #{File.basename(path)}\n"
 	  r << "SIZE        = #{File.size(path)} bytes\n"
 	  send_updating_mail(page, 'attach', r) if @conf.mail_on_update
 	end
@@ -74,7 +74,7 @@ def attach_file
         path = "#{attach_path}/#{file}"
         if FileTest::file?(path.untaint) and params["file_#{file}"][0].read
           File::unlink(path)
-          r << "FILE        = #{path}\n"
+          r << "FILE        = #{File.basename(path)}\n"
         end
       end
       Dir::rmdir(attach_path) if Dir::entries(attach_path).size == 2
