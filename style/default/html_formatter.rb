@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.40 2005-07-16 03:25:15 fdiary Exp $
+# $Id: html_formatter.rb,v 1.41 2005-07-20 09:31:26 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -301,7 +301,7 @@ EOS
         if outer_alias = @interwiki.outer_alias(t[:href])
           s[:html] << @plugin.make_anchor(outer_alias[0], outer_alias[1], 'external')
         else
-          missing_anchor_title = @conf.msg_missing_anchor_title % [ disp.escapeHTML ]
+          missing_anchor_title = @conf.msg_missing_anchor_title % [ t[:href].escapeHTML ]
           wikiname_anchor = @plugin.creatable? ? "#{disp.escapeHTML}<a class=\"nodisp\" href=\"#{@conf.cgi_name}?c=edit;p=#{t[:href].escape}\" title=\"#{missing_anchor_title}\">?</a>" : disp.escapeHTML
           s[:html] << wikiname_anchor
         end
