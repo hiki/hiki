@@ -1,4 +1,7 @@
 2005-07-20  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/bbs.rb: support changing heading levels (by
+	U.Nakamura).
+
 	* hiki/pluginutil.rb (argwords): escape double quotes (reported by
 	Kazuhiro NISHIYAMA).
 
@@ -32,7 +35,8 @@
 
 	* hiki/repos/default.rb, hiki/repos/cvs.rb, hiki/repos/svn.rb,
 	hiki/repos/svnsingle.rb, misc/hikifarm/index.cgi,
-	misc/hikifarm/vc-backend-setup.cgi: separate HikifarmRepos* from Repos*.
+	misc/hikifarm/vc-backend-setup.cgi: separate HikifarmRepos* from
+	Repos*.
 
 	* test/test_hikifarm.rb: change @data_path to @data_root.
 
