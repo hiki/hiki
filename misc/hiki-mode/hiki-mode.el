@@ -4,7 +4,7 @@
 
 ;; Author: Hideaki Hori <yowaken@cool.ne.jp>
 
-;; $Id: hiki-mode.el,v 1.5 2005-07-19 13:21:11 fdiary Exp $
+;; $Id: hiki-mode.el,v 1.6 2005-07-20 15:09:38 yanagita Exp $
 ;;
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
@@ -54,7 +54,7 @@
 (require 'derived)
 
 (defconst hiki-mode-version
-  (let ((revision "$Revision: 1.5 $"))
+  (let ((revision "$Revision: 1.6 $"))
     (string-match "\\([0-9.]+\\)" revision)
     (match-string 1 revision)))
 
@@ -721,11 +721,13 @@ REFETCH が nil ですでにバッファが存在するなら、HTTP GET しない。"
 	(set-buffer buf)
 	(re-search-forward "<ul>\n\\s-*" nil t nil)
 	(while (equal (char-after) ?<)
-	  (re-search-forward "<a[^?]*\\?\\([^\"]*\\)\"[^>]*>\\([^<]*\\)</a>: \\([^<]*\\)</li>" nil t nil)
+	  (re-search-forward "<a href=\"./\\([^\"]*\\)\">\\([^<]*\\)</a>: \\([^<]*\\)</li>" nil t nil)
 	  (setq indexes 
 		(cons
-		 (list i (hiki-http-url-unhexify-string (match-string 1) hiki-coding-system)
-
+         (list i (hiki-http-url-unhexify-string (if (= (length (match-string 1)) 0)
+                                                    "FrontPage"
+                                                  (substring (match-string 1) 1))
+                                                hiki-coding-system)
 		       (hiki-replace-entity-refs (match-string 2))
 		       (hiki-replace-entity-refs (match-string 3))) indexes))
 	  (setq i (1+ i))))

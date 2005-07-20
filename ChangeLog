@@ -1,3 +1,7 @@
+2005-07-21  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* misc/hiki-mode/hiki-mode.el (hiki-fetch-index): fixed: FrontPage is not
+	listed in hiki-index.
+
 2005-07-20  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/attach/attach.cgi: only output basename of attached
 	/ detached files in diff mails.
