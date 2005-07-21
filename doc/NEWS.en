@@ -1,3 +1,9 @@
+! Changes in 0.8.2
+
+* fix 'Cross-Site Scripting' vulnerabilities in some plugins.
+* revise 'hiki-mode.el' to work correctly.
+* fix a bug in a redirection of 'hikifarm'.
+
 ! Changes in 0.8.1
 
 * fix 'Cross-Site Request Forgeries' vulnerabilities.

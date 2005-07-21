@@ -1,12 +1,15 @@
+2005-07-21  Kazuhiko  <kazuhiko@fdiary.net>
+	* Hiki 0.8.2 released!
+
 2005-07-21  Kouhei Yanagita <sugi@dream.big.or.jp>
-	* misc/hiki-mode/hiki-mode.el (hiki-fetch-index): fixed: FrontPage is not
-	listed in hiki-index.
+	* misc/hiki-mode/hiki-mode.el (hiki-fetch-index): fixed: FrontPage
+	is not listed in hiki-index.
 
-	* misc/hiki-mode/hiki-mode.el (hiki-edit-save-page): fixed: Can't save keywords
-	when initial keyword is empty. (by Takeshi UME Imai)
+	* misc/hiki-mode/hiki-mode.el (hiki-edit-save-page): fixed: Can't
+	save keywords when initial keyword is empty. (by Takeshi UME Imai)
 
-	* misc/hiki-mode/hiki-mode.el (hiki-display-page): fixed: Can't input keywords
-	if keywords area is erased once.
+	* misc/hiki-mode/hiki-mode.el (hiki-display-page): fixed: Can't
+	input keywords if keywords area is erased once.
 
 2005-07-20  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/attach/attach.cgi: only output basename of attached
@@ -709,13 +712,16 @@
 	* hiki/misc/hiki-mode/*: hiki-mode.el を Attic から復活。
 
 2005-04-11  Kouhei Yanagita <sugi@dream.big.or.jp>
-	* hiki/style/default/html_formatter.rb (HTMLFormatter_default::token_to_s):
-	h2 の span.sanchor に `_' を入れていたのをやめて、&nbsp; にした。
+	* hiki/style/default/html_formatter.rb (token_to_s): h2 の
+	span.sanchor に `_' を入れていたのをやめて、&nbsp; にした。
 
 2005-04-10  Kouhei Yanagita <sugi@dream.big.or.jp>
-	* hiki/repos/svn.rb, hiki/repos/svnsingle.rb, misc/hikifarm/index.cgi,
-	misc/hikifarm/hikifarm.conf: svn バックエンドで、リポジトリの作り方が変だったのを修正。
-	* misc/plugin/history.rb: svn バックエンドで、ログが表示されていなかったのを修正。
+	* hiki/repos/svn.rb, hiki/repos/svnsingle.rb,
+	misc/hikifarm/index.cgi, misc/hikifarm/hikifarm.conf: svn バックエ
+	ンドで、リポジトリの作り方が変だったのを修正。
+
+	* misc/plugin/history.rb: svn バックエンドで、ログが表示されていな
+	かったのを修正。
 
 2005-04-05  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/hikifarm/index.cgi: fix a bug in collecting site_name
@@ -748,8 +754,9 @@
 	* misc/xmlrpc/xmlrpc.cgi: XMLRPC サーバを追加
 
 2005-03-15  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
-	* misc/plugin/00default.rb, misc/plugin/*/00default.rb: パスワード変更時、
-	パスワード間違っている場合にエラーメッセージを表示するように修正 thanks to Kouhei Yanagita
+	* misc/plugin/00default.rb, misc/plugin/*/00default.rb: パスワード
+	変更時、パスワード間違っている場合にエラーメッセージを表示するよう
+	に修正 thanks to Kouhei Yanagita
 	* misc/plugin/keyword.rb: <h2> から <h3>へ変更
 	* misc/plugin/referer.rb: ファイル名をuntaintするように修正 by NOB
 
@@ -1405,7 +1412,9 @@
 	* misc/plugin/rss-show.rb (rss_show): $SAFE=1 向けの修正 by MACHIDA Hideki
 
 2004-04-02  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
-	* style/default/html_formatter.rb, messages/en.rb, messages/ja.rb: 存在しないページを作成するアンカー ? にtitle属性をつける by OZAWA Sakuro
+	* style/default/html_formatter.rb, messages/en.rb, messages/ja.rb:
+	存在しないページを作成するアンカー ? にtitle属性をつける by OZAWA
+	Sakuro
 
 2004-03-17  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/attach/attach.rb: $SAFE=1 向けの修正 by HOSONO Hidetomo
@@ -1414,7 +1423,8 @@
 	* misc/plugin/amazon.rb: $SAFE=1 向けの修正
 
 2004-03-11  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
-	* style/default+/html_formatter.rb, style/rd+/html_formatter.rb: XSS脆弱性の修正
+	* style/default+/html_formatter.rb, style/rd+/html_formatter.rb:
+	XSS脆弱性の修正
 	* template/en/edit.html: 英語テンプレートの修正 by mput
 
 2004-03-09  Kazuhiko  <kazuhiko@fdiary.net>
@@ -1422,13 +1432,15 @@
 
 2004-03-05  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
 	* misc/plugin/pagerank.rb: 追加 by ichiyama ryoichi
-	* hiki.cgi, hiki/command.rb, hiki/db/flatfile.rb, misc/plugin/attach/attach.rb, misc/plugin/amazon.rb: $SAFE=1
+	* hiki.cgi, hiki/command.rb, hiki/db/flatfile.rb,
+	misc/plugin/attach/attach.rb, misc/plugin/amazon.rb: $SAFE=1
 
 2004-03-04  Kazuhiko  <kazuhiko@fdiary.net>
 	* template/: テンプレートの整理
 
 2004-03-04  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
-	* style/default/html_formatter.rb: XSS脆弱性の対処 thanks to SHIMADA Keiki <k-ki@a01.itscom.net>
+	* style/default/html_formatter.rb: XSS脆弱性の対処 thanks to
+	SHIMADA Keiki <k-ki@a01.itscom.net>
 
 2004-03-02  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
 	* misc/plugin/similarity.rb: 追加 
@@ -1562,8 +1574,10 @@ Wed Dec 03 21:25:16 2003  Hideaki Hori  <yowaken@cool.ne.jp>
 	XSS 脆弱性の修正、日本語ファイル名の扱いの修正 by Hajime BABA
 
 2003-11-13  Kazuhiko  <kazuhiko@fdiary.net>
-	* plugin/00default.rb: ブラウザキャッシュ無効の META タグ追加 by Hajime BABA
+	* plugin/00default.rb: ブラウザキャッシュ無効の META タグ追加 by
+	Hajime BABA
 	* misc/plugin/cvs.rb: $cvsroot -> $repos_root by Hajime BABA
+
 Wed Nov 12 04:32:09 2003  Hideaki Hori  <yowaken@cool.ne.jp>
 	* hiki-mode.el: bug fix. XEmacs での不具合に対応。 by simm
 	<http://pure.fan.gr.jp/simm/d/20031110.html#p02>、
@@ -1823,9 +1837,9 @@ Tue Oct  7 03:57:46 2003  Hideaki Hori  <yowaken@cool.ne.jp>
 	URL をプラグインで指定できるようにした thanks to zunda
 
 2003-08-23  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
-	* hiki/command.rb, hiki/plugin.rb: プラグイン中でexport_plugin_methods
-	がコールされた場合、指定された*以外*のメソッドをWikiページ中からコールで
-	きないようにした。by むらけん
+	* hiki/command.rb, hiki/plugin.rb: プラグイン中で
+	export_plugin_methods がコールされた場合、指定された*以外*のメソッ
+	ドをWikiページ中からコールできないようにした。by むらけん
 	* hiki/util.rb,  style/default/html_formatter.rb: $plugin_debug の場合
 	にスタックトレースが二重に出力されるバグの修正
 
