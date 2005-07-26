@@ -33,7 +33,7 @@ repos.setup
 Dir["#{File.dirname(__FILE__)}/*"].each do |wiki|
   wiki.untaint
   next if not FileTest.directory?(wiki) or FileTest.symlink?(wiki) or not FileTest.file?("#{wiki}/hikiconf.rb")
-  repos.import(wiki) unless repos.imported?(wiki)
+  repos.import(File.basename(wiki)) unless repos.imported?(File.basename(wiki))
 end
 
 puts "リポジトリの作成・インポートが終了しました。"
