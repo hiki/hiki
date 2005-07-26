@@ -2,6 +2,9 @@
 	* misc/hikifarm/vc-backend-setup.cgi: HikifarmRepos*#import/imported?
 	should take a basenamed wiki name. (by Atsushi Koga)
 
+	* style/default/html_formatter.rb (make_link): use a page name
+	instead of a page title in a toc (suggested by Shinya Kawaji). 
+
 2005-07-21  Kazuhiko  <kazuhiko@fdiary.net>
 	* Hiki 0.8.2 released!
 

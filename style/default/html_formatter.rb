@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.41 2005-07-20 09:31:26 fdiary Exp $
+# $Id: html_formatter.rb,v 1.42 2005-07-26 13:59:15 yanagita Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -278,7 +278,7 @@ EOS
       str = t[:method].gsub(/&/, '&amp;').gsub(/</, '&lt;').gsub(/>/, '&gt;')
       case t[:e]
       when :inline_plugin
-	@plugin.inline_context{ apply_plugin( str, @plugin, @conf ) }
+        @plugin.inline_context{ apply_plugin( str, @plugin, @conf ) }
       else
         @plugin.block_context{ apply_plugin( str, @plugin, @conf ) }
       end
@@ -306,7 +306,7 @@ EOS
           s[:html] << wikiname_anchor
         end
       end
-      s[:toc_title] << t[:href] if s[:toc_level] > 0
+      s[:toc_title] << disp if s[:toc_level] > 0
     end
   end
 end

@@ -1,10 +1,10 @@
-# $Id: config.rb,v 1.74 2005-07-21 01:29:44 fdiary Exp $
+# $Id: config.rb,v 1.75 2005-07-26 13:59:15 yanagita Exp $
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
 
 HIKI_VERSION  = '0.8.2'
-HIKI_RELEASE_DATE = '2005-07-21'
+HIKI_RELEASE_DATE = '2005-07-26'
 
 require 'cgi'
 require 'hiki/command'
