@@ -1,3 +1,9 @@
+2005-07-28  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* hiki.cgi, hiki/xmlrpc.rb: XMLRPC interface is now available via hiki.cgi.
+	xmlrpc.cgi becomes needless.
+
+	* misc/xmlrpc/xmlrpc.cgi, misc/xmlrpc/README: removed.
+
 2005-07-26  Kouhei Yanagita <sugi@dream.big.or.jp>
 	* misc/hikifarm/vc-backend-setup.cgi: HikifarmRepos*#import/imported?
 	should take a basenamed wiki name. (by Atsushi Koga)

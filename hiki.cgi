@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# $Id: hiki.cgi,v 1.31 2005-06-14 13:49:07 fdiary Exp $
+# $Id: hiki.cgi,v 1.32 2005-07-28 11:25:55 yanagita Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 BEGIN { $defout.binmode }
@@ -17,15 +17,21 @@ begin
   $:.delete(".") if File.writable?(".")
 
   require 'hiki/config'
-  conf = Hiki::Config::new
+  if ENV['CONTENT_TYPE'] =~ %r!\Atext/xml!i and ENV['REQUEST_METHOD'] =~ /\APOST\z/i
+    require 'hiki/xmlrpc'
+    server = Hiki::XMLRPCServer::new
+    server.serve
+  else
+    conf = Hiki::Config::new
 
-  cgi = CGI::new
+    cgi = CGI::new
 
-  db = Hiki::HikiDB::new( conf )
-  db.open_db {
-    cmd = Hiki::Command::new( cgi, db, conf )
-    cmd.dispatch
-  }
+    db = Hiki::HikiDB::new( conf )
+    db.open_db {
+      cmd = Hiki::Command::new( cgi, db, conf )
+      cmd.dispatch
+    }
+  end
 rescue Exception => err
   if cgi
     print cgi.header( 'type' => 'text/html' )
