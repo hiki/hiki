@@ -83,3 +83,16 @@ add_conf_proc( 'theme', 'Apparence' ) do
          </select></p>
   HTML
 end
+
+add_conf_proc( 'xmlrpc', 'XML-RPC' ) do
+  saveconf_xmlrpc
+
+  <<-HTML
+      <h3 class="subtitle">XML-RPC</h3>
+      <p>(TRANSLATE PLEASE) If you want to disable XML-RPC interfaces, set this value to off.</p>
+      <p><select name="xmlrpc_enabled">
+         <option value="true"#{@conf.xmlrpc_enabled ? ' selected' : ''}>On</option>
+         <option value="false"#{@conf.xmlrpc_enabled ? '' : ' selected'}>Off</option>
+         </select></p>
+  HTML
+end

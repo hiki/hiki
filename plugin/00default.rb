@@ -1,4 +1,4 @@
-# $Id: 00default.rb,v 1.48 2005-07-17 15:13:48 fdiary Exp $
+# $Id: 00default.rb,v 1.49 2005-07-28 15:05:30 yanagita Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #==============================
@@ -277,6 +277,14 @@ if @cgi.params['conf'][0] == 'theme'
     @conf_theme_list << [theme,name]
   end
 end
+
+# conf: XML-RPC
+def saveconf_xmlrpc
+  if @mode == 'saveconf'
+    @conf.xmlrpc_enabled = @cgi.params['xmlrpc_enabled'][0] == 'true'
+  end
+end
+
 
 def auth?
   true

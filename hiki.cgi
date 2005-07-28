@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# $Id: hiki.cgi,v 1.32 2005-07-28 11:25:55 yanagita Exp $
+# $Id: hiki.cgi,v 1.33 2005-07-28 15:05:30 yanagita Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 BEGIN { $defout.binmode }
@@ -17,13 +17,13 @@ begin
   $:.delete(".") if File.writable?(".")
 
   require 'hiki/config'
+  conf = Hiki::Config::new
+
   if ENV['CONTENT_TYPE'] =~ %r!\Atext/xml!i and ENV['REQUEST_METHOD'] =~ /\APOST\z/i
     require 'hiki/xmlrpc'
-    server = Hiki::XMLRPCServer::new
+    server = Hiki::XMLRPCServer::new( conf.xmlrpc_enabled )
     server.serve
   else
-    conf = Hiki::Config::new
-
     cgi = CGI::new
 
     db = Hiki::HikiDB::new( conf )

@@ -1,18 +1,18 @@
-# $Id: xmlrpc.rb,v 1.1 2005-07-28 11:25:55 yanagita Exp $
+# $Id: xmlrpc.rb,v 1.2 2005-07-28 15:05:30 yanagita Exp $
 
 require 'xmlrpc/server'
 require 'hiki/plugin'
 
 module Hiki
   class XMLRPCServer
-    def initialize
+    def initialize(xmlrpc_enabled)
       if defined?(MOD_RUBY)
         @server = XMLRPC::ModRubyServer.new
       else
         @server = XMLRPC::CGIServer.new
       end
 
-      init_handler
+      init_handler if xmlrpc_enabled
     end
 
     def serve

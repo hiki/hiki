@@ -1,4 +1,4 @@
-# $Id: hikiconf.rb.sample.en,v 1.4 2005-07-13 10:32:33 fdiary Exp $
+# $Id: hikiconf.rb.sample.en,v 1.5 2005-07-28 15:05:30 yanagita Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #=================================
@@ -64,6 +64,10 @@
 # Auto link
 #   Set this true if you'd like to link to existing pages automatically.
 @auto_link       = false
+
+# XML-RPC
+#   Whether to enable XML-RPC interfaces.
+@xmlrpc_enabled  = true
 
 #=========================================
 #  Items that can be changed.

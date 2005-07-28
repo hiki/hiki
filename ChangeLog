@@ -1,3 +1,10 @@
+2005-07-29  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* hiki.cgi, hikiconf.rb.sample, hiki/config.rb, hiki/xmlrpc.rb,
+	misc/hikifarm/hiki.conf, misc/i18n/hikiconf.rb.sample.en,
+	plugin/00default.rb, plugin/en/00default.rb, plugin/fr/00default.rb,
+	plugin/it/00default.rb, plugin/ja/00default.rb, template/hiki.conf: add web interface
+	to enable/disable XML-RPC interfaces.
+
 2005-07-28  Kouhei Yanagita <sugi@dream.big.or.jp>
 	* hiki.cgi, hiki/xmlrpc.rb: XMLRPC interface is now available via hiki.cgi.
 	xmlrpc.cgi becomes needless.

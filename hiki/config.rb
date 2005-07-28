@@ -1,10 +1,10 @@
-# $Id: config.rb,v 1.76 2005-07-28 11:25:55 yanagita Exp $
+# $Id: config.rb,v 1.77 2005-07-28 15:05:30 yanagita Exp $
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
 
 HIKI_VERSION  = '0.8.2'
-HIKI_RELEASE_DATE = '2005-07-28'
+HIKI_RELEASE_DATE = '2005-07-29'
 
 require 'cgi'
 require 'hiki/command'
@@ -153,6 +153,7 @@ module Hiki
       @use_wikiname    = true if @use_wikiname.nil?
       @options         = {} unless @options.class == Hash
 
+      @xmlrpc_enabled  ||= true
 
       @template_path   ||= "#{PATH}/template"
       @plugin_path     ||= "#{PATH}/plugin"
@@ -199,7 +200,7 @@ module Hiki
       variables = [:site_name, :author_name, :mail, :theme, :password,
                    :theme_url, :sidebar_class, :main_class, :theme_path,
                    :mail_on_update, :use_sidebar, :auto_link, :use_wikiname,
-                   :options2]
+                   :xmlrpc_enabled, :options2]
       begin
         cgi_conf = File::open( @config_file ){|f| f.read }.untaint
         cgi_conf.gsub!( /^[@$]/, '' )

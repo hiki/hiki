@@ -83,3 +83,17 @@ add_conf_proc( 'theme', '表示設定' ) do
          </select></p>
   HTML
 end
+
+add_conf_proc( 'xmlrpc', 'XML-RPC' ) do
+  saveconf_xmlrpc
+
+  <<-HTML
+      <h3 class="subtitle">XML-RPC</h3>
+      <p>XML-RPC インタフェイスを有効にするかどうかを指定します。</p>
+      <p><select name="xmlrpc_enabled">
+         <option value="true"#{@conf.xmlrpc_enabled ? ' selected' : ''}>有効</option>
+         <option value="false"#{@conf.xmlrpc_enabled ? '' : ' selected'}>無効</option>
+         </select></p>
+  HTML
+end
+
