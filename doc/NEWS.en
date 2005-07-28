@@ -1,3 +1,7 @@
+! Changes in 0.8.3
+
+* XML-RPC interfaces are now available via hiki.cgi. xmlrpc.cgi is removed.
+
 ! Changes in 0.8.2
 
 * fix 'Cross-Site Scripting' vulnerabilities in some plugins.
