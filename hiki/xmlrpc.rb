@@ -1,4 +1,4 @@
-# $Id: xmlrpc.rb,v 1.2 2005-07-28 15:05:30 yanagita Exp $
+# $Id: xmlrpc.rb,v 1.3 2005-07-31 09:13:42 yanagita Exp $
 
 require 'xmlrpc/server'
 require 'hiki/plugin'
@@ -62,6 +62,18 @@ module Hiki
             db.freeze_page( page, attributes['freeze'] ? true : false)
           end
           ret = true
+        rescue
+          STDERR.puts $!, $@.inspect
+          ret = false
+        end
+        ret
+      end
+
+      @server.add_handler('wiki.getAllPages') do
+        conf = Hiki::Config::new
+        db = Hiki::HikiDB::new( conf )
+        begin
+          ret = db.pages
         rescue
           STDERR.puts $!, $@.inspect
           ret = false
