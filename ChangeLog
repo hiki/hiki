@@ -1,3 +1,8 @@
+2005-08-02  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* messages/de.rb, misc/plugin/de/*, misc/text/default.de/*,
+	plugin/de/00default.rb, plugin/de/01sp.rb, plugin/de/02help.rb:
+	German resources are added (translated by Kashia Buch).
+
 2005-07-31  Kouhei Yanagita <sugi@dream.big.or.jp>
 	* hiki/xmlrpc.rb (init_handler): implement wiki.getAllPages.
 

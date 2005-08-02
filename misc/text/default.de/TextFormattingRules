@@ -1,0 +1,277 @@
+{{toc}}
+
+!Note
+* Übersetzt aus dem Englischen von Kashia Buch, 2005-08-01
+* Übersetzt aus dem Japanischen von Steve Brumbaugh, 22 November 2004
+
+! Absätze
+* Fortlaufende Zeilen werden in einen einzigen Absatz zusammengefasst.
+* Leere Zeilen (solche mit nur einem Return oder Leerzeichen bzw. Tabs) markieren das eine eines Absatzes.
+
+* Beispiel
+ Zum Beispiel,
+ wenn ich so schreibe, diese Zeilen
+ werden als ein einziger Absatz angesehen.
+
+* Beispiel Ausgabe
+Zum Beispiel,
+wenn ich so schreibe, diese Zeilen
+werden als ein einziger Absatz angesehen.
+
+! Links
+!! WikiNamen
+* WikiNamen bestehen aus zwei oder mehr Worten zusammen; jedes beginnend mit einem Großbuchstaben gefolgt von mindestens einem Kleinbuchstaben oder einer Nummer.
+* Worte, die diesen Konditionen gerecht werden, werden zu WikiNamen, und ein Link wird automatisch angehängt.
+
+* Beispiel
+ WikiName     - WikiName
+ HogeRule1    - WikiName
+ NOTWIKINAME  - Alle Buchstaben sind Großbuchstaben, dies ist kein WikiName
+ WikiNAME     - Alle Buchstaben in NAME sind Großbuchstaben, dies ist ebenfalls kein WikiName
+ fooWikiName  - Dieses beginnt mit foo, welches nur aus Kleinbuchstaben besteht, also ist dies ebenfalls kein WikiName
+
+*Beispiel Ausgabe
+** WikiName     - WikiName
+** HogeRule1    - WikiName
+** NOTWIKINAME  - Alle Buchstaben sind Großbuchstaben, dies ist kein WikiName
+** WikiNAME     - Alle Buchstaben in NAME sind Großbuchstaben, dies ist ebenfalls kein WikiName
+** fooWikiName  - Dieses beginnt mit foo, welches nur aus Kleinbuchstaben besteht, also ist dies ebenfalls kein WikiName
+
+!! Zu anderen Wiki Seiten linken
+Wenn ein Seitenname mit zwei eckigen Klammern umschlossen ist, wird er zu einem Link zu dieser Seite.
+
+* Beispiel
+ Zum Beispiel, wenn du [[TextFormattingRules]] schreibst, wird dies zu einem Link zu dieser Seite.
+
+* Beispiel Ausgabe
+
+Zum Beispiel, wenn du [[TextFormattingRules]] schreibst, wird dies zu einem Link zu dieser Seite.
+
+!! Zu einer normalen URL linken
+Normaler Text, seperiert von einer URL mit einer Pipe (|) innerhalb von eckigen Klammern, wird zu einem Link zu der angegebenen URL.
+
+* Beispiel
+ Links wie [[Yahoo!|http://www.yahoo.com/]] sind auch möglich.
+
+* Beispiel Ausgabe
+
+Links wie [[Yahoo!|http://www.yahoo.com/]] sind auch möglich.
+
+In dem Falle das die URL mit .jpg, .jpeg, .png oder .gif aufhört, wird das Bild auf der Seite angezeigt, der Text vor dem Link wird dann zum ALT text für das Bild.
+
+* Beispiel
+ [[Four-leaf clover|http://jp.rubyist.net/theme/clover/clover_h1.png]]
+
+* Beispiel Ausgabe
+
+[[Four-leaf clover|http://jp.rubyist.net/theme/clover/clover_h1.png]]
+
+Ein Text in einem Absatz, der so aussieht wie eine URL, wird mit einem Link hinterlegt.
+
+* Beispiel
+ Hiki's homepage ist http://hikiwiki.org/en/ (Englisch).
+
+* Beispiel Ausgabe
+
+Hiki's Homepage ist http://hikiwiki.org/en/ (Englisch).
+
+!! InterWiki
+InterWiki ist möglich, indem man [[Tiki:Tiki]] schreibt.  Um einen Server hinzuzufügen, editiert man InterWikiName.
+
+* Beispiel
+ * [[ruby-talk:1]]
+ * [[Google:ruby wiki]]
+
+* Beispiel Ausgabe
+** [[ruby-talk:1]]
+** [[Google:ruby wiki]]
+
+! Vorvormatierter Text
+* Zeilen die mit Leerzeichen oder Tabs anfangen werder als vorformatierter Text behandelt.
+
+* Beispiel Ausgabe
+ require 'cgi'
+ 
+ cgi = CGI::new
+ cgi.header
+ 
+ puts <<EOS
+ <html>
+   <head>
+     <title>Hello!</title>
+   </head>
+   <body>
+   <p>Hello!</p>
+   </body>
+ </html>
+ EOS
+
+! Text decoration
+* Text eingeschlossen von jeweils zwei einfachen Anführungszeichen ('') wird kursiv.
+* Text eingeschlossen von jeweils drei einfachen Anführungszeichen (''') wird fett.
+* Text eingeschlossen von jeweils zwei Gleich-Zeichen (==) wird durchgestrichen.
+
+* Beispiel
+ Wenn man so schreibt, wird es ''kursiv''.
+ Und wenn man es so schreibt, wird der Text '''fett'''.
+ ==Das ist dumm, aber== Und durchgestrichener Text ist auch möglich!
+
+* Beispiel Ausgabe
+
+Wenn man so schreibt, wird es ''kursiv''.
+Und wenn man es so schreibt, wird der Text '''fett'''.
+==Das ist dumm, aber== Und durchgestrichener Text ist auch möglich!
+
+! Überschriften
+* Zeilen mit Anführungszeichen am Anfang werden Überschriften.
+* Man kann bis zu fünf Ausrufezeichen setzen; sie werden zu <h2> bis <h6> Tags convertiert.
+
+* Beispiel
+ ! Heading1
+ !! Heading2
+ !!! Heading3
+ !!!! Heading4
+ !!!!! Heading5
+
+* Beispiel Ausgabe
+! Heading1
+!! Heading2
+!!! Heading3
+!!!! Heading4
+!!!!! Heading5
+
+! Horizontale Linien
+Vier Bindestriche am Anfang (----) werden zu einer Horizontalen Linie.
+
+* Beispiel
+
+ A B C D E
+ ----
+ F G H I J
+
+* Beispiel Ausgabe
+
+A B C D E
+----
+F G H I J
+
+! Listen
+* Zeilen beginnend mit Sternchen (*) werden zu Listenpunkten.
+* Es ist möglich bis zu drei Sternchen nebeneinander zu setzen, so ist es möglich verschachtelte Listen zu erstellen.
+* Zeilen mit Gattern (#) am Anfang werden zu Aufzählungen.
+
+* Beispiel
+ * Item 1
+ ** Item 1.1
+ ** Item 1.2
+ *** Item 1.2.1
+ *** Item 1.2.2
+ *** Item 1.2.3
+ ** Item 1.3
+ ** Item 1.4
+ * Item 2
+
+ # Item 1
+ # Item 2
+ ## Item 2.1
+ ## Item 2.2
+ ## Item 2.3
+ # Item 3
+ ## Item 3.1
+ ### Item 3.1.1
+ ### Item 3.1.2
+
+* Beispiel Ausgabe
+
+* Item 1
+** Item 1.1
+** Item 1.2
+*** Item 1.2.1
+*** Item 1.2.2
+*** Item 1.2.3
+** Item 1.3
+** Item 1.4
+* Item 2
+
+# Item 1
+# Item 2
+## Item 2.1
+## Item 2.2
+## Item 2.3
+# Item 3
+## Item 3.1
+### Item 3.1.1
+### Item 3.1.2
+
+! Zitate
+Zeilen beginnend mit Doppelten Anführungszeichen werden zu Zitaten.
+
+* Beispiel
+ ""Das ist ein Zitat.
+ ""Das ist noch ein Zitat.
+ ""Dies ist ein fortgesetztes Zitat. Wenn die Anführungszeichen fortlaufend sind
+ ""Werden sie als ein einziges Zitat angesehen, 
+ ""wie dieses.
+
+* Beispiel Ausgabe
+""Das ist ein Zitat.
+""Das ist noch ein Zitat.
+""Dies ist ein fortgesetztes Zitat. Wenn die Anführungszeichen fortlaufend sind
+""Werden sie als ein einziges Zitat angesehen, 
+""wie dieses.
+
+! Definitionen
+Zeilen beginnend mit einem Doppelpunk und einer Phrase mit anschliessend einem weiteren Doppelpunkt werden zu Definitionen.
+
+* Beispiel
+ :ringo:apple
+ :gorira:gorilla
+ :rakuda:camel
+
+* Beispiel Ausgabe
+:ringo:apple
+:gorira:gorilla
+:rakuda:camel
+
+
+! Tabellen
+Tabellen Beginnen mit zwei vertikalen Strichen.
+Ein führendes Ausrufezeichen in einer Zelle gibt an, das es sich um eine Überschriften-Zelle handelt.
+Um mehrere Zeilen oder Reihen zusammenzufügen, schreibe '>' (Spalten) oder '^' (Reihen) am anfang der Zelle.
+
+* Beispiel
+ ||!Reihenüberschrift \ Spaltenüberschrift||!Spalte A||!Spalte B||!Spalte C||!>Spalte D-E (horizontale verbindung)
+ ||!Reihe 1||A1||B1||^C1-C2 (vertikale verbindung)||D1||E1
+ ||!Reihe 2||A2||B2||^>D2-E2-D3-E3 (vertikale and horizontal verbindung)
+ ||!Reihe 3||>>A3-C3 (horizontale verbindung)
+
+* Beispiel Ausgabe
+||!Reihenüberschrift \ Spaltenüberschrift||!Spalte A||!Spalte B||!Spalte C||!>Spalte D-E (horizontale verbindung)
+||!Reihe 1||A1||B1||^C1-C2 (vertikale verbindung)||D1||E1
+||!Reihe 2||A2||B2||^>D2-E2-D3-E3 (vertikale and horizontal verbindung)
+||!Reihe 3||>>A3-C3 (horizontale verbindung)
+
+
+! Kommentare
+Zeilen startend mit '//' werden zu Kommentarzeilen.
+Kommentarzeilen erscheinen nicht auf der Seite.
+
+* Beispiel
+  // Das ist eine Kommentarzeile
+
+* Beispiel Ausgabe (nicht anzeigbar)
+// Das ist eine Kommentarzeile
+
+
+! Plugins
+* Plugins ruft man auf, indem man zwei geschleifte klammern um einen Ausdruck setzt.
+* Mehrzeilige Parameter sind erlaubt.
+* Wenn eine Zeile nichts ausser einem Plugin enthält, wird es zu einem Block-Plugin, dass nicht in einem <p> .... </p> engeschlossen ist.
+
+* Beispiel
+ {{recent(3)}}
+
+* Beispiel von mehreren Zeilen
+ {{pre('
+ ...
+ ')}}

@@ -1,0 +1,11 @@
+! Welcome to Hiki
+Dies ist die FrontPage von [[Hiki|http://hikiwiki.org/en/]].
+Wenn Sie diese Seite sehen können, haben Sie die Installation erfolgreich abgeschlosssen.
+
+! Wichtig: Bevor Sie anfangen
+W&auml;hlen Sie das [Admin] Menü und setzten Sie ein Passwort für den Administrator.
+Nur der Administrator kann Seiten einfrieren (was bedeutet, das nur ein Administrator diese Seite weiter bearbeiten kann) und wieder 'auftauen'.
+
+! Hiki Format
+Die Formatierung von Hiki ist ähnlich dem des Originals.  Wenn Sie bereits Kenntnisse über die Editierung von Wikis verfügen, können Sie diese ganz einfach hier anwenden. Jedoch wurden einige Regeln hinzugefügt.
+Beachten sie die [[Formatierungsregeln|TextFormattingRules]] für weitere Informationen.
