@@ -1,4 +1,4 @@
-# $Id: config.rb,v 1.79 2005-08-03 05:40:04 fdiary Exp $
+# $Id: config.rb,v 1.80 2005-08-03 11:26:30 yanagita Exp $
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
@@ -84,7 +84,7 @@ module Hiki
       unless @base_url
         if !ENV['SCRIPT_NAME']
           @base_url = ''
-        elsif ENV['HTTPS'] && /off/i =~ ENV['HTTPS']
+        elsif ENV['HTTPS'] && /off/i !~ ENV['HTTPS']
           port = (ENV['SERVER_PORT'] == '443') ? '' : ':' + ENV['SERVER_PORT'].to_s
           @base_url = "https://#{ ENV['SERVER_NAME'] }#{ port }#{File::dirname(ENV['SCRIPT_NAME'])}/".sub(%r|/+$|, '/')
         else
