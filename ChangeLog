@@ -1,6 +1,7 @@
 2005-08-03  Kouhei Yanagita <sugi@dream.big.or.jp>
 	* hiki/config.rb (base_url): detecting https implemented wrongly.
 	* misc/hiki-mode/hiki-mode.el (hiki-fetch-index): fixed: Emacs hangs up when fetching the index.
+	* misc/hiki-mode/hiki-mode.el (hiki-http-request): The URL contains no query when method is POST.
 
 2005-08-03  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/config.rb (base_url): revise for IIS (closes #17).

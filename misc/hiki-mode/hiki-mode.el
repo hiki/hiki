@@ -4,7 +4,7 @@
 
 ;; Author: Hideaki Hori <yowaken@cool.ne.jp>
 
-;; $Id: hiki-mode.el,v 1.8 2005-08-03 13:26:39 yanagita Exp $
+;; $Id: hiki-mode.el,v 1.9 2005-08-03 14:00:21 yanagita Exp $
 ;;
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
@@ -54,7 +54,7 @@
 (require 'derived)
 
 (defconst hiki-mode-version
-  (let ((revision "$Revision: 1.8 $"))
+  (let ((revision "$Revision: 1.9 $"))
     (string-match "\\([0-9.]+\\)" revision)
     (match-string 1 revision)))
 
@@ -256,19 +256,19 @@ STRING が non-nil なら、それをサイト名とする。"
     c))
 
 (defun hiki-http-request (mode cmd pagename site-url &optional post-data)
-  (let (url buf)
-    (setq url (concat (format "%s?c=%s" site-url cmd)
-		      (if pagename 
-			  (format ";p=%s" (hiki-http-url-hexify-string pagename hiki-coding-system)))
-		      ""))
-    (setq buf (hiki-http-fetch url mode nil nil 
-			  (hiki-http-url-hexify-alist post-data hiki-coding-system)))
+  (let* ((url (if (eq mode 'get)
+                  (concat (format "%s?c=%s" site-url cmd)
+                          (if pagename 
+                              (format ";p=%s" (hiki-http-url-hexify-string pagename hiki-coding-system))))
+                site-url))
+         (buf (hiki-http-fetch url mode nil nil 
+                               (hiki-http-url-hexify-alist post-data hiki-coding-system))))
     (if (bufferp buf)
-	(save-excursion
-	  (set-buffer buf)
-	  (decode-coding-region (point-min) (point-max)	hiki-coding-system)
-	  (goto-char (point-min))
-	  buf)
+        (save-excursion
+          (set-buffer buf)
+          (decode-coding-region (point-min) (point-max) hiki-coding-system)
+          (goto-char (point-min))
+          buf)
       (error (format "hiki get: %s - %s" (car buf) (cdr buf))))))
 
 (defun hiki-current-anchor-string ()
