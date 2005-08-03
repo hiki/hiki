@@ -2,6 +2,7 @@
 
 * XML-RPC interfaces are now available via hiki.cgi. xmlrpc.cgi is removed.
 * German resources are added.
+* fix a hang up bug of 'hiki-mode.el'.
 
 ! Changes in 0.8.2
 
