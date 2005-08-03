@@ -4,7 +4,7 @@
 
 ;; Author: Hideaki Hori <yowaken@cool.ne.jp>
 
-;; $Id: hiki-mode.el,v 1.7 2005-07-20 17:15:28 yanagita Exp $
+;; $Id: hiki-mode.el,v 1.8 2005-08-03 13:26:39 yanagita Exp $
 ;;
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
@@ -54,7 +54,7 @@
 (require 'derived)
 
 (defconst hiki-mode-version
-  (let ((revision "$Revision: 1.7 $"))
+  (let ((revision "$Revision: 1.8 $"))
     (string-match "\\([0-9.]+\\)" revision)
     (match-string 1 revision)))
 
@@ -716,24 +716,27 @@ REFETCH が nil ですでにバッファが存在するなら、HTTP GET しない。"
 (defun hiki-fetch-index (site-info)
   "ページ一覧を取得する。"
   (let (indexes history (i 1)
-	(buf (hiki-http-request 'get "index" nil (hiki-site-url site-info))))
+                (buf (hiki-http-request 'get "index" nil (hiki-site-url site-info))))
     (when (bufferp buf)
       (save-excursion
-	(set-buffer buf)
-	(re-search-forward "<ul>\n\\s-*" nil t nil)
-	(while (equal (char-after) ?<)
-	  (re-search-forward "<a href=\"./\\([^\"]*\\)\">\\([^<]*\\)</a>: \\([^<]*\\)</li>" nil t nil)
-	  (setq indexes 
-		(cons
-         (list i (hiki-http-url-unhexify-string (if (= (length (match-string 1)) 0)
-                                                    "FrontPage"
-                                                  (substring (match-string 1) 1))
-                                                hiki-coding-system)
-		       (hiki-replace-entity-refs (match-string 2))
-		       (hiki-replace-entity-refs (match-string 3))) indexes))
-	  (setq i (1+ i))))
+        (set-buffer buf)
+        (re-search-forward "<ul>\n\\s-*" nil t nil)
+        (while (and (equal (char-after) ?<)
+                    (re-search-forward "<a href=\"\\([^\"]*\\)\">\\([^<]*\\)</a>: \\([^<]*\\)</li>" nil t nil))
+          (let ((page-url (match-string 1))
+                (page-title (match-string 2))
+                (page-description (match-string 3)))
+            (setq indexes 
+                  (cons
+                   (list i (hiki-http-url-unhexify-string (if (string-match "\\?\\(.*\\)" page-url)
+                                                              (match-string 1 page-url)
+                                                            "FrontPage")
+                                                          hiki-coding-system)
+                         (hiki-replace-entity-refs page-title)
+                         (hiki-replace-entity-refs page-description)) indexes)))
+          (setq i (1+ i))))
       (or (setq history (assoc (hiki-site-name site-info) hiki-pagename-history))
-	  (setq hiki-pagename-history (cons (setq history (cons (hiki-site-name site-info) nil)) hiki-pagename-history)))
+          (setq hiki-pagename-history (cons (setq history (cons (hiki-site-name site-info) nil)) hiki-pagename-history)))
       (setcdr history (mapcar (lambda (elm) (cons (nth 1 elm) nil)) indexes))
       (reverse indexes))))
 
