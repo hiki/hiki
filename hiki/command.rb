@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.72 2005-07-14 03:31:31 fdiary Exp $
+# $Id: command.rb,v 1.73 2005-08-03 23:40:11 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -96,7 +96,7 @@ module Hiki
     end
 
   private
-    def generate_page( data )
+    def generate_page( data, status = 'OK' )
       @plugin.hiki_menu(data, @cmd)
       @plugin.title = data[:title]
       data[:cmd] = @cmd
@@ -119,7 +119,7 @@ module Hiki
 
       data[:last_modified] = Time::now unless data[:last_modified]
       @page.process( @plugin )
-      @page.out
+      @page.out( 'status' => status )
     end
 
     def generate_error_page( data )
@@ -435,7 +435,7 @@ module Hiki
         data[:msg1]    = msg
         data[:msg2]    = @conf.msg_create + ': '
         data[:button]  = @conf.msg_newpage
-        data[:key]     = %Q|value="#{msg ?  @p :  ''}"|
+        data[:key]     = %Q|value="#{msg ?  @p.escapeHTML :  ''}"|
         data[:list]    = nil
         data[:method]  = 'get'
         
@@ -448,6 +448,7 @@ module Hiki
       password = @params['password'][0]
       page = @params['p'][0]
       msg_login_result = nil
+      status = 'OK'
       if name && password
         session = Hiki::Session::new( @conf )
         @plugin.login( name, password )
@@ -463,6 +464,7 @@ module Hiki
           return
         else
           msg_login_result = @conf.msg_login_failure
+          status = '403 Forbidden'
         end
       end
 
@@ -470,8 +472,8 @@ module Hiki
       data[:title]   = title( @conf.msg_login )
       data[:button]  = @conf.msg_ok
       data[:login_result] = msg_login_result
-      data[:page] = page
-      generate_page( data )
+      data[:page] = page.escapeHTML
+      generate_page( data, status )
     end
 
     def cmd_admin

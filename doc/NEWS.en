@@ -1,5 +1,7 @@
 ! Changes in 0.8.3
 
+* fix 'Cross-Site Scripting' vulnerabilities.
+* fix a bug of possible losing a configuration file.
 * XML-RPC interfaces are now available via hiki.cgi. xmlrpc.cgi is removed.
 * German resources are added.
 * fix a hang up bug of 'hiki-mode.el'.

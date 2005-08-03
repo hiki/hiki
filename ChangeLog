@@ -1,7 +1,23 @@
+2005-08-03  Kazuhiko  <kazuhiko@fdiary.net>
+	* plugin/00default.rb (create_menu): [SECURITY FIX] escape a page
+	name in a login menu (reported by Yutaka OIWA).
+	* hiki/config.rb (save_config): make contents of a conf file
+	before trying to write (reported by Yutaka OIWA).
+
+	* hiki/command.rb (cmd_create): [SECURITY FIX] escape a page name.
+
+	* hiki/command.rb (cmd_login): returns 'FORBIDDEN' if login fails.
+	(generate_page): accept 'status' as a second argument.
+
+	* hiki/repos/cvs.rb (revisions): revise for the current cvs.
+
 2005-08-03  Kouhei Yanagita <sugi@dream.big.or.jp>
 	* hiki/config.rb (base_url): detecting https implemented wrongly.
-	* misc/hiki-mode/hiki-mode.el (hiki-fetch-index): fixed: Emacs hangs up when fetching the index.
-	* misc/hiki-mode/hiki-mode.el (hiki-http-request): The URL contains no query when method is POST.
+	* misc/hiki-mode/hiki-mode.el (hiki-fetch-index): fixed: Emacs
+	hangs up when fetching the index.
+	* misc/hiki-mode/hiki-mode.el (hiki-http-request): The URL
+	contains no query when method is POST.
+
 
 2005-08-03  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/config.rb (base_url): revise for IIS (closes #17).
@@ -19,19 +35,21 @@
 2005-07-29  Kouhei Yanagita <sugi@dream.big.or.jp>
 	* hiki.cgi, hikiconf.rb.sample, hiki/config.rb, hiki/xmlrpc.rb,
 	misc/hikifarm/hiki.conf, misc/i18n/hikiconf.rb.sample.en,
-	plugin/00default.rb, plugin/en/00default.rb, plugin/fr/00default.rb,
-	plugin/it/00default.rb, plugin/ja/00default.rb, template/hiki.conf: add web interface
-	to enable/disable XML-RPC interfaces.
+	plugin/00default.rb, plugin/en/00default.rb,
+	plugin/fr/00default.rb, plugin/it/00default.rb,
+	plugin/ja/00default.rb, template/hiki.conf: add web interface to
+	enable/disable XML-RPC interfaces.
 
 2005-07-28  Kouhei Yanagita <sugi@dream.big.or.jp>
-	* hiki.cgi, hiki/xmlrpc.rb: XMLRPC interface is now available via hiki.cgi.
-	xmlrpc.cgi becomes needless.
+	* hiki.cgi, hiki/xmlrpc.rb: XMLRPC interface is now available via
+	hiki.cgi.  xmlrpc.cgi becomes needless.
 
 	* misc/xmlrpc/xmlrpc.cgi, misc/xmlrpc/README: removed.
 
 2005-07-26  Kouhei Yanagita <sugi@dream.big.or.jp>
-	* misc/hikifarm/vc-backend-setup.cgi: HikifarmRepos*#import/imported?
-	should take a basenamed wiki name. (by Atsushi Koga)
+	* misc/hikifarm/vc-backend-setup.cgi:
+	HikifarmRepos*#import/imported?  should take a basenamed wiki
+	name. (by Atsushi Koga)
 
 	* style/default/html_formatter.rb (make_link): use a page name
 	instead of a page title in a toc (suggested by Shinya Kawaji). 

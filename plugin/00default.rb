@@ -1,4 +1,4 @@
-# $Id: 00default.rb,v 1.49 2005-07-28 15:05:30 yanagita Exp $
+# $Id: 00default.rb,v 1.50 2005-08-03 23:40:11 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #==============================
@@ -205,7 +205,7 @@ def create_menu(data, command)
       menu << cmd
     end
     menu_proc.each {|i| menu << i}
-    menu << %Q!<a href="#{@conf.cgi_name}?c=login#{@page ? ";p=#{@page}" : ""}">#{@conf.msg_login}</a>! unless @user || @conf.password.empty?
+    menu << %Q!<a href="#{@conf.cgi_name}?c=login#{@page ? ";p=#{@page.escape}" : ""}">#{@conf.msg_login}</a>! unless @user || @conf.password.empty?
     menu << %Q!<a href="#{@conf.cgi_name}?c=admin">#{@conf.msg_admin}</a>! if admin?
     menu << %Q!<a href="#{@conf.cgi_name}?c=logout">#{@conf.msg_logout}</a>! if @user && !@conf.password.empty?
   end

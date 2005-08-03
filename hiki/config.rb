@@ -1,10 +1,10 @@
-# $Id: config.rb,v 1.80 2005-08-03 11:26:30 yanagita Exp $
+# $Id: config.rb,v 1.81 2005-08-03 23:40:11 fdiary Exp $
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
 
-HIKI_VERSION  = '0.8.2'
-HIKI_RELEASE_DATE = '2005-07-31'
+HIKI_VERSION  = '0.8.3'
+HIKI_RELEASE_DATE = '2005-08-04'
 
 require 'cgi'
 require 'hiki/command'
@@ -75,8 +75,9 @@ module Hiki
     end
 
     def save_config
+      conf = ERB::new( File::open( "#{@template_path}/hiki.conf" ){|f| f.read }.untaint ).result( binding )
       File::open(@config_file, "w") do |f|
-        f.print ERB::new( File::open( "#{@template_path}/hiki.conf" ){|f| f.read }.untaint ).result( binding )
+        f.print conf
       end
     end
 
