@@ -1,3 +1,6 @@
+2005-08-03  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/config.rb (base_url): revise for IIS (closes #17).
+
 2005-08-02  Kouhei Yanagita <sugi@dream.big.or.jp>
 	* messages/de.rb, misc/plugin/de/*, misc/text/default.de/*,
 	plugin/de/00default.rb, plugin/de/01sp.rb, plugin/de/02help.rb:
