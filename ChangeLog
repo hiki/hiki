@@ -1,3 +1,6 @@
+2005-08-04  Kazuhiko  <kazuhiko@fdiary.net>
+	* Hiki 0.8.3 released!
+
 2005-08-03  Kazuhiko  <kazuhiko@fdiary.net>
 	* plugin/00default.rb (create_menu): [SECURITY FIX] escape a page
 	name in a login menu (reported by Yutaka OIWA).
