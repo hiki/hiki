@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.73 2005-08-03 23:40:11 fdiary Exp $
+# $Id: command.rb,v 1.74 2005-08-04 00:46:52 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -472,7 +472,7 @@ module Hiki
       data[:title]   = title( @conf.msg_login )
       data[:button]  = @conf.msg_ok
       data[:login_result] = msg_login_result
-      data[:page] = page.escapeHTML
+      data[:page] = ( page || '' ).escapeHTML
       generate_page( data, status )
     end
 
