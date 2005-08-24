@@ -1,4 +1,4 @@
-# $Id: xmlrpc.rb,v 1.3 2005-07-31 09:13:42 yanagita Exp $
+# $Id: xmlrpc.rb,v 1.4 2005-08-24 06:43:04 fdiary Exp $
 
 require 'xmlrpc/server'
 require 'hiki/plugin'
@@ -25,7 +25,7 @@ module Hiki
         conf = Hiki::Config::new
         db = Hiki::HikiDB::new( conf )
         begin
-          ret = db.load( page ) || ''
+          ret = XMLRPC::Base64.new( db.load( page ) || '' )
         rescue
           STDERR.puts $!, $@.inspect
           ret = false
@@ -73,7 +73,7 @@ module Hiki
         conf = Hiki::Config::new
         db = Hiki::HikiDB::new( conf )
         begin
-          ret = db.pages
+          ret = db.pages.collect{|p| XMLRPC::Base64.new( p )}
         rescue
           STDERR.puts $!, $@.inspect
           ret = false

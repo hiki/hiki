@@ -4,7 +4,7 @@
 
 ;; Author: Hideaki Hori <yowaken@cool.ne.jp>
 
-;; $Id: hiki-mode.el,v 1.9 2005-08-03 14:00:21 yanagita Exp $
+;; $Id: hiki-mode.el,v 1.10 2005-08-24 06:43:04 fdiary Exp $
 ;;
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
@@ -54,7 +54,7 @@
 (require 'derived)
 
 (defconst hiki-mode-version
-  (let ((revision "$Revision: 1.9 $"))
+  (let ((revision "$Revision: 1.10 $"))
     (string-match "\\([0-9.]+\\)" revision)
     (match-string 1 revision)))
 
@@ -844,7 +844,7 @@ REFETCH が nil ですでにバッファが存在するなら、HTTP GET しない。"
       (hiki-edit-rename-buffer (car hiki-site-info) hiki-pagename (setq hiki-pagetitle pagetitle) freeze)
       (and (functionp hiki-browser-function)
 	   (funcall hiki-browser-function
-		    (format "%s?%s" (hiki-site-url) hiki-pagename)))
+		    (format "%s?%s" (hiki-site-url) (hiki-http-url-hexify-string hiki-pagename hiki-coding-system))))
       (hiki-edit-quit))))
 
 (defun hiki-conflict-show-diff ()

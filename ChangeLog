@@ -1,3 +1,13 @@
+2005-08-24  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/xmlrpc.rb (wiki.getPage, wiki.getAllPages): encode strings
+	with base64.
+
+	* misc/hiki-mode/hiki-mode.el (hiki-edit-save-page): escape page
+	name (reported by YAA).
+
+	* hiki/db/flatfile.rb: update a timestamp of a text file in minor
+	changes to making cvs commit properly.
+
 2005-08-04  Kazuhiko  <kazuhiko@fdiary.net>
 	* Hiki 0.8.3 released!
 

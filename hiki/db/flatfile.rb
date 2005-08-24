@@ -1,4 +1,4 @@
-# $Id: flatfile.rb,v 1.20 2005-07-15 05:02:54 fdiary Exp $
+# $Id: flatfile.rb,v 1.21 2005-08-24 06:43:04 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'fileutils'
@@ -38,21 +38,10 @@ module Hiki
       create_info_default( page ) unless info_exist?( page )
 
       if update_timestamp
-        mtime = Time::now
-        set_last_update( page, mtime )
-      else
-        begin
-          mtime = File::mtime( filename )
-        rescue Errno::ENOENT
-          mtime = Time::now
-        end
+        set_last_update( page, Time::now )
       end
       File::open( filename, 'wb' ) do |f|
         f.write( text.gsub(/\r\n/, "\n") )
-      end
-      begin
-        File::utime( mtime, mtime, filename )
-      rescue Errno::EPERM
       end
       true
     end
