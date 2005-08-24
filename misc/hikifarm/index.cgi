@@ -6,7 +6,7 @@ HIKIFARM_RELEASE_DATE = '2005-08-04'
 class HikifarmConfig
   attr_reader :ruby, :hiki, :hikifarm_description
   attr_reader :default_pages, :data_root, :repos_type, :repos_root
-  attr_reader :title, :css, :author, :mail, :cgi_name, :header, :footer, :cgi, :hikifarm_template_dir
+  attr_reader :title, :css, :author, :mail, :cgi_name, :attach_cgi_name, :header, :footer, :cgi, :hikifarm_template_dir
   
   def initialize
     require 'cgi'
@@ -32,6 +32,7 @@ class HikifarmConfig
     header = nil
     footer = nil
     cgi_name = 'index.cgi'
+    attach_cgi_name = nil
     if FileTest::symlink?( __FILE__ ) then
       hikifarm_template_dir = File::dirname( File::expand_path( File::readlink( __FILE__ ) ) ) + '/template'
     else
@@ -56,6 +57,7 @@ class HikifarmConfig
     @header = header
     @footer = footer
     @cgi_name = cgi_name
+    @attach_cgi_name = attach_cgi_name
     @hikifarm_template_dir = hikifarm_template_dir
 
     # Support depracated configuration
@@ -144,16 +146,23 @@ class Hikifarm
     @wikilist.inject(0){|result, wiki| result + wiki.pages_num}
   end
 
-  def create_wiki(name, hiki, cgi_name, data_root, default_pages_path)
+  def create_wiki(name, hiki, cgi_name, attach_cgi_name, data_root, default_pages_path)
     Dir.mkdir("#{@farm_pub_path}/#{name.untaint}")
 
     File.open("#{@farm_pub_path}/#{name}/#{cgi_name}", 'w') do |f|
-      f.puts(index(name, hiki)) # fix me
+      f.puts(index(name, hiki))
       f.chmod(0744)
     end
 
+    if attach_cgi_name
+      File.open("#{@farm_pub_path}/#{name}/#{attach_cgi_name}", 'w') do |f|
+        f.puts(attach(name, hiki))
+        f.chmod(0744)
+      end
+    end
+
     File.open("#{@farm_pub_path}/#{name}/hikiconf.rb", 'w') do |f|
-      f.puts(conf(name, hiki)) # fix me
+      f.puts(conf(name, hiki))
     end
 
     Dir.mkdir("#{data_root}/#{name}")
@@ -197,6 +206,15 @@ load "\#{hiki}/hiki.cgi"
 INDEX
   end
 
+  def attach(wiki, hiki)
+<<-INDEX
+#!#{@ruby}
+hiki=''
+eval( open( '../hikifarm.conf' ){|f|f.read.untaint} )
+$:.unshift "\#{hiki}"
+load "\#{hiki}/misc/plugin/attach/attach.cgi"
+INDEX
+  end
 
 end
 
@@ -470,7 +488,7 @@ class App
       begin
         name = @cgi.params['wiki'][0]
         raise '英数字のみ指定できます' if /\A[a-zA-Z0-9]+\z/ !~ name
-        @farm.create_wiki(name, @conf.hiki, @conf.cgi_name, @conf.data_root, @conf.default_pages)
+        @farm.create_wiki(name, @conf.hiki, @conf.cgi_name, @conf.attach_cgi_name, @conf.data_root, @conf.default_pages)
 
         print @cgi.header({'Location' => hikifarm_uri})
         exit

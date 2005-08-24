@@ -1,3 +1,8 @@
+2005-08-25  Kouhei Yanagita <yanagi@shakenbu.org>
+	* misc/hikifarm/hiki.conf, misc/hikifarm/hikifarm.conf,
+	misc/hikifarm/index.cgi: Hikifarm becomes to be able to set up
+	a CGI file for file attachment (by Kouhei Sutou).
+
 2005-08-24  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/xmlrpc.rb (wiki.getPage, wiki.getAllPages): encode strings
 	with base64.
