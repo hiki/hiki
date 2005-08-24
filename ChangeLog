@@ -3,6 +3,9 @@
 	misc/hikifarm/index.cgi: Hikifarm becomes to be able to set up
 	a CGI file for file attachment (by Kouhei Sutou).
 
+	* misc/plugin/attach.rb: moved from misc/plugin/attach/attach.rb to
+	be able to select a attach.rb plugin without file copy.
+
 2005-08-24  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/xmlrpc.rb (wiki.getPage, wiki.getAllPages): encode strings
 	with base64.

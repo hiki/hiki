@@ -1,4 +1,4 @@
-# $Id: attach.rb,v 1.25 2005-07-16 02:33:57 fdiary Exp $
+# $Id: attach.rb,v 1.1 2005-08-24 16:46:23 yanagita Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 #
 # thanks to Kazuhiko, Masao Mutoh, SHIMADA Mitsunobu, Yoshimi, ¤ê¤¿
