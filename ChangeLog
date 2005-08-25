@@ -1,3 +1,7 @@
+2005-08-25  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/html_formatter.rb (make_link): display page names
+	instead of page titles if @conf.use_wikiname is false.
+
 2005-08-25  Kouhei Yanagita <yanagi@shakenbu.org>
 	* misc/hikifarm/hiki.conf, misc/hikifarm/hikifarm.conf,
 	misc/hikifarm/index.cgi: Hikifarm becomes to be able to set up

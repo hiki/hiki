@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.42 2005-07-26 13:59:15 yanagita Exp $
+# $Id: html_formatter.rb,v 1.43 2005-08-25 05:08:33 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -293,7 +293,7 @@ EOS
         t[:href] = orig[0] if orig[0]
       end
       if !@conf.use_wikiname and t[:e] == :wikiname
-        s[:html] << disp.escapeHTML
+        s[:html] << t[:s].escapeHTML
       elsif @db.exist?( t[:href] )
         s[:html] << @plugin.hiki_anchor(t[:href].escape, disp.escapeHTML)
         @references << t[:href]
