@@ -1,4 +1,4 @@
-# $Id: flatfile.rb,v 1.21 2005-08-24 06:43:04 fdiary Exp $
+# $Id: flatfile.rb,v 1.22 2005-08-26 02:01:14 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'fileutils'
@@ -172,13 +172,18 @@ module Hiki
     end
 
     def set_references(p, r)
-      set_attribute(p, [[:references, r.join(',')]])
+      set_attribute(p, [[:references, r]])
     end
 
     def get_references(p)
       ref = []
       page_info.each do |a|
-        ref << a.keys[0] if a.values[0][:references].split(',').index(p)
+        r = a.values[0][:references]
+        if String === r # for compatibility
+          r = r.split(',')
+          set_references(a.keys[0], r)
+        end
+        ref << a.keys[0] if r.include?(p)
       end
       ref
     end
@@ -222,7 +227,7 @@ module Hiki
       { :count          => 0,
         :last_modified  => Time::now,
         :freeze         => false,
-        :references     => '',
+        :references     => [],
         :keyword        => [],
         :title          => '',
       }

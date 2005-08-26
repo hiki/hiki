@@ -1,3 +1,7 @@
+2005-08-26  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/db/flatfile.rb (set_references, get_references): store
+	references as Array instead of csv String.
+
 2005-08-25  Kazuhiko  <kazuhiko@fdiary.net>
 	* style/default/html_formatter.rb (make_link): display page names
 	instead of page titles if @conf.use_wikiname is false.
