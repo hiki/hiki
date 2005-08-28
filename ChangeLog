@@ -5,6 +5,8 @@
 	* style/default/parser.rb: Remove the HikiStack class and use Array instead.
 	perform some refactorings.
 
+	* misc/hikifarm/index.cgi: update HIKIFARM_RELEASE_DATE. I've forgotten to do it.
+
 2005-08-26  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/db/flatfile.rb (set_references, get_references): store
 	references as Array instead of csv String.
