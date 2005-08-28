@@ -1,4 +1,4 @@
-# $Id: test_default_parser.rb,v 1.10 2005-06-24 01:52:44 fdiary Exp $
+# $Id: test_default_parser.rb,v 1.11 2005-08-28 02:44:45 yanagita Exp $
 
 require 'test/unit'
 require 'style/default/parser'
@@ -199,5 +199,80 @@ class Default_Parser_Unit_Tests < Test::Unit::TestCase
 		   {:s=>"いいい", :e=>:normal_text},
 		   {:e=>:p_close}],
                  @parser.parse( "あああ\nいいい" ) )
+  end
+
+  def test_emphasis
+    assert_equal([{:e => :p_open},
+                   {:s => 'hoge', :e => :normal_text},
+                   {:e => :emphasis_open},
+                   {:s => 'fuga', :e => :normal_text},
+                   {:e => :emphasis_close},
+                   {:s => 'foobar', :e => :normal_text},
+                   {:e => :p_close},
+                 ],
+                 @parser.parse("hoge''fuga''foobar"))
+
+    assert_equal([{:e => :p_open},
+                   {:s => 'hoge', :e => :normal_text},
+                   {:e => :emphasis_open},
+                   {:s => 'fuga', :e => :normal_text},
+                   {:e => :emphasis_close},
+                   {:s => 'foobar', :e => :normal_text},
+                   {:s => "''", :e => :normal_text},
+                   {:s => 'abc', :e => :normal_text},
+                   {:e => :p_close},
+                 ],
+                 @parser.parse("hoge''fuga''foobar''abc"))
+
+  end
+
+  def test_strong
+    assert_equal([{:e => :p_open},
+                   {:s => 'hoge', :e => :normal_text},
+                   {:e => :strong_open},
+                   {:s => 'fuga', :e => :normal_text},
+                   {:e => :strong_close},
+                   {:s => 'foobar', :e => :normal_text},
+                   {:e => :p_close},
+                 ],
+                 @parser.parse("hoge'''fuga'''foobar"))
+
+    assert_equal([{:e => :p_open},
+                   {:s => 'hoge', :e => :normal_text},
+                   {:e => :strong_open},
+                   {:s => 'fuga', :e => :normal_text},
+                   {:e => :strong_close},
+                   {:s => 'foobar', :e => :normal_text},
+                   {:s => "'''", :e => :normal_text},
+                   {:s => 'abc', :e => :normal_text},
+                   {:e => :p_close},
+                 ],
+                 @parser.parse("hoge'''fuga'''foobar'''abc"))
+
+  end
+
+  def test_delete
+    assert_equal([{:e => :p_open},
+                   {:s => 'hoge', :e => :normal_text},
+                   {:e => :delete_open},
+                   {:s => 'fuga', :e => :normal_text},
+                   {:e => :delete_close},
+                   {:s => 'foobar', :e => :normal_text},
+                   {:e => :p_close},
+                 ],
+                 @parser.parse("hoge==fuga==foobar"))
+
+    assert_equal([{:e => :p_open},
+                   {:s => 'hoge', :e => :normal_text},
+                   {:e => :delete_open},
+                   {:s => 'fuga', :e => :normal_text},
+                   {:e => :delete_close},
+                   {:s => 'foobar', :e => :normal_text},
+                   {:s => "==", :e => :normal_text},
+                   {:s => 'abc', :e => :normal_text},
+                   {:e => :p_close},
+                 ],
+                 @parser.parse("hoge==fuga==foobar==abc"))
+
   end
 end

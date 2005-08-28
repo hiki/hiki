@@ -1,3 +1,7 @@
+2005-08-28  Kouhei Yanagita <yanagi@shakenbu.org>
+	* test/test_default_parser.rb: (test_emphasis, test_strong, test_delete):
+	add new test methods.
+
 2005-08-26  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/db/flatfile.rb (set_references, get_references): store
 	references as Array instead of csv String.
