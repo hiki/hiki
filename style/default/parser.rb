@@ -1,27 +1,9 @@
-# $Id: parser.rb,v 1.18 2005-07-13 13:44:41 fdiary Exp $
+# $Id: parser.rb,v 1.19 2005-08-28 03:07:54 yanagita Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'cgi'
 
 module Hiki
-  class HikiStack < Array
-    def find( h )
-      return nil unless h.instance_of?(Hash)
-      key, value = h.shift
-      result = []
-      self.each { |i|
-        if i[key] == value
-          result << i
-          yield( i ) if block_given?
-        end
-      }
-      result
-    end
-    def push(e)
-      super(e)
-    end
-  end
-
   class Parser_default
 
     class << self
@@ -71,8 +53,8 @@ module Hiki
 
     def initialize( conf )
       @conf           = conf
-      @stack          = HikiStack::new
-      @cur_stack      = HikiStack::new
+      @stack          = []
+      @cur_stack      = []
       @last_blocktype = []
     end
 
@@ -92,10 +74,10 @@ module Hiki
 
     def inline( str )
       return unless str
-      a = []
 
+      opened_tags = []
       while str.size > 0 do
-        str = inline_impl( str, a )
+        str = inline_impl( str, opened_tags )
       end
       @cur_stack
     end
@@ -129,7 +111,7 @@ module Hiki
         term_flag = /^:/ !~ str
         @cur_stack.push( {:e => :definition_term_open} ) if term_flag
         cur_stack_backup = @cur_stack
-        @cur_stack = HikiStack::new
+        @cur_stack = []
         inline( str )
         tmp_stack = @cur_stack
         @cur_stack = cur_stack_backup
@@ -191,33 +173,33 @@ module Hiki
     end
     protected :parse_line
 
-    def inline_impl( str, a )
+    def inline_impl( str, opened_tags )
       case str
       when STRONG_RE
-        if a.index( :strong_close )
+        if opened_tags.index( :strong )
           @cur_stack.push( {:e => :strong_close} )
-          a.delete( :strong_close )
+          opened_tags.delete( :strong )
         else
           @cur_stack.push( {:e => :strong_open} )
-          a << :strong_close
+          opened_tags.push( :strong )
         end
         str = $'
       when EMPHASIS_RE
-        if a.index( :emphasis_close )
+        if opened_tags.index( :emphasis )
           @cur_stack.push( {:e => :emphasis_close} )
-          a.delete( :emphasis_close )
+          opened_tags.delete( :emphasis )
         else
           @cur_stack.push( {:e => :emphasis_open} )
-          a << :emphasis_close
+          opened_tags.push( :emphasis )
         end
         str = $'
       when DELETE_RE
-        if a.index( :delete_close )
+        if opened_tags.index( :delete )
           @cur_stack.push( {:e => :delete_close} )
-          a.delete( :delete_close )
+          opened_tags.delete( :delete )
         else
           @cur_stack.push( {:e => :delete_open} )
-          a << :delete_close
+          opened_tags.push( :delete )
         end
         str = $'
       when REF_RE
@@ -257,7 +239,7 @@ module Hiki
           str = ''
         end
       when WIKINAME_RE
-        str = ($2 || '') + $'
+        str = ($2 || "") + $'
         @cur_stack.push( {:e => :wikiname, :s => $1, :href => $1} )
       when NORMAL_TEXT_RE
         m = $&
@@ -282,7 +264,7 @@ module Hiki
     end
 
     def normalize(s)
-      ns = HikiStack::new
+      ns = []
       last_type = nil
       block_level = Hash::new(0)
 
@@ -427,8 +409,8 @@ module Hiki
     end
 
     def normalize_esd(s, e1, e2, to)
-      eo = s.find( :e => e1 )
-      ec = s.find( :e => e2 )
+      eo = s.find_all{|e| e[:e] == e1}
+      ec = s.find_all{|e| e[:e] == e2}
       if (n = eo.size - ec.size) != 0
         n.times do
           pos = s.rindex(eo.pop)

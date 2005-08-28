@@ -2,6 +2,9 @@
 	* test/test_default_parser.rb: (test_emphasis, test_strong, test_delete):
 	add new test methods.
 
+	* style/default/parser.rb: Remove the HikiStack class and use Array instead.
+	perform some refactorings.
+
 2005-08-26  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/db/flatfile.rb (set_references, get_references): store
 	references as Array instead of csv String.
