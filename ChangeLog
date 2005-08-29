@@ -1,3 +1,7 @@
+2005-08-29  Kouhei Yanagita <yanagi@shakenbu.org>
+	* test/test_hikifarm.rb (test_create_wiki): the test failed because one of
+	the arguments of Hikifarm#create_wiki is lack.
+
 2005-08-28  Kouhei Yanagita <yanagi@shakenbu.org>
 	* test/test_default_parser.rb: (test_emphasis, test_strong, test_delete):
 	add new test methods.

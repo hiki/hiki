@@ -86,7 +86,7 @@ class Hikifarm_Unit_Tests < Test::Unit::TestCase
   def test_create_wiki
     name = 'newwiki'
     default_pages_path = 'data/text'
-    @farm.create_wiki(name, '', 'index.cgi', @data_root, default_pages_path)
+    @farm.create_wiki(name, '', 'index.cgi', nil, @data_root, default_pages_path)
 
     default_pages = Dir["#{default_pages_path}/*"].delete_if{|f| !File.file?(f.untaint)}.map{|e| File.basename(e)}
     copied_pages = Dir["#{@data_root}/#{name}/text/*"].delete_if{|f| !File.file?(f.untaint)}.map{|e| File.basename(e)}
