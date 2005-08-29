@@ -1,4 +1,4 @@
-# $Id: parser.rb,v 1.19 2005-08-28 03:07:54 yanagita Exp $
+# $Id: parser.rb,v 1.20 2005-08-29 13:12:26 yanagita Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'cgi'
@@ -229,7 +229,7 @@ module Hiki
       when URL_RE
         href = $&
         str  = $'
-        @cur_stack.push( {:e => :reference, :href => href, :s => href} )
+        @cur_stack.push( {:e => :reference, :href => CGI::escapeHTML(href), :s => href} )
       when PLUGIN_RE
         if @conf.use_plugin
           str = $'

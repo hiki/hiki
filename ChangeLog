@@ -2,6 +2,11 @@
 	* test/test_hikifarm.rb (test_create_wiki): the test failed because one of
 	the arguments of Hikifarm#create_wiki is lack.
 
+	* test/test_default_parser.rb (test_link, test_url): add some tests.
+
+	* style/default/parser.rb (inline_impl): the href of URL was not escaped at
+	tokens of URL_RE.
+
 2005-08-28  Kouhei Yanagita <yanagi@shakenbu.org>
 	* test/test_default_parser.rb: (test_emphasis, test_strong, test_delete):
 	add new test methods.

@@ -1,4 +1,4 @@
-# $Id: test_default_parser.rb,v 1.11 2005-08-28 02:44:45 yanagita Exp $
+# $Id: test_default_parser.rb,v 1.12 2005-08-29 13:12:26 yanagita Exp $
 
 require 'test/unit'
 require 'style/default/parser'
@@ -123,13 +123,51 @@ class Default_Parser_Unit_Tests < Test::Unit::TestCase
 
   def test_link
     assert_equal([{:e=>:p_open},
-		   {:s=>"str", :e=>:reference, :href=>"../data/"},
-		   {:e=>:p_close}],
-		 @parser.parse( "[[str|:../data/]]" ) )
+                   {:s=>"str", :e=>:reference, :href=>"../data/"},
+                   {:e=>:p_close}],
+                 @parser.parse( "[[str|:../data/]]" ) )
     assert_equal([{:e=>:p_open},
-		   {:s=>"../data/", :e=>:reference, :href=>"../data/"},
-		   {:e=>:p_close}],
-		 @parser.parse( "[[:../data/]]" ) )
+                   {:s=>"../data/", :e=>:reference, :href=>"../data/"},
+                   {:e=>:p_close}],
+                 @parser.parse( "[[:../data/]]" ) )
+    assert_equal([{:e=>:p_open},
+                   {:s=>"str", :e=>:reference, :href=>"http://host/foobar"},
+                   {:e=>:p_close}],
+                 @parser.parse( "[[str|http://host/foobar]]" ) )
+    assert_equal([{:e=>:p_open},
+                   {:s=>"str", :e=>:reference, :href=>"http://host/?a=1&amp;b=2"},
+                   {:e=>:p_close}],
+                 @parser.parse( "[[str|http://host/?a=1&b=2]]" ) )
+    assert_equal([{:e=>:p_open},
+                   {:s=>"str", :e=>:interwiki, :href=>"javascript", :p=>"alert('hoge')"},
+                   {:e=>:p_close}],
+                 @parser.parse( "[[str|javascript:alert('hoge')]]" ) )
+    assert_equal([{:e=>:p_open},
+                   {:s=>"str", :e=>:bracketname, :href=>"<script>alert('hoge')</script>"},
+                   {:e=>:p_close}],
+                 @parser.parse( "[[str|<script>alert('hoge')</script>]]" ) )
+
+  end
+
+  def test_url
+    assert_equal([{:e=>:p_open},
+                   {:s=>'foobar ', :e=>:normal_text},
+                   {:s=>'http://host/hoge', :e=>:reference, :href=>'http://host/hoge'},
+                   {:s=>' aaa', :e=>:normal_text},
+                   {:e=>:p_close}],
+                 @parser.parse( 'foobar http://host/hoge aaa' ) )
+    assert_equal([{:e=>:p_open},
+                   {:s=>'foobar ', :e=>:normal_text},
+                   {:s=>'http://host/?a=1&b=2', :e=>:reference, :href=>'http://host/?a=1&amp;b=2'},
+                   {:s=>' aaa', :e=>:normal_text},
+                   {:e=>:p_close}],
+                 @parser.parse( 'foobar http://host/?a=1&b=2 aaa' ) )
+    assert_equal([{:e=>:p_open},
+                   {:s=>'foobar ', :e=>:normal_text},
+                   {:s=>'http://host/?a=1;b=2', :e=>:reference, :href=>'http://host/?a=1;b=2'},
+                   {:s=>' aaa', :e=>:normal_text},
+                   {:e=>:p_close}],
+                 @parser.parse( 'foobar http://host/?a=1;b=2 aaa' ) )
   end
 
   def test_normalize_line
