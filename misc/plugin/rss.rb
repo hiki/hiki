@@ -1,4 +1,4 @@
-# $Id: rss.rb,v 1.18 2005-06-08 06:02:37 fdiary Exp $
+# $Id: rss.rb,v 1.19 2005-08-30 13:05:12 yanagita Exp $
 # Copyright (C) 2003-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # Copyright (C) 2005 Kazuhiko <kazuhiko@fdiary.net>
 
@@ -74,14 +74,27 @@ end
 def rss
   body, last_modified = rss_body
   header = Hash::new
-  header['Last-Modified'] = CGI::rfc1123_date(last_modified)
-  header['type']          = 'text/xml'
-  header['charset']       =  @conf.charset
-  header['Content-Language'] = @conf.lang
-  header['Pragma']           = 'no-cache'
-  header['Cache-Control']    = 'no-cache'
-  print @cgi.header(header)
-  puts body
+
+  require 'time'
+  begin
+    if_modified_since = Time.parse(ENV['HTTP_IF_MODIFIED_SINCE'])
+  rescue
+    if_modified_since = nil
+  end
+
+  if if_modified_since and last_modified < if_modified_since
+    header['status'] = 'NOT_MODIFIED'
+    print @cgi.header(header)
+  else
+    header['Last-Modified'] = CGI::rfc1123_date(last_modified)
+    header['type']          = 'text/xml'
+    header['charset']       =  @conf.charset
+    header['Content-Language'] = @conf.lang
+    header['Pragma']           = 'no-cache'
+    header['Cache-Control']    = 'no-cache'
+    print @cgi.header(header)
+    puts body
+  end
 
   nil # Don't move to the 'FrontPage'
 end

@@ -1,3 +1,7 @@
+2005-08-30  Kouhei Yanagita <yanagi@shakenbu.org>
+	* misc/plugin/rss.rb (rss): deal with the If-Modified-Since header in
+	a request.
+
 2005-08-29  Kouhei Yanagita <yanagi@shakenbu.org>
 	* test/test_hikifarm.rb (test_create_wiki): the test failed because one of
 	the arguments of Hikifarm#create_wiki is lack.
