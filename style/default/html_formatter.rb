@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.44 2005-09-01 08:26:48 fdiary Exp $
+# $Id: html_formatter.rb,v 1.45 2005-09-01 08:39:04 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -290,12 +290,14 @@ EOS
       disp = t[:s] if disp.empty?
       t[:href] = @aliaswiki.aliaswiki_names.key(t[:href]) || t[:href]
       if t[:e] == :bracketname
-        if /^(.+)(#l\d+)/ =~ t[:href]
+        if /^(.*)(#l\d+)/ =~ t[:href]
           p, a = $1, $2
           if !@db.exist?( t[:href] )
             orig, = @db.select {|i| i[:title] == t[:href]}
             if orig
               t[:href] = orig
+            elsif p.empty?
+              t[:href], anchor = p, a
             elsif @db.exist?( p )
               t[:href], anchor = p, a
               disp = @db.get_attribute(p, :title)
@@ -314,7 +316,9 @@ EOS
           end
         end
       end
-      if !@conf.use_wikiname and t[:e] == :wikiname
+      if t[:href].empty?
+        s[:html] << @plugin.make_anchor( anchor, disp.escapeHTML)
+      elsif !@conf.use_wikiname and t[:e] == :wikiname
         s[:html] << t[:s].escapeHTML
       elsif @db.exist?( t[:href] )
         s[:html] << @plugin.hiki_anchor(t[:href].escape + anchor, disp.escapeHTML)
