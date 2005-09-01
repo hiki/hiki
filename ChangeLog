@@ -1,24 +1,29 @@
+2005-09-01  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/orphan.rb (orphan_pages): code cleanup (reported by
+	ISOBE, Kazuhiko).
+
 2005-08-30  Kouhei Yanagita <yanagi@shakenbu.org>
-	* misc/plugin/rss.rb (rss): deal with the If-Modified-Since header in
-	a request.
+	* misc/plugin/rss.rb (rss): deal with the If-Modified-Since header
+	in a request.
 
 2005-08-29  Kouhei Yanagita <yanagi@shakenbu.org>
-	* test/test_hikifarm.rb (test_create_wiki): the test failed because one of
-	the arguments of Hikifarm#create_wiki is lack.
+	* test/test_hikifarm.rb (test_create_wiki): the test failed
+	because one of the arguments of Hikifarm#create_wiki is lack.
 
 	* test/test_default_parser.rb (test_link, test_url): add some tests.
 
-	* style/default/parser.rb (inline_impl): the href of URL was not escaped at
-	tokens of URL_RE.
+	* style/default/parser.rb (inline_impl): the href of URL was not
+	escaped at tokens of URL_RE.
 
 2005-08-28  Kouhei Yanagita <yanagi@shakenbu.org>
-	* test/test_default_parser.rb: (test_emphasis, test_strong, test_delete):
-	add new test methods.
+	* test/test_default_parser.rb: (test_emphasis, test_strong,
+	test_delete): add new test methods.
 
-	* style/default/parser.rb: Remove the HikiStack class and use Array instead.
-	perform some refactorings.
+	* style/default/parser.rb: Remove the HikiStack class and use
+	Array instead.  perform some refactorings.
 
-	* misc/hikifarm/index.cgi: update HIKIFARM_RELEASE_DATE. I've forgotten to do it.
+	* misc/hikifarm/index.cgi: update HIKIFARM_RELEASE_DATE. I've
+	forgotten to do it.
 
 2005-08-26  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/db/flatfile.rb (set_references, get_references): store

@@ -1,31 +1,17 @@
-# $Id: orphan.rb,v 1.3 2005-06-27 13:49:57 fdiary Exp $
+# $Id: orphan.rb,v 1.4 2005-09-01 04:58:16 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 def orphan_pages
-  orphan_pgs = []
-  references   = []
-  name_map   = {}
-  
-  page_info = @db.page_info
-
-  page_info.each do |p|
-    orphan_pgs  << p.keys[0]
-    refer      =  p[p.keys[0]][:references]
-    references << refer.split(',') if refer.size > 0
-    name_map[p.keys[0]] = (p[p.keys[0]][:title] and p[p.keys[0]][:title].size > 0) ? p[p.keys[0]][:title] : p.keys[0]
-  end
-  orphan_pgs -= references.flatten
-
-  orphan_pgs.sort do |a, b|
-    name_map[a] <=> name_map[b]
-  end
+  pages = @db.pages.select{|p| @db.get_references(p).empty?}
+  pages.collect!{|p| [p, page_name(p)]}
+  pages.sort_by{|i| i[1].unescapeHTML}
 end
 
 def orphan
   s = '<ul>'
 
-  orphan_pages.each do |p|
-    s << %Q!<li>#{hiki_anchor(p.escape, "#{page_name(p)}")}\n!
+  orphan_pages.each do |p, page_name|
+    s << %Q!<li>#{hiki_anchor(p.escape, page_name)}\n!
   end
 
   s << "</ul>\n"
