@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.43 2005-08-25 05:08:33 fdiary Exp $
+# $Id: html_formatter.rb,v 1.44 2005-09-01 08:26:48 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -285,17 +285,39 @@ EOS
     end
 
     def make_link(t, s)
+      anchor = ''
       disp = @db.get_attribute(t[:s], :title)
       disp = t[:s] if disp.empty?
       t[:href] = @aliaswiki.aliaswiki_names.key(t[:href]) || t[:href]
       if t[:e] == :bracketname
-        orig = @db.select {|p| p[:title] == t[:href]}
-        t[:href] = orig[0] if orig[0]
+        if /^(.+)(#l\d+)/ =~ t[:href]
+          p, a = $1, $2
+          if !@db.exist?( t[:href] )
+            orig, = @db.select {|i| i[:title] == t[:href]}
+            if orig
+              t[:href] = orig
+            elsif @db.exist?( p )
+              t[:href], anchor = p, a
+              disp = @db.get_attribute(p, :title)
+              disp = p if disp.empty?
+            else
+              orig, = @db.select {|i| i[:title] == p}
+              if orig
+                t[:href], anchor, disp = orig, a, p
+              end
+            end
+          end
+        else
+          if !@db.exist?( t[:href] )
+            orig, = @db.select {|i| i[:title] == t[:href]}
+            t[:href] = orig if orig
+          end
+        end
       end
       if !@conf.use_wikiname and t[:e] == :wikiname
         s[:html] << t[:s].escapeHTML
       elsif @db.exist?( t[:href] )
-        s[:html] << @plugin.hiki_anchor(t[:href].escape, disp.escapeHTML)
+        s[:html] << @plugin.hiki_anchor(t[:href].escape + anchor, disp.escapeHTML)
         @references << t[:href]
       else
         if outer_alias = @interwiki.outer_alias(t[:href])

@@ -1,4 +1,7 @@
 2005-09-01  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/html_formatter.rb (make_link): support anchors in
+	bracket links.
+
 	* misc/plugin/orphan.rb (orphan_pages): code cleanup (reported by
 	ISOBE, Kazuhiko).
 
