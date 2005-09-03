@@ -1,3 +1,6 @@
+2005-09-03  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/sitemap.rb: code cleanup (report by Atsushi Koga).
+
 2005-09-01  Kazuhiko  <kazuhiko@fdiary.net>
 	* style/default/html_formatter.rb (make_link): support anchors in
 	bracket links.
