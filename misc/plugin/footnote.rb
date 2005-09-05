@@ -1,4 +1,4 @@
-# footnote.rb $Revision: 1.9 $
+# footnote.rb $Revision: 1.10 $
 #
 # fn: 脚注plugin
 #   パラメタ:
@@ -9,6 +9,9 @@
 # Distributed under the GPL
 #
 =begin ChangeLog
+2005-09-05 Kouhei Yanagita <yanagi@shakenbu.org>
+        * support a block element argument (patch by U.Nakamura).
+
 2002-05-06 MUTOH Masao <mutoh@highway.ne.jp>
         * change file encoding from ISO-2022-JP to EUC-JP.
 
@@ -47,7 +50,7 @@ def render( text )
         tokens = parser.parse( text.unescapeHTML )
         formatter = @conf.formatter::new( tokens, @db, self, @conf )
         @conf.use_plugin = tmp
-        formatter.to_s.gsub(/\A<p>/,'').gsub(/<\/p>\Z/,'')
+        formatter.to_s.gsub(/\A<p>/,'').gsub(/<\/p>\Z/,'').gsub(/<p>/, '<p class="footnote">')
 end
 
 if @options['command'] == 'view'

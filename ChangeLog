@@ -3,6 +3,8 @@
 	misc/plugin/ja/rss.rb (label_rss_mode_candidate): RSS which lists only titles
 	of updated pages is supported (report by vette).
 
+	* misc/plugin/footnote.rb (render): support a block element argument (patch by U.Nakamura).
+
 2005-09-03  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/sitemap.rb: code cleanup (report by Atsushi Koga).
 
