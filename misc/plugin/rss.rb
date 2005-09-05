@@ -1,4 +1,4 @@
-# $Id: rss.rb,v 1.19 2005-08-30 13:05:12 yanagita Exp $
+# $Id: rss.rb,v 1.20 2005-09-05 12:18:06 yanagita Exp $
 # Copyright (C) 2003-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # Copyright (C) 2005 Kazuhiko <kazuhiko@fdiary.net>
 
@@ -39,10 +39,13 @@ EOS
       content = word_diff(src, dst, true).strip.gsub(/\n/, "<br>\n")
     when 2
       content = word_diff(src, dst).strip.gsub(/\n/, "<br>\n")
+    when 3
+      content = nil
     else
       content = CGI::escapeHTML(unified_diff(src, dst)).strip.gsub(/\n/, "<br>\n").gsub(/ /, '&nbsp;')
     end
-    if content.empty?
+
+    if content and content.empty?
       content = shorten(dst).strip.gsub(/\n/, "<br>\n")
     end
     
@@ -56,9 +59,9 @@ EOS
     <title>#{CGI::escapeHTML(page_name(name))}</title>
     <link>#{uri}</link>
     <dc:date>#{p[name][:last_modified].utc.strftime('%Y-%m-%dT%H:%M:%S+00:00')}</dc:date>
-    <content:encoded><![CDATA[<div>#{content}</div>]]></content:encoded>
-  </item>
 EOS
+    item_list << "    <content:encoded><![CDATA[<div>#{content}</div>]]></content:encoded>" if content
+    item_list << '  </item>'
   end
 
   items << <<EOS

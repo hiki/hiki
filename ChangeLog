@@ -1,3 +1,8 @@
+2005-09-05  Kouhei Yanagita <yanagi@shakenbu.org>
+	* misc/plugin/rss.rb (rss_body),
+	misc/plugin/ja/rss.rb (label_rss_mode_candidate): RSS which lists only titles
+	of updated pages is supported (report by vette).
+
 2005-09-03  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/sitemap.rb: code cleanup (report by Atsushi Koga).
 
