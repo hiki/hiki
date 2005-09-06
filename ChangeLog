@@ -1,9 +1,14 @@
+2005-09-06  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/ja/rss.rb: support whole HTML output (instead of
+	title-only).
+
 2005-09-05  Kouhei Yanagita <yanagi@shakenbu.org>
 	* misc/plugin/rss.rb (rss_body),
-	misc/plugin/ja/rss.rb (label_rss_mode_candidate): RSS which lists only titles
-	of updated pages is supported (report by vette).
+	misc/plugin/ja/rss.rb (label_rss_mode_candidate): RSS which lists
+	only titles of updated pages is supported (report by vette).
 
-	* misc/plugin/footnote.rb (render): support a block element argument (patch by U.Nakamura).
+	* misc/plugin/footnote.rb (render): support a block element
+	argument (patch by U.Nakamura).
 
 2005-09-03  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/sitemap.rb: code cleanup (report by Atsushi Koga).

@@ -1,4 +1,4 @@
-# $Id: rss.rb,v 1.20 2005-09-05 12:18:06 yanagita Exp $
+# $Id: rss.rb,v 1.21 2005-09-06 06:08:28 fdiary Exp $
 # Copyright (C) 2003-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # Copyright (C) 2005 Kazuhiko <kazuhiko@fdiary.net>
 
@@ -27,7 +27,6 @@ def rss_body(page_num = 10)
     <items>
       <rdf:Seq>
 EOS
-
   pages.each do |p|
     break if (n += 1) > page_num
     name = p.keys[0]
@@ -40,7 +39,14 @@ EOS
     when 2
       content = word_diff(src, dst).strip.gsub(/\n/, "<br>\n")
     when 3
-      content = nil
+      tokens = @db.load_cache( name )
+      unless tokens
+        parser = @conf.parser::new( @conf )
+        tokens = parser.parse( @db.load( name ) )
+        @db.save_cache( name, tokens )
+      end
+      formatter = @conf.formatter::new( tokens, @db, Plugin.new( @conf.options, @conf), @conf )
+      content = formatter.to_s
     else
       content = CGI::escapeHTML(unified_diff(src, dst)).strip.gsub(/\n/, "<br>\n").gsub(/ /, '&nbsp;')
     end
