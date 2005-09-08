@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.2 2005-01-28 19:35:08 fdiary Exp $
+# $Id: html_formatter.rb,v 1.3 2005-09-08 09:51:25 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -6,7 +6,7 @@ require "style/default/html_formatter"
 require "style/math/latex.rb"
 
 module Hiki
-  class HTMLFormatter_math < HTMLFormatter_default
+  class HTMLFormatter_math
     def initialize( s, db, plugin, conf, suffix = 'l')
       super( s, db, plugin, conf, suffix )
       @save_text = ''

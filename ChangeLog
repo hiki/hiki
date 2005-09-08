@@ -1,3 +1,10 @@
+2005-09-08  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/parser.db, style/default/html_formatter.rb: use
+	the HikiDoc library.
+	* hiki/hiki_formatter.rb: removed.
+	* style/rd+/html_formatter.rb: remove the inheritance of
+	HikiFormatter.
+
 2005-09-06  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/ja/rss.rb: support whole HTML output (instead of
 	title-only).

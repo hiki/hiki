@@ -1,124 +1,64 @@
-# $Id: html_formatter.rb,v 1.45 2005-09-01 08:39:04 fdiary Exp $
+# $Id: html_formatter.rb,v 1.46 2005-09-08 09:51:25 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
 require 'hiki/pluginutil'
 require 'hiki/interwiki'
 require 'hiki/aliaswiki'
-require 'hiki/hiki_formatter'
+require 'uri'
 
 module Hiki
-    
-  class HTMLFormatter_default < HikiFormatter
-    MAP = Hash::new
-    MAP[:heading1_open]        = %Q!\n<h2><span class="date">!
-    MAP[:heading1_open_end]    = '</span><span class="title">'
-    MAP[:heading1_close]       = '</span></h2>'
-    MAP[:heading2_open]        = '<h3>'
-    MAP[:heading2_close]       = '</h3>'
-    MAP[:heading3_open]        = '<h4>'
-    MAP[:heading3_close]       = '</h4>'
-    MAP[:heading4_open]        = '<h5>'
-    MAP[:heading4_close]       = '</h5>'
-    MAP[:heading5_open]        = '<h6>'
-    MAP[:heading5_close]       = '</h6>'
-    MAP[:horizontal_rule]      = '<hr>'
-    MAP[:unordered_list_open]  = '<ul>'
-    MAP[:unordered_list_close] = '</ul>'
-    MAP[:ordered_list_open]    = '<ol>'
-    MAP[:ordered_list_close]   = '</ol>'
-    MAP[:listitem_open]        = '<li>'
-    MAP[:listitem_close]       = ''
-    MAP[:blockquote_open]      = '<blockquote>'
-    MAP[:blockquote_close]     = '</blockquote>'
-    MAP[:definition_list_open] = '<dl>'
-    MAP[:definition_list_close]= '</dl>'
-    MAP[:definition_term_open] = '<dt>'
-    MAP[:definition_term_close]= '</dt>'
-    MAP[:definition_desc_open] = '<dd>'
-    MAP[:definition_desc_close]= '</dd>'
-    MAP[:pre_open]             = '<pre>'
-    MAP[:pre_close]            = '</pre>'
-    MAP[:p_open]               = '<p>'
-    MAP[:p_close]              = '</p>'
-    MAP[:emphasis_open]        = '<em>'
-    MAP[:emphasis_close]       = '</em>'
-    MAP[:strong_open]          = '<strong>'
-    MAP[:strong_close]         = '</strong>'
-    MAP[:delete_open]          = '<del>'
-    MAP[:delete_close]         = '</del>'
-    MAP[:table_open]           = '<table border="1">'
-    MAP[:table_close]          = '</table>'
-    MAP[:table_row_open]       = '<tr>'
-    MAP[:table_row_close]      = '</tr>'
-    MAP[:table_head_open]      = '<th>'
-    MAP[:table_head_close]     = '</th>'
-    MAP[:table_data_open]      = '<td>'
-    MAP[:table_data_close]     = '</td>'
-
-    def initialize( s, db, plugin, conf, suffix = 'l')
-      @tokens     = s
+  class HTMLFormatter_default
+    def initialize( s, db, plugin, conf, prefix = 'l')
+      @html       = s
       @db         = db
       @plugin     = plugin
       @conf       = conf
-      @suffix     = suffix
-      @toc_cnt    = 0
-      @toc        = Array::new
+      @prefix     = prefix
       @references = Array::new
       @interwiki  = InterWiki::new( @db.load( @conf.interwiki_name ) )
       @aliaswiki  = AliasWiki::new( @db.load( @conf.aliaswiki_name ) )
-      @auto_links  = get_auto_links if @conf.auto_link
+      @auto_links = get_auto_links if @conf.auto_link
     end
-
-    def flush_normal_text(text, pre)
-      if not pre and @conf.auto_link
-        auto_link(text)
-      else
-        text 
-      end
-    end
-    private :flush_normal_text
 
     def to_s
-      s = {
-        :html        => '',
-        :toc_level   => 0,
-        :toc_title   => '',
-        :normal_text => '',
-        :pre         => false,
-      }
-      
-      @tokens.each do |t|
-        if (s[:normal_text].size > 0 && t[:e] != :normal_text)
-          s[:html] << flush_normal_text(s[:normal_text], s[:pre])
-          s[:normal_text] = ''
-        end
-        token_to_s( t, s )
-      end
-      if (s[:normal_text].size > 0)
-        s[:html] << flush_normal_text(s[:normal_text], s[:pre])
-      end
-      s[:html]
+      s = @html
+      s = replace_inline_image( s )
+      s = replace_auto_link( s ) if @conf.auto_link
+      s = replace_wikiname( s ) if @conf.use_wikiname
+      s = replace_link( s )
+      s = replace_heading( s )
+      s = replace_plugin( s ) if @conf.use_plugin
+      @html_converted = s
+      s
     end
 
     def references
       @references.uniq
     end    
 
+    HEADER_RE = %r|<h(\d)>.*<a name="#{@prefix}(\d+)">.*?</a>(.+)</h\1>|
+
     def toc
-      s = "#{map(:unordered_list_open)}\n"
-      lv = 1
-      @toc.each do |h|
-        if h['level'] > lv
-          s << ( "#{map(:unordered_list_open)}\n" * ( h['level'] - lv ) )
-          lv = h['level']
-        elsif h['level'] < lv
-          s << ( "#{map(:unordered_list_close)}\n" * ( lv - h['level'] ) )
-          lv = h['level']
+      s = "<ul>\n"
+      level = 1
+      to_s unless @html_converted
+      @html_converted.each do |line|
+        if HEADER_RE =~ line
+          new_level = $1.to_i - 1
+          num = $2.to_i
+          title = $3.gsub( /<.+?>/, '' )
+          if new_level > level
+            s << ( "<ul>\n" * ( new_level - level ) )
+            level = new_level
+          elsif new_level < level
+            s << ( "</ul>\n" * ( level - new_level ) )
+            level = new_level
+          end
+          s << %Q!<li><a href="\#l#{num}">#{title}</a>\n!
         end
-        s << %Q!#{map(:listitem_open)}<a href="#l#{h['index']}">#{h['title'].escapeHTML}</a>#{map(:listitem_close)}\n!
       end
-      s << ("#{map(:unordered_list_close)}\n" * lv)
+      s << ("</ul>\n" * level)
       s
     end
     
@@ -141,91 +81,132 @@ module Hiki
     end
 
     private
-    def map(key)
-      MAP[key]
+
+    def replace_inline_image( text )
+      text.gsub( %r!<a href="([^"]+)\.(jpg|jpeg|gif|png)">(.+?)</a>!i ) do |str|
+        %Q|<img src="#{$1}.#{$2}" alt="#{$3}">|
+      end
     end
 
-    def token_to_s( t, s )
-      case t[:e]
-      when :normal_text
-        s[:normal_text] << "#{t[:s].escapeHTML}"
-        if not s[:pre] and s[:toc_level] > 0
-          s[:toc_title] << t[:s]
-        end
-      when :reference
-        s[:html] << @plugin.make_anchor( t[:href], t[:s].escapeHTML, 'external' )
-        s[:toc_title] << t[:s] if s[:toc_level] > 0
-      when :wikiname, :bracketname
-        make_link(t, s)
-      when :interwiki
-        if inter_link = @interwiki.interwiki(t[:href], t[:p], t[:s])
-          s[:html] << @plugin.make_anchor(inter_link[0], inter_link[1], 'external')
-	  s[:toc_title] << t[:s] if s[:toc_level] > 0
-        else
-          t[:href] = t[:s]
-          make_link(t, s)
-        end
-      when :empty
-        s[:html] << "\n"
-      when :heading1_open, :heading2_open, :heading3_open, :heading4_open, :heading5_open
-        s[:toc_level] = t[:lv]
-        if t[:e] == :heading2_open
-          link_label = %Q[<span class="sanchor">&nbsp;</span>]
-        else
-          link_label = ' '
-        end
-        s[:html] << %Q!#{map(t[:e])}<a name="#{@suffix}#{@toc_cnt}">#{link_label}</a>#{map("#{t[:e]}_end".to_sym)}!
-      when :heading1_close, :heading2_close, :heading3_close, :heading4_close, :heading5_close
-        add_toc( s[:toc_level], s[:toc_title] )
-        s[:toc_level] = 0
-        s[:toc_title] = ''
-        s[:html] << "#{map(t[:e])}\n"
-#        s[:html] << %Q!<a href="#top"><span class="top_anchor">[TOP]</span></a>! if t[:e] == :heading1_close
-      when :image
-        s[:html] << %Q!<img src = "#{t[:href]}" alt = "#{File.basename( t[:s].escapeHTML )}">!
-      when :plugin, :inline_plugin
-        begin
-          str = call_plugin_method( t )
-          if str.class == String
-            s[:html] << str
+    def replace_auto_link( text )
+      replace_inline( text ) do |str|
+        @auto_links.each do |i, re|
+          str.gsub!( re ) do
+            %Q|<a href="#{i}">#{i}</a>|
           end
-        rescue Exception => e
-          s[:html] << e.message
-        end
-      when :table_head_open, :table_data_open
-        rws = ''
-        cls = ''
-        mp = map(t[:e])
-        len = mp.size
-        if t[:row] > 1
-          rws = %Q| rowspan="#{t[:row]}"|
-        end
-        if t[:col] > 1
-          cls = %Q| colspan="#{t[:col]}"|
-        end
-        str = mp[0,len-1]
-        str << rws
-        str << cls
-        str << mp[len-1,1]
-        s[:html] << str 
-      else
-        if t[:e] == :pre_open
-          s[:pre] = true
-        elsif t[:e] == :pre_close
-          s[:pre] = false
-        elsif t[:e] == :p_close
-          s[:html].chomp!
-        end
-        s[:html] << "#{map(t[:e])}"
-        if [:emphasis_close, :strong_close, :delete_close].index(t[:e]) == nil and /_close\z/ =~ t[:e].to_s
-          s[:html] <<  "\n"
         end
       end
     end
 
-    def add_toc( level, title )
-      @toc << {"level" => level, "title" => title, "index" => @toc_cnt}
-      @toc_cnt = @toc_cnt + 1
+    WIKINAME_RE   = /(\b(?:[A-Z][a-z0-9]+){2,}[A-Z]*\b)/n
+
+    def replace_wikiname( text )
+      replace_inline( text ) do |str|
+        str.gsub!( WIKINAME_RE ) do |i|
+          %Q|<a href="#{i}">#{i}</a>|
+        end
+      end
+    end
+
+    PLUGIN_OPEN_RE = /<(span|div) class="plugin">/
+    PLUGIN_CLOSE_RE = %r!</(span|div)/!
+    LINK_OPEN_RE = /<a href=/
+    LINK_CLOSE_RE = %r!</a>!
+
+    def replace_inline( text )
+      status = []
+      ret = text.split( /(<.+?>)/ ).collect do |str|
+        case str
+        when PLUGIN_OPEN_RE
+          status << :plugin
+        when LINK_OPEN_RE
+          status << :a
+        when PLUGIN_CLOSE_RE, LINK_CLOSE_RE
+          status.pop
+        else
+          if status.empty?
+            yield( str )
+          end
+        end
+        str
+      end
+      ret.join
+    end
+
+    URI_RE = /\A#{URI.regexp( %w( http https ftp mailto ) )}\z/
+
+    def replace_link( text )
+      text.gsub( %r|<a href="(.+?)">(.+?)</a>| ) do |str|
+        k, u = $2, $1
+        if URI_RE =~ u # uri
+          str
+        else
+          u = u.unescapeHTML
+          u = @aliaswiki.aliaswiki_names.key( u ) || u # alias wiki
+          if /(.*)(#l\d+)\z/ =~ u
+            u, anchor = $1, $2
+          else
+            anchor = ''
+          end
+          if @db.exist?( u ) # page name
+            k = @plugin.page_name( k ) if k == u
+            @references << u
+            @plugin.hiki_anchor( u.escape + anchor, k )
+          elsif orig = @db.select{|i| i[:title] == u}.first # page title
+            k = @plugin.page_name( k ) if k == u
+            u = orig
+            @references << u
+            @plugin.hiki_anchor( u.escape + anchor, k )
+          elsif outer_alias = @interwiki.outer_alias( u ) # outer alias
+            @plugin.make_anchor(outer_alias[0] + anchor, outer_alias[1], 'external')
+          elsif /:/ =~ u # inter wiki ?
+            s, p = u.split( /:/, 2 )
+            if s.empty? # normal link
+              @plugin.make_anchor( p.escapeHTML + anchor, k, 'external')
+            elsif inter_link = @interwiki.interwiki( s, p.unescapeHTML, "#{s}:#{p}" )
+              @plugin.make_anchor(inter_link[0], inter_link[1], 'external')
+            else
+              missing_page_anchor( k, u )
+            end
+          else
+            missing_page_anchor( k, u )
+          end
+        end
+      end
+    end
+
+    def missing_page_anchor( k, u )
+      if @plugin.creatable?
+        missing_anchor_title = @conf.msg_missing_anchor_title % [ u.escapeHTML ]
+        "#{k}<a class=\"nodisp\" href=\"#{@conf.cgi_name}?c=edit;p=#{u.escape}\" title=\"#{missing_anchor_title}\">?</a>"
+      else
+        k
+      end
+    end
+
+    def replace_heading( text )
+      num = -1
+      text.gsub( %r|<h(\d)>(.+)</h\1>| ) do |str|
+        num += 1
+        %Q|<h#{$1}><span class="date"><a name="#{@prefix}#{num}"> </a></span><span class="title">#{$2}</span></h#{$1}>|
+      end
+    end
+
+    def replace_plugin( text )
+      text.gsub( %r!<(span|div) class="plugin">\{\{(.+?)\}\}</\1>!m ) do |str|
+        tag, plugin_str = $1, $2
+        begin
+          case tag
+          when 'span'
+            result = @plugin.inline_context{ apply_plugin( plugin_str, @plugin, @conf ) }
+          when 'div'
+            result = @plugin.block_context{ apply_plugin( plugin_str, @plugin, @conf ) }
+          end
+          result.class == String ? result : ''
+        rescue Exception => e
+          $& + e.message
+        end
+      end
     end
 
     def tdiary_section(title, section)
@@ -245,94 +226,17 @@ EOS
     end
 
     def get_auto_links
-      pages = Array::new
-      @db.page_info.each do |p|
-        wikiname_re = /^((?:[A-Z][a-z0-9]+){2,})([^A-Za-z0-9])?/
-        if wikiname_re !~ p.keys[0] # not WikiName
-           pages << [p.keys[0], p.keys[0]]
-        end
-        title = p.values[0][:title]
-        title = ((title && title.size > 0) ? title : p.keys[0]).escapeHTML
-        if wikiname_re !~ title
-          pages << [title, title, p.keys[0]]
-        end
+      pages = []
+      @db.pages.each do |p|
+        pages << p.escapeHTML
+        title = @plugin.page_name( p )
+        pages << title unless title == p
       end
-      @aliaswiki.aliaswiki_names.each {|key, value| pages << [value, value, key]}
-      auto_link_array = pages.sort {|a, b| b[1].size <=> a[1].size}
-      @auto_links_re = Regexp.new(auto_link_array.collect {|a| Regexp::quote(a[0])}.join('|'))
-      auto_link_array
-    end
-
-    def auto_link(text)
-      return text if @auto_links.size == 0
-      text.gsub(@auto_links_re) {|matched|
-        page = @auto_links.assoc($&).size > 2 ? @auto_links.assoc($&)[2] : $&
-        title = @auto_links.assoc($&)[1]
-        @references << page
-        @plugin.hiki_anchor(page.escape, title)
-      }
-    end
-      
-    def call_plugin_method( t )
-      return nil unless @conf.use_plugin
-      str = t[:method].gsub(/&/, '&amp;').gsub(/</, '&lt;').gsub(/>/, '&gt;')
-      case t[:e]
-      when :inline_plugin
-        @plugin.inline_context{ apply_plugin( str, @plugin, @conf ) }
-      else
-        @plugin.block_context{ apply_plugin( str, @plugin, @conf ) }
+      @aliaswiki.aliaswiki_names.each do |key, value|
+        pages << key
+        pages << value
       end
-    end
-
-    def make_link(t, s)
-      anchor = ''
-      disp = @db.get_attribute(t[:s], :title)
-      disp = t[:s] if disp.empty?
-      t[:href] = @aliaswiki.aliaswiki_names.key(t[:href]) || t[:href]
-      if t[:e] == :bracketname
-        if /^(.*)(#l\d+)/ =~ t[:href]
-          p, a = $1, $2
-          if !@db.exist?( t[:href] )
-            orig, = @db.select {|i| i[:title] == t[:href]}
-            if orig
-              t[:href] = orig
-            elsif p.empty?
-              t[:href], anchor = p, a
-            elsif @db.exist?( p )
-              t[:href], anchor = p, a
-              disp = @db.get_attribute(p, :title)
-              disp = p if disp.empty?
-            else
-              orig, = @db.select {|i| i[:title] == p}
-              if orig
-                t[:href], anchor, disp = orig, a, p
-              end
-            end
-          end
-        else
-          if !@db.exist?( t[:href] )
-            orig, = @db.select {|i| i[:title] == t[:href]}
-            t[:href] = orig if orig
-          end
-        end
-      end
-      if t[:href].empty?
-        s[:html] << @plugin.make_anchor( anchor, disp.escapeHTML)
-      elsif !@conf.use_wikiname and t[:e] == :wikiname
-        s[:html] << t[:s].escapeHTML
-      elsif @db.exist?( t[:href] )
-        s[:html] << @plugin.hiki_anchor(t[:href].escape + anchor, disp.escapeHTML)
-        @references << t[:href]
-      else
-        if outer_alias = @interwiki.outer_alias(t[:href])
-          s[:html] << @plugin.make_anchor(outer_alias[0], outer_alias[1], 'external')
-        else
-          missing_anchor_title = @conf.msg_missing_anchor_title % [ t[:href].escapeHTML ]
-          wikiname_anchor = @plugin.creatable? ? "#{disp.escapeHTML}<a class=\"nodisp\" href=\"#{@conf.cgi_name}?c=edit;p=#{t[:href].escape}\" title=\"#{missing_anchor_title}\">?</a>" : disp.escapeHTML
-          s[:html] << wikiname_anchor
-        end
-      end
-      s[:toc_title] << disp if s[:toc_level] > 0
+      pages.uniq.sort_by{|i| -i.size}.collect{|i| [i, /#{Regexp.quote( i )}/]}
     end
   end
 end
