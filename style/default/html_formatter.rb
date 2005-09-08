@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.46 2005-09-08 09:51:25 fdiary Exp $
+# $Id: html_formatter.rb,v 1.47 2005-09-08 15:30:35 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -37,17 +37,19 @@ module Hiki
       @references.uniq
     end    
 
-    HEADER_RE = %r|<h(\d)>.*<a name="#{@prefix}(\d+)">.*?</a>(.+)</h\1>|
+    HEADING_RE = %r!<h(\d)>.*<a name="l\d+">.*?</a>(.*?)</h\1>!
+    TAG_RE = %r!(<.+?>)!
 
     def toc
       s = "<ul>\n"
+      num = -1
       level = 1
       to_s unless @html_converted
       @html_converted.each do |line|
-        if HEADER_RE =~ line
+        if HEADING_RE =~ line
           new_level = $1.to_i - 1
-          num = $2.to_i
-          title = $3.gsub( /<.+?>/, '' )
+          num += 1
+          title = $2.gsub( TAG_RE, '' ).strip
           if new_level > level
             s << ( "<ul>\n" * ( new_level - level ) )
             level = new_level
@@ -61,6 +63,8 @@ module Hiki
       s << ("</ul>\n" * level)
       s
     end
+
+    H2_RE = /^<h2><a name=/
     
     def apply_tdiary_theme(orig_html)
       return orig_html if @conf.mobile_agent?
@@ -69,7 +73,7 @@ module Hiki
       html    = ''
 
       orig_html.each do |line|
-        if /^<h2>/ =~ line
+        if H2_RE =~ line
           html << tdiary_section(title, section) unless title.empty? && section.empty?
           section = ''
           title = line
@@ -115,7 +119,7 @@ module Hiki
 
     def replace_inline( text )
       status = []
-      ret = text.split( /(<.+?>)/ ).collect do |str|
+      ret = text.split( TAG_RE ).collect do |str|
         case str
         when PLUGIN_OPEN_RE
           status << :plugin
@@ -184,12 +188,43 @@ module Hiki
       end
     end
 
+    BLOCKQUOTE_OPEN_RE = /<blockquote>/
+    BLOCKQUOTE_CLOSE_RE = %r!</blockquote>!
+    HEADING_OPEN_RE = /<h(\d)>/
+    HEADING_CLOSE_RE = %r!</h\d>!
+
     def replace_heading( text )
+      status = []
       num = -1
-      text.gsub( %r|<h(\d)>(.+)</h\1>| ) do |str|
-        num += 1
-        %Q|<h#{$1}><span class="date"><a name="#{@prefix}#{num}"> </a></span><span class="title">#{$2}</span></h#{$1}>|
+      ret = text.split( TAG_RE ).collect do |str|
+        case str
+        when BLOCKQUOTE_OPEN_RE
+          status << :blockquote
+        when BLOCKQUOTE_CLOSE_RE
+          status.pop
+        when HEADING_OPEN_RE
+          unless status.include?( :blockquote )
+            num += 1
+            level = $1.to_i
+            status << level
+            case level
+            when 2
+              str << %Q!<span class="date"><a name="#{@prefix}#{num}"> </a></span><span class="title">!
+            when 3
+              str << %Q!<a name="#{@prefix}#{num}"><span class="sanchor"> </span></a>!
+            else
+              str << %Q!<a name="#{@prefix}#{num}"> </a>!
+            end
+          end
+        when HEADING_CLOSE_RE
+          unless status.include?( :blockquote )
+            level = status.pop
+            str = "</span>#{str}" if level == 2
+          end
+        end
+        str
       end
+      ret.join
     end
 
     def replace_plugin( text )
