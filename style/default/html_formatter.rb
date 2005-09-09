@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.47 2005-09-08 15:30:35 fdiary Exp $
+# $Id: html_formatter.rb,v 1.48 2005-09-09 02:22:13 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -143,7 +143,7 @@ module Hiki
       text.gsub( %r|<a href="(.+?)">(.+?)</a>| ) do |str|
         k, u = $2, $1
         if URI_RE =~ u # uri
-          str
+          @plugin.make_anchor(u, k, 'external')
         else
           u = u.unescapeHTML
           u = @aliaswiki.aliaswiki_names.key( u ) || u # alias wiki
