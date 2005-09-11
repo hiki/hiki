@@ -252,15 +252,19 @@ class HikiDoc < String
   ######################################################################
   # table
 
-  TABLE_RE = /\|\|/
-  TABLES_RE = /(^#{TABLE_RE}.+\n?)+/
+  TABLE_SPLIT_RE = /\|\|/
+  TABLE_RE = /^#{TABLE_SPLIT_RE}.+\n?/
+  TABLES_RE = /(#{TABLE_RE})+/
 
   def parse_table( text )
-    text.gsub( TABLES_RE ) do |str|
+    parsed_text = text.gsub( TABLE_RE ) do |str|
+      inline_parser( str )
+    end
+    parsed_text.gsub( TABLES_RE ) do |str|
       ret = %Q|\n<table border="1">\n|
       str.each do |line|
         ret << "<tr>"
-        line.chomp.split( TABLE_RE )[1..-1].each do |i|
+        line.chomp.split( TABLE_SPLIT_RE )[1..-1].each do |i|
           tag = i.sub!( /^!/, '' ) ? 'th' : 'td'
           attr = ''
           if i.sub!( /^((?:\^|&gt;)+)/, '' )
@@ -365,11 +369,11 @@ class HikiDoc < String
     text.gsub( MODIFIER_RE ) do |str|
       case str
       when STRONG_RE
-        "<strong>#{$1}</strong>"
+        store_block( "<strong>#{$1}</strong>" )
       when EM_RE
-        "<em>#{$1}</em>"
+        store_block( "<em>#{$1}</em>" )
       when DEL_RE
-        "<del>#{$1}</del>"
+        store_block( "<del>#{$1}</del>" )
       else
         str
       end
@@ -409,9 +413,12 @@ class HikiDoc < String
 
   def restore_block( text )
     return text if @stack.empty?
-    text.gsub( BLOCK_RE ) do |str|
+    ret = text.dup
+    while ret.gsub!( BLOCK_RE ) { |str|
       ( @stack[$1.to_i] || '' ).rstrip
+      }
     end
+    ret
   end
 
   def store_plugin_block( text )
