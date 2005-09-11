@@ -197,7 +197,7 @@ class HikiDoc < String
   ######################################################################
   # definition
 
-  DEFINITION_RE = /^:(.*)?:(.+)\n?/
+  DEFINITION_RE = /^:(.*?)?:(.+)\n?/
   DEFINITIONS_RE = /(#{DEFINITION_RE})+/
 
   def parse_definition( text )
