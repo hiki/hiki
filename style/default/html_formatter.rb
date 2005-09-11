@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.50 2005-09-11 14:17:07 fdiary Exp $
+# $Id: html_formatter.rb,v 1.51 2005-09-11 14:44:09 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -77,7 +77,7 @@ module Hiki
       replace_inline( text ) do |str|
         @auto_links.each do |i, re|
           str.gsub!( re ) do
-            %Q|<a href="#{i}">#{i}</a>|
+            @plugin.hiki_anchor( i.unescapeHTML.escape, i )
           end
         end
       end
@@ -126,7 +126,7 @@ module Hiki
         if URI_RE =~ u # uri
           @plugin.make_anchor(u, k, 'external')
         else
-          u = u.unescapeHTML
+          u = u.unescape
           u = @aliaswiki.aliaswiki_names.key( u ) || u # alias wiki
           if /(.*)(#l\d+)\z/ =~ u
             u, anchor = $1, $2
@@ -228,7 +228,7 @@ module Hiki
     def get_auto_links
       pages = []
       @db.pages.each do |p|
-        pages << p.escapeHTML
+        pages << escape_html( p )
         title = @plugin.page_name( p )
         pages << title unless title == p
       end
@@ -237,6 +237,12 @@ module Hiki
         pages << value
       end
       pages.uniq.sort_by{|i| -i.size}.collect{|i| [i, /#{Regexp.quote( i )}/]}
+    end
+
+    def escape_html( text )
+      text.gsub( /&/, '&amp;' ).
+        gsub( /</, '&lt;' ).
+        gsub( />/, '&gt;' )
     end
   end
 end

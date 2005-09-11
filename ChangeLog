@@ -1,6 +1,7 @@
 2005-09-11  Kazuhiko  <kazuhiko@fdiary.net>
 	* style/default/html_formatter.rb (to_s): 'replace_auto_link'
 	after 'replace_link'.
+	(replace_auto_link): correct links.
 
 	* misc/plugin/rss.rb (rss): disable @conf.use_plugin in making
 	full-text HTML contents (reported by MORIOKA Toru

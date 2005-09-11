@@ -337,7 +337,7 @@ class HikiDoc < String
       if URI_ONLY_RE =~ uri
         store_block( %Q|<a href="#{uri}">#{title}</a>| )
       else
-        store_block( %Q|<a href="#{escape_quote_uri( uri )}">#{title}</a>| )
+        store_block( %Q|<a href="#{escape_uri( unescape_html( uri ) )}">#{title}</a>| )
       end
     end
     ret.gsub!( URI_RE ) do |uri|
@@ -392,8 +392,11 @@ class HikiDoc < String
       gsub( /&amp;/, '&' )
   end
 
-  def escape_quote_uri( text )
-    text.gsub( /"/, '%22' )
+  def escape_uri( text )
+    return text unless /[^ a-zA-Z0-9_.%-]/ =~ text
+    text.gsub( /([^ a-zA-Z0-9_.-]+)/n ) do
+      '%' + $1.unpack( 'H2' * $1.size ).join( '%' ).upcase
+    end.tr(' ', '+')
   end
 
   def store_block( text )
