@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.49 2005-09-11 10:10:31 fdiary Exp $
+# $Id: html_formatter.rb,v 1.50 2005-09-11 14:17:07 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -25,9 +25,9 @@ module Hiki
     def to_s
       s = @html
       s = replace_inline_image( s )
-      s = replace_auto_link( s ) if @conf.auto_link
       s = replace_wikiname( s ) if @conf.use_wikiname
       s = replace_link( s )
+      s = replace_auto_link( s ) if @conf.auto_link
       s = replace_heading( s )
       s = replace_plugin( s ) if @conf.use_plugin
       @html_converted = s
