@@ -1,3 +1,15 @@
+2005-09-11  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/rss.rb (rss): disable @conf.use_plugin in making
+	full-text HTML contents (reported by MORIOKA Toru
+	[Hiki-dev:01029]).
+
+	* hiki/hiki_formatter.rb (apply_tdiary_theme, tdiary_section):
+	move from style/default/html_formatter.rb.
+
+	* hiki/repos/svn.rb (commit, delete): add the '--force-log' option
+	to avoid an error in editing a page whose name and the editor is
+	the same (by ISOBE, Kazuhiko [Hiki-dev:01027]).
+
 2005-09-09  Kazuhiko  <kazuhiko@fdiary.net>
 	* style/default/html_formatter.rb (replace_inline): add
 	'class="external"' to uri liks (hikidoc:18).
@@ -5,9 +17,6 @@
 2005-09-08  Kazuhiko  <kazuhiko@fdiary.net>
 	* style/default/parser.db, style/default/html_formatter.rb: use
 	the HikiDoc library.
-	* hiki/hiki_formatter.rb: removed.
-	* style/rd+/html_formatter.rb: remove the inheritance of
-	HikiFormatter.
 
 2005-09-06  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/ja/rss.rb: support whole HTML output (instead of

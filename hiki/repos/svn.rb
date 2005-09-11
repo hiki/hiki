@@ -1,4 +1,4 @@
-# $Id: svn.rb,v 1.13 2005-07-16 04:24:33 yanagita Exp $
+# $Id: svn.rb,v 1.14 2005-09-11 10:10:30 fdiary Exp $
 # Copyright (C) 2003, Koichiro Ohba <koichiro@meadowy.org>
 # Copyright (C) 2003, Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
 # You can distribute this under GPL.
@@ -80,14 +80,14 @@ module Hiki
       Dir.chdir("#{@data_path}/text") do
         system("svn add -q -- #{page.escape}".untaint)
         system("svn propdel -q svn:mime-type -- #{page.escape}".untaint)
-        system("svn ci -q -m \"#{msg}\"".untaint)
+        system("svn ci -q --force-log -m \"#{msg}\"".untaint)
       end
     end
 
     def delete(page, msg = default_msg)
       Dir.chdir("#{@data_path}/text") do
         system("svn remove -q -- #{page.escape}".untaint)
-        system("svn ci -q -m \"#{msg}\"".untaint)
+        system("svn ci -q --force-log -m \"#{msg}\"".untaint)
       end
     end
 

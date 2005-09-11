@@ -1,4 +1,4 @@
-# $Id: rss.rb,v 1.21 2005-09-06 06:08:28 fdiary Exp $
+# $Id: rss.rb,v 1.22 2005-09-11 10:10:30 fdiary Exp $
 # Copyright (C) 2003-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # Copyright (C) 2005 Kazuhiko <kazuhiko@fdiary.net>
 
@@ -45,8 +45,11 @@ EOS
         tokens = parser.parse( @db.load( name ) )
         @db.save_cache( name, tokens )
       end
+      tmp = @conf.use_plugin
+      @conf.use_plugin = false
       formatter = @conf.formatter::new( tokens, @db, Plugin.new( @conf.options, @conf), @conf )
       content = formatter.to_s
+      @conf.use_plugin = tmp
     else
       content = CGI::escapeHTML(unified_diff(src, dst)).strip.gsub(/\n/, "<br>\n").gsub(/ /, '&nbsp;')
     end

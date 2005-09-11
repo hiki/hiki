@@ -1,14 +1,15 @@
-# $Id: html_formatter.rb,v 1.48 2005-09-09 02:22:13 fdiary Exp $
+# $Id: html_formatter.rb,v 1.49 2005-09-11 10:10:31 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
 require 'hiki/pluginutil'
 require 'hiki/interwiki'
 require 'hiki/aliaswiki'
+require 'hiki/hiki_formatter'
 require 'uri'
 
 module Hiki
-  class HTMLFormatter_default
+  class HTMLFormatter_default < HikiFormatter
     def initialize( s, db, plugin, conf, prefix = 'l')
       @html       = s
       @db         = db
@@ -62,26 +63,6 @@ module Hiki
       end
       s << ("</ul>\n" * level)
       s
-    end
-
-    H2_RE = /^<h2><a name=/
-    
-    def apply_tdiary_theme(orig_html)
-      return orig_html if @conf.mobile_agent?
-      section = ''
-      title   = ''
-      html    = ''
-
-      orig_html.each do |line|
-        if H2_RE =~ line
-          html << tdiary_section(title, section) unless title.empty? && section.empty?
-          section = ''
-          title = line
-        else
-          section << line
-        end
-      end
-      html << tdiary_section(title, section)
     end
 
     private
@@ -242,22 +223,6 @@ module Hiki
           $& + e.message
         end
       end
-    end
-
-    def tdiary_section(title, section)
-      title.strip!
-      section.strip!
-      return '' if title.empty? && section.empty?
-<<"EOS"
-<div class="day">
-  #{title}
-  <div class="body">
-    <div class="section">
-      #{section}
-    </div>
-  </div>
-</div>
-EOS
     end
 
     def get_auto_links
