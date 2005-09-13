@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.52 2005-09-13 01:50:14 fdiary Exp $
+# $Id: html_formatter.rb,v 1.53 2005-09-13 21:20:08 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -92,7 +92,7 @@ module Hiki
     end
 
     PLUGIN_OPEN_RE = /<(span|div) class="plugin">/
-    PLUGIN_CLOSE_RE = %r!</(span|div)/!
+    PLUGIN_CLOSE_RE = %r!</(span|div)>!
     LINK_OPEN_RE = /<a .*href=/
     LINK_CLOSE_RE = %r!</a>!
 
