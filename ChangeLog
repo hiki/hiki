@@ -1,3 +1,7 @@
+2005-09-13  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/html_formatter.rb: correct auto links (reported by
+	take_tk [Hiki-users:46]).
+
 2005-09-11  Kazuhiko  <kazuhiko@fdiary.net>
 	* style/default/html_formatter.rb (to_s): 'replace_auto_link'
 	after 'replace_link'.

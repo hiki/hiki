@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.51 2005-09-11 14:44:09 fdiary Exp $
+# $Id: html_formatter.rb,v 1.52 2005-09-13 01:50:14 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -19,7 +19,7 @@ module Hiki
       @references = Array::new
       @interwiki  = InterWiki::new( @db.load( @conf.interwiki_name ) )
       @aliaswiki  = AliasWiki::new( @db.load( @conf.aliaswiki_name ) )
-      @auto_links = get_auto_links if @conf.auto_link
+      get_auto_links if @conf.auto_link
     end
 
     def to_s
@@ -75,10 +75,8 @@ module Hiki
 
     def replace_auto_link( text )
       replace_inline( text ) do |str|
-        @auto_links.each do |i, re|
-          str.gsub!( re ) do
-            @plugin.hiki_anchor( i.unescapeHTML.escape, i )
-          end
+        str.gsub!( @auto_links_re ) do |match|
+          @plugin.hiki_anchor( @auto_links[match].unescapeHTML.escape, match )
         end
       end
     end
@@ -95,7 +93,7 @@ module Hiki
 
     PLUGIN_OPEN_RE = /<(span|div) class="plugin">/
     PLUGIN_CLOSE_RE = %r!</(span|div)/!
-    LINK_OPEN_RE = /<a href=/
+    LINK_OPEN_RE = /<a .*href=/
     LINK_CLOSE_RE = %r!</a>!
 
     def replace_inline( text )
@@ -226,17 +224,20 @@ module Hiki
     end
 
     def get_auto_links
-      pages = []
+      pages = {}
       @db.pages.each do |p|
-        pages << escape_html( p )
-        title = @plugin.page_name( p )
-        pages << title unless title == p
+        page_h = escape_html( p )
+        pages[page_h] = page_h
+        title_h = @plugin.page_name( p ).gsub( /&quot;/, '"' )
+        pages[title_h] = page_h unless title_h == page_h
       end
       @aliaswiki.aliaswiki_names.each do |key, value|
-        pages << key
-        pages << value
+        orig_h = escape_html( key )
+        alias_h = escape_html( value )
+        pages[alias_h] = orig_h
       end
-      pages.uniq.sort_by{|i| -i.size}.collect{|i| [i, /#{Regexp.quote( i )}/]}
+      @auto_links_re = Regexp.new( pages.keys.sort_by{|i| -i.size}.collect{|i| Regexp.quote( i )}.join( '|' ) )
+      @auto_links = pages
     end
 
     def escape_html( text )
