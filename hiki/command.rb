@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.74 2005-08-04 00:46:52 fdiary Exp $
+# $Id: command.rb,v 1.75 2005-09-13 08:57:46 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -40,8 +40,13 @@ module Hiki
                @params['p'][0] ? @params['p'][0] : nil
              end
            end
-      @aliaswiki  = AliasWiki::new( @db.load( @conf.aliaswiki_name ) )
 
+      if /\A\.{1,2}\z/ =~ @p
+        redirect(@cgi, @conf.index_url)
+        return
+      end
+
+      @aliaswiki  = AliasWiki::new( @db.load( @conf.aliaswiki_name ) )
       @p = @aliaswiki.original_name(@p).to_euc if @p
       
       options = @conf.options || Hash::new( '' )
@@ -143,10 +148,6 @@ module Hiki
     end
     
     def cmd_view
-      if /^\./ =~ @p
-        redirect(@cgi, @conf.index_url) 
-        return
-      end
       unless @db.exist?( @p )
         @cmd = 'create'
         cmd_create( @conf.msg_page_not_exist )

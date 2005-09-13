@@ -1,4 +1,7 @@
 2005-09-13  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/command.rb: disallow a page whose name is '.' or
+	'..' (reported by take_tk [Hiki-users:51]).
+
 	* style/default/html_formatter.rb: correct auto links (reported by
 	take_tk [Hiki-users:46]).
 
