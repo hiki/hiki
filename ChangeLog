@@ -1,4 +1,7 @@
 2005-09-14  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/amazon.rb: follow-up format changing of amazon.com
+	and amazon.co.jp.
+
 	* style/default/html_formatter.rb (replace_auto_link): typo.
 
 2005-09-13  Kazuhiko  <kazuhiko@fdiary.net>

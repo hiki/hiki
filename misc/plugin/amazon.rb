@@ -1,4 +1,4 @@
-# amazon.rb $Revision: 1.6 $
+# amazon.rb $Revision: 1.7 $
 #
 # isbn_image_left: 指定したISBNの書影をclass="left"で表示
 #   パラメタ:
@@ -114,10 +114,10 @@ def getAmazon( asin )
                                 response, = http.get( path )
                                 response.body.each do |line|
                                         line = NKF::nkf( "-e", line )
-                                        if line =~ /^Amazon.co.jp： (.*)<.*$/
+                                        if line =~ /^Amazon.co.jp：(.*)$/
                                                 item_name = CGI::escapeHTML(CGI::unescapeHTML($1))
                                         end
-                                        if line =~ /(<img src="(http\:\/\/images-jp\.amazon\.com\/images\/P\/(.*MZZZZZZZ_?.jpg))".*?>)/i
+                                        if line =~ /(<img src="(http\:\/\/images-jp\.amazon\.com\/images\/P\/(.*[ML]ZZZZZZZ_?.jpg))".*?>)/i
                                                 img_tag = $1
                                                 img_url = $2
                                                 img_name = $3
