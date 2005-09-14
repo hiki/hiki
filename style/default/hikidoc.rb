@@ -222,22 +222,6 @@ class HikiDoc < String
     end
   end
 
-  def parse_definition_( text )
-    text.gsub( DEFINITIONS_RE ) do |str|
-      ret = "\n<dl>\n"
-      str.chomp!
-      str.scan( DEFINITION_RE ) do |t, d|
-        if t.empty?
-          ret << "<dd>%s</dd>\n" % inline_parser( d )
-        else
-          ret << "<dt>%s</dt><dd>%s</dd>\n" % [ inline_parser( t ), inline_parser( d ) ]
-        end
-      end
-      ret << "</dl>\n\n"
-      ret
-    end
-  end
-
   ######################################################################
   # blockquote
 
