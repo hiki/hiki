@@ -1,3 +1,7 @@
+2005-09-15  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/amazon.rb (getAmazon): allow hankaku colon in a
+	regexp of an item_name.
+
 2005-09-14  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/amazon.rb: follow-up format changing of amazon.com
 	and amazon.co.jp.
