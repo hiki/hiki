@@ -347,9 +347,9 @@ class HikiDoc < String
   STRONG = "'''"
   EM = "''"
   DEL = '=='
-  STRONG_RE = /#{STRONG}(.+)#{STRONG}/
-  EM_RE = /#{EM}(.+)#{EM}/
-  DEL_RE = /#{DEL}(.+)#{DEL}/
+  STRONG_RE = /#{STRONG}(.+?)#{STRONG}/
+  EM_RE = /#{EM}(.+?)#{EM}/
+  DEL_RE = /#{DEL}(.+?)#{DEL}/
   MODIFIER_RE = /(#{STRONG_RE}|#{EM_RE}|#{DEL_RE})/   
 
   def parse_modifier( text )

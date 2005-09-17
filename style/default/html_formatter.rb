@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.53 2005-09-13 21:20:08 fdiary Exp $
+# $Id: html_formatter.rb,v 1.54 2005-09-17 16:07:25 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -74,6 +74,7 @@ module Hiki
     end
 
     def replace_auto_link( text )
+      return text if @auto_links.empty?
       replace_inline( text ) do |str|
         str.gsub!( @auto_links_re ) do |match|
           @plugin.hiki_anchor( @auto_links[match].unescapeHTML.escape, match )
