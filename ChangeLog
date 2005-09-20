@@ -1,3 +1,6 @@
+2005-09-20  Kazuhiko  <kazuhiko@fdiary.net>
+	* plugin/00default.rb (toc): return an empty string.
+
 2005-09-18  Kazuhiko  <kazuhiko@fdiary.net>
 	* style/default/html_formatter.rb (replace_auto_link): do nothing
 	if @auto_links is empty.

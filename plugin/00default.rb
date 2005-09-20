@@ -1,4 +1,4 @@
-# $Id: 00default.rb,v 1.50 2005-08-03 23:40:11 fdiary Exp $
+# $Id: 00default.rb,v 1.51 2005-09-20 11:12:24 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #==============================
@@ -50,6 +50,7 @@ end
 #===== toc
 def toc
   @toc_f = :top
+  ''
 end
 
 def toc_here( page = nil )
