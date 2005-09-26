@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.54 2005-09-17 16:07:25 fdiary Exp $
+# $Id: html_formatter.rb,v 1.55 2005-09-26 02:53:50 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -142,13 +142,13 @@ module Hiki
             @references << u
             @plugin.hiki_anchor( u.escape + anchor, k )
           elsif outer_alias = @interwiki.outer_alias( u ) # outer alias
-            @plugin.make_anchor(outer_alias[0] + anchor, outer_alias[1], 'external')
+            @plugin.make_anchor(outer_alias[0] + anchor, k, 'external')
           elsif /:/ =~ u # inter wiki ?
             s, p = u.split( /:/, 2 )
             if s.empty? # normal link
               @plugin.make_anchor( p.escapeHTML + anchor, k, 'external')
             elsif inter_link = @interwiki.interwiki( s, p.unescapeHTML, "#{s}:#{p}" )
-              @plugin.make_anchor(inter_link[0], inter_link[1], 'external')
+              @plugin.make_anchor(inter_link[0], k, 'external')
             else
               missing_page_anchor( k, u )
             end
