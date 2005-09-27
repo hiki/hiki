@@ -1,3 +1,8 @@
+2005-09-27  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/hikidoc.rb: sync with hikidoc rev.29.
+	  bugfix in parse_plugin.
+	  revise URI_RE.
+
 2005-09-26  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/rss-show.rb: use the rss library.
 
