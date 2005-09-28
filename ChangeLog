@@ -1,3 +1,7 @@
+2005-09-29  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/hikidoc.rb: sync with hikidoc rev.30.
+	  allow empty descriptions in definition lists.
+
 2005-09-27  Kazuhiko  <kazuhiko@fdiary.net>
 	* style/default/hikidoc.rb: sync with hikidoc rev.29.
 	  bugfix in parse_plugin.

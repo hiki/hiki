@@ -30,7 +30,7 @@
 require 'uri'
 
 class HikiDoc < String
-  Revision = %q$Rev: 29 $
+  Revision = %q$Rev: 30 $
 
   def initialize( content = '', options = {} )
     @level = options[:level] || 1
@@ -221,7 +221,7 @@ class HikiDoc < String
   ######################################################################
   # definition
 
-  DEFINITION_RE = /^:(.*?)?:(.+)\n?/
+  DEFINITION_RE = /^:(.*?)?:(.*)\n?/
   DEFINITIONS_RE = /(#{DEFINITION_RE})+/
 
   def parse_definition( text )
@@ -234,6 +234,8 @@ class HikiDoc < String
       str.scan( DEFINITION_RE ) do |t, d|
         if t.empty?
           ret << "<dd>%s</dd>\n" % d
+        elsif d.empty?
+          ret << "<dt>%s</dt>\n" % t
         else
           ret << "<dt>%s</dt><dd>%s</dd>\n" % [ t, d ]
         end
