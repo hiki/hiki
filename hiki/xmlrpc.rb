@@ -1,4 +1,4 @@
-# $Id: xmlrpc.rb,v 1.5 2005-09-29 02:48:21 fdiary Exp $
+# $Id: xmlrpc.rb,v 1.6 2005-09-29 03:01:15 fdiary Exp $
 
 require 'xmlrpc/server'
 require 'hiki/plugin'
@@ -44,7 +44,7 @@ module Hiki
           ret = {
             'title' => XMLRPC::Base64.new( euc_to_utf8( title ) ),
             'keyword' => db.get_attribute( page, :keyword ).collect { |k| XMLRPC::Base64.new( euc_to_utf8( k ) ) },
-            'lastModified' => db.get_attribute( page, :last_modified ),
+            'lastModified' => db.get_attribute( page, :last_modified ).getutc,
             'author' => XMLRPC::Base64.new( db.get_attribute( page, :editor ) || '' )
           }
         rescue
