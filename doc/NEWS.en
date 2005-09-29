@@ -4,6 +4,7 @@
 * change the charset of XML-RPC interfaces to UTF-8.
 * support whole HTML output in RSS (rss.rb plugin).
 * support setting up attach.cgi in hikifarm.
+* support WEBrick (misc/webrick/).
 * fix miscellaneous bugs.
 
 ! Changes in 0.8.3
