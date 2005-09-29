@@ -1,4 +1,7 @@
 2005-09-29  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/webrick/hikilet.rb: add a script to run hiki with
+	WEBrick (by Kazuhiro NISHIYAMA).
+
 	* style/math/parser.rb, style/math/html_formatter.rb: follow the
 	changes of the default style.
 

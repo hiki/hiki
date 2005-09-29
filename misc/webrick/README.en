@@ -1,0 +1,15 @@
+! Hikilet
+
+Hikilet is a script to run Hiki with WEBrick.
+
+!! Usage
+
+Copy 'hikilet.rb' to the top of hiki directory where 'hiki.cgi' exists.
+
+!! Known Bugs
+
+XML-RPC interfaces are not supported.
+
+!! Author
+
+Kazuhiro NISHIYAMA
