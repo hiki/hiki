@@ -1,4 +1,4 @@
-# $Id: util.rb,v 1.41 2005-07-17 14:28:01 fdiary Exp $
+# $Id: util.rb,v 1.42 2005-09-29 01:14:42 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'nkf'
@@ -136,21 +136,16 @@ module Hiki
       url.sub!(%r|/\./|, '/')
       header = {}
       header['cookie'] = cookies if cookies
-      if @conf.use_refresh # for XREA <http://xreafaq.com/cgi.html#37>
-	header['type'] = 'text/html'
-	print cgi.header(header)
-	print %Q[
-                 <html>
-                 <head>
-                 <meta http-equiv="refresh" content="0;url=#{url}">
-                 <title>moving...</title>
-                 </head>
-                 <body>Wait or <a href="#{url}">Click here!</a></body>
-                 </html>]
-      else
-	header['location'] = url
-	print cgi.header(header)
-      end
+      header['type'] = 'text/html'
+      print cgi.header(header)
+      print %Q[
+               <html>
+               <head>
+               <meta http-equiv="refresh" content="0;url=#{url}">
+               <title>moving...</title>
+               </head>
+               <body>Wait or <a href="#{url}">Click here!</a></body>
+               </html>]
     end
 
     def sendmail(subject, body)

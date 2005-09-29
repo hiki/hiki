@@ -1,4 +1,6 @@
 2005-09-29  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/util.rb (redirect): always use 'meta refresh' (closes #26).
+
 	* style/default/hikidoc.rb: sync with hikidoc rev.30.
 	  allow empty descriptions in definition lists.
 
@@ -15,7 +17,7 @@
 
 2005-09-20  Kazuhiko  <kazuhiko@fdiary.net>
 	* style/default/html_formatter.rb (replace_link): display
-	specified titles in interwikis (closs #25).
+	specified titles in interwikis (closes #25).
 	ditto in outer aliases.
 
 	* plugin/00default.rb (toc): return an empty string (closes #24).
