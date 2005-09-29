@@ -1,4 +1,7 @@
 2005-09-29  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/math/parser.rb, style/math/html_formatter.rb: follow the
+	changes of the default style.
+
 	* hiki/xmlrpc.rb: use utf-8 as the input/output charset.
 	add 'wiki.getPageInfo'.
 
