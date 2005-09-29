@@ -30,7 +30,7 @@
 require 'uri'
 
 class HikiDoc < String
-  Revision = %q$Rev: 30 $
+  Revision = %q$Rev: 31 $
 
   def initialize( content = '', options = {} )
     @level = options[:level] || 1
@@ -87,7 +87,7 @@ class HikiDoc < String
 
   PLUGIN_OPEN = '{{'
   PLUGIN_CLOSE = '}}'
-  PLUGIN_SPLIT_RE = /(#{Regexp.quote(PLUGIN_OPEN)}|#{Regexp.quote(PLUGIN_CLOSE)})/
+  PLUGIN_SPLIT_RE = /(#{Regexp.union( PLUGIN_OPEN, PLUGIN_CLOSE )})/
 
   def parse_plugin( text )
     ret = ''

@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.55 2005-09-26 02:53:50 fdiary Exp $
+# $Id: html_formatter.rb,v 1.56 2005-09-29 01:23:59 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -237,7 +237,7 @@ module Hiki
         alias_h = escape_html( value )
         pages[alias_h] = orig_h
       end
-      @auto_links_re = Regexp.new( pages.keys.sort_by{|i| -i.size}.collect{|i| Regexp.quote( i )}.join( '|' ) )
+      @auto_links_re = Regexp.union( * pages.keys.sort_by{|i| -i.size} )
       @auto_links = pages
     end
 
