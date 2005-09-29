@@ -1,4 +1,7 @@
 2005-09-29  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/xmlrpc.rb: use utf-8 as the input/output charset.
+	add 'wiki.getPageInfo'.
+
 	* hiki/util.rb (redirect): always use 'meta refresh' (closes #26).
 
 	* style/default/hikidoc.rb: sync with hikidoc rev.30.
