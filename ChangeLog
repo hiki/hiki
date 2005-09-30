@@ -1,4 +1,7 @@
 2005-09-30  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/hiki_formatter.rb (apply_tdiary_theme): revise
+	H2_RE (reported by NISHI Takao).
+
 	* misc/plugin/attach.rb, misc/plugin/category.rb,
 	misc/plugin/keyword.rb, misc/plugin/orphan.rb,
 	misc/plugin/referer.rb, misc/plugin/sitemap.rb,

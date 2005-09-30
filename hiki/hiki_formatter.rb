@@ -1,9 +1,9 @@
-# $Id: hiki_formatter.rb,v 1.6 2005-09-11 10:31:03 fdiary Exp $
+# $Id: hiki_formatter.rb,v 1.7 2005-09-30 11:53:15 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 module Hiki
   class HikiFormatter
-    H2_RE = /^<h2><a name=/
+    H2_RE = /^<h2>.*<a name=/
     
     def apply_tdiary_theme(orig_html)
       return orig_html if @conf.mobile_agent?
