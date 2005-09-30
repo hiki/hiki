@@ -1,4 +1,4 @@
-# $Id: sitemap.rb,v 1.4 2005-09-03 02:10:30 fdiary Exp $
+# $Id: sitemap.rb,v 1.5 2005-09-30 11:45:49 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 def sitemap(page = 'FrontPage')
@@ -17,7 +17,7 @@ def sitemap_traverse(page)
   return if @map_path.index(page) or !info
   @map_path.push page
 
-  @map_str << "<li>#{hiki_anchor(page.escape, "#{page_name(page)}")}\n"
+  @map_str << "<li>#{hiki_anchor(page.escape, "#{page_name(page)}")}</li>\n"
 
   unless @map_traversed.index(page)
     referer =  info[:references].sort

@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.56 2005-09-29 01:23:59 fdiary Exp $
+# $Id: html_formatter.rb,v 1.57 2005-09-30 11:45:50 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -58,7 +58,7 @@ module Hiki
             s << ( "</ul>\n" * ( level - new_level ) )
             level = new_level
           end
-          s << %Q!<li><a href="\#l#{num}">#{title}</a>\n!
+          s << %Q!<li><a href="\#l#{num}">#{title}</a></li>\n!
         end
       end
       s << ("</ul>\n" * level)

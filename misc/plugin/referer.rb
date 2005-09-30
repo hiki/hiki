@@ -1,4 +1,4 @@
-# $Id: referer.rb,v 1.11 2005-06-27 13:49:57 fdiary Exp $
+# $Id: referer.rb,v 1.12 2005-09-30 11:45:49 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/db/ptstore'
@@ -51,7 +51,7 @@ def show_referer(db)
   referers(db).each_with_index do |ref, i|
     break if i == @options['referer_limit']
     disp = replace_url(ref[0].unescape).escapeHTML
-    s << %!<li>#{ref[1]} ! + make_anchor("#{ref[0].escapeHTML}", "#{disp}")
+    s << %!<li>#{ref[1]} ! + make_anchor("#{ref[0].escapeHTML}", "#{disp}") + "</li>"
   end
   
   s << '</ul></div>'
@@ -73,12 +73,12 @@ def referer_map
     next unless @db.exist?(f.untaint.unescape)
     db = PTStore::new("#{path}/#{f}")
     p = File.basename(f)
-    s << "<li>#{hiki_anchor(p, page_name(p.unescape))}\n"
+    s << "<li>#{hiki_anchor(p, page_name(p.unescape))}</li>\n"
     s << "<ul>\n"
     referers(db).each_with_index do |ref, i|
       break if i == @options['referer_limit']
       disp = replace_url(ref[0].unescape).escapeHTML
-      s << %!<li>#{ref[1]} ! + make_anchor("#{ref[0].escapeHTML}", "#{disp}")
+      s << %!<li>#{ref[1]} ! + make_anchor("#{ref[0].escapeHTML}", "#{disp}")+"</li>"
     end
     db.close_cache
     s << "</ul>\n"

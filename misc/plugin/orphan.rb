@@ -1,4 +1,4 @@
-# $Id: orphan.rb,v 1.4 2005-09-01 04:58:16 fdiary Exp $
+# $Id: orphan.rb,v 1.5 2005-09-30 11:45:49 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 def orphan_pages
@@ -11,7 +11,7 @@ def orphan
   s = '<ul>'
 
   orphan_pages.each do |p, page_name|
-    s << %Q!<li>#{hiki_anchor(p.escape, page_name)}\n!
+    s << %Q!<li>#{hiki_anchor(p.escape, page_name)}</li>\n!
   end
 
   s << "</ul>\n"

@@ -1,3 +1,11 @@
+2005-09-30  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/attach.rb, misc/plugin/category.rb,
+	misc/plugin/keyword.rb, misc/plugin/orphan.rb,
+	misc/plugin/referer.rb, misc/plugin/sitemap.rb,
+	misc/plugin/template.rb, plugin/00default.rb,
+	style/default/html_formatter.rb: revise for more strict HTML (by
+	KURODA Hiraku).
+
 2005-09-29  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/webrick/hikilet.rb: add a script to run hiki with
 	WEBrick (by Kazuhiro NISHIYAMA).

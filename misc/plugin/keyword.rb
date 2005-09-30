@@ -1,4 +1,4 @@
-# $Id: keyword.rb,v 1.4 2005-06-27 13:49:57 fdiary Exp $
+# $Id: keyword.rb,v 1.5 2005-09-30 11:45:49 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 def keyword_list(*key)
@@ -18,7 +18,7 @@ def keyword_list(*key)
     p.each do |a|
       name = a[0]
       tm = a[1][:last_modified]
-      s << "<li>#{format_date( tm )}: #{hiki_anchor(name.escape, page_name(name))}\n"
+      s << "<li>#{format_date( tm )}: #{hiki_anchor(name.escape, page_name(name))}</li>\n"
     end
     s << "</ul>\n"
   end

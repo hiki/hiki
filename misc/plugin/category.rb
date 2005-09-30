@@ -1,4 +1,4 @@
-# $Id: category.rb,v 1.5 2004-02-15 02:48:35 hitoshi Exp $
+# $Id: category.rb,v 1.6 2005-09-30 11:45:49 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 def category_list(*category)
@@ -31,7 +31,7 @@ def category_list(*category)
     p.each do |a|
       name = a[0]
       tm = a[1][:last_modified]
-      s << "<li>#{format_date( tm )}: #{hiki_anchor(name.escape, page_name(name))}\n"
+      s << "<li>#{format_date( tm )}: #{hiki_anchor(name.escape, page_name(name))}</li>\n"
     end
     s << "</ul>\n"
   end

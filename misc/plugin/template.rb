@@ -1,4 +1,4 @@
-# $Id: template.rb,v 1.5 2005-06-27 05:21:42 fdiary Exp $
+# $Id: template.rb,v 1.6 2005-09-30 11:45:49 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 #
 
@@ -25,7 +25,7 @@ EOS
 
   pages.each do |p|
    p = p.unescape.escapeHTML
-   s << %Q!<option value="#{p}"#{'selected' if @options['template.default'] == p.unescapeHTML}>#{p}!
+   s << %Q!<option value="#{p}"#{'selected' if @options['template.default'] == p.unescapeHTML}>#{p}</option>!
   end
   s << <<EOS
   </select>

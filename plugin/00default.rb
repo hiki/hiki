@@ -1,4 +1,4 @@
-# $Id: 00default.rb,v 1.51 2005-09-20 11:12:24 fdiary Exp $
+# $Id: 00default.rb,v 1.52 2005-09-30 11:45:49 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #==============================
@@ -97,7 +97,7 @@ def recent( n = 20 )
     end
     t = page_name(name)
     an = hiki_anchor(name.escape, t)
-    s << "<li>#{an}\n"
+    s << "<li>#{an}</li>\n"
   end
   s << "</ul>\n"
   s
