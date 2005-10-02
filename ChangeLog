@@ -1,3 +1,10 @@
+2005-10-02  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/hikidoc.rb: sync with hikidoc rev.33.
+	  revise esacpes in parse_link
+	  allow empty descriptions in definition lists
+	* style/default/html_formatter.rb (replace_link): follow the
+	change of hikidoc.rb.
+
 2005-09-30  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/hiki_formatter.rb (apply_tdiary_theme): revise
 	H2_RE (reported by NISHI Takao).

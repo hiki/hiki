@@ -30,7 +30,7 @@
 require 'uri'
 
 class HikiDoc < String
-  Revision = %q$Rev: 31 $
+  Revision = %q$Rev: 33 $
 
   def initialize( content = '', options = {} )
     @level = options[:level] || 1
@@ -336,7 +336,6 @@ class HikiDoc < String
   BRACKET_LINK_RE = /\[\[(.+?)\]\]/
   NAMED_LINK_RE = /(.+?)\|(.+)/
   URI_RE = /(?:(?:https?|ftp|file):\/\/|mailto:)[A-Za-z0-9;\/?:@&=+$,\-_.!~*\'()#%]+/
-  URI_ONLY_RE = %r!\A#{URI_RE}\z!
 
   def parse_link( text )
     ret = text
@@ -348,11 +347,7 @@ class HikiDoc < String
       else
         uri = title = link
       end
-      if URI_ONLY_RE =~ uri
-        store_block( %Q|<a href="#{uri}">#{title}</a>| )
-      else
-        store_block( %Q|<a href="#{escape_uri( unescape_html( uri ) )}">#{title}</a>| )
-      end
+      store_block( %Q|<a href="#{escape_quote( uri )}">#{title}</a>| )
     end
     ret.gsub!( URI_RE ) do |uri|
       if IMAGE_RE =~ uri
@@ -400,17 +395,8 @@ class HikiDoc < String
       gsub( />/, '&gt;' )
   end
 
-  def unescape_html( text )
-    text.gsub( /&gt;/, '>' ).
-      gsub( /&lt;/, '<' ).
-      gsub( /&amp;/, '&' )
-  end
-
-  def escape_uri( text )
-    return text unless /[^ a-zA-Z0-9_.%-]/ =~ text
-    text.gsub( /([^ a-zA-Z0-9_.-]+)/n ) do
-      '%' + $1.unpack( 'H2' * $1.size ).join( '%' ).upcase
-    end.tr(' ', '+')
+  def escape_quote( text )
+    text.gsub( /"/, '&quot;' )
   end
 
   def store_block( text )
