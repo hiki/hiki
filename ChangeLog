@@ -1,3 +1,7 @@
+2005-10-03  Kouhei Yanagita <yanagi@shakenbu.org>
+	* hiki/plugin.rb: use *_proc methods regardless of
+	the value of @conf.use_plugin.
+
 2005-10-02  Kazuhiko  <kazuhiko@fdiary.net>
 	* style/default/hikidoc.rb: sync with hikidoc rev.33.
 	  revise esacpes in parse_link

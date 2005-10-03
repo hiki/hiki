@@ -1,4 +1,4 @@
-# $Id: plugin.rb,v 1.30 2005-07-17 15:19:01 fdiary Exp $
+# $Id: plugin.rb,v 1.31 2005-10-03 13:48:27 yanagita Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
@@ -100,8 +100,6 @@ module Hiki
     end
 
     def update_proc
-      return unless @conf.use_plugin
-      
       @update_procs.each do |proc|
         begin
           proc.call
@@ -111,8 +109,6 @@ module Hiki
     end
 
     def delete_proc
-      return unless @conf.use_plugin
-      
       @delete_procs.each do |proc|
         begin
           proc.call
@@ -122,8 +118,6 @@ module Hiki
     end
     
     def body_enter_proc
-      return '' unless @conf.use_plugin
-
       r = []
       @body_enter_procs.each do |proc|
         begin
@@ -136,9 +130,7 @@ module Hiki
     end
 
     def body_leave_proc
-      return '' unless @conf.use_plugin
       r = []
-
       @body_leave_procs.each do |proc|
         begin
           r << proc.call( @date )
@@ -150,9 +142,7 @@ module Hiki
     end
 
     def page_attribute_proc
-      return '' unless @conf.use_plugin
       r = []
-
       @page_attribute_procs.each do |proc|
         begin
           r << proc.call( @date )
@@ -164,9 +154,7 @@ module Hiki
     end
 
     def footer_proc
-#      return '' unless @conf.use_plugin
       r = []
-
       @footer_procs.each do |proc|
         begin
           r << proc.call
@@ -178,9 +166,7 @@ module Hiki
     end
 
     def edit_proc
-      return '' unless @conf.use_plugin
       r = []
-
       @edit_procs.each do |proc|
         begin
           r << proc.call
@@ -192,9 +178,7 @@ module Hiki
     end
       
     def form_proc
-      return '' unless @conf.use_plugin
       r = []
-
       @form_procs.each do |proc|
         begin
           r << proc.call
@@ -206,9 +190,7 @@ module Hiki
     end
     
     def menu_proc
-      return '' unless @conf.use_plugin
       r = []
-
       @menu_procs.each do |proc|
         begin
           r << proc.call
