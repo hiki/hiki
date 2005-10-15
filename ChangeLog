@@ -1,3 +1,8 @@
+2005-10-15  Kazuhiro NISHIYAMA <zn@mbf.nifty.com>
+	* hiki/xmlrpc.rb: keyword bug fix.
+	use XMLRPC::FaultException instead of rescue and false.
+	support minoredit and md5hex. split XMLRPCHandler.
+
 2005-10-03  Kouhei Yanagita <yanagi@shakenbu.org>
 	* hiki/plugin.rb: use *_proc methods regardless of
 	the value of @conf.use_plugin.
