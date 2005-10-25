@@ -1,3 +1,7 @@
+2005-10-25  Kouhei Yanagita <yanagi@shakenbu.org>
+	* style/rd+/rd2html.rb (a_name_href): fixed a escape string
+	remaining bug (patch by Masao Mutoh).
+
 2005-10-19  Kouhei Yanagita <yanagi@shakenbu.org>
 	* hiki/repos/plain.rb, test/test_repos_plain.rb,
 	misc/hikifarm/hikifarm.conf: add a new version control backend,

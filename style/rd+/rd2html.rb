@@ -169,6 +169,11 @@ module Hiki
     end
 
     def a_name_href(anchor, label)
+      if label.is_a? String
+        label.gsub!(ESC_WORD_RE, "")
+      else
+        label[0].gsub!(ESC_WORD_RE, "")
+      end
       %Q[<a name="#{anchor}" href="##{anchor}" title="#{anchor.unescape.escapeHTML}">#{label}</a>]
     end
 
