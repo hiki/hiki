@@ -1,3 +1,6 @@
+2005-11-01  Kouhei Yanagita <yanagi@shakenbu.org>
+	* hiki/db/flatfile.rb (unlink): backup the data when a page is deleted.
+
 2005-10-25  Kouhei Yanagita <yanagi@shakenbu.org>
 	* style/rd+/rd2html.rb (a_name_href): fixed a escape string
 	remaining bug (patch by Masao Mutoh).

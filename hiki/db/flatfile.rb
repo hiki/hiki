@@ -1,4 +1,4 @@
-# $Id: flatfile.rb,v 1.22 2005-08-26 02:01:14 fdiary Exp $
+# $Id: flatfile.rb,v 1.23 2005-11-01 14:21:00 yanagita Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'fileutils'
@@ -31,9 +31,9 @@ module Hiki
 
       if exist?( page )
         return nil if md5 != md5hex( page )
-	if update_timestamp
-	  FileUtils.copy( filename, backupdir( page ), {:preserve => true} )
-	end
+        if update_timestamp
+          FileUtils.copy( filename, backupdir( page ), {:preserve => true} )
+        end
       end
       create_info_default( page ) unless info_exist?( page )
 
@@ -49,6 +49,7 @@ module Hiki
     def unlink( page )
       if exist?( page )
         begin
+          FileUtils.copy( textdir( page ), backupdir( page ), {:preserve => true} )
           delete_info( page )
           File::unlink( textdir( page ) )
         rescue
