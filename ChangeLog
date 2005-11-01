@@ -1,3 +1,7 @@
+2005-11-02  Kouhei Yanagita <yanagi@shakenbu.org>
+	* hiki/command.rb (cmd_save): editors can delete pages without
+	administrative privilege.
+
 2005-11-01  Kouhei Yanagita <yanagi@shakenbu.org>
 	* hiki/db/flatfile.rb (unlink): backup the data when a page is deleted.
 

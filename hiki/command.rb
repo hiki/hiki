@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.75 2005-09-13 08:57:46 fdiary Exp $
+# $Id: command.rb,v 1.76 2005-11-01 15:05:45 yanagita Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -340,7 +340,7 @@ module Hiki
     def cmd_save( page, text, md5hex, update_timestamp = true )
       raise PermissionError if @session_id && @session_id != @cgi.params['session_id'][0]
       subject = ''
-      if text.size == 0 && @plugin.admin?
+      if text.empty?
         @db.delete( page )
         @plugin.delete_proc
         data             = get_common_data( @db, @plugin, @conf )
