@@ -1,3 +1,7 @@
+2005-11-03  Kouhei Yanagita <yanagi@shakenbu.org>
+	* plugin/01sp.rb, misc/plugin/show_plugins.rb: new plugin.
+	It displays enabled plugins.
+
 2005-11-02  Kouhei Yanagita <yanagi@shakenbu.org>
 	* hiki/command.rb (cmd_save): editors can delete pages without
 	administrative privilege.
