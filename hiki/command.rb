@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.76 2005-11-01 15:05:45 yanagita Exp $
+# $Id: command.rb,v 1.77 2005-11-07 12:53:10 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -95,7 +95,7 @@ module Hiki
         end
       rescue NoMethodError, PermissionError
         data = get_common_data( @db, @plugin, @conf )
-        data[:message] = CGI::escapeHTML( $!.message )
+        data[:message] = CGI::escapeHTML( $!.message + $!.backtrace.join("\n")  )
         generate_error_page( data )
       end
     end

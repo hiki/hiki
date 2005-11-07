@@ -1,3 +1,6 @@
+2005-11-07  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/amazon.rb (getAmazon): revise for recent amazon sites.
+
 2005-11-03  Kouhei Yanagita <yanagi@shakenbu.org>
 	* plugin/01sp.rb, misc/plugin/show_plugins.rb: new plugin.
 	It displays enabled plugins.
