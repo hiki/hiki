@@ -1,4 +1,4 @@
-# $Id: hikiconf.rb.sample,v 1.12 2005-07-28 15:05:30 yanagita Exp $
+# $Id: hikiconf.rb.sample,v 1.13 2005-11-15 14:37:27 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #============================
@@ -87,12 +87,6 @@
 #    通常は自動で設定されますが、リバースプロキシの場合など正しく設定され
 #    ない場合は指定してください。
 #@base_url        = "http://example.com/hiki/"
-
-# リダイレクトの方法【オプション】
-#    XREA.com のように、Location ヘッダでのリダイレクトが動作しない場合は
-#    true にしてください。
-#    (参考) http://xreafaq.com/cgi.html#37
-#@use_refresh = true
 
 # キャッシュディレクトリ【オプション】
 #    プラグインで使われるキャッシュ用のディレクトリを指定する
