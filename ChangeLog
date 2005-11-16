@@ -1,3 +1,6 @@
+2005-11-16  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/its.rb: add a 'Issue Tracking System' plugin.
+
 2005-11-15  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/hikifarm/hiki.conf: add descriptions by Atsushi SHICHI.
 	* doc/README-attach.txt: update a document by Atsushi SHICHI.
