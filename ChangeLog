@@ -1,3 +1,7 @@
+2005-11-19  Kouhei Yanagita <yanagi@shakenbu.org>
+	* plugin/02help.rb, plugin/en/02help.rb, plugin/ja/02help.rb: refine
+	the interface of editing support (by NAGASAKI).
+
 2005-11-16  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/its.rb: add a 'Issue Tracking System' plugin.
 

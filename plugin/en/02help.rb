@@ -1,3 +1,23 @@
+def help_lineshelp_label
+   'LinesHelp'
+end
+
+def help_wordshelp_label
+   'WordsHelp'
+end
+
+def help_tablehelp_label
+   'TableHelp'
+end
+
+def help_pluginhelp_label
+   'PluginHelp'
+end
+
+def help_mathhelp_label
+   'MathHelp'
+end
+
 def help_heading_label
    'Heading'
 end
@@ -8,6 +28,22 @@ end
 
 def help_numbered_label
    'numbered'
+end
+
+def help_preformatted_label
+   'Preformatted'
+end
+
+def help_quotation_label
+   'Quotation'
+end
+
+def help_comment_label
+   'Comment'
+end
+
+def help_cancel_label
+   'cancel'
 end
 
 def help_link_label
@@ -34,8 +70,8 @@ def help_definition_label
    'Definition'
 end
 
-def help_table_label
-   'Table'
+def help_horizontal_label
+   'Horizontal'
 end
 
 def help_cell_label
@@ -52,42 +88,6 @@ end
 
 def help_columns_label
    'columns'
-end
-
-def help_horizontal_label
-   'Horizontal'
-end
-
-def help_multiplelines_label
-   'multiple lines'
-end
-
-def help_preformatted_label
-   'Preformatted'
-end
-
-def help_cancel_label
-   'cancel'
-end
-
-def help_quotation_label
-   'Quotation'
-end
-
-def help_comment_label
-   'Comment'
-end
-
-def help_math_label
-   'Math'
-end
-
-def help_display_label
-   'display'
-end
-
-def help_inline_label
-   'inline'
 end
 
 def help_plugin_label
@@ -108,4 +108,12 @@ end
 
 def help_recent_label
    'Recent'
+end
+
+def help_display_label
+   'display'
+end
+
+def help_inline_label
+   'inline'
 end
