@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 HIKIFARM_VERSION = '0.8.4'
-HIKIFARM_RELEASE_DATE = '2005-10-19'
+HIKIFARM_RELEASE_DATE = '2005-11-22'
 
 class HikifarmConfig
   attr_reader :ruby, :hiki, :hikifarm_description
@@ -298,13 +298,12 @@ class HikifarmIndexPage < ErbPage
     r = ''
     r = "<p>全 #{@farm.wikis_num} Wiki / #{@farm.pages_num} ページ (* は差分へのリンク)</p>\n"
     r << "<table>\n"
-    r << %Q!<tr><th>Wiki の名前</th><th>タイトル</th><th>最終更新時刻</th></tr>!
+    r << %Q!<tr><th>Wiki の名前</th><th>最終更新時刻 / 最終更新ページ</th></tr>!
     wikilist = @farm.wikilist.sort{ |a,b| a.mtime <=> b.mtime }.reverse
     wikilist.each do |wiki|
       page = CGI.escapeHTML(CGI.unescape(wiki.last_modified_page))
       r << %Q!<tr>!
-      r << %Q!<td><a href="#{wiki.name}/">#{wiki.name}</a></td>!
-      r << %Q!<td>#{CGI::escapeHTML(wiki.title)}</td>!
+      r << %Q!<td><a href="#{wiki.name}/">#{CGI::escapeHTML(wiki.title)}</a></td>!
       r << %Q!<td>#{wiki.mtime.strftime("%Y/%m/%d %H:%M")}!
       r << %Q! <a href="#{wiki.name}/?c=diff;p=#{wiki.last_modified_page}">*</a>\n!
       r << %Q! <a href="#{wiki.name}/?#{wiki.last_modified_page}">#{page}</a></td></tr>\n!
