@@ -1,3 +1,7 @@
+2005-11-28  Kouhei Yanagita <yanagi@shakenbu.org>
+	* hiki/config.rb (load): fixed: The XMLRPC feature could not be
+	disabled (reported by Atsushi SHICHI).
+
 2005-11-22  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/hikifarm/index.cgi: revise output HTML.
 

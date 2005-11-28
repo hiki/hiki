@@ -1,4 +1,4 @@
-# $Id: config.rb,v 1.100 2005-11-19 04:14:26 yanagita Exp $
+# $Id: config.rb,v 1.101 2005-11-28 12:20:30 yanagita Exp $
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
@@ -154,7 +154,7 @@ module Hiki
       @use_wikiname    = true if @use_wikiname.nil?
       @options         = {} unless @options.class == Hash
 
-      @xmlrpc_enabled  ||= true
+      @xmlrpc_enabled  = true unless defined?(@xmlrpc_enabled)
 
       @template_path   ||= "#{PATH}/template"
       @plugin_path     ||= "#{PATH}/plugin"
