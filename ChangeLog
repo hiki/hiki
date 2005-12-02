@@ -1,3 +1,7 @@
+2005-12-02  Kazuhiko  <kazuhiko@fdiary.net>
+	* contrib/plugin/rast-register.rb: add a new plugin.
+	* contrib/plugin/rast-search.rb: add a new plugin.
+
 2005-11-28  Kouhei Yanagita <yanagi@shakenbu.org>
 	* hiki/config.rb (load): fixed: The XMLRPC feature could not be
 	disabled (reported by Atsushi SHICHI).
