@@ -284,7 +284,7 @@ end
 
 
 if __FILE__ == $0
-  print "TypeList: #{ImageSize.type.inspect}\n"
+  print "TypeList: #{ImageSize.type_list.inspect}\n"
 
   ARGV.each do |file|
     print "#{file} (string)\n"
