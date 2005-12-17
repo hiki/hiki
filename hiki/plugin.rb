@@ -1,4 +1,4 @@
-# $Id: plugin.rb,v 1.31 2005-10-03 13:48:27 yanagita Exp $
+# $Id: plugin.rb,v 1.32 2005-12-17 01:26:22 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
@@ -277,8 +277,8 @@ module Hiki
 
     def save( page, src, md5, update_timestamp = true )
       src.gsub!(/\r/, '')
-      src.strip!
-      src << "\n"
+      src.gsub!(/\A\n*/, '')
+      src.gsub!(/\n*\z/, "\n")
       result = @db.store(page, src, md5, update_timestamp)
       if result
         @db.set_attribute( page, :editor => @user )

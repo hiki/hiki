@@ -5,7 +5,7 @@ module Hiki
     MAX_PAGES = 10
     NUM = 10
 
-    def rast_output( s )
+    def rast_output(s)
       title_str = @key.empty? ? @conf.msg_search : @conf.msg_search_result
       str = <<-EOS
   <form class="update" action="./">
@@ -16,15 +16,15 @@ module Hiki
     <input type="submit" name="search" value="#{@conf.msg_search.escapeHTML}"></p>
   </form>
 EOS
-      parser = @conf.parser::new( @conf )
-      tokens = parser.parse( '' )
-      formatter = @conf.formatter::new( tokens, @db, @plugin, @conf )
-      @page  = Page::new( @cgi, @conf )
-      data   = Util::get_common_data( @db, @plugin, @conf )
+      parser = @conf.parser::new(@conf)
+      tokens = parser.parse('')
+      formatter = @conf.formatter::new(tokens, @db, @plugin, @conf)
+      @page  = Page::new(@cgi, @conf)
+      data   = Util::get_common_data(@db, @plugin, @conf)
       @plugin.hiki_menu(data, @cmd)
-      data[:title]      = title( title_str )
+      data[:title]      = title(title_str)
       data[:view_title] = title_str
-      data[:body]       = formatter.apply_tdiary_theme( str + s )
+      data[:body]       = formatter.apply_tdiary_theme(str + s)
       @cmd = 'plugin' # important!!!
       generate_page(data) # private method inherited from Command class
     end
@@ -33,24 +33,24 @@ EOS
       db_list = @conf.options['rast-search.db_list'] || [@conf.options['rast-search.db_path'] || "#{@conf.cache_path}/rast"]
       @key = @cgi['key']
       if @key.empty?
-        rast_output( '' )
+        rast_output('')
       else
         @start = @cgi["start"].to_i
         begin
           rast_db_list = db_list.collect do |db_name|
-            Rast::DB.open( db_name.untaint, Rast::DB::RDONLY )
+            Rast::DB.open(db_name.untaint, Rast::DB::RDONLY)
           end
           Rast::Merger.open(rast_db_list) do |db|
             options = create_search_options
-            @result = db.search( @key, options )
+            @result = db.search(@key, options)
             if @result.hit_count ==0
-              rast_output( "<p>#{(@conf.msg_search_not_found % @key).escapeHTML}</p>" )
+              rast_output("<p>#{(@conf.msg_search_not_found % @key).escapeHTML}</p>")
             else
-              rast_output( format_result )
+              rast_output(format_result)
             end
           end
         rescue
-          rast_output( "<p>Error : #{$!.message.escapeHTML}</p>" )
+          rast_output("<p>Error : #{$!.message.escapeHTML}</p>")
         ensure
           rast_db_list.each do |db|
             db.close if db
@@ -114,8 +114,8 @@ EOS
     end
   
     def format_link(label, start, num)
-      return format( %Q|<a href="%s?c=search;key=%s;start=%d">%s</a> |,
-                     @conf.cgi_name, @key.escape, start, label )
+      return format(%Q|<a href="%s?c=search;key=%s;start=%d">%s</a> |,
+                     @conf.cgi_name, @key.escape, start, label)
     end
 
     def create_search_options
@@ -133,9 +133,9 @@ EOS
 end
 
 def search
-  Hiki::RastSearch.new( @cgi, @db, @conf ).search
+  Hiki::RastSearch.new(@cgi, @db, @conf).search
 end
 
 add_body_enter_proc do
-  add_plugin_command( 'search', nil )
+  add_plugin_command('search', nil)
 end

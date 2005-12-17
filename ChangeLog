@@ -1,3 +1,8 @@
+2005-12-17  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/plugin.rb (save): do not remove spaces from the begining
+	and the end of texts (reported by ISOBE,
+	Kazuhiko [Hiki-dev:01078]).
+
 2005-12-02  Kazuhiko  <kazuhiko@fdiary.net>
 	* contrib/plugin/rast-register.rb: add a new plugin.
 	* contrib/plugin/rast-search.rb: add a new plugin.

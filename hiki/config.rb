@@ -1,10 +1,10 @@
-# $Id: config.rb,v 1.101 2005-11-28 12:20:30 yanagita Exp $
+# $Id: config.rb,v 1.102 2005-12-17 01:26:22 fdiary Exp $
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
 
 HIKI_VERSION  = '0.8.4'
-HIKI_RELEASE_DATE = '2005-11-19'
+HIKI_RELEASE_DATE = '2005-12-17'
 
 require 'cgi'
 require 'hiki/command'
@@ -120,7 +120,6 @@ module Hiki
 
     # loading hikiconf.rb in current directory
     def load
-      @secure = true unless @secure
       @options = {}
       eval( File::open( "hikiconf.rb" ){|f| f.read }.untaint, binding, "(hikiconf.rb)", 1 )
       formaterror if $data_path
