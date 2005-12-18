@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.78 2005-11-07 13:23:05 fdiary Exp $
+# $Id: command.rb,v 1.79 2005-12-18 10:25:42 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -76,12 +76,12 @@ module Hiki
           raise PermissionError, 'Permission denied' unless @plugin.editable?
           if @params['save'][0]
             cmd_save(@p, @params['contents'][0], @params['md5hex'][0], @params['update_timestamp'][0])
-          elsif @params['preview'][0]
-            cmd_preview
           elsif @params['edit_form_button'][0]
             @cmd = 'edit'
             cmd_plugin(false)
             cmd_edit( @p, @plugin.text )
+          else
+            cmd_preview
           end
         elsif @cmd == 'create'  
           raise PermissionError, 'Permission denied' unless @plugin.editable?

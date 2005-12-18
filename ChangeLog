@@ -1,3 +1,7 @@
+2005-12-18  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/command.rb (dispatch): enter 'preview' mode when no submit
+	parameter is sent from 'edit' mode (closes #43).
+
 2005-12-17  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/plugin.rb (save): do not remove spaces from the begining
 	and the end of texts (reported by ISOBE,
