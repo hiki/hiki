@@ -2,6 +2,9 @@
 	* misc/plugin/attach.rb (attach_image_anchor): specify the size of
 	attached images using width and height attributes of img elements.
 
+	* template/view.html: add a <hr> separator between main contents
+	and a sidebar (closes #45).
+
 2005-12-18  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/command.rb (dispatch): enter 'preview' mode when no submit
 	parameter is sent from 'edit' mode (closes #43).
