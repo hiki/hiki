@@ -1,4 +1,4 @@
-# $Id: util.rb,v 1.43 2005-12-25 05:27:42 yanagita Exp $
+# $Id: util.rb,v 1.44 2005-12-25 07:03:06 yanagita Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'nkf'
@@ -151,11 +151,16 @@ module Hiki
     def sendmail(subject, body)
       require 'net/smtp'
       require 'time'
-      if @conf.mail && @conf.smtp_server
+      if @conf.mail && !@conf.mail.empty? && @conf.smtp_server
         Net::SMTP.start(@conf.smtp_server, 25) do |smtp|
-          smtp.send_mail <<EndOfMail, @conf.mail.untaint, *@conf.mail.split(',').map{|e| e.strip}.delete_if{|e| e.empty?}
-From: #{@conf.mail_from ? @conf.mail_from : @conf.mail}
-To: #{@conf.mail}
+          from_addr = @conf.mail_from ? @conf.mail_from : @conf.mail[0]
+          from_addr.untaint
+          to_addrs = @conf.mail
+          to_addrs.each{|a| a.untaint}
+
+          smtp.send_mail <<EndOfMail, from_addr, *to_addrs
+From: #{from_addr}
+To: #{to_addrs.join(",")}
 Subject: #{NKF::nkf('-M', subject)}
 Date: #{Time.now.rfc2822}
 MIME-Version: 1.0

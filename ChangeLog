@@ -9,6 +9,11 @@
 	misc/hikifarm/template/index.html: Multiple mail addresses are available at conf.mail
 	by separating a comma (closes #23).
 
+	* hikiconf.rb.sample, hiki/config.rb, hiki/util.rb, misc/i18n/hikiconf.rb.sample.en,
+	plugin/00default.rb, plugin/de/00default.rb, plugin/en/00default.rb, plugin/fr/00default.rb,
+	plugin/it/00default.rb, plugin/ja/00default.rb, template/hiki.conf: Administrator's mail
+	addresses are held as an array internally.
+
 2005-12-18  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/command.rb (dispatch): enter 'preview' mode when no submit
 	parameter is sent from 'edit' mode (closes #43).

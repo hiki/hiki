@@ -14,8 +14,8 @@ add_conf_proc( 'default', 'Basic preferences' ) do
       <p>Enter your name.</p>
       <p><input name="author_name" value="#{CGI::escapeHTML(@conf.author_name)}" size="40"></p>
       <h3 class="subtitle">E-mail address</h3>
-      <p>Enter your e-mail address.</p>
-      <p><input name="mail" value="#{CGI::escapeHTML(@conf.mail)}" size="40"></p>
+      <p>Enter your e-mail address. (One address in one line)</p>
+      <p><textarea name="mail" rows="4" cols="50">#{CGI::escapeHTML(@conf.mail.join("\n"))}</textarea></p>
       <h3 class="subtitle">Send update e-mails?</h3>
       <p>Set whether or not you want to have e-mail sent when a page is updated.  E-mail will be sent to the address set in the Basic Preferences.  (Make sure to specify an SMTP server beforehand in hikiconf.rb.)</p>
       <p><select name="mail_on_update">

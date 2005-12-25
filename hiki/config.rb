@@ -1,4 +1,4 @@
-# $Id: config.rb,v 1.104 2005-12-25 04:14:09 yanagita Exp $
+# $Id: config.rb,v 1.105 2005-12-25 07:03:06 yanagita Exp $
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
@@ -133,7 +133,7 @@ module Hiki
       @site_name     ||= 'Hiki'
       @author_name   ||= ''
       @mail_on_update||= false
-      @mail          ||= ''
+      @mail          ||= []
       @theme         ||= 'hiki'
       @theme_url     ||= 'theme'
       @theme_path    ||= 'theme'
@@ -212,6 +212,8 @@ module Hiki
           eval( cgi_conf, binding, "(hiki.conf)", 1 )
         }.join
         variables.each do |var| eval "@#{var} = #{var} if #{var} != nil" end
+
+        @mail = [@mail].flatten # for backward compatibility
       rescue IOError, Errno::ENOENT
       end
       if @options2 then

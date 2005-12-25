@@ -15,7 +15,7 @@ add_conf_proc( 'default', 'Standard-Einstellungen' ) do
       <p><input name="author_name" value="#{CGI::escapeHTML(@conf.author_name)}" size="40"></p>
       <h3 class="subtitle">Email Addresse</h3>
       <p>Email</p>
-      <p><input name="mail" value="#{CGI::escapeHTML(@conf.mail)}" size="40"></p>
+      <p><textarea name="mail" rows="4" cols="50">#{CGI::escapeHTML(@conf.mail.join("\n"))}</textarea></p>
       <h3 class="subtitle">Sende Emails bei &auml;nderungen?</h3>
       <p>Einstellung, ob Sie &uuml;ber &auml;nderungen an Seiten per Email informiert werden m&ouml;chten. Die Email wird zu der Adresse die Sie in den Standard-Einstellungen eingegeben haben gesendet. (Stellen Sie sicher, dass ein SMTP server in der hikiconf.rb angegeben ist.)</p>
       <p><select name="mail_on_update">

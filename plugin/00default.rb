@@ -1,4 +1,4 @@
-# $Id: 00default.rb,v 1.52 2005-09-30 11:45:49 fdiary Exp $
+# $Id: 00default.rb,v 1.53 2005-12-25 07:03:07 yanagita Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #==============================
@@ -63,7 +63,7 @@ def toc_here( page = nil )
     end
     formatter = @conf.formatter::new( tokens, @db, Plugin.new( @conf.options, @conf), @conf )
     formatter.to_s
-    formatter.toc.gsub( /<a href="/, %Q|<a href="#{hiki_url( page )}| )
+    formatter.toc.gsub( /<a href="/, "<a href=\"#{hiki_url( page )}" )
   else
     @toc_f ||= :here
     TOC_STRING
@@ -227,7 +227,12 @@ def saveconf_default
   if @mode == 'saveconf' then
     @conf.site_name = @cgi.params['site_name'][0]
     @conf.author_name = @cgi.params['author_name'][0]
-    @conf.mail = @cgi.params['mail'][0]
+    mails = []
+    @cgi.params['mail'][0].each_line do |addr|
+      mails << addr.gsub(/\r?\n/, '').strip
+    end
+    mails.delete_if{|e| e.empty?}
+    @conf.mail = mails
     @conf.mail_on_update = @cgi.params['mail_on_update'][0] == "true"
   end
 end

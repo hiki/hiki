@@ -11,8 +11,8 @@ add_conf_proc( 'default', '基本' ) do
       <p>あなたの名前を指定します。</p>
       <p><input name="author_name" value="#{CGI::escapeHTML(@conf.author_name)}" size="40"></p>
       <h3 class="subtitle">メールアドレス</h3>
-      <p>あなたのメールアドレスを指定します。</p>
-      <p><input name="mail" value="#{CGI::escapeHTML(@conf.mail)}" size="40"></p>
+      <p>あなたのメールアドレスを指定します。1行に1アドレスずつ指定します。</p>
+      <p><textarea name="mail" rows="4" cols="50">#{CGI::escapeHTML(@conf.mail.join("\n"))}</textarea></p>
       <h3 class="subtitle">更新をメールで通知</h3>
       <p>ページの更新があった場合にメールで通知するかどうかを指定します。メールは基本設定で指定したアドレスに送信されます。あらかじめhikiconf.rbでSMTPサーバを設定しておいてください。</p>
       <p><select name="mail_on_update">
