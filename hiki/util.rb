@@ -1,4 +1,4 @@
-# $Id: util.rb,v 1.42 2005-09-29 01:14:42 fdiary Exp $
+# $Id: util.rb,v 1.43 2005-12-25 05:27:42 yanagita Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'nkf'
@@ -151,9 +151,9 @@ module Hiki
     def sendmail(subject, body)
       require 'net/smtp'
       require 'time'
-      return unless @conf.mail || @conf.smtp_server
-      Net::SMTP.start(@conf.smtp_server, 25) {|smtp|
-        smtp.send_mail <<EndOfMail, @conf.mail.untaint, @conf.mail
+      if @conf.mail && @conf.smtp_server
+        Net::SMTP.start(@conf.smtp_server, 25) do |smtp|
+          smtp.send_mail <<EndOfMail, @conf.mail.untaint, *@conf.mail.split(',').map{|e| e.strip}.delete_if{|e| e.empty?}
 From: #{@conf.mail_from ? @conf.mail_from : @conf.mail}
 To: #{@conf.mail}
 Subject: #{NKF::nkf('-M', subject)}
@@ -165,7 +165,8 @@ X-Mailer: Hiki #{HIKI_VERSION}
 
 #{body.to_jis}
 EndOfMail
-      }
+        end
+      end
     end
 
     def send_updating_mail(page, type, text='')

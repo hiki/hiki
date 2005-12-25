@@ -5,6 +5,10 @@
 	* template/view.html: add a <hr> separator between main contents
 	and a sidebar (closes #45).
 
+	* hiki/util.rb (sendmail), hikiconf.rb.sample, misc/i18n/hikiconf.rb.sample.en,
+	misc/hikifarm/template/index.html: Multiple mail addresses are available at conf.mail
+	by separating a comma (closes #23).
+
 2005-12-18  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/command.rb (dispatch): enter 'preview' mode when no submit
 	parameter is sent from 'edit' mode (closes #43).

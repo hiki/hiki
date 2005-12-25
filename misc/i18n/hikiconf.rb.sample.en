@@ -1,4 +1,4 @@
-# $Id: hikiconf.rb.sample.en,v 1.6 2005-11-15 14:37:27 fdiary Exp $
+# $Id: hikiconf.rb.sample.en,v 1.7 2005-12-25 05:27:42 yanagita Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #=================================
@@ -41,6 +41,7 @@
 @mail_on_update  = false
 
 # Mail address where update information to be sent.
+# Multiple addresses are available by separating ","(comma).
 @mail            = 'hoge@example.net'
 
 # Theme

@@ -1,4 +1,4 @@
-# $Id: hikiconf.rb.sample,v 1.13 2005-11-15 14:37:27 fdiary Exp $
+# $Id: hikiconf.rb.sample,v 1.14 2005-12-25 05:27:41 yanagita Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #============================
@@ -45,6 +45,7 @@
 
 # 更新通知先メールアドレス
 #   更新内容を送信するメールアドレス
+#   複数アドレスを指定する場合は、"," で区切ってください。
 @mail            = 'hoge@example.net'
 
 # テーマ
