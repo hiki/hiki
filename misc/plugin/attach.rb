@@ -1,4 +1,4 @@
-# $Id: attach.rb,v 1.2 2005-09-30 11:45:49 fdiary Exp $
+# $Id: attach.rb,v 1.3 2005-12-25 03:55:59 yanagita Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 #
 # thanks to Kazuhiko, Masao Mutoh, SHIMADA Mitsunobu, Yoshimi, ¤ê¤¿
@@ -56,25 +56,31 @@ def attach_anchor(file_name, page=@page)
   s << %Q!#{file_name.escapeHTML}</a>!
 end
 
-def attach_image_anchor(file_name, page=@page)
-  s =  %Q!<img alt="#{file_name.escapeHTML}" src="!
-  s << %Q!#{@conf.cgi_name}#{cmdstr('plugin', "plugin=attach_download;p=#{page.escape};file_name=#{file_name.escape}")}">!
+def get_image_size(file_name)
+  begin
+    require 'image_size'
+    f = "#{@cache_path}/attach/#{@page.escape}/#{file_name.escape}"
+    File.open(f.untaint,'rb') do |fh|
+      is = ImageSize.new(fh)
+      return {:width => is.get_width, :height => is.get_height}
+    end
+  rescue
+    return nil
+  end
+end
+
+def attach_image_anchor(file_name, page = @page)
+  image_size = get_image_size(file_name)
+  s =  %Q!<img alt="#{file_name.escapeHTML}"!
+  s << %Q! width="#{image_size[:width]}" height="#{image_size[:height]}"! if image_size
+  s << %Q! src="#{@conf.cgi_name}#{cmdstr('plugin', "plugin=attach_download;p=#{page.escape};file_name=#{file_name.escape}")}">!
 end
 
 def attach_flash_anchor(file_name, page=@page)
-  begin
-    require 'image_size'
-    f = "#{@cache_path}/attach/#{@page.escape}/#{file_name}"
-    img_size = File.open(f,'rb'){|fh|
-      is = ImageSize.new(fh)
-      [is.get_width, is.get_height]
-    }
-  rescue
-    img_size = nil
-  end
+  image_size = get_image_size(file_name)
   s =  %Q!<embed type="application/x-shockwave-flash" src="!
   s << %Q!#{@conf.cgi_name}#{cmdstr('plugin', "plugin=attach_download;p=#{page.escape};file_name=#{file_name.escape}")}" !
-  s << %Q! width="#{img_size[0]}" height="#{img_size[1]}" ! if img_size
+  s << %Q! width="#{image_size[:width]}" height="#{image_size[:height]}" ! if image_size
   s << %Q!>!
 end
 
@@ -124,7 +130,7 @@ def attach_src(file_name, page=@page)
   end
 end
 
-def attach_view(file_name, page=@page)
+def attach_view(file_name, page = @page)
   if file_name =~ /\.(txt|rd|rb|c|pl|py|sh|java|html|htm|css|xml|xsl)\z/i
     attach_src(file_name, page)
   elsif file_name =~ /\.(jpeg|jpg|png|gif|bmp)\z/i

@@ -1,3 +1,7 @@
+2005-12-25  Kouhei Yanagita <yanagi@shakenbu.org>
+	* misc/plugin/attach.rb (attach_image_anchor): specify the size of
+	attached images using width and height attributes of img elements.
+
 2005-12-18  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/command.rb (dispatch): enter 'preview' mode when no submit
 	parameter is sent from 'edit' mode (closes #43).
