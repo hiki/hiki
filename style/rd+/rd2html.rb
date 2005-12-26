@@ -224,7 +224,7 @@ module Hiki
 
     def apply_to_Reference_with_URL(element, content)
       url = element.label.url
-      if /\.(jpg|jpeg|png|gif)/ =~ url
+      if /\.(jpg|jpeg|png|gif)\z/ =~ url
         %Q[<img src="#{meta_char_escape(url)}" title="#{content.join("")}" alt="#{content.join("")}" />]
       else
         %Q[<a href="#{meta_char_escape(url)}" class="external">#{content.join("")}</a>]

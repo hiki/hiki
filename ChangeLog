@@ -1,3 +1,7 @@
+2005-12-26  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/rd+/rd2html.rb (apply_to_Reference_with_URL): revise a
+	regexp of image uris by Masao Mutoh (reported by GOTO Naohisa).
+
 2005-12-25  Kouhei Yanagita <yanagi@shakenbu.org>
 	* misc/plugin/attach.rb (attach_image_anchor): specify the size of
 	attached images using width and height attributes of img elements.
