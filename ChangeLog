@@ -1,4 +1,8 @@
 2005-12-29  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/quote_page.rb: revise for current hiki (closes #47).
+	* style/default/parser.rb (parse): add a second argument to
+	specify top level.
+
 	* hiki/repos/cvs.rb (revisions): revise a regexp by miya (closes
 	#50).
 

@@ -1,4 +1,4 @@
-# $Id: parser.rb,v 1.21 2005-09-08 09:51:25 fdiary Exp $
+# $Id: parser.rb,v 1.22 2005-12-28 22:42:55 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'style/default/hikidoc'
@@ -23,8 +23,8 @@ module Hiki
     def initialize( conf )
     end
 
-    def parse( s )
-      HikiDoc.new( s, :level => 2 ).to_html
+    def parse( s, top_level = 2 )
+      HikiDoc.new( s, :level => top_level ).to_html
     end
   end
 end
