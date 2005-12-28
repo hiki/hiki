@@ -1,4 +1,8 @@
 2005-12-29  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/hikidoc.rb: sync with hikidoc rev.35.
+	  support relative inline URLs.
+	  fix parse_table (closes #44).
+
 	* misc/plugin/quote_page.rb: revise for current hiki (closes #47).
 	* style/default/parser.rb (parse): add a second argument to
 	specify top level.
