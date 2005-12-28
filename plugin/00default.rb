@@ -1,4 +1,4 @@
-# $Id: 00default.rb,v 1.53 2005-12-25 07:03:07 yanagita Exp $
+# $Id: 00default.rb,v 1.54 2005-12-28 23:49:38 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #==============================
@@ -277,7 +277,7 @@ end
 if @cgi.params['conf'][0] == 'theme'
   @conf_theme_list = []
   Dir::glob( "#{@conf.theme_path}/*".untaint ).sort.each do |dir|
-    theme = dir.sub( %r[(.*/)?theme/], '')
+    theme = File::basename( dir )
     next unless FileTest::file?( "#{dir}/#{theme}.css".untaint )
     name = theme.split( /_/ ).collect{|s| s.capitalize}.join( ' ' )
     @conf_theme_list << [theme,name]
