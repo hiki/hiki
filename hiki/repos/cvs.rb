@@ -1,4 +1,4 @@
-# $Id: cvs.rb,v 1.10 2005-08-03 23:40:11 fdiary Exp $
+# $Id: cvs.rb,v 1.11 2005-12-28 22:38:30 fdiary Exp $
 # Copyright (C) 2003, Koichiro Ohba <koichiro@meadowy.org>
 # Copyright (C) 2003, Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
 # You can distribute this under GPL.
@@ -75,7 +75,7 @@ module Hiki
         end
       end
       log.split(/----------------------------/).each do |tmp|
-        if /revision 1.(\d+?)\ndate: (.*?);  author: (?:.*?);  state: (?:.*?);(.*?)?(?:;.*)?\n(.*)/m =~ tmp then
+        if /revision 1.(\d+?)\ndate: (.*?);  author: (?:.*?);  state: (?:.*?);(.*?)?(?:;.*?)?\n(.*)/m =~ tmp then
           revs << [$1.to_i, Time.parse("#{$2}Z").localtime.to_s, $3, $4.chomp]
         end
       end

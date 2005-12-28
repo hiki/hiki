@@ -1,3 +1,7 @@
+2005-12-29  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/repos/cvs.rb (revisions): revise a regexp by miya (closes
+	#50).
+
 2005-12-26  Kazuhiko  <kazuhiko@fdiary.net>
 	* style/rd+/rd2html.rb (apply_to_Reference_with_URL): revise a
 	regexp of image uris by Masao Mutoh (reported by GOTO Naohisa).
