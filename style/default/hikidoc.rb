@@ -30,7 +30,7 @@
 require 'uri'
 
 class HikiDoc < String
-  Revision = %q$Rev: 35 $
+  Revision = %q$Rev: 36 $
 
   def initialize( content = '', options = {} )
     @level = options[:level] || 1
@@ -347,7 +347,7 @@ class HikiDoc < String
       else
         uri = title = link
       end
-      uri.sub!( /^\w+:/, '' ) if %r|://| !~ uri && /^mailto:/ !~ uri
+      uri.sub!( /^(?:https?|ftp|file)+:/, '' ) if %r|://| !~ uri && /^mailto:/ !~ uri
       store_block( %Q|<a href="#{escape_quote( uri )}">#{title}</a>| )
     end
     ret.gsub!( URI_RE ) do |uri|
