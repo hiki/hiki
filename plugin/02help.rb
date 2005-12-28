@@ -9,44 +9,44 @@ def hiki_help
 
 <script type="text/javascript"><!--
 
-var tlbr_class = "#{@options['help.tlbr_class']}"
-var bttn_class = "#{@options['help.bttn_class']}"
+var tlbr_class = "#{@options['help.tlbr_class']}";
+var bttn_class = "#{@options['help.bttn_class']}";
 
-var lineshelp_label = "#{help_lineshelp_label}"
-var wordshelp_label = "#{help_wordshelp_label}"
-var tablehelp_label = "#{help_tablehelp_label}"
-var pluginhelp_label = "#{help_pluginhelp_label}"
-var mathhelp_label = "#{help_mathhelp_label}"
+var lineshelp_label = "#{help_lineshelp_label}";
+var wordshelp_label = "#{help_wordshelp_label}";
+var tablehelp_label = "#{help_tablehelp_label}";
+var pluginhelp_label = "#{help_pluginhelp_label}";
+var mathhelp_label = "#{help_mathhelp_label}";
 
-var heading_label = "#{help_heading_label}"
-var list_label = "#{help_list_label}"
-var numbered_label = "#{help_numbered_label}"
-var preformatted_label = "#{help_preformatted_label}"
-var quotation_label = "#{help_quotation_label}"
-var comment_label = "#{help_comment_label}"
-var cancel_label = "#{help_cancel_label}"
+var heading_label = "#{help_heading_label}";
+var list_label = "#{help_list_label}";
+var numbered_label = "#{help_numbered_label}";
+var preformatted_label = "#{help_preformatted_label}";
+var quotation_label = "#{help_quotation_label}";
+var comment_label = "#{help_comment_label}";
+var cancel_label = "#{help_cancel_label}";
 
-var link_label = "#{help_link_label}"
-var url_label = "#{help_url_label}"
-var emphasized_label = "#{help_emphasized_label}"
-var strongly_label = "#{help_strongly_label}"
-var struckout_label = "#{help_struckout_label}"
-var definition_label = "#{help_definition_label}"
-var horizontal_label = "#{help_horizontal_label}"
+var link_label = "#{help_link_label}";
+var url_label = "#{help_url_label}";
+var emphasized_label = "#{help_emphasized_label}";
+var strongly_label = "#{help_strongly_label}";
+var struckout_label = "#{help_struckout_label}";
+var definition_label = "#{help_definition_label}";
+var horizontal_label = "#{help_horizontal_label}";
 
-var cell_label = "#{help_cell_label}"
-var headingcell_label = "#{help_headingcell_label}"
-var rows_label = "#{help_rows_label}"
-var columns_label = "#{help_columns_label}"
+var cell_label = "#{help_cell_label}";
+var headingcell_label = "#{help_headingcell_label}";
+var rows_label = "#{help_rows_label}";
+var columns_label = "#{help_columns_label}";
 
-var plugin_label = "#{help_plugin_label}"
-var br_label = "#{help_br_label}"
-var toc_label = "#{help_toc_label}"
-var tochere_label = "#{help_tochere_label}"
-var recent_label = "#{help_recent_label}"
+var plugin_label = "#{help_plugin_label}";
+var br_label = "#{help_br_label}";
+var toc_label = "#{help_toc_label}";
+var tochere_label = "#{help_tochere_label}";
+var recent_label = "#{help_recent_label}";
 
-var display_label = "#{help_display_label}"
-var inline_label = "#{help_inline_label}"
+var display_label = "#{help_display_label}";
+var inline_label = "#{help_inline_label}";
 
 function showhelp( id ) {
   if ( document.getSelection ) {
@@ -61,12 +61,12 @@ function showhelp( id ) {
   // for Safari ?
     txtarea.focus();
   }
-  ids = new Array( "lines_help", "words_help", "table_help", "plugin_help", "math_help" );
-  for (i=0;i<5;i++){
-    if ( ids[i] == id )
-      document.getElementById( ids[i] ).style.display = "";
-    else
-      document.getElementById( ids[i] ).style.display = "none";
+  for ( i=0; i < tlbr_ids.length; i++ ){
+    if ( tlbr_ids[i] == id ) {
+      document.getElementById( tlbr_ids[i] ).style.display = "";
+    } else {
+      document.getElementById( tlbr_ids[i] ).style.display = "none";
+    }
   }
 }
 
@@ -174,30 +174,30 @@ function set_s( pre, suf, mg ){
 }
 
 function set_showbttn( txt, id ) {
-  var tn = document.createTextNode("<");
+  var tn = document.createTextNode( "<" );
   stlbr.appendChild( tn );
-  var sp = document.createElement("span");
+  var sp = document.createElement( "span" );
   sp.className = bttn_class;
-  var a = document.createElement("a");
+  var a = document.createElement( "a" );
   a.href = "javascript:showhelp( '" + id + "' )";
   var atxt = document.createTextNode( txt );
-  a.appendChild(atxt);
-  sp.appendChild(a);
-  stlbr.appendChild(sp);
-  tn = document.createTextNode(">");
+  a.appendChild( atxt );
+  sp.appendChild( a );
+  stlbr.appendChild( sp );
+  tn = document.createTextNode( ">" );
   stlbr.appendChild( tn );
 }
 
 function set_bttn( tlbr, txt, tps, help ) {
-  var sp = document.createElement("span");
+  var sp = document.createElement( "span" );
   sp.className = bttn_class;
-  var a = document.createElement("a");
+  var a = document.createElement( "a" );
   a.href = help;
   a.title = tps;
-  var atxt = document.createTextNode(txt);
-  a.appendChild(atxt);
-  sp.appendChild(a);
-  tlbr.appendChild(sp);
+  var atxt = document.createTextNode( txt );
+  a.appendChild( atxt );
+  sp.appendChild( a );
+  tlbr.appendChild( sp );
 }
 
 function add_bttn( tlbr, txt, tps, pre, suf ) {
@@ -211,7 +211,7 @@ function add_bttn_mg( tlbr, txt, tps, pre, mg ) {
 }
 
 function add_pbttn( txt, tps, pre, suf ) {
-  add_bttn( ptlbr, txt, tps, pre, suf )
+  add_bttn( ptlbr, txt, tps, pre, suf );
 }
 
 function add_txt( tlbr, txt ) {
@@ -220,8 +220,9 @@ function add_txt( tlbr, txt ) {
 }
 
 function add_ptxt( txt ) {
-  add_txt( ptlbr, txt )
+  add_txt( ptlbr, txt );
 }
+
 END_HELP
 
   help << <<'END_HELP'
@@ -330,6 +331,7 @@ function ins_tlbr( tlbr ) {
   tlbr.className = tlbr_class;
   txtarea.parentNode.insertBefore(tlbr, txtarea);
 }
+
 END_HELP
 
   help << <<END_HELP
@@ -342,6 +344,7 @@ END_HELP
   var ttlbr = document.createElement("div");
   var ptlbr = document.createElement("div");
 
+  tlbr_ids = new Array( "lines_help", "words_help", "table_help", "plugin_help" );
   ltlbr.id = "lines_help";
   wtlbr.id = "words_help";
   ttlbr.id = "table_help";
@@ -372,9 +375,10 @@ END_HELP
 if @conf.style == "math"
   help << <<END_HELP
 
+  tlbr_ids.push( "math_help" );
   set_showbttn( mathhelp_label, "math_help" );
   var mtlbr = document.createElement("div");
-  mtlbr.id = "math_help"
+  mtlbr.id = "math_help";
   mtlbr.style.display = "none";
   set_mtlbr();
   ins_tlbr( mtlbr );
@@ -396,10 +400,10 @@ def help_add_pbttn( help_txt, help_tps, help_pre, help_suf )
 
 <script type="text/javascript"><!--
 
-  var txt = "#{help_txt}"
-  var tps = "#{help_tps}"
-  var pre = "#{help_pre}"
-  var suf = "#{help_suf}"
+  var txt = "#{help_txt}";
+  var tps = "#{help_tps}";
+  var pre = "#{help_pre}";
+  var suf = "#{help_suf}";
 
   add_ptxt( "[" );
   add_pbttn( txt, tps, pre, suf );
