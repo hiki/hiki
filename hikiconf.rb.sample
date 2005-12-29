@@ -1,4 +1,4 @@
-# $Id: hikiconf.rb.sample,v 1.15 2005-12-25 07:03:06 yanagita Exp $
+# $Id: hikiconf.rb.sample,v 1.16 2005-12-29 02:19:22 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #============================
@@ -81,6 +81,12 @@
 #  変更可能項目
 #=========================================
 
+# URI に表れる CGI のファイル名 (デフォルトは "")【オプション】
+#    DirectoryIndex を CGI ファイル名 に指定している場合は、通常この項目
+#    を指定する必要はありませんが、そうでない場合や XREA.com で設置する際
+#    は CGI のファイル名を指定してください。
+#@cgi_name        = 'hiki.cgi'
+
 # ベース URL【オプション】
 #    Hiki が置かれる URL から CGI 名を除いたもの。例えば
 #    http://example.com/hiki/hiki.cgi なら http://example.com/hiki/ を指
@@ -112,8 +118,8 @@
 # プラグインのデバッグ時に true にします。
 #@plugin_debug    = false
 
+# ページのキャラクタセット
 #@charset         = 'EUC-JP'
-#@cgi_name        = 'hiki.cgi'
 
 @options         = {}                    # この行は変更しないでください。
 
