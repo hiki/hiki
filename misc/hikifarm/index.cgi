@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
-HIKIFARM_VERSION = '0.8.4'
-HIKIFARM_RELEASE_DATE = '2005-11-22'
+HIKIFARM_VERSION = '0.8.5'
+HIKIFARM_RELEASE_DATE = '2005-12-29'
 
 class HikifarmConfig
   attr_reader :ruby, :hiki, :hikifarm_description
