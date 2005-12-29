@@ -1,3 +1,11 @@
+! Changes in 0.8.5
+
+* support multiple addresses to notify changes.
+* support a pure-ruby version control repository.
+* add an 'Issue Tracking System' plugin (misc/plugin/its.rb).
+* add 'Rase Search' plugins (contrib/plugin/rast-register.rb, contrib/plugin/rast-search.rb).
+* fix miscellaneous bugs.
+
 ! Changes in 0.8.4
 
 * use the HikiDoc library in the default style.

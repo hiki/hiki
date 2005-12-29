@@ -1,3 +1,11 @@
+! 0.8.5 での変更点
+
+* 更新通知先メールアドレスを複数指定できるようになりました。
+* 外部コマンドを必要としない履歴管理ができるようになりました。
+* Issue Tracking System プラグインを追加しました (misc/plugin/its.rb)。
+* Rast 検索プラグインを追加しました (contrib/plugin/rast-register.rb, contrib/plugin/rast-search.rb)。
+* 細かなバグ修正をしました。
+
 ! 0.8.4 での変更点
 
 * デフォルトスタイルを HikiDoc ライブラリによるパーサに変更しました。
