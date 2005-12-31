@@ -1,4 +1,4 @@
-# $Id: config.rb,v 1.107 2005-12-29 10:07:41 fdiary Exp $
+# $Id: config.rb,v 1.108 2005-12-31 02:34:43 fdiary Exp $
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
@@ -212,10 +212,9 @@ module Hiki
           eval( cgi_conf, binding, "(hiki.conf)", 1 )
         }.join
         variables.each do |var| eval "@#{var} = #{var} if #{var} != nil" end
-
-        @mail = [@mail].flatten # for backward compatibility
       rescue IOError, Errno::ENOENT
       end
+      @mail = [@mail].flatten # for backward compatibility
       if @options2 then
         @options.update( @options2 )
       else

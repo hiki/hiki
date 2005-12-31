@@ -1,3 +1,7 @@
+2005-12-31  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/config.rb (load_cgi_conf): convert @mail to Array even if
+	no cgi_conf file is found.
+
 2005-12-29  Kazuhiko  <kazuhiko@fdiary.net>
 	* plugin/00default.rb: revise handling of theme_path (by OZAWA
 	Sakuro [Hiki-dev:01086]).
