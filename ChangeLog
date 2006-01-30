@@ -5,6 +5,8 @@
 	* misc/plugin/attach.rb (attach_image_anchor): introduce options['attach.cache_url'].
 	Don't use this unless all of the attached file is believed to be safe (patch by U.Nakamura).
 
+	* style/default/html_formatter.rb (replace_inline): Do not consider WikiName inside of pre elements.
+
 2005-12-31  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/config.rb (load_cgi_conf): convert @mail to Array even if
 	no cgi_conf file is found.

@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.58 2005-10-02 09:11:50 fdiary Exp $
+# $Id: html_formatter.rb,v 1.59 2006-01-30 14:49:18 yanagita Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -68,7 +68,7 @@ module Hiki
     private
 
     def replace_inline_image( text )
-      text.gsub( %r!<a href="([^"]+)\.(jpg|jpeg|gif|png)">(.+?)</a>!i ) do |str|
+      text.gsub( /<a href="([^"]+)\.(jpg|jpeg|gif|png)">(.+?)<\/a>/i ) do |str|
         %Q|<img src="#{$1}.#{$2}" alt="#{$3}">|
       end
     end
@@ -96,6 +96,8 @@ module Hiki
     PLUGIN_CLOSE_RE = %r!</(span|div)>!
     LINK_OPEN_RE = /<a .*href=/
     LINK_CLOSE_RE = %r!</a>!
+    PRE_OPEN_RE = /<pre>/
+    PRE_CLOSE_RE = %r!</pre>!
 
     def replace_inline( text )
       status = []
@@ -105,7 +107,9 @@ module Hiki
           status << :plugin
         when LINK_OPEN_RE
           status << :a
-        when PLUGIN_CLOSE_RE, LINK_CLOSE_RE
+        when PRE_OPEN_RE
+          status << :pre
+        when PLUGIN_CLOSE_RE, LINK_CLOSE_RE, PRE_CLOSE_RE
           status.pop
         else
           if status.empty?
