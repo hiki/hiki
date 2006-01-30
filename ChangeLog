@@ -2,6 +2,9 @@
 	* misc/plugin/attach.rb, hiki/image_size.rb: suppress the width/height
 	attributes when ImageSize could not determine the size of an image.
 
+	* misc/plugin/attach.rb (attach_image_anchor): introduce options['attach.cache_url'].
+	Don't use this unless all of the attached file is believed to be safe (patch by U.Nakamura).
+
 2005-12-31  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/config.rb (load_cgi_conf): convert @mail to Array even if
 	no cgi_conf file is found.

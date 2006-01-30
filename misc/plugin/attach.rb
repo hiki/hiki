@@ -1,4 +1,4 @@
-# $Id: attach.rb,v 1.4 2006-01-30 13:02:28 yanagita Exp $
+# $Id: attach.rb,v 1.5 2006-01-30 13:49:16 yanagita Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 #
 # thanks to Kazuhiko, Masao Mutoh, SHIMADA Mitsunobu, Yoshimi, ¤ê¤¿
@@ -72,7 +72,11 @@ def attach_image_anchor(file_name, page = @page)
   image_size = get_image_size(file_name)
   s =  %Q!<img alt="#{file_name.escapeHTML}"!
   s << %Q! width="#{image_size[:width]}" height="#{image_size[:height]}"! if image_size
-  s << %Q! src="#{@conf.cgi_name}#{cmdstr('plugin', "plugin=attach_download;p=#{page.escape};file_name=#{file_name.escape}")}">!
+  if @conf.options['attach.cache_url']
+    s << %Q! src="#{@conf.options['attach.cache_url']}/#{page.escape.escape}/#{file_name.escape}">!
+  else
+    s << %Q! src="#{@conf.cgi_name}#{cmdstr('plugin', "plugin=attach_download;p=#{page.escape};file_name=#{file_name.escape}")}">!
+  end
 end
 
 def attach_flash_anchor(file_name, page=@page)
