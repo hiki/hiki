@@ -81,12 +81,23 @@ class ImageSize
 
 # get parameter
   def get_type; @img_type; end
+
   def get_height
     if @img_type == Type::OTHER then nil else @img_height end
   end
+
   def get_width
     if @img_type == Type::OTHER then nil else @img_width end
   end
+
+  def get_size
+    if get_height && get_width
+      {:width => get_width, :height => get_height}
+    else
+      nil
+    end
+  end
+
   def mime_type
     case @img_type
     when 'SWF'

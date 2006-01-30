@@ -1,4 +1,4 @@
-# $Id: attach.rb,v 1.3 2005-12-25 03:55:59 yanagita Exp $
+# $Id: attach.rb,v 1.4 2006-01-30 13:02:28 yanagita Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 #
 # thanks to Kazuhiko, Masao Mutoh, SHIMADA Mitsunobu, Yoshimi, ¤ê¤¿
@@ -61,8 +61,7 @@ def get_image_size(file_name)
     require 'image_size'
     f = "#{@cache_path}/attach/#{@page.escape}/#{file_name.escape}"
     File.open(f.untaint,'rb') do |fh|
-      is = ImageSize.new(fh)
-      return {:width => is.get_width, :height => is.get_height}
+      return ImageSize.new(fh).get_size
     end
   rescue
     return nil

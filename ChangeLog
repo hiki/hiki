@@ -1,3 +1,7 @@
+2006-01-30  Kouhei Yanagita <yanagi@shakenbu.org>
+	* misc/plugin/attach.rb, hiki/image_size.rb: suppress the width/height
+	attributes when ImageSize could not determine the size of an image.
+
 2005-12-31  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/config.rb (load_cgi_conf): convert @mail to Array even if
 	no cgi_conf file is found.
