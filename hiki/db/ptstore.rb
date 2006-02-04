@@ -1,4 +1,4 @@
-# $Id: ptstore.rb,v 1.8 2005-05-17 05:33:07 fdiary Exp $
+# $Id: ptstore.rb,v 1.9 2006-02-04 12:20:18 znz Exp $
 #
 # ptstore.rb
 #   based on pstore.rb contained in Ruby 1.8.2
@@ -113,6 +113,7 @@ class PTStore
 
       if @file_cache
         file = @file_cache
+        file.flock(File::LOCK_SH)
         @table = @table_cache
       else
         new_file = @filename + ".new"
