@@ -72,8 +72,8 @@ function showhelp( id ) {
 
 function set_s( pre, suf, mg ){
   txtarea.focus();
-  if ( document.getSelection ) {
-  // for Mozilla, Opera ?
+  if ( document.getSelection || window.getSelection) {
+  // for Mozilla, Opera, Safari ?
     var start = txtarea.selectionStart;
     var end = txtarea.selectionEnd;
     var scrollPos = txtarea.scrollTop;
@@ -154,20 +154,6 @@ function set_s( pre, suf, mg ){
     } else {
       rng.move( "character", -suf.length );
       rng.select();
-    }
-  } else if ( window.getSelection ) {
-  // for Safari ?
-    txtarea.focus();
-    // var rng = window.getSelection;
-    switch( mg ) {
-    case 0:
-      j = pre + suf;
-      txtarea.value = txtarea.value + j;
-      break;
-    case 1:
-      j = "\\n" + pre + suf;
-      txtarea.value = txtarea.value + j;
-      break;
     }
   }
   txtarea.focus();

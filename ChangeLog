@@ -1,3 +1,6 @@
+2006-02-15  Kouhei Yanagita <yanagi@shakenbu.org>
+	* plugin/02help.rb (set_s): support Safari (patch by NAGASAKI).
+
 2006-01-30  Kouhei Yanagita <yanagi@shakenbu.org>
 	* misc/plugin/attach.rb, hiki/image_size.rb: suppress the width/height
 	attributes when ImageSize could not determine the size of an image.
