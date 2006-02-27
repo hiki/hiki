@@ -1,10 +1,11 @@
-# $Id: plugin.rb,v 1.33 2005-12-17 01:31:23 fdiary Exp $
+# $Id: plugin.rb,v 1.34 2006-02-27 11:56:38 yanagita Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
 
 require 'cgi'
+require 'uri'
 require 'hiki/util'
 
 module Hiki
@@ -82,9 +83,12 @@ module Hiki
     end
 
     def cookie_path
-      ret = File::dirname( @options['cgi'].script_name )
-      ret += '/' unless %r|/+$| =~ ret
-      ret
+      path = URI(@conf.base_url).path
+      if path[-1] == ?/
+        path
+      else
+        File.dirname(path) + '/'
+      end
     end
 
     def header_proc
