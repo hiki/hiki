@@ -1,3 +1,6 @@
+2006-03-15  Kouhei Yanagita <yanagi@shakenbu.org>
+	* hiki/config.rb (mobile_agent?): support WILLCOM's mobile agents (closes #57).
+
 2006-02-27  Kouhei Yanagita <yanagi@shakenbu.org>
 	* hiki/plugin.rb (cookie_path): fix the bug of breaking the path of the cookie
 	when base_url is specified (closes #56).

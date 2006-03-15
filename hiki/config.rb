@@ -1,10 +1,10 @@
-# $Id: config.rb,v 1.110 2006-02-27 11:56:38 yanagita Exp $
+# $Id: config.rb,v 1.111 2006-03-15 14:44:09 yanagita Exp $
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
 
 HIKI_VERSION  = '0.8.5'
-HIKI_RELEASE_DATE = '2006-02-27'
+HIKI_RELEASE_DATE = '2006-03-15'
 
 require 'cgi'
 require 'hiki/command'
@@ -55,7 +55,7 @@ module Hiki
     end
 
     def mobile_agent?
-      %r[(DoCoMo|J-PHONE|Vodafone|MOT-|UP\.Browser|DDIPOCKET|ASTEL|PDXGW|Palmscape|Xiino|sharp pda browser|Windows CE|L-mode)]i =~ ENV['HTTP_USER_AGENT']
+      %r[(DoCoMo|J-PHONE|Vodafone|WILLCOM|MOT-|UP\.Browser|DDIPOCKET|ASTEL|PDXGW|Palmscape|Xiino|sharp pda browser|Windows CE|L-mode)]i =~ ENV['HTTP_USER_AGENT']
     end
 
     #
