@@ -1,4 +1,4 @@
-# $Id: ptstore.rb,v 1.9 2006-02-04 12:20:18 znz Exp $
+# $Id: ptstore.rb,v 1.10 2006-04-28 05:14:30 znz Exp $
 #
 # ptstore.rb
 #   based on pstore.rb contained in Ruby 1.8.2
@@ -51,20 +51,21 @@ class PTStore
     @table[name]
   end
   def fetch(name, default=PTStore::Error)
+    in_transaction
     unless @table.key? name
       if default==PTStore::Error
         raise PTStore::Error, format("undefined root name `%s'", name)
       else
-        default
+        return default
       end
     end
-    self[name]
+    @table[name]
   end
   def []=(name, value)
     in_transaction_wr()
     @table[name] = value
   end
-  
+
   def delete(name)
     in_transaction_wr()
     @table.delete name
