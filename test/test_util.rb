@@ -1,6 +1,8 @@
-# $Id: test_util.rb,v 1.3 2005-03-03 12:56:55 fdiary Exp $
+# $Id: test_util.rb,v 1.4 2006-05-29 13:39:10 fdiary Exp $
 
 $KCODE = 'e'
+
+$:.unshift(File.join(File.dirname(__FILE__), '../hiki'))
 
 require 'test/unit'
 require 'hiki/util'

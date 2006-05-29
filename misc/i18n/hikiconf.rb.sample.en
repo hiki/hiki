@@ -1,4 +1,4 @@
-# $Id: hikiconf.rb.sample.en,v 1.8 2005-12-25 07:03:06 yanagita Exp $
+# $Id: hikiconf.rb.sample.en,v 1.9 2006-05-29 13:39:10 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #=================================
@@ -17,9 +17,6 @@
 
 # Whether to use plugins (Optional)
 @use_plugin      = true
-
-# Whether to make WikiName link (Optional)
-@use_wikiname    = true
 
 #====================================================================
 #  Settings which is modifiable from the administration menu.
@@ -66,6 +63,9 @@
 #   Set this true if you'd like to link to existing pages automatically.
 @auto_link       = false
 
+# Whether to make WikiName link (Optional)
+@use_wikiname    = true
+
 # XML-RPC
 #   Whether to enable XML-RPC interfaces.
 @xmlrpc_enabled  = true
@@ -73,7 +73,11 @@
 #=========================================
 #  Items that can be changed.
 #=========================================
-# The base URL. (Optional)
+
+# The filename of CGI that is included in URI (Optional)
+#@cgi_name        = 'hiki.cgi'
+
+# The base URL (Optional)
 #    The URL excepting the CGI name from the Hiki's one.
 #    (eg. If the hiki is placed on http://example.com/hiki/hiki.cgi,
 #    @base_url should be `http://example.com/hiki/'.)
@@ -82,11 +86,11 @@
 #    when it works wrong (for example, in case of a reverse proxy.)
 #@base_url        = "http://example.com/hiki/"
 
-# The cache directory. (Optional)
+# The cache directory (Optional)
 #    Specify the directory for cache used by plugins.
 #@cache_path      = "#{@data_path}/cache"
 
-# The template directory. (Optional)
+# The template directory (Optional)
 #    Specify the directory where template files are in.
 #@template_path   = 'template'
 
@@ -101,11 +105,11 @@
 # Keyword highlight (Optional)
 #@hilight_keys    = true
 
+# The charset of output (Optional)
+@charset         = 'iso-8859-1'
+
 # set this true when you debug plugins.
 #@plugin_debug    = false
-
-@charset         = 'iso-8859-1'
-#@cgi_name        = 'hiki.cgi'
 
 @options         = {}                    # DO NOT MODIFY THIS LINE!!
 

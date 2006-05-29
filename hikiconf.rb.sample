@@ -1,4 +1,4 @@
-# $Id: hikiconf.rb.sample,v 1.16 2005-12-29 02:19:22 fdiary Exp $
+# $Id: hikiconf.rb.sample,v 1.17 2006-05-29 13:39:10 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #============================
@@ -20,10 +20,6 @@
 # プラグインを使うかどうかの指定【オプション】
 #   使用する場合には true、使用しない場合は false を指定します。
 @use_plugin      = true
-
-# WikiName によるリンク機能を使うかどうかの指定【オプション】
-#   WikiName によるリンク機能を使わない場合には false を指定します。
-@use_wikiname    = true
 
 #====================================================================
 #  管理画面から変更できる項目
@@ -73,6 +69,10 @@
 #   既存ページ名の自動リンク機能を使用する場合には true を指定します。
 @auto_link       = false
 
+# WikiName によるリンク機能を使うかどうかの指定【オプション】
+#   WikiName によるリンク機能を使わない場合には false を指定します。
+@use_wikiname    = true
+
 # XML-RPC
 #   XML-RPC インタフェイスを有効にするかどうかを設定します。
 @xmlrpc_enabled  = true
@@ -110,16 +110,16 @@
 
 # 更新通知元メールアドレス【オプション】
 #   更新通知メールの From に指定するアドレスです。
-#@mail_from      = 'from@mail.address.hoge'
+#@mail_from       = 'from@mail.address.hoge'
 
 # キーワードハイライト【オプション】
 #@hilight_keys    = true
 
-# プラグインのデバッグ時に true にします。
-#@plugin_debug    = false
-
-# ページのキャラクタセット
+# ページのキャラクタセット【オプション】
 #@charset         = 'EUC-JP'
+
+# プラグインのデバッグ時に true にします【オプション】
+#@plugin_debug    = false
 
 @options         = {}                    # この行は変更しないでください。
 
