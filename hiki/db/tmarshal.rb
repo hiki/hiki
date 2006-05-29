@@ -35,7 +35,7 @@ module TMarshal
     when Array
       "[\n"+obj.collect{|x| dump_text(x)+",\n"}.to_s+"]"
     when Hash
-      "{\n"+obj.sort{|a,b| a[0].inspect<=>b[0].inspect}.collect{|k,v| "#{dump_text(k)} => #{dump_text(v)},\n"}.to_s+"}"
+      "{\n"+obj.sort_by{|e| e[0].inspect}.collect{|k,v| "#{dump_text(k)} => #{dump_text(v)},\n"}.to_s+"}"
     when Numeric, Module, Regexp, Symbol, TrueClass, FalseClass, NilClass, Range
       obj.inspect
     when Time

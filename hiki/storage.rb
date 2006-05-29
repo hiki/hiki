@@ -1,4 +1,4 @@
-# $Id: storage.rb,v 1.14 2005-06-09 02:48:18 fdiary Exp $
+# $Id: storage.rb,v 1.15 2006-05-29 13:51:44 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'digest/md5'
@@ -52,7 +52,7 @@ module Hiki
       p       = pages
       total   = pages.size
       
-      page_info.sort {|a, b| b.values[0][:last_modified] <=> a.values[0][:last_modified]}.each do |i|
+      page_info.sort_by {|e| e.values[0][:last_modified]}.reverse.each do |i|
         page = i.keys[0]
         info = i.values[0]
         keyword  = info[:keyword]

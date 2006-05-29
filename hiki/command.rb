@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.79 2005-12-18 10:25:42 fdiary Exp $
+# $Id: command.rb,v 1.80 2006-05-29 13:51:44 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/page'
@@ -207,12 +207,13 @@ module Hiki
     end
 
     def cmd_index
-      list = @db.page_info.sort {|a, b|
-        info_a = a.values[0]
-        title_a = (info_a[:title] and info_a[:title].size > 0) ? info_a[:title] : a.keys[0]
-        info_b = b.values[0]
-        title_b = (info_b[:title] and info_b[:title].size > 0) ? info_b[:title] : b.keys[0]
-        title_a.downcase <=> title_b.downcase
+      list = @db.page_info.sort_by {|e|
+        k,v = e.to_a.first
+        if v[:title] && !v[:title].empty?
+          v[:title].downcase
+        else
+          k.downcase
+        end
       }.collect {|f|
         k = f.keys[0]
         editor = f[k][:editor] ? "by #{f[k][:editor]}" : ''
@@ -242,11 +243,10 @@ module Hiki
     end
 
     def get_recent
-      list = @db.page_info.sort {|a, b|
-        k1 = a.keys[0]
-        k2 = b.keys[0]
-        b[k2][:last_modified] <=> a[k1][:last_modified]
-      }
+      list = @db.page_info.sort_by {|e|
+        k,v = e.to_a.first
+        v[:last_modified]
+      }.reverse
 
       last_modified = list[0].values[0][:last_modified]
 
