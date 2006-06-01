@@ -1,3 +1,7 @@
+2006-06-01  Kazuhiko  <kazuhiko@fdiary.net>
+	* plugin/00default.rb (saveconf_theme): fix a bug that raises an
+	exception when setting a wrong theme_path (closes #64).
+
 2006-04-28  Kazuhiro NISHIYAMA <zn@mbf.nifty.com>
 	* hiki/db/ptstore.rb (fetch): merge from pstore.rb in ruby 1.8.4.
 

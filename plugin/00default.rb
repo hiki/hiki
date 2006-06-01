@@ -1,4 +1,4 @@
-# $Id: 00default.rb,v 1.54 2005-12-28 23:49:38 fdiary Exp $
+# $Id: 00default.rb,v 1.55 2006-06-01 10:54:50 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #==============================
@@ -262,7 +262,7 @@ def saveconf_theme
 end
 
 if @cgi.params['conf'][0] == 'theme' && @mode == 'saveconf'
-  @conf.theme          = @cgi.params['theme'][0]
+  @conf.theme          = @cgi.params['theme'][0] || ''
   @conf.use_sidebar    = @cgi.params['sidebar'][0] == "true"
   @conf.main_class     = @cgi.params['main_class'][0]
   @conf.main_class     = 'main' if @conf.main_class == ''
