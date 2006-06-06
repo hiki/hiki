@@ -37,6 +37,21 @@ class View
 #     end
   end
 
+  def difference_whole()
+    @difference
+  end
+
+  def difference_digest()
+    #
+  end
+
+  def escape_inside(str, tags)
+    str.gsub(tags[:inside_escape_pat]){|m| tags[:inside_escape_dic][m]}
+  end
+  def escape_outside(str, tags)
+    str.gsub(tags[:outside_escape_pat]){|m| tags[:outside_escape_dic][m]}
+  end
+
   def apply_style(tags, headfoot = true)
     result = []
     @difference.each{|block|
@@ -50,28 +65,14 @@ class View
       end
       case operation
       when :common_elt_elt
-        result << (
-          tags[:start_common] +
-          source.gsub(tags[:outside_escape_pat]){|m| tags[:outside_escape_dic][m]} +
-          tags[:end_common]
-        )
+        result << (tags[:start_common] + escape_outside(source, tags) + tags[:end_common])
       when :change_elt
-        result << (tags[:start_before_change] + 
-          source.gsub(tags[:inside_escape_pat]){|m| tags[:inside_escape_dic][m]} +
-                   tags[:end_before_change] + 
-                   tags[:start_after_change] + 
-          target.gsub(tags[:inside_escape_pat]){|m| tags[:inside_escape_dic][m]} +
-                   tags[:end_after_change])
+        result << (tags[:start_before_change] + escape_inside(source, tags) + tags[:end_before_change] +
+                   tags[:start_after_change] + escape_inside(target, tags) + tags[:end_after_change])
       when :del_elt
-        result << (tags[:start_del] +
-          source.gsub(tags[:inside_escape_pat]){|m| tags[:inside_escape_dic][m]} +
-          tags[:end_del]
-        )
+        result << (tags[:start_del] + escape_inside(source, tags) + tags[:end_del])
       when :add_elt
-        result << (tags[:start_add] +
-          target.gsub(tags[:inside_escape_pat]){|m| tags[:inside_escape_dic][m]} +
-          tags[:end_add]
-        )
+        result << (tags[:start_add] + escape_inside(target, tags) + tags[:end_add])
       else
         raise "invalid attribute: #{block.first}\n"
       end
@@ -81,93 +82,74 @@ class View
     end
     result.delete_if{|elem|elem==''}
   end
+
+  CONTEXT_PRE_LENGTH = 16
+  CONTEXT_POST_LENGTH = 16
   def apply_style_digest(tags, headfoot = true)
+    context_pre_pat  = Regexp.new('.{0,'+"#{CONTEXT_PRE_LENGTH}"+'}\Z',
+                                  Regexp::MULTILINE, @encoding.sub(/ASCII/i, 'none'))
+    context_post_pat = Regexp.new('\A.{0,'+"#{CONTEXT_POST_LENGTH}"+'}',
+                                  Regexp::MULTILINE, @encoding.sub(/ASCII/i, 'none'))
     result = []
-    doc1_lnum = 1
-    doc2_lnum = 1
-    @difference.each_with_index{|block, i|
-      operation = block.first
+    d1l = doc1_line_number = 1
+    d2l = doc2_line_number = 1
+    @difference.each_with_index{|entry, i|
       if block_given?
-        source = yield block[1].to_s
-        target = yield block[2].to_s
+        source = yield entry[1].to_s
+        target = yield entry[2].to_s
       else
-        source = block[1].to_s
-        target = block[2].to_s
+        source = entry[1].to_s
+        target = entry[2].to_s
       end
+      if  i == 0
+        context_pre  = ""  # no pre context for the first entry
+      else
+        context_pre  = @difference[i-1][1].to_s.scan(context_pre_pat).to_s
+      end
+      if (i + 1) == @difference.size
+        context_post = ""  # no post context for the last entry
+      else
+        context_post = @difference[i+1][1].to_s.scan(context_post_pat).to_s
+      end
+      # elements for an entry
+      e_header       = Proc.new {|pos_str|
+                                 tags[:start_entry] + tags[:start_position] + pos_str + tags[:end_position]}
+      e_context_pre  = tags[:start_prefix] + escape_outside(context_pre, tags) + tags[:end_prefix]
+      e_body_changed = tags[:start_before_change] + escape_inside(source, tags) + tags[:end_before_change] +
+                       tags[:start_after_change] + escape_inside(target, tags) + tags[:end_after_change]
+      e_body_deleted = tags[:start_del] + escape_outside(source, tags) + tags[:end_del]
+      e_body_added   = tags[:start_add] + escape_outside(target, tags) + tags[:end_add]
+      e_context_post = tags[:start_postfix] + escape_outside(context_post, tags) + tags[:end_postfix]
+      e_footer       = tags[:end_entry] + (@eol_char||"")
+
       span1 = source_lines_involved = source.scan_lines(@eol).size
       span2 = target_lines_involved = target.scan_lines(@eol).size
-      pos = ""
-
-      case
-      when i == 0 then prefix = ""
-      else prefix = @difference[i-1][1].to_s.scan(prefix_pat).to_s
-      end
-      case
-      when (i + 1) == @difference.size then postfix = ""
-      else postfix = @difference[i+1][1].to_s.scan(postfix_pat).to_s
-      end
-
-      case operation
+      pos_str = ""
+      case operation = entry.first
       when :common_elt_elt
+        # skipping common part
       when :change_elt
-        pos += "#{doc1_lnum}"
-        pos += "-#{doc1_lnum + span1 - 1}" if span1 > 1
-        pos += ",#{doc2_lnum}"
-        pos += "-#{doc2_lnum + span2 - 1}" if span2 > 1
-        result << (
-          tags[:start_entry] + 
-          tags[:start_position] + pos + tags[:end_position] + 
-          tags[:start_prefix] + prefix.gsub(tags[:outside_escape_pat]){|m| tags[:outside_escape_dic][m]} + tags[:end_prefix] +
-          tags[:start_before_change] +
-          source.gsub(tags[:inside_escape_pat]){|m| tags[:inside_escape_dic][m]} +
-          tags[:end_before_change] + 
-          tags[:start_after_change] +
-          target.gsub(tags[:inside_escape_pat]){|m| tags[:inside_escape_dic][m]} +
-          tags[:end_after_change] +
-          tags[:start_postfix] + postfix.gsub(tags[:outside_escape_pat]){|m| tags[:outside_escape_dic][m]} + tags[:end_postfix] +
-          tags[:end_entry] + (@eol_char||"")
-        )
+        pos_str = "#{d1l}" + "#{if span1 > 1 then '-'+(d1l + span1 - 1).to_s; end}" +
+                  ",#{d2l}" + "#{if span2 > 1 then '-'+(d2l + span2 - 1).to_s; end}"
+        result << (e_header.call(pos_str) + e_context_pre + e_body_changed + e_context_post + e_footer)
       when :del_elt
-        pos += "#{doc1_lnum}"
-        pos += "-#{doc1_lnum + span1 - 1}" if span1 > 1
-        pos += ",(#{doc2_lnum})"
-        result << (
-          tags[:start_entry] +
-          tags[:start_position] + pos + tags[:end_position] +
-          tags[:start_prefix] + prefix.gsub(tags[:outside_escape_pat]){|m| tags[:outside_escape_dic][m]} + tags[:end_prefix] +
-          tags[:start_del] +
-          source.gsub(tags[:inside_escape_pat]){|m| tags[:inside_escape_dic][m]} +
-          tags[:end_del] + 
-          tags[:start_postfix] + postfix.gsub(tags[:outside_escape_pat]){|m| tags[:outside_escape_dic][m]} + tags[:end_postfix] +
-          tags[:end_entry] + (@eol_char||"")
-        )
+        pos_str = "#{d1l}" + "#{if span1 > 1 then '-'+(d1l + span1 - 1).to_s; end}" +
+                  ",(#{d2l})"
+        result << (e_header.call(pos_str) + e_context_pre + e_body_deleted + e_context_post + e_footer)
       when :add_elt
-        pos += "(#{doc1_lnum})"
-        pos += ",#{doc2_lnum}"
-        pos += "-#{doc2_lnum + span2 - 1}" if span2 > 1
-        result << (
-          tags[:start_entry] +
-          tags[:start_position] + pos + tags[:end_position] +
-          tags[:start_prefix] + prefix.gsub(tags[:outside_escape_pat]){|m| tags[:outside_escape_dic][m]} + tags[:end_prefix] +
-          tags[:start_add] +
-          target.gsub(tags[:inside_escape_pat]){|m| tags[:inside_escape_dic][m]} +
-          tags[:end_add] +
-          tags[:start_postfix] + postfix.gsub(tags[:outside_escape_pat]){|m| tags[:outside_escape_dic][m]} + tags[:end_postfix] +
-          tags[:end_entry] + (@eol_char||"")
-        )
+        pos_str = "(#{d1l})" +
+                  ",#{d2l}" + "#{if span2 > 1 then '-'+(d2l + span2 - 1).to_s; end}"
+        result << (e_header.call(pos_str) + e_context_pre + e_body_added + e_context_post + e_footer)
       else
         raise "invalid attribute: #{block.first}\n"
       end
-      doc1_lnum += source.scan_eols(@eol).size
-      doc2_lnum += target.scan_eols(@eol).size
+      d1l += source.scan_eols(@eol).size
+      d2l += target.scan_eols(@eol).size
     }
     result.unshift(tags[:start_digest_body])
     result.push(tags[:end_digest_body])
-    result = [] if result.size == 2
-    if headfoot == true
-      result = tags[:header] + result + tags[:footer]
-    end
-    result.delete_if{|elem|elem==''}
+    result = tags[:header] + result + tags[:footer] if headfoot == true
+    result.delete_if{|elem| elem == ''}
   end
 
   def source_lines()
@@ -181,16 +163,6 @@ class View
       @target_lines = @difference.collect{|entry| entry[2]}.join.scan_lines(@eol)
     end
     @target_lines
-  end
-  PREFIX_LENGTH = 16
-  POSTFIX_LENGTH = 16
-  def prefix_pat()
-    Regexp.new('.{0,'+"#{PREFIX_LENGTH}"+'}\Z', Regexp::MULTILINE,
-               @encoding.sub(/ASCII/i, 'none'))
-  end
-  def postfix_pat()
-    Regexp.new('\A.{0,'+"#{POSTFIX_LENGTH}"+'}', Regexp::MULTILINE,
-               @encoding.sub(/ASCII/i, 'none'))
   end
 
   # tty (terminal)
@@ -253,15 +225,16 @@ class View
      " body {font-family: monospace;}#{@eol_char||''}" +
      " span.del {background: hotpink; border: thin inset;}#{@eol_char||''}" +
      " span.add {background: deepskyblue; font-weight: bolder; border: thin outset;}#{@eol_char||''}" +
-     " span.before_change {background: yellow; border: thin inset;}#{@eol_char||''}" +
-     " span.after_change {background: lime; font-weight: bolder; border: thin outset;}#{@eol_char||''}" +
-     " li.entry .position {font-weight: bolder; margin-top: 0em; margin-bottom: 0em; padding-top: 0em; padding-bottom: 0em;}#{@eol_char||''}" +
-     " li.entry .body {margin-top: 0em; margin-bottom: 0em; padding-top: 0em; padding-bottom: 0em;}#{@eol_char||''}" +
+     " span.before-change {background: yellow; border: thin inset;}#{@eol_char||''}" +
+     " span.after-change {background: lime; font-weight: bolder; border: thin outset;}#{@eol_char||''}" +
+     " li.entry .position {font-weight: bolder; margin-top: 0em; margin-bottom: 0em; padding-top: 0.5em; padding-bottom: 0em;}#{@eol_char||''}" +
+     " li.entry .body {margin-top: 0em; margin-bottom: 0em; padding-top: 0em; padding-bottom: 0.5em;}#{@eol_char||''}" +
+     " li.entry {border-top: thin solid gray;}#{@eol_char||''}" +
      "</style>#{@eol_char||''}",
-     "</head><body>#{@eol_char||''}"]
+     "</head><body><div>#{@eol_char||''}"]
   end
   def html_footer()
-    [(@eol_char||"") + '</body></html>' + (@eol_char||"")]
+    [(@eol_char||"") + '</div></body></html>' + (@eol_char||"")]
   end
   HTMLEscapeDic = {'<'=>'&lt;', '>'=>'&gt;', '&'=>'&amp;', '  '=>'&nbsp;&nbsp;',
                    "\r\n" => "<br />\r\n", "\r" => "<br />\r", "\n" => "<br />\n"}
@@ -289,9 +262,9 @@ class View
      :end_del             => '</del></span>',
      :start_add           => '<span class="add"><ins>',
      :end_add             => '</ins></span>',
-     :start_before_change => '<span class="before_change"><del>',
+     :start_before_change => '<span class="before-change"><del>',
      :end_before_change   => '</del></span>',
-     :start_after_change  => '<span class="after_change"><ins>',
+     :start_after_change  => '<span class="after-change"><ins>',
      :end_after_change    => '</ins></span>'}
   end
   def to_html(overriding_tags = nil, headfoot = true)

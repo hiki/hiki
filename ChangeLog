@@ -1,3 +1,6 @@
+2006-06-06  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/docdiff/view.rb: sync to docdiff-0.3.3.
+
 2006-06-01  Kazuhiko  <kazuhiko@fdiary.net>
 	* plugin/00default.rb (saveconf_theme): fix a bug that raises an
 	exception when setting a wrong theme_path (closes #64).
