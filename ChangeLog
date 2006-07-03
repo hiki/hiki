@@ -1,3 +1,7 @@
+2006-07-03  Kazuhiko  <kazuhiko@fdiary.net>
+	* data/text/TextFormattingRules: add explanations about
+	multi-lines pre-formatted text and description-only text.
+
 2006-07-02  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/command.rb (dispatch), hiki/config.rb: raise an error if
 	timeout exceeds.
