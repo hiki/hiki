@@ -1,4 +1,7 @@
 2006-07-03  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/trackback.rb (trackback): use SCRIPT_FILENAME
+	instead of SCRIPT_NAME.
+
 	* data/text/TextFormattingRules: add explanations about
 	multi-lines pre-formatted text and description-only text.
 

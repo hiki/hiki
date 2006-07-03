@@ -1,9 +1,9 @@
-# $Id: trackback.rb,v 1.10 2005-07-13 05:03:20 fdiary Exp $
+# $Id: trackback.rb,v 1.11 2006-07-03 02:53:37 fdiary Exp $
 # Copyright (C) 2004 Kazuhiko <kazuhiko@fdiary.net>
 
 def trackback
   <<-EOF
-<div class="caption">TrackBack URL: <a href="#{File.basename(ENV['SCRIPT_NAME'])}/tb/#{@page.escape}">#{@conf.base_url}#{File.basename(ENV['SCRIPT_NAME'])}/tb/#{@page.escape}</a></div>
+<div class="caption">TrackBack URL: <a href="#{File.basename(ENV['SCRIPT_FILENAME'])}/tb/#{@page.escape}">#{@conf.base_url}#{File.basename(ENV['SCRIPT_FILENAME'])}/tb/#{@page.escape}</a></div>
 EOF
 end
 
