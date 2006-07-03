@@ -1,3 +1,14 @@
+! Changes in 0.8.6
+
+* fix DoS vulnerabilities in the process of getting a difference between pages.
+* fix the bug of unlocking without lock.
+* support WILLCOM's mobile agents.
+* fix the bug of breaking the path of the cookie when base_url is specified.
+* The page editing support script now supports Safari.
+* suppress the width/height attributes when the size of an image is unknown.
+* options['attach.cache_url'] is introduced. DO NOT use this unless all attached files are safe.
+* Do not consider WikiName inside of pre elements.
+
 ! Changes in 0.8.5
 
 * support multiple addresses to notify changes.

@@ -1,3 +1,9 @@
+2006-07-02  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/command.rb (dispatch), hiki/config.rb: raise an error if
+	timeout exceeds.
+	* hikiconf.rb.sample, misc/i18n/hikiconf.rb.sample.en: add
+	'@timeout'.
+
 2006-06-06  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/docdiff/view.rb: sync to docdiff-0.3.3.
 

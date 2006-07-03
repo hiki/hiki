@@ -1,4 +1,4 @@
-# $Id: hikiconf.rb.sample,v 1.17 2006-05-29 13:39:10 fdiary Exp $
+# $Id: hikiconf.rb.sample,v 1.18 2006-07-03 01:19:12 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #============================
@@ -117,6 +117,9 @@
 
 # ページのキャラクタセット【オプション】
 #@charset         = 'EUC-JP'
+
+# タイムアウトの秒数【オプション】
+#@timeout         = 30
 
 # プラグインのデバッグ時に true にします【オプション】
 #@plugin_debug    = false

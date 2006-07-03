@@ -1,10 +1,10 @@
-# $Id: config.rb,v 1.112 2006-04-28 11:34:54 fdiary Exp $
+# $Id: config.rb,v 1.113 2006-07-03 01:19:13 fdiary Exp $
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
 
-HIKI_VERSION  = '0.8.5'
-HIKI_RELEASE_DATE = '2006-04-28'
+HIKI_VERSION  = '0.8.6'
+HIKI_RELEASE_DATE = '2006-07-03'
 
 require 'cgi'
 require 'hiki/command'
@@ -186,6 +186,7 @@ module Hiki
       @max_name_size   ||= 50 
       @password        ||= ''
       @generator       ||= "Hiki #{HIKI_VERSION}"
+      @timeout         ||= 30
 
       Dir.mkdir(@cache_path) unless File::directory?(@cache_path)
 

@@ -1,6 +1,7 @@
-# $Id: command.rb,v 1.80 2006-05-29 13:51:44 fdiary Exp $
+# $Id: command.rb,v 1.81 2006-07-03 01:19:13 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
+require 'timeout'
 require 'hiki/page'
 require 'hiki/util'
 require 'hiki/plugin'
@@ -66,34 +67,36 @@ module Hiki
     end
 
     def dispatch
-      @cmd = 'view' unless @cmd
       begin
-        raise if !@p && ['view', 'edit', 'diff', 'save'].index( @cmd )
-        if @cmd == 'edit'
-          raise PermissionError, 'Permission denied' unless @plugin.editable?
-          cmd_edit( @p )
-        elsif @cmd == 'save'
-          raise PermissionError, 'Permission denied' unless @plugin.editable?
-          if @params['save'][0]
-            cmd_save(@p, @params['contents'][0], @params['md5hex'][0], @params['update_timestamp'][0])
-          elsif @params['edit_form_button'][0]
-            @cmd = 'edit'
-            cmd_plugin(false)
-            cmd_edit( @p, @plugin.text )
-          else
-            cmd_preview
-          end
-        elsif @cmd == 'create'  
-          raise PermissionError, 'Permission denied' unless @plugin.editable?
-          send( "cmd_#{@cmd}" )
-        else
-          if @conf.use_plugin and @plugin.plugin_command.index(@cmd) and @plugin.respond_to?(@cmd)
-            @plugin.send( @cmd )
-          else
+        Timeout.timeout(@conf.timeout) {
+          @cmd = 'view' unless @cmd
+          raise if !@p && ['view', 'edit', 'diff', 'save'].index( @cmd )
+          if @cmd == 'edit'
+            raise PermissionError, 'Permission denied' unless @plugin.editable?
+            cmd_edit( @p )
+          elsif @cmd == 'save'
+            raise PermissionError, 'Permission denied' unless @plugin.editable?
+            if @params['save'][0]
+              cmd_save(@p, @params['contents'][0], @params['md5hex'][0], @params['update_timestamp'][0])
+            elsif @params['edit_form_button'][0]
+              @cmd = 'edit'
+              cmd_plugin(false)
+              cmd_edit( @p, @plugin.text )
+            else
+              cmd_preview
+            end
+          elsif @cmd == 'create'  
+            raise PermissionError, 'Permission denied' unless @plugin.editable?
             send( "cmd_#{@cmd}" )
+          else
+            if @conf.use_plugin and @plugin.plugin_command.index(@cmd) and @plugin.respond_to?(@cmd)
+              @plugin.send( @cmd )
+            else
+              send( "cmd_#{@cmd}" )
+            end
           end
-        end
-      rescue NoMethodError, PermissionError
+        }
+      rescue NoMethodError, PermissionError, Timeout::Error
         data = get_common_data( @db, @plugin, @conf )
         data[:message] = CGI::escapeHTML( $!.message )
         generate_error_page( data )
