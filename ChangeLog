@@ -1,4 +1,7 @@
 2006-07-21  Kazuhiro NISHIYAMA  <zn@mbf.nifty.com>
+	* hiki/page.rb, misc/hikifarm/index.cgi, misc/plugin/referer.rb,
+	misc/plugin/trackback.rb: check request_method exactly.
+
 	* hiki/storage.rb: use Array#reverse_each instead of reverse.each.
 
 2006-07-03  Kazuhiko  <kazuhiko@fdiary.net>

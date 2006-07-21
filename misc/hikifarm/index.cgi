@@ -483,7 +483,7 @@ class App
       page = HikifarmRSSPage.new(@farm, hikifarm_uri, @conf.hikifarm_template_dir,
                                  @conf.hikifarm_description,
                                  @conf.author, @conf.mail, @conf.title)
-    elsif /post/i =~ @cgi.request_method and @cgi.params['wiki'][0] and @cgi.params['wiki'][0].length > 0
+    elsif 'POST' == @cgi.request_method and @cgi.params['wiki'][0] and @cgi.params['wiki'][0].length > 0
       begin
         name = @cgi.params['wiki'][0]
         raise '英数字のみ指定できます' if /\A[a-zA-Z0-9]+\z/ !~ name

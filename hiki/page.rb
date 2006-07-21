@@ -1,4 +1,4 @@
-# $Id: page.rb,v 1.13 2005-06-24 09:06:10 fdiary Exp $
+# $Id: page.rb,v 1.14 2006-07-21 07:36:37 znz Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 
@@ -32,7 +32,7 @@ module Hiki
 
       @conf.save_config if @contents[:save_config]
       @headers = Hash::new
-      if @contents[:last_modified] and /HEAD/i =~ @cgi.request_method
+      if @contents[:last_modified] and 'HEAD' == @cgi.request_method
         @headers['Last-Modified']    = CGI::rfc1123_date(@contents[:last_modified])
       end
       @headers['type']     = 'text/html'

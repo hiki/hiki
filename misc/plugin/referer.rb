@@ -1,4 +1,4 @@
-# $Id: referer.rb,v 1.12 2005-09-30 11:45:49 fdiary Exp $
+# $Id: referer.rb,v 1.13 2006-07-21 07:36:37 znz Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/db/ptstore'
@@ -12,8 +12,8 @@ def add_referer(db)
       omit_url = Regexp.new("(#{@options['referer.omit_url'].join('|')})") =~ @cgi.referer
     end
       
-    raise if /HEAD/i =~ @cgi.request_method || ! @cgi.referer ||
-                        /^https?/ !~ @cgi.referer || omit_url
+    raise if 'HEAD' == @cgi.request_method || ! @cgi.referer ||
+                       /^https?/ !~ @cgi.referer || omit_url
 
     db.transaction do
       db[@cgi.referer] = (db.root?(@cgi.referer) ? db[@cgi.referer] : 0) + 1
