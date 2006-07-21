@@ -1,3 +1,6 @@
+2006-07-21  Kazuhiro NISHIYAMA  <zn@mbf.nifty.com>
+	* hiki/storage.rb: use Array#reverse_each instead of reverse.each.
+
 2006-07-03  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/trackback.rb (trackback): use SCRIPT_FILENAME
 	instead of SCRIPT_NAME.
