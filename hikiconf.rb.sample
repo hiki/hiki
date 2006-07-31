@@ -1,4 +1,4 @@
-# $Id: hikiconf.rb.sample,v 1.19 2006-07-31 05:03:41 fdiary Exp $
+# $Id: hikiconf.rb.sample,v 1.20 2006-07-31 13:43:20 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #============================
@@ -22,10 +22,10 @@
 @use_plugin      = true
 
 # 非ログイン時も Cookie によるセッション管理を行うかどうかの指定
-#   荒し対策のため、デフォルトは true です。Cookie を使えない端末でのペー
+#   荒し対策のため、デフォルトは true です。Cookie を使えない端末で、ペー
 #   ジ編集や掲示板プラグインなどによる投稿をする必要がある場合は false を
 #   指定します。
-@user_session    = true
+@use_session    = true
 
 #====================================================================
 #  管理画面から変更できる項目
