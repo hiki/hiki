@@ -1,10 +1,10 @@
-# $Id: config.rb,v 1.114 2006-07-21 07:40:48 znz Exp $
+# $Id: config.rb,v 1.115 2006-07-31 05:03:42 fdiary Exp $
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
 
 HIKI_VERSION  = '0.8.6'
-HIKI_RELEASE_DATE = '2006-07-21'
+HIKI_RELEASE_DATE = '2006-07-31'
 
 require 'cgi'
 require 'hiki/command'
@@ -115,7 +115,7 @@ module Hiki
         raise Errno::ENOENT, "Template file for \"#{cmd}\" not found."
       end
     end
-    
+
     private
 
     # loading hikiconf.rb in current directory
@@ -151,6 +151,7 @@ module Hiki
       @admin_name    ||= 'admin'
       @repos_type    ||= 'default'
       @use_wikiname    = true if @use_wikiname.nil?
+      @use_session      = true if @use_session.nil?
       @options         = {} unless @options.class == Hash
 
       @xmlrpc_enabled  = true unless defined?(@xmlrpc_enabled)
@@ -159,8 +160,8 @@ module Hiki
       @plugin_path     ||= "#{PATH}/plugin"
 
       @side_menu       ||= 'SideMenu'
-      @interwiki_name  ||= 'InterWikiName' 
-      @aliaswiki_name  ||= 'AliasWikiName' 
+      @interwiki_name  ||= 'InterWikiName'
+      @aliaswiki_name  ||= 'AliasWikiName'
       @formatting_rule ||= 'TextFormattingRules'
 
       template_default = {
@@ -182,8 +183,8 @@ module Hiki
       else
         @template = template_default
       end
-                  
-      @max_name_size   ||= 50 
+
+      @max_name_size   ||= 50
       @password        ||= ''
       @generator       ||= "Hiki #{HIKI_VERSION}"
       @timeout         ||= 30

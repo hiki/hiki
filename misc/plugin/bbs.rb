@@ -1,4 +1,4 @@
-# $Id: bbs.rb,v 1.9 2005-07-20 06:08:51 fdiary Exp $
+# $Id: bbs.rb,v 1.10 2006-07-31 05:03:42 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 add_body_enter_proc(Proc.new do
@@ -7,6 +7,8 @@ add_body_enter_proc(Proc.new do
 end)
 
 def bbs(level = 1)
+  return '' if @conf.use_session && !@cgi.cookies['session_id'][0]
+
   @bbs_num += 1
   name = @user || ''
   level = (Integer(level) rescue 1)
@@ -23,12 +25,15 @@ def bbs(level = 1)
     <input type="hidden" name="c" value="plugin">
     <input type="hidden" name="p" value="#{@page.escapeHTML}">
     <input type="hidden" name="plugin" value="bbs_post">
+    <input type="hidden" name="session_id" value="#{@cgi.cookies['session_id'][0]}">
   </div>
 </form>
 EOS
 end
 
 def bbs_post
+  return '' if @conf.use_session && @cgi.cookies['session_id'][0] != @cgi['session_id']
+
   params     = @cgi.params
   bbs_num    = (params['bbs_num'][0] || 0).to_i
   bbs_level  = (params['bbs_level'][0] || 1).to_i

@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.81 2006-07-03 01:19:13 fdiary Exp $
+# $Id: command.rb,v 1.82 2006-07-31 05:03:42 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'timeout'
@@ -49,7 +49,7 @@ module Hiki
 
       @aliaswiki  = AliasWiki::new( @db.load( @conf.aliaswiki_name ) )
       @p = @aliaswiki.original_name(@p).to_euc if @p
-      
+
       options = @conf.options || Hash::new( '' )
       options['page'] = @p
       options['db']   = @db
@@ -62,6 +62,11 @@ module Hiki
       @session_id = @cgi.cookies['session_id'][0]
       if @session_id
         @plugin.user = Hiki::Session::new( @conf, @session_id ).user
+      elsif @conf.use_session
+        session = Hiki::Session::new( @conf )
+        session.save
+        @session_id = session.session_id
+        @plugin.add_cookie( session_cookie( @session_id ))
       end
       @body_enter = @plugin.body_enter_proc
     end
@@ -85,7 +90,7 @@ module Hiki
             else
               cmd_preview
             end
-          elsif @cmd == 'create'  
+          elsif @cmd == 'create'
             raise PermissionError, 'Permission denied' unless @plugin.editable?
             send( "cmd_#{@cmd}" )
           else
@@ -108,7 +113,7 @@ module Hiki
       @plugin.hiki_menu(data, @cmd)
       @plugin.title = data[:title]
       data[:cmd] = @cmd
-      data[:cgi_name] = @conf.cgi_name 
+      data[:cgi_name] = @conf.cgi_name
       data[:body_enter] = @body_enter
       data[:lang] = @conf.lang
       data[:header] = @plugin.header_proc
@@ -133,7 +138,7 @@ module Hiki
     def generate_error_page( data )
       @plugin.hiki_menu(data, @cmd)
       @plugin.title = title( 'Error' )
-      data[:cgi_name] = @conf.cgi_name 
+      data[:cgi_name] = @conf.cgi_name
       data[:view_title] = 'Error'
       data[:header] = @plugin.header_proc
       data[:frontpage] = @plugin.page_name( 'FrontPage' )
@@ -149,7 +154,7 @@ module Hiki
       @cmd = 'preview'
       cmd_edit( @p, @params['contents'][0], @conf.msg_preview, @params['page_title'][0] )
     end
-    
+
     def cmd_view
       unless @db.exist?( @p )
         @cmd = 'create'
@@ -178,9 +183,9 @@ module Hiki
       ref = @db.get_references( @p )
 
       data = get_common_data( @db, @plugin, @conf )
-      
+
       pg_title = @plugin.page_name(@p)
-      
+
       data[:page_title]   = (@plugin.hiki_anchor( @p.escape, @p.escapeHTML ))
       data[:view_title]   = pg_title
       data[:title]        = title( pg_title )
@@ -194,7 +199,7 @@ module Hiki
 
       generate_page( data )
     end
- 
+
     def hilighten(str, keywords)
       hilighted = str.dup
       keywords.each do |key|
@@ -226,16 +231,16 @@ module Hiki
       }
 
       data = get_common_data( @db, @plugin, @conf )
-      
+
       data[:title]     = title( @conf.msg_index )
       data[:updatelist] = list
-      
+
       generate_page( data )
     end
 
     def cmd_recent
       list, last_modified = get_recent
-      
+
       data = get_common_data( @db, @plugin, @conf )
 
       data[:title]      = title( @conf.msg_recent )
@@ -294,7 +299,7 @@ module Hiki
         differ = word_diff( old, new ).gsub( /\n/, "<br>\n" )
         link = @plugin.hiki_anchor( page.escape, page.escapeHTML )
       end
-      
+
       @cmd = 'edit'
 
       if rev = @params['r'][0]
@@ -304,7 +309,7 @@ module Hiki
         text = ( @db.load( page ) || '' ) unless text
       end
       md5hex = @params['md5hex'][0] || @db.md5hex( page )
-      
+
       @plugin.text = text
 
       data[:title]          = title( page )
@@ -332,7 +337,7 @@ module Hiki
       old = @db.load_backup( @p ) || ''
       new = @db.load( @p ) || ''
       differ = word_diff( old, new ).gsub( /\n/, "<br>\n" )
-      
+
       data = get_common_data( @db, @plugin, @conf )
 
       data[:title]        = title("#{@p} #{@conf.msg_diff}")
@@ -360,7 +365,7 @@ module Hiki
           cmd_edit( page, text, @conf.msg_duplicate_page_title )
           return
         end
-        
+
         if @plugin.save( page, text, md5hex, update_timestamp )
           keyword = @params['keyword'][0].split("\n").collect {|k|
             k.chomp.strip}.delete_if{|k| k.size == 0}
@@ -410,7 +415,7 @@ module Hiki
         data[:list]      = nil
         data[:method]  = 'get'
       end
-      
+
       generate_page( data )
     end
 
@@ -423,7 +428,7 @@ module Hiki
           cmd_create( @conf.msg_invalid_filename( @conf.max_name_size) )
           return
         end
-        
+
         @cmd = 'edit'
 
         orig_page = exist?(@p)
@@ -442,7 +447,7 @@ module Hiki
         data[:key]     = %Q|value="#{msg ?  @p.escapeHTML :  ''}"|
         data[:list]    = nil
         data[:method]  = 'get'
-        
+
         generate_page( data )
       end
     end
@@ -461,9 +466,9 @@ module Hiki
           session.user = @plugin.user
           session.save
           if page && !page.empty?
-            redirect(@cgi, @conf.base_url + @plugin.hiki_url( page ), session_cookie( session.session_id )) 
+            redirect(@cgi, @conf.base_url + @plugin.hiki_url( page ), session_cookie( session.session_id ))
           else
-            redirect(@cgi, @conf.index_url, session_cookie( session.session_id )) 
+            redirect(@cgi, @conf.index_url, session_cookie( session.session_id ))
           end
           return
         else
@@ -510,11 +515,11 @@ module Hiki
       if p != @p and p != nil
         return p
       end
-      
+
       if @db.exist?(page) and @p != page
         return page
       end
-      
+
       false
     end
 

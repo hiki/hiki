@@ -9,6 +9,8 @@ def its_status_candidates
 end
 
 def its_add_ticket_form
+  return '' if @conf.use_session && !@cgi.cookies['session_id'][0]
+
   result = <<EOS
 <form action="#{@conf.cgi_name}" method="post">
   <div>
@@ -39,6 +41,8 @@ EOS
 end
 
 def its_edit_ticket_form
+  return '' if @conf.use_session && !@cgi.cookies['session_id'][0]
+
   ticket = its_parse_ticket( @page )
   return '' unless ticket
   result = <<EOS
@@ -138,6 +142,8 @@ def its_get_tickets
 end
 
 def its_add_ticket_post
+  return '' if @conf.use_session && @cgi.cookies['session_id'][0] != @cgi['session_id']
+
   priority = @cgi['priority']
   version = @cgi['version']
   reporter = @cgi['reporter']
@@ -178,6 +184,8 @@ EOS
 end
 
 def its_edit_ticket_post
+  return '' if @conf.use_session && @cgi.cookies['session_id'][0] != @cgi['session_id']
+
   result = "\n"
   flag = false
   begin

@@ -1,3 +1,11 @@
+2006-07-31  Kazuhiko  <kazuhiko@fdiary.net>
+	* hikiconf.rb.sample, hiki/command.rb, hiki/config.rb,
+	misc/plugin/bbs.rb, misc/plugin/comment.rb, misc/plugin/its.rb:
+	add '@conf.use_session' to prevent spams.
+
+	* style/default/hikidoc.rb: sync with hikidoc rev.38.
+	  support nested modifier (reported by MoonWolf).
+
 2006-07-21  Kazuhiro NISHIYAMA  <zn@mbf.nifty.com>
 	* hiki/page.rb, misc/hikifarm/index.cgi, misc/plugin/referer.rb,
 	misc/plugin/trackback.rb: check request_method exactly.

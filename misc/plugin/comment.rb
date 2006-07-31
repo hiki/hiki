@@ -1,4 +1,4 @@
-# $Id: comment.rb,v 1.10 2005-07-13 05:03:20 fdiary Exp $
+# $Id: comment.rb,v 1.11 2006-07-31 05:03:42 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 # modified by yoshimi.
@@ -9,10 +9,11 @@ add_body_enter_proc(Proc.new do
 end)
 
 def comment(cols = 60, style = 0)
+  return '' if @conf.use_session && !@cgi.cookies['session_id'][0]
+
   cols = 60 unless cols.respond_to?(:integer?)
   style = 0 unless style.respond_to?(:integer?)
   style = 0 if style != 1
-
   @comment_num += 1
   name = @user || ''
   <<EOS
@@ -28,12 +29,15 @@ def comment(cols = 60, style = 0)
     <input type="hidden" name="p" value="#{@page.escapeHTML}">
     <input type="hidden" name="plugin" value="comment_post">
     <input type="hidden" name="style" value="#{style}">
+    <input type="hidden" name="session_id" value="#{@cgi.cookies['session_id'][0]}">
   </div>
 </form>
 EOS
 end
 
 def comment_post
+  return '' if @conf.use_session && @cgi.cookies['session_id'][0] != @cgi['session_id']
+
   params     = @cgi.params
   comment_no = (params['comment_no'][0] || 0).to_i
   name       = params['name'][0].size == 0 ? comment_anonymous_label : params['name'][0]

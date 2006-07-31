@@ -30,7 +30,7 @@
 require 'uri'
 
 class HikiDoc < String
-  Revision = %q$Rev: 36 $
+  Revision = %q$Rev: 38 $
 
   def initialize( content = '', options = {} )
     @level = options[:level] || 1
@@ -367,22 +367,17 @@ class HikiDoc < String
   STRONG = "'''"
   EM = "''"
   DEL = '=='
-  STRONG_RE = /#{STRONG}(.+?)#{STRONG}/
-  EM_RE = /#{EM}(.+?)#{EM}/
-  DEL_RE = /#{DEL}(.+?)#{DEL}/
-  MODIFIER_RE = /(#{STRONG_RE}|#{EM_RE}|#{DEL_RE})/   
+  MODIFIER_RE = /(#{STRONG}|#{EM}|#{DEL})(.+?)(?:\1)/
 
   def parse_modifier( text )
     text.gsub( MODIFIER_RE ) do |str|
-      case str
-      when STRONG_RE
-        store_block( "<strong>#{$1}</strong>" )
-      when EM_RE
-        store_block( "<em>#{$1}</em>" )
-      when DEL_RE
-        store_block( "<del>#{$1}</del>" )
-      else
-        str
+      case $1
+      when STRONG
+        store_block( "<strong>#{parse_modifier($2)}</strong>" )
+      when EM
+        store_block( "<em>#{parse_modifier($2)}</em>" )
+      when DEL
+        store_block( "<del>#{parse_modifier($2)}</del>" )
       end
     end
   end
