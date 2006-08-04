@@ -1,4 +1,4 @@
-# $Id: rank.rb,v 1.5 2006-08-04 15:10:09 fdiary Exp $
+# $Id: rank.rb,v 1.6 2006-08-04 15:34:14 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 def rank( n = 20 )
@@ -27,4 +27,5 @@ end
 
 add_body_leave_proc do
   @db.increment_hitcount( @page )
+  ''
 end

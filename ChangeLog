@@ -1,4 +1,6 @@
 2006-08-05  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/rank.rb: return an empty string in body_leave_proc.
+
 	* hiki/db/ptstore.rb: inherit the PStore class and rewrite
 	cache-related codes.
 
