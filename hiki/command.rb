@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.82 2006-07-31 05:03:42 fdiary Exp $
+# $Id: command.rb,v 1.83 2006-08-04 15:10:08 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'timeout'
@@ -178,9 +178,9 @@ module Hiki
         end
       end
 
-      @db.set_references( @p, formatter.references )
-      @db.increment_hitcount( @p )
-      ref = @db.get_references( @p )
+      old_ref = @db.get_attribute( @p, :references )
+      ref = formatter.references 
+      @db.set_references( @p, ref ) if ref != old_ref
 
       data = get_common_data( @db, @plugin, @conf )
 

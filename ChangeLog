@@ -1,3 +1,13 @@
+2006-08-05  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/db/ptstore.rb: inherit the PStore class and rewrite
+	cache-related codes.
+
+	* hiki/command.rb (cmd_view): update references only when
+	references differ from previous.
+
+	* hiki/command.rb (cmd_view), misc/plugin/rank.rb: increment a
+	counter only when the 'rank.rb' plugin is active.
+
 2006-07-31  Kazuhiko  <kazuhiko@fdiary.net>
 	* hikiconf.rb.sample, hiki/command.rb, hiki/config.rb,
 	misc/plugin/bbs.rb, misc/plugin/comment.rb, misc/plugin/its.rb:

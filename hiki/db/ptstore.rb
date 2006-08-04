@@ -1,4 +1,4 @@
-# $Id: ptstore.rb,v 1.10 2006-04-28 05:14:30 znz Exp $
+# $Id: ptstore.rb,v 1.11 2006-08-04 15:10:09 fdiary Exp $
 #
 # ptstore.rb
 #   based on pstore.rb contained in Ruby 1.8.2
@@ -20,113 +20,27 @@ require "fileutils"
 require "digest/md5"
 require "hiki/db/tmarshal"
 
-class PTStore
-  class Error < StandardError
-  end
+require 'pstore'
 
-  def initialize(file)
-    dir = File::dirname(file)
-    unless File::directory? dir
-      raise PTStore::Error, format("directory %s does not exist", dir)
-    end
-    if File::exist? file and not File::readable? file
-      raise PTStore::Error, format("file %s not readable", file)
-    end
-    @transaction = false
-    @filename = file
-    @abort = false
-  end
-
-  def in_transaction
-    raise PTStore::Error, "not in transaction" unless @transaction
-  end
-  def in_transaction_wr()
-    in_transaction()
-    raise PStore::Error, "in read-only transaction" if @rdonly
-  end
-  private :in_transaction, :in_transaction_wr
-
-  def [](name)
-    in_transaction
-    @table[name]
-  end
-  def fetch(name, default=PTStore::Error)
-    in_transaction
-    unless @table.key? name
-      if default==PTStore::Error
-        raise PTStore::Error, format("undefined root name `%s'", name)
-      else
-        return default
-      end
-    end
-    @table[name]
-  end
-  def []=(name, value)
-    in_transaction_wr()
-    @table[name] = value
-  end
-
-  def delete(name)
-    in_transaction_wr()
-    @table.delete name
-  end
-
-  def roots
-    in_transaction
-    @table.keys
-  end
-  def root?(name)
-    in_transaction
-    @table.key? name
-  end
-  def path
-    @filename
-  end
-
-  def commit
-    in_transaction
-    @abort = false
-    throw :ptstore_abort_transaction
-  end
-  def abort
-    in_transaction
-    @abort = true
-    throw :ptstore_abort_transaction
-  end
-
-  def close_cache
-    @file_cache.close if @file_cache
-  end
-
-  def transaction(read_only=false)
-    raise PTStore::Error, "nested transaction" if @transaction
+class PTStore < PStore
+  def transaction(read_only = false)
+    raise PStore::Error, "nested transaction" if @transaction
     begin
-      if !read_only
-        @table_cache = nil
-        @file_cache.close if @file_cache
-        @file_cache = nil
-      end
-
       @rdonly = read_only
       @abort = false
       @transaction = true
       value = nil
+      new_file = @filename + ".new"
 
-      if @file_cache
-        file = @file_cache
-        file.flock(File::LOCK_SH)
-        @table = @table_cache
+      content = nil
+      unless read_only
+        file = File.open(@filename, File::RDWR | File::CREAT)
+        file.binmode
+        file.flock(File::LOCK_EX)
+        commit_new(file) if FileTest.exist?(new_file)
+        content = file.read()
       else
-        new_file = @filename + ".new"
-
-        content = nil
-        unless read_only
-          file = File.open(@filename, File::RDWR | File::CREAT)
-          file.binmode
-          file.flock(File::LOCK_EX)
-          commit_new(file) if FileTest.exist?(new_file)
-          content = file.read()
-        else
+        if @table_cache.nil?
           begin
             file = File.open(@filename, File::RDONLY)
             file.binmode
@@ -136,80 +50,73 @@ class PTStore
             content = ""
           end
         end
-
-        if content != ""
-          @table = load(content)
-          if !read_only
-            size = content.size
-            md5 = Digest::MD5.digest(content)
-          end
-        else
-          @table = {}
-        end
-        content = nil                # unreference huge data
       end
 
-      begin
-        catch(:ptstore_abort_transaction) do
-          value = yield(self)
+      case content
+      when nil # use cache
+        @table = @table_cache.dup
+      when ""  # empty data
+	@table = {}
+        @table_cache = @table.dup
+      else
+	@table = load(content)
+        @table_cache = @table.dup
+        if !read_only
+          size = content.size
+          md5 = Digest::MD5.digest(content)
         end
+      end
+      content = nil		# unreference huge data
+
+      begin
+	catch(:pstore_abort_transaction) do
+	  value = yield(self)
+	end
       rescue Exception
-        @abort = true
-        raise
+	@abort = true
+	raise
       ensure
-        if !read_only and !@abort
+	if !read_only and !@abort
           tmp_file = @filename + ".tmp"
-          content = dump(@table)
-          if !md5 || size != content.size || md5 != Digest::MD5.digest(content)
+	  content = dump(@table)
+	  if !md5 || size != content.size || md5 != Digest::MD5.digest(content)
             File.open(tmp_file, "w") {|t|
               t.binmode
               t.write(content)
-              }
+            }
             File.rename(tmp_file, new_file)
             commit_new(file)
           end
-          content = nil                # unreference huge data
-        end
+          content = nil		# unreference huge data
+	end
       end
     ensure
-      if file
-        file.flock(File::LOCK_UN)
-        if read_only
-          @table_cache = @table
-          @file_cache = file
-        else
-          file.close
-        end
+      unless read_only
+        @table_cache = @table
       end
-
       @table = nil
       @transaction = false
+      file.close if file
     end
     value
   end
 
+  def close_cache
+    # do nothing
+  end
+
   def dump(table)
+  $stderr.puts 'dump'
     TMarshal::dump(table)
   end
 
   def load(content)
+  $stderr.puts 'load'
     TMarshal::load(content)
   end
 
   def load_file(file)
     TMarshal::load(file)
-  end
-
-  private
-  def commit_new(f)
-    f.truncate(0)
-    f.rewind
-    new_file = @filename + ".new"
-    File.open(new_file) do |nf|
-      nf.binmode
-      FileUtils.copy_stream(nf, f)
-    end
-    File.unlink(new_file)
   end
 end
 
