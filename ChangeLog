@@ -1,4 +1,7 @@
 2006-08-05  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/html_formatter.rb (replace_inline): do not convert
+	tag texts at all (reported by shino).
+
 	* misc/plugin/rank.rb: return an empty string in body_leave_proc.
 
 	* hiki/db/ptstore.rb: inherit the PStore class and rewrite

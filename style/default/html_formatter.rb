@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.59 2006-01-30 14:49:18 yanagita Exp $
+# $Id: html_formatter.rb,v 1.60 2006-08-05 05:35:07 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -111,6 +111,8 @@ module Hiki
           status << :pre
         when PLUGIN_CLOSE_RE, LINK_CLOSE_RE, PRE_CLOSE_RE
           status.pop
+        when TAG_RE
+          # do nothing
         else
           if status.empty?
             yield( str )
