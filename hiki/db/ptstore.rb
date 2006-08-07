@@ -1,4 +1,4 @@
-# $Id: ptstore.rb,v 1.11 2006-08-04 15:10:09 fdiary Exp $
+# $Id: ptstore.rb,v 1.12 2006-08-07 02:10:27 fdiary Exp $
 #
 # ptstore.rb
 #   based on pstore.rb contained in Ruby 1.8.2
@@ -106,12 +106,10 @@ class PTStore < PStore
   end
 
   def dump(table)
-  $stderr.puts 'dump'
     TMarshal::dump(table)
   end
 
   def load(content)
-  $stderr.puts 'load'
     TMarshal::load(content)
   end
 
