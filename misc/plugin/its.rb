@@ -10,6 +10,7 @@ end
 
 def its_add_ticket_form
   return '' if @conf.use_session && !@session_id
+  name = @user || ''
 
   result = <<EOS
 <form action="#{@conf.cgi_name}" method="post">
@@ -17,9 +18,9 @@ def its_add_ticket_form
     <input type="hidden" name="c" value="plugin">
     <input type="hidden" name="p" value="#{@page}">
     <input type="hidden" name="plugin" value="its_add_ticket_post">
-    <label>Summary:</label>
+    Summary:
     <input type="text" name="summary" value="" size="60"><br>
-    <label>Priority:</label>
+    Priority:
     <select name="priority">
 EOS
   its_priority_candidates.each do |i|
@@ -27,12 +28,13 @@ EOS
   end
   result << <<EOS
     </select><br>
-    <label>Version:</label>
+    Version:
     <input type="text" name="version" value="" size="6"><br>
-    <label>Reporter:</label>
-    <input type="text" name="reporter" value="" size="10"><br>
-    <label>Description:</label>
+    Reporter:
+    <input type="text" name="reporter" value="#{name.escapeHTML}" size="10"><br>
+    Description:
     <textarea name="description" cols="60" rows="10"></textarea><br>
+    <input type="hidden" name="session_id" value="#{@session_id}">
     <input type="submit" value="Submit">
   </div>
 </form>
@@ -45,14 +47,21 @@ def its_edit_ticket_form
 
   ticket = its_parse_ticket( @page )
   return '' unless ticket
+  name = @user || ''
   result = <<EOS
 <form action="#{@conf.cgi_name}" method="post">
+  <div>
+    Name:
+    <input type="text" name="name" value="#{name.escapeHTML}" size="10"><br>
+    Comment:<br>
+    <textarea name="comment" cols="60" rows="8"></textarea>
+  </div>
   <div>Change Properties</div>
   <div>
     <input type="hidden" name="c" value="plugin">
     <input type="hidden" name="p" value="#{@page}">
     <input type="hidden" name="plugin" value="its_edit_ticket_post">
-    <label>Priority:</label>
+    Priority:
     <select name="priority">
 EOS
   its_priority_candidates.each do |i|
@@ -60,7 +69,7 @@ EOS
   end
   result << <<EOS
     </select><br>
-    <label>Status:</label>
+    Status:
     <select name="status">
 EOS
   its_status_candidates.each do |i|
@@ -68,12 +77,13 @@ EOS
   end
   result << <<EOS
     </select><br>
-    <label>Version:</label>
+    Version:
     <input type="text" name="version" value="#{ticket[:version]}" size="6"><br>
-    <label>Milestone:</label>
+    Milestone:
     <input type="text" name="milestone" value="#{ticket[:milestone]}" size="6"><br>
-    <label>Assigned to:</label>
+    Assigned to:
     <input type="text" name="assigned" value="#{ticket[:assigned]}" size="10"><br>
+    <input type="hidden" name="session_id" value="#{@session_id}">
     <input type="submit" value="Submit">
   </div>
 </form>
@@ -174,8 +184,8 @@ def its_add_ticket_post
 
 #{its_escape(description)}
 
-{{comment}}
 ----
+!! Changelog
 {{its_edit_ticket_form}}
 EOS
   text << current_text if current_text
@@ -193,6 +203,9 @@ def its_edit_ticket_post
   rescue
     return true
   end
+  name = @cgi['name']
+  name = 'anonymous' if name.empty?
+  comment = @cgi['comment'].sub(/\A[\r\n]*/, '').sub(/[\r\n]*\z/, "\n")
   priority = @cgi['priority']
   status = @cgi['status']
   assigned = @cgi['assigned']
@@ -203,11 +216,16 @@ def its_edit_ticket_post
   text = load( @page )
   md5hex = @db.md5hex( @page )
 
-  text.sub!(/^:Priority:.*/i, ":Priority:#{priority}") 
-  text.sub!(/^:Status:.*/i, ":Status:#{status}") 
-  text.sub!(/^:Assigned to:.*/i, ":Assigned to:#{assigned}") 
-  text.sub!(/^:Version:.*/i, ":Version:#{version}") 
-  text.sub!(/^:Milestone:.*/i, ":Milestone:#{milestone}") 
+  text.sub!(/^:Priority:.*/i, ":Priority:#{priority}")
+  text.sub!(/^:Status:.*/i, ":Status:#{status}")
+  text.sub!(/^:Assigned to:.*/i, ":Assigned to:#{assigned}")
+  text.sub!(/^:Version:.*/i, ":Version:#{version}")
+  text.sub!(/^:Milestone:.*/i, ":Milestone:#{milestone}")
+  unless comment.empty?
+    str = @conf.parser.heading( "#{name} (#{format_date(Time::now)})\n", 3 )
+    str << comment
+    text.sub!(/^\{\{its_edit_ticket_form\}\}/, "#{str}\\&")
+  end
 
   save( @page, text, md5hex )
 end

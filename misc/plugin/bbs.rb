@@ -1,4 +1,4 @@
-# $Id: bbs.rb,v 1.11 2006-08-07 01:57:11 fdiary Exp $
+# $Id: bbs.rb,v 1.12 2006-08-07 06:33:15 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 add_body_enter_proc(Proc.new do
@@ -18,7 +18,7 @@ def bbs(level = 1)
   <div>
     #{bbs_name_label}: <input type="text" name="name" value="#{name.escapeHTML}" size="10">
     #{bbs_subject_label}: <input type="text" name="subject" size="40"><br>
-    <textarea cols="60" rows="8" name="msg" size="40"></textarea><br>
+    <textarea cols="60" rows="8" name="msg"></textarea><br>
     <input type="submit" name="comment" value="#{bbs_post_label}">
     <input type="hidden" name="bbs_num" value="#{@bbs_num}">
     <input type="hidden" name="bbs_level" value="#{level}">

@@ -1,4 +1,9 @@
 2006-08-07  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/bbs.rb: revise HTML.
+
+	* misc/plugin/its.rb: enable adding a comment and changing
+	properties with a single post.
+	
 	* hiki/plugin.rb: add accessors of session_id.
 	* misc/plugin/bbs.rb, misc/plugin/comment.rb, misc/plugin/its.rb:
 	validate a session_id.
