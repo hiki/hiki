@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.83 2006-08-04 15:10:08 fdiary Exp $
+# $Id: command.rb,v 1.84 2006-08-07 01:57:11 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'timeout'
@@ -59,14 +59,19 @@ module Hiki
       options['params'] = @params
 
       @plugin = Plugin::new( options, @conf )
-      @session_id = @cgi.cookies['session_id'][0]
-      if @session_id
-        @plugin.user = Hiki::Session::new( @conf, @session_id ).user
-      elsif @conf.use_session
+      session_id = @cgi.cookies['session_id'][0]
+      if session_id
+        session = Hiki::Session::new( @conf, session_id )
+        if session.check
+          @plugin.user = session.user
+          @plugin.session_id = session_id
+        end
+      end
+      if @conf.use_session && !@plugin.session_id
         session = Hiki::Session::new( @conf )
         session.save
-        @session_id = session.session_id
-        @plugin.add_cookie( session_cookie( @session_id ))
+        @plugin.session_id = session.session_id
+        @plugin.add_cookie( session_cookie( @plugin.session_id ))
       end
       @body_enter = @plugin.body_enter_proc
     end
@@ -150,7 +155,7 @@ module Hiki
     end
 
     def cmd_preview
-      raise PermissionError if @session_id && @session_id != @cgi.params['session_id'][0]
+      raise PermissionError if @plugin.session_id && @plugin.session_id != @cgi['session_id']
       @cmd = 'preview'
       cmd_edit( @p, @params['contents'][0], @conf.msg_preview, @params['page_title'][0] )
     end
@@ -328,7 +333,7 @@ module Hiki
       data[:update_timestamp] ||= ' checked'
       data[:page_title]     = page_title
       data[:form_proc]      = @plugin.form_proc
-      data[:session_id]     = @session_id || ''
+      data[:session_id]     = @plugin.session_id
 
       generate_page( data )
     end
@@ -346,7 +351,7 @@ module Hiki
     end
 
     def cmd_save( page, text, md5hex, update_timestamp = true )
-      raise PermissionError if @session_id && @session_id != @cgi.params['session_id'][0]
+      raise PermissionError if @plugin.session_id && @plugin.session_id != @cgi['session_id']
       subject = ''
       if text.empty?
         @db.delete( page )
@@ -492,9 +497,9 @@ module Hiki
       data[:key]            = @cgi.params['conf'][0] || 'default'
 
       data[:title]          = title( @conf.msg_admin )
-      data[:session_id]     = @session_id
+      data[:session_id]     = @plugin.session_id
       if @cgi.params['saveconf'][0]
-        raise PermissionError if @session_id && @session_id != @cgi.params['session_id'][0]
+        raise PermissionError if @plugin.session_id && @plugin.session_id != @cgi['session_id']
         data[:save_config]    = true
       end
       generate_page( data )

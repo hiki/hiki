@@ -1,4 +1,4 @@
-# $Id: plugin.rb,v 1.34 2006-02-27 11:56:38 yanagita Exp $
+# $Id: plugin.rb,v 1.35 2006-08-07 01:57:11 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
@@ -13,7 +13,7 @@ module Hiki
 
   class Plugin
     attr_reader   :toc_f, :plugin_command
-    attr_accessor :text, :title, :cookies, :user, :data
+    attr_accessor :text, :title, :cookies, :user, :data, :session_id
 
     TOC_STRING = "\000\000[Table of Contents]"
     

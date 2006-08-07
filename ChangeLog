@@ -1,3 +1,10 @@
+2006-08-07  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/plugin.rb: add accessors of session_id.
+	* misc/plugin/bbs.rb, misc/plugin/comment.rb, misc/plugin/its.rb:
+	validate a session_id.
+	* hiki/command.rb: create a new session if a session_id is invalid.
+	* hiki/session.rb: save a session file if @user is nil.
+
 2006-08-05  Kazuhiko  <kazuhiko@fdiary.net>
 	* style/default/html_formatter.rb (replace_inline): do not convert
 	tag texts at all (reported by shino).

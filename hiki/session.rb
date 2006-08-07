@@ -1,4 +1,4 @@
-# $Id: session.rb,v 1.8 2005-06-08 07:00:45 fdiary Exp $
+# $Id: session.rb,v 1.9 2006-08-07 01:57:11 fdiary Exp $
 # Copyright (C) 2004 Kazuhiko <kazuhiko@fdiary.net>
 
 module Hiki
@@ -29,9 +29,8 @@ module Hiki
     end
 
     def save
-      return until @user
       File.open( session_file, 'w' ) do |file|
-        file.print @user
+        file.print @user.to_s
       end
     end
 
