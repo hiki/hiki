@@ -1,5 +1,5 @@
 #!/usr/bin/ruby -Ke
-# $Id: hikilet.rb,v 1.2 2006-09-02 06:40:24 znz Exp $
+# $Id: hikilet.rb,v 1.3 2006-09-02 18:23:04 znz Exp $
 # Copyright (C) 2005 Kazuhiro NISHIYAMA
 
 require 'webrick/httpservlet/abstract'
@@ -42,6 +42,10 @@ class Hikilet < WEBrick::HTTPServlet::AbstractServlet
         @params[k] = [v]
       end
       @params
+    end
+
+    def [](key)
+      params[key][0]
     end
 
     def cookies

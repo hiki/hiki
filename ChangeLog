@@ -1,4 +1,7 @@
-2006-07-21  Kazuhiro NISHIYAMA  <zn@mbf.nifty.com>
+2006-09-03  Kazuhiro NISHIYAMA  <zn@mbf.nifty.com>
+	* misc/webrick/hikilet.rb: session_id bug fix.
+
+2006-09-02  Kazuhiro NISHIYAMA  <zn@mbf.nifty.com>
 	* hiki/plugin.rb: use URI.parse() instead of URI(). (Ticket-66)
 
 	* misc/webrick/hikilet.rb: cookies bug fix.
