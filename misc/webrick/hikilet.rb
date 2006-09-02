@@ -1,5 +1,5 @@
 #!/usr/bin/ruby -Ke
-# $Id: hikilet.rb,v 1.1 2005-09-29 05:08:59 fdiary Exp $
+# $Id: hikilet.rb,v 1.2 2006-09-02 06:40:24 znz Exp $
 # Copyright (C) 2005 Kazuhiro NISHIYAMA
 
 require 'webrick/httpservlet/abstract'
@@ -15,6 +15,8 @@ class Hikilet < WEBrick::HTTPServlet::AbstractServlet
   class CGI
     def initialize(req, res)
       @req, @res = req, res
+      @params = nil
+      @cookies = nil
     end
 
     def request_method
@@ -23,25 +25,32 @@ class Hikilet < WEBrick::HTTPServlet::AbstractServlet
 
     def header(headers)
       headers.each do |k, v|
-        @res[k] = v
+        case k
+        when 'cookie'
+          @res['Set-Cookie'] = v
+        else
+          @res[k] = v
+        end
       end
       '' # print nothing
     end
 
-    def convert_webrick_hash_to_cgi_hash(webrick_hash)
-      cgi_hash = Hash.new([])
-      webrick_hash.each do |k,v|
-        cgi_hash[k] = [v]
-      end
-      cgi_hash
-    end
-
     def params
-      convert_webrick_hash_to_cgi_hash(@req.query)
+      return @params if @params
+      @params = Hash.new([])
+      @req.query.each do |k,v|
+        @params[k] = [v]
+      end
+      @params
     end
 
     def cookies
-      convert_webrick_hash_to_cgi_hash(@req.cookies)
+      return @cookies if @cookies
+      @cookies = Hash.new([])
+      @req.cookies.each do |cookie|
+        @cookies[cookie.name] = [cookie.value]
+      end
+      @cookies
     end
   end
 
@@ -76,10 +85,13 @@ end
 
 if __FILE__ == $0
   require 'webrick'
+  require 'logger'
   logger = WEBrick::Log::new(STDERR, WEBrick::Log::INFO)
-
-  server = WEBrick::HTTPServer.new(:Port => 12380,
-                                   :Logger => logger)
+  port = 12380
+  server = WEBrick::HTTPServer.new({
+    :Port => port,
+    :Logger => logger,
+  })
 
   if FileTest::symlink?( __FILE__ )
     org_path = File::dirname( File::expand_path( File::readlink( __FILE__ ) ) )
@@ -91,6 +103,10 @@ if __FILE__ == $0
 
   require 'hiki/config'
   conf = Hiki::Config::new
+  $hiki_base_url = "http://localhost:#{port}/"
+  def conf.base_url
+    @base_url || $hiki_base_url
+  end
 
   server.mount("/", Hikilet, conf)
   server.mount("/theme", WEBrick::HTTPServlet::FileHandler, './theme')

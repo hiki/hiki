@@ -1,6 +1,8 @@
 2006-07-21  Kazuhiro NISHIYAMA  <zn@mbf.nifty.com>
 	* hiki/plugin.rb: use URI.parse() instead of URI(). (Ticket-66)
 
+	* misc/webrick/hikilet.rb: cookies bug fix.
+
 2006-08-08  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/command.rb (cmd_view): set correct references (closes #68).
 
