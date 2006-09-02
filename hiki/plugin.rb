@@ -1,4 +1,4 @@
-# $Id: plugin.rb,v 1.35 2006-08-07 01:57:11 fdiary Exp $
+# $Id: plugin.rb,v 1.36 2006-09-02 06:36:57 znz Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
@@ -83,7 +83,7 @@ module Hiki
     end
 
     def cookie_path
-      path = URI(@conf.base_url).path
+      path = URI.parse(@conf.base_url).path
       if path[-1] == ?/
         path
       else
