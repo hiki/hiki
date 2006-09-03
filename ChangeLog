@@ -1,3 +1,7 @@
+2006-09-03  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/amazon.rb: follow up to change <title> format and
+	image URL (closes #70) .
+
 2006-09-03  Kazuhiro NISHIYAMA  <zn@mbf.nifty.com>
 	* misc/webrick/hikilet.rb: session_id bug fix.
 
