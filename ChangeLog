@@ -2,7 +2,7 @@
 
 	* plugin/00default.rb: add postable?.
 	* hiki/command.rb, misc/plugin/bbs.rb, misc/plugin/comment.rb,
-	misc/plugin/its.rb: use postable?.
+	misc/plugin/its.rb, misc/plugin/trackback.rb: use postable?.
 	* misc/plugin/rbl.rb: add a new plugin that overrides postable? by
 	looking up Realtime Blackhole Lists.
 

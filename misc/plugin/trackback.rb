@@ -1,4 +1,4 @@
-# $Id: trackback.rb,v 1.12 2006-07-21 07:36:37 znz Exp $
+# $Id: trackback.rb,v 1.13 2006-10-04 02:02:22 fdiary Exp $
 # Copyright (C) 2004 Kazuhiko <kazuhiko@fdiary.net>
 
 def trackback
@@ -10,7 +10,7 @@ end
 def trackback_post
   params     = @cgi.params
   url = params['url'][0]
-  unless 'POST' == @cgi.request_method && url
+  unless 'POST' == @cgi.request_method && url && postable?
     redirect(@cgi, "#{@conf.index_url}?#{@page.escapeHTML}")
     return
   end
