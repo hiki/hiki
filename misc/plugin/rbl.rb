@@ -6,13 +6,13 @@ def postable?
     dnsbl_list = ["niku.2ch.net"]
   end
 
-  ip = ENV['REMOTE_ADDR'].scan(/\d+/).reverse.join(".")
+  address = ENV['REMOTE_ADDR']
+  ip = address.scan(/\d+/).reverse.join(".")
 
   dnsbl_list.each do |dnsbl|
     begin
       Resolv.getaddress( "#{ip}.#{dnsbl}" )
-        STDERR.puts "SPAM (RBL)"
-        STDERR.puts "IP:#{address}"
+        STDERR.puts "RBL : #{address}"
         return false
     rescue Resolv::ResolvError
     rescue Exception
