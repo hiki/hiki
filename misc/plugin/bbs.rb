@@ -1,4 +1,4 @@
-# $Id: bbs.rb,v 1.12 2006-08-07 06:33:15 fdiary Exp $
+# $Id: bbs.rb,v 1.13 2006-10-04 01:57:18 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 add_body_enter_proc(Proc.new do
@@ -32,6 +32,7 @@ EOS
 end
 
 def bbs_post
+  return '' unless postable?
   return '' if @conf.use_session && @session_id != @cgi['session_id']
 
   params     = @cgi.params

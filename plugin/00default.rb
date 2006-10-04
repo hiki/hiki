@@ -1,4 +1,4 @@
-# $Id: 00default.rb,v 1.55 2006-06-01 10:54:50 fdiary Exp $
+# $Id: 00default.rb,v 1.56 2006-10-04 01:57:18 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #==============================
@@ -306,6 +306,10 @@ end
 
 def creatable?
   auth? && (!@conf.options['freeze'] || admin?)
+end
+
+def postable?
+  true
 end
 
 export_plugin_methods(:toc, :toc_here, :recent, :br)

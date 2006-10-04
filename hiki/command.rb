@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.85 2006-08-08 08:00:13 fdiary Exp $
+# $Id: command.rb,v 1.86 2006-10-04 01:57:18 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'timeout'
@@ -82,10 +82,10 @@ module Hiki
           @cmd = 'view' unless @cmd
           raise if !@p && ['view', 'edit', 'diff', 'save'].index( @cmd )
           if @cmd == 'edit'
-            raise PermissionError, 'Permission denied' unless @plugin.editable?
+            raise PermissionError, 'Permission denied' unless @plugin.editable? && @plugin.postable?
             cmd_edit( @p )
           elsif @cmd == 'save'
-            raise PermissionError, 'Permission denied' unless @plugin.editable?
+            raise PermissionError, 'Permission denied' unless @plugin.editable? && @plugin.postable?
             if @params['save'][0]
               cmd_save(@p, @params['contents'][0], @params['md5hex'][0], @params['update_timestamp'][0])
             elsif @params['edit_form_button'][0]
@@ -96,7 +96,7 @@ module Hiki
               cmd_preview
             end
           elsif @cmd == 'create'
-            raise PermissionError, 'Permission denied' unless @plugin.editable?
+            raise PermissionError, 'Permission denied' unless @plugin.editable? && @plugin.postable?
             send( "cmd_#{@cmd}" )
           else
             if @conf.use_plugin and @plugin.plugin_command.index(@cmd) and @plugin.respond_to?(@cmd)
