@@ -1,4 +1,4 @@
-# $Id: comment.rb,v 1.13 2006-10-04 01:57:18 fdiary Exp $
+# $Id: comment.rb,v 1.14 2006-10-05 06:46:43 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 # modified by yoshimi.
@@ -36,7 +36,6 @@ EOS
 end
 
 def comment_post
-  return '' unless postable?
   return '' if @conf.use_session && @session_id != @cgi['session_id']
 
   params     = @cgi.params

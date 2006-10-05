@@ -1,3 +1,9 @@
+2006-10-05  Kazuhiko  <kazuhiko@fdiary.net>
+
+	* hiki/command.rb: check postable? if request method is "POST".
+	* misc/plugin/bbs.rb, misc/plugin/comment.rb, misc/plugin/its.rb,
+	misc/plugin/trackback.rb: cancel checking postable? in plugins.
+
 2006-10-04  Kazuhiko  <kazuhiko@fdiary.net>
 
 	* plugin/00default.rb: add postable?.

@@ -152,7 +152,6 @@ def its_get_tickets
 end
 
 def its_add_ticket_post
-  return '' unless postable?
   return '' if @conf.use_session && @session_id != @cgi['session_id']
 
   priority = @cgi['priority']
@@ -195,7 +194,6 @@ EOS
 end
 
 def its_edit_ticket_post
-  return '' unless postable?
   return '' if @conf.use_session && @session_id != @cgi['session_id']
 
   result = "\n"
