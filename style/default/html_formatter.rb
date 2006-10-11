@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.60 2006-08-05 05:35:07 fdiary Exp $
+# $Id: html_formatter.rb,v 1.61 2006-10-11 13:06:14 yanagita Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -123,7 +123,7 @@ module Hiki
       ret.join
     end
 
-    URI_RE = /\A#{URI.regexp( %w( http https ftp mailto ) )}\z/
+    URI_RE = /\A#{URI.regexp( %w( http https ftp file mailto ) )}\z/
 
     def replace_link( text )
       text.gsub( %r|<a href="(.+?)">(.+?)</a>| ) do |str|

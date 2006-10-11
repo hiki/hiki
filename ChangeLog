@@ -1,3 +1,6 @@
+2006-10-11  Kouhei Yanagita <yanagi@shakenbu.org>
+	* style/default/html_formatter.rb (URI_RE): allow file scheme in URI.
+
 2006-10-05  Kazuhiko  <kazuhiko@fdiary.net>
 
 	* hiki/command.rb: check postable? if request method is "POST".
