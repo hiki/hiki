@@ -1,3 +1,6 @@
+2006-10-16  Kazuhiro NISHIYAMA  <zn@mbf.nifty.com>
+	* hiki.cgi: return status 500 on error.
+
 2006-10-11  Kouhei Yanagita <yanagi@shakenbu.org>
 	* style/default/html_formatter.rb (URI_RE): allow file scheme in URI.
 

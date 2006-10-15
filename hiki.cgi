@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# $Id: hiki.cgi,v 1.33 2005-07-28 15:05:30 yanagita Exp $
+# $Id: hiki.cgi,v 1.34 2006-10-15 17:22:52 znz Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 BEGIN { $defout.binmode }
@@ -34,14 +34,19 @@ begin
   end
 rescue Exception => err
   if cgi
-    print cgi.header( 'type' => 'text/html' )
+    print cgi.header( 'status' => '500 Internal Server Error', 'type' => 'text/html' )
   else
+    print "Status: 500 Internal Server Error\n"
     print "Content-Type: text/html\n\n"
   end
 
   require 'cgi'
-  puts '<html><head><title>Hiki Error</title></head><body><pre>'
+  puts '<html><head><title>Hiki Error</title></head><body>'
+  puts '<h1>Hiki Error</h1>'
+  puts '<pre>'
   puts CGI.escapeHTML( "#{err} (#{err.class})\n" )
   puts CGI.escapeHTML( err.backtrace.join( "\n" ) )
-  puts '</pre></body></html>'
+  puts '</pre>'
+  puts "<div>#{' ' * 500}</div>"
+  puts '</body></html>'
 end
