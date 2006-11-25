@@ -1,3 +1,7 @@
+2006-11-26  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/storage.rb (md5hex): use MD5.hexdigest(s) instead of
+	MD5.new(s).hexdigest (closes #73).
+
 2006-10-16  Kazuhiro NISHIYAMA  <zn@mbf.nifty.com>
 	* hiki.cgi: return status 500 on error.
 
