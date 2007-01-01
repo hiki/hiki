@@ -1,4 +1,4 @@
-# amazon.rb $Revision: 1.11 $: Making link with image to Amazon using Amazon ECS.
+# amazon.rb $Revision: 1.12 $: Making link with image to Amazon using Amazon ECS.
 #
 # see document: #{@lang}/amazon.rb
 #
@@ -244,5 +244,4 @@ alias isbnImgRight isbn_image_right
 alias isbnImg isbn_image
 alias amazon isbn_image
 
-export_plugin_methods(:isbn_image, :isbn_image_left, :isbn_image_right, :isbn)
-export_plugin_methods(:isbnImgLeft, :isbnImgRight, :isbnImg, :amazon)
+export_plugin_methods(:isbn_image, :isbn_image_left, :isbn_image_right, :isbn, :isbnImgLeft, :isbnImgRight, :isbnImg, :amazon)
