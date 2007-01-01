@@ -1,4 +1,4 @@
-# amazon.rb $Revision: 1.12 $: Making link with image to Amazon using Amazon ECS.
+# amazon.rb $Revision: 1.13 $: Making link with image to Amazon using Amazon ECS.
 #
 # see document: #{@lang}/amazon.rb
 #
@@ -11,12 +11,12 @@ require 'rexml/document'
 require 'nkf'
 
 # do not change these variables
-@amazon_subscription_id = '1CVA98NEF1G753PFESR2'
+@amazon_subscription_id = '0WVS3J53FVP9M1E7ET02'
 @amazon_require_version = '2005-07-26'
 
 def amazon_call_ecs( asin )
 	aid =  @conf['amazon.aid'] || ''
-	aid = 'cshs-22' if aid.length == 0
+	aid = 'kazuhiko-22' if aid.length == 0
 	aid.untaint
 
 	url =  @amazon_ecs_url.dup
