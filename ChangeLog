@@ -1,3 +1,7 @@
+2007-01-12  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/src.rb: use the language and charset configured as
+	default (by Richard Zidlicky).
+
 2007-01-01  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/amazon.rb, misc/plugin/en/amazon.rb,
 	misc/plugin/ja/amazon.rb: import the tDiary's amazon plugin.

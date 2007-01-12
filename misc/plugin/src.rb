@@ -1,4 +1,4 @@
-# $Id: src.rb,v 1.8 2005-07-13 01:43:06 fdiary Exp $
+# $Id: src.rb,v 1.9 2007-01-12 02:27:19 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 def src
@@ -8,8 +8,8 @@ def src
     "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="ja">
 <head>
-  <meta http-equiv="Content-Language" content="ja">
-  <meta http-equiv="Content-Type" content="text/html; charset=EUC-JP">
+  <meta http-equiv="Content-Language" content="#{@conf.lang}">
+  <meta http-equiv="Content-Type" content="text/html; charset= #{@conf.charset}">
   <title>#{CGI::escapeHTML(page_name(@page))}</title>
 </head>
 <body>
@@ -26,7 +26,7 @@ EOS
   header = Hash::new
   header['Last-Modified'] = CGI::rfc1123_date(Time.now)
   header['type']          = 'text/html'
-  header['charset']       = 'EUC-jp'
+  header['charset']       =  @conf.charset
   header['Content-Language'] = @conf.lang
   header['Pragma']           = 'no-cache'
   header['Cache-Control']    = 'no-cache'
