@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.87 2006-10-05 06:46:43 fdiary Exp $
+# $Id: command.rb,v 1.88 2007-02-06 10:42:13 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'timeout'
@@ -197,7 +197,7 @@ module Hiki
 
       data[:page_title]   = (@plugin.hiki_anchor( @p.escape, @p.escapeHTML ))
       data[:view_title]   = pg_title
-      data[:title]        = title( pg_title )
+      data[:title]        = title( pg_title.unescapeHTML )
       data[:toc]          = @plugin.toc_f ? toc : nil
       data[:body]         = formatter.apply_tdiary_theme(contents)
       data[:references]   = ref.collect! {|a| "[#{@plugin.hiki_anchor(a.escape, @plugin.page_name(a))}] " }.join

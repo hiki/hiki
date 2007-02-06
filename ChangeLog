@@ -1,3 +1,7 @@
+2007-02-06  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/command.rb (cmd_view): fix too-escaped bug in title (closes
+	#76).
+
 2007-01-12  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/src.rb: use the language and charset configured as
 	default (by Richard Zidlicky).
