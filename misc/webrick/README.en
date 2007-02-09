@@ -9,6 +9,7 @@ Copy 'hikilet.rb' to the top of hiki directory where 'hiki.cgi' exists.
 !! Known Bugs
 
 XML-RPC interfaces are not supported.
+attach.cgi is not supported.
 
 !! Author
 
