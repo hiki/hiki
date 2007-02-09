@@ -1,17 +1,17 @@
 #!/usr/bin/ruby -Ke
-# $Id: hikilet.rb,v 1.3 2006-09-02 18:23:04 znz Exp $
-# Copyright (C) 2005 Kazuhiro NISHIYAMA
+# $Id: hikilet.rb,v 1.4 2007-02-09 21:39:47 znz Exp $
+# Copyright (C) 2005-2007 Kazuhiro NISHIYAMA
 
+require 'hiki/config'
 require 'webrick/httpservlet/abstract'
 
-def print(s)
-  Thread.current[:defout] << s.to_s
-end
-def puts(s)
-  print s.to_s.sub(/\n?\z/, "\n")
-end
-
 class Hikilet < WEBrick::HTTPServlet::AbstractServlet
+  DEFOUT = Object.new
+  def DEFOUT.write(s)
+    (Thread.current[:defout]||::STDOUT) << s.to_s
+  end
+  $stdout = DEFOUT
+
   class CGI
     def initialize(req, res)
       @req, @res = req, res
@@ -28,6 +28,8 @@ class Hikilet < WEBrick::HTTPServlet::AbstractServlet
         case k
         when 'cookie'
           @res['Set-Cookie'] = v
+        when 'type'
+          @res['Content-Type'] = v
         else
           @res[k] = v
         end
@@ -58,21 +60,20 @@ class Hikilet < WEBrick::HTTPServlet::AbstractServlet
     end
   end
 
-  def initialize(server, *options)
-    @conf = options.shift
-    super(server, *options)
-  end
-
   def do_GET(req, res)
     Thread.current[:defout] = ''
+    # ugly hack (thread unsafe)
+    saved_HTTP_ACCEPT_LANGUAGE = ENV['HTTP_ACCEPT_LANGUAGE']
+    ENV['HTTP_ACCEPT_LANGUAGE'] = req['Accept-Language']
+    conf = Hiki::Config::new
+    ENV['HTTP_ACCEPT_LANGUAGE'] = saved_HTTP_ACCEPT_LANGUAGE
     cgi = CGI::new(req, res)
-
-    db = Hiki::HikiDB::new( @conf )
+    db = Hiki::HikiDB::new( conf )
     db.open_db {
-      cmd = Hiki::Command::new( cgi, db, @conf )
+      cmd = Hiki::Command::new( cgi, db, conf )
       cmd.dispatch
     }
-    res.body = Thread.current[:defout]
+    res.body, Thread.current[:defout] = Thread.current[:defout], nil
     if res['location']
       res.status = 302
     end
@@ -90,10 +91,17 @@ end
 if __FILE__ == $0
   require 'webrick'
   require 'logger'
+
+  conf = Hiki::Config::new
+  base_url = URI.parse(conf.base_url)
+  theme_url = base_url + conf.theme_url
+  theme_path = conf.theme_path
+  conf = nil
+  ENV['SERVER_NAME'] ||= base_url.host
+  ENV['SERVER_PORT'] ||= base_url.port.to_s
   logger = WEBrick::Log::new(STDERR, WEBrick::Log::INFO)
-  port = 12380
   server = WEBrick::HTTPServer.new({
-    :Port => port,
+    :Port => base_url.port,
     :Logger => logger,
   })
 
@@ -105,15 +113,10 @@ if __FILE__ == $0
   $:.unshift( org_path.untaint, "#{org_path.untaint}/hiki" )
   $:.delete(".") if File.writable?(".")
 
-  require 'hiki/config'
-  conf = Hiki::Config::new
-  $hiki_base_url = "http://localhost:#{port}/"
-  def conf.base_url
-    @base_url || $hiki_base_url
+  server.mount(base_url.path, Hikilet)
+  if base_url.host == theme_url.host && base_url.port == theme_url.port
+    server.mount(theme_url.path, WEBrick::HTTPServlet::FileHandler, theme_path)
   end
-
-  server.mount("/", Hikilet, conf)
-  server.mount("/theme", WEBrick::HTTPServlet::FileHandler, './theme')
 
   trap("INT") {server.shutdown}
   server.start
