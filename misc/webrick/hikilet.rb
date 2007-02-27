@@ -1,5 +1,5 @@
 #!/usr/bin/ruby -Ke
-# $Id: hikilet.rb,v 1.4 2007-02-09 21:39:47 znz Exp $
+# $Id: hikilet.rb,v 1.5 2007-02-27 09:10:33 znz Exp $
 # Copyright (C) 2005-2007 Kazuhiro NISHIYAMA
 
 require 'hiki/config'
@@ -116,6 +116,10 @@ if __FILE__ == $0
   server.mount(base_url.path, Hikilet)
   if base_url.host == theme_url.host && base_url.port == theme_url.port
     server.mount(theme_url.path, WEBrick::HTTPServlet::FileHandler, theme_path)
+  end
+  server.mount(base_url.path, Hikilet)
+  if File.exist?('attach.cgi')
+    server.mount(base_url.path + 'attach.cgi', WEBrick::HTTPServlet::CGIHandler, 'attach.cgi')
   end
 
   trap("INT") {server.shutdown}
