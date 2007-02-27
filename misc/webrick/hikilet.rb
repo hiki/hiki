@@ -1,5 +1,5 @@
 #!/usr/bin/ruby -Ke
-# $Id: hikilet.rb,v 1.6 2007-02-27 09:12:33 znz Exp $
+# $Id: hikilet.rb,v 1.7 2007-02-27 09:15:48 znz Exp $
 # Copyright (C) 2005-2007 Kazuhiro NISHIYAMA
 
 require 'hiki/config'
@@ -95,7 +95,7 @@ if __FILE__ == $0
   conf = Hiki::Config::new
   base_url = URI.parse(conf.base_url)
   unless base_url.is_a?(URI::HTTP)
-    raise "@base_url must be full http URL: #{conf.base_url.inspect}"
+    raise "@base_url must be full http URL (e.g. http://localhost:10080/ ): current base_url=#{conf.base_url.inspect}"
   end
   theme_url = base_url + conf.theme_url
   theme_path = conf.theme_path
