@@ -1,13 +1,14 @@
-# $Id: xmlrpc.rb,v 1.7 2005-10-15 07:31:42 znz Exp $
+# $Id: xmlrpc.rb,v 1.8 2007-03-14 08:49:00 znz Exp $
 
 require 'xmlrpc/server'
 require 'hiki/plugin'
 
 module Hiki
   module XMLRPCHandler
-    private
-    def init_handler
-      @server.add_handler('wiki.getPage') do |page|
+    module_function
+
+    def init_handler(server, cgi_class=CGI)
+      server.add_handler('wiki.getPage') do |page|
         page = utf8_to_euc( page )
         conf = Hiki::Config::new
         db = Hiki::HikiDB::new( conf )
@@ -18,7 +19,7 @@ module Hiki
         XMLRPC::Base64.new( euc_to_utf8( ret ) )
       end
 
-      @server.add_handler('wiki.getPageInfo') do |page|
+      server.add_handler('wiki.getPageInfo') do |page|
         page = utf8_to_euc( page )
         conf = Hiki::Config::new
         db = Hiki::HikiDB::new( conf )
@@ -33,7 +34,7 @@ module Hiki
         }
       end
 
-      @server.add_handler('wiki.putPage') do |page, content, attributes|
+      server.add_handler('wiki.putPage') do |page, content, attributes|
         page = utf8_to_euc( page )
         content = utf8_to_euc( content )
         attributes ||= {}
@@ -46,7 +47,7 @@ module Hiki
           end
         }
         conf = Hiki::Config::new
-        cgi = CGI::new
+        cgi = cgi_class::new
         cgi.params['c'] = ['save']
         cgi.params['p'] = [page]
         db = Hiki::HikiDB::new( conf )
@@ -78,7 +79,7 @@ module Hiki
         true
       end
 
-      @server.add_handler('wiki.getAllPages') do
+      server.add_handler('wiki.getAllPages') do
         conf = Hiki::Config::new
         db = Hiki::HikiDB::new( conf )
         db.pages.collect{|p| XMLRPC::Base64.new( euc_to_utf8( p ) )}
@@ -93,13 +94,15 @@ module Hiki
     include XMLRPCHandler
 
     def initialize(xmlrpc_enabled)
+      return unless xmlrpc_enabled
+
       if defined?(MOD_RUBY)
         @server = XMLRPC::ModRubyServer.new
       else
         @server = XMLRPC::CGIServer.new
       end
 
-      init_handler if xmlrpc_enabled
+      init_handler(@server)
     end
 
     def serve

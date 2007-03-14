@@ -1,5 +1,5 @@
 #!/usr/bin/ruby -Ke
-# $Id: hikilet.rb,v 1.9 2007-03-14 07:53:53 znz Exp $
+# $Id: hikilet.rb,v 1.10 2007-03-14 08:49:16 znz Exp $
 # Copyright (C) 2005-2007 Kazuhiro NISHIYAMA
 
 require 'hiki/config'
@@ -14,7 +14,7 @@ class Hikilet < WEBrick::HTTPServlet::AbstractServlet
   $stdout = DEFOUT
 
   class DummyCGI
-    def initialize(req, res)
+    def initialize(req=nil, res=nil)
       @req, @res = req, res
       @params = nil
       @cookies = nil
@@ -41,8 +41,10 @@ class Hikilet < WEBrick::HTTPServlet::AbstractServlet
     def params
       return @params if @params
       @params = Hash.new([])
-      @req.query.each do |k,v|
-        @params[k] = [v]
+      if @req
+        @req.query.each do |k,v|
+          @params[k] = [v]
+        end
       end
       @params
     end
@@ -128,6 +130,7 @@ if __FILE__ == $0
   end
   theme_url = base_url + conf.theme_url
   theme_path = conf.theme_path
+  xmlrpc_enabled = conf.xmlrpc_enabled
   # release conf (need to load conf each request because content-negotiation)
   conf = nil
 
@@ -164,6 +167,13 @@ if __FILE__ == $0
   # mount attach.cgi
   if File.exist?('attach.cgi')
     server.mount(base_url.path + 'attach.cgi', WEBrick::HTTPServlet::CGIHandler, 'attach.cgi')
+  end
+
+  if xmlrpc_enabled
+    require 'hiki/xmlrpc'
+    xmlrpc_servlet = XMLRPC::WEBrickServlet.new
+    ::Hiki::XMLRPCHandler.init_handler(xmlrpc_servlet, ::Hikilet::DummyCGI)
+    server.mount('/HikiRPC', xmlrpc_servlet)
   end
 
   trap("INT") {server.shutdown}

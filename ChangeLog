@@ -1,6 +1,8 @@
 2007-03-14  Kazuhiro NISHIYAMA  <zn@mbf.nifty.com>
 	* misc/webrick/hikilet.rb: set $SAFE=1 in Hikilet.
 	return hiki.cgi style response on error.
+	support xmlrpc.
+	* hiki/xmlrpc.rb: support hikilet.
 
 2007-02-06  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/command.rb (cmd_view): fix too-escaped bug in title (closes
