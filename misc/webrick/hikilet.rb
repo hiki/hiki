@@ -1,8 +1,9 @@
 #!/usr/bin/ruby -Ke
-# $Id: hikilet.rb,v 1.8 2007-03-14 07:09:57 znz Exp $
+# $Id: hikilet.rb,v 1.9 2007-03-14 07:53:53 znz Exp $
 # Copyright (C) 2005-2007 Kazuhiro NISHIYAMA
 
 require 'hiki/config'
+require 'thread'
 require 'webrick/httpservlet/abstract'
 
 class Hikilet < WEBrick::HTTPServlet::AbstractServlet
@@ -60,18 +61,23 @@ class Hikilet < WEBrick::HTTPServlet::AbstractServlet
     end
   end
 
+  Mutex_of_HTTP_ACCEPT_LANGUAGE = Mutex.new
+
   def do_GET(req, res)
-    Thread.start do
+    proc do
       begin
         $SAFE = 1
         Thread.current[:defout] = ''
 
-        # ugly hack (thread unsafe)
+        # ugly hack
         # can not use Thread.exclusive because Thread.start in load_cgi_conf
-        saved_HTTP_ACCEPT_LANGUAGE = ENV['HTTP_ACCEPT_LANGUAGE']
-        ENV['HTTP_ACCEPT_LANGUAGE'] = req['Accept-Language']
-        conf = Hiki::Config::new
-        ENV['HTTP_ACCEPT_LANGUAGE'] = saved_HTTP_ACCEPT_LANGUAGE
+        conf = nil
+        Mutex_of_HTTP_ACCEPT_LANGUAGE.synchronize do
+          saved_HTTP_ACCEPT_LANGUAGE = ENV['HTTP_ACCEPT_LANGUAGE']
+          ENV['HTTP_ACCEPT_LANGUAGE'] = req['Accept-Language']
+          conf = Hiki::Config::new
+          ENV['HTTP_ACCEPT_LANGUAGE'] = saved_HTTP_ACCEPT_LANGUAGE
+        end
 
         cgi = DummyCGI::new(req, res)
         db = Hiki::HikiDB::new( conf )
@@ -98,7 +104,7 @@ class Hikilet < WEBrick::HTTPServlet::AbstractServlet
           '</body></html>',
         ].join('')
       end
-    end.value
+    end.call
   end
 
   def do_HEAD(req, res)
