@@ -1,5 +1,5 @@
 #!/usr/bin/ruby -Ke
-# $Id: hikilet.rb,v 1.7 2007-02-27 09:15:48 znz Exp $
+# $Id: hikilet.rb,v 1.8 2007-03-14 07:09:57 znz Exp $
 # Copyright (C) 2005-2007 Kazuhiro NISHIYAMA
 
 require 'hiki/config'
@@ -12,7 +12,7 @@ class Hikilet < WEBrick::HTTPServlet::AbstractServlet
   end
   $stdout = DEFOUT
 
-  class CGI
+  class DummyCGI
     def initialize(req, res)
       @req, @res = req, res
       @params = nil
@@ -61,22 +61,44 @@ class Hikilet < WEBrick::HTTPServlet::AbstractServlet
   end
 
   def do_GET(req, res)
-    Thread.current[:defout] = ''
-    # ugly hack (thread unsafe)
-    saved_HTTP_ACCEPT_LANGUAGE = ENV['HTTP_ACCEPT_LANGUAGE']
-    ENV['HTTP_ACCEPT_LANGUAGE'] = req['Accept-Language']
-    conf = Hiki::Config::new
-    ENV['HTTP_ACCEPT_LANGUAGE'] = saved_HTTP_ACCEPT_LANGUAGE
-    cgi = CGI::new(req, res)
-    db = Hiki::HikiDB::new( conf )
-    db.open_db {
-      cmd = Hiki::Command::new( cgi, db, conf )
-      cmd.dispatch
-    }
-    res.body, Thread.current[:defout] = Thread.current[:defout], nil
-    if res['location']
-      res.status = 302
-    end
+    Thread.start do
+      begin
+        $SAFE = 1
+        Thread.current[:defout] = ''
+
+        # ugly hack (thread unsafe)
+        # can not use Thread.exclusive because Thread.start in load_cgi_conf
+        saved_HTTP_ACCEPT_LANGUAGE = ENV['HTTP_ACCEPT_LANGUAGE']
+        ENV['HTTP_ACCEPT_LANGUAGE'] = req['Accept-Language']
+        conf = Hiki::Config::new
+        ENV['HTTP_ACCEPT_LANGUAGE'] = saved_HTTP_ACCEPT_LANGUAGE
+
+        cgi = DummyCGI::new(req, res)
+        db = Hiki::HikiDB::new( conf )
+        db.open_db do
+          cmd = Hiki::Command::new( cgi, db, conf )
+          cmd.dispatch
+        end
+
+        res.body, Thread.current[:defout] = Thread.current[:defout], nil
+        if res['location']
+          res.status = 302
+        end
+      rescue Exception => err
+        res.status = 500
+        res['content-type'] = 'text/html'
+        res.body = [
+          '<html><head><title>Hiki Error</title></head><body>',
+          '<h1>Hiki Error</h1>',
+          '<pre>',
+          CGI.escapeHTML( "#{err} (#{err.class})\n" ),
+          CGI.escapeHTML( err.backtrace.join( "\n" ) ),
+          '</pre>',
+          "<div>#{' ' * 500}</div>",
+          '</body></html>',
+        ].join('')
+      end
+    end.value
   end
 
   def do_HEAD(req, res)
@@ -92,6 +114,7 @@ if __FILE__ == $0
   require 'webrick'
   require 'logger'
 
+  # load conf
   conf = Hiki::Config::new
   base_url = URI.parse(conf.base_url)
   unless base_url.is_a?(URI::HTTP)
@@ -99,7 +122,10 @@ if __FILE__ == $0
   end
   theme_url = base_url + conf.theme_url
   theme_path = conf.theme_path
+  # release conf (need to load conf each request because content-negotiation)
   conf = nil
+
+  # CGI environments emulation
   ENV['SERVER_NAME'] ||= base_url.host
   ENV['SERVER_PORT'] ||= base_url.port.to_s
   logger = WEBrick::Log::new(STDERR, WEBrick::Log::INFO)
@@ -108,6 +134,7 @@ if __FILE__ == $0
     :Logger => logger,
   })
 
+  # prepare $LOAD_PATH
   if FileTest::symlink?( __FILE__ )
     org_path = File::dirname( File::expand_path( File::readlink( __FILE__ ) ) )
   else
@@ -116,11 +143,19 @@ if __FILE__ == $0
   $:.unshift( org_path.untaint, "#{org_path.untaint}/hiki" )
   $:.delete(".") if File.writable?(".")
 
-  server.mount(base_url.path, Hikilet)
+  # mount hiki
+  if false # use hiki.cgi instead of Hikilet (for debug)
+    server.mount(base_url.path, WEBrick::HTTPServlet::CGIHandler, 'hiki.cgi')
+  else
+    server.mount(base_url.path, Hikilet)
+  end
+
+  # mount theme
   if base_url.host == theme_url.host && base_url.port == theme_url.port
     server.mount(theme_url.path, WEBrick::HTTPServlet::FileHandler, theme_path)
   end
-  server.mount(base_url.path, Hikilet)
+
+  # mount attach.cgi
   if File.exist?('attach.cgi')
     server.mount(base_url.path + 'attach.cgi', WEBrick::HTTPServlet::CGIHandler, 'attach.cgi')
   end
