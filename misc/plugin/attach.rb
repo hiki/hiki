@@ -1,4 +1,4 @@
-# $Id: attach.rb,v 1.5 2006-01-30 13:49:16 yanagita Exp $
+# $Id: attach.rb,v 1.6 2007-04-08 01:15:03 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 #
 # thanks to Kazuhiko, Masao Mutoh, SHIMADA Mitsunobu, Yoshimi, ¤ê¤¿
@@ -44,22 +44,22 @@ def attach_map
   s << "</ul>\n"
 end
 
-def attach_anchor_string(string, file_name, page=@page)
+def attach_anchor_string(string, file_name, page = @page)
   s =  %Q!<a href="!
   s << %Q!#{@conf.cgi_name}#{cmdstr('plugin', "plugin=attach_download;p=#{page.escape};file_name=#{file_name.escape}")}">!
   s << %Q!#{if string then string.escapeHTML else file_name.escapeHTML end}</a>!
 end
 
-def attach_anchor(file_name, page=@page)
+def attach_anchor(file_name, page = @page)
   s =  %Q!<a href="!
   s << %Q!#{@conf.cgi_name}#{cmdstr('plugin', "plugin=attach_download;p=#{page.escape};file_name=#{file_name.escape}")}">!
   s << %Q!#{file_name.escapeHTML}</a>!
 end
 
-def get_image_size(file_name)
+def get_image_size(file_name, page = @page)
   begin
     require 'image_size'
-    f = "#{@cache_path}/attach/#{@page.escape}/#{file_name.escape}"
+    f = "#{@cache_path}/attach/#{page.escape}/#{file_name.escape}"
     File.open(f.untaint,'rb') do |fh|
       return ImageSize.new(fh).get_size
     end
@@ -69,7 +69,7 @@ def get_image_size(file_name)
 end
 
 def attach_image_anchor(file_name, page = @page)
-  image_size = get_image_size(file_name)
+  image_size = get_image_size(file_name, page)
   s =  %Q!<img alt="#{file_name.escapeHTML}"!
   s << %Q! width="#{image_size[:width]}" height="#{image_size[:height]}"! if image_size
   if @conf.options['attach.cache_url']
@@ -79,8 +79,8 @@ def attach_image_anchor(file_name, page = @page)
   end
 end
 
-def attach_flash_anchor(file_name, page=@page)
-  image_size = get_image_size(file_name)
+def attach_flash_anchor(file_name, page = @page)
+  image_size = get_image_size(file_name, page)
   s =  %Q!<embed type="application/x-shockwave-flash" src="!
   s << %Q!#{@conf.cgi_name}#{cmdstr('plugin', "plugin=attach_download;p=#{page.escape};file_name=#{file_name.escape}")}" !
   s << %Q! width="#{image_size[:width]}" height="#{image_size[:height]}" ! if image_size
@@ -117,7 +117,7 @@ def attach_download
   nil
 end
 
-def attach_src(file_name, page=@page)
+def attach_src(file_name, page = @page)
   tabstop = ' ' * (@options['attach.tabstop'] ? @options['attach.tabstop'].to_i : 2)
   
   if file_name =~ /\.(txt|rd|rb|c|pl|py|sh|java|html|htm|css|xml|xsl|sql|yaml)\z/i

@@ -1,3 +1,6 @@
+2007-04-08    <wiki@boron.rubyist.net>
+	* misc/plugin/attach.rb: get image size of other pages correctly.
+
 2007-03-14  Kazuhiro NISHIYAMA  <zn@mbf.nifty.com>
 	* misc/webrick/hikilet.rb: set $SAFE=1 in Hikilet.
 	return hiki.cgi style response on error.
