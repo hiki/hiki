@@ -1,3 +1,6 @@
+2007-05-23  Kazuhiro NISHIYAMA  <zn@mbf.nifty.com>
+	* hiki/page.rb: add Vary to response headers.
+
 2007-04-08    <wiki@boron.rubyist.net>
 	* misc/plugin/attach.rb: get image size of other pages correctly.
 

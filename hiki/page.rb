@@ -1,4 +1,4 @@
-# $Id: page.rb,v 1.14 2006-07-21 07:36:37 znz Exp $
+# $Id: page.rb,v 1.15 2007-05-23 07:20:04 znz Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 
@@ -45,6 +45,7 @@ module Hiki
 	@headers['Pragma']           = 'no-cache'
 	@headers['Cache-Control']    = 'no-cache'
       end
+      @headers['Vary']             = 'User-Agent,Accept-Language'
       @headers['Content-Length']   = @body.size.to_s
       @headers['cookie']           = @plugin.cookies unless @plugin.cookies.empty?
     end
