@@ -1,3 +1,6 @@
+2007-06-23  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/command.rb (cmd_admin): escape config key in admin mode.
+
 2007-06-22  Kouhei Yanagita <yanagi@shakenbu.org>
 	* hiki/session.rb (create_new_id): use Time#usec to make a session id
 	more hard-to-crack.

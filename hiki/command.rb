@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.88 2007-02-06 10:42:13 fdiary Exp $
+# $Id: command.rb,v 1.89 2007-06-23 18:50:41 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'timeout'
@@ -498,7 +498,7 @@ module Hiki
       raise PermissionError, 'Permission denied' unless @plugin.admin?
 
       data = get_common_data( @db, @plugin, @conf )
-      data[:key]            = @cgi.params['conf'][0] || 'default'
+      data[:key]            = ( @cgi.params['conf'][0] || 'default' ).escapeHTML
 
       data[:title]          = title( @conf.msg_admin )
       data[:session_id]     = @plugin.session_id
