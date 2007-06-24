@@ -1,3 +1,8 @@
+2007-06-24  Kouhei Yanagita <yanagi@shakenbu.org>
+	* Hiki 0.8.7 released!
+
+	* hiki/session.rb (initialize): fix a arbitrary file delete vulnerability.
+
 2007-06-24  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/attach.rb (attach_download): add a Content-Length
 	header.

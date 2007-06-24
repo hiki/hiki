@@ -1,4 +1,4 @@
-# $Id: session.rb,v 1.10 2007-06-23 13:32:25 yanagita Exp $
+# $Id: session.rb,v 1.11 2007-06-24 13:28:49 yanagita Exp $
 # Copyright (C) 2004 Kazuhiko <kazuhiko@fdiary.net>
 
 module Hiki
@@ -12,7 +12,7 @@ module Hiki
       @conf = conf
       @max_age = max_age
       if session_id
-        if /[0-9a-f]{16}/ =~ session_id
+        if /\A[0-9a-f]{16}\z/ =~ session_id
           @session_id = session_id
         else
           @session_id = nil
