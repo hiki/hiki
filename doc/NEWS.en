@@ -1,3 +1,20 @@
+! Changes in 0.8.7
+
+* fix a arbitrary file delete vulnerabilities.
+* Add Content-Length header field in downloading attached files.
+* Add Vary header field.
+* $SAFE=1 is set in Hikilet.
+* XMLRPC is supported in Hikilet.
+* fix the bug that text in a title is escaped twice.
+* the amazon plugin of tDiary is imported.
+* file scheme URI is converted to a link.
+* use status 500 on error.
+* the postable? method is added in plugins.
+* enable adding a comment and changing properties with a single post in the its.rb plugin.
+* session management without login is supported.
+* nested inline modifier is supported.
+* fix miscellaneous bugs.
+
 ! Changes in 0.8.6
 
 * fix DoS vulnerabilities in the process of getting a difference between pages.
