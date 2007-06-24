@@ -1,4 +1,4 @@
-# $Id: attach.rb,v 1.6 2007-04-08 01:15:03 fdiary Exp $
+# $Id: attach.rb,v 1.7 2007-06-24 12:00:11 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 #
 # thanks to Kazuhiko, Masao Mutoh, SHIMADA Mitsunobu, Yoshimi, ¤ê¤¿
@@ -102,6 +102,7 @@ def attach_download
 
     header = Hash::new
     header['Content-Type'] = mime_type
+    header['Content-Length'] = File.size(attach_file.untaint)
     header['Last-Modified'] = CGI::rfc1123_date(File.mtime(attach_file.untaint))
     if %r|^image/| =~ mime_type
       header['Content-Disposition'] = %Q|inline; filename="#{file_name.to_sjis}"; modification-date="#{header['Last-Modified']}";|

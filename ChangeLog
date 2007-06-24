@@ -1,3 +1,7 @@
+2007-06-24  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/attach.rb (attach_download): add a Content-Length
+	header.
+
 2007-06-23  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/command.rb (cmd_admin): escape config key in admin mode.
 
