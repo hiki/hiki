@@ -1,6 +1,6 @@
 ! Changes in 0.8.7
 
-* fix a arbitrary file delete vulnerabilities.
+* fix an arbitrary file delete vulnerabilities.
 * Add Content-Length header field in downloading attached files.
 * Add Vary header field.
 * $SAFE=1 is set in Hikilet.
@@ -31,7 +31,7 @@
 * support multiple addresses to notify changes.
 * support a pure-ruby version control repository.
 * add an 'Issue Tracking System' plugin (misc/plugin/its.rb).
-* add 'Rase Search' plugins (contrib/plugin/rast-register.rb, contrib/plugin/rast-search.rb).
+* add 'Rast Search' plugins (contrib/plugin/rast-register.rb, contrib/plugin/rast-search.rb).
 * fix miscellaneous bugs.
 
 ! Changes in 0.8.4
