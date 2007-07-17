@@ -1,3 +1,7 @@
+2007-07-17  Kouhei Yanagita <yanagi@shakenbu.org>
+	* plugin/00default.rb (create_menu): set rel="nofollow" in menu links to
+	edit/diff pages (patch by Kazuhiro NISHIYAMA).
+
 2007-06-24  Kouhei Yanagita <yanagi@shakenbu.org>
 	* Hiki 0.8.7 released!
 

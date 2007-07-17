@@ -1,4 +1,4 @@
-# $Id: 00default.rb,v 1.56 2006-10-04 01:57:18 fdiary Exp $
+# $Id: 00default.rb,v 1.57 2007-07-17 14:30:30 yanagita Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #==============================
@@ -188,9 +188,9 @@ def create_menu(data, command)
   if @conf.bot?
     menu << %Q!<a href="#{@conf.cgi_name}?c=index">#{@conf.msg_index}</a>!
   else
-    menu << %Q!<a href="#{@conf.cgi_name}?c=create">#{@conf.msg_create}</a>! if creatable?
-    menu << %Q!<a href="#{@conf.cgi_name}?c=edit;p=#{@page.escape}">#{@conf.msg_edit}</a>! if @page && editable?
-    menu << %Q!<a href="#{@conf.cgi_name}?c=diff;p=#{@page.escape}">#{@conf.msg_diff}</a>! if @page && editable?
+    menu << %Q!<a href="#{@conf.cgi_name}?c=create" rel="nofollow">#{@conf.msg_create}</a>! if creatable?
+    menu << %Q!<a href="#{@conf.cgi_name}?c=edit;p=#{@page.escape}" rel="nofollow">#{@conf.msg_edit}</a>! if @page && editable?
+    menu << %Q!<a href="#{@conf.cgi_name}?c=diff;p=#{@page.escape}" rel="nofollow">#{@conf.msg_diff}</a>! if @page && editable?
     menu << %Q!#{hiki_anchor( 'FrontPage', page_name('FrontPage') )}!
     menu << %Q!<a href="#{@conf.cgi_name}?c=index">#{@conf.msg_index}</a>!
     menu << %Q!<a href="#{@conf.cgi_name}?c=search">#{@conf.msg_search}</a>!
