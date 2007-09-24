@@ -3,7 +3,7 @@
 == plugin/history.rb - CVS の編集履歴を表示するプラグイン
 
   Copyright (C) 2003 Hajime BABA <baba.hajime@nifty.com>
-  $Id: history.rb,v 1.28 2005-06-29 06:10:45 fdiary Exp $
+  $Id: history.rb,v 1.29 2007-09-24 21:23:09 fdiary Exp $
   You can redistribute and/or modify this file under the terms of the LGPL.
 
   Copyright (C) 2003 Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
@@ -127,9 +127,9 @@ module Hiki
       title = title.compact
       title.reverse! unless rev2.nil?
       title = title.join("<=>").escapeHTML
-      
+
       do_link = (link and rev1)
-      
+
       rv = "["
       if do_link
         rev_param = "r=#{rev1[0]}"
@@ -157,7 +157,12 @@ module Hiki
       sources << "\n<br>\n"
       sources << "\n<table border=\"1\">\n"
       if @conf.options['history.hidelog']
-        sources << " <tr><th>#{history_th_label[0].escapeHTML}</th><th>#{history_th_label[1].escapeHTML}</th><th>#{history_th_label[2].escapeHTML}</th><th>#{history_th_label[3].escapeHTML}</th></tr>\n"
+	case history_repos_type
+	when 'cvs'
+          sources << " <tr><th>#{history_th_label[0].escapeHTML}</th><th>#{history_th_label[1].escapeHTML}</th><th>#{history_th_label[2].escapeHTML}</th><th>#{history_th_label[3].escapeHTML}</th></tr>\n"
+	else
+          sources << " <tr><th>#{history_th_label[0].escapeHTML}</th><th>#{history_th_label[1].escapeHTML}</th><th>#{history_th_label[3].escapeHTML}</th></tr>\n"
+        end
       else
 	case history_repos_type
 	when 'cvs'
@@ -178,7 +183,7 @@ module Hiki
 	end
         if @conf.options['history.hidelog']
 	  case history_repos_type
-	  when 'cvs' 
+	  when 'cvs'
             sources << " <tr><td>#{rev}</td><td>#{time.escapeHTML}</td><td>#{changes.escapeHTML}</td><td align=right>#{op}</td></tr>\n"
 	  else
             sources << " <tr><td>#{rev}</td><td>#{time.escapeHTML}</td><td align=right>#{op}</td></tr>\n"
@@ -239,7 +244,7 @@ module Hiki
 
       # parse the result and make revisions array
       revs = @conf.repos.revisions(@p)
-      
+
       prev2_rev, prev_rev, curr_rev, next_rev = recent_revs(revs, r.to_i)
       last_rev = revs[0]
 
