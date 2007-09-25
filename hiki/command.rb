@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.89 2007-06-23 18:50:41 fdiary Exp $
+# $Id: command.rb,v 1.90 2007-09-25 22:07:07 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'timeout'
@@ -12,6 +12,12 @@ include Hiki::Util
 
 module Hiki
   class PermissionError < StandardError; end
+  class SessionError < StandardError
+    def initialize(msg = nil)
+      msg = 'Invalid Session (maybe timeout)' unless msg
+      super
+    end
+  end
 
   class Command
     def initialize(cgi, db, conf)
@@ -109,7 +115,7 @@ module Hiki
             end
           end
         }
-      rescue NoMethodError, PermissionError, Timeout::Error
+      rescue NoMethodError, PermissionError, SessionError, Timeout::Error
         data = get_common_data( @db, @plugin, @conf )
         data[:message] = CGI::escapeHTML( $!.message )
         generate_error_page( data )
@@ -158,7 +164,7 @@ module Hiki
     end
 
     def cmd_preview
-      raise PermissionError if @plugin.session_id && @plugin.session_id != @cgi['session_id']
+      raise SessionError if @plugin.session_id && @plugin.session_id != @cgi['session_id']
       @cmd = 'preview'
       cmd_edit( @p, @params['contents'][0], @conf.msg_preview, @params['page_title'][0] )
     end
@@ -178,7 +184,7 @@ module Hiki
         @db.save_cache( @p, tokens )
       end
       formatter = @conf.formatter::new( tokens, @db, @plugin, @conf )
-      contents, toc = formatter.to_s, formatter.toc
+      contents, toc = formatter.to_s, formatter.toc(@plugin.toc_lv)
       if @conf.hilight_keys
         word = @params['key'][0]
         if word && word.size > 0
@@ -297,7 +303,7 @@ module Hiki
       if @cmd == 'preview'
         p = @conf.parser::new( @conf ).parse( text.gsub(/\r/, '') )
         formatter = @conf.formatter::new( p, @db, @plugin, @conf )
-        preview_text, toc = formatter.to_s, formatter.toc
+        preview_text, toc = formatter.to_s, formatter.toc(@plugin.toc_lv)
         save_button = ''
         data[:keyword] = CGI.escapeHTML( @params['keyword'][0] || '' )
         data[:update_timestamp] = @params['update_timestamp'][0] ? ' checked' : ''
@@ -355,7 +361,7 @@ module Hiki
     end
 
     def cmd_save( page, text, md5hex, update_timestamp = true )
-      raise PermissionError if @plugin.session_id && @plugin.session_id != @cgi['session_id']
+      raise SessionError if @plugin.session_id && @plugin.session_id != @cgi['session_id']
       subject = ''
       if text.empty?
         @db.delete( page )
@@ -503,7 +509,7 @@ module Hiki
       data[:title]          = title( @conf.msg_admin )
       data[:session_id]     = @plugin.session_id
       if @cgi.params['saveconf'][0]
-        raise PermissionError if @plugin.session_id && @plugin.session_id != @cgi['session_id']
+        raise SessionError if @plugin.session_id && @plugin.session_id != @cgi['session_id']
         data[:save_config]    = true
       end
       generate_page( data )
