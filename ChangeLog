@@ -1,3 +1,10 @@
+2007-09-25  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/db/flatfile.rb, hiki.cgi, hiki/xmlrpc.rb,
+	misc/webrick/hikilet.rb: use HikiDB_dbtype as the name of the
+	class instead of HikiDB.
+
+	* hiki.cgi: remove "$SAFE = 1" for FastCGI.
+
 2007-09-24  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/history.rb: hide "Changes" heading in non-cvs
 	repository case.

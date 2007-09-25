@@ -1,4 +1,4 @@
-# $Id: xmlrpc.rb,v 1.8 2007-03-14 08:49:00 znz Exp $
+# $Id: xmlrpc.rb,v 1.9 2007-09-25 06:23:41 fdiary Exp $
 
 require 'xmlrpc/server'
 require 'hiki/plugin'
@@ -11,7 +11,7 @@ module Hiki
       server.add_handler('wiki.getPage') do |page|
         page = utf8_to_euc( page )
         conf = Hiki::Config::new
-        db = Hiki::HikiDB::new( conf )
+        db = Hiki::const_get( "HikiDB_#{conf.database_type}" )::new( conf )
         ret = db.load( page )
         unless ret
           raise XMLRPC::FaultException.new(1, "No such page was found.")

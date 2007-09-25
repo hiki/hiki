@@ -1,4 +1,4 @@
-# $Id: flatfile.rb,v 1.23 2005-11-01 14:21:00 yanagita Exp $
+# $Id: flatfile.rb,v 1.24 2007-09-25 06:23:41 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'fileutils'
@@ -7,7 +7,7 @@ require 'hiki/storage'
 require 'hiki/util'
 
 module Hiki
-  class HikiDB < HikiDBBase
+  class HikiDB_flatfile < HikiDBBase
     attr_reader :pages_path
 
     def initialize( conf )
@@ -19,7 +19,7 @@ module Hiki
       create_infodb unless test(?e, @info_db)
       @info = PTStore::new( @info_db )
     end
-    
+
     def close_db
       @info.close_cache
       true
@@ -56,7 +56,7 @@ module Hiki
         end
       end
     end
-    
+
     def load( page )
       return nil unless exist?( page )
       File::read( textdir( page ) )
@@ -94,7 +94,7 @@ module Hiki
         @info.root?( f )
       end
     end
-    
+
     def infodb_exist?
       test( ?e, @info_db )
     end
@@ -105,7 +105,7 @@ module Hiki
         @info.root?(f) ? @info[f] : nil
       end
     end
-    
+
     def page_info
       h = Array::new
       @info.transaction(true) do
@@ -144,7 +144,7 @@ module Hiki
       end
       result
     end
-    
+
     def increment_hitcount ( p )
       f = p.escape
       @info.transaction do
@@ -192,7 +192,7 @@ module Hiki
   private
     def create_missing_dirs
       [@pages_path, @backup_path].each {|d|
-        FileUtils.mkdir_p(d) unless FileTest::exists?(d)
+        FileUtils.mkdir_p(d) unless FileTest.exist?(d)
       }
     end
 
@@ -205,7 +205,7 @@ module Hiki
       rescue
       end
     end
-    
+
     def create_infodb
       @info = PTStore::new( @info_db )
       @info.transaction do
@@ -216,14 +216,14 @@ module Hiki
         end
       end
     end
-    
+
     def create_info_default(p)
       f = p.escape
       @info.transaction do
         @info[f] = default
       end
     end
-    
+
     def default
       { :count          => 0,
         :last_modified  => Time::now,

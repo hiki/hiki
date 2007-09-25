@@ -1,10 +1,9 @@
 #!/usr/bin/env ruby
-# $Id: hiki.cgi,v 1.34 2006-10-15 17:22:52 znz Exp $
+# $Id: hiki.cgi,v 1.35 2007-09-25 06:23:41 fdiary Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 BEGIN { $defout.binmode }
 
-$SAFE     = 1
 $KCODE    = 'e'
 
 begin
@@ -26,7 +25,7 @@ begin
   else
     cgi = CGI::new
 
-    db = Hiki::HikiDB::new( conf )
+    db = Hiki::const_get( "HikiDB_#{conf.database_type}" )::new( conf )
     db.open_db {
       cmd = Hiki::Command::new( cgi, db, conf )
       cmd.dispatch

@@ -1,5 +1,5 @@
 #!/usr/bin/ruby -Ke
-# $Id: hikilet.rb,v 1.10 2007-03-14 08:49:16 znz Exp $
+# $Id: hikilet.rb,v 1.11 2007-09-25 06:23:42 fdiary Exp $
 # Copyright (C) 2005-2007 Kazuhiro NISHIYAMA
 
 require 'hiki/config'
@@ -82,7 +82,7 @@ class Hikilet < WEBrick::HTTPServlet::AbstractServlet
         end
 
         cgi = DummyCGI::new(req, res)
-        db = Hiki::HikiDB::new( conf )
+        db = Hiki::const_get( "HikiDB_#{conf.database_type}" )::new( conf )
         db.open_db do
           cmd = Hiki::Command::new( cgi, db, conf )
           cmd.dispatch
