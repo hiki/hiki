@@ -1,3 +1,7 @@
+2007-10-29  Kazuhiro NISHIYAMA  <zn@mbf.nifty.com>
+	* hiki/command.rb: revert partial patched
+	toc_lv. (see [Hiki-dev:01106], [Hiki-dev:01164])
+
 2007-09-26  U.Nakamura  <usa@garbagecollect.jp>
 	* hiki/command.rb: raise SessionError instead of PermissionError
 	in case of session errors.

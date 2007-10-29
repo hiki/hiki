@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.90 2007-09-25 22:07:07 fdiary Exp $
+# $Id: command.rb,v 1.91 2007-10-29 11:38:49 znz Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'timeout'
@@ -184,7 +184,7 @@ module Hiki
         @db.save_cache( @p, tokens )
       end
       formatter = @conf.formatter::new( tokens, @db, @plugin, @conf )
-      contents, toc = formatter.to_s, formatter.toc(@plugin.toc_lv)
+      contents, toc = formatter.to_s, formatter.toc
       if @conf.hilight_keys
         word = @params['key'][0]
         if word && word.size > 0
@@ -303,7 +303,7 @@ module Hiki
       if @cmd == 'preview'
         p = @conf.parser::new( @conf ).parse( text.gsub(/\r/, '') )
         formatter = @conf.formatter::new( p, @db, @plugin, @conf )
-        preview_text, toc = formatter.to_s, formatter.toc(@plugin.toc_lv)
+        preview_text, toc = formatter.to_s, formatter.toc
         save_button = ''
         data[:keyword] = CGI.escapeHTML( @params['keyword'][0] || '' )
         data[:update_timestamp] = @params['update_timestamp'][0] ? ' checked' : ''
