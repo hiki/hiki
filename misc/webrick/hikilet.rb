@@ -1,5 +1,5 @@
 #!/usr/bin/ruby -Ke
-# $Id: hikilet.rb,v 1.11 2007-09-25 06:23:42 fdiary Exp $
+# $Id: hikilet.rb,v 1.12 2008-01-06 05:49:30 znz Exp $
 # Copyright (C) 2005-2007 Kazuhiro NISHIYAMA
 
 require 'hiki/config'
@@ -78,7 +78,11 @@ class Hikilet < WEBrick::HTTPServlet::AbstractServlet
           saved_HTTP_ACCEPT_LANGUAGE = ENV['HTTP_ACCEPT_LANGUAGE']
           ENV['HTTP_ACCEPT_LANGUAGE'] = req['Accept-Language']
           conf = Hiki::Config::new
-          ENV['HTTP_ACCEPT_LANGUAGE'] = saved_HTTP_ACCEPT_LANGUAGE
+          if saved_HTTP_ACCEPT_LANGUAGE
+            ENV['HTTP_ACCEPT_LANGUAGE'] = saved_HTTP_ACCEPT_LANGUAGE
+          else
+            ENV.delete('HTTP_ACCEPT_LANGUAGE')
+          end
         end
 
         cgi = DummyCGI::new(req, res)

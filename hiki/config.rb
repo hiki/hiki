@@ -1,4 +1,4 @@
-# $Id: config.rb,v 1.125 2007-09-25 06:23:41 fdiary Exp $
+# $Id: config.rb,v 1.126 2008-01-06 05:49:30 znz Exp $
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
@@ -33,6 +33,7 @@ module Hiki
       @repos = Hiki::const_get("Repos#{@repos_type.capitalize}").new(@repos_root, @data_path)
 
       instance_variables.each do |v|
+        v = v.to_s
         v.sub!( /@/, '' )
         instance_eval( <<-SRC
         def #{v}

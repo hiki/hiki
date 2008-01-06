@@ -1,3 +1,8 @@
+2008-01-06  Kazuhiro NISHIYAMA  <zn@mbf.nifty.com>
+	* hiki/config.rb, hiki/hiki_formatter.rb,
+	misc/webrick/hikilet.rb, plugin/01sp.rb, hiki/pluginutil.rb,
+	style/default/html_formatter.rb: partially support ruby 1.9.0.
+
 2007-10-29  Kazuhiro NISHIYAMA  <zn@mbf.nifty.com>
 	* hiki/command.rb: revert partial patched
 	toc_lv. (see [Hiki-dev:01106], [Hiki-dev:01164])

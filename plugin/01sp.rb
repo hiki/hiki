@@ -1,4 +1,4 @@
-# 01sp.rb - select-plugins plugin $Revision: 1.4 $
+# 01sp.rb - select-plugins plugin $Revision: 1.5 $
 
 =begin ChangeLog
 See ../ChangeLog for changes after this.
@@ -34,7 +34,12 @@ See ../ChangeLog for changes after this.
 =end ChangeLog
 
 SP_PREFIX = 'sp'
-@sp_path = ( @conf["#{SP_PREFIX}.path"] || "#{PATH}/misc/plugin" ).to_a
+@sp_path = ( @conf["#{SP_PREFIX}.path"] || "#{PATH}/misc/plugin" )
+if @sp_path.respond_to? :to_a
+  @sp_path = @sp_path.to_a
+else
+  @sp_path = @sp_path.split(/\r?\n/)
+end
 @sp_path = @sp_path.collect do |path|
   /\/$/ =~ path ? path.chop : path
 end

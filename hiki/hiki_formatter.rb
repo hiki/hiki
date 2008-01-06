@@ -1,4 +1,4 @@
-# $Id: hiki_formatter.rb,v 1.7 2005-09-30 11:53:15 fdiary Exp $
+# $Id: hiki_formatter.rb,v 1.8 2008-01-06 05:49:30 znz Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 module Hiki
@@ -11,7 +11,7 @@ module Hiki
       title   = ''
       html    = ''
 
-      orig_html.each do |line|
+      orig_html.each_line do |line|
         if H2_RE =~ line
           html << tdiary_section(title, section) unless title.empty? && section.empty?
           section = ''

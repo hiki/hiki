@@ -1,4 +1,4 @@
-# $Id: html_formatter.rb,v 1.61 2006-10-11 13:06:14 yanagita Exp $
+# $Id: html_formatter.rb,v 1.62 2008-01-06 05:49:30 znz Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'
@@ -46,7 +46,7 @@ module Hiki
       num = -1
       level = 1
       to_s unless @html_converted
-      @html_converted.each do |line|
+      @html_converted.each_line do |line|
         if HEADING_RE =~ line
           new_level = $1.to_i - 1
           num += 1
