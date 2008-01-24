@@ -1,6 +1,8 @@
+2008-01-25  Kazuhiro NISHIYAMA  <zn@mbf.nifty.com>
+	* hiki.cgi, misc/plugin/attach/attach.cgi: $defout -> $stdout.
+
 2008-01-07  Kazuhiro NISHIYAMA  <zn@mbf.nifty.com>
 	* plugin/01sp.rb: improve previous incompatible change.
-
 
 2008-01-06  Kazuhiro NISHIYAMA  <zn@mbf.nifty.com>
 	* hiki/config.rb, hiki/hiki_formatter.rb,

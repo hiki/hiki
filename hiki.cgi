@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
-# $Id: hiki.cgi,v 1.35 2007-09-25 06:23:41 fdiary Exp $
+# $Id: hiki.cgi,v 1.36 2008-01-24 15:42:11 znz Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
-BEGIN { $defout.binmode }
+BEGIN { $stdout.binmode }
 
 $KCODE    = 'e'
 

@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
-# $Id: attach.cgi,v 1.19 2005-07-20 12:31:45 fdiary Exp $
+# $Id: attach.cgi,v 1.20 2008-01-24 15:42:11 znz Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
-BEGIN { $defout.binmode }
+BEGIN { $stdout.binmode }
 
 $SAFE     = 1
 
