@@ -7,13 +7,6 @@
 </head>
 
 <body>
-<div class="sidebar">
-<ul>
-<% @plugin.each_conf_key do |key|%>
-  <li><a href="<%=@contents[:cgi_name]%>?c=admin;conf=<%=key%>"><%=@plugin.conf_label( key )%></a></li>
-<% end %>
-</ul>
-</div>
 <div class="main">
 <div class="adminmenu"><%= @contents[:tools] %></div>
 <h1 class="header"><%=@conf.msg_config%></h1>
@@ -30,6 +23,13 @@
 </div>
 </form>
 <hr class="sep">
+</div>
+<div class="sidebar">
+<ul>
+<% @plugin.each_conf_key do |key|%>
+  <li><a href="<%=@contents[:cgi_name]%>?c=admin;conf=<%=key%>"><%=@plugin.conf_label( key )%></a></li>
+<% end %>
+</ul>
 </div>
 <div class="footer"><%= @contents[:footer] %></div>
 </body>

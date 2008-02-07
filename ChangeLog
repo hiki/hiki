@@ -1,3 +1,6 @@
+2008-02-08  Kouhei Yanagita <yanagi@shakenbu.org>
+	* template/adminform.html: div.main should precede div.sidebar.
+
 2008-01-25  Kazuhiro NISHIYAMA  <zn@mbf.nifty.com>
 	* hiki.cgi, misc/plugin/attach/attach.cgi: $defout -> $stdout.
 
