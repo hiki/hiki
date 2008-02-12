@@ -1,3 +1,13 @@
+2008-02-12  KURODA Hiraku  <hiraku@sapporo.email.ne.jp>
+	* hiki/command.rb, hiki/plugin.rb, messages/en.rb, messages/ja.rb:
+	hiki/filter.rb, hiki/filter/bayes_filter.rb,
+	hiki/filter/bayes_filter/bayes.rb, hiki/filter/word_filter.rb,
+	plugin/50bayes_filter.rb, plugin/50word_filter.rb,
+	plugin/en/50bayes_filter.rb, plugin/en/50word_filter.rb,
+	plugin/ja/50bayes_filter.rb, plugin/ja/50word_filter.rb,
+	test/spec_50bayes_filter.rb, test/spec_bayes_filter.rb:
+	add spam filtering features.
+
 2008-02-08  Kouhei Yanagita <yanagi@shakenbu.org>
 	* template/adminform.html: div.main should precede div.sidebar.
 

@@ -1,4 +1,4 @@
-# $Id: plugin.rb,v 1.36 2006-09-02 06:36:57 znz Exp $
+# $Id: plugin.rb,v 1.37 2008-02-12 15:06:08 hiraku Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
@@ -279,7 +279,9 @@ module Hiki
       @db.load_backup( page )
     end
 
-    def save( page, src, md5, update_timestamp = true )
+    def save( page, src, md5, update_timestamp = true, filtering = true )
+      return false if filtering and Filter.new_page_is_spam?(page, src)
+
       src.gsub!(/\r/, '')
       src.sub!(/\A\n*/, '')
       src.sub!(/\n*\z/, "\n")

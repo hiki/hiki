@@ -1,4 +1,4 @@
-# $Id: ja.rb,v 1.14 2005-07-14 01:50:25 fdiary Exp $
+# $Id: ja.rb,v 1.15 2008-02-12 15:06:08 hiraku Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # You can redistribute it and/or modify it under the terms of
 # the Ruby's licence.
@@ -69,5 +69,6 @@ module Hiki
     def msg_last_modified; '更新日時'; end
     def msg_keyword; 'キーワード'; end
     def msg_reference; '参照'; end
+    def msg_input_is_spam; '入力されたデータをスパムと判定しました。'; end
   end
 end

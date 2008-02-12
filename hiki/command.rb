@@ -1,4 +1,4 @@
-# $Id: command.rb,v 1.91 2007-10-29 11:38:49 znz Exp $
+# $Id: command.rb,v 1.92 2008-02-12 15:06:08 hiraku Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'timeout'
@@ -7,6 +7,7 @@ require 'hiki/util'
 require 'hiki/plugin'
 require 'hiki/aliaswiki'
 require 'hiki/session'
+require 'hiki/filter'
 
 include Hiki::Util
 
@@ -80,6 +81,8 @@ module Hiki
         @plugin.add_cookie( session_cookie( @plugin.session_id ))
       end
       @body_enter = @plugin.body_enter_proc
+
+      Filter.init(@conf, @cgi, @plugin, @db)
     end
 
     def dispatch
@@ -381,7 +384,13 @@ module Hiki
           return
         end
 
-        if @plugin.save( page, text, md5hex, update_timestamp )
+        if Filter.new_page_is_spam?(page, text, title)
+          @cmd = 'is_spam'
+          cmd_edit( page, text, @conf.msg_input_is_spam )
+          return
+        end
+
+        if @plugin.save( page, text, md5hex, update_timestamp, false )
           keyword = @params['keyword'][0].split("\n").collect {|k|
             k.chomp.strip}.delete_if{|k| k.size == 0}
           attr = [[:keyword, keyword.uniq], [:title, title]]
