@@ -1,3 +1,6 @@
+2008-02-20  KURODA Hiraku  <hiraku@sapporo.email.ne.jp>
+	* plugin/50bayes_filter.rb: Fix a bug for ruby-1.8.5.
+
 2008-02-12  KURODA Hiraku  <hiraku@sapporo.email.ne.jp>
 	* hiki/command.rb, hiki/plugin.rb, messages/en.rb, messages/ja.rb:
 	hiki/filter.rb, hiki/filter/bayes_filter.rb,

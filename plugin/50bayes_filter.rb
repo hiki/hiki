@@ -233,7 +233,7 @@ EOT
       end
     end
     sub = lambda do |subtitle, list|
-      next "" if list.empty?
+      break "" if list.empty?
       sr = <<EOT
 <h4>#{subtitle}</h4>
 <table>
