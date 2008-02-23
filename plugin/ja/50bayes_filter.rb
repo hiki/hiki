@@ -26,5 +26,6 @@ class BayesFilterConfig
     def self.use_filter; "ベイズフィルタを使う"; end
     def self.threshold; "閾値"; end
     def self.page_token; "ページ中のトークン一覧"; end
+    def self.report_filtering; "フィルタリング結果をメールで通知"; end
   end
 end

@@ -17,6 +17,7 @@ module SetupBayesFilter
         :data_path=>@tmpdir,
         :cache_path=>"#{@tmpdir}/cache",
         :bayes_threshold=>nil,
+        :site_name=>"SiteName",
         :null_object=>false)
       @conf.should_receive("[]".intern).any_number_of_times{|k| @opt[k]}
       @bf = Hiki::Filter::BayesFilter.init(@conf)
@@ -60,6 +61,16 @@ describe Hiki::Filter::BayesFilter, "with default settings" do
     @bf.cache_path.should == path
     File.should be_exist(path)
   end
+
+  it ".filter should not call Hiki::Filter.plugin.sendmail" do
+    new_page = Hiki::Filter::PageData.new(
+      "Page",
+      "text",
+      "title")
+    old_page = Hiki::Filter::PageData.new("Page")
+    Hiki::Filter.plugin.should_not_receive(:sendmail)
+    lambda{@bf.filter(new_page, old_page)}.should_not raise_error
+  end
 end
 
 describe Hiki::Filter::BayesFilter, "with settings" do
@@ -67,10 +78,8 @@ describe Hiki::Filter::BayesFilter, "with settings" do
 
   before do
     @opt["bayes_filter.type"] = "Paul Graham"
-    @conf = stub("conf",
-      :data_path=>@tmpdir,
-      :bayes_threshold=>"0.90",
-      :null_object=>false)
+    @opt["bayes_filter.report"] = "1"
+    @conf.stub!(:bayes_threshold).and_return("0.90")
     @conf.should_receive("[]".intern).any_number_of_times{|k| @opt[k]}
     @bf = Hiki::Filter::BayesFilter.init(@conf)
   end
@@ -98,6 +107,16 @@ describe Hiki::Filter::BayesFilter, "with settings" do
     @bf.db.spam << ["spam"]
     bfpd.new(pd.new("Page", "spam")).ham?.should be_false
     bfpd.new(pd.new("Page", "ham spam")).ham?.should be_true
+  end
+
+  it ".filter should call Hiki::Filter.plugin.sendmail" do
+    new_page = Hiki::Filter::PageData.new(
+      "Page",
+      "text",
+      "title")
+    old_page = Hiki::Filter::PageData.new("Page")
+    Hiki::Filter.plugin.should_receive(:sendmail)
+    lambda{@bf.filter(new_page, old_page)}.should_not raise_error
   end
 end
 

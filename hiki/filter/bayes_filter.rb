@@ -11,6 +11,7 @@ module Hiki::Filter
       THRESHOLD = "#{PREFIX}.threshold"
       TYPE = "#{PREFIX}.type"
       USE = "#{PREFIX}.use"
+      REPORT = "#{PREFIX}.report"
     end
 
     def self.init(conf)
@@ -47,6 +48,23 @@ module Hiki::Filter
       r = "#{@hiki_conf.cache_path}/bayes"
       FileUtils.mkpath(r)
       r
+    end
+
+    def self.filter(new_page, old_page)
+      pd = PageData.new(new_page, old_page)
+      pd.cache_save
+      subject = "#{REPORT_PREFIX[pd.ham?]} at '#{new_page.page}' of '#{@hiki_conf.site_name}'"
+      body = <<EOT
+Page              : #{new_page.page}
+Address           : #{new_page.remote_addr}
+Title             : #{new_page.title}
+Appended keywords : #{pd.diff_keyword.sort.join(", ")}
+Appended text----
+#{pd.diff_text}
+----
+EOT
+      Hiki::Filter.plugin.sendmail(subject, body) if @hiki_conf[Key::REPORT]
+      !pd.ham?
     end
 
     class TokenList < Bayes::TokenList
@@ -178,20 +196,6 @@ module Hiki::Filter
   REPORT_PREFIX = {true=>"HAM", false=>"SPAM", nil=>"DOUBT"}
   add_filter do |new_page, old_page|
     next unless @conf['bayes_filter.use']
-    BayesFilter.init(@conf)
-    pd = BayesFilter::PageData.new(new_page, old_page)
-    pd.cache_save
-    subject = "#{REPORT_PREFIX[pd.ham?]} at '#{new_page.page}' of '#{@conf.site_name}'"
-    body = <<EOT
-Page              : #{new_page.page}
-Address           : #{new_page.remote_addr}
-Title             : #{new_page.title}
-Appended keywords : #{pd.diff_keyword.sort.join(", ")}
-Appended text----
-#{pd.diff_text}
-----
-EOT
-    plugin.sendmail(subject, body)
-    !pd.ham?
+    BayesFilter.init(@conf).filter(new_page, old_page)
   end
 end

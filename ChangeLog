@@ -1,5 +1,8 @@
 2008-02-23  KURODA Hiraku  <hiraku@sapporo.email.ne.jp>
 	* hiki/filter.rb, test/spec_filter.rb: Ignore error raised inregisterd filter.
+	* hiki/filter/bayes_filter.rb, plugin/50bayes_filter.rb,
+	plugin/en/50bayes_filter.rb, plugin/ja/50bayes_filter.rb,
+	test/spec_bayes_filter.rb: Send report mail ONLY WHEN configuration is set so.
 
 2008-02-20  KURODA Hiraku  <hiraku@sapporo.email.ne.jp>
 	* plugin/50bayes_filter.rb: Fix a bug for ruby-1.8.5.

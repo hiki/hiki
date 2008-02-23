@@ -71,6 +71,7 @@ class BayesFilterConfig
     if save_mode? and @cgi.params["from_top"][0]
       @conf[USE] = @cgi.params[USE][0]
       @conf[THRESHOLD] = (@cgi.params[THRESHOLD][0]||0.9).to_f
+      @conf[REPORT] = @cgi.params[REPORT][0]
 
       rebuild = false
       rebuild = true if @cgi.params["rebuild_db"][0]=="execute"
@@ -94,6 +95,7 @@ class BayesFilterConfig
 <li><input type='checkbox' name='rebuild_db' value='execute' id='rebuild_db'><label for='rebuild_db'>#{Res.rebuild_db}</label></li>
 <li><input type='text' name='#{THRESHOLD}' value='#{@conf[THRESHOLD]}' id='#{THRESHOLD}'><label for='#{THRESHOLD}'>#{Res.threshold}</label></li>
 <li><input type='checkbox' name='#{USE}' value='yes' id='#{USE}' #{@conf[USE] ? "checked='checked'" : ""}><label for='#{USE}'>#{Res.use_filter}</label>
+<li><input type='checkbox' name='#{REPORT}' value='yes' id='#{REPORT}' #{@conf[REPORT] ? "checked='checked'" : ""}><label for='#{REPORT}'>#{Res.report_filtering}</label>
 </ul>
 <input type='hidden' name='from_top' value='yes'>
 EOT

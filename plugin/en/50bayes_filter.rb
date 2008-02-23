@@ -26,5 +26,6 @@ class BayesFilterConfig
     def self.use_filter; "Use Bayes filter"; end
     def self.threshold; "Threshold"; end
     def self.page_token; "Tokens of page"; end
+    def self.report_filtering; "Report filtering result by mail"; end
   end
 end
