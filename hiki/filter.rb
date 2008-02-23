@@ -54,7 +54,10 @@ module Hiki
 
       is_spam = false
       @filters.each do |proc|
-        break if is_spam ||= proc.call(new_page, old_page)
+        begin
+          break if is_spam ||= proc.call(new_page, old_page)
+        rescue Exception
+        end
       end
       return is_spam
     end
