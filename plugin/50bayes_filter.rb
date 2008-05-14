@@ -72,6 +72,7 @@ class BayesFilterConfig
       @conf[USE] = @cgi.params[USE][0]
       @conf[THRESHOLD] = (@cgi.params[THRESHOLD][0]||0.9).to_f
       @conf[REPORT] = @cgi.params[REPORT][0]
+      @conf[SHARE_DB] = @cgi.params[SHARE_DB][0]
 
       rebuild = false
       rebuild = true if @cgi.params["rebuild_db"][0]=="execute"
@@ -83,7 +84,7 @@ class BayesFilterConfig
       rebuild_db if rebuild
     end
 
-    <<EOT
+    r = <<EOT
 <ul>
 <li><a href="#{conf_url(Mode::HAM_TOKENS)}">#{Res.ham_tokens}</a></li>
 <li><a href="#{conf_url(Mode::SPAM_TOKENS)}">#{Res.spam_tokens}</a></li>
@@ -96,6 +97,13 @@ class BayesFilterConfig
 <li><input type='text' name='#{THRESHOLD}' value='#{@conf[THRESHOLD]}' id='#{THRESHOLD}'><label for='#{THRESHOLD}'>#{Res.threshold}</label></li>
 <li><input type='checkbox' name='#{USE}' value='yes' id='#{USE}' #{@conf[USE] ? "checked='checked'" : ""}><label for='#{USE}'>#{Res.use_filter}</label>
 <li><input type='checkbox' name='#{REPORT}' value='yes' id='#{REPORT}' #{@conf[REPORT] ? "checked='checked'" : ""}><label for='#{REPORT}'>#{Res.report_filtering}</label>
+EOT
+    if @conf[SHARED_DB_PATH]
+      r << <<EOT
+<li><input type='checkbox' name='#{SHARE_DB}' value='yes' id='#{SHARE_DB}' #{@conf[SHARE_DB] ? "checked='checked'" : ""}><label for='#{SHARE_DB}'>#{Res.share_db}</label>
+EOT
+    end
+    r << <<EOT
 </ul>
 <input type='hidden' name='from_top' value='yes'>
 EOT

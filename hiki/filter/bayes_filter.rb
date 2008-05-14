@@ -12,6 +12,8 @@ module Hiki::Filter
       TYPE = "#{PREFIX}.type"
       USE = "#{PREFIX}.use"
       REPORT = "#{PREFIX}.report"
+      SHARED_DB_PATH = "#{PREFIX}.shared_db_path"
+      SHARE_DB = "#{PREFIX}.share_db"
     end
 
     def self.init(conf)
@@ -24,8 +26,16 @@ module Hiki::Filter
       (@hiki_conf[Key::THRESHOLD] || "0.9").to_f
     end
 
+    def self.db_shared?
+      @hiki_conf[Key::SHARED_DB_PATH] and @hiki_conf[Key::SHARE_DB]
+    end
+
+    def self.data_path
+      db_shared? ? @hiki_conf[Key::SHARED_DB_PATH] : @hiki_conf.data_path
+    end
+
     def self.db_name
-      "#{@hiki_conf.data_path}/bayes.db"
+      "#{data_path}/bayes.db"
     end
 
     def self.db
@@ -45,7 +55,7 @@ module Hiki::Filter
     end
 
     def self.cache_path
-      r = "#{@hiki_conf.cache_path}/bayes"
+      r = db_shared? ? "#{data_path}/cache/bayes" : "#{@hiki_conf.cache_path}/bayes"
       FileUtils.mkpath(r)
       r
     end

@@ -1,3 +1,8 @@
+2008-05-14  KURODA Hiraku  <hiraku@sapporo.email.ne.jp>
+	* hiki/filter/bayes_filter.rb, plugin/50bayes_filter.rb,
+	plugin/ja/50bayes_filter.rb, plubin/en/50bayes_filter.rb
+	: Add feature to share database for bayes filtering.
+
 2008-03-26  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/repos/git.rb, test/test_repos_git.rb: support git
 	repository (contributed by Kouhei Sutou).

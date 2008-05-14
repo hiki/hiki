@@ -27,5 +27,6 @@ class BayesFilterConfig
     def self.threshold; "閾値"; end
     def self.page_token; "ページ中のトークン一覧"; end
     def self.report_filtering; "フィルタリング結果をメールで通知"; end
+    def self.share_db; "共用データベースを使う"; end
   end
 end
