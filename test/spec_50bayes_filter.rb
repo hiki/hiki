@@ -27,6 +27,7 @@ class << Object.new
           :bayes_threshold=>nil,
           :filter_type=>nil,
           :cgi_name=>@base_url,
+          :index_url=>@base_url,
           :null_object=>false)
         @conf.should_receive("[]".intern).any_number_of_times{|k| @opt[k]}
         @conf.should_receive("[]=".intern).any_number_of_times{|k, v| @opt[k]=v}

@@ -1,3 +1,8 @@
+2008-05-16  KURODA Hiraku  <hiraku@sapporo.email.ne.jp>
+	* hiki/filter/bayes_filter.rb, plugin/50bayes_filter.rb,
+	test/spec_50bayes_filter.rb, test/spec_bayes_filter.rb
+	: URL of posted pagedata in bayes filter become to refer the page 'in Wiki'.
+
 2008-05-14  KURODA Hiraku  <hiraku@sapporo.email.ne.jp>
 	* hiki/filter/bayes_filter.rb, plugin/50bayes_filter.rb,
 	plugin/ja/50bayes_filter.rb, plubin/en/50bayes_filter.rb

@@ -6,18 +6,21 @@ require "fileutils"
 require "hiki/command"
 
 module SetupBayesFilter
+
   def self.included(ex)
     ex.before do
       @tmpdir = "#{Dir.tmpdir}/hiki_filter_spec_#{$$}"
       FileUtils.mkdir(@tmpdir)
 
+      @index_url = "http://www.example.org/hiki/"
       @opt = {
       }
-      @conf = stub("conf",
+      @conf = stub("Hiki::Config",
         :data_path=>@tmpdir,
         :cache_path=>"#{@tmpdir}/cache",
         :bayes_threshold=>nil,
         :site_name=>"SiteName",
+        :index_url=>@index_url,
         :null_object=>false)
       @conf.should_receive("[]".intern).any_number_of_times{|k| @opt[k]}
       @bf = Hiki::Filter::BayesFilter.init(@conf)
@@ -25,6 +28,23 @@ module SetupBayesFilter
 
     ex.after do
       FileUtils.remove_entry_secure(@tmpdir)
+    end
+  end
+end
+
+class << Object.new
+  class Dummy
+    include Hiki::Filter::BayesFilter
+    def conf
+      @@hiki_conf
+    end
+  end
+
+  describe Hiki::Filter::BayesFilter do
+    include SetupBayesFilter
+
+    it "@@hiki_conf.index_url should return correct URL" do
+      Dummy.new.conf.index_url.should == @index_url
     end
   end
 end
@@ -122,6 +142,11 @@ end
 
 describe Hiki::Filter::BayesFilter::PageData do
   include SetupBayesFilter
+
+  it "url" do
+    pd = Hiki::Filter::BayesFilter::PageData.new(Hiki::Filter::PageData.new("Wiki Name", "text"))
+    pd.url.should == "#{@index_url}?Wiki+Name"
+  end
 
   it "ham?" do
     pd = Hiki::Filter::PageData

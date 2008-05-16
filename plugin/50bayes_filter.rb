@@ -117,7 +117,7 @@ EOT
       r << "<h3>#{k}</h3>\n<ul>\n"
       h.keys.sort.each do |id|
         r << <<EOT
-<li><a href="?#{CGI.escape(h[id].new_page.page)}">#{CGI.escapeHTML(h[id].new_page.page)}</a>
+<li><a href="#{h[id].url}">#{CGI.escapeHTML(h[id].new_page.page)}</a>
 <dl>
 <dt>#{Res.title}</dt><dd>#{CGI.escapeHTML(h[id].new_page.title)}</dd>
 <dt>#{Res.diff_text}</dt><dd><pre>#{CGI.escapeHTML(h[id].diff_text)}</pre></dd>

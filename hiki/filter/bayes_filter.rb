@@ -6,6 +6,8 @@ require "hiki/filter/bayes_filter/bayes.rb"
 
 module Hiki::Filter
   module BayesFilter
+    @@hiki_conf = nil
+
     module Key
       PREFIX = "bayes_filter"
       THRESHOLD = "#{PREFIX}.threshold"
@@ -17,21 +19,21 @@ module Hiki::Filter
     end
 
     def self.init(conf)
-      @hiki_conf = conf
+      @@hiki_conf = conf      
       @db = nil
       self
     end
 
     def self.threshold
-      (@hiki_conf[Key::THRESHOLD] || "0.9").to_f
+      (@@hiki_conf[Key::THRESHOLD] || "0.9").to_f
     end
 
     def self.db_shared?
-      @hiki_conf[Key::SHARED_DB_PATH] and @hiki_conf[Key::SHARE_DB]
+      @@hiki_conf[Key::SHARED_DB_PATH] and @@hiki_conf[Key::SHARE_DB]
     end
 
     def self.data_path
-      db_shared? ? @hiki_conf[Key::SHARED_DB_PATH] : @hiki_conf.data_path
+      db_shared? ? @@hiki_conf[Key::SHARED_DB_PATH] : @@hiki_conf.data_path
     end
 
     def self.db_name
@@ -39,7 +41,7 @@ module Hiki::Filter
     end
 
     def self.db
-      case @hiki_conf["bayes_filter.type"]
+      case @@hiki_conf["bayes_filter.type"]
       when /graham/i
         @db ||= Bayes::PaulGraham.new(db_name)
       else
@@ -55,7 +57,7 @@ module Hiki::Filter
     end
 
     def self.cache_path
-      r = db_shared? ? "#{data_path}/cache/bayes" : "#{@hiki_conf.cache_path}/bayes"
+      r = db_shared? ? "#{data_path}/cache/bayes" : "#{@@hiki_conf.cache_path}/bayes"
       FileUtils.mkpath(r)
       r
     end
@@ -63,8 +65,9 @@ module Hiki::Filter
     def self.filter(new_page, old_page)
       pd = PageData.new(new_page, old_page)
       pd.cache_save
-      subject = "#{REPORT_PREFIX[pd.ham?]} at '#{new_page.page}' of '#{@hiki_conf.site_name}'"
+      subject = "#{REPORT_PREFIX[pd.ham?]} at '#{new_page.page}' of '#{@@hiki_conf.site_name}'"
       body = <<EOT
+URL               : #{pd.url}
 Page              : #{new_page.page}
 Address           : #{new_page.remote_addr}
 Title             : #{new_page.title}
@@ -73,7 +76,7 @@ Appended text----
 #{pd.diff_text}
 ----
 EOT
-      Hiki::Filter.plugin.sendmail(subject, body) if @hiki_conf[Key::REPORT]
+      Hiki::Filter.plugin.sendmail(subject, body) if @@hiki_conf[Key::REPORT]
       !pd.ham?
     end
 
@@ -96,12 +99,18 @@ EOT
     end
 
     class PageData
+      include BayesFilter
       attr_reader :time, :new_page, :old_page
 
       def initialize(new_page, old_page=Hiki::Filter::PageData.new, time=Time.now)
+        @index_url = @@hiki_conf.index_url
         @new_page = new_page
         @old_page = old_page
         @time = time
+      end
+
+      def url
+        "#{@index_url}?#{CGI.escape(@new_page.page)}"
       end
 
       def self.load(filename, delete=false)
