@@ -73,6 +73,7 @@ class BayesFilterConfig
       @conf[THRESHOLD] = (@cgi.params[THRESHOLD][0]||0.9).to_f
       @conf[REPORT] = @cgi.params[REPORT][0]
       @conf[SHARE_DB] = @cgi.params[SHARE_DB][0]
+      @conf[LIMIT_OF_SUBMITTED_PAGES] = @cgi.params[LIMIT_OF_SUBMITTED_PAGES][0] || 50
 
       rebuild = false
       rebuild = true if @cgi.params["rebuild_db"][0]=="execute"
@@ -94,6 +95,7 @@ class BayesFilterConfig
 <option #{@conf[TYPE]==paul_graham ? selected : ""}>#{paul_graham}</option>
 </select></li>
 <li><input type='checkbox' name='rebuild_db' value='execute' id='rebuild_db'><label for='rebuild_db'>#{Res.rebuild_db}</label></li>
+<li><input type='text' name='#{LIMIT_OF_SUBMITTED_PAGES}' value='#{limit_of_submitted_pages}' id='#{LIMIT_OF_SUBMITTED_PAGES}'><label for='#{LIMIT_OF_SUBMITTED_PAGES}'>#{Res.limit_of_submitted_pages}</label></li>
 <li><input type='text' name='#{THRESHOLD}' value='#{@conf[THRESHOLD]}' id='#{THRESHOLD}'><label for='#{THRESHOLD}'>#{Res.threshold}</label></li>
 <li><input type='checkbox' name='#{USE}' value='yes' id='#{USE}' #{@conf[USE] ? "checked='checked'" : ""}><label for='#{USE}'>#{Res.use_filter}</label>
 <li><input type='checkbox' name='#{REPORT}' value='yes' id='#{REPORT}' #{@conf[REPORT] ? "checked='checked'" : ""}><label for='#{REPORT}'>#{Res.report_filtering}</label>
@@ -107,6 +109,10 @@ EOT
 </ul>
 <input type='hidden' name='from_top' value='yes'>
 EOT
+  end
+
+  def limit_of_submitted_pages
+    (@conf[LIMIT_OF_SUBMITTED_PAGES] || 50).to_i
   end
 
   def submitted_pages_html
@@ -150,12 +156,19 @@ EOT
 
   def submitted_pages
     r = SubmittedPages.new({}, {}, {})
-    {"H"=>r.ham, "S"=>r.spam, "D"=>r.doubt}.each do |head, hash|
-      prefix = "#{BayesFilter::PageData.cache_path}/#{head}"
-      Dir["#{prefix}*"].each do |f|
-        next unless /^#{Regexp.escape(prefix)}\d+$/=~f
-        d = BayesFilter::PageData.load(f.untaint)
-        hash[f[/.\d+$/]] = d if d
+    path = BayesFilter::PageData.cache_path
+    Dir["#{path}/[HSD]*"][0, limit_of_submitted_pages].each do |f|
+      next unless d = BayesFilter::PageData.load(f.untaint)
+      n = File.basename(f)
+      case f
+      when /^#{Regexp.escape(path)}\/S\d+$/o
+        r.spam[n] = d
+      when /^#{Regexp.escape(path)}\/H\d+$/o
+        r.ham[n] = d
+      when /^#{Regexp.escape(path)}\/D\d+$/o
+        r.doubt[n] = d
+      else
+        next
       end
     end
     r

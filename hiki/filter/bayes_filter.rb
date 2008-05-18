@@ -16,6 +16,7 @@ module Hiki::Filter
       REPORT = "#{PREFIX}.report"
       SHARED_DB_PATH = "#{PREFIX}.shared_db_path"
       SHARE_DB = "#{PREFIX}.share_db"
+      LIMIT_OF_SUBMITTED_PAGES = "#{PREFIX}.limit_of_submitted_pages"
     end
 
     def self.init(conf)
