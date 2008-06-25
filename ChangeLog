@@ -1,3 +1,6 @@
+2008-06-25 SHIBATA Hiroshi <shibata.hiroshi@gmail.com>
+	* plugin/00default.rb: display RUBY_PATCHLEVEL in footer.
+
 2008-05-18  KURODA Hiraku  <hiraku@sapporo.email.ne.jp>
 	* hiki/filter/bayes_filter.rb, plugin/50bayes_filter.rb,
 	plugin/en/50bayes_filter.rb, plugin/ja/50bayes_filter.rb
