@@ -76,13 +76,13 @@ module Hiki
       return content if content.nil? or content == ""
       #Eval Plugin
       content = content.gsub(EVAL_PLUGIN_RE) do |match|
-        method = $1
+        method = $1.unescapeHTML
         ret = ''
         begin
           ret = Hiki::Util.apply_plugin(method, @plugin, @conf)
           ret.gsub!(@regex_modulenames, "\\&#{ESC_WORD}") if @regex_modulenames
         rescue Exception
-          err = "Plugin Error: #{$!}" #<pre>#{match.to_s.escapeHTML}</pre>"
+          err = "Plugin Error: #{$!}" #<pre>#{match}</pre>"
           if @conf.plugin_debug
             err += "</p><p>Back trace<pre>"
             $!.backtrace.each do |v|

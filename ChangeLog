@@ -1,3 +1,7 @@
+2008-07-06 SAKAI Masahiro <masahiro.sakai@gmail.com>
+	* misc/plugin/rss.rb: applied patch Hiki-dev:01126,01127.
+	* style/rd+/rd2html.rb: applied patch Hiki-dev:01163.
+
 2008-06-25 SHIBATA Hiroshi <shibata.hiroshi@gmail.com>
 	* plugin/00default.rb: display RUBY_PATCHLEVEL in footer.
 
