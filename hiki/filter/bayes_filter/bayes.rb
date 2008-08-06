@@ -2,7 +2,6 @@
 # You can redistribute it and/or modify it under GPL2. 
 
 require "pstore"
-require "uri"
 
 module Bayes
 	module CHARSET
@@ -96,10 +95,8 @@ module Bayes
 		end
 
 		def add_url(url, prefix=nil)
-			if URI.regexp(%w[http https ftp]) === url
-				url  = URI.parse url
-				host = url.host                       # $4
-				path = url.path.gsub(%r{^/+|/+$}, '') # $7
+			if %r[^(?:https?|ftp)://(.*?)(?::\d+)?/(.*?)\/?(\?.*)?$] =~ url
+				host, path = $1, $2
 
 				add_host(host, prefix)
 
@@ -136,17 +133,19 @@ module Bayes
 	end
 
 	class FilterBase
-		attr_reader :spam, :ham, :db_name
+		attr_reader :spam, :ham, :db_name, :charset
 
-		def initialize(db_name=nil)
+		def initialize(db_name=nil, charset=nil)
 			@spam = self.class::Corpus.new
 			@ham = self.class::Corpus.new
+			@charset = charset
 
 			@db_name = db_name
 			if db_name && File.exist?(db_name)
 				PStore.new(db_name).transaction(true) do |db|
 					@spam = db["spam"]
 					@ham = db["ham"]
+					@charset = db["charset"]
 				end
 			end
 		end
@@ -158,6 +157,7 @@ module Bayes
 			PStore.new(@db_name).transaction do |db|
 				db["spam"] = @spam
 				db["ham"] = @ham
+				db["charset"] = @charset
 				yield(db) if block_given?
 			end
 		end
@@ -217,9 +217,6 @@ module Bayes
 			return 0.4 unless @spam.include?(token) or @ham.include?(token)
 			g = @ham.count==0 ? 0.0 : [1.0, 2*@ham[token]/@ham.count.to_f].min
 			b = @spam.count==0 ? 0.0 : [1.0, @spam[token]/@spam.count.to_f].min
-			if g+b==0
-				raise "OOO"
-			end
 			r = [0.01, [0.99, b/(g+b)].min].max
 			r
 		end

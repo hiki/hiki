@@ -11,6 +11,7 @@ module Hiki::Filter
     module Key
       PREFIX = "bayes_filter"
       THRESHOLD = "#{PREFIX}.threshold"
+      THRESHOLD_HAM = "#{PREFIX}.threshold_ham"
       TYPE = "#{PREFIX}.type"
       USE = "#{PREFIX}.use"
       REPORT = "#{PREFIX}.report"
@@ -27,6 +28,10 @@ module Hiki::Filter
 
     def self.threshold
       (@@hiki_conf[Key::THRESHOLD] || "0.9").to_f
+    end
+
+    def self.threshold_ham
+      (@@hiki_conf[Key::THRESHOLD_HAM] || "0.1").to_f
     end
 
     def self.db_shared?
@@ -139,8 +144,14 @@ EOT
       end
 
       def ham?
-        rate = BayesFilter.db.estimate(token)
-        rate ? rate <= BayesFilter.threshold : nil
+        case BayesFilter.db.estimate(token)
+        when 0..BayesFilter.threshold_ham
+          true
+        when BayesFilter.threshold..1.0
+          false
+        else
+          nil
+        end
       end
 
       def file_name

@@ -67,13 +67,19 @@ class BayesFilterConfig
     paul_graham = "Paul Graham"
     @conf[TYPE] ||= plain
     @conf[THRESHOLD] ||= 0.9
+    @conf[THRESHOLD_HAM] ||= 0.1
 
     if save_mode? and @cgi.params["from_top"][0]
       @conf[USE] = @cgi.params[USE][0]
-      @conf[THRESHOLD] = (@cgi.params[THRESHOLD][0]||0.9).to_f
       @conf[REPORT] = @cgi.params[REPORT][0]
       @conf[SHARE_DB] = @cgi.params[SHARE_DB][0]
       @conf[LIMIT_OF_SUBMITTED_PAGES] = @cgi.params[LIMIT_OF_SUBMITTED_PAGES][0] || 50
+      threshold_spam = (@cgi.params[THRESHOLD][0]||0.95).to_f
+      threshold_ham = (@cgi.params[THRESHOLD_HAM][0]||0.05).to_f
+      if 0 <= threshold_ham and threshold_ham <= threshold_spam and threshold_spam <= 1.0
+        @conf[THRESHOLD_HAM] = threshold_ham
+        @conf[THRESHOLD] = threshold_spam
+      end
 
       rebuild = false
       rebuild = true if @cgi.params["rebuild_db"][0]=="execute"
@@ -96,7 +102,7 @@ class BayesFilterConfig
 </select></li>
 <li><input type='checkbox' name='rebuild_db' value='execute' id='rebuild_db'><label for='rebuild_db'>#{Res.rebuild_db}</label></li>
 <li><input type='text' name='#{LIMIT_OF_SUBMITTED_PAGES}' value='#{limit_of_submitted_pages}' id='#{LIMIT_OF_SUBMITTED_PAGES}'><label for='#{LIMIT_OF_SUBMITTED_PAGES}'>#{Res.limit_of_submitted_pages}</label></li>
-<li><input type='text' name='#{THRESHOLD}' value='#{@conf[THRESHOLD]}' id='#{THRESHOLD}'><label for='#{THRESHOLD}'>#{Res.threshold}</label></li>
+<li>#{Res.threshold} : 0 &lt;= Ham &lt;= <input type="text" name="#{THRESHOLD_HAM}" value="#{@conf[THRESHOLD_HAM]}" id="#{THRESHOLD_HAM}"> &lt;= Doubt &lt;= <input type='text' name='#{THRESHOLD}' value='#{@conf[THRESHOLD]}' id='#{THRESHOLD}'> &lt;= 1</li>
 <li><input type='checkbox' name='#{USE}' value='yes' id='#{USE}' #{@conf[USE] ? "checked='checked'" : ""}><label for='#{USE}'>#{Res.use_filter}</label>
 <li><input type='checkbox' name='#{REPORT}' value='yes' id='#{REPORT}' #{@conf[REPORT] ? "checked='checked'" : ""}><label for='#{REPORT}'>#{Res.report_filtering}</label>
 EOT
@@ -198,14 +204,20 @@ EOT
   def add_ham(token)
     db = BayesFilter.db
     db.ham << token
-    db.ham << token until db.estimate(token) and db.estimate(token)<=BayesFilter.threshold
+    10.times do
+      break if db.estimate(token) and db.estimate(token)<=BayesFilter.threshold_ham
+      db.ham << token
+    end
     @db_update = true
   end
 
   def add_spam(token)
     db = BayesFilter.db
     db.spam << token
-    db.spam << token until db.estimate(token) and db.estimate(token)>BayesFilter.threshold
+    10.times do
+      break if db.estimate(token) and db.estimate(token)>=BayesFilter.threshold
+      db.spam << token
+    end
     @db_update = true
   end
 

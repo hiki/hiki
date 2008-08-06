@@ -57,7 +57,11 @@ describe Hiki::Filter::BayesFilter, "with default settings" do
   end
 
   it "threshold" do
-    @bf.threshold.should == 0.90
+    @bf.threshold.should == 0.9
+  end
+
+  it "threshold_ham" do
+    @bf.threshold_ham.should == 0.1
   end
 
   it "db" do
@@ -99,7 +103,7 @@ describe Hiki::Filter::BayesFilter, "with settings" do
   before do
     @opt["bayes_filter.type"] = "Paul Graham"
     @opt["bayes_filter.report"] = "1"
-    @conf.stub!(:bayes_threshold).and_return("0.90")
+    @opt["bayes_filter.threshold"] = "0.9"
     @conf.should_receive("[]".intern).any_number_of_times{|k| @opt[k]}
     @bf = Hiki::Filter::BayesFilter.init(@conf)
   end
@@ -117,16 +121,23 @@ describe Hiki::Filter::BayesFilter, "with settings" do
   end
 
   it "page_is_ham?" do
+    db = mock("database")
+    Hiki::Filter::BayesFilter.stub!(:db).and_return(db)
+
     pd = Hiki::Filter::PageData
     bfpd = Hiki::Filter::BayesFilter::PageData
+
+    db.stub!(:estimate).and_return(0.0)
     bfpd.new(pd.new("Page", "text")).ham?.should be_true
 
-    @bf.db.ham << ["ham"]
-    bfpd.new(pd.new("Page", "ham")).ham?.should be_true
-
-    @bf.db.spam << ["spam"]
+    db.stub!(:estimate).and_return(1.0)
     bfpd.new(pd.new("Page", "spam")).ham?.should be_false
-    bfpd.new(pd.new("Page", "ham spam")).ham?.should be_true
+
+    db.stub!(:estimate).and_return(0.5)
+    bfpd.new(pd.new("Page", "ham spam")).ham?.should == nil
+
+    db.stub!(:estimate).and_return(nil)
+    bfpd.new(pd.new("Page", "ham spam")).ham?.should == nil
   end
 
   it ".filter should call Hiki::Filter.plugin.sendmail" do

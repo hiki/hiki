@@ -152,7 +152,7 @@ class << Object.new
 
     it "html" do
       @c.should_receive(:process_page_data){@c.proxied_by_rspec__process_page_data}
-      lambda{@c.html}.call #should_not raise_error
+      lambda{@c.html}.should_not raise_error
     end
 
     it "process data" do
@@ -164,6 +164,48 @@ class << Object.new
       File.should_not be_exist(@ham.cache_file_name)
       File.should be_exist(@ham.corpus_file_name_spam)
       @ham.ham?.should be_false
+    end
+  end
+
+  describe BayesFilterConfig, "with Bayes::PaulGraham" do
+    include Common
+
+    before do
+      @token = Bayes::TokenList.new
+      @token << "w"
+      @filter_db = Bayes::PaulGraham.new
+      @filter_db.spam << @token
+      @filter_db.ham << @token
+      BayesFilter.stub!(:db).and_return(@filter_db)
+    end
+
+    it "should occur infinity-loop at #add_ham" do
+      lambda{@c.add_ham(@token)}.should_not raise_error
+    end
+
+    it "should occur infinity-loop at #add_spam" do
+      lambda{@c.add_spam(@token)}.should_not raise_error
+    end
+  end
+
+  describe BayesFilterConfig, "with Bayes::PaulGraham" do
+    include Common
+
+    before do
+      @token = Bayes::TokenList.new
+      @token << "w"
+      @filter_db = Bayes::PaulGraham.new
+      @filter_db.spam << @token
+      @filter_db.ham << @token
+      BayesFilter.stub!(:db).and_return(@filter_db)
+    end
+
+    it "should occur infinity-loop at #add_ham" do
+      lambda{@c.add_ham(@token)}.should_not raise_error
+    end
+
+    it "should occur infinity-loop at #add_spam" do
+      lambda{@c.add_spam(@token)}.should_not raise_error
     end
   end
 

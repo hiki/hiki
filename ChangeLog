@@ -1,3 +1,10 @@
+2008-08-06 KURODA Hiraku <hiraku@sapporo.email.ne.jp>
+	* hiki/filter/bayes_filter/bayes.rb: Update bayes library.
+	* hiki/filter/bayes_filter.rb, plugin/50bayes_filter.rb,
+	test/spec_50bayes_filter.rb, test/spec_bayes_filter.rb
+	: + Limit number of times of adding ham/spam into database to 10 times.
+	  + Add new threshold for ham, then post for page is treated as 'doubt' if threshold_ham < score < threshold(for spam).
+
 2008-07-06 SAKAI Masahiro <masahiro.sakai@gmail.com>
 	* misc/plugin/rss.rb: applied patch Hiki-dev:01126,01127.
 	* style/rd+/rd2html.rb: applied patch Hiki-dev:01163.
