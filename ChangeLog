@@ -1,4 +1,8 @@
 2008-08-06 KURODA Hiraku <hiraku@sapporo.email.ne.jp>
+	* hiki/repos/hg.rb, test/test_repos_hg.rb: support mercurial
+	repository.
+
+2008-08-06 KURODA Hiraku <hiraku@sapporo.email.ne.jp>
 	* hiki/filter/bayes_filter/bayes.rb: Update bayes library.
 	* hiki/filter/bayes_filter.rb, plugin/50bayes_filter.rb,
 	test/spec_50bayes_filter.rb, test/spec_bayes_filter.rb
