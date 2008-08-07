@@ -1,4 +1,4 @@
-# $Id: en.rb,v 1.19 2008-02-12 15:06:08 hiraku Exp $
+# $Id: en.rb,v 1.20 2008-08-07 09:54:21 hiraku Exp $
 # en.rb
 #
 # Copyright (C) 2003 Masao Mutoh <mutoh@highway.ne.jp>
@@ -77,6 +77,6 @@ module Hiki
     def msg_last_modified; 'Last modified'; end
     def msg_keyword; 'Keyword(s)'; end
     def msg_reference; 'References'; end
-    def msg_text_is_spam; 'Input is treated as SPAM.'; end
+    def msg_input_is_spam; 'Input is treated as SPAM.'; end
   end
 end

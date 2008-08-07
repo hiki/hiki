@@ -1,3 +1,6 @@
+2008-08-07 KURODA Hiraku <hiraku@sapporo.email.ne.jp>
+	* messages/en.rb: Fix typo. Reported by Kouhei Sutou.
+
 2008-08-06 KURODA Hiraku <hiraku@sapporo.email.ne.jp>
 	* hiki/repos/hg.rb, test/test_repos_hg.rb: support mercurial
 	repository.
