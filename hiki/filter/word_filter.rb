@@ -2,7 +2,8 @@
 # You can redistribute it and/or modify it under GPL2. 
 
 module Hiki::Filter
-  add_filter do |new_page, old_page|
+  add_filter do |new_page, old_page, posted_by_user|
+    next if posted_by_user
     next unless @conf['word_filter.use']
 
     spam = false
@@ -15,7 +16,7 @@ module Hiki::Filter
         next if str.empty?
         spam = true if str=~re
       end
-      break if spam
+      next if spam
     end
     spam
   end

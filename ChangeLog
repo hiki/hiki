@@ -1,3 +1,10 @@
+2008-09-18 KURODA Hiraku <hiraku@sapporo.email.ne.jp>
+	* hiki/filter.rb, hiki/filter/bayes_filter.rb,
+	  hiki/filter/word_filter.rb, test/spec_bayes_filter.rb
+	  : In bayes filter, when text is posted by registered user and
+	    judged as spam, add text to ham-db.
+
+
 2008-08-07 KURODA Hiraku <hiraku@sapporo.email.ne.jp>
 	* messages/en.rb: Fix typo. Reported by Kouhei Sutou.
 

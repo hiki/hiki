@@ -93,7 +93,8 @@ describe Hiki::Filter::BayesFilter, "with default settings" do
       "title")
     old_page = Hiki::Filter::PageData.new("Page")
     Hiki::Filter.plugin.should_not_receive(:sendmail)
-    lambda{@bf.filter(new_page, old_page)}.should_not raise_error
+    lambda{@bf.filter(new_page, old_page, true)}.should_not raise_error
+    lambda{@bf.filter(new_page, old_page, false)}.should_not raise_error
   end
 end
 
@@ -147,7 +148,17 @@ describe Hiki::Filter::BayesFilter, "with settings" do
       "title")
     old_page = Hiki::Filter::PageData.new("Page")
     Hiki::Filter.plugin.should_receive(:sendmail)
-    lambda{@bf.filter(new_page, old_page)}.should_not raise_error
+    lambda{@bf.filter(new_page, old_page, false)}.should_not raise_error
+  end
+
+  it ".filter should not call Hiki::Filter.plugin.sendmail when posted by registered user" do
+    new_page = Hiki::Filter::PageData.new(
+      "Page",
+      "text",
+      "title")
+    old_page = Hiki::Filter::PageData.new("Page")
+    Hiki::Filter.plugin.should_not_receive(:sendmail)
+    lambda{@bf.filter(new_page, old_page, true)}.should_not raise_error
   end
 end
 

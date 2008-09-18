@@ -42,7 +42,7 @@ module Hiki
     end
 
     def self.new_page_is_spam?(page, text, title=nil)
-      return false if @plugin.user and not @plugin.user.empty?
+      posted_by_user = @plugin.user and not @plugin.user.empty?
 
       title = @db.get_attribute(page, :title) || "" unless title
       title = page if title.empty?
@@ -55,11 +55,11 @@ module Hiki
       is_spam = false
       @filters.each do |proc|
         begin
-          break if is_spam ||= proc.call(new_page, old_page)
+          is_spam ||= proc.call(new_page, old_page, posted_by_user)
         rescue Exception
         end
       end
-      return is_spam
+      return !posted_by_user && is_spam
     end
   end
 end

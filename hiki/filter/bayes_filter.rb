@@ -68,9 +68,24 @@ module Hiki::Filter
       r
     end
 
-    def self.filter(new_page, old_page)
+    def self.filter(new_page, old_page, posted_by_user)
       pd = PageData.new(new_page, old_page)
+
+      if posted_by_user
+        unless pd.ham?
+          token = pd.token
+          db.ham << token
+          10.times do
+            break if pd.ham?
+            db.ham << token
+          end
+          db.save
+        end
+        return
+      end
+
       pd.cache_save
+
       subject = "#{REPORT_PREFIX[pd.ham?]} at '#{new_page.page}' of '#{@@hiki_conf.site_name}'"
       body = <<EOT
 URL               : #{pd.url}
@@ -82,6 +97,7 @@ Appended text----
 #{pd.diff_text}
 ----
 EOT
+
       Hiki::Filter.plugin.sendmail(subject, body) if @@hiki_conf[Key::REPORT]
       !pd.ham?
     end
@@ -225,8 +241,8 @@ EOT
   end
 
   REPORT_PREFIX = {true=>"HAM", false=>"SPAM", nil=>"DOUBT"}
-  add_filter do |new_page, old_page|
+  add_filter do |new_page, old_page, posted_by_user|
     next unless @conf['bayes_filter.use']
-    BayesFilter.init(@conf).filter(new_page, old_page)
+    BayesFilter.init(@conf).filter(new_page, old_page, posted_by_user)
   end
 end
