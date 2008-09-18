@@ -243,6 +243,7 @@ class << Object.new
 
     it "submitted_page_diff_html" do
       $SAFE=1
+      @c.should_receive(:word_diff)
       lambda{@c.submitted_page_diff_html}.should_not raise_error
     end
   end

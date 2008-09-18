@@ -29,5 +29,6 @@ class BayesFilterConfig
     def self.report_filtering; "フィルタリング結果をメールで通知"; end
     def self.share_db; "共用データベースを使う"; end
     def self.limit_of_submitted_pages; "一度に表示する投稿ページデータの数"; end
+	 def self.difference; "差分"; end
   end
 end

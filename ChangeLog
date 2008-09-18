@@ -1,4 +1,10 @@
 2008-09-18 KURODA Hiraku <hiraku@sapporo.email.ne.jp>
+	* plugin/50bayes_filter.rb, plugin/en/50bayes_filter.rb,
+	  plugin/ja/50bayes_filter.rb, test/spec_50bayes_filter.rb
+	  : In submitted_page_diff, show difference of text using
+	    Util#word_diff.
+
+2008-09-18 KURODA Hiraku <hiraku@sapporo.email.ne.jp>
 	* hiki/filter.rb, hiki/filter/bayes_filter.rb,
 	  hiki/filter/word_filter.rb, test/spec_bayes_filter.rb
 	  : In bayes filter, when text is posted by registered user and

@@ -185,6 +185,8 @@ EOT
     <<EOT
 <h3>#{Res.submitted_page_diff}</h3>
 <dl>
+<dt>#{Res.difference}</dt>
+<dd><pre>#{word_diff(data.old_page.text, data.new_page.text)}</pre></d>
 <dt>#{Res.old_text}</dt>
 <dd><pre>#{CGI.escapeHTML(data.old_page.text||"")}</pre></dd>
 <dt>#{Res.new_text}</dt>

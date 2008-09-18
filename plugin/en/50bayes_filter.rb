@@ -29,5 +29,6 @@ class BayesFilterConfig
     def self.report_filtering; "Report filtering result by mail"; end
     def self.share_db; "Use shared database"; end
     def self.limit_of_submitted_pages; "Limit of submitted pages to show at one time"; end
+	 def self.difference; "Difference"; end
   end
 end
