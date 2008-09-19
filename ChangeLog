@@ -1,5 +1,10 @@
 2008-09-19  okkez  <okkez000@gmail.com>
 
+	* hiki/plugin.rb (Hiki::Plugin#initialize): use
+	Object#instance_variable_set instead Kernel.eval.
+
+2008-09-19  okkez  <okkez000@gmail.com>
+
 	* hiki/config.rb (Hiki::Config#database): add new method.
 
 	* hiki.cgi: use Hiki::Config#datacase.

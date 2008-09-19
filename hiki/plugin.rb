@@ -38,8 +38,8 @@ module Hiki
       @conf_procs       = {}
       @mode             = ''
 
-      options.each_key do |opt|
-        eval("@#{opt} = options['#{opt}']") unless opt.index('.')
+      options.each do |opt, val|
+        instance_variable_set("@#{opt}", val) unless opt.index('.')
       end
       
       @toc_f            = false
@@ -404,7 +404,7 @@ module Hiki
       @options['date']        = Time::now
  
       %w(cache_path mode years diaries date).each do |p|
-        eval("@#{p} = @options['#{p}']")
+        instance_variable_set("@#{p}", @options[p])
       end
     end
   end
