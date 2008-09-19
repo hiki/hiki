@@ -1,3 +1,13 @@
+2008-09-19  okkez  <okkez000@gmail.com>
+
+	* hiki/config.rb (Hiki::Config#database): add new method.
+
+	* hiki.cgi: use Hiki::Config#datacase.
+
+	* hiki/xmlrpc.rb (Hiki::XMLRPCHandler#init_handler): ditto.
+
+	* misc/webrick/hikilet.rb (Hikilet#do_GET): ditto.
+
 2008-09-18 KURODA Hiraku <hiraku@sapporo.email.ne.jp>
 	* plugin/50bayes_filter.rb, plugin/en/50bayes_filter.rb,
 	  plugin/ja/50bayes_filter.rb, test/spec_50bayes_filter.rb

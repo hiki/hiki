@@ -11,7 +11,7 @@ module Hiki
       server.add_handler('wiki.getPage') do |page|
         page = utf8_to_euc( page )
         conf = Hiki::Config::new
-        db = Hiki::const_get( "HikiDB_#{conf.database_type}" )::new( conf )
+        db = conf.database
         ret = db.load( page )
         unless ret
           raise XMLRPC::FaultException.new(1, "No such page was found.")
@@ -22,7 +22,7 @@ module Hiki
       server.add_handler('wiki.getPageInfo') do |page|
         page = utf8_to_euc( page )
         conf = Hiki::Config::new
-        db = Hiki::HikiDB::new( conf )
+        db = conf.database
         title = db.get_attribute( page, :title )
         title = page if title.nil? || title.empty?
         {
@@ -50,7 +50,7 @@ module Hiki
         cgi = cgi_class::new
         cgi.params['c'] = ['save']
         cgi.params['p'] = [page]
-        db = Hiki::HikiDB::new( conf )
+        db = conf.database
         options = conf.options || Hash::new( '' )
         options['page'] = page
         options['cgi']  = cgi
@@ -81,7 +81,7 @@ module Hiki
 
       server.add_handler('wiki.getAllPages') do
         conf = Hiki::Config::new
-        db = Hiki::HikiDB::new( conf )
+        db = conf.database
         db.pages.collect{|p| XMLRPC::Base64.new( euc_to_utf8( p ) )}
       end
 

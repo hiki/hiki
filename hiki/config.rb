@@ -51,6 +51,10 @@ module Hiki
       @bot = Regexp::new( "(#{bot.uniq.join( '|' )})", true )
     end
 
+    def database
+      @database ||= Hiki::const_get( "HikiDB_#{database_type}" )::new( self )
+    end
+
     def bot?
       @bot =~ ENV['HTTP_USER_AGENT']
     end

@@ -25,7 +25,7 @@ begin
   else
     cgi = CGI::new
 
-    db = Hiki::const_get( "HikiDB_#{conf.database_type}" )::new( conf )
+    db = conf.database
     db.open_db {
       cmd = Hiki::Command::new( cgi, db, conf )
       cmd.dispatch

@@ -86,7 +86,7 @@ class Hikilet < WEBrick::HTTPServlet::AbstractServlet
         end
 
         cgi = DummyCGI::new(req, res)
-        db = Hiki::const_get( "HikiDB_#{conf.database_type}" )::new( conf )
+        db = conf.database
         db.open_db do
           cmd = Hiki::Command::new( cgi, db, conf )
           cmd.dispatch
