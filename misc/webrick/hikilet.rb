@@ -78,11 +78,7 @@ class Hikilet < WEBrick::HTTPServlet::AbstractServlet
           saved_HTTP_ACCEPT_LANGUAGE = ENV['HTTP_ACCEPT_LANGUAGE']
           ENV['HTTP_ACCEPT_LANGUAGE'] = req['Accept-Language']
           conf = Hiki::Config::new
-          if saved_HTTP_ACCEPT_LANGUAGE
-            ENV['HTTP_ACCEPT_LANGUAGE'] = saved_HTTP_ACCEPT_LANGUAGE
-          else
-            ENV.delete('HTTP_ACCEPT_LANGUAGE')
-          end
+          ENV['HTTP_ACCEPT_LANGUAGE'] = saved_HTTP_ACCEPT_LANGUAGE
         end
 
         cgi = DummyCGI::new(req, res)
