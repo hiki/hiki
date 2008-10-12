@@ -1,4 +1,12 @@
 2008-10-12  KURODA Hiraku <hiraku@sapporo.email.ne.jp>
+
+	* plugin/50bayes_filter.rb: Use unified diff insted of "appended lines" in "submitted_pages"
+
+	* hiki/filter/bayes_filter.rb: add Hiki::Filter::BayesFilter::PageData#get_unified_diff.
+
+	* test/spec_bayes_filter.rb: ditto.
+
+2008-10-12  KURODA Hiraku <hiraku@sapporo.email.ne.jp>
 	* test/spec_bayes_filter.rb: Update some specs.
 
 2008-10-12  KURODA Hiraku <hiraku@sapporo.email.ne.jp>

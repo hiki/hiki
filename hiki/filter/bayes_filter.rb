@@ -237,6 +237,10 @@ EOT
       def diff_keyword
         (@new_page.keyword||[])-(@old_page.keyword||[])
       end
+
+      def get_unified_diff
+        unified_diff(@old_page.text||"", @new_page.text||"")
+      end
     end
   end
 

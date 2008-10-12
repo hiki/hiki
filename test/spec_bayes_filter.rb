@@ -4,6 +4,7 @@
 require "tmpdir"
 require "fileutils"
 require "hiki/command"
+$: << "hiki"
 
 module SetupBayesFilter
 
@@ -211,6 +212,11 @@ describe Hiki::Filter::BayesFilter::PageData do
   it "diff_keyword" do
     pd = Hiki::Filter::PageData
     Hiki::Filter::BayesFilter::PageData.new(pd.new(nil, nil, nil, "old1\nnew1\nold2\nnew2"), pd.new(nil, nil, nil, "old1\nold2")).diff_keyword.sort.should == ["new1", "new2"].sort
+  end
+
+  it "get_unified_diff" do
+    pd = Hiki::Filter::PageData
+    Hiki::Filter::BayesFilter::PageData.new(pd.new("", "old1\nnew1\nold2\nnew2\n"), pd.new("", "old1\nold2\n")).get_unified_diff.should == "@@ -1,2 +1,4 @@\n old1\n+new1\n old2\n+new2\n"
   end
 end
 

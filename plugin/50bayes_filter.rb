@@ -132,7 +132,7 @@ EOT
 <li><a href="#{h[id].url}">#{CGI.escapeHTML(h[id].new_page.page)}</a>
 <dl>
 <dt>#{Res.title}</dt><dd>#{CGI.escapeHTML(h[id].new_page.title)}</dd>
-<dt>#{Res.diff_text}</dt><dd><pre>#{CGI.escapeHTML(h[id].diff_text)}</pre></dd>
+<dt>Unified Diff</dt><dd><pre>#{CGI.escapeHTML(h[id].get_unified_diff)}</pre></dd>
 #{
   unless h[id].diff_keyword.join("\n").strip.empty?
     "<dt>#{Res.diff_keyword}</dt><dd>#{CGI.escapeHTML(h[id].diff_keyword.join("\n").strip).gsub(/\n/, "<br>")}</dd>"
