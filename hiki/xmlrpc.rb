@@ -58,6 +58,7 @@ module Hiki
         options['params'] = Hash::new( [] )
         plugin = Hiki::Plugin::new( options, conf )
         plugin.login( attributes['name'], attributes['password'] )
+        Hiki::Filter.init(conf, cgi, plugin, db)
 
         unless plugin.editable?( page )
           raise XMLRPC::FaultException.new(10, "can't edit this page.")
