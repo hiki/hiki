@@ -1,4 +1,7 @@
 2008-10-12  KURODA Hiraku <hiraku@sapporo.email.ne.jp>
+	* test/spec_bayes_filter.rb: Update some specs.
+
+2008-10-12  KURODA Hiraku <hiraku@sapporo.email.ne.jp>
 	* hiki/xmlrpc.rb: Fix: Error is raised in 'wiki.putPage' because
 	  Filter was not initialized.
 	

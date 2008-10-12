@@ -92,7 +92,8 @@ describe Hiki::Filter::BayesFilter, "with default settings" do
       "text",
       "title")
     old_page = Hiki::Filter::PageData.new("Page")
-    Hiki::Filter.plugin.should_not_receive(:sendmail)
+    plugin = stub("plugin")
+    Hiki::Filter.should_not_receive(:plugin)
     lambda{@bf.filter(new_page, old_page, true)}.should_not raise_error
     lambda{@bf.filter(new_page, old_page, false)}.should_not raise_error
   end
@@ -147,7 +148,9 @@ describe Hiki::Filter::BayesFilter, "with settings" do
       "text",
       "title")
     old_page = Hiki::Filter::PageData.new("Page")
-    Hiki::Filter.plugin.should_receive(:sendmail)
+    plugin = stub("plugin")
+    plugin.should_receive(:sendmail)
+    Hiki::Filter.should_receive(:plugin).and_return(plugin)
     lambda{@bf.filter(new_page, old_page, false)}.should_not raise_error
   end
 
@@ -157,7 +160,7 @@ describe Hiki::Filter::BayesFilter, "with settings" do
       "text",
       "title")
     old_page = Hiki::Filter::PageData.new("Page")
-    Hiki::Filter.plugin.should_not_receive(:sendmail)
+    Hiki::Filter.should_not_receive(:plugin)
     lambda{@bf.filter(new_page, old_page, true)}.should_not raise_error
   end
 end
