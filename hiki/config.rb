@@ -3,8 +3,14 @@
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
 
-HIKI_VERSION  = '0.8.7'
-HIKI_RELEASE_DATE = '2008-02-08'
+module Hiki
+  VERSION = '0.8.7'
+  RELEASE_DATE = '2008-02-08'
+end
+
+# For backward compatibility
+HIKI_VERSION  = Hiki::VERSION
+HIKI_RELEASE_DATE = Hiki::RELEASE_DATE
 
 require 'cgi'
 require 'hiki/command'
@@ -191,7 +197,7 @@ module Hiki
 
       @max_name_size   ||= 50
       @password        ||= ''
-      @generator       ||= "Hiki #{HIKI_VERSION}"
+      @generator       ||= "Hiki #{Hiki::VERSION}"
       @timeout         ||= 30
 
       Dir.mkdir(@cache_path) unless File::directory?(@cache_path)

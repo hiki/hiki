@@ -14,7 +14,7 @@ module Hiki
     end
 
     attr_accessor :template, :contents
-    
+
     def initialize(cgi, conf)
       @cgi = cgi
       @conf = conf
@@ -37,13 +37,13 @@ module Hiki
       end
       @headers['type']     = 'text/html'
       if @conf.mobile_agent?
-	@body = NKF::nkf( '-sE', @body ) if /EUC-JP/i =~ @conf.charset
-	@headers['charset']          = 'Shift_JIS'
+        @body = NKF::nkf( '-sE', @body ) if /EUC-JP/i =~ @conf.charset
+        @headers['charset']          = 'Shift_JIS'
       else
-	@headers['charset']          = @conf.charset
-	@headers['Content-Language'] = @conf.lang
-	@headers['Pragma']           = 'no-cache'
-	@headers['Cache-Control']    = 'no-cache'
+        @headers['charset']          = @conf.charset
+        @headers['Content-Language'] = @conf.lang
+        @headers['Pragma']           = 'no-cache'
+        @headers['Cache-Control']    = 'no-cache'
       end
       @headers['Vary']             = 'User-Agent,Accept-Language'
       @headers['Content-Length']   = @body.size.to_s
@@ -54,7 +54,7 @@ module Hiki
       @headers.update( headers ) if headers
       print @cgi.header( @headers )
       if @cgi.request_method != 'HEAD'
-	print @body
+        print @body
       end
     end
   end

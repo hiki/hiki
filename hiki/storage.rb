@@ -84,7 +84,7 @@ module Hiki
       Dir.mkdir( cache_path ) unless test( ?e, cache_path )
       begin
         tmp = Marshal::load( File.open( "#{cache_path}/#{CGI::escape( page )}".untaint, 'rb' ) {|f| f.read} )
-	if tmp[0] == HIKI_RELEASE_DATE
+	if tmp[0] == Hiki::RELEASE_DATE
 	  return tmp[1]
 	else
 	  return nil
@@ -97,7 +97,7 @@ module Hiki
     def save_cache( page, tokens )
       begin
         File.open( "#{@conf.cache_path}/parser/#{CGI::escape( page )}".untaint, 'wb') do |f|
-          Marshal::dump([HIKI_RELEASE_DATE, tokens], f)
+          Marshal::dump([Hiki::RELEASE_DATE, tokens], f)
         end
       rescue
       end
