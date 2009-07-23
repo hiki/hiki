@@ -4,11 +4,11 @@
 module Hiki
   class AliasWiki
     require 'hiki/util'
-    
+
     ALIASWIKI_NAME_RE =  /\[\[(.+):(.+)\]\]/
 
     attr_reader :aliaswiki_names
-    
+
     def initialize(str)
       @aliaswiki_names = Hash::new
       (str || '').scan( ALIASWIKI_NAME_RE ) do |i|

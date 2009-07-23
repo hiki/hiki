@@ -1,5 +1,41 @@
 2009-07-23  okkez  <okkez000@gmail.com>
 
+	* hiki/aliaswiki.rb: delete trailing white spaces, fix indent.
+
+	* hiki/auth/typekey.rb: ditto.
+
+	* hiki/config.rb: ditto.
+
+	* hiki/db/ptstore.rb: ditto.
+
+	* hiki/db/tmarshal.rb: ditto.
+
+	* hiki/filter.rb: ditto.
+
+	* hiki/filter/bayes_filter.rb: ditto.
+
+	* hiki/filter/word_filter.rb: ditto.
+
+	* hiki/hiki_formatter.rb: ditto.
+
+	* hiki/image_size.rb: ditto.
+
+	* hiki/interwiki.rb: ditto.
+
+	* hiki/plugin.rb: ditto.
+
+	* hiki/pluginutil.rb: ditto.
+
+	* hiki/repos/default.rb: ditto.
+
+	* hiki/repos/hg.rb: ditto.
+
+	* hiki/storage.rb: ditto.
+
+	* hiki/util.rb: ditto.
+
+2009-07-23  okkez  <okkez000@gmail.com>
+
 	* style/default/html_formatter.rb: use dot instead double
 	colon when call singleton methods.
 

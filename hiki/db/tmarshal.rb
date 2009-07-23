@@ -12,7 +12,7 @@ module TMarshal
     end
     dumped
   end
-  
+
   def load(port)
     case port
     when String
@@ -23,7 +23,7 @@ module TMarshal
       raise 'Wrong type!'
     end
   end
-  
+
   def restore(port)
     load(port)
   end

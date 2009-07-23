@@ -16,7 +16,7 @@ module Hiki
     attr_accessor :text, :title, :cookies, :user, :data, :session_id
 
     TOC_STRING = "\000\000[Table of Contents]"
-    
+
     def initialize( options, conf )
       @options      = options
       @conf         = conf
@@ -41,7 +41,7 @@ module Hiki
       options.each do |opt, val|
         instance_variable_set("@#{opt}", val) unless opt.index('.')
       end
-      
+
       @toc_f            = false
       @context          = nil
       @plugin_command   = []
@@ -120,7 +120,7 @@ module Hiki
         end
       end
     end
-    
+
     def body_enter_proc
       r = []
       @body_enter_procs.each do |proc|
@@ -180,7 +180,7 @@ module Hiki
       end
       r.join
     end
-      
+
     def form_proc
       r = []
       @form_procs.each do |proc|
@@ -192,7 +192,7 @@ module Hiki
       end
       r.join
     end
-    
+
     def menu_proc
       r = []
       @menu_procs.each do |proc|
@@ -204,7 +204,7 @@ module Hiki
       end
       r.compact
     end
-    
+
     def add_cookie( cookie )
       @cookies << cookie
     end
@@ -392,8 +392,8 @@ module Hiki
     def set_tdiary_env
       @date             = Time::now
       @cookies          = []
-      
-      @options['cache_path']  = @conf.cache_path 
+
+      @options['cache_path']  = @conf.cache_path
       @options['mode']        = "day"
 #      @options['author_name'] = @conf.author_name || 'anonymous'
 #      @options['author_mail'] = @conf.mail
@@ -402,7 +402,7 @@ module Hiki
       @options['years']       = {}
       @options['diaries']     = nil,
       @options['date']        = Time::now
- 
+
       %w(cache_path mode years diaries date).each do |p|
         instance_variable_set("@#{p}", @options[p])
       end

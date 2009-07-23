@@ -116,9 +116,9 @@ module Hiki
 
     def read_template( cmd )
       if mobile_agent?
-	template = File.join(@template_path, 'i.' + @template[cmd])
+        template = File.join(@template_path, 'i.' + @template[cmd])
       else
-	template = File.join(@template_path, @template[cmd])
+        template = File.join(@template_path, @template[cmd])
       end
       if FileTest.file?(template)
         File.read(template).untaint

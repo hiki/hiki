@@ -22,7 +22,7 @@ module Hiki
     def close_db
       true
     end
-    
+
     def pages
       ['page1', 'page2', 'page3']
     end
@@ -40,7 +40,7 @@ module Hiki
       rescue
       end
     end
-    
+
     def md5hex( page )
       s = load( page )
       Digest::MD5.hexdigest( s || '' )
@@ -51,14 +51,14 @@ module Hiki
       keys    = w.split
       p       = pages
       total   = pages.size
-      
+
       page_info.sort_by {|e| e.values[0][:last_modified]}.reverse_each do |i|
         page = i.keys[0]
         info = i.values[0]
         keyword  = info[:keyword]
         title    = info[:title]
         status   = ''
-        
+
         keys.each do |key|
           quoted_key = Regexp.quote(key)
           if keyword and keyword.join("\n").index(/#{quoted_key}/i)
@@ -84,11 +84,11 @@ module Hiki
       Dir.mkdir( cache_path ) unless test( ?e, cache_path )
       begin
         tmp = Marshal.load( File.open( "#{cache_path}/#{CGI.escape( page )}".untaint, 'rb' ) {|f| f.read} )
-	if tmp[0] == Hiki::RELEASE_DATE
-	  return tmp[1]
-	else
-	  return nil
-	end
+        if tmp[0] == Hiki::RELEASE_DATE
+          return tmp[1]
+        else
+          return nil
+        end
       rescue
         return nil
       end

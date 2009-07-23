@@ -1,5 +1,5 @@
 # Copyright (C) 2008, KURODA Hiraku <hiraku@hinet.mydns.jp>
-# You can redistribute it and/or modify it under GPL2. 
+# You can redistribute it and/or modify it under GPL2.
 
 module Hiki::Filter
   add_filter do |new_page, old_page, posted_by_user|

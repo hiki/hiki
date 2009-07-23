@@ -4,7 +4,7 @@
 module Hiki
   class HikiFormatter
     H2_RE = /^<h2>.*<a name=/
-    
+
     def apply_tdiary_theme(orig_html)
       return orig_html if @conf.mobile_agent?
       section = ''

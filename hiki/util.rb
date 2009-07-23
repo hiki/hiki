@@ -19,7 +19,7 @@ class String
   def to_jis
     NKF.nkf('-m0 -j', self)
   end
-  
+
   def escape
     CGI.escape(self)
   end
@@ -230,7 +230,7 @@ EOS
         return Uconv.euctou8(str)
       end
     end
-  
+
     def utf8_to_euc(str)
       if NKF.const_defined?(:UTF8)
         return NKF.nkf('-m0 -e', str)

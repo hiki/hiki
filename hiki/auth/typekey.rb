@@ -2,7 +2,7 @@
 # Copyright (C) 2005 jouno <jouno2002@yahoo.co.jp>
 # License under GPL-2
 #
-# original is Adam Bregenzer(<adam@bregenzer.net>)'s python version 
+# original is Adam Bregenzer(<adam@bregenzer.net>)'s python version
 # http://adam.bregenzer.net/python/typekey/TypeKey.py
 #
 # note:
@@ -26,7 +26,7 @@ if cgi.params['tk'][0] == "1"
     puts "not!"
   end
 end
-return_url = "http://localhost/cgi-bin/tk_test.cgi" 
+return_url = "http://localhost/cgi-bin/tk_test.cgi"
 
 url_sign_in = tk.getLoginUrl(return_url + "?tk=1")
 url_sign_out = tk.getLogoutUrl(return_url)
@@ -44,9 +44,9 @@ require 'openssl'
 class TypeKey
     """This class handles TypeKey logins.
     """
-  
+
   attr_accessor(:base_url,:key_url,:key_cache_path,:key_cache_timeout,:login_timeout)
-  
+
   def initialize(token, version = '1.1')
     # Base url for generating login and logout urls.
     @base_url = 'https://www.typekey.com/t/typekey/'
@@ -64,7 +64,7 @@ class TypeKey
     # Length of time logins remain valid, in seconds.
     # Defaults to five minutes.
     @login_timeout = 60 * 5
-    
+
     @token = token
     @version = version
   end
@@ -74,16 +74,16 @@ class TypeKey
         """
     #sig isn't urlencoded.
     sig.gsub!(/ /,"+")
-    unless key 
+    unless key
       key = getKey()
     end
-    
+
     if @version == '1.1'
       message =[email, name, nick, ts.to_s, @token].join('::')
     else
       message =[email, name, nick, ts.to_s].join('::')
     end
-    
+
     if dsaVerify(message, sig, key)
       if (Time.now.to_i - ts.to_i) > @login_timeout
         return false
@@ -92,7 +92,7 @@ class TypeKey
     else
       return false
     end
-    
+
   end
 
   def getLoginUrl(return_url, email = false)
@@ -107,7 +107,7 @@ class TypeKey
     url += 'login?t=' + @token
     url += email
     url += '&v=' + @version
-    url += '&_return=' + CGI.escape(return_url) 
+    url += '&_return=' + CGI.escape(return_url)
     return url
   end
 
@@ -116,7 +116,7 @@ class TypeKey
         """
     return @base_url + 'logout?_return=' + URI.escape(return_url)
   end
-  
+
   def getKey(url = nil)
         """Return the TypeKey public keys, cache results unless a url is passed
         """
@@ -135,11 +135,11 @@ class TypeKey
         open(@key_url) {|fh|
           @key_string = fh.read
         }
-        
+
         File.open(@key_cache_path, 'w') {|fh|
           fh.puts(@key_string)
         }
-        
+
       end
     else
       open(url) {|fh|
@@ -154,19 +154,19 @@ class TypeKey
     return tk_key
 
   end
-  
+
   def dsaVerify(message, sig, key)
         """Verify a DSA signature
         """
     r_sig, s_sig = sig.split(':')
     r_sig = Base64.decode64(r_sig).unpack("H*")[0].hex
     s_sig = Base64.decode64(s_sig).unpack("H*")[0].hex
-    
+
     sign = OpenSSL::ASN1::Sequence.new(
     [OpenSSL::ASN1::Integer.new(r_sig),
     OpenSSL::ASN1::Integer.new(s_sig)]
     ).to_der
-    
+
     dsa = OpenSSL::PKey::DSA.new
     dsa.p = key["p"]
     dsa.q = key["q"]

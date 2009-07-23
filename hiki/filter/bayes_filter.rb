@@ -21,7 +21,7 @@ module Hiki::Filter
     end
 
     def self.init(conf)
-      @@hiki_conf = conf      
+      @@hiki_conf = conf
       @db = nil
       self
     end

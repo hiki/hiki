@@ -4,12 +4,12 @@
 module Hiki
   class InterWiki
     require 'hiki/util'
-    
+
     URL  = '(?:http|https|ftp|mailto|file):[a-zA-Z0-9;/?:@&=+$,\-_.!~*\'()#%]+'
     INTERWIKI_NAME_RE =  /\[\[([^|]+)\|(#{URL})\]\](?:\s+(sjis|euc|utf8|alias))?/
 
     attr_reader :interwiki_names
-    
+
     def initialize( str )
       @interwiki_names = Hash::new
       (str || '').scan( INTERWIKI_NAME_RE ) do |i|
@@ -43,9 +43,9 @@ module Hiki
 
     def outer_alias(s)
       if @interwiki_names.has_key?(s) && @interwiki_names[s][:encoding] == 'alias'
-	return [@interwiki_names[s][:url].escapeHTML, s.escapeHTML]
+        return [@interwiki_names[s][:url].escapeHTML, s.escapeHTML]
       else
-	return nil
+        return nil
       end
     end
   end

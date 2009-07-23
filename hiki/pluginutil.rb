@@ -67,9 +67,9 @@ module Hiki
     ARG_REG_J = /\A([^\s\\'"\(\),\]]+)/
 
     def argwords(args, escape = false)
-      args= String.new(args) rescue 
+      args= String.new(args) rescue
       raise(ArgumentError, "Argument must be a string")
-      
+
       args.sub!(LSTRIP_RE, '')
       words = []
       is_ary = false
@@ -113,9 +113,9 @@ module Hiki
     METHOD_REG_A = /\A([^\s\\'"\(\)]+)/
 
     def methodwords(line)
-      line = String.new(line) rescue 
+      line = String.new(line) rescue
       raise(ArgumentError, "Argument must be a string")
-      
+
       line.sub!(LSTRIP_RE, '')
       words = []
       meth = ''

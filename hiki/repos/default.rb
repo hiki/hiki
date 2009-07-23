@@ -24,7 +24,7 @@ module Hiki
 
     def update( wiki )
       raise "Please override this function."
-    end    
+    end
   end
 
   class ReposBase

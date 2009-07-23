@@ -41,9 +41,9 @@ module Hiki
         end
       end
       all_log.split(/\n\n(?=changeset:\s+\d+:)/).each do |l|
-	rev = l[/^changeset:\s+(\d+):.*$/, 1].to_i+1
-	date = Time.parse(l[/^date:\s+(.*)$/, 1]).localtime.strftime('%Y/%m/%d %H:%M:%S')
-	summary = l[/^summary:\s+(.*)$/, 1]
+        rev = l[/^changeset:\s+(\d+):.*$/, 1].to_i+1
+        date = Time.parse(l[/^date:\s+(.*)$/, 1]).localtime.strftime('%Y/%m/%d %H:%M:%S')
+        summary = l[/^summary:\s+(.*)$/, 1]
         revs << [rev, date, "", summary]
       end
       revs

@@ -31,7 +31,7 @@ class ImageSize
 
 # image type list
   def ImageSize.type_list
-    Type.constants 
+    Type.constants
   end
 
 # receive image & make size
@@ -118,7 +118,7 @@ class ImageSize
       ret = 'application/octet-stream'
     end
     ret
-  end    
+  end
 
   def check_type()
     if /<\s*[a-z]+/i =~ @img_top                      then Type::OTHER # html?
