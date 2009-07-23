@@ -1,3 +1,22 @@
+2009-07-23  okkez  <okkez000@gmail.com>
+
+	* style/default/html_formatter.rb: use dot instead double
+	colon when call singleton methods.
+
+	* plugin/01sp.rb: ditto.
+
+	* plugin/00default.rb: ditto.
+
+	* hiki/xmlrpc.rb: ditto.
+
+	* hiki/util.rb: ditto.
+
+	* hiki/storage.rb: ditto.
+
+	* hiki/command.rb: ditto.
+
+	* hiki/config.rb: ditto.
+
 2009-07-19  okkez  <okkez000@gmail.com>
 
 	* hiki/config.rb (Hiki): add Hiki::VERSION, Hiki::RELEASE_DATE.

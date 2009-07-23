@@ -43,11 +43,11 @@ module Hiki
     
     def md5hex( page )
       s = load( page )
-      Digest::MD5::hexdigest( s || '' )
+      Digest::MD5.hexdigest( s || '' )
     end
 
     def search( w )
-      result  = Array::new
+      result  = Array.new
       keys    = w.split
       p       = pages
       total   = pages.size
@@ -60,13 +60,13 @@ module Hiki
         status   = ''
         
         keys.each do |key|
-          quoted_key = Regexp::quote(key)
+          quoted_key = Regexp.quote(key)
           if keyword and keyword.join("\n").index(/#{quoted_key}/i)
             status << @conf.msg_match_keyword.gsub(/\]/, " <strong>#{key.escapeHTML}</strong>]")
           elsif title and title.index(/#{quoted_key}/i)
             status << @conf.msg_match_title.gsub(/\]/, " <strong>#{key.escapeHTML}</strong>]")
           elsif load( page ).index(/^.*#{quoted_key}.*$/i)
-            status << '[' + $&.escapeHTML.gsub(/#{Regexp::quote(key.escapeHTML)}/i) { "<strong>#{$&}</strong>"} + ']'
+            status << '[' + $&.escapeHTML.gsub(/#{Regexp.quote(key.escapeHTML)}/i) { "<strong>#{$&}</strong>"} + ']'
           else
             status = nil
             break
@@ -83,7 +83,7 @@ module Hiki
       cache_path = "#{@conf.cache_path}/parser"
       Dir.mkdir( cache_path ) unless test( ?e, cache_path )
       begin
-        tmp = Marshal::load( File.open( "#{cache_path}/#{CGI::escape( page )}".untaint, 'rb' ) {|f| f.read} )
+        tmp = Marshal.load( File.open( "#{cache_path}/#{CGI.escape( page )}".untaint, 'rb' ) {|f| f.read} )
 	if tmp[0] == Hiki::RELEASE_DATE
 	  return tmp[1]
 	else
@@ -96,8 +96,8 @@ module Hiki
 
     def save_cache( page, tokens )
       begin
-        File.open( "#{@conf.cache_path}/parser/#{CGI::escape( page )}".untaint, 'wb') do |f|
-          Marshal::dump([Hiki::RELEASE_DATE, tokens], f)
+        File.open( "#{@conf.cache_path}/parser/#{CGI.escape( page )}".untaint, 'wb') do |f|
+          Marshal.dump([Hiki::RELEASE_DATE, tokens], f)
         end
       rescue
       end
@@ -105,7 +105,7 @@ module Hiki
 
     def delete_cache( page )
       begin
-        File.unlink("#{@conf.cache_path}/parser/#{CGI::escape( page )}".untaint)
+        File.unlink("#{@conf.cache_path}/parser/#{CGI.escape( page )}".untaint)
       rescue Errno::ENOENT
       end
     end

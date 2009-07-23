@@ -16,9 +16,9 @@ module Hiki
       @plugin     = plugin
       @conf       = conf
       @prefix     = prefix
-      @references = Array::new
-      @interwiki  = InterWiki::new( @db.load( @conf.interwiki_name ) )
-      @aliaswiki  = AliasWiki::new( @db.load( @conf.aliaswiki_name ) )
+      @references = Array.new
+      @interwiki  = InterWiki.new( @db.load( @conf.interwiki_name ) )
+      @aliaswiki  = AliasWiki.new( @db.load( @conf.aliaswiki_name ) )
       get_auto_links if @conf.auto_link
     end
 
@@ -36,7 +36,7 @@ module Hiki
 
     def references
       @references.uniq
-    end    
+    end
 
     HEADING_RE = %r!<h(\d)>.*<a name="l\d+">.*?</a>(.*?)</h\1>!
     TAG_RE = %r!(<.+?>)!

@@ -9,31 +9,31 @@ autoload( :Diff, 'docdiff' )
 
 class String
   def to_euc
-    NKF::nkf('-m0 -e', self)
+    NKF.nkf('-m0 -e', self)
   end
 
   def to_sjis
-    NKF::nkf('-m0 -s', self)
+    NKF.nkf('-m0 -s', self)
   end
 
   def to_jis
-    NKF::nkf('-m0 -j', self)
+    NKF.nkf('-m0 -j', self)
   end
   
   def escape
-    CGI::escape(self)
+    CGI.escape(self)
   end
 
   def unescape
-    CGI::unescape(self)
+    CGI.unescape(self)
   end
 
   def escapeHTML
-    CGI::escapeHTML(self)
+    CGI.escapeHTML(self)
   end
 
   def unescapeHTML
-    CGI::unescapeHTML(self)
+    CGI.unescapeHTML(self)
   end
 
   def sanitize
@@ -60,7 +60,7 @@ module Hiki
     end
 
     def title( s )
-      CGI::escapeHTML( "#{@conf.site_name} - #{s}" )
+      CGI.escapeHTML( "#{@conf.site_name} - #{s}" )
     end
 
     def view_title( s )
@@ -72,9 +72,9 @@ module Hiki
     end
 
     def get_common_data( db, plugin, conf )
-      data = Hash::new
+      data = Hash.new
       data[:author_name] = conf.author_name
-      data[:view_style]  = conf.use_sidebar ? CGI::escapeHTML( conf.main_class ) : 'hiki' # for tDiary theme
+      data[:view_style]  = conf.use_sidebar ? CGI.escapeHTML( conf.main_class ) : 'hiki' # for tDiary theme
       data[:cgi_name]    = conf.cgi_name
       if conf.use_sidebar
         t = db.load_cache( conf.side_menu )
@@ -87,7 +87,7 @@ module Hiki
         f = conf.formatter.new( t, db, plugin, conf, 's' )
         data[:sidebar]   = f.to_s
         data[:main_class]    = conf.main_class
-        data[:sidebar_class] = CGI::escapeHTML( conf.sidebar_class )
+        data[:sidebar_class] = CGI.escapeHTML( conf.sidebar_class )
       else
         data[:sidebar] = nil
       end
@@ -161,7 +161,7 @@ module Hiki
           smtp.send_mail <<EndOfMail, from_addr, *to_addrs
 From: #{from_addr}
 To: #{to_addrs.join(",")}
-Subject: #{NKF::nkf('-M', subject)}
+Subject: #{NKF.nkf('-M', subject)}
 Date: #{Time.now.rfc2822}
 MIME-Version: 1.0
 Content-Type: text/plain; charset="iso-2022-jp"
@@ -219,8 +219,8 @@ EOS
     end
 
     def euc_to_utf8(str)
-      if NKF::const_defined?(:UTF8)
-        return NKF::nkf('-m0 -w', str)
+      if NKF.const_defined?(:UTF8)
+        return NKF.nkf('-m0 -w', str)
       else
         begin
           require 'uconv'
@@ -232,8 +232,8 @@ EOS
     end
   
     def utf8_to_euc(str)
-      if NKF::const_defined?(:UTF8)
-        return NKF::nkf('-m0 -e', str)
+      if NKF.const_defined?(:UTF8)
+        return NKF.nkf('-m0 -e', str)
       else
         begin
           require 'uconv'

@@ -48,7 +48,7 @@ end
 def sp_hash_from_dirs( dirs )
   r = Hash.new
   dirs.each do |dir|
-    Dir::glob( "#{dir}/*.rb" ).each do |path|
+    Dir.glob( "#{dir}/*.rb" ).each do |path|
       filename = File.basename( path )
       r[filename] ||= path
     end
@@ -60,9 +60,9 @@ end
 def sp_doc_url( file )
   case @conf.lang
   when 'ja'
-    "http://hikiwiki.org/ja/#{CGI::escape( file )}.html"
+    "http://hikiwiki.org/ja/#{CGI.escape( file )}.html"
   else
-    "http://hikiwiki.org/en/#{CGI::escape( file )}.html"
+    "http://hikiwiki.org/en/#{CGI.escape( file )}.html"
   end
 end
 
@@ -89,8 +89,8 @@ end
 # <li> list of plugins
 def sp_li_plugins( paths, with_checkbox, is_checked )
   paths.collect { |path| File.basename( path ) }.sort.inject('') do |result, file|
-    checkbox = with_checkbox ? %Q!<input name="#{SP_PREFIX}.#{CGI::escapeHTML( file )}" type="checkbox" value="t"#{is_checked ? ' checked' : ''}>! : ''
-    result << %Q!<li>#{checkbox}<a href="#{sp_doc_url( file )}">#{CGI::escapeHTML( file )}</a>!
+    checkbox = with_checkbox ? %Q!<input name="#{SP_PREFIX}.#{CGI.escapeHTML( file )}" type="checkbox" value="t"#{is_checked ? ' checked' : ''}>! : ''
+    result << %Q!<li>#{checkbox}<a href="#{sp_doc_url( file )}">#{CGI.escapeHTML( file )}</a>!
   end
 end
 
@@ -168,7 +168,7 @@ if sp_option( 'selected' )
           load_plugin( path )
           @plugin_files << path
         rescue Exception
-          raise PluginError::new( "Plugin error in '#{path}'.\n#{$!}" )
+          raise PluginError.new( "Plugin error in '#{path}'.\n#{$!}" )
         end
         break
       end

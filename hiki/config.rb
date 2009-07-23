@@ -16,7 +16,7 @@ require 'cgi'
 require 'hiki/command'
 
 module Hiki
-  PATH  = "#{File::dirname(File::dirname(__FILE__))}"
+  PATH  = "#{File.dirname(File.dirname(__FILE__))}"
 
   class Config
     def initialize
@@ -32,11 +32,11 @@ module Hiki
 
       # parser class and formatter class
       style = @style.gsub( /\+/, '' )
-      @parser = Hiki::const_get( "Parser_#{style}" )
-      @formatter = Hiki::const_get( "HTMLFormatter_#{style}" )
+      @parser = Hiki.const_get( "Parser_#{style}" )
+      @formatter = Hiki.const_get( "HTMLFormatter_#{style}" )
 
       # repository class
-      @repos = Hiki::const_get("Repos#{@repos_type.capitalize}").new(@repos_root, @data_path)
+      @repos = Hiki.const_get("Repos#{@repos_type.capitalize}").new(@repos_root, @data_path)
 
       instance_variables.each do |v|
         v = v.to_s
@@ -54,11 +54,11 @@ module Hiki
 
       bot = ["googlebot", "Hatena Antenna", "moget@goo.ne.jp"]
       bot += @options['bot'] || []
-      @bot = Regexp::new( "(#{bot.uniq.join( '|' )})", true )
+      @bot = Regexp.new( "(#{bot.uniq.join( '|' )})", true )
     end
 
     def database
-      @database ||= Hiki::const_get( "HikiDB_#{database_type}" )::new( self )
+      @database ||= Hiki.const_get( "HikiDB_#{database_type}" ).new( self )
     end
 
     def bot?
@@ -86,8 +86,8 @@ module Hiki
     end
 
     def save_config
-      conf = ERB::new( File::open( "#{@template_path}/hiki.conf" ){|f| f.read }.untaint ).result( binding )
-      File::open(@config_file, "w") do |f|
+      conf = ERB.new( File.open( "#{@template_path}/hiki.conf" ){|f| f.read }.untaint ).result( binding )
+      File.open(@config_file, "w") do |f|
         f.print conf
       end
     end
@@ -98,10 +98,10 @@ module Hiki
           @base_url = ''
         elsif ENV['HTTPS'] && /off/i !~ ENV['HTTPS']
           port = (ENV['SERVER_PORT'] == '443') ? '' : ':' + ENV['SERVER_PORT'].to_s
-          @base_url = "https://#{ ENV['SERVER_NAME'] }#{ port }#{File::dirname(ENV['SCRIPT_NAME'])}/".sub(%r|/+$|, '/')
+          @base_url = "https://#{ ENV['SERVER_NAME'] }#{ port }#{File.dirname(ENV['SCRIPT_NAME'])}/".sub(%r|/+$|, '/')
         else
           port = (ENV['SERVER_PORT'] == '80') ? '' : ':' + ENV['SERVER_PORT'].to_s
-          @base_url = "http://#{ ENV['SERVER_NAME'] }#{ port }#{File::dirname(ENV['SCRIPT_NAME'])}/".sub(%r|/+$|, '/')
+          @base_url = "http://#{ ENV['SERVER_NAME'] }#{ port }#{File.dirname(ENV['SCRIPT_NAME'])}/".sub(%r|/+$|, '/')
         end
       end
       @base_url
@@ -132,7 +132,7 @@ module Hiki
     # loading hikiconf.rb in current directory
     def load
       @options = {}
-      eval( File::open( "hikiconf.rb" ){|f| f.read }.untaint, binding, "(hikiconf.rb)", 1 )
+      eval( File.open( "hikiconf.rb" ){|f| f.read }.untaint, binding, "(hikiconf.rb)", 1 )
       formaterror if $data_path
 
       raise 'No @data_path variable.' unless @data_path
@@ -200,7 +200,7 @@ module Hiki
       @generator       ||= "Hiki #{Hiki::VERSION}"
       @timeout         ||= 30
 
-      Dir.mkdir(@cache_path) unless File::directory?(@cache_path)
+      Dir.mkdir(@cache_path) unless File.directory?(@cache_path)
 
       # following variables are not configurable.
       @config_file = "#{@data_path}/hiki.conf"
@@ -215,7 +215,7 @@ module Hiki
                    :mail_on_update, :use_sidebar, :auto_link, :use_wikiname,
                    :xmlrpc_enabled, :options2]
       begin
-        cgi_conf = File::open( @config_file ){|f| f.read }.untaint
+        cgi_conf = File.open( @config_file ){|f| f.read }.untaint
         cgi_conf.gsub!( /^[@$]/, '' )
         def_vars = ''
         variables.each do |var| def_vars << "#{var} = nil\n" end
@@ -274,7 +274,7 @@ module Hiki
       candidates.each do |lang|
         begin
           require "messages/#{lang}"
-          extend(Hiki::const_get("Messages_#{lang}"))
+          extend(Hiki.const_get("Messages_#{lang}"))
           @lang = lang
           return
         rescue LoadError

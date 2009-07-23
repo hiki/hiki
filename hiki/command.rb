@@ -30,7 +30,7 @@ module Hiki
 
       # for TrackBack
       if %r|/tb/(.+)$| =~ ENV['REQUEST_URI']
-        @cgi.params['p'] = [CGI::unescape($1)]
+        @cgi.params['p'] = [CGI.unescape($1)]
         @cgi.params['c'] = ['plugin']
         @cgi.params['plugin'] = ['trackback_post']
       end
@@ -54,10 +54,10 @@ module Hiki
         return
       end
 
-      @aliaswiki  = AliasWiki::new( @db.load( @conf.aliaswiki_name ) )
+      @aliaswiki  = AliasWiki.new( @db.load( @conf.aliaswiki_name ) )
       @p = @aliaswiki.original_name(@p).to_euc if @p
 
-      options = @conf.options || Hash::new( '' )
+      options = @conf.options || Hash.new( '' )
       options['page'] = @p
       options['db']   = @db
       options['cgi']  = cgi
@@ -65,17 +65,17 @@ module Hiki
       options['command'] = @cmd ? @cmd : 'view'
       options['params'] = @params
 
-      @plugin = Plugin::new( options, @conf )
+      @plugin = Plugin.new( options, @conf )
       session_id = @cgi.cookies['session_id'][0]
       if session_id
-        session = Hiki::Session::new( @conf, session_id )
+        session = Hiki::Session.new( @conf, session_id )
         if session.check
           @plugin.user = session.user
           @plugin.session_id = session_id
         end
       end
       if @conf.use_session && !@plugin.session_id
-        session = Hiki::Session::new( @conf )
+        session = Hiki::Session.new( @conf )
         session.save
         @plugin.session_id = session.session_id
         @plugin.add_cookie( session_cookie( @plugin.session_id ))
@@ -120,7 +120,7 @@ module Hiki
         }
       rescue NoMethodError, PermissionError, SessionError, Timeout::Error
         data = get_common_data( @db, @plugin, @conf )
-        data[:message] = CGI::escapeHTML( $!.message )
+        data[:message] = CGI.escapeHTML( $!.message )
         generate_error_page( data )
       end
     end
@@ -143,11 +143,11 @@ module Hiki
         data[:body].gsub!( Regexp.new( Regexp.quote( Plugin::TOC_STRING ) ), data[:toc] )
       end
 
-      @page = Hiki::Page::new( @cgi, @conf )
+      @page = Hiki::Page.new( @cgi, @conf )
       @page.template = @conf.read_template( @cmd )
       @page.contents = data
 
-      data[:last_modified] = Time::now unless data[:last_modified]
+      data[:last_modified] = Time.now unless data[:last_modified]
       @page.process( @plugin )
       @page.out( 'status' => status )
     end
@@ -159,7 +159,7 @@ module Hiki
       data[:view_title] = 'Error'
       data[:header] = @plugin.header_proc
       data[:frontpage] = @plugin.page_name( 'FrontPage' )
-      @page = Hiki::Page::new( @cgi, @conf )
+      @page = Hiki::Page.new( @cgi, @conf )
       @page.template = @conf.read_template( 'error' )
       @page.contents = data
       @page.process( @plugin )
@@ -182,11 +182,11 @@ module Hiki
       tokens = @db.load_cache( @p )
       unless tokens
         text = @db.load( @p )
-        parser = @conf.parser::new( @conf )
+        parser = @conf.parser.new( @conf )
         tokens = parser.parse( text )
         @db.save_cache( @p, tokens )
       end
-      formatter = @conf.formatter::new( tokens, @db, @plugin, @conf )
+      formatter = @conf.formatter.new( tokens, @db, @plugin, @conf )
       contents, toc = formatter.to_s, formatter.toc
       if @conf.hilight_keys
         word = @params['key'][0]
@@ -221,7 +221,7 @@ module Hiki
     def hilighten(str, keywords)
       hilighted = str.dup
       keywords.each do |key|
-        re = Regexp::new('(' << Regexp.escape(key) << ')', Regexp::IGNORECASE)
+        re = Regexp.new('(' << Regexp.escape(key) << ')', Regexp::IGNORECASE)
         hilighted.gsub!(/([^<]*)(<[^>]*>)?/) {
           body, tag = $1, $2
           body.gsub(re) {
@@ -304,8 +304,8 @@ module Hiki
       end
 
       if @cmd == 'preview'
-        p = @conf.parser::new( @conf ).parse( text.gsub(/\r/, '') )
-        formatter = @conf.formatter::new( p, @db, @plugin, @conf )
+        p = @conf.parser.new( @conf ).parse( text.gsub(/\r/, '') )
+        formatter = @conf.formatter.new( p, @db, @plugin, @conf )
         preview_text, toc = formatter.to_s, formatter.toc
         save_button = ''
         data[:keyword] = CGI.escapeHTML( @params['keyword'][0] || '' )
@@ -483,7 +483,7 @@ module Hiki
       msg_login_result = nil
       status = 'OK'
       if name && password
-        session = Hiki::Session::new( @conf )
+        session = Hiki::Session.new( @conf )
         @plugin.login( name, password )
 
         if @plugin.user
@@ -566,17 +566,17 @@ module Hiki
     def cmd_logout
       if session_id = @cgi.cookies['session_id'][0]
         cookies = [session_cookie(session_id, -1)]
-        Hiki::Session::new( @conf, session_id ).delete
+        Hiki::Session.new( @conf, session_id ).delete
       end
       redirect(@cgi, @conf.index_url, cookies)
     end
 
     def cookie(name, value, max_age = Session::MAX_AGE)
-      CGI::Cookie::new( {
+      CGI::Cookie.new( {
                           'name' => name,
                           'value' => value,
                           'path' => @plugin.cookie_path,
-                          'expires' => Time::now.gmtime + max_age
+                          'expires' => Time.now.gmtime + max_age
                         } )
     end
 

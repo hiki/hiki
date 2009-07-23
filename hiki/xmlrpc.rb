@@ -10,7 +10,7 @@ module Hiki
     def init_handler(server, cgi_class=CGI)
       server.add_handler('wiki.getPage') do |page|
         page = utf8_to_euc( page )
-        conf = Hiki::Config::new
+        conf = Hiki::Config.new
         db = conf.database
         ret = db.load( page )
         unless ret
@@ -21,7 +21,7 @@ module Hiki
 
       server.add_handler('wiki.getPageInfo') do |page|
         page = utf8_to_euc( page )
-        conf = Hiki::Config::new
+        conf = Hiki::Config.new
         db = conf.database
         title = db.get_attribute( page, :title )
         title = page if title.nil? || title.empty?
@@ -46,17 +46,17 @@ module Hiki
             v.map!{ |s| s.replace( utf8_to_euc( s ) ) }
           end
         }
-        conf = Hiki::Config::new
-        cgi = cgi_class::new
+        conf = Hiki::Config.new
+        cgi = cgi_class.new
         cgi.params['c'] = ['save']
         cgi.params['p'] = [page]
         db = conf.database
-        options = conf.options || Hash::new( '' )
+        options = conf.options || Hash.new( '' )
         options['page'] = page
         options['cgi']  = cgi
         options['db']  = db
-        options['params'] = Hash::new( [] )
-        plugin = Hiki::Plugin::new( options, conf )
+        options['params'] = Hash.new( [] )
+        plugin = Hiki::Plugin.new( options, conf )
         plugin.login( attributes['name'], attributes['password'] )
         Hiki::Filter.init(conf, cgi, plugin, db)
 
@@ -81,7 +81,7 @@ module Hiki
       end
 
       server.add_handler('wiki.getAllPages') do
-        conf = Hiki::Config::new
+        conf = Hiki::Config.new
         db = conf.database
         db.pages.collect{|p| XMLRPC::Base64.new( euc_to_utf8( p ) )}
       end

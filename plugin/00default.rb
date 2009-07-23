@@ -27,7 +27,7 @@ end
 def hiki_anchor( page, display_text )
   if page == 'FrontPage' then
     make_anchor(@conf.cgi_name, display_text)
-  else  
+  else
     make_anchor("#{@conf.cgi_name}?#{page}", display_text)
   end
 end
@@ -57,11 +57,11 @@ def toc_here( page = nil )
   if page
     tokens = @db.load_cache( page )
     unless tokens
-      parser = @conf.parser::new( @conf )
+      parser = @conf.parser.new( @conf )
       tokens = parser.parse( @db.load( page ) )
       @db.save_cache( page, tokens )
     end
-    formatter = @conf.formatter::new( tokens, @db, Plugin.new( @conf.options, @conf), @conf )
+    formatter = @conf.formatter.new( tokens, @db, Plugin.new( @conf.options, @conf), @conf )
     formatter.to_s
     formatter.toc.gsub( /<a href="/, "<a href=\"#{hiki_url( page )}" )
   else
@@ -112,7 +112,7 @@ end
 add_update_proc {
   updating_mail if @conf.mail_on_update
   if @user
-    @conf.repos.commit(@page, CGI::escape(@user))
+    @conf.repos.commit(@page, CGI.escape(@user))
   else
     @conf.repos.commit(@page)
   end
@@ -274,9 +274,9 @@ end
 
 if @cgi.params['conf'][0] == 'theme'
   @conf_theme_list = []
-  Dir::glob( "#{@conf.theme_path}/*".untaint ).sort.each do |dir|
-    theme = File::basename( dir )
-    next unless FileTest::file?( "#{dir}/#{theme}.css".untaint )
+  Dir.glob( "#{@conf.theme_path}/*".untaint ).sort.each do |dir|
+    theme = File.basename( dir )
+    next unless FileTest.file?( "#{dir}/#{theme}.css".untaint )
     name = theme.split( /_/ ).collect{|s| s.capitalize}.join( ' ' )
     @conf_theme_list << [theme,name]
   end
