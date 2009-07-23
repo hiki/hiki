@@ -8,26 +8,26 @@ $KCODE    = 'e'
 
 begin
   if FileTest::symlink?( __FILE__ )
-    org_path = File::dirname( File::expand_path( File::readlink( __FILE__ ) ) )
+    org_path = File.dirname( File.expand_path( File.readlink( __FILE__ ) ) )
   else
-    org_path = File::dirname( File::expand_path( __FILE__ ) )
+    org_path = File.dirname( File.expand_path( __FILE__ ) )
   end
   $:.unshift( org_path.untaint, "#{org_path.untaint}/hiki" )
   $:.delete(".") if File.writable?(".")
 
   require 'hiki/config'
-  conf = Hiki::Config::new
+  conf = Hiki::Config.new
 
   if ENV['CONTENT_TYPE'] =~ %r!\Atext/xml!i and ENV['REQUEST_METHOD'] =~ /\APOST\z/i
     require 'hiki/xmlrpc'
-    server = Hiki::XMLRPCServer::new( conf.xmlrpc_enabled )
+    server = Hiki::XMLRPCServer.new( conf.xmlrpc_enabled )
     server.serve
   else
-    cgi = CGI::new
+    cgi = CGI.new
 
     db = conf.database
     db.open_db {
-      cmd = Hiki::Command::new( cgi, db, conf )
+      cmd = Hiki::Command.new( cgi, db, conf )
       cmd.dispatch
     }
   end
