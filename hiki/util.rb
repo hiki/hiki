@@ -244,6 +244,35 @@ EOS
       end
     end
 
+    def to_native(str, charset=nil)
+      # XXX to_charset will be 'utf-8' in the future version
+      begin
+        Iconv.conv(@charset, charset || 'utf-8', str)
+      rescue
+        from = case charset
+               when /^utf-8$/i
+                 'W'
+               when /^shift_jis/i
+                 'S'
+               when /^EUC-JP/i
+                 'E'
+               else
+                 ''
+               end
+        to = case @charset
+               when /^utf-8$/i
+                 'w'
+               when /^shift_jis/i
+                 's'
+               when /^EUC-JP/i
+                 'e'
+               else
+                 'e' # XXX what should we use?
+               end
+        NKF::nkf("-m0 -#{from}#{to}", str)
+      end
+    end
+
     def compare_by_line(doc1, doc2)
       Difference.new(doc1.split_to_line, doc2.split_to_line)
     end
