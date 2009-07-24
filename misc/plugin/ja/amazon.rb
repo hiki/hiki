@@ -1,5 +1,6 @@
+# -*- coding: euc-jp -*-
 #
-# Japanese resource of amazon plugin $Revision: 1.1 $
+# Japanese resource of amazon plugin
 #
 # Copyright (C) 2002 HAL99 <hal99@mtj.biglobe.ne.jp>
 # You can redistribute it and/or modify it under GPL2.
@@ -20,6 +21,9 @@
 #     asin:    ASINまたはISBN(必須)
 #     comment: コメント(省略可)
 #
+# isbn_detail: 指定したISBNの書籍を書影付きで詳細表示
+#     asin:    ASINまたはISBN(必須)
+#
 # isbn: amazonにアクセスしない簡易バージョン。
 #     asin:    ASINまたはISBN(必須)
 #     comment: コメント(必須)
@@ -38,8 +42,6 @@
 #                                このオプションは設定画面から変更可能です
 #   @options['amazon.hideconf']: 設定画面上でアソシエイトIDを入力不可能
 #                                にしたい場合、trueに設定します
-#   @options['amazon.proxy']:    「host:post」形式でHTTP proxyを指定すると
-#                                Proxy経由でAmazonの情報を取得します
 #   @options['amazon.imgsize']:  表示するイメージのサイズを指定します
 #                                (0:大  1:中  2:小)
 #   @options['amazon.hidename']: class="amazon"のときに商品名を表示したく
@@ -57,8 +59,7 @@
 # 確認の上利用して下さい。
 #
 
-@amazon_url = 'http://www.amazon.co.jp/exec/obidos/ASIN'
-@amazon_ecs_url = 'http://webservices.amazon.co.jp/onca/xml'
+@amazon_default_country = 'jp'
 @amazon_item_name = /^Amazon.co.jp： (.*)<.*$/
 @amazon_item_image = %r|(<img src="(http://images-jp\.amazon\.com/images/P/(.*MZZZZZZZ_?.jpg))".*?>)|i
 @amazon_label_conf ='Amazon'

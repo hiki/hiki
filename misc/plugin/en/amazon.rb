@@ -1,5 +1,5 @@
 #
-# English resource of amazon plugin $Revision: 1.1 $
+# English resource of amazon plugin
 #
 # Copyright (C) 2002 HAL99 <hal99@mtj.biglobe.ne.jp>
 # You can redistribute it and/or modify it under GPL2.
@@ -20,6 +20,9 @@
 #     asin:    ASIN or ISBN
 #     comment: comment (optional)
 #
+# isbn_detail: show the item detail with image
+#     asin:    ASIN or ISBN
+#
 # isbn: light version. it dose not access to amazon.
 #     asin:    ASIN or ISBN
 #     comment: comment
@@ -29,7 +32,6 @@
 #                           changed in preferences page.
 #   @options['amazon.hideconf']: When you want to prohibit changing amazon.aid
 #                             via preferences page, set false.
-#   @options['amazon.proxy']: HTTP proxy in "host:post" style.
 #   @options['amazon.imgsize']: specify image size (0:laege, 1:regular, 2:small)
 #   @options['amazon.hidename']: hide book name when class="amazon", set true.
 #   @options['amazon.default_image_base']: URL that include default images.
@@ -39,9 +41,7 @@
 #   @options['amazon.nodefault']: If you dosen't want to show default image 
 #                             when the book image not found, set true.
 
-
-@amazon_url = 'http://www.amazon.com/exec/obidos/ASIN'
-@amazon_ecs_url = 'http://webservices.amazon.com/onca/xml'
+@amazon_default_country = 'us'
 @amazon_item_name = /^Amazon\.com: (.*)$/
 @amazon_item_image = %r|(<img src="(http://images\.amazon\.com/images/P/(.*MZZZZZZZ_?.jpg))".*?>)|i
 @amazon_label_conf = 'Amazon'

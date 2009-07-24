@@ -1,119 +1,196 @@
-# amazon.rb $Revision: 1.13 $: Making link with image to Amazon using Amazon ECS.
+# amazon.rb: Making link with image to Amazon using Amazon ECS.
 #
 # see document: #{@lang}/amazon.rb
 #
-# Copyright (C) 2005 TADA Tadashi <sho@spc.gr.jp>
+# Copyright (C) 2005-2007 TADA Tadashi <sho@spc.gr.jp>
 # You can redistribute it and/or modify it under GPL2.
 #
 require 'open-uri'
 require 'timeout'
 require 'rexml/document'
-require 'nkf'
 
 # do not change these variables
-@amazon_subscription_id = '0WVS3J53FVP9M1E7ET02'
-@amazon_require_version = '2005-07-26'
+@amazon_subscription_id = '1CVA98NEF1G753PFESR2'
+@amazon_require_version = '2007-01-17'
 
-def amazon_call_ecs( asin )
+@amazon_url_hash = {
+  'us' => 'http://www.amazon.com/exec/obidos/ASIN',
+  'jp' => 'http://www.amazon.co.jp/exec/obidos/ASIN',
+  'fr' => 'http://www.amazon.fr/exec/obidos/ASIN',
+  'uk' => 'http://www.amazon.co.uk/exec/obidos/ASIN',
+  'de' => 'http://www.amazon.de/exec/obidos/ASIN',
+  'ca' => 'http://www.amazon.ca/exec/obidos/ASIN',
+}
+
+@amazon_ecs_url_hash = {
+  'us' => 'http://honnomemo.appspot.com/rpaproxy/us/',
+  'jp' => 'http://honnomemo.appspot.com/rpaproxy/jp/',
+  'fr' => 'http://honnomemo.appspot.com/rpaproxy/fr/',
+  'uk' => 'http://honnomemo.appspot.com/rpaproxy/uk/',
+  'de' => 'http://honnomemo.appspot.com/rpaproxy/de/',
+  'ca' => 'http://honnomemo.appspot.com/rpaproxy/ca/',
+}
+
+def amazon_call_ecs( asin, id_type, country = nil )
 	aid =  @conf['amazon.aid'] || ''
-	aid = 'kazuhiko-22' if aid.length == 0
-	aid.untaint
+	aid = 'cshs-22' if aid.empty?
 
-	url =  @amazon_ecs_url.dup
+	url =  @amazon_ecs_url_hash[country].dup
 	url << "?Service=AWSECommerceService"
 	url << "&SubscriptionId=#{@amazon_subscription_id}"
 	url << "&AssociateTag=#{aid}"
 	url << "&Operation=ItemLookup"
 	url << "&ItemId=#{asin}"
+	url << "&IdType=#{id_type}"
+	url << "&SearchIndex=Books" if id_type == 'ISBN'
 	url << "&ResponseGroup=Medium"
 	url << "&Version=#{@amazon_require_version}"
 
-	proxy = nil
-	if @conf['amazon.proxy'] and @conf['amazon.proxy'].length > 0 then
-		proxy = @conf['amazon.proxy']
-		proxy = 'http://' + proxy unless proxy =~ /^https?:/
-	end
-
+	proxy = @conf['proxy']
+	proxy = 'http://' + proxy if proxy
 	timeout( 10 ) do
-		open( url, :proxy => proxy ) {|f| f.read}
+		open( url, :proxy => proxy ) {|f| f.read }
 	end
+end
+
+def amazon_author( item )
+	begin
+		author = []
+		%w(Author Creator Artist).each do |elem|
+			item.elements.each( "*/#{elem}" ) do |a|
+				author << a.text
+			end
+		end
+		@conf.to_native( author.uniq.join( '/' ), 'utf-8' )
+	rescue
+		'-'
+	end
+end
+
+def amazon_title( item )
+	@conf.to_native( item.elements.to_a( '*/Title' )[0].text, 'utf-8' )
+end
+
+def amazon_image( item )
+$stderr.puts @conf.methods.sort.inspect
+	image = {}
+	begin
+		size = case @conf['amazon.imgsize']
+		when 0; 'Large' 
+		when 2; 'Small'
+		else;   'Medium'
+		end
+		img = item.elements.to_a("#{size}Image")[0] || item.elements.to_a("ImageSets/ImageSet/#{size}Image")[0]
+		image[:src] = img.elements['URL'].text
+		image[:height] = img.elements['Height'].text
+		image[:width] = img.elements['Width'].text
+	rescue
+		base = @conf['amazon.default_image_base'] || 'http://www.tdiary.org/images/amazondefaults/'
+		case @conf['amazon.imgsize']
+		when 0
+			image[:src] = "#{base}large.png"
+			image[:height] = 500
+			image[:width] = 380
+		when 2
+			image[:src] = "#{base}small.png"
+			image[:height] = 75
+			image[:width] = 57
+		else
+			image[:src] = "#{base}medium.png"
+			image[:height] = 160
+			image[:width] = 122
+		end
+	end
+	image
+end
+
+def amazon_url( item )
+	item.elements.to_a( 'DetailPageURL' )[0].text
+end
+
+def amazon_label( item )
+	begin
+		@conf.to_native( item.elements.to_a( '*/Label' )[0].text, 'utf-8' )
+	rescue
+		'-'
+	end
+end
+
+def amazon_price( item )
+	begin
+		@conf.to_native( item.elements.to_a( '*/LowestNewPrice/FormattedPrice' )[0].text, 'utf-8' )
+	rescue
+		begin
+			@conf.to_native( item.elements.to_a( '*/ListPrice/FormattedPrice' )[0].text, 'utf-8' )
+		rescue
+			'(no price)'
+		end
+	end
+end
+
+def amazon_detail_html( item )
+	author = amazon_author( item )
+	title = amazon_title( item )
+
+	size_orig = @conf['amazon.imgsize']
+	@conf['amazon.imgsize'] = 2
+	image = amazon_image( item )
+	@conf['amazon.imgsize'] = size_orig
+
+	url = amazon_url( item )
+	html = <<-HTML
+	<a href="#{url}">
+		<img class="amazon-detail left" src="#{h image[:src]}"
+		height="#{h image[:height]}" width="#{h image[:width]}"
+		alt="#{h title}" title="#{h title}">
+	</a>
+	<span class="amazon-title">#{h title}</span><br>
+	<span class="amazon-author">#{h author}</span><br>
+	<span class="amazon-label">#{h amazon_label( item )}</span><br>
+	<span class="amazon-price">#{h amazon_price( item )}</span><br style="clear: left">
+	HTML
 end
 
 def amazon_to_html( item, with_image = true, label = nil, pos = 'amazon' )
 	with_image = false if @mode == 'categoryview'
-	begin
-		author = ''
-		item.elements.each( '*/Author' ) do |a|
-			author << a.text << '/'
-		end
-		author = "(#{NKF::nkf '-We', author.chop!})"
-	rescue
-		author = ''
-	end
 
-	unless label then
-		label = %Q|#{NKF::nkf '-We', item.elements.to_a( '*/Title' )[0].text}#{author}|
-	end
-
-	image = ''
-	if with_image then
-		begin
-			size = case @conf['amazon.imgsize']
-			when 0; 'Large' 
-			when 2; 'Small'
-			else;   'Medium'
-			end
-			image = <<-HTML
-			<img class="#{pos}"
-			src="#{item.elements.to_a( "#{size}Image/URL" )[0].text}"
-			height="#{item.elements.to_a( "#{size}Image/Height" )[0].text}"
-			width="#{item.elements.to_a( "#{size}Image/Width" )[0].text}"
-			alt="#{CGI::escapeHTML(label)}" title="#{CGI::escapeHTML(label)}">
-			HTML
-		rescue
-			if @conf['amazon.nodefault'] then
-				image = CGI::escapeHTML(label)
-			else
-				base = @conf['amazon.default_image_base'] || 'http://www.tdiary.org/images/amazondefaults/'
-				name = case @conf['amazon.imgsize']
-				when 0; 'large'
-				when 2; 'small'
-				else;   'medium'
-				end
-				size = case @conf['amazon.imgsize']
-				when 0; [500, 380]
-				when 2; [75, 57]
-				else;   [160, 122]
-				end
-				image = <<-HTML
-				<img class="#{pos}"
-				src="#{base}#{name}.png"
-				height="#{size[0]}"
-				width="#{size[1]}"
-				alt="#{CGI::escapeHTML(label)}" title="#{CGI::escapeHTML(label)}">
-				HTML
-			end
-		end
-		image.gsub!( /\t/, '' )
-	end
+	author = amazon_author( item )
+	author = "(#{author})" unless author.empty?
 
 	if with_image and @conf['amazon.hidename'] || pos != 'amazon' then
 		label = ''
+	elsif not label
+		label = %Q|#{amazon_title( item )}#{author}|
 	end
 
-	%Q|<a href="#{item.elements.to_a( 'DetailPageURL' )[0].text}">#{image}#{CGI::escapeHTML(label)}</a>|
+	if with_image
+		image = amazon_image( item )
+		unless image[:src] then
+			img = ''
+		else
+			img = <<-HTML
+			<img class="#{h pos}" src="#{h image[:src]}"
+			height="#{h image[:height]}" width="#{h image[:width]}"
+			alt="#{h label}" title="#{h label}">
+			HTML
+			img.gsub!( /\t/, '' )
+		end
+	end
+
+	url = amazon_url( item )
+	%Q|<a href="#{h url}">#{img}#{h label}</a>|
 end
 
-def amazon_secure_html( asin, with_image, label, pos = 'amazon' )
+def amazon_secure_html( asin, with_image, label, pos = 'amazon', country = nil )
 	with_image = false if @mode == 'categoryview'
 	label = asin unless label
 
 	image = ''
 	if with_image and @conf['amazon.secure-cgi'] then
 		image = <<-HTML
-		<img class="#{pos}"
-		src="#{@conf['amazon.secure-cgi']}?asin=#{asin};size=#{@conf['amazon.imgsize']}"
-		alt="#{CGI::escapeHTML(label)}" title="#{CGI::escapeHTML(label)}">
+		<img class="#{h pos}"
+		src="#{h @conf['amazon.secure-cgi']}?asin=#{u asin};size=#{u @conf['amazon.imgsize']};country=#{u country}"
+		alt="#{h label}" title="#{h label}">
 		HTML
 	end
 	image.gsub!( /\t/, '' )
@@ -122,41 +199,59 @@ def amazon_secure_html( asin, with_image, label, pos = 'amazon' )
 		label = ''
 	end
 
-	url =  "#{@amazon_url}/#{asin}"
-	url << "/#{@conf['amazon.aid']}" if @conf['amazon.aid'] and @conf['amazon.aid'].length > 0
+	amazon_url = @amazon_url_hash[country]
+	url =  "#{amazon_url}/#{u asin}"
+	url << "/#{u @conf['amazon.aid']}" if @conf['amazon.aid'] and @conf['amazon.aid'].length > 0
 	url << "/ref=nosim/"
-	%Q|<a href="#{url}">#{image}#{CGI::escapeHTML(label)}</a>|
+	%Q|<a href="#{h url}">#{image}#{h label}</a>|
 end
 
 def amazon_get( asin, with_image = true, label = nil, pos = 'amazon' )
-	raise "Invalid ASIN" unless asin =~ /\A[0-9A-Z]+\z/
-	asin.untaint
 	asin = asin.to_s.strip # delete white spaces
+	asin.sub!(/\A([a-z]+):/, '')
+	country = $1 || @amazon_default_country
+	digit = asin.gsub( /[^\d]/, '' )
+	if digit.length == 13 then # ISBN-13
+		asin = digit
+		id_type = 'ISBN'
+	else
+		id_type = 'ASIN'
+	end
 
 	if @conf.secure then
-		amazon_secure_html( asin, with_image, label, pos )
+		amazon_secure_html( asin, with_image, label, pos, country )
 	else
 		begin
 			cache = "#{@cache_path}/amazon"
 			Dir::mkdir( cache ) unless File::directory?( cache )
 			begin
-				xml = File::read( "#{cache}/#{asin}.xml" )
+				xml = File::read( "#{cache}/#{country}#{asin}.xml" )
 			rescue Errno::ENOENT
-				xml =  amazon_call_ecs( asin )
-				File::open( "#{cache}/#{asin}.xml", 'wb' ) {|f| f.write( xml )}
+				xml =  amazon_call_ecs( asin, id_type, country )
+				File::open( "#{cache}/#{country}#{asin}.xml", 'wb' ) {|f| f.write( xml )}
 			end
-			doc = REXML::Document::new( xml ).root
+			doc = REXML::Document::new( REXML::Source::new( xml ) ).root
 			item = doc.elements.to_a( '*/Item' )[0]
-			amazon_to_html( item, with_image, label, pos )
+			if pos == 'detail' then
+				amazon_detail_html( item )
+			else
+				amazon_to_html( item, with_image, label, pos )
+			end
 		rescue Timeout::Error
+raise
 			asin
 		rescue NoMethodError
-			if item == nil then
-				message = doc.elements.to_a( 'Items/Request/Errors/Error/Message' )[0].text
-				"#{label ? label : asin}<!--#{NKF::nkf( '-We', message )}-->"
-			else
-				"#{label ? label : asin}<!--#{$!}\n#{$@.join ' / '}-->"
+raise
+			message = label || asin
+			if @mode == 'preview' then
+				if item == nil then
+					m = doc.elements.to_a( 'Items/Request/Errors/Error/Message' )[0].text
+					message << %Q|<span class="message">(#{h @conf.to_native( m, 'utf-8' )})</span>|
+				else
+					message << %Q|<span class="message">(#{h $!}\n#{h $@.join( ' / ' )})</span>|
+				end
 			end
+			message
 		end
 	end
 end
@@ -191,25 +286,25 @@ def amazon_conf_proc
 		result << <<-HTML
 			<h3>#{@amazon_label_imgsize}</h3>
 			<p><select name="amazon.imgsize">
-				<option value="0"#{if @conf['amazon.imgsize'] == 0 then " selected" end}>#{@amazon_label_large}</option>
-				<option value="1"#{if @conf['amazon.imgsize'] == 1 then " selected" end}>#{@amazon_label_regular}</option>
-				<option value="2"#{if @conf['amazon.imgsize'] == 2 then " selected" end}>#{@amazon_label_small}</option>
+				<option value="0"#{" selected" if @conf['amazon.imgsize'] == 0}>#{@amazon_label_large}</option>
+				<option value="1"#{" selected" if @conf['amazon.imgsize'] == 1}>#{@amazon_label_regular}</option>
+				<option value="2"#{" selected" if @conf['amazon.imgsize'] == 2}>#{@amazon_label_small}</option>
 			</select></p>
 			<h3>#{@amazon_label_title}</h3>
 			<p><select name="amazon.hidename">
-				<option value="true"#{if @conf['amazon.hidename'] then " selected" end}>#{@amazon_label_hide}</option>
-				<option value="false"#{if not @conf['amazon.hidename'] then " selected" end}>#{@amazon_label_show}</option>
+				<option value="true"#{" selected" if @conf['amazon.hidename']}>#{@amazon_label_hide}</option>
+				<option value="false"#{" selected" unless @conf['amazon.hidename']}>#{@amazon_label_show}</option>
 			</select></p>
 		HTML
 		unless @conf.secure then
 			result << <<-HTML
 				<h3>#{@amazon_label_notfound}</h3>
 				<p><select name="amazon.nodefault">
-					<option value="true"#{if @conf['amazon.nodefault'] then " selected" end}>#{@amazon_label_usetitle}</option>
-					<option value="false"#{if not @conf['amazon.nodefault'] then " selected" end}>#{@amazon_label_usedefault}</option>
+					<option value="true"#{" selected" if @conf['amazon.nodefault']}>#{@amazon_label_usetitle}</option>
+					<option value="false"#{" selected" unless @conf['amazon.nodefault']}>#{@amazon_label_usedefault}</option>
 				</select></p>
 				<h3>#{@amazon_label_clearcache}</h3>
-				<p><input type="checkbox" name="amazon.clearcache" value="true">#{@amazon_label_clearcache_desc}</input></p>
+				<p><label for="amazon.clearcache"><input type="checkbox" id="amazon.clearcache" name="amazon.clearcache" value="true">#{@amazon_label_clearcache_desc}</label></p>
 			HTML
 		end
 	end
@@ -217,11 +312,16 @@ def amazon_conf_proc
 		result << <<-HTML
 			<h3>#{@amazon_label_aid}</h3>
 			<p>#{@amazon_label_aid_desc}</p>
-			<p><input name="amazon.aid" value="#{CGI::escapeHTML( @conf['amazon.aid'] ) if @conf['amazon.aid']}"></p>
+			<p><input name="amazon.aid" value="#{h( @conf['amazon.aid'] ) if @conf['amazon.aid']}"></p>
 		HTML
 	end
 	result
 end
+
+def isbn_detail( asin )
+	amazon_get( asin, true, nil, 'detail' )
+end
+
 def isbn_image( asin, label = nil )
 	amazon_get( asin, true, label )
 end
@@ -243,5 +343,3 @@ alias isbnImgLeft isbn_image_left
 alias isbnImgRight isbn_image_right
 alias isbnImg isbn_image
 alias amazon isbn_image
-
-export_plugin_methods(:isbn_image, :isbn_image_left, :isbn_image_right, :isbn, :isbnImgLeft, :isbnImgRight, :isbnImg, :amazon)
