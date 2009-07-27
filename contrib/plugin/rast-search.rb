@@ -98,9 +98,9 @@ EOS
       end
       for i in first_page..last_page
         if i == current_page
-  	buf.concat("#{i} ")
+          buf.concat("#{i} ")
         else
-  	buf.concat(format_link(i.to_s, (i - 1) * NUM, NUM))
+          buf.concat(format_link(i.to_s, (i - 1) * NUM, NUM))
         end
       end
       if last_page < page_count
@@ -112,7 +112,7 @@ EOS
       buf.concat("</p>\n")
       return buf
     end
-  
+
     def format_link(label, start, num)
       return format(%Q|<a href="%s?c=search;key=%s;start=%d">%s</a> |,
                      @conf.cgi_name, @key.escape, start, label)

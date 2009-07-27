@@ -21,7 +21,7 @@ def rast_register( page = @page, force = false )
 
   body = ''
   body << "#{page} " unless title.empty? || title == page
-  body << @db.load(page) 
+  body << @db.load(page)
   properties = {
     "title" => title,
     "uri" => uri,
@@ -98,12 +98,12 @@ if !@conf['rast_register.hideconf'] && (@mode == 'conf' || @mode == 'saveconf')
 HTML
     if @mode == 'saveconf'
       unless @cgi['rast_register_rebuild'].empty?
-	encoding = @conf.options['rast.encoding'] || 'euc_jp'
-	@db.page_info.each do |i|
-	  page = i.keys[0]
-	  rast_register( page, true )
-	end
-	str << "<p>Done.</p>\n"
+        encoding = @conf.options['rast.encoding'] || 'euc_jp'
+        @db.page_info.each do |i|
+          page = i.keys[0]
+          rast_register( page, true )
+        end
+        str << "<p>Done.</p>\n"
       end
     end
     str

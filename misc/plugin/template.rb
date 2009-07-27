@@ -4,7 +4,7 @@
 
 def templates
   keyword = @options['template.keyword']
-  if keyword 
+  if keyword
     @db.select {|p| p[:keyword] and p[:keyword].index(keyword)}
   else
     @db.select {|p| true}
@@ -13,7 +13,7 @@ end
 
 def template_form
   pages = templates.sort {|a,b| a.downcase <=> b.downcase}
-  
+
   unless pages.empty?
     s = <<EOS
 <div>
@@ -40,7 +40,7 @@ end
 def load_template
   tmpl_name = @cgi.params['template'][0]
   page = @cgi.params['p'][0] ? @cgi.params['p'][0] : 'FrontPage'
-  
+
   @text = if tmpl_name
     @db.load(tmpl_name)
   else

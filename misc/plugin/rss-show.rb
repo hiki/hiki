@@ -66,7 +66,7 @@ def rss_format_items(items)
   end
   html << "</ul>\n"
 end
- 
+
 def rss_write_cache(cache_file, rss)
   File.open(cache_file, 'w') do |f|
     f.flock(File::LOCK_EX)

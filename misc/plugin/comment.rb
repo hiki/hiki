@@ -45,10 +45,10 @@ def comment_post
   style      = params['style'][0].to_i
 
   return '' if msg.strip.size == 0
-  
+
   lines = @db.load( @page )
   md5hex = @db.md5hex( @page )
-  
+
   flag = false
   count = 1
 
@@ -68,7 +68,7 @@ def comment_post
       content << l
     end
   end
-  
+
   save( @page, content, md5hex ) if flag
 end
 

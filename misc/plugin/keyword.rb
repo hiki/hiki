@@ -14,7 +14,7 @@ def keyword_list(*key)
     p.collect! { |i| i.to_a.flatten! }.sort! do |p1, p2|
       p2[1][:last_modified] <=> p1[1][:last_modified]
     end
-    
+
     p.each do |a|
       name = a[0]
       tm = a[1][:last_modified]

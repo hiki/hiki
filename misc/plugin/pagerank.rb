@@ -1,6 +1,6 @@
 #
 # PageRank Hiki plugin ver 0.1.9
-# 
+#
 # author: ichiyama ryoichi <ir@bellbind.net>
 # site: http://kumiki.c.u-tokyo.ac.jp/~ichiyama/cgi-bin/hiki/PageRankPlugin.html
 # date: 2004/02/20
@@ -70,7 +70,7 @@ module PageRankAlgorithms
     sortorder(v, vorder)
     v
   end
-  
+
   # copy matrix
   def mcopy(matrix)
     m = []
@@ -79,7 +79,7 @@ module PageRankAlgorithms
     end
     m
   end
-    
+
   # exchange columns as the any diagonal values are none-zero
   def convertdim(m, vorder)
     size = vorder.size
@@ -95,7 +95,7 @@ module PageRankAlgorithms
       end
     end
   end
-  
+
   # create upper half triangle
   def frontsolve(m, v)
     size = v.size
@@ -110,13 +110,13 @@ module PageRankAlgorithms
       end
     end
   end
-  
+
   # generate result
   def backsolve(m, v)
     size = v.size
     (size-1).downto(0) do |i|
       next if m[i][i] == 0.0
-      v[i] /= m[i][i] 
+      v[i] /= m[i][i]
       size.times do |j|
         break if i == j
         v[j] -= m[j][i] * v[i]
@@ -124,7 +124,7 @@ module PageRankAlgorithms
     end
     v
   end
-   
+
   # sort as original order
   def sortorder(value, order)
     size = order.size
@@ -133,20 +133,20 @@ module PageRankAlgorithms
         if order[i] < order[j]
           swapv(order, i, j)
           swapv(value, i, j)
-        end         
+        end
       end
     end
     value
   end
-  
+
   # swap values in vector v
-  def swapv(v, i, j) 
+  def swapv(v, i, j)
     t = v[i]
     v[i] = v[j]
     v[j] = t
     v
   end
- 
+
   # swap matrix column
   def swapmc(m, i, j)
     m.each do |row|
@@ -163,7 +163,7 @@ module PageRankAlgorithms
     end
     value
   end
-  
+
   # vector div by b
   def vdiv(v, b)
     r = []
@@ -172,7 +172,7 @@ module PageRankAlgorithms
     end
     r
   end
-  
+
   # solve PageRank in link matrix
   # see http://www.kusastro.kyoto-u.ac.jp/~baba/wais/pagerank.html
   def pagerank(linkmatrix)
@@ -188,7 +188,7 @@ module PageRankAlgorithms
     r = vdiv(v, vsum(v))
     r
   end
-  
+
   # set diagonal line values as v
   def setdiag(m, v)
     m.size.times do |i|
@@ -196,7 +196,7 @@ module PageRankAlgorithms
     end
     m
   end
-  
+
   # matrix of weighted values in each rows
   def weightingrow(linkmatrix)
     size = linkmatrix.size
@@ -210,20 +210,20 @@ module PageRankAlgorithms
       end
     end
   end
-  
+
   # transpose matrix
   def transpose(m)
-    size = m.size 
+    size = m.size
     size.times do |i|
       (i + 1).upto(size - 1) do |j|
         t = m[i][j]
         m[i][j] = m[j][i]
-        m[j][i] = t        
+        m[j][i] = t
       end
     end
     m
   end
-  
+
   # solve the original PageRank in link matrix
   # see http://www.sem-research.jp/sem/seo/20031022000321.html
   def pagerank0(linkmatrix, d=0.85)
@@ -247,7 +247,7 @@ module PageRankAlgorithms
       p row
     end
     puts "</pre>"
-  end  
+  end
 end
 
 # PageRank core functions
@@ -270,7 +270,7 @@ class PageRank
     end
     lm
   end
-  
+
   # calc pageranks
   def get_pagerank(page_names, db, options)
     linkmatrix = get_link_matrix(page_names, db)
@@ -291,13 +291,13 @@ class PageRank
         if pagerank[i] > pagerank[j]
           swap(page_names, i, j)
           swap(pagerank, i, j)
-        end         
+        end
       end
     end
   end
 
   # swap array values
-  def swap(a, i, j) 
+  def swap(a, i, j)
     t = a[i]
     a[i] = a[j]
     a[j] = t
@@ -328,13 +328,13 @@ def pagerank_page
   header['Pragma']           = 'no-cache'
   header['Cache-Control']    = 'no-cache'
   print @cgi.header(header)
-  
+
   options = PageRank.default_options( @conf )
   options.update(@options)
   stylesheet = @conf.theme_url + "/" + @conf.theme + "/" + @conf.theme + ".css"
   align = options["pagerank.tablealign"]
   title = options["pagerank.pagetitle"]
-  
+
   sources = %{
 <!DOCTYPE html
     PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -344,7 +344,7 @@ def pagerank_page
   <meta http-equiv="Content-Type" content="text/html; charset=EUC-JP" />
   <meta http-equiv="Content-Language" content="ja" />
   <title id=title>#{title.escapeHTML}</title>
-  <link rel="stylesheet" type="text/css" href="#{stylesheet.escapeHTML}" /> 
+  <link rel="stylesheet" type="text/css" href="#{stylesheet.escapeHTML}" />
 </head>
 <body>
 <h1>#{title.escapeHTML}</h1>
@@ -383,11 +383,11 @@ def get_rank_table(page_names, pagerank, calcsec, options)
   rankformat = options["pagerank.rankformat"]
   maxpages = options["pagerank.maxpages"]
   showtime = options["pagerank.showtime"]
-  
+
   source = %{<table border="1">}
   source += if showfrom
     %{<tr><th>No.</th><th>Page</th><th>Rank</th><th>Linked from</th></tr>}
-  else 
+  else
     %{<tr><th>No.</th><th>Page</th><th>Rank</th></tr>}
   end
   size.times do |i|
@@ -427,7 +427,7 @@ end)
 # 0.1.4: self links are ignored
 # 0.1.3: fix array creation miss
 # 0.1.2: use options
-# 0.1.1: fix link matrix generate method 
+# 0.1.1: fix link matrix generate method
 # 0.1:  newly create plugin
 
 export_plugin_methods(:pagerank_page)

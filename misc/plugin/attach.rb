@@ -1,3 +1,4 @@
+# -*- coding: euc-jp -*-
 # $Id: attach.rb,v 1.7 2007-06-24 12:00:11 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 #
@@ -120,7 +121,7 @@ end
 
 def attach_src(file_name, page = @page)
   tabstop = ' ' * (@options['attach.tabstop'] ? @options['attach.tabstop'].to_i : 2)
-  
+
   if file_name =~ /\.(txt|rd|rb|c|pl|py|sh|java|html|htm|css|xml|xsl|sql|yaml)\z/i
     file = "#{@conf.cache_path}/attach/#{page.untaint.escape}/#{file_name.untaint.escape}"
     s = %Q!<pre>!
@@ -221,7 +222,7 @@ add_body_leave_proc {
   rescue Exception
   end
 }
-  
+
 add_form_proc {
   begin
     s = case @options['attach.form']

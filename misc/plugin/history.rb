@@ -157,47 +157,47 @@ module Hiki
       sources << "\n<br>\n"
       sources << "\n<table border=\"1\">\n"
       if @conf.options['history.hidelog']
-	case history_repos_type
-	when 'cvs'
+        case history_repos_type
+        when 'cvs'
           sources << " <tr><th>#{history_th_label[0].escapeHTML}</th><th>#{history_th_label[1].escapeHTML}</th><th>#{history_th_label[2].escapeHTML}</th><th>#{history_th_label[3].escapeHTML}</th></tr>\n"
-	else
+        else
           sources << " <tr><th>#{history_th_label[0].escapeHTML}</th><th>#{history_th_label[1].escapeHTML}</th><th>#{history_th_label[3].escapeHTML}</th></tr>\n"
         end
       else
-	case history_repos_type
-	when 'cvs'
-		sources << " <tr><th rowspan=\"2\">#{history_th_label[0].escapeHTML}</th><th>#{history_th_label[1].escapeHTML}</th><th>#{history_th_label[2].escapeHTML}</th><th>#{history_th_label[3].escapeHTML}</th></tr><tr><th colspan=\"3\">#{history_th_label[4].escapeHTML}</th></tr>\n"
-	else
-		sources << " <tr><th rowspan=\"2\">#{history_th_label[0].escapeHTML}</th><th>#{history_th_label[1].escapeHTML}</th><th>#{history_th_label[3].escapeHTML}</th></tr><tr><th colspan=\"2\">#{history_th_label[4].escapeHTML}</th></tr>\n"
-	end
+        case history_repos_type
+        when 'cvs'
+          sources << " <tr><th rowspan=\"2\">#{history_th_label[0].escapeHTML}</th><th>#{history_th_label[1].escapeHTML}</th><th>#{history_th_label[2].escapeHTML}</th><th>#{history_th_label[3].escapeHTML}</th></tr><tr><th colspan=\"3\">#{history_th_label[4].escapeHTML}</th></tr>\n"
+        else
+          sources << " <tr><th rowspan=\"2\">#{history_th_label[0].escapeHTML}</th><th>#{history_th_label[1].escapeHTML}</th><th>#{history_th_label[3].escapeHTML}</th></tr><tr><th colspan=\"2\">#{history_th_label[4].escapeHTML}</th></tr>\n"
+        end
       end
       revs.each do |rev,time,changes,log|
         #    time << " GMT"
         op = "[<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_src;p=#{@p.escape};r=#{rev}")}\">View</a> this version] "
-	if revs.size != 1
-	  op << "[Diff to "
-	  op << "<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{@p.escape};r=#{rev}")}\">current</a>" unless prevdiff == 1
-	  op << " | " unless (prevdiff == 1 || prevdiff >= revs.size)
-	  op << "<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{@p.escape};r=#{rev};r2=#{revs[prevdiff][0]}")}\">previous</a>" unless prevdiff >= revs.size
-	  op << "]"
-	end
+        if revs.size != 1
+          op << "[Diff to "
+          op << "<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{@p.escape};r=#{rev}")}\">current</a>" unless prevdiff == 1
+          op << " | " unless (prevdiff == 1 || prevdiff >= revs.size)
+          op << "<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{@p.escape};r=#{rev};r2=#{revs[prevdiff][0]}")}\">previous</a>" unless prevdiff >= revs.size
+          op << "]"
+        end
         if @conf.options['history.hidelog']
-	  case history_repos_type
-	  when 'cvs'
+          case history_repos_type
+          when 'cvs'
             sources << " <tr><td>#{rev}</td><td>#{time.escapeHTML}</td><td>#{changes.escapeHTML}</td><td align=right>#{op}</td></tr>\n"
-	  else
+          else
             sources << " <tr><td>#{rev}</td><td>#{time.escapeHTML}</td><td align=right>#{op}</td></tr>\n"
-	  end
+          end
         else
-          log.gsub!(/=============================================================================/, '')
+          #log.gsub!(/=============================================================================/, '')
           log.chomp!
           log = "*** no log message ***" if log.empty?
-	  case history_repos_type
-	  when 'cvs'
+          case history_repos_type
+          when 'cvs'
             sources << " <tr><td rowspan=\"2\">#{rev}</td><td>#{time.escapeHTML}</td><td>#{changes.escapeHTML}</td><td align=right>#{op}</td></tr><tr><td colspan=\"3\">#{log.escapeHTML}</td></tr>\n"
-	  else
+          else
             sources << " <tr><td rowspan=\"2\">#{rev}</td><td>#{time.escapeHTML}</td><td align=right>#{op}</td></tr><tr><td colspan=\"2\">#{log.escapeHTML}</td></tr>\n"
-	  end
+          end
         end
         prevdiff += 1
       end
@@ -235,11 +235,11 @@ module Hiki
       r = @cgi.params['r'][0] || '1'
       r2 = @cgi.params['r2'][0]
       if r2.nil? || r2.to_i == 0
-	new = @db.load(@p)
-	old = @conf.repos.get_revision(@p, r)
+        new = @db.load(@p)
+        old = @conf.repos.get_revision(@p, r)
       else
-	new = @conf.repos.get_revision(@p, r)
-	old = @conf.repos.get_revision(@p, r2)
+        new = @conf.repos.get_revision(@p, r)
+        old = @conf.repos.get_revision(@p, r2)
       end
 
       # parse the result and make revisions array

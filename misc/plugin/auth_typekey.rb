@@ -1,7 +1,7 @@
 # $Id: auth_typekey.rb,v 1.6 2005-06-07 09:10:55 fdiary Exp $
 # Copyright (C) 2005 TAKEUCHI Hitoshi
 #
-# 
+#
 
 require 'hiki/auth/typekey'
 require 'hiki/session'

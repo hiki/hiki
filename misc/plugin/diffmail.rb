@@ -38,10 +38,10 @@ def updating_mail
       diff_style = @options['diffmail.style'] || 0
       case diff_style.to_i
       when 0
-	unified = @options['diffmail.lines'] || 3
-	r = unified_diff( src, dst, unified )
+        unified = @options['diffmail.lines'] || 3
+        r = unified_diff( src, dst, unified )
       when 1
-	r = word_diff_text( src, dst, true )
+        r = word_diff_text( src, dst, true )
       end
     end
     send_updating_mail(@page, type, head + r) unless (head + r).empty?

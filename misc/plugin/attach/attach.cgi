@@ -45,20 +45,20 @@ def attach_file
       Dir.mkdir(attach_path) unless test(?e, attach_path.untaint)
       path = "#{attach_path}/#{filename.to_euc.escape}"
       if params['attach_file'][0].size > max_size
-	raise "File size is larger than limit (#{max_size} bytes)."
+        raise "File size is larger than limit (#{max_size} bytes)."
       end
       unless filename.empty?
-	content = params['attach_file'][0].read
-	if (!@conf.options['attach.allow_script']) && (/<script\b/i =~ content)
-	  raise "You cannot attach a file that contains scripts."
-	else
-	  open(path.untaint, "wb") do |f|
-	    f.print content
-	  end
-	  r << "FILE        = #{File.basename(path)}\n"
-	  r << "SIZE        = #{File.size(path)} bytes\n"
-	  send_updating_mail(page, 'attach', r) if @conf.mail_on_update
-	end
+        content = params['attach_file'][0].read
+        if (!@conf.options['attach.allow_script']) && (/<script\b/i =~ content)
+          raise "You cannot attach a file that contains scripts."
+        else
+          open(path.untaint, "wb") do |f|
+            f.print content
+          end
+          r << "FILE        = #{File.basename(path)}\n"
+          r << "SIZE        = #{File.size(path)} bytes\n"
+          send_updating_mail(page, 'attach', r) if @conf.mail_on_update
+        end
       end
       redirect(cgi, "#{@conf.index_url}?c=#{command}&p=#{page.escape}")
     rescue Exception => ex

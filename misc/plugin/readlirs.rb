@@ -62,12 +62,12 @@ def readlirs_recent_cache(url, cache_file, cache_time)
       path = ''
       proxy_host = nil
       proxy_port = nil
-                        
+
       if /^([^:]+):(\d+)$/ =~ @options['readlirs.proxy'] then
         proxy_host = $1
         proxy_port = $2.to_i
       end
-                        
+
       if url =~ /(https?:\/\/)(.+?)(\/.*)/
         host = $2.untaint
         path = $3

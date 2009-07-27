@@ -5,7 +5,7 @@ def category_list(*category)
   category_re = /^\(([^\)]+?)\)/
 
   category.collect! {|a| a.unescapeHTML}
-  
+
   l = Hash::new
   @db.page_info.each do |a|
     if category_re =~ a.keys[0] && (category.size == 0 || category.index($1))
@@ -27,7 +27,7 @@ def category_list(*category)
     p.collect! { |i| i.to_a.flatten! }.sort! do |p1, p2|
       p2[1][:last_modified] <=> p1[1][:last_modified]
     end
-    
+
     p.each do |a|
       name = a[0]
       tm = a[1][:last_modified]

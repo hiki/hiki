@@ -5,7 +5,7 @@ def recent2( n = 20 )
   n = n > 0 ? n : 0
 
   now = Time::now
-  
+
   l = @db.page_info.sort do |a, b|
     b[b.keys[0]][:last_modified] <=> a[a.keys[0]][:last_modified]
   end
@@ -16,8 +16,8 @@ def recent2( n = 20 )
 
     name = a.keys[0]
     p = a[name]
-    
-    tm = p[:last_modified ] 
+
+    tm = p[:last_modified ]
 
     tp = now - tm
     if tp < 3600 then

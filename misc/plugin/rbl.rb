@@ -12,8 +12,8 @@ def postable?
   dnsbl_list.each do |dnsbl|
     begin
       Resolv.getaddress( "#{ip}.#{dnsbl}" )
-        STDERR.puts "RBL : #{address}"
-        return false
+      STDERR.puts "RBL : #{address}"
+      return false
     rescue Resolv::ResolvError
     rescue Exception
     end

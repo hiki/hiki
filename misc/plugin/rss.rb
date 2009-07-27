@@ -57,7 +57,7 @@ EOS
     if content and content.empty?
       content = shorten(dst).strip.gsub(/\n/, "<br>\n")
     end
-    
+
     items << '        '
 
     uri = "#{@conf.index_url}?#{name.escape}"
