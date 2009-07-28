@@ -5,7 +5,8 @@
 # Copyright (C) 2005-2007 TADA Tadashi <sho@spc.gr.jp>
 # You can redistribute it and/or modify it under GPL2.
 #
-require 'open-uri'
+require 'net/http'
+require 'uri'
 require 'timeout'
 require 'rexml/document'
 
@@ -31,6 +32,22 @@ require 'rexml/document'
   'ca' => 'http://honnomemo.appspot.com/rpaproxy/ca/',
 }
 
+def amazon_fetch( url, limit = 10 )
+	raise ArgumentError, 'HTTP redirect too deep' if limit == 0
+
+	px_host, px_port = (@conf['proxy'] || '').split( /:/ )
+	px_port = 80 if px_host and !px_port
+	res = Net::HTTP::Proxy( px_host, px_port ).get_response( URI::parse( url ) )
+	case res
+	when Net::HTTPSuccess
+		res.body
+	when Net::HTTPRedirection
+		amazon_fetch( res['location'].untaint, limit - 1 )
+	else
+		raise ArgumentError, res.error!
+	end
+end
+
 def amazon_call_ecs( asin, id_type, country = nil )
 	aid =  @conf['amazon.aid'] || ''
 	aid = 'cshs-22' if aid.empty?
@@ -46,10 +63,11 @@ def amazon_call_ecs( asin, id_type, country = nil )
 	url << "&ResponseGroup=Medium"
 	url << "&Version=#{@amazon_require_version}"
 
-	proxy = @conf['proxy']
-	proxy = 'http://' + proxy if proxy
-	timeout( 10 ) do
-		open( url, :proxy => proxy ) {|f| f.read }
+	begin
+		timeout( 10 ) do
+			amazon_fetch( url )
+		end
+	rescue ArgumentError
 	end
 end
 
@@ -72,7 +90,6 @@ def amazon_title( item )
 end
 
 def amazon_image( item )
-$stderr.puts @conf.methods.sort.inspect
 	image = {}
 	begin
 		size = case @conf['amazon.imgsize']
@@ -238,10 +255,8 @@ def amazon_get( asin, with_image = true, label = nil, pos = 'amazon' )
 				amazon_to_html( item, with_image, label, pos )
 			end
 		rescue Timeout::Error
-raise
 			asin
 		rescue NoMethodError
-raise
 			message = label || asin
 			if @mode == 'preview' then
 				if item == nil then
