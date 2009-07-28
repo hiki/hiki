@@ -190,7 +190,7 @@ module Hiki
             sources << " <tr><td>#{rev}</td><td>#{time.escapeHTML}</td><td align=right>#{op}</td></tr>\n"
           end
         else
-          #log.gsub!(/=============================================================================/, '')
+          log.gsub!(/=============================================================================/, '')
           log.chomp!
           log = "*** no log message ***" if log.empty?
           case history_repos_type
