@@ -1,3 +1,8 @@
+2009-07-28  okkez  <okkez000@gmail.com>
+
+	* misc/plugin/history.rb: use dot instead double colon when call
+	singleton meshods.
+
 2009-07-28  Kazuhiko  <kazuhiko@fdiary.net>
 
 	* plugin/00default.rb: use ::Hiki::VERSION instead of

@@ -1,3 +1,4 @@
+# -*- coding: euc-jp -*-
 =begin
 
 == plugin/history.rb - CVS ¤ÎÊÔ½¸ÍúÎò¤òÉ½¼¨¤¹¤ë¥×¥é¥°¥¤¥ó
@@ -53,21 +54,21 @@ CSS¤Çspan.add_line, span.del_line¤òÀßÄê¤¹¤ë¤È¡¢ÊÑ¹¹²Õ½ê¤ÎÊ¸»úÂ°À­¤òÊÑ¹¹¤Ç¤­¤Þ¤¹¡
 =end
 
 def history
-  h = Hiki::History::new(@cgi, @db, @conf)
+  h = Hiki::History.new(@cgi, @db, @conf)
   h.history
 end
 
 def history_src
-  h = Hiki::History::new(@cgi, @db, @conf)
+  h = Hiki::History.new(@cgi, @db, @conf)
   h.history_src
 end
 
 def history_diff
-  h = Hiki::History::new(@cgi, @db, @conf)
+  h = Hiki::History.new(@cgi, @db, @conf)
   h.history_diff
 end
 
-add_body_enter_proc(Proc::new do
+add_body_enter_proc(Proc.new do
   add_plugin_command('history', history_label, {'p' => true})
 end)
 
@@ -93,11 +94,11 @@ module Hiki
     # Subroutine to output proper HTML for Hiki.
     def history_output(s)
       # Imported codes from hiki/command.rb::cmd_view()
-      parser = @conf.parser::new( @conf )
+      parser = @conf.parser.new( @conf )
       tokens = parser.parse( s )
-      formatter = @conf.formatter::new( tokens, @db, @plugin, @conf )
-      @page  = Page::new( @cgi, @conf )
-      data   = Util::get_common_data( @db, @plugin, @conf )
+      formatter = @conf.formatter.new( tokens, @db, @plugin, @conf )
+      @page  = Page.new( @cgi, @conf )
+      data   = Util.get_common_data( @db, @plugin, @conf )
       @plugin.hiki_menu(data, @cmd)
       pg_title = @plugin.page_name(@p)
       data[:title]      = title( "#{pg_title} - #{history_label}")
