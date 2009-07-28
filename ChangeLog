@@ -1,5 +1,8 @@
 2009-07-28  Kazuhiko  <kazuhiko@fdiary.net>
 
+	* plugin/00default.rb: use ::Hiki::VERSION instead of
+	Hiki::VERSION.
+
 	* misc/plugin/amazon.rb: import tDiary's amazon.rb (rev.3484).
 
 2009-07-25  okkez  <okkez000@gmail.com>
