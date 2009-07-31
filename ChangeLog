@@ -1,3 +1,7 @@
+2009-07-31  Kazuhiko  <kazuhiko@fdiary.net>
+
+	* style/default/hikidoc.rb: use recent hikidoc.rb (rev.110).
+
 2009-07-28  okkez  <okkez000@gmail.com>
 
 	* misc/plugin/history.rb (Hiki::History#history): uncomment. (see rev.942)
