@@ -166,7 +166,7 @@ Date: #{Time.now.rfc2822}
 MIME-Version: 1.0
 Content-Type: text/plain; charset="iso-2022-jp"
 Content-Transfer-Encoding: 7bit
-X-Mailer: Hiki #{Hiki::Version}
+X-Mailer: Hiki #{Hiki::VERSION}
 
 #{body.to_jis}
 EndOfMail
