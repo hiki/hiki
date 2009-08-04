@@ -6,10 +6,10 @@ BEGIN { $stdout.binmode }
 
 $SAFE     = 1
 
-if FileTest::symlink?( __FILE__ ) then
-  org_path = File::dirname( File::expand_path( File::readlink( __FILE__ ) ) )
+if FileTest.symlink?( __FILE__ ) then
+  org_path = File.dirname( File.expand_path( File.readlink( __FILE__ ) ) )
 else
-  org_path = File::dirname( File::expand_path( __FILE__ ) )
+  org_path = File.dirname( File.expand_path( __FILE__ ) )
 end
 $:.unshift( org_path.untaint, "#{org_path.untaint}/hiki" )
 $:.delete(".") if File.writable?(".")
@@ -21,7 +21,7 @@ require 'hiki/util'
 include Hiki::Util
 
 def attach_file
-  @conf = Hiki::Config::new
+  @conf = Hiki::Config.new
   set_conf(@conf)
   cgi = CGI.new
 
@@ -72,12 +72,12 @@ def attach_file
       Dir.foreach(attach_path) do |file|
         next unless params["file_#{file}"][0]
         path = "#{attach_path}/#{file}"
-        if FileTest::file?(path.untaint) and params["file_#{file}"][0].read
-          File::unlink(path)
+        if FileTest.file?(path.untaint) and params["file_#{file}"][0].read
+          File.unlink(path)
           r << "FILE        = #{File.basename(path)}\n"
         end
       end
-      Dir::rmdir(attach_path) if Dir::entries(attach_path).size == 2
+      Dir.rmdir(attach_path) if Dir.entries(attach_path).size == 2
       send_updating_mail(page, 'detach', r) if @conf.mail_on_update
       redirect(cgi, "#{@conf.index_url}?c=#{command}&p=#{page.escape}")
     rescue Exception => ex

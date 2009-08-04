@@ -1,3 +1,8 @@
+2009-08-04  okkez  <okkez000@gmail.com>
+
+	* misc/plugin/attach/attach.cgi: use dot instead of double colon
+	when call singleton methods.
+
 2009-08-01  Kazuhiko  <kazuhiko@fdiary.net>
 
 	* hiki/util.rb (Hiki::Util::sendmail): fix a typo (Hiki::Version
