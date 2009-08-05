@@ -727,7 +727,7 @@ class HikiDoc
     end
 
     def inline_plugin(src)
-      %Q(<span class="plugin">{{#{src}}}</span>)
+      %Q(<span class="plugin">{{#{escape_html(src)}}}</span>)
     end
 
     #

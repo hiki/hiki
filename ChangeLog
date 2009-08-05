@@ -1,3 +1,7 @@
+2009-08-05  Kazuhiko  <kazuhiko@fdiary.net>
+
+	* style/default/hikidoc.rb: use recent hikidoc.rb (rev.110).
+
 2009-08-04  okkez  <okkez000@gmail.com>
 
 	* misc/plugin/attach/attach.cgi: use dot instead of double colon
@@ -7,10 +11,6 @@
 
 	* hiki/util.rb (Hiki::Util::sendmail): fix a typo (Hiki::Version
 	-> Hiki::VERSION).
-
-2009-07-31  Kazuhiko  <kazuhiko@fdiary.net>
-
-	* style/default/hikidoc.rb: use recent hikidoc.rb (rev.110).
 
 2009-07-28  okkez  <okkez000@gmail.com>
 
