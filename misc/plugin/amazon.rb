@@ -52,7 +52,7 @@ def amazon_call_ecs( asin, id_type, country = nil )
 	aid =  @conf['amazon.aid'] || ''
 	aid = 'cshs-22' if aid.empty?
 
-	url =  @amazon_ecs_url_hash[country].dup
+	url = (@conf['amazon.endpoints'] || @amazon_ecs_url_hash)[country].dup
 	url << "?Service=AWSECommerceService"
 	url << "&SubscriptionId=#{@amazon_subscription_id}"
 	url << "&AssociateTag=#{aid}"
@@ -226,7 +226,7 @@ end
 def amazon_get( asin, with_image = true, label = nil, pos = 'amazon' )
 	asin = asin.to_s.strip # delete white spaces
 	asin.sub!(/\A([a-z]+):/, '')
-	country = $1 || @amazon_default_country
+	country = $1 || @conf['amazon.default_country'] || @amazon_default_country
 	digit = asin.gsub( /[^\d]/, '' )
 	if digit.length == 13 then # ISBN-13
 		asin = digit

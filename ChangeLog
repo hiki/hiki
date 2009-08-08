@@ -1,3 +1,6 @@
+2009-08-08  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/amazon.rb: import tDiary's amazon.rb (rev.3501).
+
 2009-08-05  Kazuhiko  <kazuhiko@fdiary.net>
 
 	* style/default/hikidoc.rb: use recent hikidoc.rb (rev.110).
