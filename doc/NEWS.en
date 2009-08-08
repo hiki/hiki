@@ -1,3 +1,11 @@
+! Changes in 0.8.8
+
+* use [[HikiDoc|http://rubyforge.org/projects/hikidoc/]] as Wiki style's parser.
+* support API authentication in amazon plugin.
+* add the spam filter feature.
+* support git repositories.
+* fix miscellaneous bugs.
+
 ! Changes in 0.8.7
 
 * fix an arbitrary file delete vulnerabilities.
