@@ -2,162 +2,105 @@
 	* misc/plugin/amazon.rb: import tDiary's amazon.rb (rev.3501).
 
 2009-08-05  Kazuhiko  <kazuhiko@fdiary.net>
-
 	* style/default/hikidoc.rb: use recent hikidoc.rb (rev.110).
 
 2009-08-04  okkez  <okkez000@gmail.com>
-
 	* misc/plugin/attach/attach.cgi: use dot instead of double colon
 	when call singleton methods.
 
 2009-08-01  Kazuhiko  <kazuhiko@fdiary.net>
-
 	* hiki/util.rb (Hiki::Util::sendmail): fix a typo (Hiki::Version
 	-> Hiki::VERSION).
 
 2009-07-28  okkez  <okkez000@gmail.com>
-
-	* misc/plugin/history.rb (Hiki::History#history): uncomment. (see rev.942)
+	* misc/plugin/history.rb (Hiki::History#history): uncomment. (see
+	rev.942)
 
 2009-07-28  okkez  <okkez000@gmail.com>
-
 	* misc/plugin/history.rb: use dot instead double colon when call
 	singleton meshods.
 
 2009-07-28  Kazuhiko  <kazuhiko@fdiary.net>
-
 	* plugin/00default.rb: use ::Hiki::VERSION instead of
 	Hiki::VERSION.
 
 	* misc/plugin/amazon.rb: import tDiary's amazon.rb (rev.3484).
 
 2009-07-25  okkez  <okkez000@gmail.com>
-
 	* contrib/plugin/rast-register.rb: delete trailing white spaces,
 	fix indent.
-
 	* contrib/plugin/rast-search.rb: ditto.
-
 	* misc/plugin/attach.rb: ditto.
-
 	* misc/plugin/attach/attach.cgi: ditto.
-
 	* misc/plugin/auth_typekey.rb: ditto.
-
 	* misc/plugin/bbs.rb: ditto.
-
 	* misc/plugin/category.rb: ditto.
-
 	* misc/plugin/comment.rb: ditto.
-
 	* misc/plugin/diffmail.rb: ditto.
-
 	* misc/plugin/footnote.rb: ditto.
-
 	* misc/plugin/history.rb: ditto.
-
 	* misc/plugin/incremental_search.rb: ditto.
-
 	* misc/plugin/keyword.rb: ditto.
-
 	* misc/plugin/pagerank.rb: ditto.
-
 	* misc/plugin/rank.rb: ditto.
-
 	* misc/plugin/rbl.rb: ditto.
-
 	* misc/plugin/readlirs.rb: ditto.
-
 	* misc/plugin/recent2.rb: ditto.
-
 	* misc/plugin/referer.rb: ditto.
-
 	* misc/plugin/rss-show.rb: ditto.
-
 	* misc/plugin/rss.rb: ditto.
-
 	* misc/plugin/template.rb: ditto.
 
 2009-07-23  okkez  <okkez000@gmail.com>
-
 	* hiki.cgi: use dot instead double
 	colon when call singleton methods.
 
 2009-07-23  okkez  <okkez000@gmail.com>
-
 	* hiki/aliaswiki.rb: delete trailing white spaces, fix indent.
-
 	* hiki/auth/typekey.rb: ditto.
-
 	* hiki/config.rb: ditto.
-
 	* hiki/db/ptstore.rb: ditto.
-
 	* hiki/db/tmarshal.rb: ditto.
-
 	* hiki/filter.rb: ditto.
-
 	* hiki/filter/bayes_filter.rb: ditto.
-
 	* hiki/filter/word_filter.rb: ditto.
-
 	* hiki/hiki_formatter.rb: ditto.
-
 	* hiki/image_size.rb: ditto.
-
 	* hiki/interwiki.rb: ditto.
-
 	* hiki/plugin.rb: ditto.
-
 	* hiki/pluginutil.rb: ditto.
-
 	* hiki/repos/default.rb: ditto.
-
 	* hiki/repos/hg.rb: ditto.
-
 	* hiki/storage.rb: ditto.
-
 	* hiki/util.rb: ditto.
 
 2009-07-23  okkez  <okkez000@gmail.com>
-
 	* style/default/html_formatter.rb: use dot instead double
 	colon when call singleton methods.
-
 	* plugin/01sp.rb: ditto.
-
 	* plugin/00default.rb: ditto.
-
 	* hiki/xmlrpc.rb: ditto.
-
 	* hiki/util.rb: ditto.
-
 	* hiki/storage.rb: ditto.
-
 	* hiki/command.rb: ditto.
-
 	* hiki/config.rb: ditto.
 
 2009-07-19  okkez  <okkez000@gmail.com>
-
 	* hiki/config.rb (Hiki): add Hiki::VERSION, Hiki::RELEASE_DATE.
 	(Hiki::Config#load): use Hiki::VERSION instead HIKI_VERSION.
-
 	* plugin/00default.rb (#hiki_footer): ditto.
-
 	* hiki/util.rb (Hiki::Util#sendmail): ditto.
 
 	* hiki/storage.rb (Hiki::HikiDBBase#load_cache): use
 	Hiki::RELEASE_DATE instead HIKI_RELEASE_DATE.
-
 	* hiki/storage.rb (Hiki::HikiDBBase#save_cache): ditto.
 
 2008-10-12  KURODA Hiraku <hiraku@sapporo.email.ne.jp>
+	* plugin/50bayes_filter.rb: Use unified diff insted of "appended
+	lines" in "submitted_pages"
 
-	* plugin/50bayes_filter.rb: Use unified diff insted of "appended lines" in "submitted_pages"
-
-	* hiki/filter/bayes_filter.rb: add Hiki::Filter::BayesFilter::PageData#get_unified_diff.
-
+	* hiki/filter/bayes_filter.rb: add
+	Hiki::Filter::BayesFilter::PageData#get_unified_diff.
 	* test/spec_bayes_filter.rb: ditto.
 
 2008-10-12  KURODA Hiraku <hiraku@sapporo.email.ne.jp>
@@ -166,24 +109,20 @@
 2008-10-12  KURODA Hiraku <hiraku@sapporo.email.ne.jp>
 	* hiki/xmlrpc.rb: Fix: Error is raised in 'wiki.putPage' because
 	  Filter was not initialized.
-	
+
 2008-09-24  Kazuhiro NISHIYAMA  <zn@mbf.nifty.com>
 	* misc/webrick/hikilet.rb: revert change on 2008-01-06,
 	  because ENV[key]=nil behavior of ruby 1.9 reverted.
 
 2008-09-19  okkez  <okkez000@gmail.com>
-
 	* hiki/plugin.rb (Hiki::Plugin#initialize): use
 	Object#instance_variable_set instead Kernel.eval.
 
 2008-09-19  okkez  <okkez000@gmail.com>
-
 	* hiki/config.rb (Hiki::Config#database): add new method.
 
 	* hiki.cgi: use Hiki::Config#datacase.
-
 	* hiki/xmlrpc.rb (Hiki::XMLRPCHandler#init_handler): ditto.
-
 	* misc/webrick/hikilet.rb (Hikilet#do_GET): ditto.
 
 2008-09-18 KURODA Hiraku <hiraku@sapporo.email.ne.jp>
@@ -211,7 +150,8 @@
 	* hiki/filter/bayes_filter.rb, plugin/50bayes_filter.rb,
 	test/spec_50bayes_filter.rb, test/spec_bayes_filter.rb
 	: + Limit number of times of adding ham/spam into database to 10 times.
-	  + Add new threshold for ham, then post for page is treated as 'doubt' if threshold_ham < score < threshold(for spam).
+	  + Add new threshold for ham, then post for page is treated as
+	'doubt' if threshold_ham < score < threshold(for spam).
 
 2008-07-06 SAKAI Masahiro <masahiro.sakai@gmail.com>
 	* misc/plugin/rss.rb: applied patch Hiki-dev:01126,01127.
@@ -228,7 +168,8 @@
 2008-05-16  KURODA Hiraku  <hiraku@sapporo.email.ne.jp>
 	* hiki/filter/bayes_filter.rb, plugin/50bayes_filter.rb,
 	test/spec_50bayes_filter.rb, test/spec_bayes_filter.rb
-	: URL of posted pagedata in bayes filter become to refer the page 'in Wiki'.
+	: URL of posted pagedata in bayes filter become to refer the page
+	'in Wiki'.
 
 2008-05-14  KURODA Hiraku  <hiraku@sapporo.email.ne.jp>
 	* hiki/filter/bayes_filter.rb, plugin/50bayes_filter.rb,
@@ -240,10 +181,12 @@
 	repository (contributed by Kouhei Sutou).
 
 2008-02-23  KURODA Hiraku  <hiraku@sapporo.email.ne.jp>
-	* hiki/filter.rb, test/spec_filter.rb: Ignore error raised inregisterd filter.
+	* hiki/filter.rb, test/spec_filter.rb: Ignore error raised
+	inregisterd filter.
 	* hiki/filter/bayes_filter.rb, plugin/50bayes_filter.rb,
 	plugin/en/50bayes_filter.rb, plugin/ja/50bayes_filter.rb,
-	test/spec_bayes_filter.rb: Send report mail ONLY WHEN configuration is set so.
+	test/spec_bayes_filter.rb: Send report mail ONLY WHEN
+	configuration is set so.
 
 2008-02-20  KURODA Hiraku  <hiraku@sapporo.email.ne.jp>
 	* plugin/50bayes_filter.rb: Fix a bug for ruby-1.8.5.
@@ -292,13 +235,14 @@
 	repository case.
 
 2007-07-17  Kouhei Yanagita <yanagi@shakenbu.org>
-	* plugin/00default.rb (create_menu): set rel="nofollow" in menu links to
-	edit/diff pages (patch by Kazuhiro NISHIYAMA).
+	* plugin/00default.rb (create_menu): set rel="nofollow" in menu
+	links to edit/diff pages (patch by Kazuhiro NISHIYAMA).
 
 2007-06-24  Kouhei Yanagita <yanagi@shakenbu.org>
 	* Hiki 0.8.7 released!
 
-	* hiki/session.rb (initialize): fix a arbitrary file delete vulnerability.
+	* hiki/session.rb (initialize): fix a arbitrary file delete
+	vulnerability.
 
 2007-06-24  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/attach.rb (attach_download): add a Content-Length
@@ -346,13 +290,11 @@
 	* style/default/html_formatter.rb (URI_RE): allow file scheme in URI.
 
 2006-10-05  Kazuhiko  <kazuhiko@fdiary.net>
-
 	* hiki/command.rb: check postable? if request method is "POST".
 	* misc/plugin/bbs.rb, misc/plugin/comment.rb, misc/plugin/its.rb,
 	misc/plugin/trackback.rb: cancel checking postable? in plugins.
 
 2006-10-04  Kazuhiko  <kazuhiko@fdiary.net>
-
 	* plugin/00default.rb: add postable?.
 	* hiki/command.rb, misc/plugin/bbs.rb, misc/plugin/comment.rb,
 	misc/plugin/its.rb, misc/plugin/trackback.rb: use postable?.
