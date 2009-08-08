@@ -1,4 +1,8 @@
 2009-08-08  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/util.rb (String): add a warning comment to notify that all
+	instance methods added in String class will be obsoleted in the
+	future release.
+
 	* misc/plugin/amazon.rb: import tDiary's amazon.rb (rev.3501).
 
 2009-08-05  Kazuhiko  <kazuhiko@fdiary.net>

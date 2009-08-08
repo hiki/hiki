@@ -8,6 +8,9 @@ autoload( :Document, 'docdiff' )
 autoload( :Diff, 'docdiff' )
 
 class String
+  # all instance methods added in String class will be obsoleted in the
+  # future release.
+
   def to_euc
     NKF.nkf('-m0 -e', self)
   end
