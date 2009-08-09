@@ -1,3 +1,6 @@
+2009-08-09  Kazuhiko  <kazuhiko@fdiary.net>
+	* Hiki 0.8.8 released!
+
 2009-08-08  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/util.rb (String): add a warning comment to notify that all
 	instance methods added in String class will be obsoleted in the
