@@ -5,7 +5,7 @@
 
 module Hiki
   VERSION = '0.8.8'
-  RELEASE_DATE = '2009-08-09'
+  RELEASE_DATE = '2009-08-14'
 end
 
 # For backward compatibility
@@ -217,14 +217,19 @@ module Hiki
       begin
         cgi_conf = File.open( @config_file ){|f| f.read }.untaint
         cgi_conf.gsub!( /^[@$]/, '' )
-        def_vars = ''
-        variables.each do |var| def_vars << "#{var} = nil\n" end
-        eval( def_vars )
+        def_vars1 = ''
+        def_vars2 = ''
+        variables.each do |var|
+          def_vars1 << "#{var} = nil\n"
+          def_vars2 << "@#{var} = #{var} unless #{var} == nil\n"
+        end
+        b = binding.taint
+        eval( def_vars1, b )
         Thread.start {
           $SAFE = 4
           eval( cgi_conf, binding, "(hiki.conf)", 1 )
         }.join
-        variables.each do |var| eval "@#{var} = #{var} if #{var} != nil" end
+        eval( def_vars2, b )
       rescue IOError, Errno::ENOENT
       end
       @mail = [@mail].flatten # for backward compatibility

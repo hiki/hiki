@@ -33,9 +33,9 @@ module TMarshal
     when String
       obj.dump
     when Array
-      "[\n"+obj.collect{|x| dump_text(x)+",\n"}.to_s+"]"
+      "[\n"+obj.collect{|x| dump_text(x)+",\n"}.join+"]"
     when Hash
-      "{\n"+obj.sort_by{|e| e[0].inspect}.collect{|k,v| "#{dump_text(k)} => #{dump_text(v)},\n"}.to_s+"}"
+      "{\n"+obj.sort_by{|e| e[0].inspect}.collect{|k,v| "#{dump_text(k)} => #{dump_text(v)},\n"}.join+"}"
     when Numeric, Module, Regexp, Symbol, TrueClass, FalseClass, NilClass, Range
       obj.inspect
     when Time
@@ -44,4 +44,8 @@ module TMarshal
       raise 'Wrong type!'
     end
   end
+end
+
+if __FILE__ == $0
+  puts TMarshal.dump({:age => 22, :lang => 'Ruby', :man => true, :day => Time.now})
 end

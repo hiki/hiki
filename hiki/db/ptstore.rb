@@ -116,6 +116,21 @@ class PTStore < PStore
   def load_file(file)
     TMarshal::load(file)
   end
+
+  private
+
+  # for Ruby 1.9
+  unless private_method_defined?('commit_new')
+    def commit_new(f)
+      f.truncate(0)
+      f.rewind
+      new_file = @filename + ".new"
+      File.open(new_file, RD_ACCESS) do |nf|
+        FileUtils.copy_stream(nf, f)
+      end
+      File.unlink(new_file)
+    end
+  end
 end
 
 if __FILE__ == $0
