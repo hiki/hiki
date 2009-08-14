@@ -1,3 +1,4 @@
+# -*- coding: euc-jp -*-
 def history_label
   'ÊÔ½¸ÍúÎò'
 end

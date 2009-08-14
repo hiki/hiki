@@ -1,3 +1,4 @@
+# -*- coding: euc-jp -*-
 def append_css_label
         'CSS¤ÎÄÉ²Ã'
 end

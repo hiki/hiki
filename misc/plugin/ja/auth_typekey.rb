@@ -1,3 +1,4 @@
+# -*- coding: euc-jp -*-
 # $Id: auth_typekey.rb,v 1.1 2005-03-06 09:05:23 fdiary Exp $
 # Copyright (C) 2005 TAKEUCHI Hitoshi
 

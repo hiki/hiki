@@ -1,3 +1,4 @@
+# -*- coding: euc-jp -*-
 def note_prefix; 'Note-'; end
 def label_note_config; '¥Î¡¼¥È'; end
 def label_note_link; '¥Î¡¼¥È'; end

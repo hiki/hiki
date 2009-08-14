@@ -1,3 +1,4 @@
+# -*- coding: euc-jp -*-
 # $Id: edit_user.rb,v 1.2 2005-06-09 08:12:39 fdiary Exp $
 # Copyright (C) 2005 Kazuhiko <kazuhiko@fdiary.net>
 

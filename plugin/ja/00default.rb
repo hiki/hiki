@@ -1,3 +1,4 @@
+# -*- coding: euc-jp -*-
 #
 # preferences (resources)
 #

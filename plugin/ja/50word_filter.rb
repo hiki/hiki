@@ -1,3 +1,4 @@
+# -*- coding: euc-jp -*-
 # Copyright (C) 2008, KURODA Hiraku <hiraku@hinet.mydns.jp>
 # You can redistribute it and/or modify it under GPL2. 
 

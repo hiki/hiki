@@ -1,3 +1,4 @@
+# -*- coding: euc-jp -*-
 def label_math_latex_ptsize; 'フォントサイズ (pt)'; end
 def label_math_latex_documentclass; 'ドキュメントクラス'; end
 def label_math_latex_preamble; 'プリアンブル'; end

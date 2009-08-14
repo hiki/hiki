@@ -1,3 +1,4 @@
+# -*- coding: euc-jp -*-
 # Japanese resources of 01sp.rb $Revision: 1.1 $
 
 =begin

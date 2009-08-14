@@ -1,3 +1,4 @@
+# -*- coding: euc-jp -*-
 def help_lineshelp_label
    '¹Ô»Ù±ç'
 end
