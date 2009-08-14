@@ -1,3 +1,17 @@
+2009-08-14  Kazuhiko  <kazuhiko@fdiary.net>
+
+	* hiki/page.rb (process): use String#bytesize instead of
+	String#size if exists.
+
+	* hiki/config.rb (load_cgi_conf): call eval() with binding, that
+	is required for Ruby 1.9.
+
+	* hiki/db/ptstore.rb: define commit_new if missing, that is
+	required for Ruby 1.9.
+
+	* hiki/db/tmarshal.rb: use Array#join instead of Array#to_s, whose
+	specification is different between Ruby 1.8 and Ruby 1.9
+
 2009-08-09  Kazuhiko  <kazuhiko@fdiary.net>
 	* Hiki 0.8.8 released!
 
