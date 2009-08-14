@@ -46,7 +46,7 @@ module Hiki
         @headers['Cache-Control']    = 'no-cache'
       end
       @headers['Vary']             = 'User-Agent,Accept-Language'
-      @headers['Content-Length']   = @body.size.to_s
+      @headers['Content-Length']   = @body.bytesize.to_s rescue @body.size.to_s
       @headers['cookie']           = @plugin.cookies unless @plugin.cookies.empty?
     end
 
