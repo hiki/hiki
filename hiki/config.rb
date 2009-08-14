@@ -227,7 +227,7 @@ module Hiki
         eval( def_vars1, b )
         Thread.start {
           $SAFE = 4
-          eval( cgi_conf, binding, "(hiki.conf)", 1 )
+          eval( cgi_conf, b, "(hiki.conf)", 1 )
         }.join
         eval( def_vars2, b )
       rescue IOError, Errno::ENOENT
