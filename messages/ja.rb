@@ -1,3 +1,4 @@
+# -*- coding: euc-jp -*-
 # $Id: ja.rb,v 1.15 2008-02-12 15:06:08 hiraku Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # You can redistribute it and/or modify it under the terms of
