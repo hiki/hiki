@@ -132,7 +132,7 @@ module Hiki
     end
 
     def unified_diff( src, dst, context_lines = 3 )
-      return Diff.new(src.split(/^/), dst.split(/^/)).ses.unidiff( '', context_lines )
+      return CGI.escapeHTML(Diff.new(src.split(/^/), dst.split(/^/)).ses.unidiff( '', context_lines ))
     end
 
     def redirect(cgi, url, cookies = nil)

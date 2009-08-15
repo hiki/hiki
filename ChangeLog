@@ -1,4 +1,9 @@
 2009-08-15  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/util.rb (unified_diff): escape output in this method just
+	same as word_diff() does.
+	* misc/plugin/rss.rb (rss_body): remove escape because
+	unified_diff() will escape instead.
+
 	* hiki.cgi: set Encoding::defailt_external if exists (for Ruby
 	1.9). add :accept_charset parameter in CGI.new().
 

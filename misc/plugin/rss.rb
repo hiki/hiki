@@ -51,7 +51,7 @@ EOS
       content = formatter.to_s
       @conf.use_plugin = tmp
     else
-      content = CGI::escapeHTML(unified_diff(src, dst)).strip.gsub(/\n/, "<br>\n").gsub(/ /, '&nbsp;')
+      content = unified_diff(src, dst).strip.gsub(/\n/, "<br>\n").gsub(/ /, '&nbsp;')
     end
 
     if content and content.empty?
