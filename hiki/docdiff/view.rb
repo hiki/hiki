@@ -57,11 +57,11 @@ class View
     @difference.each{|block|
       operation = block.first
       if block_given?
-        source = yield block[1].to_s
-        target = yield block[2].to_s
+        source = yield block[1].join rescue ''
+        target = yield block[2].join rescue ''
       else
-        source = block[1].to_s
-        target = block[2].to_s
+        source = block[1].join rescue ''
+        target = block[2].join rescue ''
       end
       case operation
       when :common_elt_elt
@@ -95,11 +95,11 @@ class View
     d2l = doc2_line_number = 1
     @difference.each_with_index{|entry, i|
       if block_given?
-        source = yield entry[1].to_s
-        target = yield entry[2].to_s
+        source = yield entry[1].join rescue ''
+        target = yield entry[2].join rescue ''
       else
-        source = entry[1].to_s
-        target = entry[2].to_s
+        source = entry[1].join rescue ''
+        target = entry[2].join rescue ''
       end
       if  i == 0
         context_pre  = ""  # no pre context for the first entry

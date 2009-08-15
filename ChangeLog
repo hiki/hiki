@@ -1,4 +1,8 @@
 2009-08-15  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/docdiff/view.rb (apply_style, apply_style_digest): use
+	Array#join instead of Array#to_s, whose specification is different
+	between Ruby 1.8 and Ruby 1.9.
+
 	* hiki/util.rb (unified_diff): use String#split(/^/) instead of
 	String#to_a, that works on both (old) Ruby-1.8 and Ruby-1.9.
 
@@ -19,7 +23,7 @@
 	required for Ruby 1.9.
 
 	* hiki/db/tmarshal.rb: use Array#join instead of Array#to_s, whose
-	specification is different between Ruby 1.8 and Ruby 1.9
+	specification is different between Ruby 1.8 and Ruby 1.9.
 
 2009-08-09  Kazuhiko  <kazuhiko@fdiary.net>
 	* Hiki 0.8.8 released!
