@@ -31,7 +31,7 @@ module Hiki
       @body = to_html
 
       @conf.save_config if @contents[:save_config]
-      @headers = Hash::new
+      @headers = {}
       if @contents[:last_modified] and 'HEAD' == @cgi.request_method
         @headers['Last-Modified']    = CGI::rfc1123_date(@contents[:last_modified])
       end

@@ -75,7 +75,7 @@ module Hiki
     end
 
     def get_common_data( db, plugin, conf )
-      data = Hash.new
+      data = {}
       data[:author_name] = conf.author_name
       data[:view_style]  = conf.use_sidebar ? CGI.escapeHTML( conf.main_class ) : 'hiki' # for tDiary theme
       data[:cgi_name]    = conf.cgi_name

@@ -47,7 +47,7 @@ module Hiki
     end
 
     def search( w )
-      result  = Array.new
+      result  = []
       keys    = w.split
       p       = pages
       total   = pages.size
