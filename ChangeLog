@@ -1,3 +1,7 @@
+2009-08-15  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/parser.rb (parse): use HikiDoc.to_html instead of
+	HikiDoc#to_html.
+
 2009-08-14  Kazuhiko  <kazuhiko@fdiary.net>
 	* plugin/00default.rb (hiki_footer): display fcgi information in
 	footer.

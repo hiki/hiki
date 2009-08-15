@@ -24,7 +24,7 @@ module Hiki
     end
 
     def parse( s, top_level = 2 )
-      HikiDoc.new( s, :level => top_level ).to_html
+      HikiDoc.to_html( s, :level => top_level )
     end
   end
 end
