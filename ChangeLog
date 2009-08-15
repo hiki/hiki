@@ -5,6 +5,7 @@
 	* hiki/docdiff/view.rb (apply_style, apply_style_digest): use
 	Array#join instead of Array#to_s, whose specification is different
 	between Ruby 1.8 and Ruby 1.9.
+	* hiki/util.rb (word_diff): ditto.
 
 	* hiki/util.rb (unified_diff): use String#split(/^/) instead of
 	String#to_a, that works on both (old) Ruby-1.8 and Ruby-1.9.
