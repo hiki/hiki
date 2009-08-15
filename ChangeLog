@@ -1,4 +1,7 @@
 2009-08-15  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/util.rb (unified_diff): use String#split(/^/) instead of
+	String#to_a, that works on both (old) Ruby-1.8 and Ruby-1.9.
+
 	* style/default/parser.rb (parse): use HikiDoc.to_html instead of
 	HikiDoc#to_html.
 
