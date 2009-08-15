@@ -6,8 +6,8 @@
 #require 'iconv'
 module CharString
 
-  Encodings = Hash.new
-  EOLChars = Hash.new  # End-of-line characters, such as CR, LF, CRLF.
+  Encodings = {}
+  EOLChars = {}  # End-of-line characters, such as CR, LF, CRLF.
 
   def initialize(string)
 =begin unnecessary

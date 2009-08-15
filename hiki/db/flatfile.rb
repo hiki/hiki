@@ -107,7 +107,7 @@ module Hiki
     end
 
     def page_info
-      h = Array::new
+      h = []
       @info.transaction(true) do
         @info.roots.each { |a| h << {a.unescape => @info[a]} }
       end

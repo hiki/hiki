@@ -10,7 +10,7 @@ module Hiki
     attr_reader :aliaswiki_names
 
     def initialize(str)
-      @aliaswiki_names = Hash::new
+      @aliaswiki_names = {}
       (str || '').scan( ALIASWIKI_NAME_RE ) do |i|
         @aliaswiki_names[i[0]] = i[1]
       end

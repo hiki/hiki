@@ -11,7 +11,7 @@ module Hiki
     attr_reader :interwiki_names
 
     def initialize( str )
-      @interwiki_names = Hash.new
+      @interwiki_names = {}
       (str || '').scan( INTERWIKI_NAME_RE ) do |i|
         e = i.size > 2 ? i[2] : 'none'
         @interwiki_names[i[0]] = {:url => i[1], :encoding => e}

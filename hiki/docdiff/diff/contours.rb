@@ -312,7 +312,7 @@ class Diff
       def initialize(arr)
         @n = arr.length + 1
 
-        @table = Array.new
+        @table = []
         arr.each_index {|i|
           s = arr[i]
           @table[s] = [-1] unless @table[s]
