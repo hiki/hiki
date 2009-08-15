@@ -82,7 +82,7 @@ module Hiki
       end
     end
 
-    WIKINAME_RE   = /(\b(?:[A-Z][a-z0-9]+){2,}[A-Z]*\b)/n
+    WIKINAME_RE   = /(\b(?:[A-Z][a-z0-9]+){2,}[A-Z]*\b)/
 
     def replace_wikiname( text )
       replace_inline( text ) do |str|
