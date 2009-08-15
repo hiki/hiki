@@ -272,7 +272,7 @@ EOS
                else
                  'e' # XXX what should we use?
                end
-        NKF::nkf("-m0 -#{from}#{to}", str)
+        NKF.nkf("-m0 -#{from}#{to}", str)
       end
     end
 

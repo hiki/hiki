@@ -54,7 +54,7 @@ def bbs_post
     if /^\{\{bbs\b(:?[^\}]*)?\}\}/ =~ l && flag == false
       if count == bbs_num
         content << "#{l}\n"
-        content << @conf.parser.heading( "#{subject} - #{name} (#{format_date(Time::now)})\n", bbs_level )
+        content << @conf.parser.heading( "#{subject} - #{name} (#{format_date(Time.now)})\n", bbs_level )
         content << "#{msg}\n"
         content << "{{comment}}\n"
         flag = true

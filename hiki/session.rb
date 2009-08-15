@@ -75,8 +75,8 @@ module Hiki
     # (from cgi/session.rb)
     def create_new_id
       require 'digest/md5'
-      md5 = Digest::MD5::new
-      now = Time::now
+      md5 = Digest::MD5.new
+      now = Time.now
       md5.update(now.to_s)
       md5.update(String(now.usec))
       md5.update(String(rand(0)))

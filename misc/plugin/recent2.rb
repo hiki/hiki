@@ -4,7 +4,7 @@
 def recent2( n = 20 )
   n = n > 0 ? n : 0
 
-  now = Time::now
+  now = Time.now
 
   l = @db.page_info.sort do |a, b|
     b[b.keys[0]][:last_modified] <=> a[a.keys[0]][:last_modified]

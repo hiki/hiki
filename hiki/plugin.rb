@@ -337,43 +337,43 @@ module Hiki
       end
     end
 
-    def add_header_proc( block = Proc::new )
+    def add_header_proc( block = Proc.new )
       @header_procs << block
     end
 
-    def add_footer_proc( block = Proc::new )
+    def add_footer_proc( block = Proc.new )
       @footer_procs << block
     end
 
-    def add_update_proc( block = Proc::new )
+    def add_update_proc( block = Proc.new )
       @update_procs << block
     end
 
-    def add_delete_proc( block = Proc::new )
+    def add_delete_proc( block = Proc.new )
       @delete_procs << block
     end
 
-    def add_body_enter_proc( block = Proc::new )
+    def add_body_enter_proc( block = Proc.new )
       @body_enter_procs << block
     end
 
-    def add_page_attribute_proc( block = Proc::new )
+    def add_page_attribute_proc( block = Proc.new )
       @page_attribute_procs << block
     end
 
-    def add_body_leave_proc( block = Proc::new )
+    def add_body_leave_proc( block = Proc.new )
       @body_leave_procs << block
     end
 
-    def add_edit_proc( block = Proc::new )
+    def add_edit_proc( block = Proc.new )
       @edit_procs << block
     end
 
-    def add_form_proc( block = Proc::new )
+    def add_form_proc( block = Proc.new )
       @form_procs << block
     end
 
-    def add_menu_proc( block = Proc::new )
+    def add_menu_proc( block = Proc.new )
       @menu_procs << block
     end
 
@@ -385,14 +385,14 @@ module Hiki
       nil
     end
 
-    def add_conf_proc( key, label, block = Proc::new )
+    def add_conf_proc( key, label, block = Proc.new )
       return unless @mode =~ /^(conf|saveconf)$/
       @conf_keys << key unless @conf_keys.index( key )
       @conf_procs[key] = [label, block]
     end
 
     def set_tdiary_env
-      @date             = Time::now
+      @date             = Time.now
       @cookies          = []
 
       @options['cache_path']  = @conf.cache_path
@@ -403,7 +403,7 @@ module Hiki
 #      @options['html_title']  = @conf.site_name
       @options['years']       = {}
       @options['diaries']     = nil,
-      @options['date']        = Time::now
+      @options['date']        = Time.now
 
       %w(cache_path mode years diaries date).each do |p|
         instance_variable_set("@#{p}", @options[p])

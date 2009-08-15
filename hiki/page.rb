@@ -23,7 +23,7 @@ module Hiki
     end
 
     def to_html
-      ERB::new( @template ).result( binding )
+      ERB.new( @template ).result( binding )
     end
 
     def process( plugin )
@@ -33,11 +33,11 @@ module Hiki
       @conf.save_config if @contents[:save_config]
       @headers = {}
       if @contents[:last_modified] and 'HEAD' == @cgi.request_method
-        @headers['Last-Modified']    = CGI::rfc1123_date(@contents[:last_modified])
+        @headers['Last-Modified']    = CGI.rfc1123_date(@contents[:last_modified])
       end
       @headers['type']     = 'text/html'
       if @conf.mobile_agent?
-        @body = NKF::nkf( '-sE', @body ) if /EUC-JP/i =~ @conf.charset
+        @body = NKF.nkf( '-sE', @body ) if /EUC-JP/i =~ @conf.charset
         @headers['charset']          = 'Shift_JIS'
       else
         @headers['charset']          = @conf.charset

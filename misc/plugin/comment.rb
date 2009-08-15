@@ -57,7 +57,7 @@ def comment_post
     if /^\{\{r?comment.*\}\}/ =~ l && flag == false
       if count == comment_no
         content << l if style == 1
-        content << "*#{format_date(Time::now)} #{name} : #{msg}\n"
+        content << "*#{format_date(Time.now)} #{name} : #{msg}\n"
         content << l if style == 0
         flag = true
       else

@@ -12,12 +12,12 @@ module Hiki
 
     def initialize( conf )
       @conf = conf
-      @pages_path = File::join(@conf.data_path, "text")
-      @backup_path = File::join(@conf.data_path, "backup")
-      @info_db = File::join(@conf.data_path, "info.db")
+      @pages_path = File.join(@conf.data_path, "text")
+      @backup_path = File.join(@conf.data_path, "backup")
+      @info_db = File.join(@conf.data_path, "info.db")
       create_missing_dirs
       create_infodb unless test(?e, @info_db)
-      @info = PTStore::new( @info_db )
+      @info = PTStore.new( @info_db )
     end
 
     def close_db
@@ -38,9 +38,9 @@ module Hiki
       create_info_default( page ) unless info_exist?( page )
 
       if update_timestamp
-        set_last_update( page, Time::now )
+        set_last_update( page, Time.now )
       end
-      File::open( filename, 'wb' ) do |f|
+      File.open( filename, 'wb' ) do |f|
         f.write( text.gsub(/\r\n/, "\n") )
       end
       true
@@ -51,7 +51,7 @@ module Hiki
         begin
           FileUtils.copy( textdir( page ), backupdir( page ), {:preserve => true} )
           delete_info( page )
-          File::unlink( textdir( page ) )
+          File.unlink( textdir( page ) )
         rescue
         end
       end
@@ -59,12 +59,12 @@ module Hiki
 
     def load( page )
       return nil unless exist?( page )
-      File::read( textdir( page ) )
+      File.read( textdir( page ) )
     end
 
     def load_backup( page )
       return nil unless backup_exist?( page )
-      File::read( backupdir( page ) )
+      File.read( backupdir( page ) )
     end
 
     def save( page, src, md5 )
@@ -81,7 +81,7 @@ module Hiki
 
     def pages
       Dir.glob( "#{@pages_path}/*" ).delete_if {|f| !test(?f, f.untaint)}.collect! {|f|
-        File::basename( f ).unescape
+        File.basename( f ).unescape
       }
     end
 
@@ -207,11 +207,11 @@ module Hiki
     end
 
     def create_infodb
-      @info = PTStore::new( @info_db )
+      @info = PTStore.new( @info_db )
       @info.transaction do
         pages.each do |a|
           r = default
-          r[:last_modified] = File::mtime( "#{@pages_path}/#{a.escape}".untaint )
+          r[:last_modified] = File.mtime( "#{@pages_path}/#{a.escape}".untaint )
           @info[a.escape]  = r
         end
       end
@@ -226,7 +226,7 @@ module Hiki
 
     def default
       { :count          => 0,
-        :last_modified  => Time::now,
+        :last_modified  => Time.now,
         :freeze         => false,
         :references     => [],
         :keyword        => [],
@@ -235,11 +235,11 @@ module Hiki
     end
 
     def textdir(s)
-      File::join(@pages_path, s.escape).untaint
+      File.join(@pages_path, s.escape).untaint
     end
 
     def backupdir(s)
-      File::join(@backup_path, s.escape).untaint
+      File.join(@backup_path, s.escape).untaint
     end
   end
 end

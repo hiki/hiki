@@ -222,7 +222,7 @@ def its_edit_ticket_post
   text.sub!(/^:Version:.*/i, ":Version:#{version}")
   text.sub!(/^:Milestone:.*/i, ":Milestone:#{milestone}")
   unless comment.empty?
-    str = @conf.parser.heading( "#{name} (#{format_date(Time::now)})\n", 3 )
+    str = @conf.parser.heading( "#{name} (#{format_date(Time.now)})\n", 3 )
     str << comment
     text.sub!(/^\{\{its_edit_ticket_form\}\}/, "#{str}\\&")
   end
