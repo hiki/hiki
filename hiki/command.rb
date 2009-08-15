@@ -354,7 +354,13 @@ module Hiki
     def cmd_diff
       old = @db.load_backup( @p ) || ''
       new = @db.load( @p ) || ''
-      differ = word_diff( old, new ).gsub( /\n/, "<br>\n" )
+      begin
+        differ = word_diff( old, new ).gsub( /\n/, "<br>\n" )
+      rescue
+        # FIXME word_diff() can raise Encoding::CompatibilityError in
+        # Ruby-1.9.
+        differ = unified_diff( old, new ).gsub( /\n/, "<br>\n" )
+      end
 
       data = get_common_data( @db, @plugin, @conf )
 

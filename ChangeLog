@@ -1,4 +1,10 @@
 2009-08-15  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/command.rb (cmd_diff): use unified_diff if word_diff raises
+	an exception, because word_diff can raise
+	Encoding::CompatibilityError in Ruby-1.9. this change should be
+	temporary and should be removed when docdiff becomes Ruby-1.9
+	ready.
+
 	* hiki/util.rb (unified_diff): escape output in this method just
 	same as word_diff() does.
 	* misc/plugin/rss.rb (rss_body): remove escape because
