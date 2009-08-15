@@ -3,8 +3,13 @@
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 BEGIN { $stdout.binmode }
-
-$KCODE    = 'e'
+begin
+  # FIXME encoding can be different (eg. iso-8859-1 in
+  # hikiconf.rb.sample.en).
+  Encoding.default_external = 'euc-jp'
+rescue NameError
+  $KCODE = 'e'
+end
 
 begin
   if FileTest::symlink?( __FILE__ )
@@ -23,7 +28,9 @@ begin
     server = Hiki::XMLRPCServer.new( conf.xmlrpc_enabled )
     server.serve
   else
-    cgi = CGI.new
+    # FIXME encoding can be different (eg. iso-8859-1 in
+    # hikiconf.rb.sample.en).
+    cgi = CGI.new(:accept_charset=>"euc-jp")
 
     db = conf.database
     db.open_db {

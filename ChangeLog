@@ -1,4 +1,7 @@
 2009-08-15  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki.cgi: set Encoding::defailt_external if exists (for Ruby
+	1.9). add :accept_charset parameter in CGI.new().
+
 	* style/default/html_formatter.rb: remove a needless regexp
 	option.
 
