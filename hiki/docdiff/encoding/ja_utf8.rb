@@ -1,3 +1,4 @@
+# -*- coding: utf-8; -*-
 # Japanese UTF-8 encoding module for CharString
 # 2003- Hisashi MORITA
 
@@ -6955,6 +6956,8 @@ module CharString
     PUNCT.replace(Regexp.quote(PUNCT)) # kludge to avoid warning "character class has `[' without escape"
     PRINT.replace(Regexp.quote(PRINT)) # kludge to avoid warning "character class has `[' without escape"
     GRAPH.replace(Regexp.quote(GRAPH)) # kludge to avoid warning "character class has `[' without escape"
+    JA_PRINT.replace(Regexp.quote(JA_PRINT)) # kludge to avoid warning "character class has `[' without escape"
+    JA_GRAPH.replace(Regexp.quote(JA_GRAPH)) # kludge to avoid warning "character class has `[' without escape"
 
     WORD_REGEXP_SRC = ["(?:[#{GRAPH}]+[#{BLANK}]?)", 
                        "|(?:[#{SPACE}]+)", 
