@@ -1,4 +1,8 @@
 2009-08-16  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/docdiff/charstring.rb: many changes for Ruby-1.9.
+	* hiki/docdiff/encoding/document.rb: do not guess encoding for
+	Ruby-1.9.
+
 	* hiki/docdiff/encoding/ja_utf8.rb: quote regular expressions
 	correctly.
 
