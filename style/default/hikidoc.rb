@@ -91,7 +91,7 @@ class HikiDoc
   #
 
   def valid_plugin_syntax?(code)
-    /['"]/ !~ code.gsub(/'(?:[^\\']+|\\.)*'|"(?:[^\\"]+|\\.)*"/m, "")
+    /['"]/ !~ code.gsub(/\\\\/, "").gsub(/\\['"]/,"").gsub(/'[^']*'|"[^"]*"/m, "")
   end
 
   def escape_plugin_blocks(text)

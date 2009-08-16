@@ -1,3 +1,6 @@
+2009-08-16  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/hikidoc.rb: use recent hikidoc.rb (rev.116).
+
 2009-08-15  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/command.rb (cmd_diff): use unified_diff if word_diff raises
 	an exception, because word_diff can raise
