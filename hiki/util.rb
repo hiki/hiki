@@ -285,9 +285,9 @@ EOS
       words = Difference.new
       lines.each{|line|
         if line.first == :change_elt
-          before_change = Document.new(line[1].to_s,
+          before_change = Document.new((line[1] || []).join,
                                        doc1.encoding, doc1.eol)
-          after_change  = Document.new(line[2].to_s,
+          after_change  = Document.new((line[2] || []).join,
                                        doc2.encoding, doc2.eol)
           Difference.new(before_change.split_to_word,
                          after_change.split_to_word).each{|word|

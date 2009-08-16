@@ -57,8 +57,8 @@ class View
     @difference.each{|block|
       operation = block.first
       if block_given?
-        source = yield (block[1] || []).join
-        target = yield (block[2] || []).join
+        source = yield((block[1] || []).join)
+        target = yield((block[2] || []).join)
       else
         source = (block[1] || []).join
         target = (block[2] || []).join
@@ -95,8 +95,8 @@ class View
     d2l = doc2_line_number = 1
     @difference.each_with_index{|entry, i|
       if block_given?
-        source = yield (entry[1] || []).join
-        target = yield (entry[2] || []).join
+        source = yield((entry[1] || []).join)
+        target = yield((entry[2] || []).join)
       else
         source = (entry[1] || []).join
         target = (entry[2] || []).join
