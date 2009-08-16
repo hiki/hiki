@@ -1,3 +1,8 @@
+! 0.9.0 での変更点（未リリース）
+
+* Wikiスタイルのパーサの DoS 脆弱性を修正しました。
+* Ruby-1.9に対応しました。
+
 ! 0.8.8 での変更点
 
 * Wikiスタイルのパーサが[[HikiDoc|http://rubyforge.org/projects/hikidoc/]]になりました。

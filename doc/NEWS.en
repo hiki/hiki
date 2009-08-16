@@ -1,3 +1,8 @@
+! Changes in 0.9.0 (not yet released)
+
+* fix DoS vulnerabilities in the process of Wiki style's parser.
+* support Ruby-1.9.
+
 ! Changes in 0.8.8
 
 * use [[HikiDoc|http://rubyforge.org/projects/hikidoc/]] as Wiki style's parser.
