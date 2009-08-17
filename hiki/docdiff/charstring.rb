@@ -144,100 +144,100 @@ if "".respond_to?(:force_encoding)
 
   def split_to_char()
     if eol_char  # sometimes string has no end-of-line char
-      encode('UTF-8').scan(Regexp.new("(?:#{eol_char})|(?:.)", 
+      scan(Regexp.new("(?:#{eol_char})|(?:.)", 
                       Regexp::MULTILINE)
-      ).map{|e| e.encode(self.encoding)}
+      )
     else                  # it seems that no EOL module was extended...
-      encode('UTF-8').scan(Regexp.new("(?:.)", 
+      scan(Regexp.new("(?:.)", 
                       Regexp::MULTILINE)
-      ).map{|e| e.encode(self.encoding)}
+      )
     end
   end
 
   def count_latin_graph_char()
-    encode('UTF-8').scan(Regexp.new("[#{Encodings['UTF-8']::GRAPH}]", 
+    scan(Regexp.new("[#{Encodings['UTF-8']::GRAPH}]", 
                     Regexp::MULTILINE)
     ).size
   end
 
   def count_ja_graph_char()
-    encode('UTF-8').scan(Regexp.new("[#{Encodings['UTF-8']::JA_GRAPH}]", 
+    scan(Regexp.new("[#{Encodings['UTF-8']::JA_GRAPH}]".encode(encoding), 
                     Regexp::MULTILINE)
     ).size
   end
 
   def count_latin_blank_char()
-    encode('UTF-8').scan(Regexp.new("[#{Encodings['UTF-8']::BLANK}]", 
+    scan(Regexp.new("[#{Encodings['UTF-8']::BLANK}]", 
                     Regexp::MULTILINE)
     ).size
   end
 
   def count_ja_blank_char()
-    encode('UTF-8').scan(Regexp.new("[#{Encodings['UTF-8']::JA_BLANK}]", 
+    scan(Regexp.new("[#{Encodings['UTF-8']::JA_BLANK}]".encode(encoding), 
                     Regexp::MULTILINE)
     ).size
   end
 
   def split_to_word()
-    encode('UTF-8').scan(Regexp.new(Encodings['UTF-8']::WORD_REGEXP_SRC, 
+    scan(Regexp.new(Encodings['UTF-8']::WORD_REGEXP_SRC.encode(encoding), 
                     Regexp::MULTILINE)
-    ).map{|e| e.encode(self.encoding)}
+    )
   end
 
   def count_latin_word()
     split_to_word.collect{|word|
       word if Regexp.new("[#{Encodings['UTF-8']::PRINT}]", 
-                         Regexp::MULTILINE).match word.encode('UTF-8')
+                         Regexp::MULTILINE).match word
     }.compact.size
   end
 
   def count_ja_word()
     split_to_word.collect{|word|
-      word if Regexp.new("[#{Encodings['UTF-8']::JA_PRINT}]", 
-                         Regexp::MULTILINE).match word.encode('UTF-8')
+      word if Regexp.new("[#{Encodings['UTF-8']::JA_PRINT}]".encode(encoding), 
+                         Regexp::MULTILINE).match word
     }.compact.size
   end
 
   def count_latin_valid_word()
     split_to_word.collect{|word|
       word if Regexp.new("[#{Encodings['UTF-8']::ALNUM}]", 
-                         Regexp::MULTILINE).match word.encode('UTF-8')
+                         Regexp::MULTILINE).match word
     }.compact.size
   end
 
   def count_ja_valid_word()
     split_to_word.collect{|word|
-      word if Regexp.new("[#{Encodings['UTF-8']::JA_GRAPH}]", 
-                         Regexp::MULTILINE).match word.encode('UTF-8')
+      word if Regexp.new("[#{Encodings['UTF-8']::JA_GRAPH}]".encode(encoding), 
+                         Regexp::MULTILINE).match word
     }.compact.size
   end
 
   def split_to_line()
     raise "EOLChars[eol] is #{EOLChars[eol].inspect}: eol not specified or auto-detection failed." unless EOLChars[eol]
     if defined? eol_char
-      encode('UTF-8').scan(Regexp.new(".*?#{eol_char}|.+", 
+      scan(Regexp.new(".*?#{eol_char}|.+", 
                       Regexp::MULTILINE)
-      ).map{|e| e.encode(self.encoding)}
+      )
     else
-      encode('UTF-8').scan(Regexp.new(".+", 
+      scan(Regexp.new(".+", 
                       Regexp::MULTILINE)
-      ).map{|e| e.encode(self.encoding)}
+      )
     end
   end
 
   def count_graph_line()
     split_to_line.collect{|line|
       line if Regexp.new("[#{Encodings['UTF-8']::GRAPH}" + 
-                         "#{Encodings['UTF-8']::JA_GRAPH}]", 
-                         Regexp::MULTILINE).match line.encode('UTF-8')
+                         "#{Encodings['UTF-8']::JA_GRAPH}]".encode(encoding), 
+                         Regexp::MULTILINE).match line
     }.compact.size
   end
 
   def count_blank_line()
     split_to_line.collect{|line|
       line if Regexp.new("^[#{Encodings['UTF-8']::BLANK}" + 
-                         "#{Encodings['UTF-8']::JA_BLANK}]+(?:#{eol_char})?", 
-                         Regexp::MULTILINE).match line.encode('UTF-8')
+                         "#{Encodings['UTF-8']::JA_BLANK}]+(?:#{eol_char})?".encode(encoding), 
+                         Regexp::MULTILINE).match line
     }.compact.size
   end
 
