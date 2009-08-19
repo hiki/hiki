@@ -1,3 +1,6 @@
+2009-08-19  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/rank.rb: increment hit count only in view mode.
+
 2009-08-17  Kazuhiko  <kazuhiko@fdiary.net>
 	* hiki/docdiff/charstring.rb: code cleanup.
 

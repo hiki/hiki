@@ -25,7 +25,9 @@ def rank( n = 20 )
   s
 end
 
-add_body_leave_proc do
-  @db.increment_hitcount( @page )
-  ''
+if @command == 'view'
+  add_body_leave_proc do
+    @db.increment_hitcount( @page )
+    ''
+  end
 end
