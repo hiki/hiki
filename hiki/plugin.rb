@@ -4,7 +4,7 @@
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
 
-require 'cgi'
+require 'cgi' unless Object.const_defined?(:Rack)
 require 'uri'
 require 'erb'
 require 'hiki/util'
