@@ -1,3 +1,7 @@
+2009-08-23  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/hikidoc.rb: use recent hikidoc.rb (rev.122). fix a
+	bug: strings after non-WikiName expression are ignored.
+
 2009-08-19  Kazuhiko  <kazuhiko@fdiary.net>
 	* misc/plugin/rank.rb: increment hit count only in view mode.
 

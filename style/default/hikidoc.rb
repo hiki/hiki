@@ -38,7 +38,7 @@ rescue LoadError
 end
 
 class HikiDoc
-  VERSION = "0.0.4" # FIXME
+  VERSION = "0.0.5" # FIXME
 
   class Error < StandardError
   end
@@ -408,7 +408,7 @@ class HikiDoc
 
       link, uri, mod, wiki_name = m[1, 4]
       if wiki_name and wiki_name[0, 1] == "^"
-        pending_str = m.pre_match + wiki_name[1..-1]
+        pending_str = m.pre_match + wiki_name[1..-1] + str
         next
       end
 
