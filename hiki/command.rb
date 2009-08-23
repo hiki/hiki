@@ -6,6 +6,7 @@ require 'hiki/page'
 require 'hiki/util'
 require 'hiki/plugin'
 require 'hiki/aliaswiki'
+require 'hiki/cookie'
 require 'hiki/session'
 require 'hiki/filter'
 
@@ -576,7 +577,7 @@ module Hiki
     end
 
     def cookie(name, value, max_age = Session::MAX_AGE)
-      CGI::Cookie.new( {
+      Hiki::Cookie.new( {
                           'name' => name,
                           'value' => value,
                           'path' => @plugin.cookie_path,
