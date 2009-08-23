@@ -95,6 +95,7 @@ module Hiki
     end
 
     def base_url
+      return '' if Object.const_defined?(:Rack)
       unless @base_url
         if !ENV['SCRIPT_NAME']
           @base_url = ''
