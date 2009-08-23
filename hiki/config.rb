@@ -12,7 +12,7 @@ end
 HIKI_VERSION  = Hiki::VERSION
 HIKI_RELEASE_DATE = Hiki::RELEASE_DATE
 
-require 'cgi'
+require 'cgi' unless Object.const_defined?(:Rack)
 require 'hiki/request'
 require 'hiki/response'
 require 'hiki/command'
