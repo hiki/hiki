@@ -1,9 +1,11 @@
 # $Id: interwiki.rb,v 1.10 2005-12-28 23:42:18 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
+require 'hiki/util'
+
 module Hiki
   class InterWiki
-    require 'hiki/util'
+    include Hiki::Util
 
     URL  = '(?:http|https|ftp|mailto|file):[a-zA-Z0-9;/?:@&=+$,\-_.!~*\'()#%]+'
     INTERWIKI_NAME_RE =  /\[\[([^|]+)\|(#{URL})\]\](?:\s+(sjis|euc|utf8|alias))?/
@@ -18,7 +20,7 @@ module Hiki
       end
     end
 
-    def interwiki(s, p, display_text = "#{s}:#{p}".escapeHTML)
+    def interwiki(s, p, display_text = h("#{s}:#{p}"))
       if @interwiki_names.has_key?(s)
         encoding = @interwiki_names[s][:encoding]
         page = case encoding
@@ -32,9 +34,9 @@ module Hiki
                  p
                end
         if @interwiki_names[s][:url].index('$1')
-          [@interwiki_names[s][:url].dup.sub(/\$1/, page).escapeHTML, display_text]
+          [h(@interwiki_names[s][:url].dup.sub(/\$1/, page)), display_text]
         else
-          ["#{@interwiki_names[s][:url]}#{page}".escapeHTML, display_text]
+          [h("#{@interwiki_names[s][:url]}#{page}"), display_text]
         end
       else
         nil
@@ -43,7 +45,7 @@ module Hiki
 
     def outer_alias(s)
       if @interwiki_names.has_key?(s) && @interwiki_names[s][:encoding] == 'alias'
-        return [@interwiki_names[s][:url].escapeHTML, s.escapeHTML]
+        return [h(@interwiki_names[s][:url]), h(s)]
       else
         return nil
       end

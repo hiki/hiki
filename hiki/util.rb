@@ -3,6 +3,7 @@
 
 require 'nkf'
 require 'cgi'
+require 'erb'
 
 autoload( :Document, 'docdiff' )
 autoload( :Diff, 'docdiff' )
@@ -32,10 +33,11 @@ class String
   end
 
   def escapeHTML
-    CGI.escapeHTML(self)
+    ERB::Util.h(self)
   end
 
   def unescapeHTML
+    # ???
     CGI.unescapeHTML(self)
   end
 
@@ -52,8 +54,10 @@ module Hiki
   class PluginException < Exception; end
 
   module Util
-    def plugin_error( method, e )
-      msg = "<strong>#{e.class} (#{e.message.escapeHTML}): #{method.escapeHTML}</strong><br>"
+    include ERB::Util
+
+    def plugin_error(method, e)
+      msg = "<strong>#{e.class} (#{h(e.message)}): #{h(method)}</strong><br>"
       msg << "<strong>#{e.backtrace.join("<br>\n")}</strong>" if @conf.plugin_debug
       msg
     end
@@ -62,12 +66,12 @@ module Hiki
       "?c=#{cmd};#{param}"
     end
 
-    def title( s )
-      CGI.escapeHTML( "#{@conf.site_name} - #{s}" )
+    def title(s)
+      h("#{@conf.site_name} - #{s}")
     end
 
     def view_title( s )
-      %Q!<a href="#{@conf.cgi_name}#{cmdstr('search', "key=#{s.escape}") }">#{s.escapeHTML}</a>!
+      %Q!<a href="#{@conf.cgi_name}#{cmdstr('search', "key=#{s.escape}") }">#{h(s)}</a>!
     end
 
     def format_date( tm )
@@ -77,7 +81,7 @@ module Hiki
     def get_common_data( db, plugin, conf )
       data = {}
       data[:author_name] = conf.author_name
-      data[:view_style]  = conf.use_sidebar ? CGI.escapeHTML( conf.main_class ) : 'hiki' # for tDiary theme
+      data[:view_style]  = conf.use_sidebar ? h(conf.main_class) : 'hiki' # for tDiary theme
       data[:cgi_name]    = conf.cgi_name
       if conf.use_sidebar
         t = db.load_cache( conf.side_menu )
@@ -90,7 +94,7 @@ module Hiki
         f = conf.formatter.new( t, db, plugin, conf, 's' )
         data[:sidebar]   = f.to_s
         data[:main_class]    = conf.main_class
-        data[:sidebar_class] = CGI.escapeHTML( conf.sidebar_class )
+        data[:sidebar_class] = h(conf.sidebar_class)
       else
         data[:sidebar] = nil
       end

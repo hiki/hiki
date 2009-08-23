@@ -119,9 +119,9 @@ module Hiki
           end
         }
       rescue NoMethodError, PermissionError, SessionError, Timeout::Error
-        data = get_common_data( @db, @plugin, @conf )
-        data[:message] = CGI.escapeHTML( $!.message )
-        generate_error_page( data )
+        data = get_common_data(@db, @plugin, @conf)
+        data[:message] = h($!.message)
+        generate_error_page(data)
       end
     end
 
@@ -204,7 +204,7 @@ module Hiki
 
       pg_title = @plugin.page_name(@p)
 
-      data[:page_title]   = (@plugin.hiki_anchor( @p.escape, @p.escapeHTML ))
+      data[:page_title]   = @plugin.hiki_anchor(@p.escape, h(@p))
       data[:view_title]   = pg_title
       data[:title]        = title( pg_title.unescapeHTML )
       data[:toc]          = @plugin.toc_f ? toc : nil
@@ -243,7 +243,7 @@ module Hiki
       }.collect {|f|
         k = f.keys[0]
         editor = f[k][:editor] ? "by #{f[k][:editor]}" : ''
-        display_text = ((f[k][:title] and f[k][:title].size > 0) ? f[k][:title] : k).escapeHTML
+        display_text = h((f[k][:title] and f[k][:title].size > 0) ? f[k][:title] : k)
         display_text << " [#{@aliaswiki.aliaswiki(k)}]" if k != @aliaswiki.aliaswiki(k)
         %Q!#{@plugin.hiki_anchor(k.escape, display_text)}: #{format_date(f[k][:last_modified] )} #{editor}#{@conf.msg_freeze_mark if f[k][:freeze]}!
       }
@@ -281,15 +281,15 @@ module Hiki
         tm = f[k][:last_modified]
         editor = f[k][:editor] ? "by #{f[k][:editor]}" : ''
         display_text = (f[k][:title] and f[k][:title].size > 0) ? f[k][:title] : k
-        display_text = display_text.escapeHTML
+        display_text = h(display_text)
         display_text << " [#{@aliaswiki.aliaswiki(k)}]" if k != @aliaswiki.aliaswiki(k)
-        %Q|#{format_date( tm )}: #{@plugin.hiki_anchor( k.escape, display_text )} #{editor.escapeHTML} (<a href="#{@conf.cgi_name}#{cmdstr('diff',"p=#{k.escape}")}">#{@conf.msg_diff}</a>)|
+        %Q|#{format_date( tm )}: #{@plugin.hiki_anchor( k.escape, display_text )} #{h(editor)} (<a href="#{@conf.cgi_name}#{cmdstr('diff',"p=#{k.escape}")}">#{@conf.msg_diff}</a>)|
       }
       [list, last_modified]
     end
 
     def cmd_edit( page, text=nil, msg=nil, d_title=nil )
-      page_title = d_title ? d_title.escapeHTML : @plugin.page_name(page)
+      page_title = d_title ? h(d_title) : @plugin.page_name(page)
 
       save_button = @cmd == 'edit' ? '' : nil
       preview_text = nil
@@ -308,14 +308,14 @@ module Hiki
         formatter = @conf.formatter.new( p, @db, @plugin, @conf )
         preview_text, toc = formatter.to_s, formatter.toc
         save_button = ''
-        data[:keyword] = CGI.escapeHTML( @params['keyword'][0] || '' )
+        data[:keyword] = h(@params['keyword'][0] || '')
         data[:update_timestamp] = @params['update_timestamp'][0] ? ' checked' : ''
         data[:freeze] = @params['freeze'][0] ? ' checked' : ''
       elsif @cmd == 'conflict'
         old = text.gsub(/\r/, '')
         new = @db.load( page ) || ''
         differ = word_diff( old, new ).gsub( /\n/, "<br>\n" )
-        link = @plugin.hiki_anchor( page.escape, page.escapeHTML )
+        link = @plugin.hiki_anchor( page.escape, h(page))
       end
 
       @cmd = 'edit'
@@ -332,17 +332,17 @@ module Hiki
 
       data[:title]          = title( page )
       data[:toc]            = @plugin.toc_f ? toc : nil
-      data[:pagename]       = page.escapeHTML
+      data[:pagename]       = h(page)
       data[:md5hex]         = md5hex
       data[:edit_proc]      = @plugin.edit_proc
-      data[:contents]       = @plugin.text.escapeHTML
+      data[:contents]       = h(@plugin.text)
       data[:msg]            = msg
       data[:button]         = save_button
       data[:preview_button] = save_button
       data[:link]           = link
       data[:differ]         = differ
       data[:body]        = preview_text ? formatter.apply_tdiary_theme(preview_text) :  nil
-      data[:keyword]        ||= CGI.escapeHTML( @db.get_attribute(page, :keyword).join("\n") )
+      data[:keyword]        ||= h(@db.get_attribute(page, :keyword).join("\n"))
       data[:update_timestamp] ||= ' checked'
       data[:page_title]     = page_title
       data[:form_proc]      = @plugin.form_proc
@@ -378,7 +378,7 @@ module Hiki
         data             = get_common_data( @db, @plugin, @conf )
         data[:title]     = @conf.msg_delete
         data[:msg]       = @conf.msg_delete_page
-        data[:link]      = page.escapeHTML
+        data[:link]      = h(page)
         generate_page(data)
       else
         title = @params['page_title'][0] ? @params['page_title'][0].strip : page
@@ -426,13 +426,13 @@ module Hiki
         data[:title]     = title( @conf.msg_search_result )
         data[:msg2]      = @conf.msg_search + ': '
         data[:button]    = @conf.msg_search
-        data[:key]       = %Q|value="#{word.escapeHTML}"|
+        data[:key]       = %Q|value="#{h(word)}"|
         word2            = word.split.join("', '")
         if l.size > 0
-          data[:msg1]    = sprintf( @conf.msg_search_hits, word2.escapeHTML, total, l.size )
+          data[:msg1]    = sprintf(@conf.msg_search_hits, h(word2), total, l.size)
           data[:list]    = l
         else
-          data[:msg1]    = sprintf( @conf.msg_search_not_found, word2.escapeHTML )
+          data[:msg1]    = sprintf(@conf.msg_search_not_found, h(word2))
           data[:list]    = nil
         end
       else
@@ -474,7 +474,7 @@ module Hiki
         data[:msg1]    = msg
         data[:msg2]    = @conf.msg_create + ': '
         data[:button]  = @conf.msg_newpage
-        data[:key]     = %Q|value="#{msg ?  @p.escapeHTML :  ''}"|
+        data[:key]     = %Q|value="#{msg ?  h(@p) :  ''}"|
         data[:list]    = nil
         data[:method]  = 'get'
 
@@ -511,7 +511,7 @@ module Hiki
       data[:title]   = title( @conf.msg_login )
       data[:button]  = @conf.msg_ok
       data[:login_result] = msg_login_result
-      data[:page] = ( page || '' ).escapeHTML
+      data[:page] = h(page || '')
       generate_page( data, status )
     end
 
@@ -519,7 +519,7 @@ module Hiki
       raise PermissionError, 'Permission denied' unless @plugin.admin?
 
       data = get_common_data( @db, @plugin, @conf )
-      data[:key]            = ( @cgi.params['conf'][0] || 'default' ).escapeHTML
+      data[:key]            = h(@cgi.params['conf'][0] || 'default')
 
       data[:title]          = title( @conf.msg_admin )
       data[:session_id]     = @plugin.session_id

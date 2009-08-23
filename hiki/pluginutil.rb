@@ -11,6 +11,7 @@
 # Based on shellwords.rb(in ruby standard library).
 
 require 'cgi'
+require 'erb'
 
 module Hiki
   module Util
@@ -48,7 +49,7 @@ module Hiki
       elsif NIL_RE =~ field
         nil
       elsif field.size > 0
-        field = CGI.escapeHTML(field) if escape
+        field = ERB::Util.h(field) if escape
         field
       else
         :no_data

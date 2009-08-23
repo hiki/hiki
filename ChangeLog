@@ -1,3 +1,12 @@
+2009-08-23  okkez  <okkez000@gmail.com>
+
+	* hiki/command.rb (Hiki::Command): use ERB::Util#h
+	instead of String#escapeHTML or CGI::Util#escapeHTML .
+	* hiki/interwiki.rb (Hiki::InterWiki): ditto.
+	* hiki/pluginutil.rb (Hiki::Util): ditto.
+	* hiki/storage.rb (Hiki::HikiDBBase): ditto.
+	* hiki/util.rb (Hiki::Util): ditto.
+
 2009-08-23  Kazuhiko  <kazuhiko@fdiary.net>
 	* style/default/hikidoc.rb: use recent hikidoc.rb (rev.122). fix a
 	bug: strings after non-WikiName expression are ignored.

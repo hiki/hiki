@@ -62,11 +62,11 @@ module Hiki
         keys.each do |key|
           quoted_key = Regexp.quote(key)
           if keyword and keyword.join("\n").index(/#{quoted_key}/i)
-            status << @conf.msg_match_keyword.gsub(/\]/, " <strong>#{key.escapeHTML}</strong>]")
+            status << @conf.msg_match_keyword.gsub(/\]/, " <strong>#{h(key)}</strong>]")
           elsif title and title.index(/#{quoted_key}/i)
-            status << @conf.msg_match_title.gsub(/\]/, " <strong>#{key.escapeHTML}</strong>]")
+            status << @conf.msg_match_title.gsub(/\]/, " <strong>#{h(key)}</strong>]")
           elsif load( page ).index(/^.*#{quoted_key}.*$/i)
-            status << '[' + $&.escapeHTML.gsub(/#{Regexp.quote(key.escapeHTML)}/i) { "<strong>#{$&}</strong>"} + ']'
+            status << '[' + h($&).gsub(/#{Regexp.quote(h(key))}/i) { "<strong>#{$&}</strong>"} + ']'
           else
             status = nil
             break
