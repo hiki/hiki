@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 module Hiki
-  if Module.const_defined?(:CGI)
+  if Object.const_defined?(:CGI)
     # CGI を Rack::Request っぽいインターフェイスに変換する
     class Request
-      attr_reader :env
+      attr_reader :env, :cgi
       def initialize(env)
         @cgi = CGI.new
         @env = env
@@ -13,16 +13,56 @@ module Hiki
       def params
         return @params if @params
         @params = { }
-        @cgi.params.map{|k,v| @params[k] = v[0] }
+        @cgi.params.each{|k,v|
+          case v.size
+          when 0
+            @params[k] = nil
+          when 1
+            @params[k] = v[0]
+          else
+            @params[k] = v
+          end
+        }
         @params
       end
 
       def [](key)
-        params[key]
+        params[key.to_s]
       end
 
       def []=(key, val)
-        params[key] = val
+        params[key.to_s] = val
+      end
+
+      def request_method
+        @env['REQUEST_METHOD']
+      end
+
+      def header(header)
+        @cgi.header(header)
+      end
+
+      def get?
+        request_method == 'GET'
+      end
+
+      def head?
+        request_method = 'HEAD'
+      end
+
+      def post?
+        request_method == 'POST'
+      end
+
+      def put?
+        request_method == 'PUT'
+      end
+
+      def delete?
+        request_method == 'DELETE'
+      end
+
+      def xhr?
       end
 
       def accept_encoding
@@ -43,22 +83,30 @@ module Hiki
         @env['CONTENT_TYPE']
       end
 
-      def cookies
+      def remote_addr
+        @env['REMOTE_ADDR']
       end
 
-      def delete?
+      def cookies
+        return @cookies if @cookies
+        @cookies = { }
+        @cgi.cookies.each{|k, v|
+          case v.size
+          when 0
+            @cookies[k] = nil
+          when 1
+            @cookies[k] = v[0]
+          else
+            @cookies[k] = v
+          end
+        }
+        @cookies
       end
 
       def form_data?
       end
 
       def fullpath
-      end
-
-      def get?
-      end
-
-      def head?
       end
 
       def host
@@ -96,22 +144,12 @@ module Hiki
       def port
       end
 
-      def post?
-      end
-
-      def put?
-      end
-
       def query_string
       end
 
       def referer
       end
       alias referrer referer
-
-      def request_method
-        @env['REQUEST_METHOD']
-      end
 
       def schema
       end
@@ -127,11 +165,8 @@ module Hiki
 
       def values_at(*keys)
       end
-
-      def xhr?
-      end
     end
   else
-    Request = Rack::Request
+    Request = ::Rack::Request
   end
 end

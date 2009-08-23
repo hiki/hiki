@@ -265,20 +265,20 @@ def saveconf_theme
   # dummy
 end
 
-if @cgi.params['conf'][0] == 'theme' && @mode == 'saveconf'
-  @conf.theme          = @cgi.params['theme'][0] || ''
-  @conf.use_sidebar    = @cgi.params['sidebar'][0] == "true"
-  @conf.main_class     = @cgi.params['main_class'][0]
+if @cgi.params['conf'] == 'theme' && @mode == 'saveconf'
+  @conf.theme          = @cgi.params['theme'] || ''
+  @conf.use_sidebar    = @cgi.params['sidebar'] == "true"
+  @conf.main_class     = @cgi.params['main_class']
   @conf.main_class     = 'main' if @conf.main_class == ''
-  @conf.sidebar_class  = @cgi.params['sidebar_class'][0]
+  @conf.sidebar_class  = @cgi.params['sidebar_class']
   @conf.sidebar_class  = 'sidebar' if @conf.sidebar_class == ''
-  @conf.auto_link      = @cgi.params['auto_link'][0] == "true"
-  @conf.use_wikiname   = @cgi.params['use_wikiname'][0] == "true"
-  @conf.theme_url      = @cgi.params['theme_url'][0]
-  @conf.theme_path     = @cgi.params['theme_path'][0]
+  @conf.auto_link      = @cgi.params['auto_link'] == "true"
+  @conf.use_wikiname   = @cgi.params['use_wikiname'] == "true"
+  @conf.theme_url      = @cgi.params['theme_url']
+  @conf.theme_path     = @cgi.params['theme_path']
 end
 
-if @cgi.params['conf'][0] == 'theme'
+if @cgi.params['conf'] == 'theme'
   @conf_theme_list = []
   Dir.glob( "#{@conf.theme_path}/*".untaint ).sort.each do |dir|
     theme = File.basename( dir )
@@ -291,7 +291,7 @@ end
 # conf: XML-RPC
 def saveconf_xmlrpc
   if @mode == 'saveconf'
-    @conf.xmlrpc_enabled = @cgi.params['xmlrpc_enabled'][0] == 'true'
+    @conf.xmlrpc_enabled = @cgi.params['xmlrpc_enabled'] == 'true'
   end
 end
 

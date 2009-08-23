@@ -21,7 +21,6 @@ begin
   $:.delete(".") if File.writable?(".")
 
   require 'hiki/config'
-  require 'hiki/request'
   conf = Hiki::Config.new
   request = Hiki::Request.new(ENV)
 
@@ -34,15 +33,18 @@ begin
     # hikiconf.rb.sample.en).
     #cgi = CGI.new(:accept_charset=>"euc-jp")
 
+    response = nil
     db = conf.database
     db.open_db {
       cmd = Hiki::Command.new(request, db, conf)
-      cmd.dispatch
+      response = cmd.dispatch
     }
+    print response.header
+    print response.body
   end
 rescue Exception => err
-  if cgi
-    print cgi.header( 'status' => '500 Internal Server Error', 'type' => 'text/html' )
+  if request
+    print request.cgi.header( 'status' => '500 Internal Server Error', 'type' => 'text/html' )
   else
     print "Status: 500 Internal Server Error\n"
     print "Content-Type: text/html\n\n"

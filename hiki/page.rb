@@ -52,10 +52,7 @@ module Hiki
 
     def out( headers = nil )
       @headers.update( headers ) if headers
-      print @cgi.header( @headers )
-      if @cgi.request_method != 'HEAD'
-        print @body
-      end
+      return Hiki::Response.new(@body, 200, @headers)
     end
   end
 end

@@ -131,7 +131,7 @@ def sp_list_plugins( sp_opt, with_checkbox )
 end
 
 # things needed to configure this plugin
-if SP_PREFIX == @cgi.params['conf'][0]
+if SP_PREFIX == @cgi.params['conf']
   # list of plugins
   @sp_opt = sp_hash_from_dirs( @sp_path )
 
@@ -141,7 +141,7 @@ if SP_PREFIX == @cgi.params['conf'][0]
     @conf["#{SP_PREFIX}.selected"] = ''
     @conf["#{SP_PREFIX}.notselected"] = ''
     @sp_opt.each_key do |file|
-      if 't' == @cgi.params["#{SP_PREFIX}.#{file}"][0]
+      if 't' == @cgi.params["#{SP_PREFIX}.#{file}"]
         @conf["#{SP_PREFIX}.selected"] << "#{file}\n"
       else
         @conf["#{SP_PREFIX}.notselected"] << "#{file}\n"

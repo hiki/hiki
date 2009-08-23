@@ -13,6 +13,8 @@ HIKI_VERSION  = Hiki::VERSION
 HIKI_RELEASE_DATE = Hiki::RELEASE_DATE
 
 require 'cgi'
+require 'hiki/request'
+require 'hiki/response'
 require 'hiki/command'
 
 module Hiki

@@ -118,9 +118,9 @@ module Hiki
         :end_after_change    => '</ins>',
       }
       if digest
-        return View.new( diff, src.encoding, src.eol ).to_html_digest(overriding_tags, false).join.gsub( %r|<br />|, '' ).gsub( %r|\n</ins>|, "</ins>\n" )
+        return View.new( diff, src.encoding, src.eol ).to_html_digest(overriding_tags, false).join.gsub( %r|<br />|, '' ).gsub( %r|\n</ins>|, "</ins>\n" ) #"
       else
-        return View.new( diff, src.encoding, src.eol ).to_html(overriding_tags, false).join.gsub( %r|<br />|, '' ).gsub( %r|\n</ins>|, "</ins>\n" )
+        return View.new( diff, src.encoding, src.eol ).to_html(overriding_tags, false).join.gsub( %r|<br />|, '' ).gsub( %r|\n</ins>|, "</ins>\n" ) #"
       end
     end
 
@@ -144,8 +144,7 @@ module Hiki
       header = {}
       header['cookie'] = cookies if cookies
       header['type'] = 'text/html'
-      print cgi.header(header)
-      print %Q[
+      body = %Q[
                <html>
                <head>
                <meta http-equiv="refresh" content="0;url=#{url}">
@@ -153,6 +152,7 @@ module Hiki
                </head>
                <body>Wait or <a href="#{url}">Click here!</a></body>
                </html>]
+      Hiki::Response.new(body, 200, header)
     end
 
     def sendmail(subject, body)

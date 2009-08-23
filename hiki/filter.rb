@@ -46,7 +46,11 @@ module Hiki
 
       title = @db.get_attribute(page, :title) || "" unless title
       title = page if title.empty?
-      new_page = PageData.new(page, text.gsub(/\r\n/, "\n"), title, (@cgi.params["keyword"][0]||"").gsub(/\r\n/, "\n").split(/\n/), @cgi.remote_addr)
+      new_page = PageData.new(page,
+                              text.gsub(/\r\n/, "\n"),
+                              title,
+                              (@cgi.params["keyword"] || "").gsub(/\r\n/, "\n").split(/\n/),
+                              @cgi.remote_addr)
 
       old_title = @db.get_attribute(page, :title) || ""
       old_title = page if old_title.empty?

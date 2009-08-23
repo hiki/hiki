@@ -30,7 +30,7 @@ module Hiki
       code_conv
 
       # for TrackBack
-      if %r|/tb/(.+)$| =~ ENV['REQUEST_URI']
+      if %r|/tb/(.+)$| =~ @cgi.env['REQUEST_URI']
         @params['p'] = CGI.unescape($1)
         @params['c'] = 'plugin'
         @params['plugin'] = 'trackback_post'
@@ -67,7 +67,7 @@ module Hiki
       options['params'] = @params
 
       @plugin = Plugin.new( options, @conf )
-      session_id = @cgi.cookies['session_id'][0]
+      session_id = @cgi.cookies['session_id']
       if session_id
         session = Hiki::Session.new( @conf, session_id )
         if session.check
@@ -89,7 +89,7 @@ module Hiki
     def dispatch
       begin
         Timeout.timeout(@conf.timeout) {
-          if 'POST' == @cgi.request_method
+          if @cgi.post?
             raise PermissionError, 'Permission denied' unless @plugin.postable?
           end
           @cmd = 'view' unless @cmd
@@ -197,7 +197,7 @@ module Hiki
       end
 
       old_ref = @db.get_attribute( @p, :references )
-      new_ref = formatter.references 
+      new_ref = formatter.references
       @db.set_references( @p, new_ref ) if new_ref != old_ref
       ref = @db.get_references( @p )
 
@@ -387,14 +387,12 @@ module Hiki
 
         if exist?(title)
           @cmd = 'edit'
-          cmd_edit( page, text, @conf.msg_duplicate_page_title )
-          return
+          return cmd_edit( page, text, @conf.msg_duplicate_page_title )
         end
 
         if Filter.new_page_is_spam?(page, text, title)
           @cmd = 'is_spam'
-          cmd_edit( page, text, @conf.msg_input_is_spam )
-          return
+          return cmd_edit( page, text, @conf.msg_input_is_spam )
         end
 
         if @plugin.save( page, text, md5hex, update_timestamp, false )
@@ -405,12 +403,11 @@ module Hiki
           @db.set_attribute(page, attr)
         else
           @cmd = 'conflict'
-          cmd_edit( page, text, @conf.msg_save_conflict )
-          return
+          return cmd_edit( page, text, @conf.msg_save_conflict )
         end
 
         @db.freeze_page( page, @params['freeze'] ? true : false) if @plugin.admin?
-        redirect(@cgi, @conf.base_url + @plugin.hiki_url(page))
+        return redirect(@cgi, @conf.base_url + @plugin.hiki_url(page))
       end
     end
 
@@ -497,11 +494,10 @@ module Hiki
           session.user = @plugin.user
           session.save
           if page && !page.empty?
-            redirect(@cgi, @conf.base_url + @plugin.hiki_url( page ), session_cookie( session.session_id ))
+            return redirect(@cgi, @conf.base_url + @plugin.hiki_url( page ), session_cookie( session.session_id ))
           else
-            redirect(@cgi, @conf.index_url, session_cookie( session.session_id ))
+            return redirect(@cgi, @conf.index_url, session_cookie( session.session_id ))
           end
-          return
         else
           msg_login_result = @conf.msg_login_failure
           status = '403 Forbidden'
