@@ -21,7 +21,9 @@ begin
   $:.delete(".") if File.writable?(".")
 
   require 'hiki/config'
+  require 'hiki/request'
   conf = Hiki::Config.new
+  request = Hiki::Request.new(ENV)
 
   if ENV['CONTENT_TYPE'] =~ %r!\Atext/xml!i and ENV['REQUEST_METHOD'] =~ /\APOST\z/i
     require 'hiki/xmlrpc'
@@ -30,11 +32,11 @@ begin
   else
     # FIXME encoding can be different (eg. iso-8859-1 in
     # hikiconf.rb.sample.en).
-    cgi = CGI.new(:accept_charset=>"euc-jp")
+    #cgi = CGI.new(:accept_charset=>"euc-jp")
 
     db = conf.database
     db.open_db {
-      cmd = Hiki::Command.new( cgi, db, conf )
+      cmd = Hiki::Command.new(request, db, conf)
       cmd.dispatch
     }
   end
