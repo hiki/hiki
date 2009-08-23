@@ -63,12 +63,15 @@ module Hiki
       end
 
       def xhr?
+        raise 'not implemented'
       end
 
       def accept_encoding
+        raise 'not implemented'
       end
 
       def body
+        raise 'not implemented'
       end
 
       def content_charset
@@ -104,21 +107,27 @@ module Hiki
       end
 
       def form_data?
+        raise 'not implemented'
       end
 
       def fullpath
+        raise 'not implemented'
       end
 
       def host
+        raise 'not implemented'
       end
 
       def ip
+        raise 'not implemented'
       end
 
       def media_type
+        raise 'not implemented'
       end
 
       def media_type_params
+        raise 'not implemented'
       end
 
       def openid_request
@@ -130,43 +139,58 @@ module Hiki
       end
 
       def parseable_data?
+        raise 'not implemented'
       end
 
       def path
+        raise 'not implemented'
       end
 
       def path_info
+        raise 'not implemented'
       end
 
       def path_info=(s)
+        raise 'not implemented'
       end
 
       def port
+        raise 'not implemented'
       end
 
       def query_string
+        raise 'not implemented'
       end
 
       def referer
+        raise 'not implemented'
       end
       alias referrer referer
 
       def schema
+        raise 'not implemented'
       end
 
       def script_name
+        raise 'not implemented'
       end
 
       def session_options
+        raise 'not implemented'
       end
 
       def url
+        raise 'not implemented'
       end
 
       def values_at(*keys)
+        raise 'not implemented'
       end
     end
   else
     Request = ::Rack::Request
+    class ::Rack::Request
+      alias remote_addr ip
+    end
   end
 end
