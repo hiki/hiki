@@ -52,7 +52,16 @@ module Hiki
 
     def out( headers = nil )
       @headers.update( headers ) if headers
-      return Hiki::Response.new(@body, 200, @headers)
+      response = Hiki::Response.new(@body, 200, @headers)
+      if Object.const_defined?(:Rack)
+        cookies = @headers.delete('cookie')
+        if cookies
+          cookies.each do |cookie|
+            response.set_cookie(cookie.name, cookie.value)
+          end
+        end
+      end
+      return response
     end
   end
 end

@@ -27,6 +27,7 @@ module Hiki
       @params = cgi.params
       @cgi    = cgi
       @conf   = conf
+      @cookies = cgi.cookies
       code_conv
 
       # for TrackBack
@@ -67,7 +68,7 @@ module Hiki
       options['params'] = @params
 
       @plugin = Plugin.new( options, @conf )
-      session_id = @cgi.cookies['session_id']
+      session_id = @cookies['session_id']
       if session_id
         session = Hiki::Session.new( @conf, session_id )
         if session.check
@@ -168,7 +169,7 @@ module Hiki
     end
 
     def cmd_preview
-      raise SessionError if @plugin.session_id && @plugin.session_id != @cgi['session_id']
+      raise SessionError if @plugin.session_id && @plugin.session_id != @params['session_id']
       @cmd = 'preview'
       cmd_edit( @p, @params['contents'], @conf.msg_preview, @params['page_title'] )
     end
@@ -371,7 +372,7 @@ module Hiki
     end
 
     def cmd_save( page, text, md5hex, update_timestamp = true )
-      raise SessionError if @plugin.session_id && @plugin.session_id != @cgi['session_id']
+      raise SessionError if @plugin.session_id && @plugin.session_id != @params['session_id']
       subject = ''
       if text.empty?
         @db.delete( page )
@@ -521,7 +522,7 @@ module Hiki
       data[:title]          = title( @conf.msg_admin )
       data[:session_id]     = @plugin.session_id
       if @params['saveconf']
-        raise SessionError if @plugin.session_id && @plugin.session_id != @cgi['session_id']
+        raise SessionError if @plugin.session_id && @plugin.session_id != @params['session_id']
         data[:save_config]    = true
       end
       generate_page( data )
@@ -567,7 +568,7 @@ module Hiki
     end
 
     def cmd_logout
-      if session_id = @cgi.cookies['session_id'][0]
+      if session_id = @cookies['session_id']
         cookies = [session_cookie(session_id, -1)]
         Hiki::Session.new( @conf, session_id ).delete
       end
