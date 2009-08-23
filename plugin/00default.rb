@@ -229,24 +229,24 @@ end
 # conf: default
 def saveconf_default
   if @mode == 'saveconf' then
-    @conf.site_name = @cgi.params['site_name'][0]
-    @conf.author_name = @cgi.params['author_name'][0]
+    @conf.site_name = @cgi.params['site_name']
+    @conf.author_name = @cgi.params['author_name']
     mails = []
-    @cgi.params['mail'][0].each_line do |addr|
+    @cgi.params['mail'].each_line do |addr|
       mails << addr.gsub(/\r?\n/, '').strip
     end
     mails.delete_if{|e| e.empty?}
     @conf.mail = mails
-    @conf.mail_on_update = @cgi.params['mail_on_update'][0] == "true"
+    @conf.mail_on_update = @cgi.params['mail_on_update'] == "true"
   end
 end
 
 # conf: password
 def saveconf_password
   if @mode == 'saveconf' then
-    old_password    = @cgi.params['old_password'][0]
-    password1       = @cgi.params['password1'][0]
-    password2       = @cgi.params['password2'][0]
+    old_password    = @cgi.params['old_password']
+    password1       = @cgi.params['password1']
+    password2       = @cgi.params['password2']
     if password1 and password1.size > 0
       if (@conf.password.size > 0 && old_password.crypt( @conf.password ) != @conf.password) ||
           (password1 != password2)
