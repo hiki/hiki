@@ -2,6 +2,7 @@
 
 module Hiki
   if Object.const_defined?(:CGI)
+    raise RuntimeError, 'Do not use CGI class!' if Object.const_defined?(:Rack)
     # CGI を Rack::Request っぽいインターフェイスに変換する
     class Request
       attr_reader :env, :cgi
@@ -63,15 +64,15 @@ module Hiki
       end
 
       def xhr?
-        raise 'not implemented'
+        raise NameError, 'not implemented : xhr?'
       end
 
       def accept_encoding
-        raise 'not implemented'
+        raise NameError, 'not implemented : accept_encoding'
       end
 
       def body
-        raise 'not implemented'
+        raise NameError, 'not implemented : body'
       end
 
       def content_charset
@@ -107,84 +108,85 @@ module Hiki
       end
 
       def form_data?
-        raise 'not implemented'
+        raise NameError, 'not implemented : form_data?'
       end
 
       def fullpath
-        raise 'not implemented'
+        raise NameError, 'not implemented : fullpath'
       end
 
       def host
-        raise 'not implemented'
+        # Remove port number.from Rack::Response
+        (@env["HTTP_HOST"] || @env["SERVER_NAME"]).gsub(/:\d+\z/, '')
       end
 
       def ip
-        raise 'not implemented'
+        raise NameError, 'not implemented : ip'
       end
 
       def media_type
-        raise 'not implemented'
+        raise NameError, 'not implemented : madia_type'
       end
 
       def media_type_params
-        raise 'not implemented'
+        raise NameError, 'not implemented : media_type_params'
       end
 
       def openid_request
-        raise 'not implemented'
+        raise NameError, 'not implemented : openid_request'
       end
 
       def openid_response
-        raise 'not implemented'
+        raise NameError, 'not implemented : openid_response'
       end
 
       def parseable_data?
-        raise 'not implemented'
+        raise NameError, 'not implemented : parseable_data?'
       end
 
       def path
-        raise 'not implemented'
+        raise NameError, 'not implemented : path'
       end
 
       def path_info
-        raise 'not implemented'
+        @env['PATH_INFO'].to_s
       end
 
       def path_info=(s)
-        raise 'not implemented'
+        raise NameError, 'not implemented : path_info='
       end
 
       def port
-        raise 'not implemented'
+        raise NameError, 'not implemented : port'
       end
 
       def query_string
-        raise 'not implemented'
+        raise NameError, 'not implemented : query_string'
       end
 
       def referer
-        raise 'not implemented'
+        raise NameError, 'not implemented : referer'
       end
       alias referrer referer
 
       def schema
-        raise 'not implemented'
+        raise NameError, 'not implemented : schema'
       end
 
       def script_name
-        raise 'not implemented'
+        @env['SCRIPT_NAME']
       end
 
       def session_options
-        raise 'not implemented'
+        raise NameError, 'not implemented : session_options'
       end
 
       def url
-        raise 'not implemented'
+        raise NameError, 'not implemented : url'
       end
 
       def values_at(*keys)
-        raise 'not implemented'
+        raise NameError, 'not implemented : values_at'
       end
     end
   else
