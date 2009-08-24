@@ -25,7 +25,6 @@ module Hiki
     def to_s
       s = @html
       s = replace_inline_image( s )
-      s = replace_wikiname( s ) if @conf.use_wikiname
       s = replace_link( s )
       s = replace_auto_link( s ) if @conf.auto_link
       s = replace_heading( s )
@@ -78,16 +77,6 @@ module Hiki
       replace_inline( text ) do |str|
         str.gsub!( @auto_links_re ) do |match|
           @plugin.hiki_anchor( @auto_links[match].unescapeHTML.escape, match )
-        end
-      end
-    end
-
-    WIKINAME_RE   = /(\b(?:[A-Z][a-z0-9]+){2,}[A-Z]*\b)/
-
-    def replace_wikiname( text )
-      replace_inline( text ) do |str|
-        str.gsub!( WIKINAME_RE ) do |i|
-          %Q|<a href="#{i}">#{i}</a>|
         end
       end
     end

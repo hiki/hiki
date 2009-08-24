@@ -5,7 +5,7 @@
 
 module Hiki
   VERSION = '0.9dev'
-  RELEASE_DATE = '2009-08-23'
+  RELEASE_DATE = '2009-08-24'
 end
 
 # For backward compatibility

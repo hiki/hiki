@@ -1,3 +1,8 @@
+2009-08-24  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/parser.rb, style/default/html_formatter.rb:
+	replacing WikiName links is now handled by HikiDoc by specifying
+	use_wiki_name parameter.
+
 2009-08-23  okkez  <okkez000@gmail.com>
 
 	* hiki/command.rb (Hiki::Command): use ERB::Util#h
