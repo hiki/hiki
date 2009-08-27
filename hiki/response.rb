@@ -1,7 +1,9 @@
 
 
 module Hiki
-  if Object.const_defined?(:CGI)
+  if Object.const_defined?(:Rack)
+    Response = ::Rack::Response
+  else
     class Response
       attr_reader :body, :status, :headers
       def initialize(body = [], status = 200, headers = {}, &block)
@@ -16,7 +18,5 @@ module Hiki
         @cgi.header(@headers)
       end
     end
-  else
-    Response = ::Rack::Response
   end
 end

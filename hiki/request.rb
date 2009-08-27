@@ -1,7 +1,12 @@
 # -*- coding: utf-8 -*-
 
 module Hiki
-  if Object.const_defined?(:CGI)
+  if Object.const_defined?(:Rack)
+    Request = ::Rack::Request
+    class ::Rack::Request
+      alias remote_addr ip
+    end
+  else
     raise RuntimeError, 'Do not use CGI class!' if Object.const_defined?(:Rack)
     # CGI を Rack::Request っぽいインターフェイスに変換する
     class Request
@@ -188,11 +193,6 @@ module Hiki
       def values_at(*keys)
         raise NameError, 'not implemented : values_at'
       end
-    end
-  else
-    Request = ::Rack::Request
-    class ::Rack::Request
-      alias remote_addr ip
     end
   end
 end
