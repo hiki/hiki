@@ -61,7 +61,7 @@ module Hiki
           end
         end
       end
-      return response
+      response
     end
   end
 end
