@@ -496,10 +496,12 @@ module Hiki
           session.user = @plugin.user
           session.save
           if page && !page.empty?
-            return redirect(@cgi, @conf.base_url + @plugin.hiki_url( page ), session_cookie( session.session_id ))
+            url = @conf.base_url + @plugin.hiki_url( page )
           else
-            return redirect(@cgi, @conf.index_url, session_cookie( session.session_id ))
+            url = @conf.index_url
           end
+          cookies = [session_cookie(session.session_id)]
+          return redirect(@cgi, url, cookies)
         else
           msg_login_result = @conf.msg_login_failure
           status = '403 Forbidden'

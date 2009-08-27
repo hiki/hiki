@@ -152,7 +152,16 @@ module Hiki
                </head>
                <body>Wait or <a href="#{url}">Click here!</a></body>
                </html>]
-      Hiki::Response.new(body, 200, header)
+      response = Hiki::Response.new(body, 200, header)
+      if Object.const_defined?(:Rack)
+        cookies = response.header.delete('cookie')
+        if cookies
+          cookies.each do |cookie|
+            response.set_cookie(cookie.name, cookie.value)
+          end
+        end
+      end
+      response
     end
 
     def sendmail(subject, body)
