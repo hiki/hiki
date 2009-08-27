@@ -3,6 +3,7 @@ require 'rubygems'
 require 'rack'
 
 require 'hiki/config'
+require 'hiki/xmlrpc'
 
 $LOAD_PATH.unshift 'hiki'
 
@@ -14,11 +15,16 @@ module Hiki
       # HACK replace ENV values to web application environment
       env.each{|k,v| ENV[k] = v unless /\Arack\./ =~ k }
       conf = Hiki::Config.new
-      db = conf.database
       response = nil
-      db.open_db do
-        command = Hiki::Command.new(request, db, conf)
-        response = command.dispatch
+      if %r|text/xml| =~ request.content_type and request.post?
+        server = Hiki::XMLRPCServer.new(conf, request)
+        response = server.serve
+      else
+        db = conf.database
+        db.open_db do
+          command = Hiki::Command.new(request, db, conf)
+          response = command.dispatch
+        end
       end
       # [body, status, headers]
       # Rack::Response.new(*response){|r|

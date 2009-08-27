@@ -7,10 +7,9 @@ module Hiki
   module XMLRPCHandler
     module_function
 
-    def init_handler(server, cgi_class=CGI)
+    def init_handler(server, conf, request)
       server.add_handler('wiki.getPage') do |page|
         page = utf8_to_euc( page )
-        conf = Hiki::Config.new
         db = conf.database
         ret = db.load( page )
         unless ret
@@ -21,7 +20,6 @@ module Hiki
 
       server.add_handler('wiki.getPageInfo') do |page|
         page = utf8_to_euc( page )
-        conf = Hiki::Config.new
         db = conf.database
         title = db.get_attribute( page, :title )
         title = page if title.nil? || title.empty?
@@ -46,19 +44,17 @@ module Hiki
             v.map!{ |s| s.replace( utf8_to_euc( s ) ) }
           end
         }
-        conf = Hiki::Config.new
-        cgi = cgi_class.new
-        cgi.params['c'] = ['save']
-        cgi.params['p'] = [page]
+        request.params['c'] = 'save'
+        request.params['p'] = page
         db = conf.database
-        options = conf.options || Hash.new( '' )
+        options = conf.options || Hash.new('')
         options['page'] = page
-        options['cgi']  = cgi
+        options['cgi']  = request
         options['db']  = db
-        options['params'] = Hash.new( [] )
+        options['params'] = Hash.new('')
         plugin = Hiki::Plugin.new( options, conf )
         plugin.login( attributes['name'], attributes['password'] )
-        Hiki::Filter.init(conf, cgi, plugin, db)
+        Hiki::Filter.init(conf, request, plugin, db)
 
         unless plugin.editable?( page )
           raise XMLRPC::FaultException.new(10, "can't edit this page.")
@@ -81,7 +77,6 @@ module Hiki
       end
 
       server.add_handler('wiki.getAllPages') do
-        conf = Hiki::Config.new
         db = conf.database
         db.pages.collect{|p| XMLRPC::Base64.new( euc_to_utf8( p ) )}
       end
@@ -94,16 +89,22 @@ module Hiki
   class XMLRPCServer
     include XMLRPCHandler
 
-    def initialize(xmlrpc_enabled)
-      return unless xmlrpc_enabled
+    def initialize(conf, request)
+      return unless conf.xmlrpc_enabled
 
-      if defined?(MOD_RUBY)
+      case
+      when Object.const_defined?(:Rack)
+        require 'hiki/xmlrpc/rackserver.rb'
+        @server = XMLRPC::RackServer.new(request)
+      when Object.const_defined?(:MOD_RUBY)
         @server = XMLRPC::ModRubyServer.new
-      else
+      when Object.const_defined?(:CGI)
         @server = XMLRPC::CGIServer.new
+      else
+        raise 'must not happen!'
       end
 
-      init_handler(@server)
+      init_handler(@server, conf, request)
     end
 
     def serve

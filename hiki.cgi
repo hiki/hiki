@@ -26,7 +26,7 @@ begin
 
   if ENV['CONTENT_TYPE'] =~ %r!\Atext/xml!i and ENV['REQUEST_METHOD'] =~ /\APOST\z/i
     require 'hiki/xmlrpc'
-    server = Hiki::XMLRPCServer.new( conf.xmlrpc_enabled )
+    server = Hiki::XMLRPCServer.new(conf, request)
     server.serve
   else
     # FIXME encoding can be different (eg. iso-8859-1 in
