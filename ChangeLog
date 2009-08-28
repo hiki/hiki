@@ -1,3 +1,7 @@
+2009-08-28  okkez  <okkez000@gmail.com>
+
+	* hiki/config.rb (Hiki::Config#initialize): improved performance.
+
 2009-08-24  Kazuhiko  <kazuhiko@fdiary.net>
 	* style/default/parser.rb, style/default/html_formatter.rb:
 	replacing WikiName links is now handled by HikiDoc by specifying
