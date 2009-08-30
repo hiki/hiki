@@ -91,8 +91,8 @@ end
 def attach_download
   require 'image_size'
   params      = @cgi.params
-  page        = (params['p'][0] || '')
-  file_name   = (params['file_name'][0] || '')
+  page        = (params['p'] || '')
+  file_name   = (params['file_name'] || '')
   attach_file = "#{@cache_path}/attach/#{escape(page)}/#{escape(file_name)}"
   extname     =  /\.([^.]+)$/.match(file_name.downcase).to_a[1]
   if File::exist?( attach_file.untaint )
