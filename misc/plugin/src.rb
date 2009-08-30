@@ -23,17 +23,15 @@ EOS
 </html>
 EOS
 
-  header = Hash::new
-  header['Last-Modified'] = CGI::rfc1123_date(Time.now)
+  header = {}
+  header['Last-Modified'] = CGI.rfc1123_date(Time.now)
   header['type']          = 'text/html'
   header['charset']       =  @conf.charset
   header['Content-Language'] = @conf.lang
   header['Pragma']           = 'no-cache'
   header['Cache-Control']    = 'no-cache'
-  print @cgi.header(header)
-  puts sources
 
-  nil # Don't move to the 'FrontPage'
+  Hiki::Response.new(sources, 200, header)
 end
 
 add_body_enter_proc(Proc.new do
