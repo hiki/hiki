@@ -38,8 +38,8 @@ EOS
 end
 
 def load_template
-  tmpl_name = @cgi.params['template'][0]
-  page = @cgi.params['p'][0] ? @cgi.params['p'][0] : 'FrontPage'
+  tmpl_name = @cgi.params['template']
+  page = @cgi.params['p'] ? @cgi.params['p'] : 'FrontPage'
 
   @text = if tmpl_name
     @db.load(tmpl_name)
@@ -61,9 +61,9 @@ export_plugin_methods(:load_template)
 
 def saveconf_template
   if @mode == 'saveconf' then
-    @conf['template.default'] = @params['template.default'][0] && @params['template.default'][0].empty? ? nil : @params['template.default'][0]
-    @conf['template.keyword'] = @params['template.keyword'][0].empty? ? nil : @params['template.keyword'][0]
-    @conf['template.autoinsert'] = @params['template.autoinsert'][0] ? true : false
+    @conf['template.default'] = @params['template.default'] && @params['template.default'].empty? ? nil : @params['template.default']
+    @conf['template.keyword'] = @params['template.keyword'].empty? ? nil : @params['template.keyword']
+    @conf['template.autoinsert'] = @params['template.autoinsert'] ? true : false
   end
 end
 
