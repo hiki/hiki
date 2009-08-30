@@ -31,7 +31,7 @@ EOS
   header['Pragma']           = 'no-cache'
   header['Cache-Control']    = 'no-cache'
 
-  Hiki::Response.new(sources, 200, header)
+  ::Hiki::Response.new(sources, 200, header)
 end
 
 add_body_enter_proc(Proc.new do
