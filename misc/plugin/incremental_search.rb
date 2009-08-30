@@ -18,7 +18,7 @@
 
 def search
   as = Hiki::AjaxSearch.new( @cgi, @db, @conf )
-  @cgi.params['key'][0] ? as.search : as.form
+  @cgi.params['key'] ? as.search : as.form
 end
 
 module Hiki
@@ -76,7 +76,7 @@ module Hiki
     end
 
     def search
-      word = utf8_to_euc( @cgi.params['key'][0] )
+      word = utf8_to_euc( @cgi.params['key'] )
       r = ""
       unless word.empty? then
         total, l = @db.search( word )
@@ -89,15 +89,13 @@ module Hiki
           r = "<ul>\n" + l.map{|i| "<li>#{i}</li>\n"}.join + "</ul>\n"
         end
       end
-      header = Hash::new
+      header = {}
       header['type'] = 'text/html'
       header['charset'] = 'EUC-JP'
       header['Content-Language'] = @conf.lang
       header['Pragma'] = 'no-cache'
       header['Cache-Control'] = 'no-cache'
-      print @cgi.header( header )
-      print r
-      nil
+      ::Hiki::Response.new(r, 200, header)
     end
   end
 end
