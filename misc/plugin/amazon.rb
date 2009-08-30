@@ -280,11 +280,11 @@ end
 def amazon_conf_proc
 	if @mode == 'saveconf' then
 		unless @conf.secure and not @conf['amazon.secure-cgi'] then
-			@conf['amazon.imgsize'] = @cgi.params['amazon.imgsize'][0].to_i
-			@conf['amazon.hidename'] = (@cgi.params['amazon.hidename'][0] == 'true')
+			@conf['amazon.imgsize'] = @cgi.params['amazon.imgsize'].to_i
+			@conf['amazon.hidename'] = (@cgi.params['amazon.hidename'] == 'true')
 			unless @conf.secure then
-				@conf['amazon.nodefault'] = (@cgi.params['amazon.nodefault'][0] == 'true')
-				if @cgi.params['amazon.clearcache'][0] == 'true' then
+				@conf['amazon.nodefault'] = (@cgi.params['amazon.nodefault'] == 'true')
+				if @cgi.params['amazon.clearcache'] == 'true' then
 					Dir["#{@cache_path}/amazon/*"].each do |cache|
 						File::delete( cache.untaint )
 					end
@@ -292,7 +292,7 @@ def amazon_conf_proc
 			end
 		end
 		unless @conf['amazon.hideconf'] then
-			@conf['amazon.aid'] = @cgi.params['amazon.aid'][0]
+			@conf['amazon.aid'] = @cgi.params['amazon.aid']
 		end
 	end
 
