@@ -39,10 +39,10 @@ def comment_post
   return '' if @conf.use_session && @session_id != @cgi['session_id']
 
   params     = @cgi.params
-  comment_no = (params['comment_no'][0] || 0).to_i
-  name       = params['name'][0].size == 0 ? comment_anonymous_label : params['name'][0]
-  msg        = params['msg'][0]
-  style      = params['style'][0].to_i
+  comment_no = (params['comment_no'] || 0).to_i
+  name       = params['name'].size == 0 ? comment_anonymous_label : params['name']
+  msg        = params['msg']
+  style      = params['style'].to_i
 
   return '' if msg.strip.size == 0
 
