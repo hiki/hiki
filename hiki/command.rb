@@ -561,6 +561,7 @@ module Hiki
       result = true
       if @plugin.respond_to?( plugin ) && !Object.method_defined?( plugin )
         result = @plugin.send( plugin )
+        return result if result.instance_of? Hiki::Response
       else
         raise PluginException, 'not plugin method'
       end

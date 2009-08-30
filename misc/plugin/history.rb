@@ -210,7 +210,7 @@ module Hiki
     # Output source at an arbitrary revision
     def history_src
       # make command string
-      r = @cgi.params['r'][0] || '1'
+      r = @cgi.params['r'] || '1'
       txt = @conf.repos.get_revision(@p, r)
       txt = "*** no source ***" if txt.empty?
 
@@ -233,8 +233,8 @@ module Hiki
     # Output diff between two arbitrary revisions
     def history_diff
       # make command string
-      r = @cgi.params['r'][0] || '1'
-      r2 = @cgi.params['r2'][0]
+      r = @cgi.params['r'] || '1'
+      r2 = @cgi.params['r2']
       if r2.nil? || r2.to_i == 0
         new = @db.load(@p)
         old = @conf.repos.get_revision(@p, r)
