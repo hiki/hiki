@@ -33,7 +33,7 @@ module Hiki
 
       # for TrackBack
       if %r|/tb/(.+)$| =~ @cgi.env['REQUEST_URI']
-        @params['p'] = CGI.unescape($1)
+        @params['p'] = unescape($1)
         @params['c'] = 'plugin'
         @params['plugin'] = 'trackback_post'
       end
@@ -194,7 +194,7 @@ module Hiki
       if @conf.hilight_keys
         word = @params['key']
         if word && word.size > 0
-          contents = hilighten(contents, word.unescape.split)
+          contents = hilighten(contents, unescape(word).split)
         end
       end
 
@@ -207,12 +207,12 @@ module Hiki
 
       pg_title = @plugin.page_name(@p)
 
-      data[:page_title]   = @plugin.hiki_anchor(@p.escape, h(@p))
+      data[:page_title]   = @plugin.hiki_anchor(escape(@p), h(@p))
       data[:view_title]   = pg_title
-      data[:title]        = title( pg_title.unescapeHTML )
+      data[:title]        = title(unescape_html(pg_title))
       data[:toc]          = @plugin.toc_f ? toc : nil
       data[:body]         = formatter.apply_tdiary_theme(contents)
-      data[:references]   = ref.collect! {|a| "[#{@plugin.hiki_anchor(a.escape, @plugin.page_name(a))}] " }.join
+      data[:references]   = ref.collect! {|a| "[#{@plugin.hiki_anchor(escape(a), @plugin.page_name(a))}] " }.join
       data[:keyword]      = @db.get_attribute(@p, :keyword).collect {|k| "[#{view_title(k)}]"}.join(' ')
 
       data[:last_modified]  = @db.get_last_update( @p )
@@ -248,7 +248,7 @@ module Hiki
         editor = f[k][:editor] ? "by #{f[k][:editor]}" : ''
         display_text = h((f[k][:title] and f[k][:title].size > 0) ? f[k][:title] : k)
         display_text << " [#{@aliaswiki.aliaswiki(k)}]" if k != @aliaswiki.aliaswiki(k)
-        %Q!#{@plugin.hiki_anchor(k.escape, display_text)}: #{format_date(f[k][:last_modified] )} #{editor}#{@conf.msg_freeze_mark if f[k][:freeze]}!
+        %Q!#{@plugin.hiki_anchor(escape(k), display_text)}: #{format_date(f[k][:last_modified] )} #{editor}#{@conf.msg_freeze_mark if f[k][:freeze]}!
       }
 
       data = get_common_data( @db, @plugin, @conf )
@@ -286,7 +286,7 @@ module Hiki
         display_text = (f[k][:title] and f[k][:title].size > 0) ? f[k][:title] : k
         display_text = h(display_text)
         display_text << " [#{@aliaswiki.aliaswiki(k)}]" if k != @aliaswiki.aliaswiki(k)
-        %Q|#{format_date( tm )}: #{@plugin.hiki_anchor( k.escape, display_text )} #{h(editor)} (<a href="#{@conf.cgi_name}#{cmdstr('diff',"p=#{k.escape}")}">#{@conf.msg_diff}</a>)|
+        %Q|#{format_date( tm )}: #{@plugin.hiki_anchor(escape(k), display_text)} #{h(editor)} (<a href="#{@conf.cgi_name}#{cmdstr('diff',"p=#{escape(k)}")}">#{@conf.msg_diff}</a>)|
       }
       [list, last_modified]
     end
@@ -318,7 +318,7 @@ module Hiki
         old = text.gsub(/\r/, '')
         new = @db.load( page ) || ''
         differ = word_diff( old, new ).gsub( /\n/, "<br>\n" )
-        link = @plugin.hiki_anchor( page.escape, h(page))
+        link = @plugin.hiki_anchor(escape(page), h(page))
       end
 
       @cmd = 'edit'
@@ -418,9 +418,9 @@ module Hiki
       if word && word.size > 0
         total, l = @db.search(word)
         if @conf.hilight_keys
-          l.collect! {|p| @plugin.make_anchor("#{@conf.cgi_name}?cmd=view&p=#{p[0].escape}&key=#{word.split.join('+').escape}", @plugin.page_name(p[0])) + " - #{p[1]}"}
+          l.collect! {|p| @plugin.make_anchor("#{@conf.cgi_name}?cmd=view&p=#{escape(p[0])}&key=#{escape(word.split.join('+'))}", @plugin.page_name(p[0])) + " - #{p[1]}"}
         else
-          l.collect! {|p| @plugin.hiki_anchor( p[0].escape, @plugin.page_name(p[0])) + " - #{p[1]}"}
+          l.collect! {|p| @plugin.hiki_anchor(escape(p[0]]), @plugin.page_name(p[0])) + " - #{p[1]}"}
         end
         data             = get_common_data( @db, @plugin, @conf )
         data[:title]     = title( @conf.msg_search_result )
@@ -542,7 +542,7 @@ module Hiki
       return tmp
       end
 
-      p = (@db.select {|p| p[:title] and p[:title].unescape == page})[0]
+      p = (@db.select {|p| p[:title] and unescape(p[:title]) == page})[0]
       if p != @p and p != nil
         return p
       end
