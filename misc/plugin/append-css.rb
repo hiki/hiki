@@ -19,7 +19,7 @@ end
 
 add_conf_proc( 'append-css', append_css_label ) do
   if @mode == 'saveconf'
-    @conf['append-css.css'] = @cgi.params['append-css.css'][0]
+    @conf['append-css.css'] = @cgi.params['append-css.css']
   end
 
   <<-HTML
