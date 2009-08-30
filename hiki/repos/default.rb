@@ -3,6 +3,8 @@
 # Copyright (C) 2003, Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
 # You can distribute this under GPL.
 
+require 'hiki/util'
+
 module Hiki
   class HikifarmReposBase
     def initialize(root, data_root)
@@ -73,6 +75,8 @@ module Hiki
   end
 
   class ReposDefault < ReposBase
+    include Hiki::Util
+
     def commit(page, log = nil)
     end
 
@@ -82,7 +86,7 @@ module Hiki
     def get_revision(page, revision)
       revision = revision.to_i
       begin
-        File::read("#{rev_path(revision)}/#{page.escape.untaint}")
+        File::read("#{rev_path(revision)}/#{escape(page).untaint}")
       rescue
         ''
       end
@@ -90,8 +94,8 @@ module Hiki
 
     def revisions(page)
       rev = []
-      rev << [2, File.mtime("#{rev_path(2)}/#{page.escape.untaint}").localtime.strftime('%Y/%m/%d %H:%M:%S'), '', 'current']
-      rev << [1, File.mtime("#{rev_path(1)}/#{page.escape.untaint}").localtime.strftime('%Y/%m/%d %H:%M:%S'), '', 'backup'] if File.exist?("#{rev_path(1)}/#{page.escape.untaint}")
+      rev << [2, File.mtime("#{rev_path(2)}/#{escape(page).untaint}").localtime.strftime('%Y/%m/%d %H:%M:%S'), '', 'current']
+      rev << [1, File.mtime("#{rev_path(1)}/#{escape(page).untaint}").localtime.strftime('%Y/%m/%d %H:%M:%S'), '', 'backup'] if File.exist?("#{rev_path(1)}/#{escape(page).untaint}")
       rev
     end
 

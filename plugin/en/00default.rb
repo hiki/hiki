@@ -9,13 +9,13 @@ add_conf_proc( 'default', 'Basic preferences' ) do
   <<-HTML
       <h3 class="subtitle">Site name</h3>
       <p>Enter the name of your site.  This will appear in page titles.</p>
-      <p><input name="site_name" value="#{CGI::escapeHTML(@conf.site_name)}" size="40"></p>
+      <p><input name="site_name" value="#{h(@conf.site_name)}" size="40"></p>
       <h3 class="subtitle">Author</h3>
       <p>Enter your name.</p>
-      <p><input name="author_name" value="#{CGI::escapeHTML(@conf.author_name)}" size="40"></p>
+      <p><input name="author_name" value="#{h(@conf.author_name)}" size="40"></p>
       <h3 class="subtitle">E-mail address</h3>
       <p>Enter your e-mail address. (One address in one line)</p>
-      <p><textarea name="mail" rows="4" cols="50">#{CGI::escapeHTML(@conf.mail.join("\n"))}</textarea></p>
+      <p><textarea name="mail" rows="4" cols="50">#{h(@conf.mail.join("\n"))}</textarea></p>
       <h3 class="subtitle">Send update e-mails?</h3>
       <p>Set whether or not you want to have e-mail sent when a page is updated.  E-mail will be sent to the address set in the Basic Preferences.  (Make sure to specify an SMTP server beforehand in hikiconf.rb.)</p>
       <p><select name="mail_on_update">
@@ -56,10 +56,10 @@ add_conf_proc( 'theme', 'Appearance' ) do
       </select></p>
       <h3 class="subtitle">Theme URL</h3>
       <p>Specify a URL where a theme is located.  If you specify a CSS URL, the theme selected above will be ignored, and the CSS will be used.</p>
-      <p><input name="theme_url" value="#{CGI::escapeHTML(@conf.theme_url)}" size="60"></p>
+      <p><input name="theme_url" value="#{h(@conf.theme_url)}" size="60"></p>
       <h3 class="subtitle">Theme directory</h3>
       <p>Enter the directory where themes are located.</p>
-      <p><input name="theme_path" value="#{CGI::escapeHTML(@conf.theme_path)}" size="60"></p>
+      <p><input name="theme_path" value="#{h(@conf.theme_path)}" size="60"></p>
       <h3 class="subtitle">Sidebar</h3>
       <p>Some themes cannot properly display the sidebar.  If you are using one of these themes, set this value to off.</p> 
       <p><select name="sidebar">
@@ -68,10 +68,10 @@ add_conf_proc( 'theme', 'Appearance' ) do
          </select></p>
       <h3 class="subtitle">CSS class name for the main area</h3>
       <p>Enter the CSS class name for the main area (default: 'main').</p>
-      <p><input name="main_class" value="#{CGI::escapeHTML(@conf.main_class)}" size="20"></p>
+      <p><input name="main_class" value="#{h(@conf.main_class)}" size="20"></p>
       <h3 class="subtitle">CSS class name for the sidebar</h3>
       <p>Enter the CSS class name for the sidebar (default: 'sidebar').</p>
-      <p><input name="sidebar_class" value="#{CGI::escapeHTML(@conf.sidebar_class)}" size="20"></p>
+      <p><input name="sidebar_class" value="#{h(@conf.sidebar_class)}" size="20"></p>
       <h3 class="subtitle">Auto link</h3>
       <p>If you want to use the auto link function, set this value to on.</p>
       <p><select name="auto_link">

@@ -10,13 +10,13 @@ def src
 <head>
   <meta http-equiv="Content-Language" content="#{@conf.lang}">
   <meta http-equiv="Content-Type" content="text/html; charset= #{@conf.charset}">
-  <title>#{CGI::escapeHTML(page_name(@page))}</title>
+  <title>#{h(page_name(@page))}</title>
 </head>
 <body>
 <div>
 EOS
   page = @db.load( @page )
-  sources << (page ? page.escapeHTML.gsub(/\n/, "<br>\n").gsub(/ /, '&nbsp;') : 'load error.')
+  sources << (page ? h(page).gsub(/\n/, "<br>\n").gsub(/ /, '&nbsp;') : 'load error.')
   sources  << <<EOS
 </div>
 </body>

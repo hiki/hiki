@@ -25,11 +25,11 @@ module Hiki
         encoding = @interwiki_names[s][:encoding]
         page = case encoding
                when 'sjis'
-                 p.to_sjis.escape
+                 escape(p.to_sjis)
                when 'euc'
-                 p.to_euc.escape
+                 escape(p.to_euc)
                when 'utf8'
-                 euc_to_utf8(p).escape
+                 escape(euc_to_utf8(p))
                else
                  p
                end

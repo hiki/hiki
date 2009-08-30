@@ -140,7 +140,7 @@ module Hiki
     end
 
     def view_title( s )
-      %Q!<a href="#{@conf.cgi_name}#{cmdstr('search', "key=#{s.escape}") }">#{h(s)}</a>!
+      %Q!<a href="#{@conf.cgi_name}#{cmdstr('search', "key=#{escape(s)}") }">#{h(s)}</a>!
     end
 
     def format_date( tm )
@@ -205,7 +205,7 @@ module Hiki
     end
 
     def unified_diff( src, dst, context_lines = 3 )
-      return CGI.escapeHTML(Diff.new(src.split(/^/), dst.split(/^/)).ses.unidiff( '', context_lines ))
+      return h(Diff.new(src.split(/^/), dst.split(/^/)).ses.unidiff( '', context_lines ))
     end
 
     def redirect(cgi, url, cookies = nil)
@@ -258,7 +258,7 @@ REMOTE_HOST = #{ENV['REMOTE_HOST']}
 EOS
       body << "REMOTE_USER = #{ENV['REMOTE_USER']}\n" if ENV['REMOTE_USER']
       body << <<EOS
-        URL = #{@conf.index_url}?#{page.escape}
+        URL = #{@conf.index_url}?#{escape(page)}
 #{'-' * 25}
 #{text}
 EOS

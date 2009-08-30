@@ -17,7 +17,7 @@ def sitemap_traverse(page)
   return if @map_path.index(page) or !info
   @map_path.push page
 
-  @map_str << "<li>#{hiki_anchor(page.escape, "#{page_name(page)}")}</li>\n"
+  @map_str << "<li>#{hiki_anchor(escape(page), "#{page_name(page)}")}</li>\n"
 
   unless @map_traversed.index(page)
     referer =  info[:references].sort

@@ -3,7 +3,7 @@
 
 def trackback
   <<-EOF
-<div class="caption">TrackBack URL: <a href="#{File.basename(ENV['SCRIPT_FILENAME'])}/tb/#{@page.escape}">#{@conf.base_url}#{File.basename(ENV['SCRIPT_FILENAME'])}/tb/#{@page.escape}</a></div>
+<div class="caption">TrackBack URL: <a href="#{File.basename(ENV['SCRIPT_FILENAME'])}/tb/#{escape(@page)}">#{@conf.base_url}#{File.basename(ENV['SCRIPT_FILENAME'])}/tb/#{escape(@page)}</a></div>
 EOF
 end
 
@@ -11,7 +11,7 @@ def trackback_post
   params     = @cgi.params
   url = params['url'][0]
   unless 'POST' == @cgi.request_method && url
-    redirect(@cgi, "#{@conf.index_url}?#{@page.escapeHTML}")
+    redirect(@cgi, "#{@conf.index_url}?#{h(@page)}")
     return
   end
   blog_name = utf8_to_euc( params['blog_name'][0] || '' )

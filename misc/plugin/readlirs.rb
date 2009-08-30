@@ -17,13 +17,13 @@ def readlirs( url, n = 20,  style=1, cache_time = 1800, tf="%Y/%m/%d %H:%m" )
       data = line.split(/,/)
       case style
       when 1
-        an = "#{Time.at(data[1].to_i).strftime(tf)} <a href=\"#{CGI::escapeHTML(data[5])}\" title=\"#{CGI::escapeHTML(data[6])}\">#{CGI::escapeHTML(data[6])}</a> #{CGI::escapeHTML(data[7])}" if style
+        an = "#{Time.at(data[1].to_i).strftime(tf)} <a href=\"#{h(data[5])}\" title=\"#{h(data[6])}\">#{h(data[6])}</a> #{h(data[7])}" if style
       when 2
-        an = "#{Time.at(data[1].to_i).strftime(tf)}<br><a href=\"#{CGI::escapeHTML(data[5])}\" title=\"#{CGI::escapeHTML(data[6])}\">#{CGI::escapeHTML(data[6])}</a>"
+        an = "#{Time.at(data[1].to_i).strftime(tf)}<br><a href=\"#{h(data[5])}\" title=\"#{h(data[6])}\">#{h(data[6])}</a>"
       when 3
-        an = "<a href=\"#{CGI::escapeHTML(data[5])}\" title=\"#{Time.at(data[1].to_i).strftime(tf)} - #{CGI::escapeHTML(data[7])}\">#{CGI::escapeHTML(data[6])}</a>"
+        an = "<a href=\"#{h(data[5])}\" title=\"#{Time.at(data[1].to_i).strftime(tf)} - #{h(data[7])}\">#{h(data[6])}</a>"
       else
-        an = "#{Time.at(data[1].to_i).strftime(tf)} <a href=\"#{CGI::escapeHTML(data[5])}\" title=\"#{CGI::escapeHTML(data[6])}\">#{CGI::escapeHTML(data[6])}</a> #{CGI::escapeHTML(data[7])}" if style
+        an = "#{Time.at(data[1].to_i).strftime(tf)} <a href=\"#{h(data[5])}\" title=\"#{h(data[6])}\">#{h(data[6])}</a> #{h(data[7])}" if style
       end
       s << "<li>#{an}</li>\n"
       c = c + 1
@@ -38,7 +38,7 @@ end
 def readlirs_get(url, cache_time)
   if /^(https?:\/\/)(.+?)(\/.*)/ =~ url
     Dir.mkdir("#{@cache_path}/readlirs") unless File.exist?("#{@cache_path}/readlirs")
-    cache_file = "#{@cache_path}/readlirs/#{CGI::escape(url)}".untaint
+    cache_file = "#{@cache_path}/readlirs/#{escape(url)}".untaint
     begin
       readlirs_recent_cache(url, cache_file, cache_time)
       raise unless File.readable?(cache_file)

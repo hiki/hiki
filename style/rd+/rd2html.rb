@@ -15,9 +15,12 @@ require "cgi"
 require "rd/rd2html-lib"
 require 'style/rd+/anchorlist'
 require 'hiki/pluginutil'
+require 'hiki/util'
 
 module Hiki
   class RD2HTMLVisitor < RD::RD2HTMLVisitor
+    include Hiki::Util
+
     attr_reader :references, :toc
     EVAL_PLUGIN_RE = /\{\{(.*?)\}\}/m
     LAST_WORD_RE = /^[A-Z0-9_]*$/
@@ -36,7 +39,7 @@ module Hiki
       @references = Array.new
       @regex = nil
       @toc = []
-    
+
       if text = @db.load("ModuleNames")
         @modulenames = text.split(/\s/).join("|")
         @esc_modulenames = /(#{text.split(/\s/).join(ESC_WORD + "|") + ESC_WORD})/
@@ -49,7 +52,7 @@ module Hiki
     end
 
     def get_anchor(element)
-      element.label.escape
+      escape(element.label)
     end
 
     def div_class_method(s)
@@ -57,10 +60,10 @@ module Hiki
         # Gtk::Hoge#fuga, Gtk::Hoge.fuga, Gtk::Hoge::Foo
         # If Gtk::Hoge. << period for document, unscan it.
         if constant = s.scan(CONSTANT_RE)
-          constant = constant.unescapeHTML
-          child = div_class_method(s) 
+          constant = unescape_html(constant)
+          child = div_class_method(s)
           if child
-            [sep, constant] << child 
+            [sep, constant] << child
           else
             [sep, constant]
           end
@@ -76,7 +79,7 @@ module Hiki
       return content if content.nil? or content == ""
       #Eval Plugin
       content = content.gsub(EVAL_PLUGIN_RE) do |match|
-        method = $1.unescapeHTML
+        method = unescape_html($1)
         ret = ''
         begin
           ret = Hiki::Util.apply_plugin(method, @plugin, @conf)
@@ -106,39 +109,39 @@ module Hiki
           name = ""
           option = nil
           divary = div_class_method(s)
-          
+
           if divary
             divary.flatten!
             lastword = divary.pop
             separator = divary.pop
-            
+
             if divary.size == 0
               if separator == "::"
-                if lastword =~ LAST_WORD_RE 
+                if lastword =~ LAST_WORD_RE
                   # Constants
-                  target = module_name.escape
+                  target = escape(module_name)
                   name = module_name + separator + lastword
                   option = lastword
                 else
                   # Class
                   module_name += separator + lastword
-                  target = module_name.escape
+                  target = escape(module_name)
                   name = module_name
                 end
               else
                 # Module method
-                target = module_name.escape
+                target = escape(module_name)
                 name = module_name + separator + lastword
-                option = module_name + (separator + lastword).escape
+                option = module_name + escape(separator + lastword)
               end
             elsif divary.size > 1
               module_name += divary.join
-              target = module_name.escape
+              target = escape(module_name)
               name = module_name + separator + lastword
               if separator == "."
-                option = "#{target}.#{lastword.escape}"
+                option = "#{target}.#{escape(lastword)}"
               else
-                option = lastword.escape
+                option = escape(lastword)
               end
             end
             #Create result
@@ -174,7 +177,7 @@ module Hiki
       else
         label[0].gsub!(ESC_WORD_RE, "")
       end
-      %Q[<a name="#{anchor}" href="##{anchor}" title="#{anchor.unescape.escapeHTML}">#{label}</a>]
+      %Q[<a name="#{anchor}" href="##{anchor}" title="#{h(unescape(anchor))}">#{label}</a>]
     end
 
     def apply_to_Headline(element, title)
@@ -243,10 +246,10 @@ module Hiki
       key, *option = label.split(/\#/)
 
       if @db.infodb_exist? and @db.info_exist?(key)
-        escaped = key.escape
+        escaped = escape(key)
         if @regex_modulenames
-          escaped.gsub!(@regex_modulenames, "\\&#{ESC_WORD}") 
-          escaped += '#' + option.join.gsub(@regex_modulenames, "\\&#{ESC_WORD}").escape if option and option.size > 0
+          escaped.gsub!(@regex_modulenames, "\\&#{ESC_WORD}")
+          escaped += '#' + escape(option.join.gsub(@regex_modulenames, "\\&#{ESC_WORD}")) if option and option.size > 0
         end
         @references << key
         @plugin.hiki_anchor(escaped, content)
@@ -259,7 +262,7 @@ module Hiki
           if @regex_modulenames and @regex_modulenames =~ label
             label.gsub!(@regex_modulenames, "\\&#{ESC_WORD}")
           end
-          escaped = label.escape
+          escaped = escape(label)
           content + %Q[<a href="#{@conf.cgi_name}?c=edit;p=#{escaped}">?</a>]
         end
       end

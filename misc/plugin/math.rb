@@ -2,7 +2,7 @@ def math_latex_download
   params     = @cgi.params
   page       = (params['p'][0] || '')
   file_name  = (params['file_name'][0] || '')
-  image_file = "#{@cache_path}/math_latex/#{page.escape}/#{file_name.escape}"
+  image_file = "#{@cache_path}/math_latex/#{escape(page)}/#{escape(file_name)}"
   mime_type  = "image/png"
 
   header = Hash::new
@@ -85,7 +85,7 @@ add_conf_proc('math', 'math style') do
   <h3 class="subtitle">#{label_math_latex_documentclass}</h3>
   <p><input type="text" name="math.latex.documentclass" value="#{@conf['math.latex.documentclass']}" size="20"></p>
   <h3 class="subtitle">#{label_math_latex_preamble}</h3>
-  <p><textarea name="math.latex.preamble" cols="60" rows="8">#{CGI::escapeHTML( @conf['math.latex.preamble'])}</textarea></p>
+  <p><textarea name="math.latex.preamble" cols="60" rows="8">#{h(@conf['math.latex.preamble'])}</textarea></p>
   <h3 class="subtitle">#{label_math_latex_log}</h3>
   <p><input type="checkbox" name="math.latex.log" value="true"#{@conf['math.latex.log'] ? ' checked="checked"' : ""}>#{label_math_latex_log_description}</p>
   <h3 class="subtitle">#{label_math_latex_cache_clear}</h3>
@@ -98,11 +98,11 @@ add_conf_proc('math', 'math style') do
   unless @conf['math.latex.secure'] then
     str += <<-HTML
     <h3 class="subtitle">#{label_math_latex_latex}</h3>
-    <p><input type="text" name="math.latex.latex" value="#{CGI::escapeHTML(@conf['math.latex.latex'])}"></p>
+    <p><input type="text" name="math.latex.latex" value="#{h(@conf['math.latex.latex'])}"></p>
     <h3 class="subtitle">#{label_math_latex_dvips}</h3>
-    <p><input type="text" name="math.latex.dvips" value="#{CGI::escapeHTML(@conf['math.latex.dvips'])}"></p>
+    <p><input type="text" name="math.latex.dvips" value="#{h(@conf['math.latex.dvips'])}"></p>
     <h3 class="subtitle">#{label_math_latex_convert}</h3>
-    <p><input type="text" name="math.latex.convert" value="#{CGI::escapeHTML(@conf['math.latex.convert'])}"></p>
+    <p><input type="text" name="math.latex.convert" value="#{h(@conf['math.latex.convert'])}"></p>
     HTML
   end
   str

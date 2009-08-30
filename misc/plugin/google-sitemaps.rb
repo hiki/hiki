@@ -15,7 +15,7 @@ def google_sitemaps_body
     end
     sitemaps << <<_E
   <url>
-    <loc>#{@conf.index_url}?#{name.escape}</loc>
+    <loc>#{@conf.index_url}?#{escape(name)}</loc>
     <lastmod>#{lastmod.utc.strftime('%Y-%m-%dT%H:%M:%S+00:00')}</lastmod>
   </url>
 _E
