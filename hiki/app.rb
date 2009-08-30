@@ -5,6 +5,8 @@ require 'rack'
 require 'hiki/config'
 require 'hiki/xmlrpc'
 
+$LOAD_PATH.unshift(File.dirname(__FILE__))
+
 module Hiki
   class App
     def call(env)
