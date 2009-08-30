@@ -41,9 +41,9 @@ def attach_file
       cache_path = "#{@conf.cache_path}/attach"
 
       Dir.mkdir(cache_path) unless test(?e, cache_path.untaint)
-      attach_path = "#{cache_path}/#{page.escape}"
+      attach_path = "#{cache_path}/#{escape(page)}"
       Dir.mkdir(attach_path) unless test(?e, attach_path.untaint)
-      path = "#{attach_path}/#{filename.to_euc.escape}"
+      path = "#{attach_path}/#{escape(filename.to_euc)}"
       if params['attach_file'][0].size > max_size
         raise "File size is larger than limit (#{max_size} bytes)."
       end
@@ -60,13 +60,13 @@ def attach_file
           send_updating_mail(page, 'attach', r) if @conf.mail_on_update
         end
       end
-      redirect(cgi, "#{@conf.index_url}?c=#{command}&p=#{page.escape}")
+      redirect(cgi, "#{@conf.index_url}?c=#{command}&p=#{escape(page)}")
     rescue Exception => ex
       print cgi.header( 'type' => 'text/plain' )
       puts ex.message
     end
   elsif cgi.params['detach'][0] then
-    attach_path = "#{@conf.cache_path}/attach/#{page.escape}"
+    attach_path = "#{@conf.cache_path}/attach/#{escape(page)}"
 
     begin
       Dir.foreach(attach_path) do |file|
@@ -79,7 +79,7 @@ def attach_file
       end
       Dir.rmdir(attach_path) if Dir.entries(attach_path).size == 2
       send_updating_mail(page, 'detach', r) if @conf.mail_on_update
-      redirect(cgi, "#{@conf.index_url}?c=#{command}&p=#{page.escape}")
+      redirect(cgi, "#{@conf.index_url}?c=#{command}&p=#{escape(page)}")
     rescue Exception => ex
       print cgi.header( 'type' => 'text/plain' )
       puts ex.message

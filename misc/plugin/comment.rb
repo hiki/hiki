@@ -26,7 +26,7 @@ def comment(cols = 60, style = 0)
     <input type="submit" name="comment" value="#{comment_post_label}">
     <input type="hidden" name="comment_no" value="#{@comment_num}">
     <input type="hidden" name="c" value="plugin">
-    <input type="hidden" name="p" value="#{@page.escapeHTML}">
+    <input type="hidden" name="p" value="#{h(@page)}">
     <input type="hidden" name="plugin" value="comment_post">
     <input type="hidden" name="style" value="#{style}">
     <input type="hidden" name="session_id" value="#{@session_id}">

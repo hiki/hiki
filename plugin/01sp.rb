@@ -60,9 +60,9 @@ end
 def sp_doc_url( file )
   case @conf.lang
   when 'ja'
-    "http://hikiwiki.org/ja/#{CGI.escape( file )}.html"
+    "http://hikiwiki.org/ja/#{escape(file)}.html"
   else
-    "http://hikiwiki.org/en/#{CGI.escape( file )}.html"
+    "http://hikiwiki.org/en/#{escape(file)}.html"
   end
 end
 
@@ -89,8 +89,8 @@ end
 # <li> list of plugins
 def sp_li_plugins( paths, with_checkbox, is_checked )
   paths.collect { |path| File.basename( path ) }.sort.inject('') do |result, file|
-    checkbox = with_checkbox ? %Q!<input name="#{SP_PREFIX}.#{CGI.escapeHTML( file )}" type="checkbox" value="t"#{is_checked ? ' checked' : ''}>! : ''
-    result << %Q!<li>#{checkbox}<a href="#{sp_doc_url( file )}">#{CGI.escapeHTML( file )}</a>!
+    checkbox = with_checkbox ? %Q!<input name="#{SP_PREFIX}.#{h(file)}" type="checkbox" value="t"#{is_checked ? ' checked' : ''}>! : ''
+    result << %Q!<li>#{checkbox}<a href="#{sp_doc_url( file )}">#{h(file)}</a>!
   end
 end
 

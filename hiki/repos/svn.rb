@@ -66,6 +66,8 @@ module Hiki
   end
 
   class ReposSvn < ReposBase
+    include Hiki::Util
+
     def initialize(root, data_path)
       super
       if /^[a-z]:/i =~ @root
@@ -78,15 +80,15 @@ module Hiki
 
     def commit(page, msg = default_msg)
       Dir.chdir("#{@data_path}/text") do
-        system("svn add -q -- #{page.escape}".untaint)
-        system("svn propdel -q svn:mime-type -- #{page.escape}".untaint)
+        system("svn add -q -- #{escape(page)}".untaint)
+        system("svn propdel -q svn:mime-type -- #{escape(page)}".untaint)
         system("svn ci -q --force-log -m \"#{msg}\"".untaint)
       end
     end
 
     def delete(page, msg = default_msg)
       Dir.chdir("#{@data_path}/text") do
-        system("svn remove -q -- #{page.escape}".untaint)
+        system("svn remove -q -- #{escape(page)}".untaint)
         system("svn ci -q --force-log -m \"#{msg}\"".untaint)
       end
     end
@@ -94,7 +96,7 @@ module Hiki
     def get_revision(page, revision)
       ret = ''
       Dir.chdir("#{@data_path}/text") do
-        open("|svn cat -r #{revision.to_i} #{page.escape.untaint}") do |f|
+        open("|svn cat -r #{revision.to_i} #{escape(page).untaint}") do |f|
           ret = f.read
         end
       end
@@ -106,7 +108,7 @@ module Hiki
       log = ''
       revs = []
       Dir.chdir("#{@data_path}/text") do
-        open("|svn log #{page.escape.untaint}") do |f|
+        open("|svn log #{escape(page).untaint}") do |f|
           log = f.read
         end
       end

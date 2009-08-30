@@ -7,24 +7,26 @@ require 'hiki/repos/default'
 
 module Hiki
   class ReposHg < ReposBase
+    include Hiki::Util
+
     def commit(page, msg = default_msg)
       Dir.chdir("#{@data_path}/text") do
-        system("hg addremove -q #{page.escape}".untaint)
-        system("hg ci -m \"#{msg}\" #{page.escape}".untaint)
+        system("hg addremove -q #{escape(page)}".untaint)
+        system("hg ci -m \"#{msg}\" #{escape(page)}".untaint)
       end
     end
 
     def delete(page, msg = default_msg)
       Dir.chdir("#{@data_path}/text") do
-        system("hg rm #{page.escape}".untaint)
-        system("hg ci -m \"#{msg}\" #{page.escape}".untaint)
+        system("hg rm #{escape(page)}".untaint)
+        system("hg ci -m \"#{msg}\" #{escape(page)}".untaint)
       end
     end
 
     def get_revision(page, revision)
       r = ""
       Dir.chdir("#{@data_path}/text") do
-        open("|hg cat -r #{revision.to_i-1} #{page.escape}".untaint) do |f|
+        open("|hg cat -r #{revision.to_i-1} #{escape(page)}".untaint) do |f|
           r = f.read
         end
       end
@@ -36,7 +38,7 @@ module Hiki
       all_log = ''
       revs = []
       Dir.chdir("#{@data_path}/text") do
-        open("|hg log #{page.escape.untaint}") do |f|
+        open("|hg log #{escape(page).untaint}") do |f|
           all_log = f.read
         end
       end

@@ -54,7 +54,7 @@ add_body_enter_proc(Proc::new do
   elsif @user
     <<EOS
 <div class="hello">
-#{sprintf(label_auth_typekey_hello, @user.escapeHTML)}
+#{sprintf(label_auth_typekey_hello, h(@user))}
 </div>
 EOS
   end
@@ -71,7 +71,7 @@ add_conf_proc('auth_typekey', label_auth_typekey_config) do
   str = <<-HTML
   <h3 class="subtitle">#{label_auth_typekey_token}</h3>
   <p>#{label_auth_typekey_token_msg}</p>
-  <p><input name="typekey.token" size="40" value="#{CGI::escapeHTML(@conf['typekey.token'])}"></p>
+  <p><input name="typekey.token" size="40" value="#{h(@conf['typekey.token'])}"></p>
   HTML
   str
 end

@@ -81,7 +81,7 @@ module Hiki
 
     def pages
       Dir.glob( "#{@pages_path}/*" ).delete_if {|f| !test(?f, f.untaint)}.collect! {|f|
-        File.basename( f ).unescape
+        unescape(File.basename( f ))
       }
     end
 
@@ -89,7 +89,7 @@ module Hiki
     #   info DB
     # ==============
     def info_exist? ( p )
-      f = p.escape
+      f = escape(p)
       @info.transaction(true) do
         @info.root?( f )
       end
@@ -100,7 +100,7 @@ module Hiki
     end
 
     def info( p )
-      f = p.escape
+      f = escape(p)
       @info.transaction(true) do
         @info.root?(f) ? @info[f] : nil
       end
@@ -109,13 +109,13 @@ module Hiki
     def page_info
       h = []
       @info.transaction(true) do
-        @info.roots.each { |a| h << {a.unescape => @info[a]} }
+        @info.roots.each { |a| h << { unescape(a) => @info[a]} }
       end
       h
     end
 
     def set_attribute(p, attr)
-      f = p.escape
+      f = escape(p)
       @info.transaction do
         @info[f] = default unless @info[f]
         attr.each do |attribute, value|
@@ -125,7 +125,7 @@ module Hiki
     end
 
     def get_attribute(p, attribute)
-      f = p.escape
+      f = escape(p)
       @info.transaction(true) do
         if @info.root?(f)
           @info[f][attribute] || default[attribute]
@@ -139,14 +139,14 @@ module Hiki
       result = []
       @info.transaction(true) do
         @info.roots.each do |a|
-          result << a.unescape if yield(@info[a])
+          result << unescape(a) if yield(@info[a])
         end
       end
       result
     end
 
     def increment_hitcount ( p )
-      f = p.escape
+      f = escape(p)
       @info.transaction do
         @info[f][:count] = @info[f][:count] + 1
       end
@@ -197,7 +197,7 @@ module Hiki
     end
 
     def delete_info(p)
-      f = p.escape
+      f = escape(p)
       begin
         @info.transaction do
           @info.delete(f)
@@ -211,14 +211,14 @@ module Hiki
       @info.transaction do
         pages.each do |a|
           r = default
-          r[:last_modified] = File.mtime( "#{@pages_path}/#{a.escape}".untaint )
-          @info[a.escape]  = r
+          r[:last_modified] = File.mtime( "#{@pages_path}/#{escape(a)}".untaint )
+          @info[escape(a)]  = r
         end
       end
     end
 
     def create_info_default(p)
-      f = p.escape
+      f = escape(p)
       @info.transaction do
         @info[f] = default
       end
@@ -235,11 +235,11 @@ module Hiki
     end
 
     def textdir(s)
-      File.join(@pages_path, s.escape).untaint
+      File.join(@pages_path, escape(s)).untaint
     end
 
     def backupdir(s)
-      File.join(@backup_path, s.escape).untaint
+      File.join(@backup_path, escape(s)).untaint
     end
   end
 end

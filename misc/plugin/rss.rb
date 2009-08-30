@@ -18,11 +18,11 @@ def rss_body(page_num = 10)
 <?xml version="1.0" encoding="#{@conf.charset}" standalone="yes"?>
 <rdf:RDF xmlns="http://purl.org/rss/1.0/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:content="http://purl.org/rss/1.0/modules/content/" xml:lang="ja-JP">
   <channel rdf:about="#{@conf.index_url}?c=rss">
-    <title>#{CGI::escapeHTML(@conf.site_name)} : #{label_rss_recent}</title>
+    <title>#{h(@conf.site_name)} : #{label_rss_recent}</title>
     <link>#{@conf.index_url}?c=recent</link>
-    <description>#{CGI::escapeHTML(@conf.site_name)} #{label_rss_recent}</description>
+    <description>#{h(@conf.site_name)} #{label_rss_recent}</description>
     <dc:language>ja</dc:language>
-    <dc:rights>Copyright (C) #{CGI::escapeHTML(@conf.author_name)}</dc:rights>
+    <dc:rights>Copyright (C) #{h(@conf.author_name)}</dc:rights>
     <dc:date>#{last_modified.utc.strftime('%Y-%m-%dT%H:%M:%S+00:00')}</dc:date>
     <items>
       <rdf:Seq>
@@ -60,12 +60,12 @@ EOS
 
     items << '        '
 
-    uri = "#{@conf.index_url}?#{name.escape}"
+    uri = "#{@conf.index_url}?#{escape(name)}"
     items << %Q!<rdf:li rdf:resource="#{uri}"/>\n!
 
     item_list << <<EOS
   <item rdf:about="#{uri}">
-    <title>#{CGI::escapeHTML(page_name(name))}</title>
+    <title>#{h(page_name(name))}</title>
     <link>#{uri}</link>
     <dc:date>#{p[name][:last_modified].utc.strftime('%Y-%m-%dT%H:%M:%S+00:00')}</dc:date>
 EOS

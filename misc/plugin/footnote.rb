@@ -48,7 +48,7 @@ def render( text )
   tmp = @conf.use_plugin
   @conf.use_plugin = false
   parser = @conf.parser::new( @conf )
-  tokens = parser.parse( text.unescapeHTML )
+  tokens = parser.parse(unescape_html(text) )
   formatter = @conf.formatter::new( tokens, @db, self, @conf )
   @conf.use_plugin = tmp
   formatter.to_s.gsub(/\A<p>/,'').gsub(/<\/p>\Z/,'').gsub(/<p>/, '<p class="footnote">')
