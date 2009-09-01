@@ -71,7 +71,7 @@ def referer_map
   Dir.entries(path).sort {|a, b| unescape(a) <=> unescape(b) }.each do |f|
     next if /(?:^\.)|(?:~$)/ =~ f
     next unless @db.exist?(unescape(f.untaint))
-    db = PTStore::new("#{path}/#{f}")
+    db = PTStore.new("#{path}/#{f}")
     p = File.basename(f)
     s << "<li>#{hiki_anchor(p, page_name(unescape(p)))}</li>\n"
     s << "<ul>\n"
@@ -105,7 +105,7 @@ add_body_leave_proc(Proc.new do
     Dir.mkdir(referer_path) unless File.exist?(referer_path)
 
     file_name = "#{referer_path}/#{escape(@page).to_euc}"
-    db = PTStore::new(file_name)
+    db = PTStore.new(file_name)
     add_referer(db)
 
     case @options['referer.display_type']

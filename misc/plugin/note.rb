@@ -4,7 +4,7 @@
 
 def note_orig_page
   if /\A#{Regexp.escape(note_prefix)}/ =~ @page
-    hiki_anchor( CGI::escape( $' ), page_name( $' ) )
+    hiki_anchor(escape($'), page_name($'))
   end
 end
 
