@@ -101,7 +101,7 @@ def attach_download
       mime_type = ImageSize.new(fh).mime_type
     end
 
-    header = Hash::new
+    header = {}
     header['Content-Type'] = mime_type
     header['Content-Length'] = File.size(attach_file.untaint)
     header['Last-Modified'] = CGI::rfc1123_date(File.mtime(attach_file.untaint))
@@ -144,7 +144,7 @@ def attach_view(file_name, page = @page)
 end
 
 def attach_page_files
-  result = Array::new
+  result = []
   attach_path = "#{@cache_path}/attach/#{escape(@page)}".untaint
   if FileTest::directory?(attach_path)
     Dir.entries(attach_path).collect do |file_name|

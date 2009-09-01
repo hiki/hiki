@@ -1,3 +1,22 @@
+2009-08-31  okkez  <okkez000@gmail.com>
+
+	* hiki/auth/typekey.rb: use literal instead of obvious new method.
+	* hiki/auth/typekey.rb: ditto.
+	* misc/plugin/attach.rb: ditto.
+	* misc/plugin/category.rb: ditto.
+	* misc/plugin/google-sitemaps.rb: ditto.
+	* misc/plugin/incremental_search.rb: ditto.
+	* misc/plugin/keyword.rb: ditto.
+	* misc/plugin/math.rb: ditto.
+	* misc/plugin/pagerank.rb: ditto.
+	* misc/plugin/rss.rb: ditto.
+	* misc/plugin/src.rb: ditto.
+	* plugin/01sp.rb: ditto.
+	* style/default/html_formatter.rb: ditto.
+	* style/rd+/anchorlist.rb: ditto.
+	* style/rd+/rd2html.rb: ditto.
+
+
 2009-08-30  okkez  <okkez000@gmail.com>
 
 	* hiki/command.rb: use Hiki::Util#escape, Hiki::Util#unescape,

@@ -28,7 +28,7 @@ end
 def keywords(*keyword)
   keyword.collect! {|a| unescape_html(a) }
 
-  key = Hash::new
+  key = {}
   @db.page_info.each do |info|
     next unless info.values[0][:keyword]
     info.values[0][:keyword].each do |k|

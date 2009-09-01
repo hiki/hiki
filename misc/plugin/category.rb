@@ -6,7 +6,7 @@ def category_list(*category)
 
   category.collect! {|a| unescape_html(a) }
 
-  l = Hash::new
+  l = {}
   @db.page_info.each do |a|
     if category_re =~ a.keys[0] && (category.size == 0 || category.index($1))
       l[$1] = [] unless l[$1]
