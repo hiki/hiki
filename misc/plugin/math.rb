@@ -5,7 +5,7 @@ def math_latex_download
   image_file = "#{@cache_path}/math_latex/#{escape(page)}/#{escape(file_name)}"
   mime_type  = "image/png"
 
-  header = Hash::new
+  header = {}
   header['Content-Type'] = mime_type
   header['Last-Modified'] = CGI::rfc1123_date(File.mtime(image_file.untaint))
   header['Content-Disposition'] = %Q|filename="#{file_name.to_sjis}"|

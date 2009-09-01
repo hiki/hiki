@@ -18,7 +18,7 @@ module Hiki
       @plugin     = plugin
       @conf       = conf
       @prefix     = prefix
-      @references = Array.new
+      @references = []
       @interwiki  = InterWiki.new( @db.load( @conf.interwiki_name ) )
       @aliaswiki  = AliasWiki.new( @db.load( @conf.aliaswiki_name ) )
       get_auto_links if @conf.auto_link

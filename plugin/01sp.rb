@@ -46,7 +46,7 @@ end
 
 # hash of paths from array of dirs
 def sp_hash_from_dirs( dirs )
-  r = Hash.new
+  r = {}
   dirs.each do |dir|
     Dir.glob( "#{dir}/*.rb" ).each do |path|
       filename = File.basename( path )

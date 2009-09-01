@@ -36,7 +36,7 @@ module Hiki
       @plugin = plugin
       @db = db
       @conf = conf
-      @references = Array.new
+      @references = []
       @regex = nil
       @toc = []
 

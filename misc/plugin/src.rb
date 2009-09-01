@@ -23,7 +23,7 @@ EOS
 </html>
 EOS
 
-  header = Hash::new
+  header = {}
   header['Last-Modified'] = CGI::rfc1123_date(Time.now)
   header['type']          = 'text/html'
   header['charset']       =  @conf.charset

@@ -85,7 +85,7 @@ end
 
 def rss
   body, last_modified = rss_body
-  header = Hash::new
+  header = {}
 
   require 'time'
   begin

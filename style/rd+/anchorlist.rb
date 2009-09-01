@@ -26,7 +26,7 @@ module Hiki
 
 
     def initialize(interwiki_data, plugin)
-      @anchors = Hash.new
+      @anchors = {}
       @plugin = plugin
       n = interwiki_data || ''
       n.scan(REG_INTERWIKI_NAME) do |i|

@@ -89,7 +89,7 @@ module Hiki
           r = "<ul>\n" + l.map{|i| "<li>#{i}</li>\n"}.join + "</ul>\n"
         end
       end
-      header = Hash::new
+      header = {}
       header['type'] = 'text/html'
       header['charset'] = 'EUC-JP'
       header['Content-Language'] = @conf.lang

@@ -320,7 +320,7 @@ end
 
 # show pagerank page: called by hiki menu
 def pagerank_page
-  header = Hash::new
+  header = {}
   header['Last-Modified'] = CGI::rfc1123_date(Time.now)
   header['type']          = 'text/html'
   header['charset']       = @conf.charset
