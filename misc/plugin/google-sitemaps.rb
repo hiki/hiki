@@ -28,7 +28,7 @@ end
 def google_sitemaps
   body, last_modified = google_sitemaps_body
   header = {}
-  header['Last-Modified'] = CGI::rfc1123_date(last_modified)
+  header['Last-Modified'] = CGI.rfc1123_date(last_modified)
   header['type']          = 'text/xml'
   header['charset']       =  'UTF-8'
   header['Content-Language'] = @conf.lang

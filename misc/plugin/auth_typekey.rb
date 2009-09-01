@@ -11,7 +11,7 @@ require 'hiki/session'
 def auth?
   return true if @conf['typekey.token'].empty?
   session_id = @cgi.cookies['typekey_session_id'][0]
-  session_id && Session::new(@conf, session_id).check
+  session_id && Session.new(@conf, session_id).check
 end
 
 def auth_typekey
@@ -24,7 +24,7 @@ def auth_typekey
   page =  @cgi.params['p'][0] || 'FrontPage'
 
   if ts and email and name and nick and sig and tk.verify(email, name, nick, ts, sig)
-    session = Session::new(@conf)
+    session = Session.new(@conf)
     session.user = utf8_to_euc(nick)
     session.save
     self.cookies << typekey_cookie('typekey_session_id', session.session_id)
@@ -41,14 +41,14 @@ def login_url
 end
 
 def typekey_cookie(name, value, max_age = Session::MAX_AGE)
-  CGI::Cookie::new( {
+  CGI::Cookie.new( {
     'name' => name,
     'value' => value,
     'path' => self.cookie_path,
   })
 end
 
-add_body_enter_proc(Proc::new do
+add_body_enter_proc(Proc.new do
   if !auth?
     label_auth_typekey_login
   elsif @user

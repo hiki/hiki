@@ -7,7 +7,7 @@ def math_latex_download
 
   header = {}
   header['Content-Type'] = mime_type
-  header['Last-Modified'] = CGI::rfc1123_date(File.mtime(image_file.untaint))
+  header['Last-Modified'] = CGI.rfc1123_date(File.mtime(image_file.untaint))
   header['Content-Disposition'] = %Q|filename="#{file_name.to_sjis}"|
   print @cgi.header(header)
   print open(image_file.untaint, "rb").read

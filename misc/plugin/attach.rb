@@ -95,7 +95,7 @@ def attach_download
   file_name   = (params['file_name'][0] || '')
   attach_file = "#{@cache_path}/attach/#{escape(page)}/#{escape(file_name)}"
   extname     =  /\.([^.]+)$/.match(file_name.downcase).to_a[1]
-  if File::exist?( attach_file.untaint )
+  if File.exist?( attach_file.untaint )
     mime_type = nil
     File.open(attach_file.untaint, 'rb') do |fh|
       mime_type = ImageSize.new(fh).mime_type
@@ -104,7 +104,7 @@ def attach_download
     header = {}
     header['Content-Type'] = mime_type
     header['Content-Length'] = File.size(attach_file.untaint)
-    header['Last-Modified'] = CGI::rfc1123_date(File.mtime(attach_file.untaint))
+    header['Last-Modified'] = CGI.rfc1123_date(File.mtime(attach_file.untaint))
     if %r|^image/| =~ mime_type
       header['Content-Disposition'] = %Q|inline; filename="#{file_name.to_sjis}"; modification-date="#{header['Last-Modified']}";|
     else
@@ -125,7 +125,7 @@ def attach_src(file_name, page = @page)
   if file_name =~ /\.(txt|rd|rb|c|pl|py|sh|java|html|htm|css|xml|xsl|sql|yaml)\z/i
     file = "#{@conf.cache_path}/attach/#{escape(page.untaint)}/#{escape(file_name.untaint)}"
     s = %Q!<pre>!
-    content = File::readlines(file)
+    content = File.readlines(file)
     if @options['attach.show_linenum']
       line = 0
       content.collect! {|i| sprintf("%3d| %s", line+=1, i)}
@@ -146,9 +146,9 @@ end
 def attach_page_files
   result = []
   attach_path = "#{@cache_path}/attach/#{escape(@page)}".untaint
-  if FileTest::directory?(attach_path)
+  if FileTest.directory?(attach_path)
     Dir.entries(attach_path).collect do |file_name|
-      result << file_name if FileTest::file?("#{attach_path}/#{file_name}".untaint)
+      result << file_name if FileTest.file?("#{attach_path}/#{file_name}".untaint)
     end
   end
   result
@@ -156,7 +156,7 @@ end
 
 def attach_all_files
   attach_files = Hash.new([])
-  return [] unless File::exist?("#{@cache_path}/attach/")
+  return [] unless File.exist?("#{@cache_path}/attach/")
 
   Dir.foreach("#{@cache_path}/attach/") do |dir|
     next if /^\./ =~ dir

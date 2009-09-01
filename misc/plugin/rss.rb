@@ -41,13 +41,13 @@ EOS
     when 3
       tokens = @db.load_cache( name )
       unless tokens
-        parser = @conf.parser::new( @conf )
+        parser = @conf.parser.new( @conf )
         tokens = parser.parse( @db.load( name ) )
         @db.save_cache( name, tokens )
       end
       tmp = @conf.use_plugin
       @conf.use_plugin = false
-      formatter = @conf.formatter::new( tokens, @db, Plugin.new( @conf.options, @conf), @conf )
+      formatter = @conf.formatter.new( tokens, @db, Plugin.new( @conf.options, @conf), @conf )
       content = formatter.to_s
       @conf.use_plugin = tmp
     else
@@ -98,7 +98,7 @@ def rss
     header['status'] = 'NOT_MODIFIED'
     print @cgi.header(header)
   else
-    header['Last-Modified'] = CGI::rfc1123_date(last_modified)
+    header['Last-Modified'] = CGI.rfc1123_date(last_modified)
     header['type']          = 'text/xml'
     header['charset']       =  @conf.charset
     header['Content-Language'] = @conf.lang
