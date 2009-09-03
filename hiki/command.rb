@@ -9,8 +9,6 @@ require 'hiki/aliaswiki'
 require 'hiki/session'
 require 'hiki/filter'
 
-include Hiki::Util
-
 module Hiki
   class PermissionError < StandardError; end
   class SessionError < StandardError
@@ -21,6 +19,7 @@ module Hiki
   end
 
   class Command
+    include Hiki::Util
     def initialize(cgi, db, conf)
       @db     = db
       @params = cgi.params

@@ -1,3 +1,10 @@
+2009-09-03  okkez  <okkez000@gmail.com>
+
+	* hiki/command.rb (Hiki::Command): do not include Hiki::Util on
+	top level.
+
+	* hiki/plugin.rb (Hiki::Plugin): include Hiki::Util instead of ERB::Util.
+
 2009-08-31  okkez  <okkez000@gmail.com>
 
 	* hiki/auth/typekey.rb: use literal instead of obvious new method.
