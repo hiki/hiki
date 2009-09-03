@@ -19,7 +19,8 @@ module Hiki
       def params
         return @params if @params
         @params = { }
-        @cgi.params.each{|k,v|
+        @cgi.params.each{|k, v|
+          v = v.uniq
           case v.size
           when 0
             @params[k] = nil
