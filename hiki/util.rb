@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # $Id: util.rb,v 1.44 2005-12-25 07:03:06 yanagita Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
@@ -25,20 +26,19 @@ class String
   end
 
   def escape
-    CGI.escape(self)
+    Hiki::Util.escape(self)
   end
 
   def unescape
-    CGI.unescape(self)
+    Hiki::Util.unescape(self)
   end
 
   def escapeHTML
-    ERB::Util.h(self)
+    Hiki::Util.escape_html(self)
   end
 
   def unescapeHTML
-    # ???
-    CGI.unescapeHTML(self)
+    Hiki::Util.unescape_html(self)
   end
 
   def sanitize
@@ -124,6 +124,8 @@ module Hiki
     alias escape_html escapeHTML
     alias h escapeHTML
     alias unescape_html unescapeHTML
+
+    module_function :escape, :unescape, :escape_html, :h, :unescape_html
 
     def plugin_error(method, e)
       msg = "<strong>#{e.class} (#{h(e.message)}): #{h(method)}</strong><br>"
