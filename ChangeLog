@@ -1,3 +1,10 @@
+2009-09-05  okkez  <okkez000@gmail.com>
+
+	* hiki/util.rb (Hiki::Util): add module functions (escape,
+	unescape, escape_html, h, unescape_html)
+	(String#escape, unescape, escapeHTML, unescapeHTML): use
+	Hiki::Util instead of CGI.
+
 2009-09-03  okkez  <okkez000@gmail.com>
 
 	* hiki/command.rb (Hiki::Command): do not include Hiki::Util on
@@ -138,7 +145,7 @@
 	temporary and should be removed when docdiff becomes Ruby-1.9
 	ready.
 
-	* hiki/util.rb (unified_diff): escape output in this method just
+	* hiki/util.rb (ppunified_diff): escape output in this method just
 	same as word_diff() does.
 	* misc/plugin/rss.rb (rss_body): remove escape because
 	unified_diff() will escape instead.
