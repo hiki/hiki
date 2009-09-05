@@ -16,7 +16,7 @@
 
 	* hiki/auth/typekey.rb: use literal instead of obvious new method.
 	* hiki/auth/typekey.rb: ditto.
-v	* misc/plugin/attach.rb: ditto.
+	* misc/plugin/attach.rb: ditto.
 	* misc/plugin/category.rb: ditto.
 	* misc/plugin/google-sitemaps.rb: ditto.
 	* misc/plugin/incremental_search.rb: ditto.
