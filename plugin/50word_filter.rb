@@ -20,7 +20,7 @@ add_conf_proc("word_filter", WordFilterMessage.word_filter) do
 <input type='checkbox' name='#{key_use}' id='#{key_use}' #{@conf[key_use] ? "checked='checked'" : ""}>
 <label for='#{key_use}'>#{m.use}</label>
 <p>#{m.regexp_by_line}</p>
-<textarea name='#{key_words}' col='80' row='40'>#{CGI.escapeHTML(@conf[key_words])}</textarea>
+<textarea name='#{key_words}' col='80' row='40'>#{h(@conf[key_words])}</textarea>
 </ul>
 EOT
 end
