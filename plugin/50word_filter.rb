@@ -7,8 +7,8 @@ add_conf_proc("word_filter", WordFilterMessage.word_filter) do
   key_words = "#{pre}.words"
 
   if @cgi.request_method=="POST" and @mode=="saveconf"
-    @conf[key_use] = @cgi.params[key_use][0]
-    @conf[key_words] = @cgi.params[key_words][0]
+    @conf[key_use] = @cgi.params[key_use]
+    @conf[key_words] = @cgi.params[key_words]
   end
   old = @conf[key_words]
   @conf[key_words] ||= ""
