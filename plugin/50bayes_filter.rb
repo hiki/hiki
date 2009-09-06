@@ -33,7 +33,7 @@ class BayesFilterConfig
   end
 
   def html
-    case @mode = @cgi.params['bfmode'][0]
+    case @mode = @cgi.params['bfmode']
     when Mode::SUBMITTED_PAGES
       r = submitted_pages_html
     when Mode::SUBMITTED_PAGE_DIFF
@@ -69,22 +69,22 @@ class BayesFilterConfig
     @conf[THRESHOLD] ||= 0.9
     @conf[THRESHOLD_HAM] ||= 0.1
 
-    if save_mode? and @cgi.params["from_top"][0]
-      @conf[USE] = @cgi.params[USE][0]
-      @conf[REPORT] = @cgi.params[REPORT][0]
-      @conf[SHARE_DB] = @cgi.params[SHARE_DB][0]
-      @conf[LIMIT_OF_SUBMITTED_PAGES] = @cgi.params[LIMIT_OF_SUBMITTED_PAGES][0] || 50
-      threshold_spam = (@cgi.params[THRESHOLD][0]||0.95).to_f
-      threshold_ham = (@cgi.params[THRESHOLD_HAM][0]||0.05).to_f
+    if save_mode? and @cgi.params["from_top"]
+      @conf[USE] = @cgi.params[USE]
+      @conf[REPORT] = @cgi.params[REPORT]
+      @conf[SHARE_DB] = @cgi.params[SHARE_DB]
+      @conf[LIMIT_OF_SUBMITTED_PAGES] = @cgi.params[LIMIT_OF_SUBMITTED_PAGES] || 50
+      threshold_spam = (@cgi.params[THRESHOLD]||0.95).to_f
+      threshold_ham = (@cgi.params[THRESHOLD_HAM]||0.05).to_f
       if 0 <= threshold_ham and threshold_ham <= threshold_spam and threshold_spam <= 1.0
         @conf[THRESHOLD_HAM] = threshold_ham
         @conf[THRESHOLD] = threshold_spam
       end
 
       rebuild = false
-      rebuild = true if @cgi.params["rebuild_db"][0]=="execute"
-      if @cgi.params[TYPE][0] && @cgi.params[TYPE][0]!=@conf[TYPE]
-        @conf[TYPE] = @cgi.params[TYPE][0] 
+      rebuild = true if @cgi.params["rebuild_db"]=="execute"
+      if @cgi.params[TYPE] && @cgi.params[TYPE]!=@conf[TYPE]
+        @conf[TYPE] = @cgi.params[TYPE]
         rebuild = true
       end
 
@@ -181,7 +181,7 @@ EOT
   end
 
   def submitted_page_diff_html
-    return "" unless data = BayesFilter::PageData.load_from_cache(@cgi.params["id"][0].untaint)
+    return "" unless data = BayesFilter::PageData.load_from_cache(@cgi.params["id"].untaint)
     <<EOT
 <h3>#{Res.submitted_page_diff}</h3>
 <dl>
@@ -196,7 +196,7 @@ EOT
   end
 
   def page_token_html
-    return "" unless data = BayesFilter::PageData.load_from_cache(@cgi.params["id"][0].untaint)
+    return "" unless data = BayesFilter::PageData.load_from_cache(@cgi.params["id"].untaint)
     <<EOT
 <h3>#{Res.page_token}</h3>
 #{tokens_html(data.token)}
@@ -234,7 +234,7 @@ EOT
     @cgi.params.keys.select{|k| k=~/\A[HSD]\d+\z/}.each do |id|
       data = BayesFilter::PageData.load_from_cache(id.dup.untaint, true)
       next unless data
-      case @cgi.params["register_#{id}"][0]
+      case @cgi.params["register_#{id}"]
       when "ham"
         add_ham(data.token)
         data.corpus_save(true)
