@@ -34,10 +34,8 @@ def google_sitemaps
   header['Content-Language'] = @conf.lang
   header['Pragma']           = 'no-cache'
   header['Cache-Control']    = 'no-cache'
-  print @cgi.header(header)
-  puts body
 
-  nil # Don't move to the 'FrontPage'
+  ::Hiki::Response.new(body, 200, header)
 end
 
 add_body_enter_proc(Proc.new do
