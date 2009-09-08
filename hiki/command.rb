@@ -177,8 +177,7 @@ module Hiki
     def cmd_view
       unless @db.exist?( @p )
         @cmd = 'create'
-        cmd_create( @conf.msg_page_not_exist )
-        return
+        return cmd_create( @conf.msg_page_not_exist )
       end
 
       tokens = @db.load_cache( @p )
