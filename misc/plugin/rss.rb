@@ -96,7 +96,7 @@ def rss
 
   if if_modified_since and last_modified < if_modified_since
     header['status'] = 'NOT_MODIFIED'
-    print @cgi.header(header)
+    return ::Hiki::Response.new('', 304, header)
   else
     header['Last-Modified'] = CGI.rfc1123_date(last_modified)
     header['type']          = 'text/xml'
@@ -104,11 +104,8 @@ def rss
     header['Content-Language'] = @conf.lang
     header['Pragma']           = 'no-cache'
     header['Cache-Control']    = 'no-cache'
-    print @cgi.header(header)
-    puts body
+    return ::Hiki::Response.new(body, 200, header)
   end
-
-  nil # Don't move to the 'FrontPage'
 end
 
 add_body_enter_proc(Proc.new do
