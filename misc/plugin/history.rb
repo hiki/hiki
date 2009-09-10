@@ -98,7 +98,7 @@ module Hiki
       tokens = parser.parse( s )
       formatter = @conf.formatter.new( tokens, @db, @plugin, @conf )
       @page  = Page.new( @cgi, @conf )
-      data   = Util.get_common_data( @db, @plugin, @conf )
+      data   = get_common_data( @db, @plugin, @conf )
       @plugin.hiki_menu(data, @cmd)
       pg_title = @plugin.page_name(@p)
       data[:title]      = title( "#{pg_title} - #{history_label}")
