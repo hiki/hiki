@@ -21,12 +21,21 @@ module Hiki
 
   class Command
     include Hiki::Util
-    # TODO cgi -> request
     def initialize(request, db, conf)
       @db      = db
       @request = request
-      @cgi     = @request # for backward compatibility
-      @params  = @request.params
+      @cgi     = @request.dup # for backward compatibility
+      # HACK for backward compatibility
+      # @request.params['key'] == @cgi.params['key'][0] == @params['key'][0]
+      # TODO remove this logic ASAP
+      def @cgi.params
+        result = {}
+        super.each do |key, value|
+          result[key] = [value]
+        end
+        result
+      end
+      @params  = @cgi.params
       @cookies = @request.cookies
       @conf    = conf
       code_conv
@@ -64,7 +73,7 @@ module Hiki
       options['page']    = @p
       options['db']      = @db
       options['request'] = @request
-      options['cgi']     = @request # for backward compatibility
+      options['cgi']     = @cgi # for backward compatibility
       options['alias']   = @aliaswiki
       options['command'] = @cmd ? @cmd : 'view'
       options['params']  = @params
