@@ -32,9 +32,9 @@ EOS
 end
 
 def bbs_post
-  return '' if @conf.use_session && @session_id != @cgi['session_id']
+  return '' if @conf.use_session && @session_id != @request.params['session_id']
 
-  params     = @cgi.params
+  params     = @request.params
   bbs_num    = (params['bbs_num'] || 0).to_i
   bbs_level  = (params['bbs_level'] || 1).to_i
   name       = params['name'].size == 0 ? bbs_anonymous_label : params['name']
