@@ -15,12 +15,14 @@ HIKI_RELEASE_DATE = Hiki::RELEASE_DATE
 require 'cgi' unless Object.const_defined?(:Rack)
 require 'hiki/request'
 require 'hiki/response'
+require 'hiki/util'
 require 'hiki/command'
 
 module Hiki
   PATH  = "#{File.dirname(File.dirname(__FILE__))}"
 
   class Config
+    include ::Hiki::Util
     def initialize
       load
       load_cgi_conf

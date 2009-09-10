@@ -54,6 +54,7 @@ module Hiki
   class PluginException < Exception; end
 
   module Util
+    include ERB::Util
 
     # dead copy from cgi.rb (Ruby1.8)
     # URL-encode a string.
