@@ -25,7 +25,7 @@ end if @page and auth?
 
 def saveconf_note
   if @mode == 'saveconf' then
-    @conf['note.template'] = @cgi.params['note.template']
+    @conf['note.template'] = @request.params['note.template']
   end
 end
 
