@@ -10,18 +10,18 @@ require 'hiki/session'
 
 def auth?
   return true if @conf['typekey.token'].empty?
-  session_id = @cgi.cookies['typekey_session_id']
+  session_id = @request.cookies['typekey_session_id']
   session_id && Session.new(@conf, session_id).check
 end
 
 def auth_typekey
   tk = TypeKey.new(@conf['typekey.token'], '1.1')
-  ts =    @params['ts']
-  email = @params['email']
-  name =  @params['name']
-  nick =  @params['nick']
-  sig =   @params['sig']
-  page =  @params['p'] || 'FrontPage'
+  ts =    @request.params['ts']
+  email = @request.params['email']
+  name =  @request.params['name']
+  nick =  @request.params['nick']
+  sig =   @request.params['sig']
+  page =  @request.params['p'] || 'FrontPage'
 
   if ts and email and name and nick and sig and tk.verify(email, name, nick, ts, sig)
     session = Session.new(@conf)
@@ -62,7 +62,7 @@ end)
 
 def saveconf_auth_typekey
   if @mode == 'saveconf' then
-    @conf['typekey.token'] = @params['typekey.token']
+    @conf['typekey.token'] = @request.params['typekey.token']
   end
 end
 
