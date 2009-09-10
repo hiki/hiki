@@ -3,7 +3,7 @@
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'nkf'
-require 'cgi'
+require 'cgi' unless Object.const_defined?(:Rack)
 require 'erb'
 
 autoload( :Document, 'docdiff' )
