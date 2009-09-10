@@ -5,13 +5,13 @@
 def updating_mail
   begin
     latest_text = @db.load(@page) || ''
-    if @params['page_title']
-      title = @params['page_title'].empty? ? @page : @params['page_title'].strip
+    if @request.params['page_title']
+      title = @request.params['page_title'].empty? ? @page : @request.params['page_title'].strip
     else
       title = nil
     end
-    if @params['keyword']
-      keyword = (@params['keyword'] || '').split("\n").collect {|k|
+    if @request.params['keyword']
+      keyword = (@request.params['keyword'] || '').split("\n").collect {|k|
         k.chomp.strip}.delete_if{|k| k.empty?}.join(' / ')
     else
       keyword = nil

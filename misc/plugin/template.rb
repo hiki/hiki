@@ -61,9 +61,9 @@ export_plugin_methods(:load_template)
 
 def saveconf_template
   if @mode == 'saveconf' then
-    @conf['template.default'] = @params['template.default'] && @params['template.default'].empty? ? nil : @params['template.default']
-    @conf['template.keyword'] = @params['template.keyword'].empty? ? nil : @params['template.keyword']
-    @conf['template.autoinsert'] = @params['template.autoinsert'] ? true : false
+    @conf['template.default'] = @request.params['template.default'] && @request.params['template.default'].empty? ? nil : @request.params['template.default']
+    @conf['template.keyword'] = @request.params['template.keyword'].empty? ? nil : @request.params['template.keyword']
+    @conf['template.autoinsert'] = @request.params['template.autoinsert'] ? true : false
   end
 end
 
