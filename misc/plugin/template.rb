@@ -38,8 +38,8 @@ EOS
 end
 
 def load_template
-  tmpl_name = @cgi.params['template']
-  page = @cgi.params['p'] ? @cgi.params['p'] : 'FrontPage'
+  tmpl_name = @request.params['template']
+  page = @request.params['p'] ? @request.params['p'] : 'FrontPage'
 
   @text = if tmpl_name
     @db.load(tmpl_name)
