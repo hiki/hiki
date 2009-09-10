@@ -1,7 +1,6 @@
 def math_latex_download
-  params     = @cgi.params
-  page       = (params['p'] || '')
-  file_name  = (params['file_name'] || '')
+  page       = (@request.params['p'] || '')
+  file_name  = (@request.params['file_name'] || '')
   image_file = "#{@cache_path}/math_latex/#{escape(page)}/#{escape(file_name)}"
   mime_type  = "image/png"
 
@@ -57,17 +56,17 @@ end
 
 def saveconf_math
   if @mode == 'saveconf' then
-    @conf['math.latex.ptsize'] = @cgi.params['math.latex.ptsize']
-    @conf['math.latex.documentclass'] = @cgi.params['math.latex.documentclass']
-    @conf['math.latex.preamble'] = @cgi.params['math.latex.preamble']
-    @conf['math.latex.log'] = (@cgi.params['math.latex.log'] == 'true')
+    @conf['math.latex.ptsize']        = @request.params['math.latex.ptsize']
+    @conf['math.latex.documentclass'] = @request.params['math.latex.documentclass']
+    @conf['math.latex.preamble']      = @request.params['math.latex.preamble']
+    @conf['math.latex.log']           = (@request.params['math.latex.log'] == 'true')
     unless (@conf['math.latex.secure'] || true) then
-      @conf['math.latex.latex'] = @cgi.params['math.latex.latex']
-      @conf['math.latex.dvips'] = @cgi.params['math.latex.dvips']
-      @conf['math.latex.convert'] = @cgi.params['math.latex.convert']
+      @conf['math.latex.latex']   = @request.params['math.latex.latex']
+      @conf['math.latex.dvips']   = @request.params['math.latex.dvips']
+      @conf['math.latex.convert'] = @request.params['math.latex.convert']
     end
     math_init
-    if @cgi.params['math.latex.cache_clear'] == 'true' then
+    if @request.params['math.latex.cache_clear'] == 'true' then
       math_clear_cache
     end
   end
