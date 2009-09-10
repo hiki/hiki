@@ -1,8 +1,6 @@
 # $Id: readlirs.rb,v 1.6 2005-06-27 07:38:08 fdiary Exp $
 # Copyright (C) 2003 yoshimi <yoshimik@iris.dti.ne.jp>
 
-require 'cgi'
-
 def readlirs( url, n = 20,  style=1, cache_time = 1800, tf="%Y/%m/%d %H:%m" )
   n = 20 unless n.respond_to?(:integer?)
   n = n > 0 ? n : 200
