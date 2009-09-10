@@ -17,8 +17,8 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 def search
-  as = Hiki::AjaxSearch.new( @cgi, @db, @conf )
-  @cgi.params['key'] ? as.search : as.form
+  as = Hiki::AjaxSearch.new(@request, @db, @conf)
+  @request.params['key'] ? as.search : as.form
 end
 
 module Hiki
@@ -76,7 +76,7 @@ module Hiki
     end
 
     def search
-      word = utf8_to_euc( @cgi.params['key'] )
+      word = utf8_to_euc(@request.params['key'])
       r = ""
       unless word.empty? then
         total, l = @db.search( word )
