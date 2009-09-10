@@ -152,13 +152,13 @@ def its_get_tickets
 end
 
 def its_add_ticket_post
-  return '' if @conf.use_session && @session_id != @cgi['session_id']
+  return '' if @conf.use_session && @session_id != @request.params['session_id']
 
-  priority = @cgi['priority']
-  version = @cgi['version']
-  reporter = @cgi['reporter']
-  summary = @cgi['summary']
-  description = @cgi['description']
+  priority = @request.params['priority']
+  version = @request.params['version']
+  reporter = @request.params['reporter']
+  summary = @request.params['summary']
+  description = @request.params['description']
   return true if priority.empty? || summary.empty? || description.empty?
   status = 'New'
   assigned = '?'
@@ -194,7 +194,7 @@ EOS
 end
 
 def its_edit_ticket_post
-  return '' if @conf.use_session && @session_id != @cgi['session_id']
+  return '' if @conf.use_session && @session_id != @request.params['session_id']
 
   result = "\n"
   flag = false
@@ -203,14 +203,14 @@ def its_edit_ticket_post
   rescue
     return true
   end
-  name = @cgi['name']
+  name = @request.params['name']
   name = 'anonymous' if name.empty?
-  comment = @cgi['comment'].sub(/\A[\r\n]*/, '').sub(/[\r\n]*\z/, "\n")
-  priority = @cgi['priority']
-  status = @cgi['status']
-  assigned = @cgi['assigned']
-  version = @cgi['version']
-  milestone = @cgi['milestone']
+  comment = @request.params['comment'].sub(/\A[\r\n]*/, '').sub(/[\r\n]*\z/, "\n")
+  priority = @request.params['priority']
+  status = @request.params['status']
+  assigned = @request.params['assigned']
+  version = @request.params['version']
+  milestone = @request.params['milestone']
   return true if priority.empty? || status.empty?
 
   text = load( @page )
