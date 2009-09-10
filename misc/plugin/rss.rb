@@ -123,12 +123,12 @@ end)
 
 def saveconf_rss
   if @mode == 'saveconf' then
-    @conf['rss.mode'] = @cgi.params['rss.mode'].to_i
+    @conf['rss.mode'] = @request.params['rss.mode'].to_i
   end
 end
 
-if @cgi.params['conf'] == 'rss' && @mode == 'saveconf'
-  @conf['rss.menu'] = @cgi.params['rss.menu'].to_i
+if @request.params['conf'] == 'rss' && @mode == 'saveconf'
+  @conf['rss.menu'] = @request.params['rss.menu'].to_i
 end
 
 add_conf_proc('rss', label_rss_config) do
