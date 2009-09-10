@@ -90,7 +90,7 @@ end
 
 def attach_download
   require 'image_size'
-  params      = @cgi.params
+  params      = @request.params
   page        = (params['p'] || '')
   file_name   = (params['file_name'] || '')
   attach_file = "#{@cache_path}/attach/#{escape(page)}/#{escape(file_name)}"
