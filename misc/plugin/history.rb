@@ -54,17 +54,17 @@ CSS¤Çspan.add_line, span.del_line¤òÀßÄê¤¹¤ë¤È¡¢ÊÑ¹¹²Õ½ê¤ÎÊ¸»úÂ°À­¤òÊÑ¹¹¤Ç¤­¤Þ¤¹¡
 =end
 
 def history
-  h = Hiki::History.new(@cgi, @db, @conf)
+  h = Hiki::History.new(@request, @db, @conf)
   h.history
 end
 
 def history_src
-  h = Hiki::History.new(@cgi, @db, @conf)
+  h = Hiki::History.new(@request, @db, @conf)
   h.history_src
 end
 
 def history_diff
-  h = Hiki::History.new(@cgi, @db, @conf)
+  h = Hiki::History.new(@request, @db, @conf)
   h.history_diff
 end
 
@@ -97,7 +97,7 @@ module Hiki
       parser = @conf.parser.new( @conf )
       tokens = parser.parse( s )
       formatter = @conf.formatter.new( tokens, @db, @plugin, @conf )
-      @page  = Page.new( @cgi, @conf )
+      @page  = Page.new( @request, @conf )
       data   = get_common_data( @db, @plugin, @conf )
       @plugin.hiki_menu(data, @cmd)
       pg_title = @plugin.page_name(@p)
@@ -210,7 +210,7 @@ module Hiki
     # Output source at an arbitrary revision
     def history_src
       # make command string
-      r = @cgi.params['r'] || '1'
+      r = @request.params['r'] || '1'
       txt = @conf.repos.get_revision(@p, r)
       txt = "*** no source ***" if txt.empty?
 
@@ -233,8 +233,8 @@ module Hiki
     # Output diff between two arbitrary revisions
     def history_diff
       # make command string
-      r = @cgi.params['r'] || '1'
-      r2 = @cgi.params['r2']
+      r = @request.params['r'] || '1'
+      r2 = @request.params['r2']
       if r2.nil? || r2.to_i == 0
         new = @db.load(@p)
         old = @conf.repos.get_revision(@p, r)
