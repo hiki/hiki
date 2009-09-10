@@ -10,11 +10,10 @@ EOF
 end
 
 def trackback_post
-  params     = @cgi.params
+  params     = @request.params
   url = params['url']
-  unless 'POST' == @cgi.request_method && url
-    redirect(@cgi, "#{@conf.index_url}?#{h(@page)}")
-    return
+  unless 'POST' == @request.request_method && url
+    return redirect(@request, "#{@conf.index_url}?#{h(@page)}")
   end
   blog_name = utf8_to_euc( params['blog_name'] || '' )
   title = utf8_to_euc( params['title'] || '' )
