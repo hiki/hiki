@@ -20,20 +20,20 @@ class BayesFilterConfig
 
   SubmittedPages = Struct.new(:ham, :spam, :doubt)
 
-  def initialize(cgi, conf, mode, db)
+  def initialize(request, conf, mode, db)
     BayesFilter.init(conf)
-    @cgi = cgi
+    @request = request
     @conf = conf
     @confmode = mode
     @db = db
   end
 
   def save_mode?
-    @cgi.request_method=="POST" and @confmode=="saveconf"
+    @request.request_method=="POST" and @confmode=="saveconf"
   end
 
   def html
-    case @mode = @cgi.params['bfmode']
+    case @mode = @request.params['bfmode']
     when Mode::SUBMITTED_PAGES
       r = submitted_pages_html
     when Mode::SUBMITTED_PAGE_DIFF
@@ -69,22 +69,22 @@ class BayesFilterConfig
     @conf[THRESHOLD] ||= 0.9
     @conf[THRESHOLD_HAM] ||= 0.1
 
-    if save_mode? and @cgi.params["from_top"]
-      @conf[USE] = @cgi.params[USE]
-      @conf[REPORT] = @cgi.params[REPORT]
-      @conf[SHARE_DB] = @cgi.params[SHARE_DB]
-      @conf[LIMIT_OF_SUBMITTED_PAGES] = @cgi.params[LIMIT_OF_SUBMITTED_PAGES] || 50
-      threshold_spam = (@cgi.params[THRESHOLD]||0.95).to_f
-      threshold_ham = (@cgi.params[THRESHOLD_HAM]||0.05).to_f
+    if save_mode? and @request.params["from_top"]
+      @conf[USE] = @request.params[USE]
+      @conf[REPORT] = @request.params[REPORT]
+      @conf[SHARE_DB] = @request.params[SHARE_DB]
+      @conf[LIMIT_OF_SUBMITTED_PAGES] = @request.params[LIMIT_OF_SUBMITTED_PAGES] || 50
+      threshold_spam = (@request.params[THRESHOLD]||0.95).to_f
+      threshold_ham = (@request.params[THRESHOLD_HAM]||0.05).to_f
       if 0 <= threshold_ham and threshold_ham <= threshold_spam and threshold_spam <= 1.0
         @conf[THRESHOLD_HAM] = threshold_ham
         @conf[THRESHOLD] = threshold_spam
       end
 
       rebuild = false
-      rebuild = true if @cgi.params["rebuild_db"]=="execute"
-      if @cgi.params[TYPE] && @cgi.params[TYPE]!=@conf[TYPE]
-        @conf[TYPE] = @cgi.params[TYPE]
+      rebuild = true if @request.params["rebuild_db"]=="execute"
+      if @request.params[TYPE] && @request.params[TYPE]!=@conf[TYPE]
+        @conf[TYPE] = @request.params[TYPE]
         rebuild = true
       end
 
@@ -181,7 +181,7 @@ EOT
   end
 
   def submitted_page_diff_html
-    return "" unless data = BayesFilter::PageData.load_from_cache(@cgi.params["id"].untaint)
+    return "" unless data = BayesFilter::PageData.load_from_cache(@request.params["id"].untaint)
     <<EOT
 <h3>#{Res.submitted_page_diff}</h3>
 <dl>
@@ -196,7 +196,7 @@ EOT
   end
 
   def page_token_html
-    return "" unless data = BayesFilter::PageData.load_from_cache(@cgi.params["id"].untaint)
+    return "" unless data = BayesFilter::PageData.load_from_cache(@request.params["id"].untaint)
     <<EOT
 <h3>#{Res.page_token}</h3>
 #{tokens_html(data.token)}
@@ -231,10 +231,10 @@ EOT
   def process_page_data
     return unless save_mode?
 
-    @cgi.params.keys.select{|k| k=~/\A[HSD]\d+\z/}.each do |id|
+    @request.params.keys.select{|k| k=~/\A[HSD]\d+\z/}.each do |id|
       data = BayesFilter::PageData.load_from_cache(id.dup.untaint, true)
       next unless data
-      case @cgi.params["register_#{id}"]
+      case @request.params["register_#{id}"]
       when "ham"
         add_ham(data.token)
         data.corpus_save(true)
@@ -328,7 +328,7 @@ end
 if self.is_a?(::Hiki::Plugin)
   add_conf_proc( "bayes_filter",  BayesFilterConfig::Res.label) do
     begin
-      BayesFilterConfig.new(@cgi, @conf, @mode, @db).html
+      BayesFilterConfig.new(@request, @conf, @mode, @db).html
     rescue
       <<EOT
 <pre>
