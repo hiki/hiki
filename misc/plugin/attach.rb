@@ -110,13 +110,11 @@ def attach_download
     else
       header['Content-Disposition'] = %Q|attachment; filename="#{file_name.to_sjis}"; modification-date="#{header['Last-Modified']}";|
     end
-    print @cgi.header(header)
-    print File.open(attach_file.untaint, 'rb').read
+    return ::Hiki::Response.new(File.open(attach_file.untaint, 'rb').read, 200, header)
   else
     data = get_common_data( @db, @plugin, @conf )
-    generate_error_page( data )
+    return generate_error_page( data )
   end
-  nil
 end
 
 def attach_src(file_name, page = @page)
