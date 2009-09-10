@@ -14,12 +14,12 @@
 =begin
 token="your_site_token"
 tk = TypeKey.new(token,'1.1')
-if cgi.params['tk'][0] == "1"
-  ts = cgi.params["ts"][0]
-  email =cgi.params["email"][0]
-  name =cgi.params["name"][0]
-  nick =cgi.params["nick"][0]
-  sig = cgi.params["sig"][0]
+if request.params['tk'] == "1"
+  ts    = request.params["ts"]
+  email = request.params["email"]
+  name  = request.params["name"]
+  nick  = request.params["nick"]
+  sig   = request.params["sig"]
   if tk.verify(email, name, nick, ts, sig)
     puts "verify!"
   else
@@ -36,7 +36,7 @@ puts "<a href=\"#{url_sign_out}\">sign out</a><br />";
 =end
 
 require 'uri'
-require 'cgi'
+require 'cgi' unless Object.const_defined?(:Rack)
 require 'open-uri'
 require 'base64'
 require 'openssl'
@@ -107,7 +107,7 @@ class TypeKey
     url += 'login?t=' + @token
     url += email
     url += '&v=' + @version
-    url += '&_return=' + CGI.escape(return_url)
+    url += '&_return=' + Hiki::Util.escape(return_url)
     return url
   end
 
