@@ -8,15 +8,15 @@ def add_referer(db)
     raise unless @db.exist?(@page)
     omit_url = false
 
-    if @options['referer.omit_url'] && @cgi.referer
-      omit_url = Regexp.new("(#{@options['referer.omit_url'].join('|')})") =~ @cgi.referer
+    if @options['referer.omit_url'] && @request.referer
+      omit_url = Regexp.new("(#{@options['referer.omit_url'].join('|')})") =~ @request.referer
     end
 
-    raise if 'HEAD' == @cgi.request_method || ! @cgi.referer ||
-                       /^https?/ !~ @cgi.referer || omit_url
+    raise if 'HEAD' == @request.request_method || ! @request.referer ||
+                       /^https?/ !~ @request.referer || omit_url
 
     db.transaction do
-      db[@cgi.referer] = (db.root?(@cgi.referer) ? db[@cgi.referer] : 0) + 1
+      db[@request.referer] = (db.root?(@request.referer) ? db[@request.referer] : 0) + 1
     end
   rescue Exception
   end
