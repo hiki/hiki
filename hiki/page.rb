@@ -15,8 +15,8 @@ module Hiki
 
     attr_accessor :template, :contents
 
-    def initialize(cgi, conf)
-      @cgi = cgi
+    def initialize(request, conf)
+      @request = request
       @conf = conf
       @template = ''
       @contents = nil
@@ -32,7 +32,7 @@ module Hiki
 
       @conf.save_config if @contents[:save_config]
       @headers = {}
-      if @contents[:last_modified] and 'HEAD' == @cgi.request_method
+      if @contents[:last_modified] and 'HEAD' == @request.request_method
         @headers['Last-Modified']    = CGI.rfc1123_date(@contents[:last_modified])
       end
       @headers['type']     = 'text/html'

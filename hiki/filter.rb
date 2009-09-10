@@ -27,9 +27,9 @@ module Hiki
       end
     end
 
-    def self.init(conf, cgi, plugin, db)
+    def self.init(conf, request, plugin, db)
       @conf = conf
-      @cgi = cgi
+      @request = request
       @plugin = plugin
       @db = db
     end
@@ -49,8 +49,8 @@ module Hiki
       new_page = PageData.new(page,
                               text.gsub(/\r\n/, "\n"),
                               title,
-                              (@cgi.params["keyword"] || "").gsub(/\r\n/, "\n").split(/\n/),
-                              @cgi.remote_addr)
+                              (@request.params["keyword"] || "").gsub(/\r\n/, "\n").split(/\n/),
+                              @request.remote_addr)
 
       old_title = @db.get_attribute(page, :title) || ""
       old_title = page if old_title.empty?

@@ -48,10 +48,11 @@ module Hiki
         request.params['p'] = page
         db = conf.database
         options = conf.options || Hash.new('')
-        options['page'] = page
-        options['cgi']  = request
-        options['db']  = db
-        options['params'] = Hash.new('')
+        options['page']     = page
+        options['request']  = request
+        options['cgi']      = request # for backward compatibility
+        options['db']       = db
+        options['params']   = Hash.new('')
         plugin = Hiki::Plugin.new( options, conf )
         plugin.login( attributes['name'], attributes['password'] )
         Hiki::Filter.init(conf, request, plugin, db)
