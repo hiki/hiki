@@ -81,13 +81,13 @@ def recent( n = 20 )
   s = ''
   c = 0
   ddd = nil
-  
+
   l.each do |a|
     break if (c += 1) > n
     name = a.keys[0]
     p = a[name]
-    
-    tm = p[:last_modified ] 
+
+    tm = p[:last_modified ]
     cur_date = tm.strftime( @conf.msg_date_format )
 
     if ddd != cur_date
@@ -155,7 +155,7 @@ def hiki_header
   <link rel="stylesheet" type="text/css" href="#{h(theme_url)}" media="all">
 EOS
   s << <<EOS if @command != 'view'
-  <meta name="ROBOTS" content="NOINDEX,NOFOLLOW"> 
+  <meta name="ROBOTS" content="NOINDEX,NOFOLLOW">
   <meta http-equiv="pragma" content="no-cache">
   <meta http-equiv="cache-control" content="no-cache">
   <meta http-equiv="expires" content="0">
@@ -229,24 +229,24 @@ end
 # conf: default
 def saveconf_default
   if @mode == 'saveconf' then
-    @conf.site_name = @cgi.params['site_name']
-    @conf.author_name = @cgi.params['author_name']
+    @conf.site_name = @request.params['site_name']
+    @conf.author_name = @request.params['author_name']
     mails = []
-    @cgi.params['mail'].each_line do |addr|
+    @request.params['mail'].each_line do |addr|
       mails << addr.gsub(/\r?\n/, '').strip
     end
     mails.delete_if{|e| e.empty?}
     @conf.mail = mails
-    @conf.mail_on_update = @cgi.params['mail_on_update'] == "true"
+    @conf.mail_on_update = @request.params['mail_on_update'] == "true"
   end
 end
 
 # conf: password
 def saveconf_password
   if @mode == 'saveconf' then
-    old_password    = @cgi.params['old_password']
-    password1       = @cgi.params['password1']
-    password2       = @cgi.params['password2']
+    old_password    = @request.params['old_password']
+    password1       = @request.params['password1']
+    password2       = @request.params['password2']
     if password1 and password1.size > 0
       if (@conf.password.size > 0 && old_password.crypt( @conf.password ) != @conf.password) ||
           (password1 != password2)
@@ -265,20 +265,20 @@ def saveconf_theme
   # dummy
 end
 
-if @cgi.params['conf'] == 'theme' && @mode == 'saveconf'
-  @conf.theme          = @cgi.params['theme'] || ''
-  @conf.use_sidebar    = @cgi.params['sidebar'] == "true"
-  @conf.main_class     = @cgi.params['main_class']
+if @request.params['conf'] == 'theme' && @mode == 'saveconf'
+  @conf.theme          = @request.params['theme'] || ''
+  @conf.use_sidebar    = @request.params['sidebar'] == "true"
+  @conf.main_class     = @request.params['main_class']
   @conf.main_class     = 'main' if @conf.main_class == ''
-  @conf.sidebar_class  = @cgi.params['sidebar_class']
+  @conf.sidebar_class  = @request.params['sidebar_class']
   @conf.sidebar_class  = 'sidebar' if @conf.sidebar_class == ''
-  @conf.auto_link      = @cgi.params['auto_link'] == "true"
-  @conf.use_wikiname   = @cgi.params['use_wikiname'] == "true"
-  @conf.theme_url      = @cgi.params['theme_url']
-  @conf.theme_path     = @cgi.params['theme_path']
+  @conf.auto_link      = @request.params['auto_link'] == "true"
+  @conf.use_wikiname   = @request.params['use_wikiname'] == "true"
+  @conf.theme_url      = @request.params['theme_url']
+  @conf.theme_path     = @request.params['theme_path']
 end
 
-if @cgi.params['conf'] == 'theme'
+if @request.params['conf'] == 'theme'
   @conf_theme_list = []
   Dir.glob( "#{@conf.theme_path}/*".untaint ).sort.each do |dir|
     theme = File.basename( dir )
@@ -291,7 +291,7 @@ end
 # conf: XML-RPC
 def saveconf_xmlrpc
   if @mode == 'saveconf'
-    @conf.xmlrpc_enabled = @cgi.params['xmlrpc_enabled'] == 'true'
+    @conf.xmlrpc_enabled = @request.params['xmlrpc_enabled'] == 'true'
   end
 end
 
