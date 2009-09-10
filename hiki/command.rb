@@ -22,16 +22,17 @@ module Hiki
   class Command
     include Hiki::Util
     # TODO cgi -> request
-    def initialize(cgi, db, conf)
-      @db     = db
-      @params = cgi.params
-      @cgi    = cgi
-      @conf   = conf
-      @cookies = cgi.cookies
+    def initialize(request, db, conf)
+      @db      = db
+      @request = request
+      @cgi     = @request # for backward compatibility
+      @params  = @request.params
+      @cookies = @request.cookies
+      @conf    = conf
       code_conv
 
       # for TrackBack
-      if %r|/tb/(.+)$| =~ @cgi.env['REQUEST_URI']
+      if %r|/tb/(.+)$| =~ @request.env['REQUEST_URI']
         @params['p'] = unescape($1)
         @params['c'] = 'plugin'
         @params['plugin'] = 'trackback_post'
@@ -52,7 +53,7 @@ module Hiki
            end
 
       if /\A\.{1,2}\z/ =~ @p
-        redirect(@cgi, @conf.index_url)
+        redirect(@request, @conf.index_url)
         return
       end
 
@@ -60,12 +61,13 @@ module Hiki
       @p = @aliaswiki.original_name(@p).to_euc if @p
 
       options = @conf.options || Hash.new( '' )
-      options['page'] = @p
-      options['db']   = @db
-      options['cgi']  = cgi
-      options['alias'] = @aliaswiki
+      options['page']    = @p
+      options['db']      = @db
+      options['request'] = @request
+      options['cgi']     = @request # for backward compatibility
+      options['alias']   = @aliaswiki
       options['command'] = @cmd ? @cmd : 'view'
-      options['params'] = @params
+      options['params']  = @params
 
       @plugin = Plugin.new( options, @conf )
       session_id = @cookies['session_id']
@@ -84,13 +86,13 @@ module Hiki
       end
       @body_enter = @plugin.body_enter_proc
 
-      Filter.init(@conf, @cgi, @plugin, @db)
+      Filter.init(@conf, @request, @plugin, @db)
     end
 
     def dispatch
       begin
         Timeout.timeout(@conf.timeout) {
-          if @cgi.post?
+          if @request.post?
             raise PermissionError, 'Permission denied' unless @plugin.postable?
           end
           @cmd = 'view' unless @cmd
@@ -145,7 +147,7 @@ module Hiki
         data[:body].gsub!( Regexp.new( Regexp.quote( Plugin::TOC_STRING ) ), data[:toc] )
       end
 
-      @page = Hiki::Page.new( @cgi, @conf )
+      @page = Hiki::Page.new( @request, @conf )
       @page.template = @conf.read_template( @cmd )
       @page.contents = data
 
@@ -161,7 +163,7 @@ module Hiki
       data[:view_title] = 'Error'
       data[:header] = @plugin.header_proc
       data[:frontpage] = @plugin.page_name( 'FrontPage' )
-      @page = Hiki::Page.new( @cgi, @conf )
+      @page = Hiki::Page.new( @request, @conf )
       @page.template = @conf.read_template( 'error' )
       @page.contents = data
       @page.process( @plugin )
@@ -407,7 +409,7 @@ module Hiki
         end
 
         @db.freeze_page( page, @params['freeze'] ? true : false) if @plugin.admin?
-        return redirect(@cgi, @conf.base_url + @plugin.hiki_url(page))
+        return redirect(@request, @conf.base_url + @plugin.hiki_url(page))
       end
     end
 
@@ -499,7 +501,7 @@ module Hiki
             url = @conf.index_url
           end
           cookies = [session_cookie(session.session_id)]
-          return redirect(@cgi, url, cookies)
+          return redirect(@request, url, cookies)
         else
           msg_login_result = @conf.msg_login_failure
           status = '403 Forbidden'
@@ -565,7 +567,7 @@ module Hiki
       end
 
       if redirect_mode and result
-        redirect(@cgi, @conf.base_url + @plugin.hiki_url(@p))
+        redirect(@request, @conf.base_url + @plugin.hiki_url(@p))
       end
     end
 
@@ -574,7 +576,7 @@ module Hiki
         cookies = [session_cookie(session_id, -1)]
         Hiki::Session.new( @conf, session_id ).delete
       end
-      redirect(@cgi, @conf.index_url, cookies)
+      redirect(@request, @conf.index_url, cookies)
     end
 
     def cookie(name, value, max_age = Session::MAX_AGE)
