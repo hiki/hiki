@@ -50,8 +50,8 @@ module Hiki
       @plugin_menu      = []
       @text             = ''
 
-      @mode = 'conf' if options['params']['c'] == 'admin'
-      @mode = 'saveconf' if options['params']['saveconf']
+      @mode = 'conf' if @request.params['c'] == 'admin'
+      @mode = 'saveconf' if @request.params['saveconf']
 
       # loading plugins
       @plugin_files = []
