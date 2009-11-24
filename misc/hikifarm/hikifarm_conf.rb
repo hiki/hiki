@@ -13,7 +13,11 @@
 
 # データを入れるディレクトリ
 # この下に各Wiki名のディレクトリが掘られる
-@data_path = '/home/foo/var/hiki'
+@data_root = '/home/foo/var/hiki'
+
+# デフォルトの hikiconf.rb を保存するディレクトリ
+# hikiconf.rb は各 Wiki ごとに作成する
+@farm_root = "#{@hiki}/public"
 
 # バージョン管理なし
 @repos_type = nil
