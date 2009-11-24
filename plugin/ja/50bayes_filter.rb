@@ -1,35 +1,35 @@
-# -*- coding: euc-jp -*-
+# -*- coding: utf-8 -*-
 # Copyright (C) 2008, KURODA Hiraku <hiraku@hinet.mydns.jp>
 # You can redistribute it and/or modify it under GPL2. 
 
 class BayesFilterConfig
   module Res
-    def self.label; "¥Ù¥¤¥º¥Õ¥£¥ë¥¿"; end
-    def self.submitted_pages; "Åê¹Æ¤µ¤ì¤¿¥Ú¡¼¥¸¥Ç¡¼¥¿°ìÍ÷"; end
-    def self.submitted_page_diff; "Åê¹Æ¤µ¤ì¤¿¥Ú¡¼¥¸¤Îº¹Ê¬"; end
-    def self.spam_rate; "¥¹¥Ñ¥àÎ¨"; end
-    def self.title; "¥¿¥¤¥È¥ë"; end
-    def self.diff_text; "ËÜÊ¸ÄÉ²ÃÉôÊ¬"; end
-    def self.diff_keyword; "ÄÉ²Ã¥­¡¼¥ï¡¼¥É"; end
-    def self.remote_addr; "¥ê¥â¡¼¥È¥¢¥É¥ì¥¹"; end
-    def self.register_as_ham; "¥Ï¥à¤È¤·¤ÆÅĞÏ¿"; end
-    def self.register_as_spam; "¥¹¥Ñ¥à¤È¤·¤ÆÅĞÏ¿"; end
-    def self.success_process_page_data; "Åê¹Æ¥Ú¡¼¥¸¥Ç¡¼¥¿¤ò½èÍı¤·¤Ş¤·¤¿"; end
-    def self.ham_tokens; "¥Ï¥à¤Î¥È¡¼¥¯¥ó°ìÍ÷"; end
-    def self.spam_tokens; "¥¹¥Ñ¥à¤Î¥È¡¼¥¯¥ó°ìÍ÷"; end
-    def self.token; "¥È¡¼¥¯¥ó"; end
-    def self.score; "¥¹¥Ñ¥àÎ¨"; end
-    def self.old_text; "¹¹¿·Á°ËÜÊ¸"; end
-    def self.new_text; "¹¹¿·¸åËÜÊ¸"; end
-    def self.rebuild_db; "¥Ù¥¤¥º¥Õ¥£¥ë¥¿ÍÑ¥Ç¡¼¥¿¥Ù¡¼¥¹¤òºÆ¹½ÃÛ¤¹¤ë"; end
-    def self.remote_addr; "¥ê¥â¡¼¥È¥Û¥¹¥È¥¢¥É¥ì¥¹"; end
-    def self.other; "¤½¤ÎÂ¾"; end
-    def self.use_filter; "¥Ù¥¤¥º¥Õ¥£¥ë¥¿¤ò»È¤¦"; end
-    def self.threshold; "ïçÃÍ"; end
-    def self.page_token; "¥Ú¡¼¥¸Ãæ¤Î¥È¡¼¥¯¥ó°ìÍ÷"; end
-    def self.report_filtering; "¥Õ¥£¥ë¥¿¥ê¥ó¥°·ë²Ì¤ò¥á¡¼¥ë¤ÇÄÌÃÎ"; end
-    def self.share_db; "¶¦ÍÑ¥Ç¡¼¥¿¥Ù¡¼¥¹¤ò»È¤¦"; end
-    def self.limit_of_submitted_pages; "°ìÅÙ¤ËÉ½¼¨¤¹¤ëÅê¹Æ¥Ú¡¼¥¸¥Ç¡¼¥¿¤Î¿ô"; end
-	 def self.difference; "º¹Ê¬"; end
+    def self.label; "ãƒ™ã‚¤ã‚ºãƒ•ã‚£ãƒ«ã‚¿"; end
+    def self.submitted_pages; "æŠ•ç¨¿ã•ã‚ŒãŸãƒšãƒ¼ã‚¸ãƒ‡ãƒ¼ã‚¿ä¸€è¦§"; end
+    def self.submitted_page_diff; "æŠ•ç¨¿ã•ã‚ŒãŸãƒšãƒ¼ã‚¸ã®å·®åˆ†"; end
+    def self.spam_rate; "ã‚¹ãƒ‘ãƒ ç‡"; end
+    def self.title; "ã‚¿ã‚¤ãƒˆãƒ«"; end
+    def self.diff_text; "æœ¬æ–‡è¿½åŠ éƒ¨åˆ†"; end
+    def self.diff_keyword; "è¿½åŠ ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰"; end
+    def self.remote_addr; "ãƒªãƒ¢ãƒ¼ãƒˆã‚¢ãƒ‰ãƒ¬ã‚¹"; end
+    def self.register_as_ham; "ãƒãƒ ã¨ã—ã¦ç™»éŒ²"; end
+    def self.register_as_spam; "ã‚¹ãƒ‘ãƒ ã¨ã—ã¦ç™»éŒ²"; end
+    def self.success_process_page_data; "æŠ•ç¨¿ãƒšãƒ¼ã‚¸ãƒ‡ãƒ¼ã‚¿ã‚’å‡¦ç†ã—ã¾ã—ãŸ"; end
+    def self.ham_tokens; "ãƒãƒ ã®ãƒˆãƒ¼ã‚¯ãƒ³ä¸€è¦§"; end
+    def self.spam_tokens; "ã‚¹ãƒ‘ãƒ ã®ãƒˆãƒ¼ã‚¯ãƒ³ä¸€è¦§"; end
+    def self.token; "ãƒˆãƒ¼ã‚¯ãƒ³"; end
+    def self.score; "ã‚¹ãƒ‘ãƒ ç‡"; end
+    def self.old_text; "æ›´æ–°å‰æœ¬æ–‡"; end
+    def self.new_text; "æ›´æ–°å¾Œæœ¬æ–‡"; end
+    def self.rebuild_db; "ãƒ™ã‚¤ã‚ºãƒ•ã‚£ãƒ«ã‚¿ç”¨ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã‚’å†æ§‹ç¯‰ã™ã‚‹"; end
+    def self.remote_addr; "ãƒªãƒ¢ãƒ¼ãƒˆãƒ›ã‚¹ãƒˆã‚¢ãƒ‰ãƒ¬ã‚¹"; end
+    def self.other; "ãã®ä»–"; end
+    def self.use_filter; "ãƒ™ã‚¤ã‚ºãƒ•ã‚£ãƒ«ã‚¿ã‚’ä½¿ã†"; end
+    def self.threshold; "é–¾å€¤"; end
+    def self.page_token; "ãƒšãƒ¼ã‚¸ä¸­ã®ãƒˆãƒ¼ã‚¯ãƒ³ä¸€è¦§"; end
+    def self.report_filtering; "ãƒ•ã‚£ãƒ«ã‚¿ãƒªãƒ³ã‚°çµæœã‚’ãƒ¡ãƒ¼ãƒ«ã§é€šçŸ¥"; end
+    def self.share_db; "å…±ç”¨ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã‚’ä½¿ã†"; end
+    def self.limit_of_submitted_pages; "ä¸€åº¦ã«è¡¨ç¤ºã™ã‚‹æŠ•ç¨¿ãƒšãƒ¼ã‚¸ãƒ‡ãƒ¼ã‚¿ã®æ•°"; end
+	 def self.difference; "å·®åˆ†"; end
   end
 end

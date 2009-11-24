@@ -1,27 +1,27 @@
-# -*- coding: euc-jp -*-
+# -*- coding: utf-8 -*-
 # $Id: auth_typekey.rb,v 1.1 2005-03-06 09:05:23 fdiary Exp $
 # Copyright (C) 2005 TAKEUCHI Hitoshi
 
 def label_auth_typekey_login
 <<EOS
 <div class="hello">
-  ¥Ú¡¼¥¸¤òÊÔ½¸¤¹¤ë¤Ë¤Ï<a href="#{login_url}">¥í¥°¥¤¥ó</a>¤¬É¬Í×¤Ç¤¹¡£
+  ãƒšãƒ¼ã‚¸ã‚’ç·¨é›†ã™ã‚‹ã«ã¯<a href="#{login_url}">ãƒ­ã‚°ã‚¤ãƒ³</a>ãŒå¿…è¦ã§ã™ã€‚
 </div>
 EOS
 end
 
 def label_auth_typekey_hello
-  '¤³¤ó¤Ë¤Á¤Ï¡£%s¤µ¤ó'
+  'ã“ã‚“ã«ã¡ã¯ã€‚%sã•ã‚“'
 end
 
 def label_auth_typekey_config
-  'TypeKeyÇ§¾Ú'
+  'TypeKeyèªè¨¼'
 end
 
 def label_auth_typekey_token
-  'TypeKey¥È¡¼¥¯¥ó'
+  'TypeKeyãƒˆãƒ¼ã‚¯ãƒ³'
 end
 
 def label_auth_typekey_token_msg
-  'TypeKey¤Î¥È¡¼¥¯¥ó¤ò»ØÄê¤·¤Ş¤¹¡£¥È¡¼¥¯¥ó¤ÏTypeKey¤Î¥µ¥¤¥È¤Î¥¢¥«¥¦¥ó¥È¾ğÊó¤Ç³ÎÇ§¤·¤Æ¤¯¤À¤µ¤¤¡£'
+  'TypeKeyã®ãƒˆãƒ¼ã‚¯ãƒ³ã‚’æŒ‡å®šã—ã¾ã™ã€‚ãƒˆãƒ¼ã‚¯ãƒ³ã¯TypeKeyã®ã‚µã‚¤ãƒˆã®ã‚¢ã‚«ã‚¦ãƒ³ãƒˆæƒ…å ±ã§ç¢ºèªã—ã¦ãã ã•ã„ã€‚'
 end

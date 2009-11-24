@@ -1,4 +1,4 @@
-# -*- coding: euc-jp -*-
+# -*- coding: utf-8 -*-
 # highlight.rb $Revision: 1.3 $
 #
 # ジャンプ先のエレメントをハイライトする。通称「謎JavaScript。最終形態」

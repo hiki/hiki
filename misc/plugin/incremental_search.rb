@@ -1,4 +1,4 @@
-# -*- coding: euc-jp -*-
+# -*- coding: utf-8 -*-
 # ajaxsearch.rb $Revision: 1.3 $
 # Copyright (C) 2005 Michitaka Ohno <elpeo@mars.dti.ne.jp>
 #

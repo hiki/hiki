@@ -1,4 +1,4 @@
-# -*- coding: euc-jp -*-
+# -*- coding: utf-8 -*-
 =begin
 
 == plugin/history.rb - CVS の編集履歴を表示するプラグイン

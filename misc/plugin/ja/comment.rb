@@ -1,19 +1,19 @@
-# -*- coding: euc-jp -*-
+# -*- coding: utf-8 -*-
 # $Id: comment.rb,v 1.1 2005-03-03 15:53:56 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 def comment_name_label
-  '¤ªΜΎΑ°'
+  'γεε‰'
 end
 
 def comment_comment_label
-  '¥³¥α¥σ¥Θ'
+  'γ‚³γƒ΅γƒ³γƒ'
 end
 
 def comment_post_label
-  'ΕκΉΖ'
+  'ζ•η¨Ώ'
 end
 
 def comment_anonymous_label
-  'ΜΎΜµ¤·¤µ¤σ'
+  'εη„΅γ—γ•γ‚“'
 end

@@ -1,54 +1,54 @@
-# -*- coding: euc-jp -*-
+# -*- coding: utf-8 -*-
 def help_lineshelp_label
-   '¹Ô»Ù±ç'
+   'è¡Œæ”¯æ´'
 end
 
 def help_wordshelp_label
-   'Ê¸»ú»Ù±ç'
+   'æ–‡å­—æ”¯æ´'
 end
 
 def help_tablehelp_label
-   'É½»Ù±ç'
+   'è¡¨æ”¯æ´'
 end
 
 def help_pluginhelp_label
-   '¥×¥é¥°¥¤¥ó»Ù±ç'
+   'ãƒ—ãƒ©ã‚°ã‚¤ãƒ³æ”¯æ´'
 end
 
 def help_mathhelp_label
-   '¿ô¼°»Ù±ç'
+   'æ•°å¼æ”¯æ´'
 end
 
 def help_heading_label
-   '¸«½Ğ¤·'
+   'è¦‹å‡ºã—'
 end
 
 def help_list_label
-   '²Õ¾ò½ñ'
+   'ç®‡æ¡æ›¸'
 end
 
 def help_numbered_label
-   'ÈÖ¹æÉÕ'
+   'ç•ªå·ä»˜'
 end
 
 def help_preformatted_label
-   'À°·ÁºÑ'
+   'æ•´å½¢æ¸ˆ'
 end
 
 def help_quotation_label
-   '°úÍÑ'
+   'å¼•ç”¨'
 end
 
 def help_comment_label
-   '¥³¥á¥ó¥È'
+   'ã‚³ãƒ¡ãƒ³ãƒˆ'
 end
 
 def help_cancel_label
-   '²ò½ü'
+   'è§£é™¤'
 end
 
 def help_link_label
-   '¥ê¥ó¥¯'
+   'ãƒªãƒ³ã‚¯'
 end
 
 def help_url_label
@@ -56,65 +56,65 @@ def help_url_label
 end
 
 def help_emphasized_label
-   '¶¯Ä´'
+   'å¼·èª¿'
 end
 
 def help_strongly_label
-   '¤µ¤é¤Ë'
+   'ã•ã‚‰ã«'
 end
 
 def help_struckout_label
-   '¼è¾ÃÀş'
+   'å–æ¶ˆç·š'
 end
 
 def help_definition_label
-   'ÍÑ¸ì²òÀâ'
+   'ç”¨èªè§£èª¬'
 end
 
 def help_horizontal_label
-   '¿åÊ¿Àş'
+   'æ°´å¹³ç·š'
 end
 
 def help_cell_label
-   '¥»¥ë'
+   'ã‚»ãƒ«'
 end
 
 def help_headingcell_label
-   '¸«½Ğ¤·'
+   'è¦‹å‡ºã—'
 end
 
 def help_rows_label
-   '½ÄÏ¢·ë'
+   'ç¸¦é€£çµ'
 end
 
 def help_columns_label
-   '²£Ï¢·ë'
+   'æ¨ªé€£çµ'
 end
 
 def help_plugin_label
-   '¥×¥é¥°¥¤¥ó'
+   'ãƒ—ãƒ©ã‚°ã‚¤ãƒ³'
 end
 
 def help_br_label
-   '²ş¹Ô'
+   'æ”¹è¡Œ'
 end
 
 def help_toc_label
-   'ÌÜ¼¡'
+   'ç›®æ¬¡'
 end
 
 def help_tochere_label
-   '¤³¤³¤Ë'
+   'ã“ã“ã«'
 end
 
 def help_recent_label
-   'ºÇ¶á'
+   'æœ€è¿‘'
 end
 
 def help_display_label
-   '¥Ç¥£¥¹¥×¥ì¥¤'
+   'ãƒ‡ã‚£ã‚¹ãƒ—ãƒ¬ã‚¤'
 end
 
 def help_inline_label
-   '¥¤¥ó¥é¥¤¥ó'
+   'ã‚¤ãƒ³ãƒ©ã‚¤ãƒ³'
 end

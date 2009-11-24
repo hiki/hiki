@@ -1,11 +1,11 @@
-# -*- coding: euc-jp -*-
+# -*- coding: utf-8 -*-
 # $Id: referer.rb,v 1.1 2005-03-03 15:53:56 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 def referer_short_label
-  '¥ê¥ó¥¯¸µ'
+  'ãƒªãƒ³ã‚¯å…ƒ'
 end
 
 def referer_long_label
-  '¤³¤Î¥Ú¡¼¥¸¤Ø¤Î¥ê¥ó¥¯¸µ'
+  'ã“ã®ãƒšãƒ¼ã‚¸ã¸ã®ãƒªãƒ³ã‚¯å…ƒ'
 end

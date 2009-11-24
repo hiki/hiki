@@ -1,20 +1,20 @@
-# -*- coding: euc-jp -*-
+# -*- coding: utf-8 -*-
 # $Id: edit_user.rb,v 1.2 2005-06-09 08:12:39 fdiary Exp $
 # Copyright (C) 2005 Kazuhiko <kazuhiko@fdiary.net>
 
-def label_edit_user_config; '¥æ¡¼¥¶ÊÔ½¸'; end
-def label_edit_user_title; '¥æ¡¼¥¶¤Îºï½ü / ¥Ñ¥¹¥ï¡¼¥É¤ÎÊÑ¹¹'; end
-def label_edit_user_add_title; '¥æ¡¼¥¶¤ÎÄÉ²Ã'; end
+def label_edit_user_config; 'ãƒ¦ãƒ¼ã‚¶ç·¨é›†'; end
+def label_edit_user_title; 'ãƒ¦ãƒ¼ã‚¶ã®å‰Šé™¤ / ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã®å¤‰æ›´'; end
+def label_edit_user_add_title; 'ãƒ¦ãƒ¼ã‚¶ã®è¿½åŠ '; end
 def label_edit_user_description
-  '°ì¹Ô¤º¤Ä¡Ö¥æ¡¼¥¶Ì¾&nbsp;¥Ñ¥¹¥ï¡¼¥É¡×¤È¤¤¤¦½ñ¼°¤Ç½ñ¤¤¤Æ¤¯¤À¤µ¤¤¡£'
+  'ä¸€è¡Œãšã¤ã€Œãƒ¦ãƒ¼ã‚¶å&nbsp;ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã€ã¨ã„ã†æ›¸å¼ã§æ›¸ã„ã¦ãã ã•ã„ã€‚'
 end
-def label_edit_user_auth_title; 'ÊÔ½¸¤ÎÀ©¸Â'; end
+def label_edit_user_auth_title; 'ç·¨é›†ã®åˆ¶é™'; end
 def label_edit_user_auth_description
-  'ÅĞÏ¿¥æ¡¼¥¶¤Î¤ßÊÔ½¸¤Ç¤­¤ë¤è¤¦¤ËÀ©¸Â¤·¤Ş¤¹¤«¡©'
+  'ç™»éŒ²ãƒ¦ãƒ¼ã‚¶ã®ã¿ç·¨é›†ã§ãã‚‹ã‚ˆã†ã«åˆ¶é™ã—ã¾ã™ã‹ï¼Ÿ'
 end
 def label_edit_user_auth_candidate
-  [ '¤Ï¤¤', '¤¤¤¤¤¨' ]
+  [ 'ã¯ã„', 'ã„ã„ãˆ' ]
 end
-def label_edit_user_delete; 'ºï½ü'; end
-def label_edit_user_name; '¥æ¡¼¥¶Ì¾'; end
-def label_edit_user_new_password; '¿·¥Ñ¥¹¥ï¡¼¥É'; end
+def label_edit_user_delete; 'å‰Šé™¤'; end
+def label_edit_user_name; 'ãƒ¦ãƒ¼ã‚¶å'; end
+def label_edit_user_new_password; 'æ–°ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰'; end

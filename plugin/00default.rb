@@ -147,7 +147,7 @@ def hiki_header
   s = <<EOS
   <meta http-equiv="Content-Language" content="#{@conf.lang}">
   <meta http-equiv="Content-Type" content="text/html; charset=#{@conf.charset}">
-  <meta http-equiv="Content-Script-Type" content="text/javascript; charset=euc-jp">
+  <meta http-equiv="Content-Script-Type" content="text/javascript; charset=#{@conf.charset}">
   <meta http-equiv="Content-Style-Type" content="text/css">
   <meta name="generator" content="#{@conf.generator}">
   <title>#{title}</title>

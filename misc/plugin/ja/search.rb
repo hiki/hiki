@@ -1,4 +1,4 @@
-# -*- coding: euc-jp -*-
+# -*- coding: utf-8 -*-
 def search_post_label
-  '¸¡º÷'
+  'æ¤œç´¢'
 end

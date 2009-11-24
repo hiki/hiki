@@ -1,23 +1,23 @@
-# -*- coding: euc-jp -*-
+# -*- coding: utf-8 -*-
 # $Id: bbs.rb,v 1.1 2005-03-03 15:53:56 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 def bbs_name_label
-  '¤ªÌ¾Á°'
+  'ãŠåå‰'
 end
 
 def bbs_subject_label
-  '·ïÌ¾'
+  'ä»¶å'
 end
 
 def bbs_post_label
-  'Åê¹Æ'
+  'æŠ•ç¨¿'
 end
 
 def bbs_anonymous_label
-  'Ì¾Ìµ¤·¤µ¤ó'
+  'åç„¡ã—ã•ã‚“'
 end
 
 def bbs_notitle_label
-  'ÌµÂê'
+  'ç„¡é¡Œ'
 end

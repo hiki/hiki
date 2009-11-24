@@ -1,4 +1,4 @@
-# -*- coding: euc-jp -*-
+# -*- coding: utf-8 -*-
 # footnote.rb $Revision: 1.10 $
 #
 # fn: µ”√Ìplugin
