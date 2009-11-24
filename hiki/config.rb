@@ -23,8 +23,8 @@ module Hiki
 
   class Config
     include ::Hiki::Util
-    def initialize
-      load
+    def initialize(config_path = 'hikiconf.rb')
+      load(config_path)
       load_cgi_conf
 
       load_messages
@@ -123,9 +123,9 @@ module Hiki
     private
 
     # loading hikiconf.rb in current directory
-    def load
+    def load(config_path = 'hikiconf.rb')
       @options = {}
-      eval( File.open( "hikiconf.rb" ){|f| f.read }.untaint, binding, "(hikiconf.rb)", 1 )
+      eval( File.open(config_path){|f| f.read }.untaint, binding, "(#{config_path})", 1 )
       formaterror if $data_path
 
       raise 'No @data_path variable.' unless @data_path

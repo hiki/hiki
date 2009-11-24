@@ -10,11 +10,14 @@ $LOAD_PATH.unshift(File.dirname(__FILE__))
 module Hiki
   class Attachment
     include ::Hiki::Util
+    def initialize(config_path)
+      @config_path = config_path
+    end
     def call(env)
       request = Hiki::Request.new(env)
       # HACK replace ENV values to web application environment
       env.each{|k,v| ENV[k] = v unless /\Arack\./ =~ k }
-      conf = Hiki::Config.new
+      conf = Hiki::Config.new(@config_path)
       response = attach_file(request, conf)
       response.finish
     end
