@@ -37,7 +37,12 @@ module Hiki
 
       def run(manager, request)
         case
-        when false # RSS
+        when request.get? && %r!\A/hikifarm.rss\z! =~ request.path_info
+          body = ::Hiki::Farm::RSSPage.new(@conf, manager).to_s
+          ::Hiki::Response.new(body, 200, { })
+        when request.get? && 'rss' == request.params[manager.command_key]
+          body = ::Hiki::Farm::RSSPage.new(@conf, manager).to_s
+          ::Hiki::Response.new(body, 200, { })
         when request.post? && request.params['wiki'] && !request.params['wiki'].empty?
           begin
             name = request.params['wiki']

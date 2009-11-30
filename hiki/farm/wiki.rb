@@ -1,7 +1,12 @@
+require 'hiki/util'
+
 module Hiki
   module Farm
     class Wiki
+      include ::Hiki::Util
+
       attr_reader :name, :title, :mtime, :last_modified_page, :pages_num, :pages
+
       def initialize(name, data_root)
         @name = name
         @pages_num = 0
@@ -35,6 +40,10 @@ module Hiki
             :mtime => File.mtime(page),
           }
         end
+      end
+
+      def description
+        "#{unescape(last_modified_page)} was updated."
       end
     end
   end

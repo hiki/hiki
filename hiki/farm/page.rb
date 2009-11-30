@@ -106,145 +106,58 @@ module Hiki
     end
 
     # TODO: refactor
-    class RSSPage < Page
+    class RSSPage
+      include ::Hiki::Util
+
       class << self
         def command_name
           'rss'
         end
       end
 
-      def initialize(farm, hikifarm_uri, template_dir, hikifarm_description,
-                     author, mail, title)
-        super(template_dir)
-        @manager = farm
-        @hikifarm_uri = hikifarm_uri
-        @hikifarm_base_uri = @hikifarm_uri.sub(%r|[^/]*$|, '')
-        @hikifarm_description = hikifarm_description
-        @author = author
-        @mail = mail
-        @title = title
-        @wikilist = @manager.wikilist.sort_by{|x| x.mtime}.reverse[0..14]
-        setup_headings
+      def initialize(conf, manager)
+        @conf = conf
+        @manager = manager
+      end
+
+      def to_s
+        make_rss.to_s
       end
 
       private
-      def template_name
-        'rss.rdf'
-      end
 
-      def setup_headings
-        @headings['type'] = 'text/xml'
-        @headings['charset'] = 'EUC-JP'
-        @headings['Content-Language'] = 'ja'
-        @headings['Pragma'] = 'no-cache'
-        @headings['Cache-Control'] = 'no-cache'
-        lm = last_modified
-        # @headings['Last-Modified'] = CGI.rfc1123_date(lm) if lm
-      end
+      def make_rss
+        require 'rss'
+        rss = RSS::Maker.make("1.0") do |maker|
+          maker.channel.about = "http://example.com/index.rdf"
+          maker.channel.title = @conf.title
+          maker.channel.description = @conf.hikifarm_description
+          maker.channel.link = "http://example.com/"
 
-      def last_modified
-        if @wikilist.empty?
-          nil
-        else
-          @wikilist.first.mtime
+          maker.items.do_sort  = true
+          maker.items.max_size = 15
+
+          @manager.wikilist.each do |wiki|
+            maker.items.new_item do |item|
+              item.link  = "http://example.com/article.html"
+              item.title = wiki.title
+              item.date  = wiki.mtime
+              item.description = wiki.description
+              content = %Q!<div class="recent-changes">\n!
+              content << "  <ol>\n"
+              wiki.pages.each do |page|
+                content << "    <li>"
+                content << %Q!<a href="">*</a>!
+                content << %Q!<a href="">#{escape_html(unescape(page[:name]))}</a>!
+                content << %Q!(#{escape_html(modified(page[:mtime]))})!
+                content << "</li>\n"
+              end
+              content << "  </ol>\n"
+              content << %Q!</div>!
+              item.content_encoded = content
+            end
+          end
         end
-      end
-
-      def rss_uri
-        "#{@hikifarm_uri}#{@manager.command_query(self.class.command_name)}"
-      end
-
-      def tag(name, content)
-        "<#{name}>#{escape_html(content)}</#{name}>"
-      end
-
-      def dc_prefix
-        "dc"
-      end
-
-      def content_prefix
-        "content"
-      end
-
-      def dc_tag(name, content)
-        tag("#{dc_prefix}:#{name}", content)
-      end
-
-      def content_tag(name, content)
-        tag("#{content_prefix}:#{name}", content)
-      end
-
-      def dc_language
-        dc_tag("language", "ja-JP")
-      end
-
-      def dc_creator
-        version = "#{HIKIFARM_VERSION} (#{HIKIFARM_RELEASE_DATE})"
-        creator = "HikiFarm version #{version}"
-        dc_tag("creator", creator)
-      end
-
-      def dc_publisher
-        dc_tag("publisher", "#{@author} <#{@mail}>")
-      end
-
-      def dc_rights
-        dc_tag("rights", "Copyright (C) #{@author} <#{@mail}>")
-      end
-
-      def dc_date(date)
-        if date
-          dc_tag("date", date.iso8601)
-        else
-          ""
-        end
-      end
-
-      def rdf_lis(indent='')
-        @wikilist.collect do |wiki|
-          %Q[#{indent}<rdf:li rdf:resource="#{wiki_uri(wiki)}"/>]
-        end.join("\n")
-      end
-
-      def rdf_items(indent="")
-        @wikilist.collect do |wiki|
-          <<-ITEM
-#{indent}<item rdf:about="#{wiki_uri(wiki)}">
-#{indent}  #{tag('title', wiki.title)}
-#{indent}  #{tag('link', wiki_uri(wiki))}
-#{indent}  #{tag('description', wiki_description(wiki))}
-#{indent}  #{dc_date(wiki.mtime)}
-#{indent}  #{content_encoded(wiki)}
-#{indent}</item>
-      ITEM
-        end.join("\n")
-      end
-
-      def wiki_uri(wiki)
-        "#{@hikifarm_base_uri}#{wiki.name}/"
-      end
-
-      def wiki_description(wiki)
-        "「#{unescape(wiki.last_modified_page)}」ページが変更されました．"
-      end
-
-      def content_encoded(wiki)
-        return '' if wiki.pages.empty?
-        base_uri = wiki_uri(wiki)
-        content = "<div class='recent-changes'>\n"
-        content << "  <ol>\n"
-        wiki.pages.each do |page|
-          content << "    <li>"
-          content << "<a href='#{base_uri}?c=diff;p=#{page[:name]}'>"
-          content << "*</a>\n"
-          content << "<a href='#{base_uri}?#{page[:name]}'>"
-          content << "#{escape_html(unescape(page[:name]))}</a>"
-          content << "(#{escape_html(modified(page[:mtime]))})"
-          content << "</li>\n"
-        end
-        content << "  </ol>\n"
-        content << "</div>\n"
-        content_tag("encoded", content)
       end
 
       # from RWiki
