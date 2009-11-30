@@ -10,7 +10,7 @@ use Rack::Reloader
 #use Rack::Session::Cookie
 #use Rack::ShowStatus
 use Rack::CommonLogger
-use Rack::Static, :urls => ['/theme'], :root => '.'
+use Rack::Static, :urls => ['/theme', '/favicon.ico'], :root => '.'
 
 map '/' do
   run Hiki::Farm::Dispatcher.new
