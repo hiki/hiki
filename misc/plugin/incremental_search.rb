@@ -61,7 +61,7 @@ module Hiki
                   <form method="GET">
                     #{@conf.msg_search}: <input type="hidden" value="search_orig" name="c">
                     <input size="50" maxlength="50" name="key" onkeyup="invoke(this.value)" onfocus="invoke(this.value)">
-                    <input type="submit" value="¸¡º÷">
+                    <input type="submit" value="æ¤œç´¢">
                   </form>
                   <div id="result">
                   </div>

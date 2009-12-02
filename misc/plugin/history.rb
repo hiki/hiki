@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 =begin
 
-== plugin/history.rb - CVS ���Խ������ɽ������ץ饰����
+== plugin/history.rb - CVS の編集履歴を表示するプラグイン
 
   Copyright (C) 2003 Hajime BABA <baba.hajime@nifty.com>
   $Id: history.rb,v 1.29 2007-09-24 21:23:09 fdiary Exp $
@@ -9,46 +9,46 @@
 
   Copyright (C) 2003 Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
 
-=== �Ȥ���
+=== 使い方
 
-* Hiki �� cvs �ץ饰���� (���뤤�� svn �ץ饰����) �����Ѥ��Ƥ���
-  ���Ȥ�������Ǥ���
+* Hiki の cvs プラグイン (あるいは svn プラグイン) を利用している
+  ことが前提条件です。
 
-* ���ξ�ǡ�Hiki �Υץ饰����ǥ��쥯�ȥ�˥��ԡ�����С�
-  ������˥塼�ˡ��Խ�����פ�����ƻȤ���褦�ˤʤ�ޤ���
+* その上で、Hiki のプラグインディレクトリにコピーすれば、
+  上部メニューに「編集履歴」が現れて使えるようになります。
 
-=== �ܺ�
+=== 詳細
 
-* �ʲ��λ��ĤΥץ饰���󥳥ޥ�ɤ��ɲä���ޤ���
-    * history       �ڡ������Խ�����ΰ�����ɽ��
-    * history_src   �����ӥ����Υ�������ɽ��
-    * history_diff  Ǥ�դΥ�ӥ����֤κ�ʬ��ɽ��
-  �ºݤˤϡ�
-    @conf.cgi_name?c=history;p=FrontPage ��
+* 以下の三つのプラグインコマンドが追加されます。
+    * history       ページの編集履歴の一覧を表示
+    * history_src   あるリビジョンのソースを表示
+    * history_diff  任意のリビジョン間の差分を表示
+  実際には、
+    @conf.cgi_name?c=history;p=FrontPage や
     @conf.cgi_name?c=plugin;plugin=history_diff;p=FrontPage;r=2
-  �Τ褦�˻��Ѥ��ޤ���
+  のように使用します。
 
-* ����ˤϥ֥�����������ʤ����Ȥ�����ˤ��Ƥ��ޤ���
+* 履歴にはブランチ等が現れないことを前提にしています。
 
-* Subversion �б���Ŭ���Ǥ�(�ͤ��ȤäƤ��ʤ��Τ�)��
+* Subversion 対応は適当です(僕が使っていないので)。
 
-* �ץ饰��������κ�ˡ���褯�狼�äƤʤ��Τǡ��ɤʤ���ľ���Ƥ���������
+* プラグイン作成の作法がよくわかってないので、どなたか直してください。
 
 === history
-2003/12/17 Yasuo Itabashi(Yas)    Subversion�б�, �ѹ��ս�ζ�Ĵ�б�, Ruby 1.7�ʹߤ��б�
+2003/12/17 Yasuo Itabashi(Yas)    Subversion対応, 変更箇所の強調対応, Ruby 1.7以降に対応
 
 === notice
-Hikifarm����Ѥ��Ƥ����硢hiki.conf��
+Hikifarmを使用している場合、hiki.confに
 @conf.repos_type      = (defined? repos_type) ? "#{repos_type}" : nil
-���ɲä��Ƥ���������-- Yas
+を追加してください。-- Yas
 
-CSS��span.add_line, span.del_line�����ꤹ��ȡ��ѹ��ս��ʸ��°�����ѹ��Ǥ��ޤ���
+CSSでspan.add_line, span.del_lineを設定すると、変更箇所の文字属性を変更できます。
 -- Yas
 
 
 === SEE ALSO
 
-* �����ν��Ϸ����� WiLiKi ���Խ�����򻲹ͤˤ����Ƥ��������ޤ�����
+* 一覧の出力形式は WiLiKi の編集履歴を参考にさせていただきました。
   http://www.shiro.dreamhost.com/scheme/wiliki/wiliki.cgi
 
 =end

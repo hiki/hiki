@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 # highlight.rb $Revision: 1.3 $
 #
-# ¥¸¥ã¥ó¥×Àè¤Î¥¨¥ì¥á¥ó¥È¤ò¥Ï¥¤¥é¥¤¥È¤¹¤ë¡£ÄÌ¾Î¡ÖÆæJavaScript¡£ºÇ½ª·ÁÂÖ¡×
-# ¥¤¥ó¥¹¥È¡¼¥ë¤¹¤ë¤À¤±¤ÇÆ°ºî¤·¤Ş¤¹¡£
+# ã‚¸ãƒ£ãƒ³ãƒ—å…ˆã®ã‚¨ãƒ¬ãƒ¡ãƒ³ãƒˆã‚’ãƒã‚¤ãƒ©ã‚¤ãƒˆã™ã‚‹ã€‚é€šç§°ã€Œè¬JavaScriptã€‚æœ€çµ‚å½¢æ…‹ã€
+# ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã™ã‚‹ã ã‘ã§å‹•ä½œã—ã¾ã™ã€‚
 #
-# ¥ª¥×¥·¥ç¥ó:
-#                        @options["highlight.color"]:      ¥Ï¥¤¥é¥¤¥È¤ÎÊ¸»ú¿§(¾ÊÎ¬»ş:Çò)
-#                        @options["highlight.background"]: ¥Ï¥¤¥é¥¤¥È¤ÎÇØ·Ê¿§(¾ÊÎ¬»ş:ÀÖ)
+# ã‚ªãƒ—ã‚·ãƒ§ãƒ³:
+#                        @options["highlight.color"]:      ãƒã‚¤ãƒ©ã‚¤ãƒˆã®æ–‡å­—è‰²(çœç•¥æ™‚:ç™½)
+#                        @options["highlight.background"]: ãƒã‚¤ãƒ©ã‚¤ãƒˆã®èƒŒæ™¯è‰²(çœç•¥æ™‚:èµ¤)
 #
 # See: http://tdiary-users.sourceforge.jp/cgi-bin/wiki.cgi?%A5%EA%A5%F3%A5%AF%B8%B5%A4%F2%A4%BF%A4%C9%A4%C3%A4%C6%A4%E2%A1%A2%A4%C9%A4%B3%A4%CE%CF%C3%C2%EA%A4%AB%A4%EF%A4%AB%A4%E9%A4%CA%A4%A4%A4%F3%A4%C7%A4%B9%A4%B1%A4%C9
 #

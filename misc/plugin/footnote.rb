@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 # footnote.rb $Revision: 1.10 $
 #
-# fn: µ”√Ìplugin
-#   •—•È•·•ø:
-#     text: µ”√ÌÀ‹ ∏
-#     mark: µ”√Ì•ﬁ°º•Ø('*')
+# fn: ËÑöÊ≥®plugin
+#   „Éë„É©„É°„Çø:
+#     text: ËÑöÊ≥®Êú¨Êñá
+#     mark: ËÑöÊ≥®„Éû„Éº„ÇØ('*')
 #
 # Copyright (c) 2001,2002 Junichiro KITA <kita@kitaj.no-ip.com>
 # Distributed under the GPL
