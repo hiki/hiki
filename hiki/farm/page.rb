@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 require 'erb'
+require 'uri'
 require 'hiki/util'
 
 module Hiki
@@ -79,7 +80,7 @@ module Hiki
       end
 
       def rss_href
-        "#{@hikifarm_uri}#{@manager.command_query(Hiki::Farm::RSSPage.command_name)}"
+        URI.join(@hikifarm_uri, RSSPage.page_name)
       end
 
       def template_name
@@ -105,7 +106,6 @@ module Hiki
       end
     end
 
-    # TODO: refactor
     class RSSPage
       include ::Hiki::Util
 
@@ -113,11 +113,16 @@ module Hiki
         def command_name
           'rss'
         end
+
+        def page_name
+          'hikifarm.rss'
+        end
       end
 
-      def initialize(conf, manager)
+      def initialize(conf, manager, hikifarm_uri)
         @conf = conf
         @manager = manager
+        @hikifarm_uri = hikifarm_uri
       end
 
       def to_s
@@ -129,17 +134,17 @@ module Hiki
       def make_rss
         require 'rss'
         rss = RSS::Maker.make("1.0") do |maker|
-          maker.channel.about = "http://example.com/index.rdf"
+          maker.channel.about = URI.join(@hikifarm_uri, self.class.page_name).to_s
           maker.channel.title = @conf.title
           maker.channel.description = @conf.hikifarm_description
-          maker.channel.link = "http://example.com/"
+          maker.channel.link = @hikifarm_uri
 
           maker.items.do_sort  = true
           maker.items.max_size = 15
 
           @manager.wikilist.each do |wiki|
             maker.items.new_item do |item|
-              item.link  = "http://example.com/article.html"
+              item.link  = URI.join(@hikifarm_uri, wiki.name)
               item.title = wiki.title
               item.date  = wiki.mtime
               item.description = wiki.description
