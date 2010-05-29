@@ -313,6 +313,8 @@ EOS
       end
     end
 
+    module_function :euc_to_utf8
+
     def utf8_to_euc(str)
       if NKF.const_defined?(:UTF8)
         return NKF.nkf('-m0 -e', str)
@@ -325,6 +327,8 @@ EOS
         return Uconv.u8toeuc(str)
       end
     end
+
+    module_function :utf8_to_euc
 
     def to_native(str, charset=nil)
       # XXX to_charset will be 'utf-8' in the future version
