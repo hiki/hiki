@@ -240,7 +240,7 @@ EOT
       end
 
       def get_unified_diff
-        unified_diff(@old_page.text||"", @new_page.text||"")
+        Hiki::Util.unified_diff(@old_page.text||"", @new_page.text||"")
       end
     end
   end

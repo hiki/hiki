@@ -1,3 +1,10 @@
+2010-05-29  hiraku <hiraku@sapporo.email.ne.jp>
+
+	* hiki/util.rb (Hiki::Util): add module function (unified_diff)
+
+	* hiki/filter/bayes_filter.rb: use Hiki::Util.unified_diff insted
+	of Object#unified_diff (included Hiki::Util on top level).
+
 2009-09-05  okkez  <okkez000@gmail.com>
 
 	* hiki/util.rb (Hiki::Util): add module functions (escape,

@@ -210,6 +210,8 @@ module Hiki
       return h(Diff.new(src.split(/^/), dst.split(/^/)).ses.unidiff( '', context_lines ))
     end
 
+    module_function :unified_diff
+
     def redirect(cgi, url, cookies = nil)
       url.sub!(%r|/\./|, '/')
       header = {}
