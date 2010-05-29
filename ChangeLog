@@ -1,5 +1,10 @@
 2010-05-29  hiraku <hiraku@sapporo.email.ne.jp>
 
+	* hiki/util.rb (Hiki::Util): add module function (get_common_data)
+	for misc/plugin/history.rb
+
+2010-05-29  hiraku <hiraku@sapporo.email.ne.jp>
+
 	* hiki/util.rb (Hiki::Util): add module function (unified_diff)
 
 	* hiki/filter/bayes_filter.rb: use Hiki::Util.unified_diff insted

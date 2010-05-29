@@ -172,6 +172,8 @@ module Hiki
       data
     end
 
+    module_function :get_common_data
+
     def word_diff( src, dst, digest = false )
       src_doc = Document.new( src, 'EUC-JP', CharString.guess_eol($/) )
       dst_doc = Document.new( dst, 'EUC-JP', CharString.guess_eol($/) )
