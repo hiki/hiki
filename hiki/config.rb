@@ -38,7 +38,7 @@ module Hiki
       # repository class
       @repos = Hiki.const_get("Repos#{@repos_type.capitalize}").new(@repos_root, @data_path)
 
-      self.class.__send__ :attr_accessor, *instance_variables.map{|v| v.sub('@', '') }
+      self.class.__send__ :attr_accessor, *instance_variables.map{|v| v.to_s.sub('@', '') }
 
       bot = ["googlebot", "Hatena Antenna", "moget@goo.ne.jp"]
       bot += @options['bot'] || []
