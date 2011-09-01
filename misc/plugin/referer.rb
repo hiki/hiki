@@ -1,3 +1,4 @@
+# coding: utf-8
 # $Id: referer.rb,v 1.13 2006-07-21 07:36:37 znz Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
@@ -116,8 +117,6 @@ add_body_leave_proc(Proc.new do
       show_short_referer(db)
     end
   rescue Exception
-  ensure
-    db.close_cache if db
   end
 end)
 
