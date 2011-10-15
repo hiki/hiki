@@ -1,4 +1,4 @@
-# -*- coding: nil -*-
+# -*- coding: utf-8 -*-
 #
 # preferences (resources)
 #
@@ -15,7 +15,7 @@ add_conf_proc( 'default', 'Preferenze base' ) do
       <p>Imposta il tuo indirizzo email.</p>
       <p><textarea name="mail" rows="4" cols="50">#{h(@conf.mail.join("\n"))}</textarea></p>
       <h3 class="subtitle">Manda email per le modifiche.</h3>
-      <p>Se è ABILITATO, l'email di notifica è inviata all'"Indirizzo email" delle preferenze di base via SMTP server(che è impostato in hikiconf.rb) quando una pagina è aggiornata. Se è DISABILITATO, l'email viene inviata.</p>
+      <p>Se Ã¨ ABILITATO, l'email di notifica Ã¨ inviata all'"Indirizzo email" delle preferenze di base via SMTP server(che Ã¨ impostato in hikiconf.rb) quando una pagina Ã¨ aggiornata. Se Ã¨ DISABILITATO, l'email viene inviata.</p>
       <p><select name="mail_on_update">
          <option value="true"#{@conf.mail_on_update ? ' selected' : ''}>ABILIATO</option>
          <option value="false"#{@conf.mail_on_update ? '' : ' selected'}>DISABILIATO</option>
@@ -59,7 +59,7 @@ add_conf_proc( 'theme', 'Aspetto' ) do
       <p>Imposta cartella tema.</p>
       <p><input name="theme_path" value="#{h(@conf.theme_path)}" size="60"></p>
       <h3 class="subtitle">Barra laterale</h3>
-      <p>ABILITATO se la barra laterale è mostrata. Se vuoi usare un tema che non supporta la barra laterale, devi selezionare DISABILITATO qui.</p>
+      <p>ABILITATO se la barra laterale Ã¨ mostrata. Se vuoi usare un tema che non supporta la barra laterale, devi selezionare DISABILITATO qui.</p>
       <p><select name="sidebar">
          <option value="true"#{@conf.use_sidebar ? ' selected' : ''}>ABILIATO</option>
          <option value="false"#{@conf.use_sidebar ? '' : ' selected'}>DISABILIATO</option>
