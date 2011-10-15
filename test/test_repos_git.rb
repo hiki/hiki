@@ -13,6 +13,7 @@ class Repos_Git_Tests < Test::Unit::TestCase
     @repos = Hiki::ReposGit.new(@root, @data_dir)
 
     FileUtils.mkdir_p(@text_dir)
+    omit "coundn't find git." unless system("which git > /dev/null")
     Dir.chdir(@text_dir) do
       git("init")
     end
