@@ -13,7 +13,7 @@ module Hiki
   class PluginError < StandardError; end
 
   class Plugin
-    include Hiki::Util
+    include ERB::Util
     attr_reader   :toc_f, :plugin_command
     attr_accessor :text, :title, :cookies, :user, :data, :session_id
 

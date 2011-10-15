@@ -1,4 +1,3 @@
-# -*- coding: nil -*-
 #
 # preferences (resources)
 #
@@ -7,13 +6,13 @@ add_conf_proc( 'default', 'Preferenze base' ) do
   <<-HTML
       <h3 class="subtitle">Nome del sito</h3>
       <p>Imposta il nome del sito. Questo appare come titolo dell'elemento.</p>
-      <p><input name="site_name" value="#{h(@conf.site_name)}" size="40"></p>
+      <p><input name="site_name" value="#{CGI::escapeHTML(@conf.site_name)}" size="40"></p>
       <h3 class="subtitle">Autore</h3>
       <p>Set your name.</p>
-      <p><input name="author_name" value="#{h(@conf.author_name)}" size="40"></p>
+      <p><input name="author_name" value="#{CGI::escapeHTML(@conf.author_name)}" size="40"></p>
       <h3 class="subtitle">Indirizzo email</h3>
       <p>Imposta il tuo indirizzo email.</p>
-      <p><textarea name="mail" rows="4" cols="50">#{h(@conf.mail.join("\n"))}</textarea></p>
+      <p><textarea name="mail" rows="4" cols="50">#{CGI::escapeHTML(@conf.mail.join("\n"))}</textarea></p>
       <h3 class="subtitle">Manda email per le modifiche.</h3>
       <p>Se è ABILITATO, l'email di notifica è inviata all'"Indirizzo email" delle preferenze di base via SMTP server(che è impostato in hikiconf.rb) quando una pagina è aggiornata. Se è DISABILITATO, l'email viene inviata.</p>
       <p><select name="mail_on_update">
@@ -54,10 +53,10 @@ add_conf_proc( 'theme', 'Aspetto' ) do
       </select></p>
       <h3 class="subtitle">URL Tema</h3>
       <p>Imposta URL tema.</p>
-      <p><input name="theme_url" value="#{h(@conf.theme_url)}" size="60"></p>
+      <p><input name="theme_url" value="#{CGI::escapeHTML(@conf.theme_url)}" size="60"></p>
       <h3 class="subtitle">Cartella tema</h3>
       <p>Imposta cartella tema.</p>
-      <p><input name="theme_path" value="#{h(@conf.theme_path)}" size="60"></p>
+      <p><input name="theme_path" value="#{CGI::escapeHTML(@conf.theme_path)}" size="60"></p>
       <h3 class="subtitle">Barra laterale</h3>
       <p>ABILITATO se la barra laterale è mostrata. Se vuoi usare un tema che non supporta la barra laterale, devi selezionare DISABILITATO qui.</p>
       <p><select name="sidebar">
@@ -66,10 +65,10 @@ add_conf_proc( 'theme', 'Aspetto' ) do
          </select></p>
       <h3 class="subtitle">Nome della classe nell'area principale(CSS)</h3>
       <p>Imposta il nome della classe CSS nell'area principale.</p>
-      <p><input name="main_class" value="#{h(@conf.main_class)}" size="20"></p>
+      <p><input name="main_class" value="#{CGI::escapeHTML(@conf.main_class)}" size="20"></p>
       <h3 class="subtitle">Nome del CSS nella barra laterale (CSS)</h3>
       <p>Imposta il nome della classe CSS nella barra laterale.</p>
-      <p><input name="sidebar_class" value="#{h(@conf.sidebar_class)}" size="20"></p>
+      <p><input name="sidebar_class" value="#{CGI::escapeHTML(@conf.sidebar_class)}" size="20"></p>
       <h3 class="subtitle">Collegamento automatico</h3>
       <p>Imposta ABILITATO se vuoi usare il collegamento automatico.</p>
       <p><select name="auto_link">

@@ -10,20 +10,20 @@ def src
 <head>
   <meta http-equiv="Content-Language" content="#{@conf.lang}">
   <meta http-equiv="Content-Type" content="text/html; charset= #{@conf.charset}">
-  <title>#{h(page_name(@page))}</title>
+  <title>#{CGI::escapeHTML(page_name(@page))}</title>
 </head>
 <body>
 <div>
 EOS
   page = @db.load( @page )
-  sources << (page ? h(page).gsub(/\n/, "<br>\n").gsub(/ /, '&nbsp;') : 'load error.')
+  sources << (page ? page.escapeHTML.gsub(/\n/, "<br>\n").gsub(/ /, '&nbsp;') : 'load error.')
   sources  << <<EOS
 </div>
 </body>
 </html>
 EOS
 
-  header = {}
+  header = Hash::new
   header['Last-Modified'] = CGI::rfc1123_date(Time.now)
   header['type']          = 'text/html'
   header['charset']       =  @conf.charset

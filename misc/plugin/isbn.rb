@@ -1,4 +1,3 @@
-# -*- coding: euc-jp -*-
 # $Id: isbn.rb,v 1.3 2005-06-27 13:42:37 fdiary Exp $
 # converts from sns isbn.pl
 # Copyright (C) 2003 NAKAMURA Noritsugu <nnakamur@mxq.mesh.ne.jp>
@@ -11,7 +10,7 @@ def isbn(isbn, bookname = "")
   if bookname == ""
     buf = ""
   else
-    buf = "#{h(bookname)}"
+    buf = "#{bookname.escapeHTML}"
   end
 
   aid = @options['amazon.aid'] ? "/#{@options['amazon.aid']}" : ""

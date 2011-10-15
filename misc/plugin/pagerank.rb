@@ -320,8 +320,8 @@ end
 
 # show pagerank page: called by hiki menu
 def pagerank_page
-  header = {}
-  header['Last-Modified'] = CGI.rfc1123_date(Time.now)
+  header = Hash::new
+  header['Last-Modified'] = CGI::rfc1123_date(Time.now)
   header['type']          = 'text/html'
   header['charset']       = @conf.charset
   header['Content-Language'] = @conf.lang
@@ -343,11 +343,11 @@ def pagerank_page
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=EUC-JP" />
   <meta http-equiv="Content-Language" content="ja" />
-  <title id=title>#{h(title)}</title>
-  <link rel="stylesheet" type="text/css" href="#{h(stylesheet)}" />
+  <title id=title>#{title.escapeHTML}</title>
+  <link rel="stylesheet" type="text/css" href="#{stylesheet.escapeHTML}" />
 </head>
 <body>
-<h1>#{h(title)}</h1>
+<h1>#{title.escapeHTML}</h1>
 <div align="#{align}">
 #{pagerank()}
 </div>
@@ -395,11 +395,11 @@ def get_rank_table(page_names, pagerank, calcsec, options)
     no[i] = i + 1
     no[i] = no[i - 1] if i > 0 and pagerank[i] == pagerank[i - 1]
     page = page_names[i]
-    page = hiki_anchor(escape(page), page_name(page))
+    page = hiki_anchor(page.escape, page_name(page))
     rank = sprintf(rankformat, pagerank[i])
     if showfrom
       linked_names = @db.get_references(page_names[i]).collect do |linked_name|
-        hiki_anchor(escape(linked_name), page_name(linked_name))
+        hiki_anchor(linked_name.escape, page_name(linked_name))
       end
       linked = linked_names.join(", ")
       source += %{<tr><td style="text-align: right">#{no[i].to_s}</td><td>#{page}</td><td style="text-align: right">#{rank}</td><td>#{linked}</td></tr>}

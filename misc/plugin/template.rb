@@ -18,14 +18,14 @@ def template_form
     s = <<EOS
 <div>
   #{template_label}:
-  <input type="hidden" name="p" value="#{h(@page)}">
+  <input type="hidden" name="p" value="#{@page.escapeHTML}">
   <input type="hidden" name="plugin" value="load_template">
   <select name="template">
 EOS
 
   pages.each do |p|
-   p = h(unescape(p))
-   s << %Q!<option value="#{p}"#{'selected' if @options['template.default'] == unescape_html(p)}>#{p}</option>!
+   p = p.unescape.escapeHTML
+   s << %Q!<option value="#{p}"#{'selected' if @options['template.default'] == p.unescapeHTML}>#{p}</option>!
   end
   s << <<EOS
   </select>
@@ -84,7 +84,7 @@ add_conf_proc('template', template_label) do
   <p><select name="template.default">
     HTML
     pages.each do |p|
-      str << %Q|<option value="#{h(p)}"#{@conf['template.default'] == p ? ' selected' : ''}>#{h(p)}</option>\n|
+      str << %Q|<option value="#{CGI::escapeHTML(p)}"#{@conf['template.default'] == p ? ' selected' : ''}>#{CGI::escapeHTML(p)}</option>\n|
     end
   end
 

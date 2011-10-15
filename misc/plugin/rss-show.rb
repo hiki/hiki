@@ -15,7 +15,7 @@ end
 
 def rss_get(url, cache_time)
   Dir.mkdir("#{@cache_path}/rss-show") unless File.exist?("#{@cache_path}/rss-show")
-  cache_file = "#{@cache_path}/rss-show/#{escape(url)}".untaint
+  cache_file = "#{@cache_path}/rss-show/#{url.escape}".untaint
 
   begin
     rss_recent_cache(url, cache_file, cache_time)
@@ -62,7 +62,7 @@ def rss_format_items(items)
   items.each do |i|
     page = utf8_to_euc( i.title )
     url = utf8_to_euc( i.link )
-    html << "<li>#{make_anchor(h(url), h(unescape_html(page)))}</li>\n"
+    html << "<li>#{make_anchor(url.escapeHTML, page.unescapeHTML.escapeHTML)}</li>\n"
   end
   html << "</ul>\n"
 end

@@ -1,16 +1,13 @@
 require "digest/md5"
-require 'hiki/util'
 
 module Hiki
   class Math_latex
-    include Hiki::Util
-
     def initialize(conf, page)
       @conf = conf
       @page = page
 
       @cache_path = "#{@conf.cache_path}/math_latex"
-      @image_path = "#{@cache_path}/#{escape(@page)}"
+      @image_path = "#{@cache_path}/#{@page.escape}"
       begin
         Dir.mkdir(@cache_path) unless test(?e, @cache_path.untaint)
       rescue Exception
@@ -78,8 +75,8 @@ module Hiki
       end
 
       html =  %Q!<img class="math" src="!
-      html << %Q!#{@conf.cgi_name}#{cmdstr('plugin', "plugin=math_latex_download;p=#{escape(@page)};file_name=#{escape(filename)}.png")}" !
-      html << %Q!alt="#{h(text)}">!
+      html << %Q!#{@conf.cgi_name}#{cmdstr('plugin', "plugin=math_latex_download;p=#{@page.escape};file_name=#{filename.escape}.png")}" !
+      html << %Q!alt="#{text.escapeHTML}">!
     end
 
     def text_mode(text)

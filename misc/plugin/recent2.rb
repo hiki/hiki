@@ -30,7 +30,7 @@ def recent2( n = 20 )
 
     cur_date = tm.strftime( @conf.msg_date_format )
     t = page_name(name)
-    an = hiki_anchor(escape(name), t)
+    an = hiki_anchor(name.escape, t)
     s << "<li title=\"#{cur_date}\">#{an} <span class=\"recent2\">(#{ps})</span>\n"
   end
   s << "</ul>\n"

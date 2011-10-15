@@ -16,14 +16,14 @@ def bbs(level = 1)
   <<EOS
 <form action="#{@conf.cgi_name}" method="post">
   <div>
-    #{bbs_name_label}: <input type="text" name="name" value="#{h(name)}" size="10">
+    #{bbs_name_label}: <input type="text" name="name" value="#{name.escapeHTML}" size="10">
     #{bbs_subject_label}: <input type="text" name="subject" size="40"><br>
     <textarea cols="60" rows="8" name="msg"></textarea><br>
     <input type="submit" name="comment" value="#{bbs_post_label}">
     <input type="hidden" name="bbs_num" value="#{@bbs_num}">
     <input type="hidden" name="bbs_level" value="#{level}">
     <input type="hidden" name="c" value="plugin">
-    <input type="hidden" name="p" value="#{h(@page)}">
+    <input type="hidden" name="p" value="#{@page.escapeHTML}">
     <input type="hidden" name="plugin" value="bbs_post">
     <input type="hidden" name="session_id" value="#{@session_id}">
   </div>

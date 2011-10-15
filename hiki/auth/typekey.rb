@@ -146,7 +146,7 @@ class TypeKey
         @key_string = fh.read
       }
     end
-    tk_key = {}
+    tk_key = Hash.new
     for pair in @key_string.strip.split(' ')
       key, value = pair.split('=')
       tk_key[key] = value.to_i

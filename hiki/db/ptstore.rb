@@ -106,15 +106,15 @@ class PTStore < PStore
   end
 
   def dump(table)
-    TMarshal.dump(table)
+    TMarshal::dump(table)
   end
 
   def load(content)
-    TMarshal.load(content)
+    TMarshal::load(content)
   end
 
   def load_file(file)
-    TMarshal.load(file)
+    TMarshal::load(file)
   end
 
   private

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # $Id: util.rb,v 1.44 2005-12-25 07:03:06 yanagita Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
@@ -26,19 +25,20 @@ class String
   end
 
   def escape
-    Hiki::Util.escape(self)
+    CGI.escape(self)
   end
 
   def unescape
-    Hiki::Util.unescape(self)
+    CGI.unescape(self)
   end
 
   def escapeHTML
-    Hiki::Util.escape_html(self)
+    ERB::Util.h(self)
   end
 
   def unescapeHTML
-    Hiki::Util.unescape_html(self)
+    # ???
+    CGI.unescapeHTML(self)
   end
 
   def sanitize
@@ -54,78 +54,7 @@ module Hiki
   class PluginException < Exception; end
 
   module Util
-
-    # dead copy from cgi.rb (Ruby1.8)
-    # URL-encode a string.
-    #   url_encoded_string = escape("'Stop!' said Fred")
-    #      # => "%27Stop%21%27+said+Fred"
-    def escape(string)
-      string.gsub(/([^ a-zA-Z0-9_.-]+)/n) do
-        '%' + $1.unpack('H2' * $1.size).join('%').upcase
-      end.tr(' ', '+')
-    end
-
-    # dead copy from cgi.rb (Ruby1.8)
-    # URL-decode a string.
-    #   string = unescape("%27Stop%21%27+said+Fred")
-    #      # => "'Stop!' said Fred"
-    def unescape(string)
-      string.tr('+', ' ').gsub(/((?:%[0-9a-fA-F]{2})+)/n) do
-        [$1.delete('%')].pack('H*')
-      end
-    end
-
-    # dead copy from cgi.rb (Ruby1.8)
-    # Escape special characters in HTML, namely &\"<>
-    #   escapeHTML('Usage: foo "bar" <baz>')
-    #      # => "Usage: foo &quot;bar&quot; &lt;baz&gt;"
-    def escapeHTML(string)
-      string.gsub(/&/n, '&amp;').gsub(/\"/n, '&quot;').gsub(/>/n, '&gt;').gsub(/</n, '&lt;')
-    end
-
-    # dead copy from cgi.rb (Ruby1.8)
-    # Unescape a string that has been HTML-escaped
-    #   unescapeHTML("Usage: foo &quot;bar&quot; &lt;baz&gt;")
-    #      # => "Usage: foo \"bar\" <baz>"
-    def unescapeHTML(string)
-      string.gsub(/&(amp|quot|gt|lt|\#[0-9]+|\#x[0-9A-Fa-f]+);/n) do
-        match = $1.dup
-        case match
-        when 'amp'                 then '&'
-        when 'quot'                then '"'
-        when 'gt'                  then '>'
-        when 'lt'                  then '<'
-        when /\A#0*(\d+)\z/n       then
-          if Integer($1) < 256
-            Integer($1).chr
-          else
-            if Integer($1) < 65536 and $KCODE[0] == ?U
-              [Integer($1)].pack("U")
-            else
-              "&##{$1};"
-            end
-          end
-        when /\A#x([0-9a-f]+)\z/ni then
-          if $1.hex < 256
-            $1.hex.chr
-          else
-            if $1.hex < 65536 and $KCODE[0] == ?U
-              [$1.hex].pack("U")
-            else
-              "&#x#{$1};"
-            end
-          end
-        else
-          "&#{match};"
-        end
-      end
-    end
-
-    alias escape_html escapeHTML
-    alias h escapeHTML
-    alias unescape_html unescapeHTML
-
-    module_function :escape, :unescape, :escape_html, :h, :unescape_html
+    include ERB::Util
 
     def plugin_error(method, e)
       msg = "<strong>#{e.class} (#{h(e.message)}): #{h(method)}</strong><br>"
@@ -142,7 +71,7 @@ module Hiki
     end
 
     def view_title( s )
-      %Q!<a href="#{@conf.cgi_name}#{cmdstr('search', "key=#{escape(s)}") }">#{h(s)}</a>!
+      %Q!<a href="#{@conf.cgi_name}#{cmdstr('search', "key=#{s.escape}") }">#{h(s)}</a>!
     end
 
     def format_date( tm )
@@ -171,8 +100,6 @@ module Hiki
       end
       data
     end
-
-    module_function :get_common_data
 
     def word_diff( src, dst, digest = false )
       src_doc = Document.new( src, 'EUC-JP', CharString.guess_eol($/) )
@@ -209,10 +136,8 @@ module Hiki
     end
 
     def unified_diff( src, dst, context_lines = 3 )
-      return h(Diff.new(src.split(/^/), dst.split(/^/)).ses.unidiff( '', context_lines ))
+      return CGI.escapeHTML(Diff.new(src.split(/^/), dst.split(/^/)).ses.unidiff( '', context_lines ))
     end
-
-    module_function :unified_diff
 
     def redirect(cgi, url, cookies = nil)
       url.sub!(%r|/\./|, '/')
@@ -264,7 +189,7 @@ REMOTE_HOST = #{ENV['REMOTE_HOST']}
 EOS
       body << "REMOTE_USER = #{ENV['REMOTE_USER']}\n" if ENV['REMOTE_USER']
       body << <<EOS
-        URL = #{@conf.index_url}?#{escape(page)}
+        URL = #{@conf.index_url}?#{page.escape}
 #{'-' * 25}
 #{text}
 EOS
@@ -313,8 +238,6 @@ EOS
       end
     end
 
-    module_function :euc_to_utf8
-
     def utf8_to_euc(str)
       if NKF.const_defined?(:UTF8)
         return NKF.nkf('-m0 -e', str)
@@ -327,8 +250,6 @@ EOS
         return Uconv.u8toeuc(str)
       end
     end
-
-    module_function :utf8_to_euc
 
     def to_native(str, charset=nil)
       # XXX to_charset will be 'utf-8' in the future version

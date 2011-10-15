@@ -127,7 +127,7 @@ module Hiki
       title << (rev_title2 || (rev2 and rev2[0]) || nil)
       title = title.compact
       title.reverse! unless rev2.nil?
-      title = h(title.join("<=>"))
+      title = title.join("<=>").escapeHTML
 
       do_link = (link and rev1)
 
@@ -135,7 +135,7 @@ module Hiki
       if do_link
         rev_param = "r=#{rev1[0]}"
         rev_param << ";r2=#{rev2[0]}" if rev2
-        rv << %Q[<a href="#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{escape(@p)};#{rev_param}")}" title="#{title}">]
+        rv << %Q[<a href="#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{@p.escape};#{rev_param}")}" title="#{title}">]
       end
       rv << title
       if do_link
@@ -154,40 +154,40 @@ module Hiki
       # construct output sources
       prevdiff = 1
       sources = ''
-      sources << @plugin.hiki_anchor(escape(@p), @plugin.page_name(@p))
+      sources << @plugin.hiki_anchor(@p.escape, @plugin.page_name(@p))
       sources << "\n<br>\n"
       sources << "\n<table border=\"1\">\n"
       if @conf.options['history.hidelog']
         case history_repos_type
         when 'cvs'
-          sources << " <tr><th>#{h(history_th_label[0])}</th><th>#{h(history_th_label[1])}</th><th>#{h(history_th_label[2])}</th><th>#{h(history_th_label[3])}</th></tr>\n"
+          sources << " <tr><th>#{history_th_label[0].escapeHTML}</th><th>#{history_th_label[1].escapeHTML}</th><th>#{history_th_label[2].escapeHTML}</th><th>#{history_th_label[3].escapeHTML}</th></tr>\n"
         else
-          sources << " <tr><th>#{h(history_th_label[0])}</th><th>#{h(history_th_label[1])}</th><th>#{h(history_th_label[3])}</th></tr>\n"
+          sources << " <tr><th>#{history_th_label[0].escapeHTML}</th><th>#{history_th_label[1].escapeHTML}</th><th>#{history_th_label[3].escapeHTML}</th></tr>\n"
         end
       else
         case history_repos_type
         when 'cvs'
-          sources << " <tr><th rowspan=\"2\">#{h(history_th_label[0])}</th><th>#{h(history_th_label[1])}</th><th>#{h(history_th_label[2])}</th><th>#{h(history_th_label[3])}</th></tr><tr><th colspan=\"3\">#{h(history_th_label[4])}</th></tr>\n"
+          sources << " <tr><th rowspan=\"2\">#{history_th_label[0].escapeHTML}</th><th>#{history_th_label[1].escapeHTML}</th><th>#{history_th_label[2].escapeHTML}</th><th>#{history_th_label[3].escapeHTML}</th></tr><tr><th colspan=\"3\">#{history_th_label[4].escapeHTML}</th></tr>\n"
         else
-          sources << " <tr><th rowspan=\"2\">#{h(history_th_label[0])}</th><th>#{h(history_th_label[1])}</th><th>#{h(history_th_label[3])}</th></tr><tr><th colspan=\"2\">#{h(history_th_label[4])}</th></tr>\n"
+          sources << " <tr><th rowspan=\"2\">#{history_th_label[0].escapeHTML}</th><th>#{history_th_label[1].escapeHTML}</th><th>#{history_th_label[3].escapeHTML}</th></tr><tr><th colspan=\"2\">#{history_th_label[4].escapeHTML}</th></tr>\n"
         end
       end
       revs.each do |rev,time,changes,log|
         #    time << " GMT"
-        op = "[<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_src;p=#{escape(@p)};r=#{rev}")}\">View</a> this version] "
+        op = "[<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_src;p=#{@p.escape};r=#{rev}")}\">View</a> this version] "
         if revs.size != 1
           op << "[Diff to "
-          op << "<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{escape(@p)};r=#{rev}")}\">current</a>" unless prevdiff == 1
+          op << "<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{@p.escape};r=#{rev}")}\">current</a>" unless prevdiff == 1
           op << " | " unless (prevdiff == 1 || prevdiff >= revs.size)
-          op << "<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{escape(@p)};r=#{rev};r2=#{revs[prevdiff][0]}")}\">previous</a>" unless prevdiff >= revs.size
+          op << "<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{@p.escape};r=#{rev};r2=#{revs[prevdiff][0]}")}\">previous</a>" unless prevdiff >= revs.size
           op << "]"
         end
         if @conf.options['history.hidelog']
           case history_repos_type
           when 'cvs'
-            sources << " <tr><td>#{rev}</td><td>#{h(time)}</td><td>#{h(changes)}</td><td align=right>#{op}</td></tr>\n"
+            sources << " <tr><td>#{rev}</td><td>#{time.escapeHTML}</td><td>#{changes.escapeHTML}</td><td align=right>#{op}</td></tr>\n"
           else
-            sources << " <tr><td>#{rev}</td><td>#{h(time)}</td><td align=right>#{op}</td></tr>\n"
+            sources << " <tr><td>#{rev}</td><td>#{time.escapeHTML}</td><td align=right>#{op}</td></tr>\n"
           end
         else
           log.gsub!(/=============================================================================/, '')
@@ -195,9 +195,9 @@ module Hiki
           log = "*** no log message ***" if log.empty?
           case history_repos_type
           when 'cvs'
-            sources << " <tr><td rowspan=\"2\">#{rev}</td><td>#{h(time)}</td><td>#{h(changes)}</td><td align=right>#{op}</td></tr><tr><td colspan=\"3\">#{h(log)}</td></tr>\n"
+            sources << " <tr><td rowspan=\"2\">#{rev}</td><td>#{time.escapeHTML}</td><td>#{changes.escapeHTML}</td><td align=right>#{op}</td></tr><tr><td colspan=\"3\">#{log.escapeHTML}</td></tr>\n"
           else
-            sources << " <tr><td rowspan=\"2\">#{rev}</td><td>#{h(time)}</td><td align=right>#{op}</td></tr><tr><td colspan=\"2\">#{h(log)}</td></tr>\n"
+            sources << " <tr><td rowspan=\"2\">#{rev}</td><td>#{time.escapeHTML}</td><td align=right>#{op}</td></tr><tr><td colspan=\"2\">#{log.escapeHTML}</td></tr>\n"
           end
         end
         prevdiff += 1
@@ -217,14 +217,14 @@ module Hiki
       # construct output sources
       sources = ''
       sources << "<div class=\"section\">\n"
-      sources << @plugin.hiki_anchor(escape(@p), @plugin.page_name(@p))
+      sources << @plugin.hiki_anchor(@p.escape, @plugin.page_name(@p))
       sources << "\n<br>\n"
-      sources << "<a href=\"#{@conf.cgi_name}#{cmdstr('edit', "p=#{escape(@p)};r=#{h(r)}")}\">#{h(history_revert_label)}</a><br>\n"
-      sources << "<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{escape(@p)};r=#{h(r)}")}\">#{h(history_diffto_current_label)}</a><br>\n"
-      sources << "<a href=\"#{@conf.cgi_name}#{cmdstr('history', "p=#{escape(@p)}")}\">#{h(history_backto_summary_label)}</a><br>\n"
+      sources << "<a href=\"#{@conf.cgi_name}#{cmdstr('edit', "p=#{@p.escape};r=#{r.escapeHTML}")}\">#{history_revert_label.escapeHTML}</a><br>\n"
+      sources << "<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{@p.escape};r=#{r.escapeHTML}")}\">#{history_diffto_current_label.escapeHTML}</a><br>\n"
+      sources << "<a href=\"#{@conf.cgi_name}#{cmdstr('history', "p=#{@p.escape}")}\">#{history_backto_summary_label.escapeHTML}</a><br>\n"
       sources << "</div>\n"
       sources << "<div class=\"diff\">\n"
-      sources << h(txt).gsub(/\n/, "<br>\n").gsub(/ /, '&nbsp;')
+      sources << txt.escapeHTML.gsub(/\n/, "<br>\n").gsub(/ /, '&nbsp;')
       sources << "</div>\n"
 
       history_output(sources)
@@ -254,10 +254,10 @@ module Hiki
       # construct output sources
       sources = ''
       sources << "<div class=\"section\">\n"
-      sources << @plugin.hiki_anchor(escape(@p), @plugin.page_name(@p))
+      sources << @plugin.hiki_anchor(@p.escape, @plugin.page_name(@p))
       sources << "<br>\n"
-      sources << "<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_src;p=#{escape(@p)};r=#{curr_rev[0]}")}\">#{h(history_view_this_version_src_label)}</a><br>\n" if curr_rev
-      sources << "<a href=\"#{@conf.cgi_name}#{cmdstr('history', "p=#{escape(@p)}")}\">#{h(history_backto_summary_label)}</a><br>\n"
+      sources << "<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_src;p=#{@p.escape};r=#{curr_rev[0]}")}\">#{history_view_this_version_src_label.escapeHTML}</a><br>\n" if curr_rev
+      sources << "<a href=\"#{@conf.cgi_name}#{cmdstr('history', "p=#{@p.escape}")}\">#{history_backto_summary_label.escapeHTML}</a><br>\n"
       sources << "\n"
 
       if prev_rev

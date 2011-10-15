@@ -6,13 +6,13 @@
 #==============================
 def anchor( s )
   s.sub!(/^\d+$/, '')
-  p = h(escape(@page))
+  p = @page.escape.escapeHTML
   p.gsub!(/%/, '%%')
   %Q[#{@conf.cgi_name}?#{p}#{s}]
 end
 
 def my( a, str )
-  %Q[<a href="#{anchor(a).gsub!(/%%/, '%')}">#{h(str)}</a>]
+  %Q[<a href="#{anchor(a).gsub!(/%%/, '%')}">#{str.escapeHTML}</a>]
 end
 
 #==============================
@@ -20,7 +20,7 @@ end
 #==============================
 #===== hiki_url
 def hiki_url(page)
-  "#{@conf.cgi_name}?#{escape(page)}"
+  "#{@conf.cgi_name}?#{page.escape}"
 end
 
 #===== hiki_anchor
@@ -44,7 +44,7 @@ end
 #===== page_name
 def page_name( page )
   pg_title = @db.get_attribute(page, :title)
-  h((pg_title && pg_title.size > 0) ? pg_title : page)
+  ((pg_title && pg_title.size > 0) ? pg_title : page).escapeHTML
 end
 
 #===== toc
@@ -96,7 +96,7 @@ def recent( n = 20 )
       ddd = cur_date
     end
     t = page_name(name)
-    an = hiki_anchor(escape(name), t)
+    an = hiki_anchor(name.escape, t)
     s << "<li>#{an}</li>\n"
   end
   s << "</ul>\n"
@@ -112,7 +112,7 @@ end
 add_update_proc {
   updating_mail if @conf.mail_on_update
   if @user
-    @conf.repos.commit(@page, escape(@user))
+    @conf.repos.commit(@page, CGI.escape(@user))
   else
     @conf.repos.commit(@page)
   end
@@ -151,8 +151,8 @@ def hiki_header
   <meta http-equiv="Content-Style-Type" content="text/css">
   <meta name="generator" content="#{@conf.generator}">
   <title>#{title}</title>
-  <link rel="stylesheet" type="text/css" href="#{h(base_css_url)}" media="all">
-  <link rel="stylesheet" type="text/css" href="#{h(theme_url)}" media="all">
+  <link rel="stylesheet" type="text/css" href="#{base_css_url.escapeHTML}" media="all">
+  <link rel="stylesheet" type="text/css" href="#{theme_url.escapeHTML}" media="all">
 EOS
   s << <<EOS if @command != 'view'
   <meta name="ROBOTS" content="NOINDEX,NOFOLLOW"> 
@@ -177,12 +177,12 @@ def hiki_footer
   elsif defined?(FCGI)
     s << ' with <a href="http://raa.ruby-lang.org/project/fcgi/">ruby-fcgi</a>'
   end
-  s << %Q|.<br>\nFounded by #{h(@conf.author_name)}.<br>\n|
+  s << %Q|.<br>\nFounded by #{@conf.author_name.escapeHTML}.<br>\n|
 end
 
 #===== edit_proc
 add_edit_proc {
-  hiki_anchor(escape(@page), "[#{page_name(@page)}]")
+  hiki_anchor(@page.escape, "[#{page_name(@page)}]")
 }
 
 #===== menu
@@ -193,8 +193,8 @@ def create_menu(data, command)
     menu << %Q!<a href="#{@conf.cgi_name}?c=index">#{@conf.msg_index}</a>!
   else
     menu << %Q!<a href="#{@conf.cgi_name}?c=create" rel="nofollow">#{@conf.msg_create}</a>! if creatable?
-    menu << %Q!<a href="#{@conf.cgi_name}?c=edit;p=#{escape(@page)}" rel="nofollow">#{@conf.msg_edit}</a>! if @page && editable?
-    menu << %Q!<a href="#{@conf.cgi_name}?c=diff;p=#{escape(@page)}" rel="nofollow">#{@conf.msg_diff}</a>! if @page && editable?
+    menu << %Q!<a href="#{@conf.cgi_name}?c=edit;p=#{@page.escape}" rel="nofollow">#{@conf.msg_edit}</a>! if @page && editable?
+    menu << %Q!<a href="#{@conf.cgi_name}?c=diff;p=#{@page.escape}" rel="nofollow">#{@conf.msg_diff}</a>! if @page && editable?
     menu << %Q!#{hiki_anchor( 'FrontPage', page_name('FrontPage') )}!
     menu << %Q!<a href="#{@conf.cgi_name}?c=index">#{@conf.msg_index}</a>!
     menu << %Q!<a href="#{@conf.cgi_name}?c=search">#{@conf.msg_search}</a>!
@@ -203,14 +203,14 @@ def create_menu(data, command)
       next if c[:option].has_key?('p') && !(@page && editable?)
       cmd =  %Q!<a href="#{@conf.cgi_name}?c=#{c[:command]}!
       c[:option].each do |key, value|
-        value = escape(@page) if key == 'p'
+        value = @page.escape if key == 'p'
         cmd << %Q!;#{key}=#{value}!
       end
       cmd << %Q!">#{c[:display_text]}</a>!
       menu << cmd
     end
     menu_proc.each {|i| menu << i}
-    menu << %Q!<a href="#{@conf.cgi_name}?c=login#{@page ? ";p=#{escape(@page)}" : ""}">#{@conf.msg_login}</a>! unless @user || @conf.password.empty?
+    menu << %Q!<a href="#{@conf.cgi_name}?c=login#{@page ? ";p=#{@page.escape}" : ""}">#{@conf.msg_login}</a>! unless @user || @conf.password.empty?
     menu << %Q!<a href="#{@conf.cgi_name}?c=admin">#{@conf.msg_admin}</a>! if admin?
     menu << %Q!<a href="#{@conf.cgi_name}?c=logout">#{@conf.msg_logout}</a>! if @user && !@conf.password.empty?
   end

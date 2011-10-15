@@ -9,6 +9,8 @@ require 'hiki/aliaswiki'
 require 'hiki/session'
 require 'hiki/filter'
 
+include Hiki::Util
+
 module Hiki
   class PermissionError < StandardError; end
   class SessionError < StandardError
@@ -19,7 +21,6 @@ module Hiki
   end
 
   class Command
-    include Hiki::Util
     def initialize(cgi, db, conf)
       @db     = db
       @params = cgi.params
@@ -29,7 +30,7 @@ module Hiki
 
       # for TrackBack
       if %r|/tb/(.+)$| =~ ENV['REQUEST_URI']
-        @cgi.params['p'] = [unescape($1)]
+        @cgi.params['p'] = [CGI.unescape($1)]
         @cgi.params['c'] = ['plugin']
         @cgi.params['plugin'] = ['trackback_post']
       end
@@ -190,12 +191,12 @@ module Hiki
       if @conf.hilight_keys
         word = @params['key'][0]
         if word && word.size > 0
-          contents = hilighten(contents, unescape(word).split)
+          contents = hilighten(contents, word.unescape.split)
         end
       end
 
       old_ref = @db.get_attribute( @p, :references )
-      new_ref = formatter.references
+      new_ref = formatter.references 
       @db.set_references( @p, new_ref ) if new_ref != old_ref
       ref = @db.get_references( @p )
 
@@ -203,12 +204,12 @@ module Hiki
 
       pg_title = @plugin.page_name(@p)
 
-      data[:page_title]   = @plugin.hiki_anchor(escape(@p), h(@p))
+      data[:page_title]   = @plugin.hiki_anchor(@p.escape, h(@p))
       data[:view_title]   = pg_title
-      data[:title]        = title(unescape_html(pg_title))
+      data[:title]        = title( pg_title.unescapeHTML )
       data[:toc]          = @plugin.toc_f ? toc : nil
       data[:body]         = formatter.apply_tdiary_theme(contents)
-      data[:references]   = ref.collect! {|a| "[#{@plugin.hiki_anchor(escape(a), @plugin.page_name(a))}] " }.join
+      data[:references]   = ref.collect! {|a| "[#{@plugin.hiki_anchor(a.escape, @plugin.page_name(a))}] " }.join
       data[:keyword]      = @db.get_attribute(@p, :keyword).collect {|k| "[#{view_title(k)}]"}.join(' ')
 
       data[:last_modified]  = @db.get_last_update( @p )
@@ -244,7 +245,7 @@ module Hiki
         editor = f[k][:editor] ? "by #{f[k][:editor]}" : ''
         display_text = h((f[k][:title] and f[k][:title].size > 0) ? f[k][:title] : k)
         display_text << " [#{@aliaswiki.aliaswiki(k)}]" if k != @aliaswiki.aliaswiki(k)
-        %Q!#{@plugin.hiki_anchor(escape(k), display_text)}: #{format_date(f[k][:last_modified] )} #{editor}#{@conf.msg_freeze_mark if f[k][:freeze]}!
+        %Q!#{@plugin.hiki_anchor(k.escape, display_text)}: #{format_date(f[k][:last_modified] )} #{editor}#{@conf.msg_freeze_mark if f[k][:freeze]}!
       }
 
       data = get_common_data( @db, @plugin, @conf )
@@ -282,7 +283,7 @@ module Hiki
         display_text = (f[k][:title] and f[k][:title].size > 0) ? f[k][:title] : k
         display_text = h(display_text)
         display_text << " [#{@aliaswiki.aliaswiki(k)}]" if k != @aliaswiki.aliaswiki(k)
-        %Q|#{format_date( tm )}: #{@plugin.hiki_anchor(escape(k), display_text )} #{h(editor)} (<a href="#{@conf.cgi_name}#{cmdstr('diff',"p=#{escape(k)}")}">#{@conf.msg_diff}</a>)|
+        %Q|#{format_date( tm )}: #{@plugin.hiki_anchor( k.escape, display_text )} #{h(editor)} (<a href="#{@conf.cgi_name}#{cmdstr('diff',"p=#{k.escape}")}">#{@conf.msg_diff}</a>)|
       }
       [list, last_modified]
     end
@@ -314,7 +315,7 @@ module Hiki
         old = text.gsub(/\r/, '')
         new = @db.load( page ) || ''
         differ = word_diff( old, new ).gsub( /\n/, "<br>\n" )
-        link = @plugin.hiki_anchor(escape(page), h(page))
+        link = @plugin.hiki_anchor( page.escape, h(page))
       end
 
       @cmd = 'edit'
@@ -417,9 +418,9 @@ module Hiki
       if word && word.size > 0
         total, l = @db.search(word)
         if @conf.hilight_keys
-          l.collect! {|p| @plugin.make_anchor("#{@conf.cgi_name}?cmd=view&p=#{escape(p[0])}&key=#{escape(word.split.join('+'))}", @plugin.page_name(p[0])) + " - #{p[1]}"}
+          l.collect! {|p| @plugin.make_anchor("#{@conf.cgi_name}?cmd=view&p=#{p[0].escape}&key=#{word.split.join('+').escape}", @plugin.page_name(p[0])) + " - #{p[1]}"}
         else
-          l.collect! {|p| @plugin.hiki_anchor(escape(p[0]), @plugin.page_name(p[0])) + " - #{p[1]}"}
+          l.collect! {|p| @plugin.hiki_anchor( p[0].escape, @plugin.page_name(p[0])) + " - #{p[1]}"}
         end
         data             = get_common_data( @db, @plugin, @conf )
         data[:title]     = title( @conf.msg_search_result )
@@ -540,7 +541,7 @@ module Hiki
       return tmp
       end
 
-      p = (@db.select {|p| p[:title] and unescape(p[:title]) == page})[0]
+      p = (@db.select {|p| p[:title] and p[:title].unescape == page})[0]
       if p != @p and p != nil
         return p
       end

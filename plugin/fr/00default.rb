@@ -1,4 +1,3 @@
-# -*- coding: nil -*-
 #
 # preferences (resources)
 #
@@ -7,13 +6,13 @@ add_conf_proc( 'default', 'Préférences de base' ) do
   <<-HTML
       <h3 class="subtitle">Pseudonyme</h3>
       <p>Entrez votre nom d'utilisateur.  Il apparaîtra comme élément de titre.</p>
-      <p><input name="site_name" value="#{h(@conf.site_name)}" size="40"></p>
+      <p><input name="site_name" value="#{CGI::escapeHTML(@conf.site_name)}" size="40"></p>
       <h3 class="subtitle">Auteur</h3>
       <p>Entrez votre nom complet.</p>
-      <p><input name="author_name" value="#{h(@conf.author_name)}" size="40"></p>
+      <p><input name="author_name" value="#{CGI::escapeHTML(@conf.author_name)}" size="40"></p>
       <h3 class="subtitle">Adresse électronique</h3>
       <p>Entrez votre adresse e-mail.</p>
-      <p><textarea name="mail" rows="4" cols="50">#{h(@conf.mail.join("\n"))}</textarea></p>
+      <p><textarea name="mail" rows="4" cols="50">#{CGI::escapeHTML(@conf.mail.join("\n"))}</textarea></p>
       <h3 class="subtitle">Notification par e-mail.</h3>
       <p>Si cette option est activée, un e-mail de notification sera envoyé à votre adresse électronique via le serveur SMTP (définit dans hikiconf.rb) lorsqu'une page est modifiée.  Aucun e-mail ne sera envoyé si cette option est désactivée.</p>
       <p><select name="mail_on_update">
@@ -54,10 +53,10 @@ add_conf_proc( 'theme', 'Apparence' ) do
       </select></p>
       <h3 class="subtitle">Thème - URL</h3>
       <p>Entrez l'URL d'un thème.</p>
-      <p><input name="theme_url" value="#{h(@conf.theme_url)}" size="60"></p>
+      <p><input name="theme_url" value="#{CGI::escapeHTML(@conf.theme_url)}" size="60"></p>
       <h3 class="subtitle">Thème - Répertoire</h3>
       <p>Entrez le répertoire du thème.</p>
-      <p><input name="theme_path" value="#{h(@conf.theme_path)}" size="60"></p>
+      <p><input name="theme_path" value="#{CGI::escapeHTML(@conf.theme_path)}" size="60"></p>
       <h3 class="subtitle">Barre contextuelle</h3>
       <p>ON et la barre contextuelle sera affichée.  Si vous voulez utiliser un thème qui ne gère pas de barre contextuelle, vous devez sélectionner OFF.</p>
       <p><select name="sidebar">
@@ -66,10 +65,10 @@ add_conf_proc( 'theme', 'Apparence' ) do
          </select></p>
       <h3 class="subtitle">Nom de la classe dans la section principale (CSS)</h3>
       <p>Entrez le nom CSS de la classe dans la section principale.</p>
-      <p><input name="main_class" value="#{h(@conf.main_class)}" size="20"></p>
+      <p><input name="main_class" value="#{CGI::escapeHTML(@conf.main_class)}" size="20"></p>
       <h3 class="subtitle">Nom de la classe dans la barre contextuelle (CSS)</h3>
       <p>Entrez le nom CSS de la classe dans la barre contextuelle.</p>
-      <p><input name="sidebar_class" value="#{h(@conf.sidebar_class)}" size="20"></p>
+      <p><input name="sidebar_class" value="#{CGI::escapeHTML(@conf.sidebar_class)}" size="20"></p>
       <h3 class="subtitle">Liens automatiques</h3>
       <p>Choisissez ON si vous désirez activer les liens automatiques.</p>
       <p><select name="auto_link">

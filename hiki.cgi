@@ -12,7 +12,7 @@ rescue NameError
 end
 
 begin
-  if FileTest.symlink?( __FILE__ )
+  if FileTest::symlink?( __FILE__ )
     org_path = File.dirname( File.expand_path( File.readlink( __FILE__ ) ) )
   else
     org_path = File.dirname( File.expand_path( __FILE__ ) )

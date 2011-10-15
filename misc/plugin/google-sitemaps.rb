@@ -15,7 +15,7 @@ def google_sitemaps_body
     end
     sitemaps << <<_E
   <url>
-    <loc>#{@conf.index_url}?#{escape(name)}</loc>
+    <loc>#{@conf.index_url}?#{name.escape}</loc>
     <lastmod>#{lastmod.utc.strftime('%Y-%m-%dT%H:%M:%S+00:00')}</lastmod>
   </url>
 _E
@@ -27,8 +27,8 @@ end
 
 def google_sitemaps
   body, last_modified = google_sitemaps_body
-  header = {}
-  header['Last-Modified'] = CGI.rfc1123_date(last_modified)
+  header = Hash::new
+  header['Last-Modified'] = CGI::rfc1123_date(last_modified)
   header['type']          = 'text/xml'
   header['charset']       =  'UTF-8'
   header['Content-Language'] = @conf.lang

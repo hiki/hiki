@@ -124,23 +124,23 @@ EOT
   def submitted_pages_html
     sp = submitted_pages
     r = ""
-    {"Ham"=>sp.ham, "Doubt"=>sp.doubt, "Spam"=>sp.spam}.each do |k, hash|
-      next if hash.empty?
+    {"Ham"=>sp.ham, "Doubt"=>sp.doubt, "Spam"=>sp.spam}.each do |k, h|
+      next if h.empty?
       r << "<h3>#{k}</h3>\n<ul>\n"
-      hash.keys.sort.each do |id|
+      h.keys.sort.each do |id|
         r << <<EOT
-<li><a href="#{hash[id].url}">#{h(hash[id].new_page.page)}</a>
+<li><a href="#{h[id].url}">#{CGI.escapeHTML(h[id].new_page.page)}</a>
 <dl>
-<dt>#{Res.title}</dt><dd>#{h(hash[id].new_page.title)}</dd>
-<dt>Unified Diff</dt><dd><pre>#{h(hash[id].get_unified_diff)}</pre></dd>
+<dt>#{Res.title}</dt><dd>#{CGI.escapeHTML(h[id].new_page.title)}</dd>
+<dt>Unified Diff</dt><dd><pre>#{CGI.escapeHTML(h[id].get_unified_diff)}</pre></dd>
 #{
-  unless hash[id].diff_keyword.join("\n").strip.empty?
-    "<dt>#{Res.diff_keyword}</dt><dd>#{h(hash[id].diff_keyword.join("\n").strip).gsub(/\n/, "<br>")}</dd>"
+  unless h[id].diff_keyword.join("\n").strip.empty?
+    "<dt>#{Res.diff_keyword}</dt><dd>#{CGI.escapeHTML(h[id].diff_keyword.join("\n").strip).gsub(/\n/, "<br>")}</dd>"
   end
 }
-<dt>#{Res.remote_addr}</dt><dd>#{h(hash[id].new_page.remote_addr)}</dd>
+<dt>#{Res.remote_addr}</dt><dd>#{CGI.escapeHTML(h[id].new_page.remote_addr)}</dd>
 #{
-  rate = BayesFilter.db.estimate(hash[id].token)
+  rate = BayesFilter.db.estimate(h[id].token)
   rate ? "<dt>#{Res.spam_rate}</dt><dd>#{format("%.4f", rate)}</dd>" : ""
 }
 <dt><a href='#{conf_url(Mode::SUBMITTED_PAGE_DIFF)};id=#{id}'>#{Res.submitted_page_diff}</a></dt>
@@ -188,9 +188,9 @@ EOT
 <dt>#{Res.difference}</dt>
 <dd><pre>#{word_diff(data.old_page.text, data.new_page.text)}</pre></d>
 <dt>#{Res.old_text}</dt>
-<dd><pre>#{h(data.old_page.text||"")}</pre></dd>
+<dd><pre>#{CGI.escapeHTML(data.old_page.text||"")}</pre></dd>
 <dt>#{Res.new_text}</dt>
-<dd><pre>#{h(data.new_page.text||"")}</pre></dd>
+<dd><pre>#{CGI.escapeHTML(data.new_page.text||"")}</pre></dd>
 </dl>
 EOT
   end

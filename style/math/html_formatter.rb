@@ -6,7 +6,6 @@ require "style/math/latex.rb"
 
 module Hiki
   class HTMLFormatter_math < HTMLFormatter_default
-    include Hiki::Util
     def to_s
       super
       @html_converted = replace_math( @html_converted )
@@ -17,11 +16,11 @@ module Hiki
     def replace_math( text )
       replace_inline( text ) do |str|
         str.gsub!( /\[\$(.+?)\$\]/ ) do |match|
-          math.text_mode(unescape_html($1) )
+          math.text_mode( $1.unescapeHTML )
         end
         str.gsub!( /(^\$\$.*\n?)+/ ) do |match|
           '<div class="displaymath">%s</div>' % 
-            math.display_mode( unescape_html(match).gsub( /^\$\$/, '' ) )
+            math.display_mode( match.unescapeHTML.gsub( /^\$\$/, '' ) )
         end
       end
     end

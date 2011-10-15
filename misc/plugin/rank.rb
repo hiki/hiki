@@ -17,7 +17,7 @@ def rank( n = 20 )
     p = a[name]
 
     t = "#{page_name(name)} (#{p[:count]})"
-    an = hiki_anchor(escape(name), t)
+    an = hiki_anchor( name.escape, t )
     s << "<li>#{an}\n"
     c = c + 1
   end

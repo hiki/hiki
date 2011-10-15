@@ -23,7 +23,7 @@ def updating_mail
       head << "KEYWORD     = #{keyword}\n" if keyword
       r = "#{latest_text}\n"
     elsif type == 'update'
-      title_old = unescape_html(page_name(@page))
+      title_old = CGI::unescapeHTML( page_name( @page ) )
       keyword_old = @db.get_attribute(@page, :keyword).join(' / ')
       if title && title != title_old
         head << "TITLE       = #{title_old} -> #{title}\n"

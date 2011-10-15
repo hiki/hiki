@@ -1,4 +1,3 @@
-# -*- coding: euc-jp -*-
 # highlight.rb $Revision: 1.3 $
 #
 # ジャンプ先のエレメントをハイライトする。通称「謎JavaScript。最終形態」
@@ -20,8 +19,8 @@ add_footer_proc do
         <<-SCRIPT
                 <script type="text/javascript"><!--
                 var highlightStyle = new Object();
-                highlightStyle.color = "#{h(@options['highlight.color'])}";
-                highlightStyle.backgroundColor = "#{h(@options['highlight.background'])}";
+                highlightStyle.color = "#{CGI::escapeHTML(@options['highlight.color'])}";
+                highlightStyle.backgroundColor = "#{CGI::escapeHTML(@options['highlight.background'])}";
                 
                 var highlightElem = null;
                 var saveStyle = null;

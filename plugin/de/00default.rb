@@ -9,13 +9,13 @@ add_conf_proc( 'default', 'Standard-Einstellungen' ) do
   <<-HTML
       <h3 class="subtitle">Wiki Name</h3>
       <p>Der Name des Wikis. Er erscheint in de Seitentiteln.</p>
-      <p><input name="site_name" value="#{h(@conf.site_name)}" size="40"></p>
+      <p><input name="site_name" value="#{CGI::escapeHTML(@conf.site_name)}" size="40"></p>
       <h3 class="subtitle">Author</h3>
       <p>Ihr Name</p>
-      <p><input name="author_name" value="#{h(@conf.author_name)}" size="40"></p>
+      <p><input name="author_name" value="#{CGI::escapeHTML(@conf.author_name)}" size="40"></p>
       <h3 class="subtitle">Email Addresse</h3>
       <p>Email</p>
-      <p><textarea name="mail" rows="4" cols="50">#{h(@conf.mail.join("\n"))}</textarea></p>
+      <p><textarea name="mail" rows="4" cols="50">#{CGI::escapeHTML(@conf.mail.join("\n"))}</textarea></p>
       <h3 class="subtitle">Sende Emails bei &auml;nderungen?</h3>
       <p>Einstellung, ob Sie &uuml;ber &auml;nderungen an Seiten per Email informiert werden m&ouml;chten. Die Email wird zu der Adresse die Sie in den Standard-Einstellungen eingegeben haben gesendet. (Stellen Sie sicher, dass ein SMTP server in der hikiconf.rb angegeben ist.)</p>
       <p><select name="mail_on_update">
@@ -56,10 +56,10 @@ add_conf_proc( 'theme', 'Aussehen' ) do
       </select></p>
       <h3 class="subtitle">Theme URL</h3>
       <p>Eine URL eines Themes. Wenn Sie hier eine URL angeben, wird dieses CSS Theme verwendet und das oben angegebene ignoriert.</p>
-      <p><input name="theme_url" value="#{h(@conf.theme_url)}" size="60"></p>
+      <p><input name="theme_url" value="#{CGI::escapeHTML(@conf.theme_url)}" size="60"></p>
       <h3 class="subtitle">Theme Ordner</h3>
       <p>Ordner der vorhandenen Themes.</p>
-      <p><input name="theme_path" value="#{h(@conf.theme_path)}" size="60"></p>
+      <p><input name="theme_path" value="#{CGI::escapeHTML(@conf.theme_path)}" size="60"></p>
       <h3 class="subtitle">Seitenleiste</h3>
       <p>Manche Themes k&ouml;nnen die Seitenleiste nicht ordnungsgem&auml;&szlig; darstellen. Wenn sie eines dieser Themes benutzten, den Wert auf 'Aus' setzen.</p> 
       <p><select name="sidebar">
@@ -68,10 +68,10 @@ add_conf_proc( 'theme', 'Aussehen' ) do
          </select></p>
       <h3 class="subtitle">CSS Klassename der die Haupt-Fl&auml;che</h3>
       <p>CSS Klassenname der die Haupt-Fl&auml;che (Stardard: 'main').</p>
-      <p><input name="main_class" value="#{h(@conf.main_class)}" size="20"></p>
+      <p><input name="main_class" value="#{CGI::escapeHTML(@conf.main_class)}" size="20"></p>
       <h3 class="subtitle">CSS Klassenname der Seitenleiste</h3>
       <p>CSS Klassenname der Seitenleiste (Standard: 'sidebar').</p>
-      <p><input name="sidebar_class" value="#{h(@conf.sidebar_class)}" size="20"></p>
+      <p><input name="sidebar_class" value="#{CGI::escapeHTML(@conf.sidebar_class)}" size="20"></p>
       <h3 class="subtitle">Auto link</h3>
       <p>Um die Auto link Funktion zu aktivieren, den Wert auf 'An' setzen.</p>
       <p><select name="auto_link">

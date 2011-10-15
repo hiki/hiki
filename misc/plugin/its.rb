@@ -24,14 +24,14 @@ def its_add_ticket_form
     <select name="priority">
 EOS
   its_priority_candidates.each do |i|
-    result << %Q|      <option#{i == 'Normal' ? ' selected' : ''}>#{h(i)}</option>|
+    result << %Q|      <option#{i == 'Normal' ? ' selected' : ''}>#{i.escapeHTML}</option>|
   end
   result << <<EOS
     </select><br>
     Version:
     <input type="text" name="version" value="" size="6"><br>
     Reporter:
-    <input type="text" name="reporter" value="#{h(name)}" size="10"><br>
+    <input type="text" name="reporter" value="#{name.escapeHTML}" size="10"><br>
     Description:
     <textarea name="description" cols="60" rows="10"></textarea><br>
     <input type="hidden" name="session_id" value="#{@session_id}">
@@ -52,7 +52,7 @@ def its_edit_ticket_form
 <form action="#{@conf.cgi_name}" method="post">
   <div>
     Name:
-    <input type="text" name="name" value="#{h(name)}" size="10"><br>
+    <input type="text" name="name" value="#{name.escapeHTML}" size="10"><br>
     Comment:<br>
     <textarea name="comment" cols="60" rows="8"></textarea>
   </div>
@@ -65,7 +65,7 @@ def its_edit_ticket_form
     <select name="priority">
 EOS
   its_priority_candidates.each do |i|
-    result << %Q|      <option#{i == ticket[:priority] ? ' selected' : ''}>#{h(i)}</option>|
+    result << %Q|      <option#{i == ticket[:priority] ? ' selected' : ''}>#{i.escapeHTML}</option>|
   end
   result << <<EOS
     </select><br>
@@ -73,7 +73,7 @@ EOS
     <select name="status">
 EOS
   its_status_candidates.each do |i|
-    result << %Q|      <option#{i == ticket[:status] ? ' selected' : ''}>#{h(i)}</option>|
+    result << %Q|      <option#{i == ticket[:status] ? ' selected' : ''}>#{i.escapeHTML}</option>|
   end
   result << <<EOS
     </select><br>
@@ -112,7 +112,7 @@ def its_view_tickets( tickets, num = nil )
       <tr><th>No.</th><th>Summary</th><th>Version</th><th>Milestone</th><th>Priority</th><th>Reporter</th><th>Created</th></tr>
     EOS
   (num ? tickets[0...num.to_i] : tickets).each do |i|
-    ret << %Q|      <tr><td>#{hiki_anchor("Ticket-#{i[:num]}", i[:num])}</td><td>#{hiki_anchor("Ticket-#{i[:num]}", h(i[:summary]))}</td><td>#{h(i[:version])}</td><td>#{h(i[:milestone])}</td><td>#{h(i[:priority])}</td><td>#{h(i[:reporter])}</td><td>#{h(i[:created])}</td></tr>\n|
+    ret << %Q|      <tr><td>#{hiki_anchor("Ticket-#{i[:num]}", i[:num])}</td><td>#{hiki_anchor("Ticket-#{i[:num]}", i[:summary].escapeHTML)}</td><td>#{i[:version].escapeHTML}</td><td>#{i[:milestone].escapeHTML}</td><td>#{i[:priority].escapeHTML}</td><td>#{i[:reporter].escapeHTML}</td><td>#{i[:created].escapeHTML}</td></tr>\n|
   end
   ret << "    </table>\n"
   ret

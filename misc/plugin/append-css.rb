@@ -9,7 +9,7 @@ add_header_proc do
   if @conf['append-css.css'] and !@conf['append-css.css'].empty?
     <<-HTML
     <style type="text/css"><!--
-    #{h(@conf['append-css.css'])}
+    #{CGI::escapeHTML( @conf['append-css.css'] )}
     --></style>
     HTML
   else
@@ -24,6 +24,6 @@ add_conf_proc( 'append-css', append_css_label ) do
 
   <<-HTML
   #{append_css_desc}
-  <p><textarea name="append-css.css" cols="70" rows="15">#{h(@conf['append-css.css'].to_s)}</textarea></p>
+  <p><textarea name="append-css.css" cols="70" rows="15">#{CGI::escapeHTML( @conf['append-css.css'].to_s )}</textarea></p>
   HTML
 end

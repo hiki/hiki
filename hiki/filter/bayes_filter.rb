@@ -3,7 +3,6 @@
 
 require "fileutils"
 require "hiki/filter/bayes_filter/bayes.rb"
-require "hiki/util"
 
 module Hiki::Filter
   module BayesFilter
@@ -133,7 +132,7 @@ EOT
       end
 
       def url
-        "#{@index_url}?#{Hiki::Util.escape(@new_page.page)}"
+        "#{@index_url}?#{CGI.escape(@new_page.page)}"
       end
 
       def self.load(filename, delete=false)
@@ -240,7 +239,7 @@ EOT
       end
 
       def get_unified_diff
-        Hiki::Util.unified_diff(@old_page.text||"", @new_page.text||"")
+        unified_diff(@old_page.text||"", @new_page.text||"")
       end
     end
   end
