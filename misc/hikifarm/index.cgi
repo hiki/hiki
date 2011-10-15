@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# -*- coding: utf-8 -*-
 
 HIKIFARM_VERSION = '0.8.6'
 HIKIFARM_RELEASE_DATE = '2006-07-21'

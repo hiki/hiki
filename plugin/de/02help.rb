@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 def help_heading_label
    'Überschrift'
 end
