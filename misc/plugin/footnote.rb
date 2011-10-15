@@ -1,10 +1,10 @@
-# -*- coding: euc-jp -*-
+# -*- coding: utf-8 -*-
 # footnote.rb $Revision: 1.10 $
 #
-# fn: µ”√Ìplugin
-#   •—•È•·•ø:
-#     text: µ”√ÌÀ‹ ∏
-#     mark: µ”√Ì•ﬁ°º•Ø('*')
+# fn: ËÑöÊ≥®plugin
+#   „Éë„É©„É°„Çø:
+#     text: ËÑöÊ≥®Êú¨Êñá
+#     mark: ËÑöÊ≥®„Éû„Éº„ÇØ('*')
 #
 # Copyright (c) 2001,2002 Junichiro KITA <kita@kitaj.no-ip.com>
 # Distributed under the GPL
@@ -47,15 +47,15 @@ end
 def render( text )
   tmp = @conf.use_plugin
   @conf.use_plugin = false
-  parser = @conf.parser::new( @conf )
-  tokens = parser.parse( text.unescapeHTML )
-  formatter = @conf.formatter::new( tokens, @db, self, @conf )
+  parser = @conf.parser.new( @conf )
+  tokens = parser.parse(unescape_html(text) )
+  formatter = @conf.formatter.new( tokens, @db, self, @conf )
   @conf.use_plugin = tmp
   formatter.to_s.gsub(/\A<p>/,'').gsub(/<\/p>\Z/,'').gsub(/<p>/, '<p class="footnote">')
 end
 
 if @options['command'] == 'view'
-  add_body_enter_proc(Proc::new do |date|
+  add_body_enter_proc(Proc.new do |date|
                         date = date.strftime("%Y%m%d")
                         @footnote_name.replace "f%02d"
                         @footnote_url.replace "#{@index}#{anchor date}##{@footnote_name}"
@@ -66,7 +66,7 @@ if @options['command'] == 'view'
                         ""
                       end)
 
-  add_body_leave_proc(Proc::new do |date|
+  add_body_leave_proc(Proc.new do |date|
                         if @footnote_name and @footnotes.size > 0
                           %Q|<div class="footnote">\n| +
                             @footnotes.collect do |fn|

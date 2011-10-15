@@ -1,12 +1,12 @@
-# -*- coding: euc-jp -*-
+# -*- coding: utf-8 -*-
 def note_prefix; 'Note-'; end
-def label_note_config; '¥Î¡¼¥È'; end
-def label_note_link; '¥Î¡¼¥È'; end
-def label_note_orig; '¸µ¤Î¥Ú¡¼¥¸'; end
-def label_note_template; '¿·µ¬¥Î¡¼¥È¥Ú¡¼¥¸¤Î¥Æ¥ó¥×¥ì¡¼¥È'; end
+def label_note_config; 'ãƒãƒ¼ãƒˆ'; end
+def label_note_link; 'ãƒãƒ¼ãƒˆ'; end
+def label_note_orig; 'å…ƒã®ãƒšãƒ¼ã‚¸'; end
+def label_note_template; 'æ–°è¦ãƒãƒ¼ãƒˆãƒšãƒ¼ã‚¸ã®ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ'; end
 def label_note_template_default
   str = <<-END
-{{note_orig_page}} ¤Î¥Î¡¼¥È¤Î¥Ú¡¼¥¸¤Ç¤¹¡£
+{{note_orig_page}} ã®ãƒãƒ¼ãƒˆã®ãƒšãƒ¼ã‚¸ã§ã™ã€‚
 ----
 {{bbs}}
   END

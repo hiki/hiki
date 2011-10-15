@@ -5,13 +5,13 @@
 def updating_mail
   begin
     latest_text = @db.load(@page) || ''
-    if @params['page_title'][0]
-      title = @params['page_title'][0].empty? ? @page : @params['page_title'][0].strip
+    if @request.params['page_title']
+      title = @request.params['page_title'].empty? ? @page : @request.params['page_title'].strip
     else
       title = nil
     end
-    if @params['keyword'][0]
-      keyword = (@params['keyword'][0]||'').split("\n").collect {|k|
+    if @request.params['keyword']
+      keyword = (@request.params['keyword'] || '').split("\n").collect {|k|
         k.chomp.strip}.delete_if{|k| k.empty?}.join(' / ')
     else
       keyword = nil
@@ -23,7 +23,7 @@ def updating_mail
       head << "KEYWORD     = #{keyword}\n" if keyword
       r = "#{latest_text}\n"
     elsif type == 'update'
-      title_old = CGI::unescapeHTML( page_name( @page ) )
+      title_old = unescape_html(page_name(@page))
       keyword_old = @db.get_attribute(@page, :keyword).join(' / ')
       if title && title != title_old
         head << "TITLE       = #{title_old} -> #{title}\n"

@@ -10,21 +10,21 @@ require 'hiki/session'
 
 def auth?
   return true if @conf['typekey.token'].empty?
-  session_id = @cgi.cookies['typekey_session_id'][0]
-  session_id && Session::new(@conf, session_id).check
+  session_id = @request.cookies['typekey_session_id']
+  session_id && Session.new(@conf, session_id).check
 end
 
 def auth_typekey
   tk = TypeKey.new(@conf['typekey.token'], '1.1')
-  ts =    @cgi.params['ts'][0]
-  email = @cgi.params['email'][0]
-  name =  @cgi.params['name'][0]
-  nick =  @cgi.params['nick'][0]
-  sig =   @cgi.params['sig'][0]
-  page =  @cgi.params['p'][0] || 'FrontPage'
+  ts =    @request.params['ts']
+  email = @request.params['email']
+  name =  @request.params['name']
+  nick =  @request.params['nick']
+  sig =   @request.params['sig']
+  page =  @request.params['p'] || 'FrontPage'
 
   if ts and email and name and nick and sig and tk.verify(email, name, nick, ts, sig)
-    session = Session::new(@conf)
+    session = Session.new(@conf)
     session.user = utf8_to_euc(nick)
     session.save
     self.cookies << typekey_cookie('typekey_session_id', session.session_id)
@@ -41,20 +41,20 @@ def login_url
 end
 
 def typekey_cookie(name, value, max_age = Session::MAX_AGE)
-  CGI::Cookie::new( {
+  Hiki::Cookie.new( {
     'name' => name,
     'value' => value,
     'path' => self.cookie_path,
   })
 end
 
-add_body_enter_proc(Proc::new do
+add_body_enter_proc(Proc.new do
   if !auth?
     label_auth_typekey_login
   elsif @user
     <<EOS
 <div class="hello">
-#{sprintf(label_auth_typekey_hello, @user.escapeHTML)}
+#{sprintf(label_auth_typekey_hello, h(@user))}
 </div>
 EOS
   end
@@ -62,7 +62,7 @@ end)
 
 def saveconf_auth_typekey
   if @mode == 'saveconf' then
-    @conf['typekey.token'] = @cgi.params['typekey.token'][0]
+    @conf['typekey.token'] = @request.params['typekey.token']
   end
 end
 
@@ -71,7 +71,7 @@ add_conf_proc('auth_typekey', label_auth_typekey_config) do
   str = <<-HTML
   <h3 class="subtitle">#{label_auth_typekey_token}</h3>
   <p>#{label_auth_typekey_token_msg}</p>
-  <p><input name="typekey.token" size="40" value="#{CGI::escapeHTML(@conf['typekey.token'])}"></p>
+  <p><input name="typekey.token" size="40" value="#{h(@conf['typekey.token'])}"></p>
   HTML
   str
 end

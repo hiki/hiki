@@ -1,4 +1,4 @@
-# -*- coding: euc-jp -*-
+# -*- coding: utf-8 -*-
 # ajaxsearch.rb $Revision: 1.3 $
 # Copyright (C) 2005 Michitaka Ohno <elpeo@mars.dti.ne.jp>
 #
@@ -17,8 +17,8 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 def search
-  as = Hiki::AjaxSearch.new( @cgi, @db, @conf )
-  @cgi.params['key'][0] ? as.search : as.form
+  as = Hiki::AjaxSearch.new(@request, @db, @conf)
+  @request.params['key'] ? as.search : as.form
 end
 
 module Hiki
@@ -61,7 +61,7 @@ module Hiki
                   <form method="GET">
                     #{@conf.msg_search}: <input type="hidden" value="search_orig" name="c">
                     <input size="50" maxlength="50" name="key" onkeyup="invoke(this.value)" onfocus="invoke(this.value)">
-                    <input type="submit" value="¸¡º÷">
+                    <input type="submit" value="æ¤œç´¢">
                   </form>
                   <div id="result">
                   </div>
@@ -76,28 +76,26 @@ module Hiki
     end
 
     def search
-      word = utf8_to_euc( @cgi.params['key'][0] )
+      word = utf8_to_euc(@request.params['key'])
       r = ""
       unless word.empty? then
         total, l = @db.search( word )
         if @conf.hilight_keys
-          l.collect! {|p| @plugin.make_anchor("#{@conf.cgi_name}?cmd=view&p=#{p[0].escape}&key=#{word.split.join('+').escape}", @plugin.page_name(p[0])) + " - #{p[1]}"}
+          l.collect! {|p| @plugin.make_anchor("#{@conf.cgi_name}?cmd=view&p=#{escape(p[0])}&key=#{escape(word.split.join('+'))}", @plugin.page_name(p[0])) + " - #{p[1]}"}
         else
-          l.collect! {|p| @plugin.hiki_anchor( p[0].escape, @plugin.page_name(p[0])) + " - #{p[1]}"}
+          l.collect! {|p| @plugin.hiki_anchor(escape(p[0]), @plugin.page_name(p[0])) + " - #{p[1]}"}
         end
         if l.size > 0 then
           r = "<ul>\n" + l.map{|i| "<li>#{i}</li>\n"}.join + "</ul>\n"
         end
       end
-      header = Hash::new
+      header = {}
       header['type'] = 'text/html'
       header['charset'] = 'EUC-JP'
       header['Content-Language'] = @conf.lang
       header['Pragma'] = 'no-cache'
       header['Cache-Control'] = 'no-cache'
-      print @cgi.header( header )
-      print r
-      nil
+      ::Hiki::Response.new(r, 200, header)
     end
   end
 end

@@ -20,20 +20,20 @@ class BayesFilterConfig
 
   SubmittedPages = Struct.new(:ham, :spam, :doubt)
 
-  def initialize(cgi, conf, mode, db)
+  def initialize(request, conf, mode, db)
     BayesFilter.init(conf)
-    @cgi = cgi
+    @request = request
     @conf = conf
     @confmode = mode
     @db = db
   end
 
   def save_mode?
-    @cgi.request_method=="POST" and @confmode=="saveconf"
+    @request.request_method=="POST" and @confmode=="saveconf"
   end
 
   def html
-    case @mode = @cgi.params['bfmode'][0]
+    case @mode = @request.params['bfmode']
     when Mode::SUBMITTED_PAGES
       r = submitted_pages_html
     when Mode::SUBMITTED_PAGE_DIFF
@@ -69,22 +69,22 @@ class BayesFilterConfig
     @conf[THRESHOLD] ||= 0.9
     @conf[THRESHOLD_HAM] ||= 0.1
 
-    if save_mode? and @cgi.params["from_top"][0]
-      @conf[USE] = @cgi.params[USE][0]
-      @conf[REPORT] = @cgi.params[REPORT][0]
-      @conf[SHARE_DB] = @cgi.params[SHARE_DB][0]
-      @conf[LIMIT_OF_SUBMITTED_PAGES] = @cgi.params[LIMIT_OF_SUBMITTED_PAGES][0] || 50
-      threshold_spam = (@cgi.params[THRESHOLD][0]||0.95).to_f
-      threshold_ham = (@cgi.params[THRESHOLD_HAM][0]||0.05).to_f
+    if save_mode? and @request.params["from_top"]
+      @conf[USE] = @request.params[USE]
+      @conf[REPORT] = @request.params[REPORT]
+      @conf[SHARE_DB] = @request.params[SHARE_DB]
+      @conf[LIMIT_OF_SUBMITTED_PAGES] = @request.params[LIMIT_OF_SUBMITTED_PAGES] || 50
+      threshold_spam = (@request.params[THRESHOLD]||0.95).to_f
+      threshold_ham = (@request.params[THRESHOLD_HAM]||0.05).to_f
       if 0 <= threshold_ham and threshold_ham <= threshold_spam and threshold_spam <= 1.0
         @conf[THRESHOLD_HAM] = threshold_ham
         @conf[THRESHOLD] = threshold_spam
       end
 
       rebuild = false
-      rebuild = true if @cgi.params["rebuild_db"][0]=="execute"
-      if @cgi.params[TYPE][0] && @cgi.params[TYPE][0]!=@conf[TYPE]
-        @conf[TYPE] = @cgi.params[TYPE][0] 
+      rebuild = true if @request.params["rebuild_db"]=="execute"
+      if @request.params[TYPE] && @request.params[TYPE]!=@conf[TYPE]
+        @conf[TYPE] = @request.params[TYPE]
         rebuild = true
       end
 
@@ -124,23 +124,23 @@ EOT
   def submitted_pages_html
     sp = submitted_pages
     r = ""
-    {"Ham"=>sp.ham, "Doubt"=>sp.doubt, "Spam"=>sp.spam}.each do |k, h|
-      next if h.empty?
+    {"Ham"=>sp.ham, "Doubt"=>sp.doubt, "Spam"=>sp.spam}.each do |k, hash|
+      next if hash.empty?
       r << "<h3>#{k}</h3>\n<ul>\n"
-      h.keys.sort.each do |id|
+      hash.keys.sort.each do |id|
         r << <<EOT
-<li><a href="#{h[id].url}">#{CGI.escapeHTML(h[id].new_page.page)}</a>
+<li><a href="#{hash[id].url}">#{h(hash[id].new_page.page)}</a>
 <dl>
-<dt>#{Res.title}</dt><dd>#{CGI.escapeHTML(h[id].new_page.title)}</dd>
-<dt>Unified Diff</dt><dd><pre>#{CGI.escapeHTML(h[id].get_unified_diff)}</pre></dd>
+<dt>#{Res.title}</dt><dd>#{h(hash[id].new_page.title)}</dd>
+<dt>Unified Diff</dt><dd><pre>#{h(hash[id].get_unified_diff)}</pre></dd>
 #{
-  unless h[id].diff_keyword.join("\n").strip.empty?
-    "<dt>#{Res.diff_keyword}</dt><dd>#{CGI.escapeHTML(h[id].diff_keyword.join("\n").strip).gsub(/\n/, "<br>")}</dd>"
+  unless hash[id].diff_keyword.join("\n").strip.empty?
+    "<dt>#{Res.diff_keyword}</dt><dd>#{h(hash[id].diff_keyword.join("\n").strip).gsub(/\n/, "<br>")}</dd>"
   end
 }
-<dt>#{Res.remote_addr}</dt><dd>#{CGI.escapeHTML(h[id].new_page.remote_addr)}</dd>
+<dt>#{Res.remote_addr}</dt><dd>#{h(hash[id].new_page.remote_addr)}</dd>
 #{
-  rate = BayesFilter.db.estimate(h[id].token)
+  rate = BayesFilter.db.estimate(hash[id].token)
   rate ? "<dt>#{Res.spam_rate}</dt><dd>#{format("%.4f", rate)}</dd>" : ""
 }
 <dt><a href='#{conf_url(Mode::SUBMITTED_PAGE_DIFF)};id=#{id}'>#{Res.submitted_page_diff}</a></dt>
@@ -181,22 +181,22 @@ EOT
   end
 
   def submitted_page_diff_html
-    return "" unless data = BayesFilter::PageData.load_from_cache(@cgi.params["id"][0].untaint)
+    return "" unless data = BayesFilter::PageData.load_from_cache(@request.params["id"].untaint)
     <<EOT
 <h3>#{Res.submitted_page_diff}</h3>
 <dl>
 <dt>#{Res.difference}</dt>
 <dd><pre>#{word_diff(data.old_page.text, data.new_page.text)}</pre></d>
 <dt>#{Res.old_text}</dt>
-<dd><pre>#{CGI.escapeHTML(data.old_page.text||"")}</pre></dd>
+<dd><pre>#{h(data.old_page.text||"")}</pre></dd>
 <dt>#{Res.new_text}</dt>
-<dd><pre>#{CGI.escapeHTML(data.new_page.text||"")}</pre></dd>
+<dd><pre>#{h(data.new_page.text||"")}</pre></dd>
 </dl>
 EOT
   end
 
   def page_token_html
-    return "" unless data = BayesFilter::PageData.load_from_cache(@cgi.params["id"][0].untaint)
+    return "" unless data = BayesFilter::PageData.load_from_cache(@request.params["id"].untaint)
     <<EOT
 <h3>#{Res.page_token}</h3>
 #{tokens_html(data.token)}
@@ -231,10 +231,10 @@ EOT
   def process_page_data
     return unless save_mode?
 
-    @cgi.params.keys.select{|k| k=~/\A[HSD]\d+\z/}.each do |id|
+    @request.params.keys.select{|k| k=~/\A[HSD]\d+\z/}.each do |id|
       data = BayesFilter::PageData.load_from_cache(id.dup.untaint, true)
       next unless data
-      case @cgi.params["register_#{id}"][0]
+      case @request.params["register_#{id}"]
       when "ham"
         add_ham(data.token)
         data.corpus_save(true)
@@ -328,7 +328,7 @@ end
 if self.is_a?(::Hiki::Plugin)
   add_conf_proc( "bayes_filter",  BayesFilterConfig::Res.label) do
     begin
-      BayesFilterConfig.new(@cgi, @conf, @mode, @db).html
+      BayesFilterConfig.new(@request, @conf, @mode, @db).html
     rescue
       <<EOT
 <pre>

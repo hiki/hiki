@@ -1,5 +1,5 @@
-# -*- coding: euc-jp -*-
+# -*- coding: utf-8 -*-
 # $Id: frozenmark.rb,v 1.1 2005-03-03 15:53:56 fdiary Exp $
 # Copyright (C) 2003 OZAWA Sakuro <crouton@users.sourceforge.jp>
 
-def frozenmark_message; '¤³¤Î¥Ú¡¼¥¸¤ÏÅà·ë¤µ¤ì¤Æ¤¤¤Ş¤¹¡£'; end
+def frozenmark_message; 'ã“ã®ãƒšãƒ¼ã‚¸ã¯å‡çµã•ã‚Œã¦ã„ã¾ã™ã€‚'; end

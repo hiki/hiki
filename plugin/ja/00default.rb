@@ -1,50 +1,50 @@
-# -*- coding: euc-jp -*-
+# -*- coding: utf-8 -*-
 #
 # preferences (resources)
 #
-add_conf_proc( 'default', '����' ) do
+add_conf_proc( 'default', '基本' ) do
   saveconf_default
   <<-HTML
-      <h3 class="subtitle">������̾</h3>
-      <p>������̾����ꤷ�ޤ���</p>
-      <p><input name="site_name" value="#{CGI::escapeHTML(@conf.site_name)}" size="40"></p>
-      <h3 class="subtitle">����̾</h3>
-      <p>���ʤ���̾������ꤷ�ޤ���</p>
-      <p><input name="author_name" value="#{CGI::escapeHTML(@conf.author_name)}" size="40"></p>
-      <h3 class="subtitle">�᡼�륢�ɥ쥹</h3>
-      <p>���ʤ��Υ᡼�륢�ɥ쥹����ꤷ�ޤ���1�Ԥ�1���ɥ쥹���Ļ��ꤷ�ޤ���</p>
-      <p><textarea name="mail" rows="4" cols="50">#{CGI::escapeHTML(@conf.mail.join("\n"))}</textarea></p>
-      <h3 class="subtitle">������᡼�������</h3>
-      <p>�ڡ����ι��������ä����˥᡼������Τ��뤫�ɤ�������ꤷ�ޤ����᡼��ϴ�������ǻ��ꤷ�����ɥ쥹����������ޤ������餫����hikiconf.rb��SMTP�����Ф����ꤷ�Ƥ����Ƥ���������</p>
+      <h3 class="subtitle">サイト名</h3>
+      <p>サイト名を指定します。</p>
+      <p><input name="site_name" value="#{h(@conf.site_name)}" size="40"></p>
+      <h3 class="subtitle">著者名</h3>
+      <p>あなたの名前を指定します。</p>
+      <p><input name="author_name" value="#{h(@conf.author_name)}" size="40"></p>
+      <h3 class="subtitle">メールアドレス</h3>
+      <p>あなたのメールアドレスを指定します。1行に1アドレスずつ指定します。</p>
+      <p><textarea name="mail" rows="4" cols="50">#{h(@conf.mail.join("\n"))}</textarea></p>
+      <h3 class="subtitle">更新をメールで通知</h3>
+      <p>ページの更新があった場合にメールで通知するかどうかを指定します。メールは基本設定で指定したアドレスに送信されます。あらかじめhikiconf.rbでSMTPサーバを設定しておいてください。</p>
       <p><select name="mail_on_update">
-         <option value="true"#{@conf.mail_on_update ? ' selected' : ''}>�᡼�� ������</option>
-         <option value="false"#{@conf.mail_on_update ? '' : ' selected'}>������</option>
+         <option value="true"#{@conf.mail_on_update ? ' selected' : ''}>メール で通知</option>
+         <option value="false"#{@conf.mail_on_update ? '' : ' selected'}>非通知</option>
          </select></p>
   HTML
 end
 
-add_conf_proc( 'password', '�ѥ����' ) do
-  '<h3 class="password">�ѥ����</h3>' +
+add_conf_proc( 'password', 'パスワード' ) do
+  '<h3 class="password">パスワード</h3>' +
     case saveconf_password
     when :password_change_success
-      '<p>�������ѥѥ���ɤ��ѹ����ޤ�����</p>'
+      '<p>管理者用パスワードを変更しました。</p>'
     when :password_change_failure
-      '<p>�������ѥѥ���ɤ��ְ�äƤ��뤫���ѥ���ɤ����פ��ޤ���</p>'
+      '<p>管理者用パスワードが間違っているか、パスワードが一致しません。</p>'
     when nil
-      '<p>�������ѥѥ���ɤ��ѹ����ޤ���</p>'
+      '<p>管理者用パスワードを変更します。</p>'
     end +
     <<-HTML
-        <p>���ߤΥѥ����: <input type="password" name="old_password" size="40"></p>
-        <p>�������ѥ����: <input type="password" name="password1" size="40"></p>
-        <p>�������ѥ���ɡʳ�ǧ�Ѥ˺����Ϥ��Ƥ���������: <input type="password" name="password2" size="40"></p>
+        <p>現在のパスワード: <input type="password" name="old_password" size="40"></p>
+        <p>新しいパスワード: <input type="password" name="password1" size="40"></p>
+        <p>新しいパスワード（確認用に再入力してください）: <input type="password" name="password2" size="40"></p>
     HTML
 end
 
-add_conf_proc( 'theme', 'ɽ������' ) do
+add_conf_proc( 'theme', '表示設定' ) do
   saveconf_theme
   r = <<-HTML
-      <h3 class="subtitle">�ơ��ޤλ���</h3>
-      <p>ɽ���˻��Ѥ���ơ��ޤ����򤹤뤳�Ȥ��Ǥ��ޤ���</p>
+      <h3 class="subtitle">テーマの指定</h3>
+      <p>表示に使用するテーマを選択することができます。</p>
       <p><select name="theme">
   HTML
   @conf_theme_list.each do |theme|
@@ -52,35 +52,35 @@ add_conf_proc( 'theme', 'ɽ������' ) do
   end
   r << <<-HTML
       </select></p>
-      <h3 class="subtitle">�ơ���URL�λ���</h3>
-      <p>�ơ��ޤ�����URL����ꤹ�뤳�Ȥ��Ǥ��ޤ���ľ��CSS����ꤷ����硢��Ρ֥ơ��ޤλ���פ����򤷤��ơ��ޤ�̵�뤵�졢���ꤷ��CSS���Ȥ��ޤ���</p>
-      <p><input name="theme_url" value="#{CGI::escapeHTML(@conf.theme_url)}" size="60"></p>
-      <h3 class="subtitle">�ơ��ޥǥ��쥯�ȥ�λ���</h3>
-      <p>�ơ��ޤ�����ǥ��쥯�ȥ����ꤹ�뤳�Ȥ��Ǥ��ޤ�����ʣ�����ֻ��˻��ѡ�</p>
-      <p><input name="theme_path" value="#{CGI::escapeHTML(@conf.theme_path)}" size="60"></p>
-      <h3 class="subtitle">�����ɥС�������</h3>
-      <p>�ơ��ޤˤ�äƤϥ����ɥС������Ѥ����ɽ���������Τ�����ޤ������ξ�硢�����ɥС���ɽ���򥪥դˤ��뤳�Ȥ��Ǥ��ޤ���</p>
+      <h3 class="subtitle">テーマURLの指定</h3>
+      <p>テーマがあるURLを指定することができます。直接CSSを指定した場合、上の「テーマの指定」で選択したテーマは無視され、指定したCSSが使われます。</p>
+      <p><input name="theme_url" value="#{h(@conf.theme_url)}" size="60"></p>
+      <h3 class="subtitle">テーマディレクトリの指定</h3>
+      <p>テーマがあるディレクトリを指定することができます。（複数設置時に使用）</p>
+      <p><input name="theme_path" value="#{h(@conf.theme_path)}" size="60"></p>
+      <h3 class="subtitle">サイドバーの利用</h3>
+      <p>テーマによってはサイドバーを利用すると表示が乱れるものがあります。その場合、サイドバーの表示をオフにすることができます。</p>
       <p><select name="sidebar">
-         <option value="true"#{@conf.use_sidebar ? ' selected' : ''}>���Ѥ���</option>
-         <option value="false"#{@conf.use_sidebar ? '' : ' selected'}>���Ѥ��ʤ�</option>
+         <option value="true"#{@conf.use_sidebar ? ' selected' : ''}>使用する</option>
+         <option value="false"#{@conf.use_sidebar ? '' : ' selected'}>使用しない</option>
          </select></p>
-      <h3 class="subtitle">�ᥤ�󥨥ꥢ�Υ��饹̾(CSS)�λ���</h3>
-      <p>�ǥե���ȤǤ���ʸ��ʬ�Υ��饹̾�Ȥ���'main'����Ѥ��ޤ���������ʳ��Υ��饹̾����Ѥ��������˻��ꤷ�ޤ���</p>
-      <p><input name="main_class" value="#{CGI::escapeHTML(@conf.main_class)}" size="20"></p>
-      <h3 class="subtitle">�����ɥС��Υ��饹̾(CSS)�λ���</h3>
-      <p>�ǥե���ȤǤϥ����ɥС��Υ��饹̾�Ȥ���'sidebar'����Ѥ��ޤ���������ʳ��Υ��饹̾����Ѥ��������˻��ꤷ�ޤ���</p>
-      <p><input name="sidebar_class" value="#{CGI::escapeHTML(@conf.sidebar_class)}" size="20"></p>
-      <h3 class="subtitle">�����ȥ�󥯤�����</h3>
-      <p>��¸�Υڡ����˼�ưŪ�˥�󥯤����ꤹ�륪���ȥ�󥯵�ǽ����Ѥ��뤫�ɤ������ꤷ�ޤ���</p>
+      <h3 class="subtitle">メインエリアのクラス名(CSS)の指定</h3>
+      <p>デフォルトでは本文部分のクラス名として'main'を使用しますが、それ以外のクラス名を使用したい場合に指定します。</p>
+      <p><input name="main_class" value="#{h(@conf.main_class)}" size="20"></p>
+      <h3 class="subtitle">サイドバーのクラス名(CSS)の指定</h3>
+      <p>デフォルトではサイドバーのクラス名として'sidebar'を使用しますが、それ以外のクラス名を使用したい場合に指定します。</p>
+      <p><input name="sidebar_class" value="#{h(@conf.sidebar_class)}" size="20"></p>
+      <h3 class="subtitle">オートリンクの利用</h3>
+      <p>既存のページに自動的にリンクを設定するオートリンク機能を使用するかどうか指定します。</p>
       <p><select name="auto_link">
-         <option value="true"#{@conf.auto_link ? ' selected' : ''}>���Ѥ���</option>
-         <option value="false"#{@conf.auto_link ? '' : ' selected'}>���Ѥ��ʤ�</option>
+         <option value="true"#{@conf.auto_link ? ' selected' : ''}>使用する</option>
+         <option value="false"#{@conf.auto_link ? '' : ' selected'}>使用しない</option>
          </select></p>
-      <h3 class="subtitle">WikiName �ˤ���󥯵�ǽ������</h3>
-      <p>WikiName �ˤ���󥯵�ǽ����Ѥ��뤫�ɤ������ꤷ�ޤ���</p>
+      <h3 class="subtitle">WikiName によるリンク機能の利用</h3>
+      <p>WikiName によるリンク機能を使用するかどうか指定します。</p>
       <p><select name="use_wikiname">
-         <option value="true"#{@conf.use_wikiname ? ' selected' : ''}>���Ѥ���</option>
-         <option value="false"#{@conf.use_wikiname ? '' : ' selected'}>���Ѥ��ʤ�</option>
+         <option value="true"#{@conf.use_wikiname ? ' selected' : ''}>使用する</option>
+         <option value="false"#{@conf.use_wikiname ? '' : ' selected'}>使用しない</option>
          </select></p>
   HTML
 end
@@ -90,10 +90,10 @@ add_conf_proc( 'xmlrpc', 'XML-RPC' ) do
 
   <<-HTML
       <h3 class="subtitle">XML-RPC</h3>
-      <p>XML-RPC ���󥿥ե�������ͭ���ˤ��뤫�ɤ�������ꤷ�ޤ���</p>
+      <p>XML-RPC インタフェイスを有効にするかどうかを指定します。</p>
       <p><select name="xmlrpc_enabled">
-         <option value="true"#{@conf.xmlrpc_enabled ? ' selected' : ''}>ͭ��</option>
-         <option value="false"#{@conf.xmlrpc_enabled ? '' : ' selected'}>̵��</option>
+         <option value="true"#{@conf.xmlrpc_enabled ? ' selected' : ''}>有効</option>
+         <option value="false"#{@conf.xmlrpc_enabled ? '' : ' selected'}>無効</option>
          </select></p>
   HTML
 end

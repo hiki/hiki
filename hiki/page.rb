@@ -2,7 +2,7 @@
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 
-require 'cgi'
+require 'cgi' unless Object.const_defined?(:Rack)
 require 'nkf'
 
 module Hiki
@@ -15,8 +15,8 @@ module Hiki
 
     attr_accessor :template, :contents
 
-    def initialize(cgi, conf)
-      @cgi = cgi
+    def initialize(request, conf)
+      @request = request
       @conf = conf
       @template = ''
       @contents = nil
@@ -32,7 +32,7 @@ module Hiki
 
       @conf.save_config if @contents[:save_config]
       @headers = {}
-      if @contents[:last_modified] and 'HEAD' == @cgi.request_method
+      if @contents[:last_modified] and 'HEAD' == @request.request_method
         @headers['Last-Modified']    = CGI.rfc1123_date(@contents[:last_modified])
       end
       @headers['type']     = 'text/html'
@@ -52,10 +52,16 @@ module Hiki
 
     def out( headers = nil )
       @headers.update( headers ) if headers
-      print @cgi.header( @headers )
-      if @cgi.request_method != 'HEAD'
-        print @body
+      response = Hiki::Response.new(@body, 200, @headers)
+      if Object.const_defined?(:Rack)
+        cookies = @headers.delete('cookie')
+        if cookies
+          cookies.each do |cookie|
+            response.set_cookie(cookie.name, cookie.value)
+          end
+        end
       end
+      response
     end
   end
 end

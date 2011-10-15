@@ -15,7 +15,7 @@ def google_sitemaps_body
     end
     sitemaps << <<_E
   <url>
-    <loc>#{@conf.index_url}?#{name.escape}</loc>
+    <loc>#{@conf.index_url}?#{escape(name)}</loc>
     <lastmod>#{lastmod.utc.strftime('%Y-%m-%dT%H:%M:%S+00:00')}</lastmod>
   </url>
 _E
@@ -27,17 +27,15 @@ end
 
 def google_sitemaps
   body, last_modified = google_sitemaps_body
-  header = Hash::new
-  header['Last-Modified'] = CGI::rfc1123_date(last_modified)
+  header = {}
+  header['Last-Modified'] = CGI.rfc1123_date(last_modified)
   header['type']          = 'text/xml'
   header['charset']       =  'UTF-8'
   header['Content-Language'] = @conf.lang
   header['Pragma']           = 'no-cache'
   header['Cache-Control']    = 'no-cache'
-  print @cgi.header(header)
-  puts body
 
-  nil # Don't move to the 'FrontPage'
+  ::Hiki::Response.new(body, 200, header)
 end
 
 add_body_enter_proc(Proc.new do

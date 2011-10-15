@@ -16,6 +16,8 @@ require 'style/rd+/rd2html.rb'
 
 module Hiki
   class HTMLFormatter_rd < HikiFormatter
+    include Hiki::Util
+
     def initialize( s, db, plugin, conf, suffix = 'l')
       @tokens     = s
       @db         = db
@@ -24,32 +26,32 @@ module Hiki
       @visitor = Hiki::RD2HTMLVisitor.new(@plugin, @db, @conf)
     end
 
-    def to_s 
+    def to_s
       @references = @visitor.references
       begin
         @visitor.visit(@tokens).gsub(/<\/?body>/, "")
       rescue Exception
-        tree = RD::RDTree.new("=begin\n==Error! Please edit this page again.\n#{($!.backtrace.join("\n")).escapeHTML}" + "\n=end\n")
+        tree = RD::RDTree.new("=begin\n==Error! Please edit this page again.\n#{h($!.backtrace.join("\n"))}" + "\n=end\n")
         @visitor.visit(tree).gsub(/<\/?body>/, "")
       end
     end
 
     def references
       @references.uniq
-    end    
+    end
 
     def toc
       s = "<ul>\n"
       lv = 1
-      @visitor.toc.each do |h|
-        if h['level'] > lv
-          s << ( "<ul>\n" * ( h['level'] - lv ) )
-          lv = h['level']
-        elsif h['level'] < lv
-          s << ( "</ul>\n" * ( lv - h['level'] ) )
-          lv = h['level']
+      @visitor.toc.each do |hash|
+        if hash['level'] > lv
+          s << ( "<ul>\n" * ( hash['level'] - lv ) )
+          lv = hash['level']
+        elsif hash['level'] < lv
+          s << ( "</ul>\n" * ( lv - hash['level'] ) )
+          lv = hash['level']
         end
-        s << %Q!<li><a href="##{h['index']}">#{h['title'].escapeHTML}</a>\n!
+        s << %Q!<li><a href="##{hash['index']}">#{h(hash['title'])}</a>\n!
       end
       s << ("</ul>\n" * lv)
     end

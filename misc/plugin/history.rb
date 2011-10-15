@@ -1,7 +1,7 @@
-# -*- coding: euc-jp -*-
+# -*- coding: utf-8 -*-
 =begin
 
-== plugin/history.rb - CVS ¤ÎÊÔ½¸ÍúÎò¤òÉ½¼¨¤¹¤ë¥×¥é¥°¥¤¥ó
+== plugin/history.rb - CVS ã®ç·¨é›†å±¥æ­´ã‚’è¡¨ç¤ºã™ã‚‹ãƒ—ãƒ©ã‚°ã‚¤ãƒ³
 
   Copyright (C) 2003 Hajime BABA <baba.hajime@nifty.com>
   $Id: history.rb,v 1.29 2007-09-24 21:23:09 fdiary Exp $
@@ -9,62 +9,62 @@
 
   Copyright (C) 2003 Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
 
-=== »È¤¤Êı
+=== ä½¿ã„æ–¹
 
-* Hiki ¤Î cvs ¥×¥é¥°¥¤¥ó (¤¢¤ë¤¤¤Ï svn ¥×¥é¥°¥¤¥ó) ¤òÍøÍÑ¤·¤Æ¤¤¤ë
-  ¤³¤È¤¬Á°Äó¾ò·ï¤Ç¤¹¡£
+* Hiki ã® cvs ãƒ—ãƒ©ã‚°ã‚¤ãƒ³ (ã‚ã‚‹ã„ã¯ svn ãƒ—ãƒ©ã‚°ã‚¤ãƒ³) ã‚’åˆ©ç”¨ã—ã¦ã„ã‚‹
+  ã“ã¨ãŒå‰ææ¡ä»¶ã§ã™ã€‚
 
-* ¤½¤Î¾å¤Ç¡¢Hiki ¤Î¥×¥é¥°¥¤¥ó¥Ç¥£¥ì¥¯¥È¥ê¤Ë¥³¥Ô¡¼¤¹¤ì¤Ğ¡¢
-  ¾åÉô¥á¥Ë¥å¡¼¤Ë¡ÖÊÔ½¸ÍúÎò¡×¤¬¸½¤ì¤Æ»È¤¨¤ë¤è¤¦¤Ë¤Ê¤ê¤Ş¤¹¡£
+* ãã®ä¸Šã§ã€Hiki ã®ãƒ—ãƒ©ã‚°ã‚¤ãƒ³ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã«ã‚³ãƒ”ãƒ¼ã™ã‚Œã°ã€
+  ä¸Šéƒ¨ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã«ã€Œç·¨é›†å±¥æ­´ã€ãŒç¾ã‚Œã¦ä½¿ãˆã‚‹ã‚ˆã†ã«ãªã‚Šã¾ã™ã€‚
 
-=== ¾ÜºÙ
+=== è©³ç´°
 
-* °Ê²¼¤Î»°¤Ä¤Î¥×¥é¥°¥¤¥ó¥³¥Ş¥ó¥É¤¬ÄÉ²Ã¤µ¤ì¤Ş¤¹¡£
-    * history       ¥Ú¡¼¥¸¤ÎÊÔ½¸ÍúÎò¤Î°ìÍ÷¤òÉ½¼¨
-    * history_src   ¤¢¤ë¥ê¥Ó¥¸¥ç¥ó¤Î¥½¡¼¥¹¤òÉ½¼¨
-    * history_diff  Ç¤°Õ¤Î¥ê¥Ó¥¸¥ç¥ó´Ö¤Îº¹Ê¬¤òÉ½¼¨
-  ¼Âºİ¤Ë¤Ï¡¢
-    @conf.cgi_name?c=history;p=FrontPage ¤ä
+* ä»¥ä¸‹ã®ä¸‰ã¤ã®ãƒ—ãƒ©ã‚°ã‚¤ãƒ³ã‚³ãƒãƒ³ãƒ‰ãŒè¿½åŠ ã•ã‚Œã¾ã™ã€‚
+    * history       ãƒšãƒ¼ã‚¸ã®ç·¨é›†å±¥æ­´ã®ä¸€è¦§ã‚’è¡¨ç¤º
+    * history_src   ã‚ã‚‹ãƒªãƒ“ã‚¸ãƒ§ãƒ³ã®ã‚½ãƒ¼ã‚¹ã‚’è¡¨ç¤º
+    * history_diff  ä»»æ„ã®ãƒªãƒ“ã‚¸ãƒ§ãƒ³é–“ã®å·®åˆ†ã‚’è¡¨ç¤º
+  å®Ÿéš›ã«ã¯ã€
+    @conf.cgi_name?c=history;p=FrontPage ã‚„
     @conf.cgi_name?c=plugin;plugin=history_diff;p=FrontPage;r=2
-  ¤Î¤è¤¦¤Ë»ÈÍÑ¤·¤Ş¤¹¡£
+  ã®ã‚ˆã†ã«ä½¿ç”¨ã—ã¾ã™ã€‚
 
-* ÍúÎò¤Ë¤Ï¥Ö¥é¥ó¥ÁÅù¤¬¸½¤ì¤Ê¤¤¤³¤È¤òÁ°Äó¤Ë¤·¤Æ¤¤¤Ş¤¹¡£
+* å±¥æ­´ã«ã¯ãƒ–ãƒ©ãƒ³ãƒç­‰ãŒç¾ã‚Œãªã„ã“ã¨ã‚’å‰æã«ã—ã¦ã„ã¾ã™ã€‚
 
-* Subversion ÂĞ±ş¤ÏÅ¬Åö¤Ç¤¹(ËÍ¤¬»È¤Ã¤Æ¤¤¤Ê¤¤¤Î¤Ç)¡£
+* Subversion å¯¾å¿œã¯é©å½“ã§ã™(åƒ•ãŒä½¿ã£ã¦ã„ãªã„ã®ã§)ã€‚
 
-* ¥×¥é¥°¥¤¥óºîÀ®¤ÎºîË¡¤¬¤è¤¯¤ï¤«¤Ã¤Æ¤Ê¤¤¤Î¤Ç¡¢¤É¤Ê¤¿¤«Ä¾¤·¤Æ¤¯¤À¤µ¤¤¡£
+* ãƒ—ãƒ©ã‚°ã‚¤ãƒ³ä½œæˆã®ä½œæ³•ãŒã‚ˆãã‚ã‹ã£ã¦ãªã„ã®ã§ã€ã©ãªãŸã‹ç›´ã—ã¦ãã ã•ã„ã€‚
 
 === history
-2003/12/17 Yasuo Itabashi(Yas)    SubversionÂĞ±ş, ÊÑ¹¹²Õ½ê¤Î¶¯Ä´ÂĞ±ş, Ruby 1.7°Ê¹ß¤ËÂĞ±ş
+2003/12/17 Yasuo Itabashi(Yas)    Subversionå¯¾å¿œ, å¤‰æ›´ç®‡æ‰€ã®å¼·èª¿å¯¾å¿œ, Ruby 1.7ä»¥é™ã«å¯¾å¿œ
 
 === notice
-Hikifarm¤ò»ÈÍÑ¤·¤Æ¤¤¤ë¾ì¹ç¡¢hiki.conf¤Ë
+Hikifarmã‚’ä½¿ç”¨ã—ã¦ã„ã‚‹å ´åˆã€hiki.confã«
 @conf.repos_type      = (defined? repos_type) ? "#{repos_type}" : nil
-¤òÄÉ²Ã¤·¤Æ¤¯¤À¤µ¤¤¡£-- Yas
+ã‚’è¿½åŠ ã—ã¦ãã ã•ã„ã€‚-- Yas
 
-CSS¤Çspan.add_line, span.del_line¤òÀßÄê¤¹¤ë¤È¡¢ÊÑ¹¹²Õ½ê¤ÎÊ¸»úÂ°À­¤òÊÑ¹¹¤Ç¤­¤Ş¤¹¡£
+CSSã§span.add_line, span.del_lineã‚’è¨­å®šã™ã‚‹ã¨ã€å¤‰æ›´ç®‡æ‰€ã®æ–‡å­—å±æ€§ã‚’å¤‰æ›´ã§ãã¾ã™ã€‚
 -- Yas
 
 
 === SEE ALSO
 
-* °ìÍ÷¤Î½ĞÎÏ·Á¼°¤Ï WiLiKi ¤ÎÊÔ½¸ÍúÎò¤ò»²¹Í¤Ë¤µ¤»¤Æ¤¤¤¿¤À¤­¤Ş¤·¤¿¡£
+* ä¸€è¦§ã®å‡ºåŠ›å½¢å¼ã¯ WiLiKi ã®ç·¨é›†å±¥æ­´ã‚’å‚è€ƒã«ã•ã›ã¦ã„ãŸã ãã¾ã—ãŸã€‚
   http://www.shiro.dreamhost.com/scheme/wiliki/wiliki.cgi
 
 =end
 
 def history
-  h = Hiki::History.new(@cgi, @db, @conf)
+  h = Hiki::History.new(@request, @db, @conf)
   h.history
 end
 
 def history_src
-  h = Hiki::History.new(@cgi, @db, @conf)
+  h = Hiki::History.new(@request, @db, @conf)
   h.history_src
 end
 
 def history_diff
-  h = Hiki::History.new(@cgi, @db, @conf)
+  h = Hiki::History.new(@request, @db, @conf)
   h.history_diff
 end
 
@@ -97,8 +97,8 @@ module Hiki
       parser = @conf.parser.new( @conf )
       tokens = parser.parse( s )
       formatter = @conf.formatter.new( tokens, @db, @plugin, @conf )
-      @page  = Page.new( @cgi, @conf )
-      data   = Util.get_common_data( @db, @plugin, @conf )
+      @page  = Page.new( @request, @conf )
+      data   = get_common_data( @db, @plugin, @conf )
       @plugin.hiki_menu(data, @cmd)
       pg_title = @plugin.page_name(@p)
       data[:title]      = title( "#{pg_title} - #{history_label}")
@@ -127,7 +127,7 @@ module Hiki
       title << (rev_title2 || (rev2 and rev2[0]) || nil)
       title = title.compact
       title.reverse! unless rev2.nil?
-      title = title.join("<=>").escapeHTML
+      title = h(title.join("<=>"))
 
       do_link = (link and rev1)
 
@@ -135,7 +135,7 @@ module Hiki
       if do_link
         rev_param = "r=#{rev1[0]}"
         rev_param << ";r2=#{rev2[0]}" if rev2
-        rv << %Q[<a href="#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{@p.escape};#{rev_param}")}" title="#{title}">]
+        rv << %Q[<a href="#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{escape(@p)};#{rev_param}")}" title="#{title}">]
       end
       rv << title
       if do_link
@@ -154,40 +154,40 @@ module Hiki
       # construct output sources
       prevdiff = 1
       sources = ''
-      sources << @plugin.hiki_anchor(@p.escape, @plugin.page_name(@p))
+      sources << @plugin.hiki_anchor(escape(@p), @plugin.page_name(@p))
       sources << "\n<br>\n"
       sources << "\n<table border=\"1\">\n"
       if @conf.options['history.hidelog']
         case history_repos_type
         when 'cvs'
-          sources << " <tr><th>#{history_th_label[0].escapeHTML}</th><th>#{history_th_label[1].escapeHTML}</th><th>#{history_th_label[2].escapeHTML}</th><th>#{history_th_label[3].escapeHTML}</th></tr>\n"
+          sources << " <tr><th>#{h(history_th_label[0])}</th><th>#{h(history_th_label[1])}</th><th>#{h(history_th_label[2])}</th><th>#{h(history_th_label[3])}</th></tr>\n"
         else
-          sources << " <tr><th>#{history_th_label[0].escapeHTML}</th><th>#{history_th_label[1].escapeHTML}</th><th>#{history_th_label[3].escapeHTML}</th></tr>\n"
+          sources << " <tr><th>#{h(history_th_label[0])}</th><th>#{h(history_th_label[1])}</th><th>#{h(history_th_label[3])}</th></tr>\n"
         end
       else
         case history_repos_type
         when 'cvs'
-          sources << " <tr><th rowspan=\"2\">#{history_th_label[0].escapeHTML}</th><th>#{history_th_label[1].escapeHTML}</th><th>#{history_th_label[2].escapeHTML}</th><th>#{history_th_label[3].escapeHTML}</th></tr><tr><th colspan=\"3\">#{history_th_label[4].escapeHTML}</th></tr>\n"
+          sources << " <tr><th rowspan=\"2\">#{h(history_th_label[0])}</th><th>#{h(history_th_label[1])}</th><th>#{h(history_th_label[2])}</th><th>#{h(history_th_label[3])}</th></tr><tr><th colspan=\"3\">#{h(history_th_label[4])}</th></tr>\n"
         else
-          sources << " <tr><th rowspan=\"2\">#{history_th_label[0].escapeHTML}</th><th>#{history_th_label[1].escapeHTML}</th><th>#{history_th_label[3].escapeHTML}</th></tr><tr><th colspan=\"2\">#{history_th_label[4].escapeHTML}</th></tr>\n"
+          sources << " <tr><th rowspan=\"2\">#{h(history_th_label[0])}</th><th>#{h(history_th_label[1])}</th><th>#{h(history_th_label[3])}</th></tr><tr><th colspan=\"2\">#{h(history_th_label[4])}</th></tr>\n"
         end
       end
       revs.each do |rev,time,changes,log|
         #    time << " GMT"
-        op = "[<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_src;p=#{@p.escape};r=#{rev}")}\">View</a> this version] "
+        op = "[<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_src;p=#{escape(@p)};r=#{rev}")}\">View</a> this version] "
         if revs.size != 1
           op << "[Diff to "
-          op << "<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{@p.escape};r=#{rev}")}\">current</a>" unless prevdiff == 1
+          op << "<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{escape(@p)};r=#{rev}")}\">current</a>" unless prevdiff == 1
           op << " | " unless (prevdiff == 1 || prevdiff >= revs.size)
-          op << "<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{@p.escape};r=#{rev};r2=#{revs[prevdiff][0]}")}\">previous</a>" unless prevdiff >= revs.size
+          op << "<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{escape(@p)};r=#{rev};r2=#{revs[prevdiff][0]}")}\">previous</a>" unless prevdiff >= revs.size
           op << "]"
         end
         if @conf.options['history.hidelog']
           case history_repos_type
           when 'cvs'
-            sources << " <tr><td>#{rev}</td><td>#{time.escapeHTML}</td><td>#{changes.escapeHTML}</td><td align=right>#{op}</td></tr>\n"
+            sources << " <tr><td>#{rev}</td><td>#{h(time)}</td><td>#{h(changes)}</td><td align=right>#{op}</td></tr>\n"
           else
-            sources << " <tr><td>#{rev}</td><td>#{time.escapeHTML}</td><td align=right>#{op}</td></tr>\n"
+            sources << " <tr><td>#{rev}</td><td>#{h(time)}</td><td align=right>#{op}</td></tr>\n"
           end
         else
           log.gsub!(/=============================================================================/, '')
@@ -195,9 +195,9 @@ module Hiki
           log = "*** no log message ***" if log.empty?
           case history_repos_type
           when 'cvs'
-            sources << " <tr><td rowspan=\"2\">#{rev}</td><td>#{time.escapeHTML}</td><td>#{changes.escapeHTML}</td><td align=right>#{op}</td></tr><tr><td colspan=\"3\">#{log.escapeHTML}</td></tr>\n"
+            sources << " <tr><td rowspan=\"2\">#{rev}</td><td>#{h(time)}</td><td>#{h(changes)}</td><td align=right>#{op}</td></tr><tr><td colspan=\"3\">#{h(log)}</td></tr>\n"
           else
-            sources << " <tr><td rowspan=\"2\">#{rev}</td><td>#{time.escapeHTML}</td><td align=right>#{op}</td></tr><tr><td colspan=\"2\">#{log.escapeHTML}</td></tr>\n"
+            sources << " <tr><td rowspan=\"2\">#{rev}</td><td>#{h(time)}</td><td align=right>#{op}</td></tr><tr><td colspan=\"2\">#{h(log)}</td></tr>\n"
           end
         end
         prevdiff += 1
@@ -210,21 +210,21 @@ module Hiki
     # Output source at an arbitrary revision
     def history_src
       # make command string
-      r = @cgi.params['r'][0] || '1'
+      r = @request.params['r'] || '1'
       txt = @conf.repos.get_revision(@p, r)
       txt = "*** no source ***" if txt.empty?
 
       # construct output sources
       sources = ''
       sources << "<div class=\"section\">\n"
-      sources << @plugin.hiki_anchor(@p.escape, @plugin.page_name(@p))
+      sources << @plugin.hiki_anchor(escape(@p), @plugin.page_name(@p))
       sources << "\n<br>\n"
-      sources << "<a href=\"#{@conf.cgi_name}#{cmdstr('edit', "p=#{@p.escape};r=#{r.escapeHTML}")}\">#{history_revert_label.escapeHTML}</a><br>\n"
-      sources << "<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{@p.escape};r=#{r.escapeHTML}")}\">#{history_diffto_current_label.escapeHTML}</a><br>\n"
-      sources << "<a href=\"#{@conf.cgi_name}#{cmdstr('history', "p=#{@p.escape}")}\">#{history_backto_summary_label.escapeHTML}</a><br>\n"
+      sources << "<a href=\"#{@conf.cgi_name}#{cmdstr('edit', "p=#{escape(@p)};r=#{h(r)}")}\">#{h(history_revert_label)}</a><br>\n"
+      sources << "<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_diff;p=#{escape(@p)};r=#{h(r)}")}\">#{h(history_diffto_current_label)}</a><br>\n"
+      sources << "<a href=\"#{@conf.cgi_name}#{cmdstr('history', "p=#{escape(@p)}")}\">#{h(history_backto_summary_label)}</a><br>\n"
       sources << "</div>\n"
       sources << "<div class=\"diff\">\n"
-      sources << txt.escapeHTML.gsub(/\n/, "<br>\n").gsub(/ /, '&nbsp;')
+      sources << h(txt).gsub(/\n/, "<br>\n").gsub(/ /, '&nbsp;')
       sources << "</div>\n"
 
       history_output(sources)
@@ -233,8 +233,8 @@ module Hiki
     # Output diff between two arbitrary revisions
     def history_diff
       # make command string
-      r = @cgi.params['r'][0] || '1'
-      r2 = @cgi.params['r2'][0]
+      r = @request.params['r'] || '1'
+      r2 = @request.params['r2']
       if r2.nil? || r2.to_i == 0
         new = @db.load(@p)
         old = @conf.repos.get_revision(@p, r)
@@ -254,10 +254,10 @@ module Hiki
       # construct output sources
       sources = ''
       sources << "<div class=\"section\">\n"
-      sources << @plugin.hiki_anchor(@p.escape, @plugin.page_name(@p))
+      sources << @plugin.hiki_anchor(escape(@p), @plugin.page_name(@p))
       sources << "<br>\n"
-      sources << "<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_src;p=#{@p.escape};r=#{curr_rev[0]}")}\">#{history_view_this_version_src_label.escapeHTML}</a><br>\n" if curr_rev
-      sources << "<a href=\"#{@conf.cgi_name}#{cmdstr('history', "p=#{@p.escape}")}\">#{history_backto_summary_label.escapeHTML}</a><br>\n"
+      sources << "<a href=\"#{@conf.cgi_name}#{cmdstr('plugin', "plugin=history_src;p=#{escape(@p)};r=#{curr_rev[0]}")}\">#{h(history_view_this_version_src_label)}</a><br>\n" if curr_rev
+      sources << "<a href=\"#{@conf.cgi_name}#{cmdstr('history', "p=#{escape(@p)}")}\">#{h(history_backto_summary_label)}</a><br>\n"
       sources << "\n"
 
       if prev_rev

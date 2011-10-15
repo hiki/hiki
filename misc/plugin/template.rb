@@ -18,14 +18,14 @@ def template_form
     s = <<EOS
 <div>
   #{template_label}:
-  <input type="hidden" name="p" value="#{@page.escapeHTML}">
+  <input type="hidden" name="p" value="#{h(@page)}">
   <input type="hidden" name="plugin" value="load_template">
   <select name="template">
 EOS
 
   pages.each do |p|
-   p = p.unescape.escapeHTML
-   s << %Q!<option value="#{p}"#{'selected' if @options['template.default'] == p.unescapeHTML}>#{p}</option>!
+   p = h(unescape(p))
+   s << %Q!<option value="#{p}"#{'selected' if @options['template.default'] == unescape_html(p)}>#{p}</option>!
   end
   s << <<EOS
   </select>
@@ -38,8 +38,8 @@ EOS
 end
 
 def load_template
-  tmpl_name = @cgi.params['template'][0]
-  page = @cgi.params['p'][0] ? @cgi.params['p'][0] : 'FrontPage'
+  tmpl_name = @request.params['template']
+  page = @request.params['p'] ? @request.params['p'] : 'FrontPage'
 
   @text = if tmpl_name
     @db.load(tmpl_name)
@@ -61,9 +61,9 @@ export_plugin_methods(:load_template)
 
 def saveconf_template
   if @mode == 'saveconf' then
-    @conf['template.default'] = @params['template.default'][0] && @params['template.default'][0].empty? ? nil : @params['template.default'][0]
-    @conf['template.keyword'] = @params['template.keyword'][0].empty? ? nil : @params['template.keyword'][0]
-    @conf['template.autoinsert'] = @params['template.autoinsert'][0] ? true : false
+    @conf['template.default'] = @request.params['template.default'] && @request.params['template.default'].empty? ? nil : @request.params['template.default']
+    @conf['template.keyword'] = @request.params['template.keyword'].empty? ? nil : @request.params['template.keyword']
+    @conf['template.autoinsert'] = @request.params['template.autoinsert'] ? true : false
   end
 end
 
@@ -84,7 +84,7 @@ add_conf_proc('template', template_label) do
   <p><select name="template.default">
     HTML
     pages.each do |p|
-      str << %Q|<option value="#{CGI::escapeHTML(p)}"#{@conf['template.default'] == p ? ' selected' : ''}>#{CGI::escapeHTML(p)}</option>\n|
+      str << %Q|<option value="#{h(p)}"#{@conf['template.default'] == p ? ' selected' : ''}>#{h(p)}</option>\n|
     end
   end
 

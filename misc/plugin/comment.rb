@@ -26,7 +26,7 @@ def comment(cols = 60, style = 0)
     <input type="submit" name="comment" value="#{comment_post_label}">
     <input type="hidden" name="comment_no" value="#{@comment_num}">
     <input type="hidden" name="c" value="plugin">
-    <input type="hidden" name="p" value="#{@page.escapeHTML}">
+    <input type="hidden" name="p" value="#{h(@page)}">
     <input type="hidden" name="plugin" value="comment_post">
     <input type="hidden" name="style" value="#{style}">
     <input type="hidden" name="session_id" value="#{@session_id}">
@@ -36,13 +36,13 @@ EOS
 end
 
 def comment_post
-  return '' if @conf.use_session && @session_id != @cgi['session_id']
+  return '' if @conf.use_session && @session_id != @request.params['session_id']
 
-  params     = @cgi.params
-  comment_no = (params['comment_no'][0] || 0).to_i
-  name       = params['name'][0].size == 0 ? comment_anonymous_label : params['name'][0]
-  msg        = params['msg'][0]
-  style      = params['style'][0].to_i
+  params     = @request.params
+  comment_no = (params['comment_no'] || 0).to_i
+  name       = params['name'].size == 0 ? comment_anonymous_label : params['name']
+  msg        = params['msg']
+  style      = params['style'].to_i
 
   return '' if msg.strip.size == 0
 

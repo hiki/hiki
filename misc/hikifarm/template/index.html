@@ -1,9 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="ja-JP">
 <head>
-   <meta http-equiv="Content-Type" content="text/html; charset=EUC-JP">
+   <meta http-equiv="Content-Type" content="text/html; charset=<%= @conf.charset %>">
    <meta name="generator" content="HikiFarm">
-   <meta http-equiv="Content-Script-Type" content="text/javascript; charset=EUC-JP">
+   <meta http-equiv="Content-Script-Type" content="text/javascript; charset=<%= @conf.charset %>">
    <meta name="author" content="<%= @author %>">
    <meta http-equiv="content-style-type" content="text/css">
    <link rel="stylesheet" href="<%= @css %>" title="tada" type="text/css" media="all">
@@ -18,7 +18,7 @@
    <hr class="sep">
 
    <div class="day">
-      <h2><span class="title">¸½ºß±¿ÍÑÃæ¤Î Wiki ¥µ¥¤¥È <a href="<%= rss_href %>">[RDF]</a></span></h2>
+      <h2><span class="title">ç¾åœ¨é‹ç”¨ä¸­ã® Wiki ã‚µã‚¤ãƒˆ <a href="<%= rss_href %>">[RDF]</a></span></h2>
       <div class="body"><div class="section">
       <%= wikilist_table %>
       </div></div>
@@ -27,18 +27,18 @@
    <hr class="sep">
 
    <div class="update day">
-     <h2><span class="title">¿·¤·¤¤ Wiki ¥µ¥¤¥È¤ÎºîÀ®</span></h2>
+     <h2><span class="title">æ–°ã—ã„ Wiki ã‚µã‚¤ãƒˆã®ä½œæˆ</span></h2>
      <div class="form">
        <form class="update" method="post" action="<%= @hikifarm_uri %>">
          <div>
-           ºîÀ®¤·¤¿¤¤ Wiki ¥µ¥¤¥È¤ÎÌ¾¾Î¤ò»ØÄê¤·¤Þ¤¹¡£
-           ¤³¤ì¤Ï URL ¤Ë´Þ¤Þ¤ì¤ë¤Î¤Ç¡¢¤Ç¤­¤ë¤À¤±Ã»¤¯¡¢
-           ¤«¤Ä Wiki ¤ÎÌÜÅª¤ò¤è¤¯É½¸½¤·¤¿¤â¤Î¤¬ÎÉ¤¤¤Ç¤·¤ç¤¦¡£
+           ä½œæˆã—ãŸã„ Wiki ã‚µã‚¤ãƒˆã®åç§°ã‚’æŒ‡å®šã—ã¾ã™ã€‚
+           ã“ã‚Œã¯ URL ã«å«ã¾ã‚Œã‚‹ã®ã§ã€ã§ãã‚‹ã ã‘çŸ­ãã€
+           ã‹ã¤ Wiki ã®ç›®çš„ã‚’ã‚ˆãè¡¨ç¾ã—ãŸã‚‚ã®ãŒè‰¯ã„ã§ã—ã‚‡ã†ã€‚
          </div>
          <div class="field title">
-           Wiki ¤ÎÌ¾Á° (±Ñ¿ô»ú¤Î¤ß):
+           Wiki ã®åå‰ (è‹±æ•°å­—ã®ã¿):
            <input class="field" name="wiki" size="20" value="">
-           <input class="submit" type="submit" value="ºîÀ®">
+           <input class="submit" type="submit" value="ä½œæˆ">
          </div>
        </form>
      </div>

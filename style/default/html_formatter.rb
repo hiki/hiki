@@ -10,13 +10,15 @@ require 'uri'
 
 module Hiki
   class HTMLFormatter_default < HikiFormatter
+    include Hiki::Util
+
     def initialize( s, db, plugin, conf, prefix = 'l')
       @html       = s
       @db         = db
       @plugin     = plugin
       @conf       = conf
       @prefix     = prefix
-      @references = Array.new
+      @references = []
       @interwiki  = InterWiki.new( @db.load( @conf.interwiki_name ) )
       @aliaswiki  = AliasWiki.new( @db.load( @conf.aliaswiki_name ) )
       get_auto_links if @conf.auto_link
@@ -25,7 +27,6 @@ module Hiki
     def to_s
       s = @html
       s = replace_inline_image( s )
-      s = replace_wikiname( s ) if @conf.use_wikiname
       s = replace_link( s )
       s = replace_auto_link( s ) if @conf.auto_link
       s = replace_heading( s )
@@ -77,17 +78,7 @@ module Hiki
       return text if @auto_links.empty?
       replace_inline( text ) do |str|
         str.gsub!( @auto_links_re ) do |match|
-          @plugin.hiki_anchor( @auto_links[match].unescapeHTML.escape, match )
-        end
-      end
-    end
-
-    WIKINAME_RE   = /(\b(?:[A-Z][a-z0-9]+){2,}[A-Z]*\b)/
-
-    def replace_wikiname( text )
-      replace_inline( text ) do |str|
-        str.gsub!( WIKINAME_RE ) do |i|
-          %Q|<a href="#{i}">#{i}</a>|
+          @plugin.hiki_anchor( escape(unescape_html(@auto_links[match])), match )
         end
       end
     end
@@ -131,7 +122,7 @@ module Hiki
         if URI_RE =~ u # uri
           @plugin.make_anchor(u, k, 'external')
         else
-          u = u.unescapeHTML
+          u = unescape_html(u)
           u = @aliaswiki.aliaswiki_names.key( u ) || u # alias wiki
           if /(.*)(#l\d+)\z/ =~ u
             u, anchor = $1, $2
@@ -141,19 +132,19 @@ module Hiki
           if @db.exist?( u ) # page name
             k = @plugin.page_name( k ) if k == u
             @references << u
-            @plugin.hiki_anchor( u.escape + anchor, k )
+            @plugin.hiki_anchor( escape(u) + anchor, k )
           elsif orig = @db.select{|i| i[:title] == u}.first # page title
             k = @plugin.page_name( k ) if k == u
             u = orig
             @references << u
-            @plugin.hiki_anchor( u.escape + anchor, k )
+            @plugin.hiki_anchor( escape(u) + anchor, k )
           elsif outer_alias = @interwiki.outer_alias( u ) # outer alias
             @plugin.make_anchor(outer_alias[0] + anchor, k, 'external')
           elsif /:/ =~ u # inter wiki ?
             s, p = u.split( /:/, 2 )
             if s.empty? # normal link
-              @plugin.make_anchor( p.escapeHTML + anchor, k, 'external')
-            elsif inter_link = @interwiki.interwiki( s, p.unescapeHTML, "#{s}:#{p}" )
+              @plugin.make_anchor( h(p) + anchor, k, 'external')
+            elsif inter_link = @interwiki.interwiki( s, unescape_html(p), "#{s}:#{p}" )
               @plugin.make_anchor(inter_link[0], k, 'external')
             else
               missing_page_anchor( k, u )
@@ -167,8 +158,8 @@ module Hiki
 
     def missing_page_anchor( k, u )
       if @plugin.creatable?
-        missing_anchor_title = @conf.msg_missing_anchor_title % [ u.escapeHTML ]
-        "#{k}<a class=\"nodisp\" href=\"#{@conf.cgi_name}?c=edit;p=#{u.escape}\" title=\"#{missing_anchor_title}\">?</a>"
+        missing_anchor_title = @conf.msg_missing_anchor_title % [h(u)]
+        "#{k}<a class=\"nodisp\" href=\"#{@conf.cgi_name}?c=edit;p=#{escape(u)}\" title=\"#{missing_anchor_title}\">?</a>"
       else
         k
       end

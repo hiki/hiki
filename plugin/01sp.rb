@@ -46,7 +46,7 @@ end
 
 # hash of paths from array of dirs
 def sp_hash_from_dirs( dirs )
-  r = Hash.new
+  r = {}
   dirs.each do |dir|
     Dir.glob( "#{dir}/*.rb" ).each do |path|
       filename = File.basename( path )
@@ -60,9 +60,9 @@ end
 def sp_doc_url( file )
   case @conf.lang
   when 'ja'
-    "http://hikiwiki.org/ja/#{CGI.escape( file )}.html"
+    "http://hikiwiki.org/ja/#{escape(file)}.html"
   else
-    "http://hikiwiki.org/en/#{CGI.escape( file )}.html"
+    "http://hikiwiki.org/en/#{escape(file)}.html"
   end
 end
 
@@ -89,8 +89,8 @@ end
 # <li> list of plugins
 def sp_li_plugins( paths, with_checkbox, is_checked )
   paths.collect { |path| File.basename( path ) }.sort.inject('') do |result, file|
-    checkbox = with_checkbox ? %Q!<input name="#{SP_PREFIX}.#{CGI.escapeHTML( file )}" type="checkbox" value="t"#{is_checked ? ' checked' : ''}>! : ''
-    result << %Q!<li>#{checkbox}<a href="#{sp_doc_url( file )}">#{CGI.escapeHTML( file )}</a>!
+    checkbox = with_checkbox ? %Q!<input name="#{SP_PREFIX}.#{h(file)}" type="checkbox" value="t"#{is_checked ? ' checked' : ''}>! : ''
+    result << %Q!<li>#{checkbox}<a href="#{sp_doc_url( file )}">#{h(file)}</a>!
   end
 end
 
@@ -131,7 +131,7 @@ def sp_list_plugins( sp_opt, with_checkbox )
 end
 
 # things needed to configure this plugin
-if SP_PREFIX == @cgi.params['conf'][0]
+if SP_PREFIX == @request.params['conf']
   # list of plugins
   @sp_opt = sp_hash_from_dirs( @sp_path )
 
@@ -141,7 +141,7 @@ if SP_PREFIX == @cgi.params['conf'][0]
     @conf["#{SP_PREFIX}.selected"] = ''
     @conf["#{SP_PREFIX}.notselected"] = ''
     @sp_opt.each_key do |file|
-      if 't' == @cgi.params["#{SP_PREFIX}.#{file}"][0]
+      if 't' == @request.params["#{SP_PREFIX}.#{file}"]
         @conf["#{SP_PREFIX}.selected"] << "#{file}\n"
       else
         @conf["#{SP_PREFIX}.notselected"] << "#{file}\n"

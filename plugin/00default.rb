@@ -6,13 +6,13 @@
 #==============================
 def anchor( s )
   s.sub!(/^\d+$/, '')
-  p = @page.escape.escapeHTML
+  p = h(escape(@page))
   p.gsub!(/%/, '%%')
   %Q[#{@conf.cgi_name}?#{p}#{s}]
 end
 
 def my( a, str )
-  %Q[<a href="#{anchor(a).gsub!(/%%/, '%')}">#{str.escapeHTML}</a>]
+  %Q[<a href="#{anchor(a).gsub!(/%%/, '%')}">#{h(str)}</a>]
 end
 
 #==============================
@@ -20,7 +20,7 @@ end
 #==============================
 #===== hiki_url
 def hiki_url(page)
-  "#{@conf.cgi_name}?#{page.escape}"
+  "#{@conf.cgi_name}?#{escape(page)}"
 end
 
 #===== hiki_anchor
@@ -44,7 +44,7 @@ end
 #===== page_name
 def page_name( page )
   pg_title = @db.get_attribute(page, :title)
-  ((pg_title && pg_title.size > 0) ? pg_title : page).escapeHTML
+  h((pg_title && pg_title.size > 0) ? pg_title : page)
 end
 
 #===== toc
@@ -81,13 +81,13 @@ def recent( n = 20 )
   s = ''
   c = 0
   ddd = nil
-  
+
   l.each do |a|
     break if (c += 1) > n
     name = a.keys[0]
     p = a[name]
-    
-    tm = p[:last_modified ] 
+
+    tm = p[:last_modified ]
     cur_date = tm.strftime( @conf.msg_date_format )
 
     if ddd != cur_date
@@ -96,7 +96,7 @@ def recent( n = 20 )
       ddd = cur_date
     end
     t = page_name(name)
-    an = hiki_anchor(name.escape, t)
+    an = hiki_anchor(escape(name), t)
     s << "<li>#{an}</li>\n"
   end
   s << "</ul>\n"
@@ -112,7 +112,7 @@ end
 add_update_proc {
   updating_mail if @conf.mail_on_update
   if @user
-    @conf.repos.commit(@page, CGI.escape(@user))
+    @conf.repos.commit(@page, escape(@user))
   else
     @conf.repos.commit(@page)
   end
@@ -147,15 +147,15 @@ def hiki_header
   s = <<EOS
   <meta http-equiv="Content-Language" content="#{@conf.lang}">
   <meta http-equiv="Content-Type" content="text/html; charset=#{@conf.charset}">
-  <meta http-equiv="Content-Script-Type" content="text/javascript; charset=euc-jp">
+  <meta http-equiv="Content-Script-Type" content="text/javascript; charset=#{@conf.charset}">
   <meta http-equiv="Content-Style-Type" content="text/css">
   <meta name="generator" content="#{@conf.generator}">
   <title>#{title}</title>
-  <link rel="stylesheet" type="text/css" href="#{base_css_url.escapeHTML}" media="all">
-  <link rel="stylesheet" type="text/css" href="#{theme_url.escapeHTML}" media="all">
+  <link rel="stylesheet" type="text/css" href="#{h(base_css_url)}" media="all">
+  <link rel="stylesheet" type="text/css" href="#{h(theme_url)}" media="all">
 EOS
   s << <<EOS if @command != 'view'
-  <meta name="ROBOTS" content="NOINDEX,NOFOLLOW"> 
+  <meta name="ROBOTS" content="NOINDEX,NOFOLLOW">
   <meta http-equiv="pragma" content="no-cache">
   <meta http-equiv="cache-control" content="no-cache">
   <meta http-equiv="expires" content="0">
@@ -177,12 +177,12 @@ def hiki_footer
   elsif defined?(FCGI)
     s << ' with <a href="http://raa.ruby-lang.org/project/fcgi/">ruby-fcgi</a>'
   end
-  s << %Q|.<br>\nFounded by #{@conf.author_name.escapeHTML}.<br>\n|
+  s << %Q|.<br>\nFounded by #{h(@conf.author_name)}.<br>\n|
 end
 
 #===== edit_proc
 add_edit_proc {
-  hiki_anchor(@page.escape, "[#{page_name(@page)}]")
+  hiki_anchor(escape(@page), "[#{page_name(@page)}]")
 }
 
 #===== menu
@@ -193,8 +193,8 @@ def create_menu(data, command)
     menu << %Q!<a href="#{@conf.cgi_name}?c=index">#{@conf.msg_index}</a>!
   else
     menu << %Q!<a href="#{@conf.cgi_name}?c=create" rel="nofollow">#{@conf.msg_create}</a>! if creatable?
-    menu << %Q!<a href="#{@conf.cgi_name}?c=edit;p=#{@page.escape}" rel="nofollow">#{@conf.msg_edit}</a>! if @page && editable?
-    menu << %Q!<a href="#{@conf.cgi_name}?c=diff;p=#{@page.escape}" rel="nofollow">#{@conf.msg_diff}</a>! if @page && editable?
+    menu << %Q!<a href="#{@conf.cgi_name}?c=edit;p=#{escape(@page)}" rel="nofollow">#{@conf.msg_edit}</a>! if @page && editable?
+    menu << %Q!<a href="#{@conf.cgi_name}?c=diff;p=#{escape(@page)}" rel="nofollow">#{@conf.msg_diff}</a>! if @page && editable?
     menu << %Q!#{hiki_anchor( 'FrontPage', page_name('FrontPage') )}!
     menu << %Q!<a href="#{@conf.cgi_name}?c=index">#{@conf.msg_index}</a>!
     menu << %Q!<a href="#{@conf.cgi_name}?c=search">#{@conf.msg_search}</a>!
@@ -203,14 +203,14 @@ def create_menu(data, command)
       next if c[:option].has_key?('p') && !(@page && editable?)
       cmd =  %Q!<a href="#{@conf.cgi_name}?c=#{c[:command]}!
       c[:option].each do |key, value|
-        value = @page.escape if key == 'p'
+        value = escape(@page) if key == 'p'
         cmd << %Q!;#{key}=#{value}!
       end
       cmd << %Q!">#{c[:display_text]}</a>!
       menu << cmd
     end
     menu_proc.each {|i| menu << i}
-    menu << %Q!<a href="#{@conf.cgi_name}?c=login#{@page ? ";p=#{@page.escape}" : ""}">#{@conf.msg_login}</a>! unless @user || @conf.password.empty?
+    menu << %Q!<a href="#{@conf.cgi_name}?c=login#{@page ? ";p=#{escape(@page)}" : ""}">#{@conf.msg_login}</a>! unless @user || @conf.password.empty?
     menu << %Q!<a href="#{@conf.cgi_name}?c=admin">#{@conf.msg_admin}</a>! if admin?
     menu << %Q!<a href="#{@conf.cgi_name}?c=logout">#{@conf.msg_logout}</a>! if @user && !@conf.password.empty?
   end
@@ -229,24 +229,24 @@ end
 # conf: default
 def saveconf_default
   if @mode == 'saveconf' then
-    @conf.site_name = @cgi.params['site_name'][0]
-    @conf.author_name = @cgi.params['author_name'][0]
+    @conf.site_name = @request.params['site_name']
+    @conf.author_name = @request.params['author_name']
     mails = []
-    @cgi.params['mail'][0].each_line do |addr|
+    @request.params['mail'].each_line do |addr|
       mails << addr.gsub(/\r?\n/, '').strip
     end
     mails.delete_if{|e| e.empty?}
     @conf.mail = mails
-    @conf.mail_on_update = @cgi.params['mail_on_update'][0] == "true"
+    @conf.mail_on_update = @request.params['mail_on_update'] == "true"
   end
 end
 
 # conf: password
 def saveconf_password
   if @mode == 'saveconf' then
-    old_password    = @cgi.params['old_password'][0]
-    password1       = @cgi.params['password1'][0]
-    password2       = @cgi.params['password2'][0]
+    old_password    = @request.params['old_password']
+    password1       = @request.params['password1']
+    password2       = @request.params['password2']
     if password1 and password1.size > 0
       if (@conf.password.size > 0 && old_password.crypt( @conf.password ) != @conf.password) ||
           (password1 != password2)
@@ -265,20 +265,20 @@ def saveconf_theme
   # dummy
 end
 
-if @cgi.params['conf'][0] == 'theme' && @mode == 'saveconf'
-  @conf.theme          = @cgi.params['theme'][0] || ''
-  @conf.use_sidebar    = @cgi.params['sidebar'][0] == "true"
-  @conf.main_class     = @cgi.params['main_class'][0]
+if @request.params['conf'] == 'theme' && @mode == 'saveconf'
+  @conf.theme          = @request.params['theme'] || ''
+  @conf.use_sidebar    = @request.params['sidebar'] == "true"
+  @conf.main_class     = @request.params['main_class']
   @conf.main_class     = 'main' if @conf.main_class == ''
-  @conf.sidebar_class  = @cgi.params['sidebar_class'][0]
+  @conf.sidebar_class  = @request.params['sidebar_class']
   @conf.sidebar_class  = 'sidebar' if @conf.sidebar_class == ''
-  @conf.auto_link      = @cgi.params['auto_link'][0] == "true"
-  @conf.use_wikiname   = @cgi.params['use_wikiname'][0] == "true"
-  @conf.theme_url      = @cgi.params['theme_url'][0]
-  @conf.theme_path     = @cgi.params['theme_path'][0]
+  @conf.auto_link      = @request.params['auto_link'] == "true"
+  @conf.use_wikiname   = @request.params['use_wikiname'] == "true"
+  @conf.theme_url      = @request.params['theme_url']
+  @conf.theme_path     = @request.params['theme_path']
 end
 
-if @cgi.params['conf'][0] == 'theme'
+if @request.params['conf'] == 'theme'
   @conf_theme_list = []
   Dir.glob( "#{@conf.theme_path}/*".untaint ).sort.each do |dir|
     theme = File.basename( dir )
@@ -291,7 +291,7 @@ end
 # conf: XML-RPC
 def saveconf_xmlrpc
   if @mode == 'saveconf'
-    @conf.xmlrpc_enabled = @cgi.params['xmlrpc_enabled'][0] == 'true'
+    @conf.xmlrpc_enabled = @request.params['xmlrpc_enabled'] == 'true'
   end
 end
 

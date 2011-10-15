@@ -18,7 +18,7 @@ def keyword_list(*key)
     p.each do |a|
       name = a[0]
       tm = a[1][:last_modified]
-      s << "<li>#{format_date( tm )}: #{hiki_anchor(name.escape, page_name(name))}</li>\n"
+      s << "<li>#{format_date( tm )}: #{hiki_anchor(escape(name), page_name(name))}</li>\n"
     end
     s << "</ul>\n"
   end
@@ -26,9 +26,9 @@ def keyword_list(*key)
 end
 
 def keywords(*keyword)
-  keyword.collect! {|a| a.unescapeHTML}
+  keyword.collect! {|a| unescape_html(a) }
 
-  key = Hash::new
+  key = {}
   @db.page_info.each do |info|
     next unless info.values[0][:keyword]
     info.values[0][:keyword].each do |k|

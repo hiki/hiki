@@ -1,9 +1,9 @@
-# -*- coding: euc-jp -*-
+# -*- coding: utf-8 -*-
 # Copyright (C) 2008, KURODA Hiraku <hiraku@hinet.mydns.jp>
 # You can redistribute it and/or modify it under GPL2. 
 
 module WordFilterMessage
-  def self.word_filter; "Ã±¸ì¥Õ¥£¥ë¥¿"; end
-  def self.use; "ÅĞÏ¿¤·¤¿Àµµ¬É½¸½¤Ç¥Õ¥£¥ë¥¿¥ê¥ó¥°¤¹¤ë"; end
-  def self.regexp_by_line; "1¹Ô¤Ë1¤Ä¤º¤Ä¡¢Àµµ¬É½¸½¤òµ­½Ò¤·¤Æ¤¯¤À¤µ¤¤"; end
+  def self.word_filter; "å˜èªãƒ•ã‚£ãƒ«ã‚¿"; end
+  def self.use; "ç™»éŒ²ã—ãŸæ­£è¦è¡¨ç¾ã§ãƒ•ã‚£ãƒ«ã‚¿ãƒªãƒ³ã‚°ã™ã‚‹"; end
+  def self.regexp_by_line; "1è¡Œã«1ã¤ãšã¤ã€æ­£è¦è¡¨ç¾ã‚’è¨˜è¿°ã—ã¦ãã ã•ã„"; end
 end

@@ -1,6 +1,6 @@
-# -*- coding: euc-jp -*-
+# -*- coding: utf-8 -*-
 def history_label
-  'ÊÔ½¸ÍúÎò'
+  'ç·¨é›†å±¥æ­´'
 end
 
 module Hiki
@@ -8,39 +8,39 @@ module Hiki
     private
 
     def history_label
-      'ÊÔ½¸ÍúÎò'
+      'ç·¨é›†å±¥æ­´'
     end
 
     def history_th_label
-      ['Rev', '»ş¹ï', 'ÊÑ¹¹', 'Áàºî', '¥í¥°']
+      ['Rev', 'æ™‚åˆ»', 'å¤‰æ›´', 'æ“ä½œ', 'ãƒ­ã‚°']
     end
 
     def history_not_supported_label
-      '¸½ºß¤ÎÀßÄê¤Ç¤ÏÊÔ½¸ÍúÎò¤Ï¥µ¥İ¡¼¥È¤µ¤ì¤Æ¤¤¤Ş¤»¤ó¡£'
+      'ç¾åœ¨ã®è¨­å®šã§ã¯ç·¨é›†å±¥æ­´ã¯ã‚µãƒãƒ¼ãƒˆã•ã‚Œã¦ã„ã¾ã›ã‚“ã€‚'
     end
 
     def history_revert_label
-      '¤³¤Î¥Ğ¡¼¥¸¥ç¥ó¤ËÌá¤¹'
+      'ã“ã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã«æˆ»ã™'
     end
 
     def history_diffto_current_label
-      '¸½ºß¤Î¥Ğ¡¼¥¸¥ç¥ó¤È¤Îº¹Ê¬¤ò¸«¤ë'
+      'ç¾åœ¨ã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã¨ã®å·®åˆ†ã‚’è¦‹ã‚‹'
     end
 
     def history_view_this_version_src_label
-      '¤³¤Î¥Ğ¡¼¥¸¥ç¥ó¤Î¥½¡¼¥¹¤ò¸«¤ë'
+      'ã“ã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã®ã‚½ãƒ¼ã‚¹ã‚’è¦‹ã‚‹'
     end
 
     def history_backto_summary_label
-      'ÊÔ½¸ÍúÎò¥Ú¡¼¥¸¤ËÌá¤ë'
+      'ç·¨é›†å±¥æ­´ãƒšãƒ¼ã‚¸ã«æˆ»ã‚‹'
     end
 
     def history_add_line_label
-      'ÄÉ²Ã¤µ¤ì¤¿ÉôÊ¬¤Ï<ins class="added">¤³¤Î¤è¤¦¤Ë</ins>É½¼¨¤·¤Ş¤¹¡£'
+      'è¿½åŠ ã•ã‚ŒãŸéƒ¨åˆ†ã¯<ins class="added">ã“ã®ã‚ˆã†ã«</ins>è¡¨ç¤ºã—ã¾ã™ã€‚'
     end
 
     def history_delete_line_label
-      'ºï½ü¤µ¤ì¤¿ÉôÊ¬¤Ï<del class="deleted">¤³¤Î¤è¤¦¤Ë</del>É½¼¨¤·¤Ş¤¹¡£'
+      'å‰Šé™¤ã•ã‚ŒãŸéƒ¨åˆ†ã¯<del class="deleted">ã“ã®ã‚ˆã†ã«</del>è¡¨ç¤ºã—ã¾ã™ã€‚'
     end
   end
 end

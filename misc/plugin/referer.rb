@@ -8,15 +8,15 @@ def add_referer(db)
     raise unless @db.exist?(@page)
     omit_url = false
 
-    if @options['referer.omit_url'] && @cgi.referer
-      omit_url = Regexp.new("(#{@options['referer.omit_url'].join('|')})") =~ @cgi.referer
+    if @options['referer.omit_url'] && @request.referer
+      omit_url = Regexp.new("(#{@options['referer.omit_url'].join('|')})") =~ @request.referer
     end
 
-    raise if 'HEAD' == @cgi.request_method || ! @cgi.referer ||
-                       /^https?/ !~ @cgi.referer || omit_url
+    raise if 'HEAD' == @request.request_method || ! @request.referer ||
+                       /^https?/ !~ @request.referer || omit_url
 
     db.transaction do
-      db[@cgi.referer] = (db.root?(@cgi.referer) ? db[@cgi.referer] : 0) + 1
+      db[@request.referer] = (db.root?(@request.referer) ? db[@request.referer] : 0) + 1
     end
   rescue Exception
   end
@@ -37,8 +37,8 @@ def show_short_referer(db)
 
   referers(db).each_with_index do |ref, i|
     break if i == @options['referer_limit']
-    disp = replace_url(ref[0].unescape).escapeHTML
-    s << make_anchor("#{ref[0].escapeHTML}", " #{ref[1]}").gsub(/<a\s+([^>]+)>/i) { %Q!<a #{$1} title="#{disp}">! }
+    disp = h(replace_url(unescape(ref[0])))
+    s << make_anchor("#{h(ref[0])}", " #{ref[1]}").gsub(/<a\s+([^>]+)>/i) { %Q!<a #{$1} title="#{disp}">! }
     s << ' |'
   end
 
@@ -50,8 +50,8 @@ def show_referer(db)
 
   referers(db).each_with_index do |ref, i|
     break if i == @options['referer_limit']
-    disp = replace_url(ref[0].unescape).escapeHTML
-    s << %!<li>#{ref[1]} ! + make_anchor("#{ref[0].escapeHTML}", "#{disp}") + "</li>"
+    disp = h(replace_url(unescape(ref[0])))
+    s << %!<li>#{ref[1]} ! + make_anchor("#{h(ref[0])}", "#{disp}") + "</li>"
   end
 
   s << '</ul></div>'
@@ -68,17 +68,17 @@ def referer_map
 
   s << "<ul>\n"
 
-  Dir.entries(path).sort {|a, b| a.unescape <=> b.unescape}.each do |f|
+  Dir.entries(path).sort {|a, b| unescape(a) <=> unescape(b) }.each do |f|
     next if /(?:^\.)|(?:~$)/ =~ f
-    next unless @db.exist?(f.untaint.unescape)
-    db = PTStore::new("#{path}/#{f}")
+    next unless @db.exist?(unescape(f.untaint))
+    db = PTStore.new("#{path}/#{f}")
     p = File.basename(f)
-    s << "<li>#{hiki_anchor(p, page_name(p.unescape))}</li>\n"
+    s << "<li>#{hiki_anchor(p, page_name(unescape(p)))}</li>\n"
     s << "<ul>\n"
     referers(db).each_with_index do |ref, i|
       break if i == @options['referer_limit']
-      disp = replace_url(ref[0].unescape).escapeHTML
-      s << %!<li>#{ref[1]} ! + make_anchor("#{ref[0].escapeHTML}", "#{disp}")+"</li>"
+      disp = h(replace_url(unescape(ref[0])))
+      s << %!<li>#{ref[1]} ! + make_anchor("#{h(ref[0])}", "#{disp}")+"</li>"
     end
     db.close_cache
     s << "</ul>\n"
@@ -104,8 +104,8 @@ add_body_leave_proc(Proc.new do
   begin
     Dir.mkdir(referer_path) unless File.exist?(referer_path)
 
-    file_name = "#{referer_path}/#{@page.escape.to_euc}"
-    db = PTStore::new(file_name)
+    file_name = "#{referer_path}/#{escape(@page).to_euc}"
+    db = PTStore.new(file_name)
     add_referer(db)
 
     case @options['referer.display_type']

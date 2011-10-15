@@ -5,22 +5,26 @@
 
 module Hiki
   VERSION = '0.9dev'
-  RELEASE_DATE = '2009-08-23'
+  RELEASE_DATE = '2009-08-24'
 end
 
 # For backward compatibility
 HIKI_VERSION  = Hiki::VERSION
 HIKI_RELEASE_DATE = Hiki::RELEASE_DATE
 
-require 'cgi'
+require 'cgi' unless Object.const_defined?(:Rack)
+require 'hiki/request'
+require 'hiki/response'
+require 'hiki/util'
 require 'hiki/command'
 
 module Hiki
   PATH  = "#{File.dirname(File.dirname(__FILE__))}"
 
   class Config
-    def initialize
-      load
+    include ::Hiki::Util
+    def initialize(config_path = 'hikiconf.rb')
+      load(config_path)
       load_cgi_conf
 
       load_messages
@@ -38,19 +42,7 @@ module Hiki
       # repository class
       @repos = Hiki.const_get("Repos#{@repos_type.capitalize}").new(@repos_root, @data_path)
 
-      instance_variables.each do |v|
-        v = v.to_s
-        v.sub!( /@/, '' )
-        instance_eval( <<-SRC
-        def #{v}
-          @#{v}
-        end
-        def #{v}=(p)
-          @#{v} = p
-        end
-        SRC
-        )
-      end
+      self.class.__send__ :attr_accessor, *instance_variables.map{|v| v.to_s.sub('@', '') }
 
       bot = ["googlebot", "Hatena Antenna", "moget@goo.ne.jp"]
       bot += @options['bot'] || []
@@ -93,6 +85,7 @@ module Hiki
     end
 
     def base_url
+      return '' if Object.const_defined?(:Rack)
       unless @base_url
         if !ENV['SCRIPT_NAME']
           @base_url = ''
@@ -130,9 +123,9 @@ module Hiki
     private
 
     # loading hikiconf.rb in current directory
-    def load
+    def load(config_path = 'hikiconf.rb')
       @options = {}
-      eval( File.open( "hikiconf.rb" ){|f| f.read }.untaint, binding, "(hikiconf.rb)", 1 )
+      eval( File.open(config_path){|f| f.read }.untaint, binding, "(#{config_path})", 1 )
       formaterror if $data_path
 
       raise 'No @data_path variable.' unless @data_path

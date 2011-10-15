@@ -30,33 +30,35 @@ module Hiki
   end
 
   class ReposPlain < ReposBase
+    include Hiki::Util
+
     def commit(page, log = nil)
       wiki = File.read("#{@data_path}/text/.wiki")
 
-      dir = "#{@root}/#{wiki.untaint}/#{page.escape.untaint}"
+      dir = "#{@root}/#{wiki.untaint}/#{escape(page).untaint}"
 
       Dir.mkdir(dir) if not File.exists?(dir)
       FileUtils.rm("#{dir}/.removed", {:force => true})
 
       rev = last_revision(page) + 1
 
-      FileUtils.cp("#{@data_path}/text/#{page.escape.untaint}", "#{dir}/#{rev}")
+      FileUtils.cp("#{@data_path}/text/#{escape(page).untaint}", "#{dir}/#{rev}")
     end
 
     def delete(page, log = nil)
       wiki = File.read("#{@data_path}/text/.wiki")
-      File.open("#{@root}/#{wiki.untaint}/#{page.escape.untaint}/.removed", 'w'){|f|}
+      File.open("#{@root}/#{wiki.untaint}/#{escape(page).untaint}/.removed", 'w'){|f|}
     end
 
     def get_revision(page, revision)
       wiki = File.read("#{@data_path}/text/.wiki")
-      File.read("#{@root}/#{wiki.untaint}/#{page.escape.untaint}/#{revision.to_i}")
+      File.read("#{@root}/#{wiki.untaint}/#{escape(page).untaint}/#{revision.to_i}")
     end
 
     def revisions(page)
       wiki = File.read("#{@data_path}/text/.wiki")
       revs = []
-      Dir.glob("#{@root}/#{wiki.untaint}/#{page.escape.untaint}/*").each do |file|
+      Dir.glob("#{@root}/#{wiki.untaint}/#{escape(page).untaint}/*").each do |file|
         revs << [File.basename(file).to_i, File.mtime(file.untaint).localtime.to_s, '', '']
       end
       revs.sort_by{|e| -e[0]}
@@ -66,7 +68,7 @@ module Hiki
     private
     def last_revision(page)
       wiki = File.read("#{@data_path}/text/.wiki")
-      Dir.glob("#{@root}/#{wiki.untaint}/#{page.escape.untaint}/*").map{|f| File.basename(f)}.sort_by{|f| -f.to_i}[0].to_i
+      Dir.glob("#{@root}/#{wiki.untaint}/#{escape(page).untaint}/*").map{|f| File.basename(f)}.sort_by{|f| -f.to_i}[0].to_i
     end
   end
 end

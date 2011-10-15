@@ -18,11 +18,11 @@ def rss_body(page_num = 10)
 <?xml version="1.0" encoding="#{@conf.charset}" standalone="yes"?>
 <rdf:RDF xmlns="http://purl.org/rss/1.0/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:content="http://purl.org/rss/1.0/modules/content/" xml:lang="ja-JP">
   <channel rdf:about="#{@conf.index_url}?c=rss">
-    <title>#{CGI::escapeHTML(@conf.site_name)} : #{label_rss_recent}</title>
+    <title>#{h(@conf.site_name)} : #{label_rss_recent}</title>
     <link>#{@conf.index_url}?c=recent</link>
-    <description>#{CGI::escapeHTML(@conf.site_name)} #{label_rss_recent}</description>
+    <description>#{h(@conf.site_name)} #{label_rss_recent}</description>
     <dc:language>ja</dc:language>
-    <dc:rights>Copyright (C) #{CGI::escapeHTML(@conf.author_name)}</dc:rights>
+    <dc:rights>Copyright (C) #{h(@conf.author_name)}</dc:rights>
     <dc:date>#{last_modified.utc.strftime('%Y-%m-%dT%H:%M:%S+00:00')}</dc:date>
     <items>
       <rdf:Seq>
@@ -41,13 +41,13 @@ EOS
     when 3
       tokens = @db.load_cache( name )
       unless tokens
-        parser = @conf.parser::new( @conf )
+        parser = @conf.parser.new( @conf )
         tokens = parser.parse( @db.load( name ) )
         @db.save_cache( name, tokens )
       end
       tmp = @conf.use_plugin
       @conf.use_plugin = false
-      formatter = @conf.formatter::new( tokens, @db, Plugin.new( @conf.options, @conf), @conf )
+      formatter = @conf.formatter.new( tokens, @db, Plugin.new( @conf.options, @conf), @conf )
       content = formatter.to_s
       @conf.use_plugin = tmp
     else
@@ -60,12 +60,12 @@ EOS
 
     items << '        '
 
-    uri = "#{@conf.index_url}?#{name.escape}"
+    uri = "#{@conf.index_url}?#{escape(name)}"
     items << %Q!<rdf:li rdf:resource="#{uri}"/>\n!
 
     item_list << <<EOS
   <item rdf:about="#{uri}">
-    <title>#{CGI::escapeHTML(page_name(name))}</title>
+    <title>#{h(page_name(name))}</title>
     <link>#{uri}</link>
     <dc:date>#{p[name][:last_modified].utc.strftime('%Y-%m-%dT%H:%M:%S+00:00')}</dc:date>
 EOS
@@ -85,7 +85,7 @@ end
 
 def rss
   body, last_modified = rss_body
-  header = Hash::new
+  header = {}
 
   require 'time'
   begin
@@ -96,19 +96,16 @@ def rss
 
   if if_modified_since and last_modified < if_modified_since
     header['status'] = 'NOT_MODIFIED'
-    print @cgi.header(header)
+    return ::Hiki::Response.new('', 304, header)
   else
-    header['Last-Modified'] = CGI::rfc1123_date(last_modified)
+    header['Last-Modified'] = CGI.rfc1123_date(last_modified)
     header['type']          = 'text/xml'
     header['charset']       =  @conf.charset
     header['Content-Language'] = @conf.lang
     header['Pragma']           = 'no-cache'
     header['Cache-Control']    = 'no-cache'
-    print @cgi.header(header)
-    puts body
+    return ::Hiki::Response.new(body, 200, header)
   end
-
-  nil # Don't move to the 'FrontPage'
 end
 
 add_body_enter_proc(Proc.new do
@@ -126,12 +123,12 @@ end)
 
 def saveconf_rss
   if @mode == 'saveconf' then
-    @conf['rss.mode'] = @cgi.params['rss.mode'][0].to_i
+    @conf['rss.mode'] = @request.params['rss.mode'].to_i
   end
 end
 
-if @cgi.params['conf'][0] == 'rss' && @mode == 'saveconf'
-  @conf['rss.menu'] = @cgi.params['rss.menu'][0].to_i
+if @request.params['conf'] == 'rss' && @mode == 'saveconf'
+  @conf['rss.menu'] = @request.params['rss.menu'].to_i
 end
 
 add_conf_proc('rss', label_rss_config) do

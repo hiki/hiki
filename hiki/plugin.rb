@@ -4,7 +4,7 @@
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
 
-require 'cgi'
+require 'cgi' unless Object.const_defined?(:Rack)
 require 'uri'
 require 'erb'
 require 'hiki/util'
@@ -13,7 +13,7 @@ module Hiki
   class PluginError < StandardError; end
 
   class Plugin
-    include ERB::Util
+    include Hiki::Util
     attr_reader   :toc_f, :plugin_command
     attr_accessor :text, :title, :cookies, :user, :data, :session_id
 
@@ -50,8 +50,8 @@ module Hiki
       @plugin_menu      = []
       @text             = ''
 
-      @mode = 'conf' if options['params']['c'][0] == 'admin'
-      @mode = 'saveconf' if options['params']['saveconf'][0]
+      @mode = 'conf' if @request.params['c'] == 'admin'
+      @mode = 'saveconf' if @request.params['saveconf']
 
       # loading plugins
       @plugin_files = []

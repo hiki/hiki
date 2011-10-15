@@ -3,11 +3,11 @@
 
 def saveconf_edit_user
   if @mode == 'saveconf' then
-    @conf['user.auth'] = @cgi.params['user.auth'][0].to_i
+    @conf['user.auth'] = @request.params['user.auth'].to_i
     user_list = {}
     (@conf['user.list'] ||= []).sort.each do |name, pass|
-      unless @cgi.params["#{CGI.escape(name)}_remove"][0]
-        password = @cgi.params["#{CGI.escape(name)}_pass"][0]
+      unless @request.params["#{escape(name)}_remove"]
+        password = @request.params["#{escape(name)}_pass"]
         unless password.empty?
           user_list[name] = crypt_password(password)
         else
@@ -17,7 +17,7 @@ def saveconf_edit_user
     end
     @conf['user.list'] = user_list
 
-    @cgi.params['user.list'][0].each do |line|
+    @request.params['user.list'].each do |line|
       if /^([^\s]+)\s+([^\s]+)/ =~ line
         name = $1
         pass = $2
@@ -39,7 +39,7 @@ add_conf_proc('user', label_edit_user_config) do
       <tr>
         <td>#{label_edit_user_delete}</td><td>#{label_edit_user_name}</td><td>#{label_edit_user_new_password}</td>
       </tr>
-      #{(@conf['user.list'] || {}).sort.collect { |i, j| "<tr><td><input type=\"checkbox\" name=\"#{CGI.escape(i)}_remove\"></td><td>#{i}</td><td><input type=\"text\" name=\"#{CGI.escape(i)}_pass\" value=\"\"></td></tr>" }.join("\n")}
+      #{(@conf['user.list'] || {}).sort.collect { |i, j| "<tr><td><input type=\"checkbox\" name=\"#{escape(i)}_remove\"></td><td>#{i}</td><td><input type=\"text\" name=\"#{escape(i)}_pass\" value=\"\"></td></tr>" }.join("\n")}
     </table>
   </p>
   <h3 class="subtitle">#{label_edit_user_add_title}</h3>

@@ -2,21 +2,22 @@
 # Copyright (C) 2004 Kazuhiko <kazuhiko@fdiary.net>
 
 def trackback
+  script_name = ENV['SCRIPT_FILENAME']
+  base_url = script_name.nil? || script_name.empty? ? '' : File.basename(script_name)
   <<-EOF
-<div class="caption">TrackBack URL: <a href="#{File.basename(ENV['SCRIPT_FILENAME'])}/tb/#{@page.escape}">#{@conf.base_url}#{File.basename(ENV['SCRIPT_FILENAME'])}/tb/#{@page.escape}</a></div>
+<div class="caption">TrackBack URL: <a href="#{base_url}/tb/#{escape(@page)}">#{@conf.base_url}#{base_url}/tb/#{escape(@page)}</a></div>
 EOF
 end
 
 def trackback_post
-  params     = @cgi.params
-  url = params['url'][0]
-  unless 'POST' == @cgi.request_method && url
-    redirect(@cgi, "#{@conf.index_url}?#{@page.escapeHTML}")
-    return
+  params     = @request.params
+  url = params['url']
+  unless 'POST' == @request.request_method && url
+    return redirect(@request, "#{@conf.index_url}?#{h(@page)}")
   end
-  blog_name = utf8_to_euc( params['blog_name'][0] || '' )
-  title = utf8_to_euc( params['title'][0] || '' )
-  excerpt = utf8_to_euc( params['excerpt'][0] || '' )
+  blog_name = utf8_to_euc( params['blog_name'] || '' )
+  title = utf8_to_euc( params['title'] || '' )
+  excerpt = utf8_to_euc( params['excerpt'] || '' )
 
   lines = @db.load( @page )
   md5hex = @db.md5hex( @page )
@@ -49,6 +50,5 @@ END
   head['Content-Length'] = response.size.to_s
   head['Pragma'] = 'no-cache'
   head['Cache-Control'] = 'no-cache'
-  print @cgi.header( head )
-  print response
+  ::Hiki::Response.new(response, 200, head)
 end

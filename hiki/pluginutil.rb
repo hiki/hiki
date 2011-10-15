@@ -10,7 +10,7 @@
 #
 # Based on shellwords.rb(in ruby standard library).
 
-require 'cgi'
+require 'cgi' unless Object.const_defined?(:Rack)
 require 'erb'
 
 module Hiki

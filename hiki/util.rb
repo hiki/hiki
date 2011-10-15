@@ -1,8 +1,9 @@
+# -*- coding: utf-8 -*-
 # $Id: util.rb,v 1.44 2005-12-25 07:03:06 yanagita Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'nkf'
-require 'cgi'
+require 'cgi' unless Object.const_defined?(:Rack)
 require 'erb'
 
 autoload( :Document, 'docdiff' )
@@ -25,20 +26,19 @@ class String
   end
 
   def escape
-    CGI.escape(self)
+    Hiki::Util.escape(self)
   end
 
   def unescape
-    CGI.unescape(self)
+    Hiki::Util.unescape(self)
   end
 
   def escapeHTML
-    ERB::Util.h(self)
+    Hiki::Util.escape_html(self)
   end
 
   def unescapeHTML
-    # ???
-    CGI.unescapeHTML(self)
+    Hiki::Util.unescape_html(self)
   end
 
   def sanitize
@@ -56,6 +56,78 @@ module Hiki
   module Util
     include ERB::Util
 
+    # dead copy from cgi.rb (Ruby1.8)
+    # URL-encode a string.
+    #   url_encoded_string = escape("'Stop!' said Fred")
+    #      # => "%27Stop%21%27+said+Fred"
+    def escape(string)
+      string.gsub(/([^ a-zA-Z0-9_.-]+)/n) do
+        '%' + $1.unpack('H2' * $1.size).join('%').upcase
+      end.tr(' ', '+')
+    end
+
+    # dead copy from cgi.rb (Ruby1.8)
+    # URL-decode a string.
+    #   string = unescape("%27Stop%21%27+said+Fred")
+    #      # => "'Stop!' said Fred"
+    def unescape(string)
+      string.tr('+', ' ').gsub(/((?:%[0-9a-fA-F]{2})+)/n) do
+        [$1.delete('%')].pack('H*')
+      end
+    end
+
+    # dead copy from cgi.rb (Ruby1.8)
+    # Escape special characters in HTML, namely &\"<>
+    #   escapeHTML('Usage: foo "bar" <baz>')
+    #      # => "Usage: foo &quot;bar&quot; &lt;baz&gt;"
+    def escapeHTML(string)
+      string.gsub(/&/n, '&amp;').gsub(/\"/n, '&quot;').gsub(/>/n, '&gt;').gsub(/</n, '&lt;')
+    end
+
+    # dead copy from cgi.rb (Ruby1.8)
+    # Unescape a string that has been HTML-escaped
+    #   unescapeHTML("Usage: foo &quot;bar&quot; &lt;baz&gt;")
+    #      # => "Usage: foo \"bar\" <baz>"
+    def unescapeHTML(string)
+      string.gsub(/&(amp|quot|gt|lt|\#[0-9]+|\#x[0-9A-Fa-f]+);/n) do
+        match = $1.dup
+        case match
+        when 'amp'                 then '&'
+        when 'quot'                then '"'
+        when 'gt'                  then '>'
+        when 'lt'                  then '<'
+        when /\A#0*(\d+)\z/n       then
+          if Integer($1) < 256
+            Integer($1).chr
+          else
+            if Integer($1) < 65536 and $KCODE[0] == ?U
+              [Integer($1)].pack("U")
+            else
+              "&##{$1};"
+            end
+          end
+        when /\A#x([0-9a-f]+)\z/ni then
+          if $1.hex < 256
+            $1.hex.chr
+          else
+            if $1.hex < 65536 and $KCODE[0] == ?U
+              [$1.hex].pack("U")
+            else
+              "&#x#{$1};"
+            end
+          end
+        else
+          "&#{match};"
+        end
+      end
+    end
+
+    alias escape_html escapeHTML
+    alias h escapeHTML
+    alias unescape_html unescapeHTML
+
+    module_function :escape, :unescape, :escape_html, :h, :unescape_html
+
     def plugin_error(method, e)
       msg = "<strong>#{e.class} (#{h(e.message)}): #{h(method)}</strong><br>"
       msg << "<strong>#{e.backtrace.join("<br>\n")}</strong>" if @conf.plugin_debug
@@ -71,7 +143,7 @@ module Hiki
     end
 
     def view_title( s )
-      %Q!<a href="#{@conf.cgi_name}#{cmdstr('search', "key=#{s.escape}") }">#{h(s)}</a>!
+      %Q!<a href="#{@conf.cgi_name}#{cmdstr('search', "key=#{escape(s)}") }">#{h(s)}</a>!
     end
 
     def format_date( tm )
@@ -118,9 +190,9 @@ module Hiki
         :end_after_change    => '</ins>',
       }
       if digest
-        return View.new( diff, src.encoding, src.eol ).to_html_digest(overriding_tags, false).join.gsub( %r|<br />|, '' ).gsub( %r|\n</ins>|, "</ins>\n" )
+        return View.new( diff, src.encoding, src.eol ).to_html_digest(overriding_tags, false).join.gsub( %r|<br />|, '' ).gsub( %r|\n</ins>|, "</ins>\n" ) #"
       else
-        return View.new( diff, src.encoding, src.eol ).to_html(overriding_tags, false).join.gsub( %r|<br />|, '' ).gsub( %r|\n</ins>|, "</ins>\n" )
+        return View.new( diff, src.encoding, src.eol ).to_html(overriding_tags, false).join.gsub( %r|<br />|, '' ).gsub( %r|\n</ins>|, "</ins>\n" ) #"
       end
     end
 
@@ -136,16 +208,15 @@ module Hiki
     end
 
     def unified_diff( src, dst, context_lines = 3 )
-      return CGI.escapeHTML(Diff.new(src.split(/^/), dst.split(/^/)).ses.unidiff( '', context_lines ))
+      return h(Diff.new(src.split(/^/), dst.split(/^/)).ses.unidiff( '', context_lines ))
     end
 
-    def redirect(cgi, url, cookies = nil)
+    def redirect(request, url, cookies = nil)
       url.sub!(%r|/\./|, '/')
       header = {}
       header['cookie'] = cookies if cookies
       header['type'] = 'text/html'
-      print cgi.header(header)
-      print %Q[
+      body = %Q[
                <html>
                <head>
                <meta http-equiv="refresh" content="0;url=#{url}">
@@ -153,6 +224,16 @@ module Hiki
                </head>
                <body>Wait or <a href="#{url}">Click here!</a></body>
                </html>]
+      response = Hiki::Response.new(body, 200, header)
+      if Object.const_defined?(:Rack)
+        cookies = response.header.delete('cookie')
+        if cookies
+          cookies.each do |cookie|
+            response.set_cookie(cookie.name, cookie.value)
+          end
+        end
+      end
+      response
     end
 
     def sendmail(subject, body)
@@ -189,7 +270,7 @@ REMOTE_HOST = #{ENV['REMOTE_HOST']}
 EOS
       body << "REMOTE_USER = #{ENV['REMOTE_USER']}\n" if ENV['REMOTE_USER']
       body << <<EOS
-        URL = #{@conf.index_url}?#{page.escape}
+        URL = #{@conf.index_url}?#{escape(page)}
 #{'-' * 25}
 #{text}
 EOS

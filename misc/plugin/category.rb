@@ -4,9 +4,9 @@
 def category_list(*category)
   category_re = /^\(([^\)]+?)\)/
 
-  category.collect! {|a| a.unescapeHTML}
+  category.collect! {|a| unescape_html(a) }
 
-  l = Hash::new
+  l = {}
   @db.page_info.each do |a|
     if category_re =~ a.keys[0] && (category.size == 0 || category.index($1))
       l[$1] = [] unless l[$1]
@@ -31,7 +31,7 @@ def category_list(*category)
     p.each do |a|
       name = a[0]
       tm = a[1][:last_modified]
-      s << "<li>#{format_date( tm )}: #{hiki_anchor(name.escape, page_name(name))}</li>\n"
+      s << "<li>#{format_date( tm )}: #{hiki_anchor(escape(name), page_name(name))}</li>\n"
     end
     s << "</ul>\n"
   end

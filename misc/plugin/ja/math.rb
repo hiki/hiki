@@ -1,12 +1,12 @@
-# -*- coding: euc-jp -*-
-def label_math_latex_ptsize; '¥Õ¥©¥ó¥È¥µ¥¤¥º (pt)'; end
-def label_math_latex_documentclass; '¥É¥­¥å¥á¥ó¥È¥¯¥é¥¹'; end
-def label_math_latex_preamble; '¥×¥ê¥¢¥ó¥Ö¥ë'; end
-def label_math_latex_log; '¥í¥°¤ÎÊİ»ı'; end
-def label_math_latex_log_description; '¥¿¥¤¥×¥»¥Ã¥È¡¦¥³¥Ş¥ó¥É¼Â¹Ô»ş¤ÎÉ¸½à½ĞÎÏ¡¦
-É¸½à¥¨¥é¡¼½ĞÎÏ¤Î¥í¥°¤òºï½ü¤·¤Ê¤¤¡¥'; end
-def label_math_latex_cache_clear; '¥­¥ã¥Ã¥·¥å¤Î¥¯¥ê¥¢'; end
-def label_math_latex_cache_clear_description; '¥Á¥§¥Ã¥¯¤·¤Æ OK ¤¹¤ë¤È¡¤¸½»şÅÀ¤ÇÊİ»ı¤µ¤ì¤Æ¤¤¤ë²èÁü¤Î¥­¥ã¥Ã¥·¥å¤òºï½ü¤¹¤ë¡¥'; end
-def label_math_latex_latex; 'latex ¥³¥Ş¥ó¥É'; end
-def label_math_latex_dvips; 'dvips ¥³¥Ş¥ó¥É'; end
-def label_math_latex_convert; 'convert ¥³¥Ş¥ó¥É'; end
+# -*- coding: utf-8 -*-
+def label_math_latex_ptsize; 'ãƒ•ã‚©ãƒ³ãƒˆã‚µã‚¤ã‚º (pt)'; end
+def label_math_latex_documentclass; 'ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆã‚¯ãƒ©ã‚¹'; end
+def label_math_latex_preamble; 'ãƒ—ãƒªã‚¢ãƒ³ãƒ–ãƒ«'; end
+def label_math_latex_log; 'ãƒ­ã‚°ã®ä¿æŒ'; end
+def label_math_latex_log_description; 'ã‚¿ã‚¤ãƒ—ã‚»ãƒƒãƒˆãƒ»ã‚³ãƒãƒ³ãƒ‰å®Ÿè¡Œæ™‚ã®æ¨™æº–å‡ºåŠ›ãƒ»
+æ¨™æº–ã‚¨ãƒ©ãƒ¼å‡ºåŠ›ã®ãƒ­ã‚°ã‚’å‰Šé™¤ã—ãªã„ï¼'; end
+def label_math_latex_cache_clear; 'ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã®ã‚¯ãƒªã‚¢'; end
+def label_math_latex_cache_clear_description; 'ãƒã‚§ãƒƒã‚¯ã—ã¦ OK ã™ã‚‹ã¨ï¼Œç¾æ™‚ç‚¹ã§ä¿æŒã•ã‚Œã¦ã„ã‚‹ç”»åƒã®ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’å‰Šé™¤ã™ã‚‹ï¼'; end
+def label_math_latex_latex; 'latex ã‚³ãƒãƒ³ãƒ‰'; end
+def label_math_latex_dvips; 'dvips ã‚³ãƒãƒ³ãƒ‰'; end
+def label_math_latex_convert; 'convert ã‚³ãƒãƒ³ãƒ‰'; end

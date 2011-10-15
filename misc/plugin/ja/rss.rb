@@ -1,22 +1,22 @@
-# -*- coding: euc-jp -*-
+# -*- coding: utf-8 -*-
 # $Id: rss.rb,v 1.4 2005-09-06 06:08:29 fdiary Exp $
 # Copyright (C) 2003-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # Copyright (C) 2005 Kazuhiko <kazuhiko@fdiary.net>
 
 def label_rss_recent
-  '¹¹¿·Æü»ş½ç'
+  'æ›´æ–°æ—¥æ™‚é †'
 end
 
-def label_rss_config; 'RSS ¤ÎºîÀ®'; end
-def label_rss_mode_title; 'RSS ¤Î¥Õ¥©¡¼¥Ş¥Ã¥È'; end
+def label_rss_config; 'RSS ã®ä½œæˆ'; end
+def label_rss_mode_title; 'RSS ã®ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ'; end
 def label_rss_mode_candidate
-  [ 'unified diff ·Á¼°',
-    'word diff ·Á¼° (¥À¥¤¥¸¥§¥¹¥È)',
-    'word diff ·Á¼° (Á´Ê¸)',
-    'HTML ·Á¼° (Á´Ê¸)',
+  [ 'unified diff å½¢å¼',
+    'word diff å½¢å¼ (ãƒ€ã‚¤ã‚¸ã‚§ã‚¹ãƒˆ)',
+    'word diff å½¢å¼ (å…¨æ–‡)',
+    'HTML å½¢å¼ (å…¨æ–‡)',
   ]
 end
-def label_rss_menu_title; 'RSS ¥á¥Ë¥å¡¼¤ÎÉ½¼¨'; end
+def label_rss_menu_title; 'RSS ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®è¡¨ç¤º'; end
 def label_rss_menu_candidate
-  [ '¤¹¤ë', '¤·¤Ê¤¤' ]
+  [ 'ã™ã‚‹', 'ã—ãªã„' ]
 end

@@ -1,5 +1,5 @@
 # anchorlist.rb for Hiki/RD+
-#  
+#
 # Copyright (c) 2003 Masao Mutoh<mutoh@highway.ne.jp>
 # You can redistribute it and/or modify it under GPL2.
 #
@@ -7,11 +7,14 @@
 # a.rb -
 # Copyright (c) 2002,2003 MUTOH Masao <mutoh@highway.ne.jp>
 # You can redistribute it and/or modify it under GPL2.
-# 
+#
 require 'nkf'
+require 'hiki/util'
 
 module Hiki
   class AnchorList
+    include Hiki::Util
+
     REG_PIPE = /\|/
     REG_COLON = /\:/
     REG_URL = /:\/\//
@@ -23,7 +26,7 @@ module Hiki
 
 
     def initialize(interwiki_data, plugin)
-      @anchors = Hash.new
+      @anchors = {}
       @plugin = plugin
       n = interwiki_data || ''
       n.scan(REG_INTERWIKI_NAME) do |i|
@@ -53,9 +56,9 @@ module Hiki
       return "" unless option
       return option unless charset
       if charset =~ REG_CHARSET2
-      ret = NKF::nkf("-#{charset[0].chr}", option).escape
+      ret = escape(NKF.nkf("-#{charset[0].chr}", option))
       elsif charset =~ REG_CHARSET3
-        ret = option.escape
+        ret = escape(option)
       else
         ret = option
       end
@@ -88,7 +91,7 @@ module Hiki
           value = name
           url += convert_charset(option_or_name, charset)
         elsif option_or_name
-          value = option_or_name 
+          value = option_or_name
         else
           value = key
         end

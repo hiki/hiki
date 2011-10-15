@@ -9,7 +9,7 @@ module Hiki::Filter
     spam = false
     @conf['word_filter.words'].split(/\n/).each do |w|
       next if w.empty?
-      re = /#{w}/
+      re = /#{w.chomp}/
       [:page, :title, :text, :keyword].each do |m|
         str = (new_page.send(m)||"")
         str = str.join("\n") if str.is_a?(Array)

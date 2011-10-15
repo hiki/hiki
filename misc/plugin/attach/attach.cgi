@@ -26,29 +26,29 @@ def attach_file
   cgi = CGI.new
 
   params     = cgi.params
-  page       = params['p'][0] ? params['p'][0].read : 'FrontPage'
-  command = params['command'][0] ? params['command'][0].read : 'view'
+  page       = params['p'] ? params['p'].read : 'FrontPage'
+  command = params['command'] ? params['command'].read : 'view'
   command = 'view' unless ['view', 'edit'].index(command)
   r = ''
 
   max_size = @conf.options['attach_size'] || 1048576
 
-  if cgi.params['attach'][0]
+  if cgi.params['attach']
     begin
-      raise 'Invalid request.' unless params['p'][0] && params['attach_file'][0]
+      raise 'Invalid request.' unless params['p'] && params['attach_file']
 
-      filename   = File.basename(params['attach_file'][0].original_filename.gsub(/\\/, '/'))
+      filename   = File.basename(params['attach_file'].original_filename.gsub(/\\/, '/'))
       cache_path = "#{@conf.cache_path}/attach"
 
       Dir.mkdir(cache_path) unless test(?e, cache_path.untaint)
-      attach_path = "#{cache_path}/#{page.escape}"
+      attach_path = "#{cache_path}/#{escape(page)}"
       Dir.mkdir(attach_path) unless test(?e, attach_path.untaint)
-      path = "#{attach_path}/#{filename.to_euc.escape}"
-      if params['attach_file'][0].size > max_size
+      path = "#{attach_path}/#{escape(filename.to_euc)}"
+      if params['attach_file'].size > max_size
         raise "File size is larger than limit (#{max_size} bytes)."
       end
       unless filename.empty?
-        content = params['attach_file'][0].read
+        content = params['attach_file'].read
         if (!@conf.options['attach.allow_script']) && (/<script\b/i =~ content)
           raise "You cannot attach a file that contains scripts."
         else
@@ -60,26 +60,26 @@ def attach_file
           send_updating_mail(page, 'attach', r) if @conf.mail_on_update
         end
       end
-      redirect(cgi, "#{@conf.index_url}?c=#{command}&p=#{page.escape}")
+      redirect(cgi, "#{@conf.index_url}?c=#{command}&p=#{escape(page)}")
     rescue Exception => ex
       print cgi.header( 'type' => 'text/plain' )
       puts ex.message
     end
-  elsif cgi.params['detach'][0] then
-    attach_path = "#{@conf.cache_path}/attach/#{page.escape}"
+  elsif cgi.params['detach'] then
+    attach_path = "#{@conf.cache_path}/attach/#{escape(page)}"
 
     begin
       Dir.foreach(attach_path) do |file|
-        next unless params["file_#{file}"][0]
+        next unless params["file_#{file}"]
         path = "#{attach_path}/#{file}"
-        if FileTest.file?(path.untaint) and params["file_#{file}"][0].read
+        if FileTest.file?(path.untaint) and params["file_#{file}"].read
           File.unlink(path)
           r << "FILE        = #{File.basename(path)}\n"
         end
       end
       Dir.rmdir(attach_path) if Dir.entries(attach_path).size == 2
       send_updating_mail(page, 'detach', r) if @conf.mail_on_update
-      redirect(cgi, "#{@conf.index_url}?c=#{command}&p=#{page.escape}")
+      redirect(cgi, "#{@conf.index_url}?c=#{command}&p=#{escape(page)}")
     rescue Exception => ex
       print cgi.header( 'type' => 'text/plain' )
       puts ex.message

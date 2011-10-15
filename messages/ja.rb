@@ -1,75 +1,75 @@
-# -*- coding: euc-jp -*-
+# -*- coding: utf-8 -*-
 # $Id: ja.rb,v 1.15 2008-02-12 15:06:08 hiraku Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # You can redistribute it and/or modify it under the terms of
 # the Ruby's licence.
 module Hiki
   module Messages_ja
-    def msg_recent; '¹¹¿·ÍúÎò' end
-    def msg_create; '¿·µ¬ºîÀ®' end
-    def msg_diff; 'º¹Ê¬' end
-    def msg_edit; 'ÊÔ½¸' end
-    def msg_search; '¸¡º÷' end
-    def msg_admin; '´ÉÍı' end
-    def msg_login; '¥í¥°¥¤¥ó' end
-    def msg_logout; '¥í¥°¥¢¥¦¥È' end
-    def msg_search_result; '¸¡º÷·ë²Ì' end
-    def msg_search_hits; '\'%s\'¤ò´Ş¤à¥Ú¡¼¥¸¤ÏÁ´%d¥Ú¡¼¥¸Ãæ¡¢%d¥Ú¡¼¥¸¸«¤Ä¤«¤ê¤Ş¤·¤¿¡£' end
-    def msg_search_not_found; '\'%s\'¤ò´Ş¤à¥Ú¡¼¥¸¤Ï¸«¤Ä¤«¤ê¤Ş¤»¤ó¤Ç¤·¤¿¡£' end
-    def msg_search_comment; 'Á´¤Æ¤Î¥Ú¡¼¥¸¤«¤éÃ±¸ì¤ò¸¡º÷¤·¤Ş¤¹¡£ÂçÊ¸»ú¤È¾®Ê¸»ú¤Ï¶èÊÌ¤µ¤ì¤Ş¤»¤ó¡£È¾³Ñ¥¹¥Ú¡¼¥¹¤ÇÃ±¸ì¤ò¶èÀÚ¤ë¤È»ØÄê¤·¤¿Ã±¸ì¤òÁ´¤Æ´Ş¤à¥Ú¡¼¥¸¤ò¸¡º÷¤·¤Ş¤¹¡£' end
-    def msg_frontpage; '¥È¥Ã¥×' end
-    def msg_hitory; '¹¹¿·ÍúÎò' end
-    def msg_index; '¥Ú¡¼¥¸°ìÍ÷' end
-    def msg_recent_changes; '¹¹¿·ÍúÎò' end
-    def msg_newpage; '¿·µ¬' end
-    def msg_no_recent; '<P>¹¹¿·¾ğÊó¤¬Â¸ºß¤·¤Ş¤»¤ó¡£</P>' end
-    def msg_thanks; '¹¹¿·¤¢¤ê¤¬¤È¤¦¤´¤¶¤¤¤Ş¤·¤¿¡£' end
-    def msg_save_conflict; '¹¹¿·¤¬¾×ÆÍ¤·¤Ş¤·¤¿¡£²¼µ­¤ÎÆâÍÆ¤ò¥Æ¥­¥¹¥È¥¨¥Ç¥£¥¿¤Ê¤É¤ËÊİÂ¸¤·¡¢ºÇ¿·¤Î¥Ú¡¼¥¸¤ò»²¾È¸å¤ËºÆÊÔ½¸¤·¤Æ¤¯¤À¤µ¤¤¡£' end
+    def msg_recent; 'æ›´æ–°å±¥æ­´' end
+    def msg_create; 'æ–°è¦ä½œæˆ' end
+    def msg_diff; 'å·®åˆ†' end
+    def msg_edit; 'ç·¨é›†' end
+    def msg_search; 'æ¤œç´¢' end
+    def msg_admin; 'ç®¡ç†' end
+    def msg_login; 'ãƒ­ã‚°ã‚¤ãƒ³' end
+    def msg_logout; 'ãƒ­ã‚°ã‚¢ã‚¦ãƒˆ' end
+    def msg_search_result; 'æ¤œç´¢çµæœ' end
+    def msg_search_hits; '\'%s\'ã‚’å«ã‚€ãƒšãƒ¼ã‚¸ã¯å…¨%dãƒšãƒ¼ã‚¸ä¸­ã€%dãƒšãƒ¼ã‚¸è¦‹ã¤ã‹ã‚Šã¾ã—ãŸã€‚' end
+    def msg_search_not_found; '\'%s\'ã‚’å«ã‚€ãƒšãƒ¼ã‚¸ã¯è¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã§ã—ãŸã€‚' end
+    def msg_search_comment; 'å…¨ã¦ã®ãƒšãƒ¼ã‚¸ã‹ã‚‰å˜èªã‚’æ¤œç´¢ã—ã¾ã™ã€‚å¤§æ–‡å­—ã¨å°æ–‡å­—ã¯åŒºåˆ¥ã•ã‚Œã¾ã›ã‚“ã€‚åŠè§’ã‚¹ãƒšãƒ¼ã‚¹ã§å˜èªã‚’åŒºåˆ‡ã‚‹ã¨æŒ‡å®šã—ãŸå˜èªã‚’å…¨ã¦å«ã‚€ãƒšãƒ¼ã‚¸ã‚’æ¤œç´¢ã—ã¾ã™ã€‚' end
+    def msg_frontpage; 'ãƒˆãƒƒãƒ—' end
+    def msg_hitory; 'æ›´æ–°å±¥æ­´' end
+    def msg_index; 'ãƒšãƒ¼ã‚¸ä¸€è¦§' end
+    def msg_recent_changes; 'æ›´æ–°å±¥æ­´' end
+    def msg_newpage; 'æ–°è¦' end
+    def msg_no_recent; '<P>æ›´æ–°æƒ…å ±ãŒå­˜åœ¨ã—ã¾ã›ã‚“ã€‚</P>' end
+    def msg_thanks; 'æ›´æ–°ã‚ã‚ŠãŒã¨ã†ã”ã–ã„ã¾ã—ãŸã€‚' end
+    def msg_save_conflict; 'æ›´æ–°ãŒè¡çªã—ã¾ã—ãŸã€‚ä¸‹è¨˜ã®å†…å®¹ã‚’ãƒ†ã‚­ã‚¹ãƒˆã‚¨ãƒ‡ã‚£ã‚¿ãªã©ã«ä¿å­˜ã—ã€æœ€æ–°ã®ãƒšãƒ¼ã‚¸ã‚’å‚ç…§å¾Œã«å†ç·¨é›†ã—ã¦ãã ã•ã„ã€‚' end
     def msg_time_format; "%Y-%m-%d #DAY# %H:%M:%S" end
     def msg_date_format; "%Y-%m-%d " end
-    def msg_day; %w(Æü ·î ²Ğ ¿å ÌÚ ¶â ÅÚ) end
-    def msg_preview; '°Ê²¼¤Î¥×¥ì¥Ó¥å¡¼¤ò³ÎÇ§¤·¡¢ÌäÂê¤¬¤Ê¤±¤ì¤Ğ¥Ú¡¼¥¸¤Î²¼¤Ë¤¢¤ëÊİÂ¸¥Ü¥¿¥ó¤ÇÊİÂ¸¤·¤Æ¤¯¤À¤µ¤¤ ¢ª<a href="#form">ÊÔ½¸¥Õ¥©¡¼¥à</a>' end
-    def msg_mail_on; '¥á¡¼¥ë¤ÇÄÌÃÎ' end
-    def msg_mail_off; 'ÈóÄÌÃÎ' end
-    def msg_use; '»ÈÍÑ¤¹¤ë' end
-    def msg_unuse; '»ÈÍÑ¤·¤Ê¤¤' end
-    def msg_login_info; '´ÉÍı¼Ô¤È¤·¤Æ¥í¥°¥¤¥ó¤¹¤ëºİ¤Ï¡¢¥æ¡¼¥¶Ì¾¤Ë admin ¤ÈÆşÎÏ¤·¤Æ¤¯¤À¤µ¤¤¡£' end
-    def msg_login_failure; '¥æ¡¼¥¶Ì¾¤Ş¤¿¤Ï¥Ñ¥¹¥ï¡¼¥É¤¬´Ö°ã¤Ã¤Æ¤¤¤Ş¤¹¡£' end
-    def msg_name; '¥æ¡¼¥¶Ì¾' end
-    def msg_password; '¥Ñ¥¹¥ï¡¼¥É' end
+    def msg_day; %w(æ—¥ æœˆ ç« æ°´ æœ¨ é‡‘ åœŸ) end
+    def msg_preview; 'ä»¥ä¸‹ã®ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ã‚’ç¢ºèªã—ã€å•é¡ŒãŒãªã‘ã‚Œã°ãƒšãƒ¼ã‚¸ã®ä¸‹ã«ã‚ã‚‹ä¿å­˜ãƒœã‚¿ãƒ³ã§ä¿å­˜ã—ã¦ãã ã•ã„ â†’<a href="#form">ç·¨é›†ãƒ•ã‚©ãƒ¼ãƒ </a>' end
+    def msg_mail_on; 'ãƒ¡ãƒ¼ãƒ«ã§é€šçŸ¥' end
+    def msg_mail_off; 'éé€šçŸ¥' end
+    def msg_use; 'ä½¿ç”¨ã™ã‚‹' end
+    def msg_unuse; 'ä½¿ç”¨ã—ãªã„' end
+    def msg_login_info; 'ç®¡ç†è€…ã¨ã—ã¦ãƒ­ã‚°ã‚¤ãƒ³ã™ã‚‹éš›ã¯ã€ãƒ¦ãƒ¼ã‚¶åã« admin ã¨å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚' end
+    def msg_login_failure; 'ãƒ¦ãƒ¼ã‚¶åã¾ãŸã¯ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒé–“é•ã£ã¦ã„ã¾ã™ã€‚' end
+    def msg_name; 'ãƒ¦ãƒ¼ã‚¶å' end
+    def msg_password; 'ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰' end
     def msg_ok; 'OK' end
-    def msg_invalid_password; '¥Ñ¥¹¥ï¡¼¥É¤¬´Ö°ã¤Ã¤Æ¤¤¤Ş¤¹¡£¤Ş¤ÀÀßÄê¾ğÊó¤ÏÊİÂ¸¤µ¤ì¤Æ¤¤¤Ş¤»¤ó¡£' end
-    def msg_save_config; 'ÀßÄê¤òÊİÂ¸¤·¤Ş¤·¤¿¡£' end
-    def msg_freeze; '¤³¤Î¥Ú¡¼¥¸¤ÏÅà·ë¤µ¤ì¤Æ¤¤¤Ş¤¹¡£ÊİÂ¸¤Ë¤Ï´ÉÍı¼ÔÍÑ¤Î¥Ñ¥¹¥ï¡¼¥É¤¬É¬Í×¤Ç¤¹¡£' end
-    def msg_freeze_mark; '¡ÚÅà·ë¡Û' end
-    def msg_already_exist; '»ØÄê¤Î¥Ú¡¼¥¸¤Ï¤¹¤Ç¤ËÂ¸ºß¤·¤Æ¤¤¤Ş¤¹¡£' end
-    def msg_page_not_exist; '»ØÄê¤Î¥Ú¡¼¥¸¤ÏÂ¸ºß¤·¤Ş¤»¤ó¡£¤¼¤Ò¡¢ºîÀ®¤·¤Æ¤¯¤À¤µ¤¤:-)' end
-    def msg_invalid_filename(s); "ÉÔÀµ¤ÊÊ¸»ú¤¬´Ş¤Ş¤ì¤Æ¤¤¤ë¤«¡¢ºÇÂçÄ¹(#{s}¥Ğ¥¤¥È)¤òÄ¶¤¨¤Æ¤¤¤Ş¤¹¡£¥Ú¡¼¥¸Ì¾¤ò½¤Àµ¤·¤Æ¤¯¤À¤µ¤¤¡£" end
-    def msg_delete; '¥Ú¡¼¥¸¤òºï½ü¤·¤Ş¤·¤¿' end
-    def msg_delete_page; '°Ê²¼¤Î¥Ú¡¼¥¸¤òºï½ü¤·¤Ş¤·¤¿¡£' end
-    def msg_follow_link; '°Ê²¼¤Î¥ê¥ó¥¯¤ò¤¿¤É¤Ã¤Æ¤¯¤À¤µ¤¤: ' end
-    def msg_match_title; '[¥¿¥¤¥È¥ë¤Ë°ìÃ×]' end
-    def msg_match_keyword; '[¥­¡¼¥ï¡¼¥É¤Ë°ìÃ×]' end
-    def msg_duplicate_page_title; '»ØÄê¤·¤¿¥¿¥¤¥È¥ë¤Ï´û¤ËÂ¸ºß¤·¤Æ¤¤¤Ş¤¹¡£' end
-    def msg_missing_anchor_title; '¥Ú¡¼¥¸ %s ¤ò¿·µ¬ºîÀ®¤·¡¢ÊÔ½¸¤·¤Ş¤¹¡£' end
+    def msg_invalid_password; 'ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒé–“é•ã£ã¦ã„ã¾ã™ã€‚ã¾ã è¨­å®šæƒ…å ±ã¯ä¿å­˜ã•ã‚Œã¦ã„ã¾ã›ã‚“ã€‚' end
+    def msg_save_config; 'è¨­å®šã‚’ä¿å­˜ã—ã¾ã—ãŸã€‚' end
+    def msg_freeze; 'ã“ã®ãƒšãƒ¼ã‚¸ã¯å‡çµã•ã‚Œã¦ã„ã¾ã™ã€‚ä¿å­˜ã«ã¯ç®¡ç†è€…ç”¨ã®ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒå¿…è¦ã§ã™ã€‚' end
+    def msg_freeze_mark; 'ã€å‡çµã€‘' end
+    def msg_already_exist; 'æŒ‡å®šã®ãƒšãƒ¼ã‚¸ã¯ã™ã§ã«å­˜åœ¨ã—ã¦ã„ã¾ã™ã€‚' end
+    def msg_page_not_exist; 'æŒ‡å®šã®ãƒšãƒ¼ã‚¸ã¯å­˜åœ¨ã—ã¾ã›ã‚“ã€‚ãœã²ã€ä½œæˆã—ã¦ãã ã•ã„:-)' end
+    def msg_invalid_filename(s); "ä¸æ­£ãªæ–‡å­—ãŒå«ã¾ã‚Œã¦ã„ã‚‹ã‹ã€æœ€å¤§é•·(#{s}ãƒã‚¤ãƒˆ)ã‚’è¶…ãˆã¦ã„ã¾ã™ã€‚ãƒšãƒ¼ã‚¸åã‚’ä¿®æ­£ã—ã¦ãã ã•ã„ã€‚" end
+    def msg_delete; 'ãƒšãƒ¼ã‚¸ã‚’å‰Šé™¤ã—ã¾ã—ãŸ' end
+    def msg_delete_page; 'ä»¥ä¸‹ã®ãƒšãƒ¼ã‚¸ã‚’å‰Šé™¤ã—ã¾ã—ãŸã€‚' end
+    def msg_follow_link; 'ä»¥ä¸‹ã®ãƒªãƒ³ã‚¯ã‚’ãŸã©ã£ã¦ãã ã•ã„: ' end
+    def msg_match_title; '[ã‚¿ã‚¤ãƒˆãƒ«ã«ä¸€è‡´]' end
+    def msg_match_keyword; '[ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰ã«ä¸€è‡´]' end
+    def msg_duplicate_page_title; 'æŒ‡å®šã—ãŸã‚¿ã‚¤ãƒˆãƒ«ã¯æ—¢ã«å­˜åœ¨ã—ã¦ã„ã¾ã™ã€‚' end
+    def msg_missing_anchor_title; 'ãƒšãƒ¼ã‚¸ %s ã‚’æ–°è¦ä½œæˆã—ã€ç·¨é›†ã—ã¾ã™ã€‚' end
     # (config)
-    def msg_config; 'Hiki ´Ä¶­ÀßÄê'; end
+    def msg_config; 'Hiki ç’°å¢ƒè¨­å®š'; end
     # (diff)
-    def msg_diff_add; 'ºÇ¸å¤Î¹¹¿·¤ÇÄÉ²Ã¤µ¤ì¤¿ÉôÊ¬¤Ï<ins class="added">¤³¤Î¤è¤¦¤Ë</ins>É½¼¨¤·¤Ş¤¹¡£'; end
-    def msg_diff_del; 'ºÇ¸å¤Î¹¹¿·¤Çºï½ü¤µ¤ì¤¿ÉôÊ¬¤Ï<del class="deleted">¤³¤Î¤è¤¦¤Ë</del>É½¼¨¤·¤Ş¤¹¡£'; end
+    def msg_diff_add; 'æœ€å¾Œã®æ›´æ–°ã§è¿½åŠ ã•ã‚ŒãŸéƒ¨åˆ†ã¯<ins class="added">ã“ã®ã‚ˆã†ã«</ins>è¡¨ç¤ºã—ã¾ã™ã€‚'; end
+    def msg_diff_del; 'æœ€å¾Œã®æ›´æ–°ã§å‰Šé™¤ã•ã‚ŒãŸéƒ¨åˆ†ã¯<del class="deleted">ã“ã®ã‚ˆã†ã«</del>è¡¨ç¤ºã—ã¾ã™ã€‚'; end
     # (edit)
-    def msg_title; '¥¿¥¤¥È¥ë'; end
-    def msg_keyword_form; '¥­¡¼¥ï¡¼¥É(1¹Ô¤Ë1¤Äµ­½Ò¤·¤Æ¤¯¤À¤µ¤¤)'; end
-    def msg_freeze_checkbox; '¥Ú¡¼¥¸¤ÎÅà·ë'; end
-    def msg_preview_button; '¥×¥ì¥Ó¥å¡¼'; end
-    def msg_save; 'ÊİÂ¸'; end
-    def msg_update_timestamp; '¥¿¥¤¥à¥¹¥¿¥ó¥×¤ò¹¹¿·¤¹¤ë'; end
-    def msg_latest; 'ºÇ¿·ÈÇ¤ò»²¾È'; end
-    def msg_rules; %Q|½ñ¤­Êı¤¬¤ï¤«¤é¤Ê¤¤¾ì¹ç¤Ï<a href="#{@cgi_name}?TextFormattingRules">TextFormattingRules</a>¤ò»²¾È¤·¤Æ¤¯¤À¤µ¤¤¡£|; end
+    def msg_title; 'ã‚¿ã‚¤ãƒˆãƒ«'; end
+    def msg_keyword_form; 'ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰(1è¡Œã«1ã¤è¨˜è¿°ã—ã¦ãã ã•ã„)'; end
+    def msg_freeze_checkbox; 'ãƒšãƒ¼ã‚¸ã®å‡çµ'; end
+    def msg_preview_button; 'ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼'; end
+    def msg_save; 'ä¿å­˜'; end
+    def msg_update_timestamp; 'ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ã‚’æ›´æ–°ã™ã‚‹'; end
+    def msg_latest; 'æœ€æ–°ç‰ˆã‚’å‚ç…§'; end
+    def msg_rules; %Q|æ›¸ãæ–¹ãŒã‚ã‹ã‚‰ãªã„å ´åˆã¯<a href="#{@cgi_name}?TextFormattingRules">TextFormattingRules</a>ã‚’å‚ç…§ã—ã¦ãã ã•ã„ã€‚|; end
     # (view)
-    def msg_last_modified; '¹¹¿·Æü»ş'; end
-    def msg_keyword; '¥­¡¼¥ï¡¼¥É'; end
-    def msg_reference; '»²¾È'; end
-    def msg_input_is_spam; 'ÆşÎÏ¤µ¤ì¤¿¥Ç¡¼¥¿¤ò¥¹¥Ñ¥à¤ÈÈ½Äê¤·¤Ş¤·¤¿¡£'; end
+    def msg_last_modified; 'æ›´æ–°æ—¥æ™‚'; end
+    def msg_keyword; 'ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰'; end
+    def msg_reference; 'å‚ç…§'; end
+    def msg_input_is_spam; 'å…¥åŠ›ã•ã‚ŒãŸãƒ‡ãƒ¼ã‚¿ã‚’ã‚¹ãƒ‘ãƒ ã¨åˆ¤å®šã—ã¾ã—ãŸã€‚'; end
   end
 end

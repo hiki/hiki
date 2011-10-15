@@ -6,10 +6,9 @@ require 'hiki/page'
 require 'hiki/util'
 require 'hiki/plugin'
 require 'hiki/aliaswiki'
+require 'hiki/cookie'
 require 'hiki/session'
 require 'hiki/filter'
-
-include Hiki::Util
 
 module Hiki
   class PermissionError < StandardError; end
@@ -21,36 +20,49 @@ module Hiki
   end
 
   class Command
-    def initialize(cgi, db, conf)
-      @db     = db
-      @params = cgi.params
-      @cgi    = cgi
-      @conf   = conf
+    include Hiki::Util
+    def initialize(request, db, conf)
+      @db      = db
+      @request = request
+      @cgi     = @request.dup # for backward compatibility
+      # HACK for backward compatibility
+      # @request.params['key'] == @cgi.params['key'][0] == @params['key'][0]
+      # TODO remove this logic ASAP
+      def @cgi.params
+        result = {}
+        super.each do |key, value|
+          result[key] = [value]
+        end
+        result
+      end
+      @params  = @cgi.params
+      @cookies = @request.cookies
+      @conf    = conf
       code_conv
 
       # for TrackBack
-      if %r|/tb/(.+)$| =~ ENV['REQUEST_URI']
-        @cgi.params['p'] = [CGI.unescape($1)]
-        @cgi.params['c'] = ['plugin']
-        @cgi.params['plugin'] = ['trackback_post']
+      if %r|/tb/(.+)$| =~ @request.env['REQUEST_URI']
+        @request.params['p'] = unescape($1)
+        @request.params['c'] = 'plugin'
+        @request.params['plugin'] = 'trackback_post'
       end
 
-      @cmd    = @params['c'][0]
-      @p = case @params.keys.size
+      @cmd    = @request.params['c']
+      @p = case @request.params.keys.size
            when 0
              'FrontPage'
            when 1
-             @cmd ? nil : @params.keys[0]
+             @cmd ? nil : @request.params.keys.first
            else
              if @cmd == "create"
-               @params['key'][0] ? @params['key'][0] : nil
+               @request.params['key'] ? @request.params['key'] : nil
              else
-               @params['p'][0] ? @params['p'][0] : nil
+               @request.params['p'] ? @request.params['p'] : nil
              end
            end
 
       if /\A\.{1,2}\z/ =~ @p
-        redirect(@cgi, @conf.index_url)
+        redirect(@request, @conf.index_url)
         return
       end
 
@@ -58,15 +70,16 @@ module Hiki
       @p = @aliaswiki.original_name(@p).to_euc if @p
 
       options = @conf.options || Hash.new( '' )
-      options['page'] = @p
-      options['db']   = @db
-      options['cgi']  = cgi
-      options['alias'] = @aliaswiki
+      options['page']    = @p
+      options['db']      = @db
+      options['request'] = @request
+      options['cgi']     = @cgi # for backward compatibility
+      options['alias']   = @aliaswiki
       options['command'] = @cmd ? @cmd : 'view'
-      options['params'] = @params
+      options['params']  = @params
 
       @plugin = Plugin.new( options, @conf )
-      session_id = @cgi.cookies['session_id'][0]
+      session_id = @cookies['session_id']
       if session_id
         session = Hiki::Session.new( @conf, session_id )
         if session.check
@@ -82,13 +95,13 @@ module Hiki
       end
       @body_enter = @plugin.body_enter_proc
 
-      Filter.init(@conf, @cgi, @plugin, @db)
+      Filter.init(@conf, @request, @plugin, @db)
     end
 
     def dispatch
       begin
         Timeout.timeout(@conf.timeout) {
-          if 'POST' == @cgi.request_method
+          if @request.post?
             raise PermissionError, 'Permission denied' unless @plugin.postable?
           end
           @cmd = 'view' unless @cmd
@@ -98,9 +111,9 @@ module Hiki
             cmd_edit( @p )
           elsif @cmd == 'save'
             raise PermissionError, 'Permission denied' unless @plugin.editable?
-            if @params['save'][0]
-              cmd_save(@p, @params['contents'][0], @params['md5hex'][0], @params['update_timestamp'][0])
-            elsif @params['edit_form_button'][0]
+            if @request.params['save']
+              cmd_save(@p, @request.params['contents'], @request.params['md5hex'], @request.params['update_timestamp'])
+            elsif @request.params['edit_form_button']
               @cmd = 'edit'
               cmd_plugin(false)
               cmd_edit( @p, @plugin.text )
@@ -143,7 +156,7 @@ module Hiki
         data[:body].gsub!( Regexp.new( Regexp.quote( Plugin::TOC_STRING ) ), data[:toc] )
       end
 
-      @page = Hiki::Page.new( @cgi, @conf )
+      @page = Hiki::Page.new( @request, @conf )
       @page.template = @conf.read_template( @cmd )
       @page.contents = data
 
@@ -159,7 +172,7 @@ module Hiki
       data[:view_title] = 'Error'
       data[:header] = @plugin.header_proc
       data[:frontpage] = @plugin.page_name( 'FrontPage' )
-      @page = Hiki::Page.new( @cgi, @conf )
+      @page = Hiki::Page.new( @request, @conf )
       @page.template = @conf.read_template( 'error' )
       @page.contents = data
       @page.process( @plugin )
@@ -167,16 +180,15 @@ module Hiki
     end
 
     def cmd_preview
-      raise SessionError if @plugin.session_id && @plugin.session_id != @cgi['session_id']
+      raise SessionError if @plugin.session_id && @plugin.session_id != @request.params['session_id']
       @cmd = 'preview'
-      cmd_edit( @p, @params['contents'][0], @conf.msg_preview, @params['page_title'][0] )
+      cmd_edit( @p, @request.params['contents'], @conf.msg_preview, @request.params['page_title'] )
     end
 
     def cmd_view
       unless @db.exist?( @p )
         @cmd = 'create'
-        cmd_create( @conf.msg_page_not_exist )
-        return
+        return cmd_create( @conf.msg_page_not_exist )
       end
 
       tokens = @db.load_cache( @p )
@@ -189,14 +201,14 @@ module Hiki
       formatter = @conf.formatter.new( tokens, @db, @plugin, @conf )
       contents, toc = formatter.to_s, formatter.toc
       if @conf.hilight_keys
-        word = @params['key'][0]
+        word = @request.params['key']
         if word && word.size > 0
-          contents = hilighten(contents, word.unescape.split)
+          contents = hilighten(contents, unescape(word).split)
         end
       end
 
       old_ref = @db.get_attribute( @p, :references )
-      new_ref = formatter.references 
+      new_ref = formatter.references
       @db.set_references( @p, new_ref ) if new_ref != old_ref
       ref = @db.get_references( @p )
 
@@ -204,12 +216,12 @@ module Hiki
 
       pg_title = @plugin.page_name(@p)
 
-      data[:page_title]   = @plugin.hiki_anchor(@p.escape, h(@p))
+      data[:page_title]   = @plugin.hiki_anchor(escape(@p), h(@p))
       data[:view_title]   = pg_title
-      data[:title]        = title( pg_title.unescapeHTML )
+      data[:title]        = title(unescape_html(pg_title))
       data[:toc]          = @plugin.toc_f ? toc : nil
       data[:body]         = formatter.apply_tdiary_theme(contents)
-      data[:references]   = ref.collect! {|a| "[#{@plugin.hiki_anchor(a.escape, @plugin.page_name(a))}] " }.join
+      data[:references]   = ref.collect! {|a| "[#{@plugin.hiki_anchor(escape(a), @plugin.page_name(a))}] " }.join
       data[:keyword]      = @db.get_attribute(@p, :keyword).collect {|k| "[#{view_title(k)}]"}.join(' ')
 
       data[:last_modified]  = @db.get_last_update( @p )
@@ -245,7 +257,7 @@ module Hiki
         editor = f[k][:editor] ? "by #{f[k][:editor]}" : ''
         display_text = h((f[k][:title] and f[k][:title].size > 0) ? f[k][:title] : k)
         display_text << " [#{@aliaswiki.aliaswiki(k)}]" if k != @aliaswiki.aliaswiki(k)
-        %Q!#{@plugin.hiki_anchor(k.escape, display_text)}: #{format_date(f[k][:last_modified] )} #{editor}#{@conf.msg_freeze_mark if f[k][:freeze]}!
+        %Q!#{@plugin.hiki_anchor(escape(k), display_text)}: #{format_date(f[k][:last_modified] )} #{editor}#{@conf.msg_freeze_mark if f[k][:freeze]}!
       }
 
       data = get_common_data( @db, @plugin, @conf )
@@ -283,7 +295,7 @@ module Hiki
         display_text = (f[k][:title] and f[k][:title].size > 0) ? f[k][:title] : k
         display_text = h(display_text)
         display_text << " [#{@aliaswiki.aliaswiki(k)}]" if k != @aliaswiki.aliaswiki(k)
-        %Q|#{format_date( tm )}: #{@plugin.hiki_anchor( k.escape, display_text )} #{h(editor)} (<a href="#{@conf.cgi_name}#{cmdstr('diff',"p=#{k.escape}")}">#{@conf.msg_diff}</a>)|
+        %Q|#{format_date( tm )}: #{@plugin.hiki_anchor(escape(k), display_text)} #{h(editor)} (<a href="#{@conf.cgi_name}#{cmdstr('diff',"p=#{escape(k)}")}">#{@conf.msg_diff}</a>)|
       }
       [list, last_modified]
     end
@@ -308,25 +320,25 @@ module Hiki
         formatter = @conf.formatter.new( p, @db, @plugin, @conf )
         preview_text, toc = formatter.to_s, formatter.toc
         save_button = ''
-        data[:keyword] = h(@params['keyword'][0] || '')
-        data[:update_timestamp] = @params['update_timestamp'][0] ? ' checked' : ''
-        data[:freeze] = @params['freeze'][0] ? ' checked' : ''
+        data[:keyword] = h(@request.params['keyword'] || '')
+        data[:update_timestamp] = @request.params['update_timestamp'] ? ' checked' : ''
+        data[:freeze] = @request.params['freeze'] ? ' checked' : ''
       elsif @cmd == 'conflict'
         old = text.gsub(/\r/, '')
         new = @db.load( page ) || ''
         differ = word_diff( old, new ).gsub( /\n/, "<br>\n" )
-        link = @plugin.hiki_anchor( page.escape, h(page))
+        link = @plugin.hiki_anchor(escape(page), h(page))
       end
 
       @cmd = 'edit'
 
-      if rev = @params['r'][0]
+      if rev = @request.params['r']
         text = @conf.repos.get_revision(page, rev.to_i)
         raise 'No such revision.' if text.empty?
       else
         text = ( @db.load( page ) || '' ) unless text
       end
-      md5hex = @params['md5hex'][0] || @db.md5hex( page )
+      md5hex = @request.params['md5hex'] || @db.md5hex( page )
 
       @plugin.text = text
 
@@ -370,7 +382,7 @@ module Hiki
     end
 
     def cmd_save( page, text, md5hex, update_timestamp = true )
-      raise SessionError if @plugin.session_id && @plugin.session_id != @cgi['session_id']
+      raise SessionError if @plugin.session_id && @plugin.session_id != @request.params['session_id']
       subject = ''
       if text.empty?
         @db.delete( page )
@@ -381,46 +393,43 @@ module Hiki
         data[:link]      = h(page)
         generate_page(data)
       else
-        title = @params['page_title'][0] ? @params['page_title'][0].strip : page
+        title = @request.params['page_title'] ? @request.params['page_title'].strip : page
         title = title.size > 0 ? title : page
 
         if exist?(title)
           @cmd = 'edit'
-          cmd_edit( page, text, @conf.msg_duplicate_page_title )
-          return
+          return cmd_edit( page, text, @conf.msg_duplicate_page_title )
         end
 
         if Filter.new_page_is_spam?(page, text, title)
           @cmd = 'is_spam'
-          cmd_edit( page, text, @conf.msg_input_is_spam )
-          return
+          return cmd_edit( page, text, @conf.msg_input_is_spam )
         end
 
         if @plugin.save( page, text, md5hex, update_timestamp, false )
-          keyword = @params['keyword'][0].split("\n").collect {|k|
+          keyword = @request.params['keyword'].split("\n").collect {|k|
             k.chomp.strip}.delete_if{|k| k.size == 0}
           attr = [[:keyword, keyword.uniq], [:title, title]]
           attr << [:editor, @plugin.user]
           @db.set_attribute(page, attr)
         else
           @cmd = 'conflict'
-          cmd_edit( page, text, @conf.msg_save_conflict )
-          return
+          return cmd_edit( page, text, @conf.msg_save_conflict )
         end
 
-        @db.freeze_page( page, @params['freeze'][0] ? true : false) if @plugin.admin?
-        redirect(@cgi, @conf.base_url + @plugin.hiki_url(page))
+        @db.freeze_page( page, @request.params['freeze'] ? true : false) if @plugin.admin?
+        return redirect(@request, @conf.base_url + @plugin.hiki_url(page))
       end
     end
 
     def cmd_search
-      word = @params['key'][0]
+      word = @request.params['key']
       if word && word.size > 0
         total, l = @db.search(word)
         if @conf.hilight_keys
-          l.collect! {|p| @plugin.make_anchor("#{@conf.cgi_name}?cmd=view&p=#{p[0].escape}&key=#{word.split.join('+').escape}", @plugin.page_name(p[0])) + " - #{p[1]}"}
+          l.collect! {|p| @plugin.make_anchor("#{@conf.cgi_name}?cmd=view&p=#{escape(p[0])}&key=#{escape(word.split.join('+'))}", @plugin.page_name(p[0])) + " - #{p[1]}"}
         else
-          l.collect! {|p| @plugin.hiki_anchor( p[0].escape, @plugin.page_name(p[0])) + " - #{p[1]}"}
+          l.collect! {|p| @plugin.hiki_anchor(escape(p[0]), @plugin.page_name(p[0])) + " - #{p[1]}"}
         end
         data             = get_common_data( @db, @plugin, @conf )
         data[:title]     = title( @conf.msg_search_result )
@@ -450,11 +459,11 @@ module Hiki
     end
 
     def cmd_create( msg = nil )
-      p = @params['key'][0]
+      p = @request.params['key']
       if p
         @p = @aliaswiki.original_name(p).to_euc
         if /^\./ =~ @p || @p.size > @conf.max_name_size || @p.size == 0
-          @params['key'][0] = nil
+          @request.params['key'] = nil
           cmd_create( @conf.msg_invalid_filename( @conf.max_name_size) )
           return
         end
@@ -466,7 +475,7 @@ module Hiki
           s = @db.load( @p )
           cmd_edit( orig_page || @p, s, @conf.msg_already_exist )
         else
-          cmd_edit( @p, @params['text'][0] )
+          cmd_edit( @p, @request.params['text'] )
         end
       else
         data           = get_common_data( @db, @plugin, @conf )
@@ -483,9 +492,9 @@ module Hiki
     end
 
     def cmd_login
-      name = @params['name'][0]
-      password = @params['password'][0]
-      page = @params['p'][0]
+      name = @request.params['name']
+      password = @request.params['password']
+      page = @request.params['p']
       msg_login_result = nil
       status = 'OK'
       if name && password
@@ -496,11 +505,12 @@ module Hiki
           session.user = @plugin.user
           session.save
           if page && !page.empty?
-            redirect(@cgi, @conf.base_url + @plugin.hiki_url( page ), session_cookie( session.session_id ))
+            url = @conf.base_url + @plugin.hiki_url( page )
           else
-            redirect(@cgi, @conf.index_url, session_cookie( session.session_id ))
+            url = @conf.index_url
           end
-          return
+          cookies = [session_cookie(session.session_id)]
+          return redirect(@request, url, cookies)
         else
           msg_login_result = @conf.msg_login_failure
           status = '403 Forbidden'
@@ -519,12 +529,12 @@ module Hiki
       raise PermissionError, 'Permission denied' unless @plugin.admin?
 
       data = get_common_data( @db, @plugin, @conf )
-      data[:key]            = h(@cgi.params['conf'][0] || 'default')
+      data[:key]            = h(@request.params['conf'] || 'default')
 
       data[:title]          = title( @conf.msg_admin )
       data[:session_id]     = @plugin.session_id
-      if @cgi.params['saveconf'][0]
-        raise SessionError if @plugin.session_id && @plugin.session_id != @cgi['session_id']
+      if @request.params['saveconf']
+        raise SessionError if @plugin.session_id && @plugin.session_id != @request.params['session_id']
         data[:save_config]    = true
       end
       generate_page( data )
@@ -541,7 +551,7 @@ module Hiki
       return tmp
       end
 
-      p = (@db.select {|p| p[:title] and p[:title].unescape == page})[0]
+      p = (@db.select {|p| p[:title] and unescape(p[:title]) == page})[0]
       if p != @p and p != nil
         return p
       end
@@ -555,30 +565,31 @@ module Hiki
 
     def cmd_plugin(redirect_mode = true)
       return unless @conf.use_plugin
-      plugin = @params['plugin'][0]
+      plugin = @request.params['plugin']
 
       result = true
       if @plugin.respond_to?( plugin ) && !Object.method_defined?( plugin )
         result = @plugin.send( plugin )
+        return result if result.instance_of? Hiki::Response
       else
         raise PluginException, 'not plugin method'
       end
 
       if redirect_mode and result
-        redirect(@cgi, @conf.base_url + @plugin.hiki_url(@p))
+        redirect(@request, @conf.base_url + @plugin.hiki_url(@p))
       end
     end
 
     def cmd_logout
-      if session_id = @cgi.cookies['session_id'][0]
+      if session_id = @cookies['session_id']
         cookies = [session_cookie(session_id, -1)]
         Hiki::Session.new( @conf, session_id ).delete
       end
-      redirect(@cgi, @conf.index_url, cookies)
+      redirect(@request, @conf.index_url, cookies)
     end
 
     def cookie(name, value, max_age = Session::MAX_AGE)
-      CGI::Cookie.new( {
+      Hiki::Cookie.new( {
                           'name' => name,
                           'value' => value,
                           'path' => @plugin.cookie_path,
@@ -592,8 +603,8 @@ module Hiki
 
     def code_conv
       if @conf.mobile_agent? && /EUC-JP/i =~ @conf.charset
-        @params.each_key do |k|
-          @params[k].each do |v|
+        @request.params.each_key do |k|
+          @request.params[k].each do |v|
             v.replace(v.to_euc) if v
           end
         end
