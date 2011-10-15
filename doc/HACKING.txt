@@ -1,51 +1,51 @@
-Hiki ��ϥå������ǡ����ͤȤʤ�����򵭤��ޤ���
+Hiki をハックする上で、参考となる事柄を記します。
 
 
 ==========================================================
 
-�� �᡼��󥰥ꥹ�� ��
+◆ メーリングリスト ◆
 
-Hiki ������Τ���Υ᡼��󥰥ꥹ�Ȥ��Ѱդ���Ƥ��ޤ���
-������ˡ�ϡ����줾��Υ᡼��󥰥ꥹ�ȤΥڡ����򸫤Ƥ���������
+Hiki の話題のためのメーリングリストが用意されています。
+購読方法は、それぞれのメーリングリストのページを見てください。
 
 hiki-users
-  �桼�������Υ᡼��󥰥ꥹ�ȤǤ���
+  ユーザ向けのメーリングリストです。
   http://lists.sourceforge.jp/mailman/listinfo/hiki-users
 
 hiki-dev
-  ��ȯ�Ը����Υ᡼��󥰥ꥹ�ȤǤ���
+  開発者向けのメーリングリストです。
   http://lists.sourceforge.jp/mailman/listinfo/hiki-dev
 
 
 
 ==========================================================
 
-�� �ѥå��κ���� ��
+◆ パッチの作り方 ◆
 
-�ѥå��ϡ�unified diff ������侩���ޤ���
-diff ���ޥ�ɤ� -u ���ץ������դ��Ƥ���������
+パッチは、unified diff 形式を推奨します。
+diff コマンドに -u オプションを付けてください。
 
-CVS �ǥ��������äƤ��Ƥ�����ˤϡ�
+CVS でソースを取ってきている場合には、
   $ cvs diff -u
-�Ǻ����Ǥ��ޤ���
+で作成できます。
 
-����Ū���������Ȥ��Ƥϡ��������������ͤˤʤ�ޤ���
+一般的な注意点としては、下記記事が参考になります。
 
-�ѥå�������ݤ˵���Ĥ���٤�����
+パッチを送る際に気をつけるべきこと
   http://d.hatena.ne.jp/higepon/20050629/1120024153
 
 
 
 ==========================================================
 
-�� �ȼ��ΥС����������Хå�����ɤ�������� ��
+◆ 独自のバージョン管理バックエンドを定義する ◆
 
-�ȼ��ΥХå�����ɤ��������ˤϡ�
+独自のバックエンドを定義するには、
 
-1. "hiki/repos/#{repos_type}.rb" �Ȥ����ե�����˥�����ץȤ�񤯡�
-2. "HikifarmRepos#{repos_type.capitalize}" ���饹��
-   "Repos#{repos_type.capitalize}" ���饹���ꡢ
-   ���줾�� HikifarmReposBase �� ReposBase ��Ѿ����롣
-3. �᥽�åɤ�Ŭ�ڤ˥����С��饤�ɤ��롣
+1. "hiki/repos/#{repos_type}.rb" というファイルにスクリプトを書く。
+2. "HikifarmRepos#{repos_type.capitalize}" クラスと
+   "Repos#{repos_type.capitalize}" クラスを作り、
+   それぞれ HikifarmReposBase と ReposBase を継承する。
+3. メソッドを適切にオーバーライドする。
 
-�Ȥ������ˤʤ�ޤ���
+という手順になります。

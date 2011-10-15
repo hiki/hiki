@@ -2,7 +2,7 @@
 # $Id: attach.rb,v 1.7 2007-06-24 12:00:11 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 #
-# thanks to Kazuhiko, Masao Mutoh, SHIMADA Mitsunobu, Yoshimi, �ꤿ
+# thanks to Kazuhiko, Masao Mutoh, SHIMADA Mitsunobu, Yoshimi, りた
 
 @options['attach.form'] ||= 'edit'
 

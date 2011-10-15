@@ -1,12 +1,12 @@
 ! hiki-mode.el
 
-Emacs¤ÇHiki¤Î¥Ú¡¼¥¸¤òÊÔ½¸¤¹¤ë¤¿¤á¤Îmajor mode¤Ç¤¹¡£
+Emacsã§Hikiã®ãƒšãƒ¼ã‚¸ã‚’ç·¨é›†ã™ã‚‹ãŸã‚ã®major modeã§ã™ã€‚
 
-!! ¥¤¥ó¥¹¥È¡¼¥ë
-¥Ñ¥¹¤ÎÄÌ¤Ã¤Æ¤¤¤ë¤È¤³¤í¤Ëhiki-mode.el¤òÃÖ¤¤¤¿¸å¡¢~/.hiki¤Ë
+!! ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«
+ãƒ‘ã‚¹ã®é€šã£ã¦ã„ã‚‹ã¨ã“ã‚ã«hiki-mode.elã‚’ç½®ã„ãŸå¾Œã€~/.hikiã«
 
  (setq hiki-site-list '(("Hoge-Hiki" "http://example.com/hiki/")
                         ("Fuga-Hiki" "http://example.jp/hiki/hiki.cgi")))
  (require 'hiki-mode)
 
-¤Î¤è¤¦¤Ë½ñ¤±¤ĞOK¡£
+ã®ã‚ˆã†ã«æ›¸ã‘ã°OKã€‚

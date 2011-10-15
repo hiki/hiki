@@ -1,11 +1,11 @@
 ! Hikilet
 
-WEBrick �� Hiki ��ư��������Υ�����ץȤǤ���
+WEBrick で Hiki を動かすためのスクリプトです。
 
-!! �Ȥ���
+!! 使い方
 
-Hiki �Υȥåץǥ��쥯�ȥ�� hikilet.rb �򥳥ԡ����Ƽ¹Ԥ��Ƥ���������
+Hiki のトップディレクトリに hikilet.rb をコピーして実行してください。
 
-!! ���
+!! 作者
 
-�����¹�
+西山和広

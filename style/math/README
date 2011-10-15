@@ -1,64 +1,64 @@
-! Math ��������ȿ���ɽ���ץ饰����
+! Math スタイルと数式表示プラグイン
 
-default ����������ĥ���ƿ�����ɽ�����Ǥ���褦�ˤ�����������Ǥ���
+default スタイルを拡張して数式の表示ができるようにしたスタイルです。
 
-!! ɬ�פʤ��
+!! 必要なもの
 
-* LaTeX �� DVI ���Ѵ������� (�ǥե���ȡ�platex)
-* DVI �� PS ���Ѵ������� (�ǥե���ȡ�dvips)
-* PS �� PNG ���Ѵ������� (�ǥե���ȡ�convert �� ghostscript)
+* LaTeX → DVI に変換するもの (デフォルト：platex)
+* DVI → PS に変換するもの (デフォルト：dvips)
+* PS → PNG に変換するもの (デフォルト：convert と ghostscript)
 
-!! ���󥹥ȡ�����ˡ
+!! インストール方法
 
-# hikiconf.rb�� @style �� @style = 'math' ���ѹ�����
-# misc/plugin/math.rb �� plugin/ �˥��ԡ�����
+# hikiconf.rbの @style を @style = 'math' と変更する
+# misc/plugin/math.rb を plugin/ にコピーする
 
-!! ����
+!! 書き方
 
-ʸˡ�� Hiki �� default ��������ˡ�����饤������Ѥ�
+文法は Hiki の default スタイルに、インライン数式用の
 
  [$...$]
 
-�Ȥ����ޡ������åפȡ��ǥ����ץ쥤�����Ѥ�
+というマークアップと、ディスプレイ数式用の
 
  $$...
  $$...
 
-�Ȥ����ޡ������åפ��ɲä��Ƥ���ޤ���
+というマークアップを追加してあります。
 
-!! ���ץ����
+!! オプション
 
-Math ��������Ǥϰʲ��Υ��ץ������Ѱդ��Ƥ��ޤ���hikiconf.rb�˵��Ҥ�
-�Ƥ���������
+Math スタイルでは以下のオプションを用意しています。hikiconf.rbに記述し
+てください。
 
 * @options['math.latex.ptsize']
-** LaTeX �δ��ܥݥ���ȥ������Ǥ� (�ǥե���Ȥ� '12pt')��
+** LaTeX の基本ポイントサイズです (デフォルトは '12pt')。
 
 * @options['math.latex.documentclass']
-** LaTeX �� documentclass �Ǥ� (�ǥե���Ȥ� 'report')��
+** LaTeX の documentclass です (デフォルトは 'report')。
 
 * @options['math.latex.preamble']
-** laTeX �� preamble ���Ǥ� (�ǥե���Ȥ� '')��
+** laTeX の preamble 部です (デフォルトは '')。
 
 * @options['math.latex.latex']
-** LaTeX �� DVI �Ѵ����륳�ޥ�� (�ǥե���Ȥ� 'platex %.tex')
+** LaTeX → DVI 変換するコマンド (デフォルトは 'platex %.tex')
 
 * @options['math.latex.dvips']
-** DVI �� PS �Ѵ����륳�ޥ�� (�ǥե���Ȥ� 'dvips %.dvi')
+** DVI → PS 変換するコマンド (デフォルトは 'dvips %.dvi')
 
 * @options['math.latex.convert']
-** DVI �� PNG �Ѵ����륳�ޥ�� (�ǥե���Ȥ� 'convert -antialias -trim -transparent white %.ps %.png')
+** DVI → PNG 変換するコマンド (デフォルトは 'convert -antialias -trim -transparent white %.ps %.png')
 
 * @options['math.latex.log']
-** ��������Ϥ��뤫�ɤ��� (�ǥե���Ȥ� false)��
+** ログを出力するかどうか (デフォルトは false)。
 
 * @options['math.latex.recompile']
-** �ꥯ�����ȤΤ��Ӥ��Ѵ����ʤ������ɤ��� (�ǥե���Ȥ� false)��
+** リクエストのたびに変換しなおすかどうか (デフォルトは false)。
 
 !! Tips
 
-�طʤ��Ť��ơ��ޤ�ȤäƤ�����ϡ�@options['math.latex.convert'] ��
+背景が暗いテーマを使っている場合は、@options['math.latex.convert'] を
  'convert -antialias -trim -border 4x4 -bordercolor white %.ps %.png'
-�Ȥ�
+とか
  'convert -antialias -trim -negate -transparent black %.ps %.png'
-�Τ褦�����ꤹ��ȡ����������䤹���ʤ�Ǥ��礦��
+のように設定すると、数式が見やすくなるでしょう。

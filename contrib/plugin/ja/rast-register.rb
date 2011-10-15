@@ -1,3 +1,3 @@
-@rast_register_conf_label = 'Rast¸¡º÷'
-@rast_register_conf_header = 'Rast¸¡º÷¥¤¥ó¥Ç¥Ã¥¯¥¹¤ÎºÆ¹½ÃÛ'
-@rast_register_conf_description = 'Rast¸¡º÷¤Î¥¤¥ó¥Ç¥Ã¥¯¥¹¤òºÆ¹½ÃÛ¤¹¤ë¾ì¹ç¤Ï¡¢¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤ò¥Á¥§¥Ã¥¯¤·¤ÆOK¤ò²¡¤·¤Æ¤¯¤À¤µ¤¤¡£'
+@rast_register_conf_label = 'Rastæ¤œç´¢'
+@rast_register_conf_header = 'Rastæ¤œç´¢ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®å†æ§‹ç¯‰'
+@rast_register_conf_description = 'Rastæ¤œç´¢ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’å†æ§‹ç¯‰ã™ã‚‹å ´åˆã¯ã€ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã‚’ãƒã‚§ãƒƒã‚¯ã—ã¦OKã‚’æŠ¼ã—ã¦ãã ã•ã„ã€‚'

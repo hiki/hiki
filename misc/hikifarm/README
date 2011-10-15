@@ -1,79 +1,79 @@
-! HikiFarm�Ȥ�
+! HikiFarmとは
 
-ñ��Υ����Ȥ�ʣ����Wiki���󶡤���WikiFarm�Ȥ��������ӥ�������ޤ�����
-���Hiki�Ǵ�ñ�˼¸����뤿���CGI��HikiFarm�Ǥ���WikiFarm���Ǥ���ȡ�
-�ʲ��Τ褦�ʴ򤷤�������ޤ���
+単一のサイトで複数のWikiを提供するWikiFarmというサービスがあります。こ
+れをHikiで簡単に実現するためのCGIがHikiFarmです。WikiFarmができると、
+以下のような嬉しさがあります。
 
-* ���Ϥ�Wiki�����֤Ǥ��ʤ��ͤˡ�Wiki�����Ȥ��ߤ��Ф���褦�ˤʤ�ޤ�
-* Ʊ��Wiki��������˶�¸������ˤ�̵��������ڡ����򡢴�ñ��ʬΥ�Ǥ���褦�ˤʤ�ޤ�
-** �㤦���ƤʤΤ�Ʊ���ڡ���̾��ɬ�ס��Ȥ��ä�̾�����֤ξ��ͤ��ʤ��ʤ�ޤ�
-** �֥�����פΤ褦��̵���ʳ�ǰ��Ƴ������ɬ�פ��ʤ��ʤ�ޤ�
-** �ڡ����ǥ�����򥵥��Ȥ��Ȥ��ѹ��Ǥ���褦�ˤʤ�ޤ�
+* 自力でWikiを設置できない人に、Wikiサイトを貸し出せるようになります
+* 同じWikiサイト内に共存させるには無理があるページを、簡単に分離できるようになります
+** 違う内容なのに同じページ名が必要、といった名前空間の衝突がなくなります
+** 「ジャンル」のような無理な概念を導入する必要がなくなります
+** ページデザインをサイトごとに変更できるようになります
 
-HikiFarm�ϡ�HikiFarm��CGI�β��˥ǥ��쥯�ȥ������������β���Hiki�¹�
-�Ķ����������뤳�Ȥ�ʣ��Hiki�δ�����Ԥ��ޤ����㤨�С�HikiFarm��URL��
-�ʲ��Τ褦�ʾ�硢
+HikiFarmは、HikiFarmのCGIの下にディレクトリを作成し、その下にHiki実行
+環境を生成することで複数Hikiの管理を行います。例えば、HikiFarmのURLが
+以下のような場合、
 
  http://example.com/hikifarm/
 
-��sample�פȤ���Hiki�����Ȥ���������Ȱʲ��Τ褦��URL�ˤʤ�ޤ���
+「sample」というHikiサイトを生成すると以下のようなURLになります。
 
  http://example.com/hikifarm/sample/
 
-! HikiFarm ��������ˡ
+! HikiFarm の設置方法
 
-Hiki�Ϲ����ʤȤ�����Ÿ�����ޤ� (��: /home/foo/src/hiki)��
-������Hiki ���󥹥ȡ���ǥ��쥯�ȥ�ȸƤӤޤ���
-���Υǥ��쥯�ȥ��Web���鸫����ɬ�פϤ���ޤ���
+Hikiは好きなところに展開します (例: /home/foo/src/hiki)。
+ここを、Hiki インストールディレクトリと呼びます。
+このディレクトリはWebから見える必要はありません。
 
-CGI�����֤���ǥ��쥯�ȥ���� (��: /home/foo/public_html/hikifarm)��
-������Web�����Фθ��¤ǽ񤭹��߲�ǽ�ˤ��ޤ���
-�ޤ����ǥե���ȤΥ���ǥå��� (Apache�ʤ�DirectoryIndex) ��
-index.cgi�ˤ��ޤ� (HikiFarm��index.cgi��ư�������ޤ�)��
+CGIを設置するディレクトリを決め (例: /home/foo/public_html/hikifarm)、
+そこをWebサーバの権限で書き込み可能にします。
+また、デフォルトのインデックス (ApacheならDirectoryIndex) を、
+index.cgiにします (HikiFarmはindex.cgiを自動生成します)。
 
- # Apache�ξ���.htaccess (�ޤ���httpd.conf) ����
+ # Apacheの場合の.htaccess (またはhttpd.conf) の例
  Options +ExecCGI +FollowSymLinks
  AddHandler cgi-script .cgi
  DirectoryIndex index.cgi
 
-�ơ��ޤΥǥ��쥯�ȥ� (theme) �⡢CGI�����֤���ǥ��쥯�ȥ���֤��Ƥ�����
-�ɤ��Ǥ��礦��(��: /home/foo/public_html/hikifarm/theme)
+テーマのディレクトリ (theme) も、CGIを設置するディレクトリに置いておくと
+良いでしょう。(例: /home/foo/public_html/hikifarm/theme)
 
-�ǡ�������¸����ǥ��쥯�ȥ���� (��: /home/foo/var/hiki)��
-������Web�����Фθ��¤ǽ񤭹��߲�ǽ�ˤ��ޤ���
-���Υǥ��쥯�ȥ��Web���鸫����ɬ�פϤ���ޤ���
+データを保存するディレクトリを決め (例: /home/foo/var/hiki)、
+そこをWebサーバの権限で書き込み可能にします。
+このディレクトリはWebから見える必要はありません。
 
-index.cgi��hikifarm.conf�ϡ�CGI�����֤���ǥ��쥯�ȥ�˥��ԡ����ޤ���
-index.cgi�ˤϼ¹Ը��¤��դ���hikifarm.conf�ϼ�ʬ�δĶ��˹�碌�ƽ񤭴�
-���Ƥ����ޤ���
+index.cgiとhikifarm.confは、CGIを設置するディレクトリにコピーします。
+index.cgiには実行権限を付け、hikifarm.confは自分の環境に合わせて書き換
+えておきます。
 
-���ˡ�hiki.conf��Hiki���󥹥ȡ���ǥ��쥯�ȥ���֤��ơ��Ķ��˹�碌��
-�񤭴����ޤ������Υե�������ܼ�Ū��hikiconf.rb��Ʊ����ΤǤ�����
-��__my_wiki_name__�פȤ���������ɤ��������줿Wiki������̾���֤��Ѥ�
-��褦�ˤʤäƤ���Ȥ������ߥ��Ǥ���
+次に、hiki.confをHikiインストールディレクトリに置いて、環境に合わせて
+書き換えます。このファイルは本質的にhikiconf.rbと同じものですが、
+「__my_wiki_name__」というキーワードが生成されたWikiサイト名に置き変わ
+るようになっているところがミソです。
 
-�ޤ���@mail�ˡ�Wiki̾@hikifarm.quickml.com�פ����äƤ��ޤ������������
-[[QuickML|http://www.quickml.com/]]���ۿ����뤿�������Ǥ���ɬ�פ˱�
-���ƽ񤭴����Ƥ������� (�ۿ�̵�Ѥʤ�nil�ˤ���)��
+また、@mailに「Wiki名@hikifarm.quickml.com」が入っています。更新情報を
+[[QuickML|http://www.quickml.com/]]で配信するための設定です。必要に応
+じて書き換えてください (配信無用ならnilにする)。
 
-CGI�����֤����ǥ��쥯�ȥ�˥֥饦�����饢����������С�HikiFarm�β���
-������ޤ���
+CGIを設置したディレクトリにブラウザからアクセスすれば、HikiFarmの画面
+が現れます。
 
-CVS/Subversion �Хå�����ɤ��Ѥ�����ϡ�vc-backend-setup.cgi
-��¹Ԥ��Ƥ���������
+CVS/Subversion バックエンドを用いる場合は、vc-backend-setup.cgi
+を実行してください。
 
-!! CVS/Subversion �Хå�����ɤˤĤ���
-Hikifarm �Ǥϡ��С����������ΥХå�����ɤȤ���
-CVS �⤷���� Subversion ��Ȥ����Ȥ��Ǥ��ޤ���
-CVS ���Ѥ������ repos_type �� 'cvs' �ˡ�
-Subversion ��� Wiki ���ȤΥ�ݥ��ȥ�ǻ��Ѥ������ repos_type �� 'svn' �ˡ�
-Subversion �� Hikifarm ���Τ�ñ���ݥ��ȥ�ǻ��Ѥ������ repos_type ��
-'svnsingle' �����ꤷ�Ƥ���������
+!! CVS/Subversion バックエンドについて
+Hikifarm では、バージョン管理のバックエンドとして
+CVS もしくは Subversion を使うことができます。
+CVS を用いる場合は repos_type を 'cvs' に、
+Subversion を各 Wiki ごとのリポジトリで使用する場合は repos_type を 'svn' に、
+Subversion を Hikifarm 全体で単一リポジトリで使用する場合は repos_type を
+'svnsingle' に設定してください。
 
-�ʤ���CVS/Subversion �Хå�����ɤ��Ѥ�����ϡ�
-Hikifarm ���ִ�λ��� vc-backend-setup.cgi ��¹Ԥ��Ƥ���������
-�����¹Ԥ��ʤ��ȡ��С������������������ʤ���ޤ���
+なお、CVS/Subversion バックエンドを用いる場合は、
+Hikifarm 設置完了後に vc-backend-setup.cgi を実行してください。
+これを実行しないと、バージョン管理が正しくなされません。
 
-�¹���ˡ�ϡ�vc-backend-setup.cgi �� Hikifarm �� index.cgi �����֤����ǥ�
-�쥯�ȥ�˥��ԡ�����CGI �Ȥ��ƥ������������ OK �Ǥ� (�����뤬�Ȥ�����
-�ϡ����ޥ�ɥ饤�󤫤�¹Ԥ��Ƥ⤫�ޤ��ޤ���)��
+実行方法は、vc-backend-setup.cgi を Hikifarm の index.cgi を設置したディ
+レクトリにコピーし、CGI としてアクセスすれば OK です (シェルが使える場合
+は、コマンドラインから実行してもかまいません)。

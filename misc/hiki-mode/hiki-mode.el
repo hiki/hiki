@@ -142,7 +142,7 @@ is expected to accept only one argument(URL).")
     (hiki-load-init-file)
     (setq hiki-init t)))
 
-;;; ÊÔ½¸¥â¡¼¥É (hiki-edit-*)
+;;; ç·¨é›†ãƒ¢ãƒ¼ãƒ‰ (hiki-edit-*)
 
 (define-derived-mode hiki-edit-mode text-mode "Hiki Edit"
   "Major mode for Hiki editing.
@@ -201,9 +201,9 @@ If you want to set up your own key bindings, use `hiki-edit-mode-hook'."
     (setq hiki-site-list hiki-list)))
 
 (defun hiki-read-site-name (&optional string)
-  "¥µ¥¤¥ÈÌ¾¤ò¥ß¥Ë¥Ğ¥Ã¥Õ¥¡¤«¤éÆÉ¤ß¡¢¥µ¥¤¥È¾ğÊó¤Î¥ê¥¹¥È¤òÊÖ¤¹¡£
+  "ã‚µã‚¤ãƒˆåã‚’ãƒŸãƒ‹ãƒãƒƒãƒ•ã‚¡ã‹ã‚‰èª­ã¿ã€ã‚µã‚¤ãƒˆæƒ…å ±ã®ãƒªã‚¹ãƒˆã‚’è¿”ã™ã€‚
 
-STRING ¤¬ non-nil ¤Ê¤é¡¢¤½¤ì¤ò¥µ¥¤¥ÈÌ¾¤È¤¹¤ë¡£"
+STRING ãŒ non-nil ãªã‚‰ã€ãã‚Œã‚’ã‚µã‚¤ãƒˆåã¨ã™ã‚‹ã€‚"
   (let* ((selected (car hiki-site-list))
 	 (default (or (hiki-site-name) (car selected))))
     (assoc 
@@ -231,9 +231,9 @@ STRING ¤¬ non-nil ¤Ê¤é¡¢¤½¤ì¤ò¥µ¥¤¥ÈÌ¾¤È¤¹¤ë¡£"
 		   (cdr (assoc site-name hiki-pagename-history)) 
 		   nil nil arg nil arg))
 
-;;; navi2ch-read-char ¤ò»²¹Í¤Ë¤·¤Æ¤Ş¤¹¡£
+;;; navi2ch-read-char ã‚’å‚è€ƒã«ã—ã¦ã¾ã™ã€‚
 (defun hiki-read-char (prompt)
-  "PROMPT (non-nil ¤Î¾ì¹ç) ¤òÉ½¼¨¤·¤Æ `read-char' ¤ò¸Æ¤Ó½Ğ¤¹¡£"
+  "PROMPT (non-nil ã®å ´åˆ) ã‚’è¡¨ç¤ºã—ã¦ `read-char' ã‚’å‘¼ã³å‡ºã™ã€‚"
   (let ((cursor-in-echo-area t)
 	c)
     (if prompt
@@ -243,7 +243,7 @@ STRING ¤¬ non-nil ¤Ê¤é¡¢¤½¤ì¤ò¥µ¥¤¥ÈÌ¾¤È¤¹¤ë¡£"
 	(message "%s%c" prompt c))
     c))
 
-;;; navi2ch-read-char-with-retry ¤ò»²¹Í¤Ë¤·¤Æ¤Ş¤¹¡£
+;;; navi2ch-read-char-with-retry ã‚’å‚è€ƒã«ã—ã¦ã¾ã™ã€‚
 (defun hiki-read-char-with-retry (prompt retry-prompt list)
   (let ((retry t) c)
     (while retry
@@ -285,17 +285,17 @@ STRING ¤¬ non-nil ¤Ê¤é¡¢¤½¤ì¤ò¥µ¥¤¥ÈÌ¾¤È¤¹¤ë¡£"
     str))
 
 (defun hiki-edit-next-anchor (&optional prev)
-  "¼¡¤Î¥¢¥ó¥«¡¼¤Ø°ÜÆ°¤¹¤ë¡£
+  "æ¬¡ã®ã‚¢ãƒ³ã‚«ãƒ¼ã¸ç§»å‹•ã™ã‚‹ã€‚
 
-PREV ¤¬ non-nil ¤Ê¤é¤Ğ¡¢Á°¤Î¥¢¥ó¥«¡¼¤Ø°ÜÆ°¤¹¤ë¡£"
+PREV ãŒ non-nil ãªã‚‰ã°ã€å‰ã®ã‚¢ãƒ³ã‚«ãƒ¼ã¸ç§»å‹•ã™ã‚‹ã€‚"
   (interactive "P")
   (goto-char (or (car (hiki-search-anchor (point) prev))
 		 (point))))
 
 (defun hiki-search-anchor (point &optional prev)
-  "POINT ¤«¤éºÇ¤â¶á¤¤¥¢¥ó¥«¡¼¤òÃµ¤¹¡£
+  "POINT ã‹ã‚‰æœ€ã‚‚è¿‘ã„ã‚¢ãƒ³ã‚«ãƒ¼ã‚’æ¢ã™ã€‚
 
-¸«¤Ä¤«¤Ã¤¿¤é (beginning . end) ¤ò¡¢¸«¤Ä¤«¤é¤Ê¤«¤Ã¤¿¤é nil ¤ò ÊÖ¤¹"
+è¦‹ã¤ã‹ã£ãŸã‚‰ (beginning . end) ã‚’ã€è¦‹ã¤ã‹ã‚‰ãªã‹ã£ãŸã‚‰ nil ã‚’ è¿”ã™"
   (let ((case-fold-search nil)
 	(alist hiki-anchor-regexp-alist)
 	result)
@@ -321,7 +321,7 @@ PREV ¤¬ non-nil ¤Ê¤é¤Ğ¡¢Á°¤Î¥¢¥ó¥«¡¼¤Ø°ÜÆ°¤¹¤ë¡£"
 	(rename-buffer name t))))
 
 (defun hiki-edit-url (str &optional url-encoded)
-  "URL ¤ò»ØÄê¤·¤ÆÊÔ½¸¤¹¤ë¡£"
+  "URL ã‚’æŒ‡å®šã—ã¦ç·¨é›†ã™ã‚‹ã€‚"
   (interactive "sURL: ")
   (let (url pagename site-info)
     (or	(string-match "^\\(http://[^?]+\\)\\?\\(.+\\)$" str)
@@ -360,15 +360,15 @@ PREV ¤¬ non-nil ¤Ê¤é¤Ğ¡¢Á°¤Î¥¢¥ó¥«¡¼¤Ø°ÜÆ°¤¹¤ë¡£"
       (hiki-index site-info t pagename))))
 
 (defun hiki-edit-reload ()
-  "¸½ºßÊÔ½¸Ãæ¤Î¥Ú¡¼¥¸¤ò¥ê¥í¡¼¥É¤¹¤ë¡£"
+  "ç¾åœ¨ç·¨é›†ä¸­ã®ãƒšãƒ¼ã‚¸ã‚’ãƒªãƒ­ãƒ¼ãƒ‰ã™ã‚‹ã€‚"
   (interactive)
   (let ((selected-pagename hiki-pagename))
     (hiki-edit)))
 
 (defun hiki-edit (&optional select-site)
-  "¥Ú¡¼¥¸Ì¾¤ò»ØÄê¤·¤ÆÊÔ½¸¤¹¤ë¡£
+  "ãƒšãƒ¼ã‚¸åã‚’æŒ‡å®šã—ã¦ç·¨é›†ã™ã‚‹ã€‚
 
-SELECT-SITE ¤¬ non-nil ¤Î»ş¤Ï¡¢SITEÌ¾¤â»ØÄê¤¹¤ë¡£"
+SELECT-SITE ãŒ non-nil ã®æ™‚ã¯ã€SITEåã‚‚æŒ‡å®šã™ã‚‹ã€‚"
   (interactive "P")
   (hiki-initialize)
   (let ((point (point))
@@ -397,7 +397,7 @@ SELECT-SITE ¤¬ non-nil ¤Î»ş¤Ï¡¢SITEÌ¾¤â»ØÄê¤¹¤ë¡£"
       (set-window-start (selected-window) start)
       (goto-char point))))
 
-;;; °ìÍ÷¥â¡¼¥É(hiki-index-*)
+;;; ä¸€è¦§ãƒ¢ãƒ¼ãƒ‰(hiki-index-*)
 
 (define-derived-mode hiki-index-mode text-mode "Hiki Index"
   "Major mode for Hiki index.
@@ -425,10 +425,10 @@ If you want to set up your own key bindings, use `hiki-index-mode-hook'."
   )
 
 (defun hiki-index (&optional site-info refetch pagename)
-  "°ìÍ÷¥â¡¼¥É¤ËÆş¤ë¡£
+  "ä¸€è¦§ãƒ¢ãƒ¼ãƒ‰ã«å…¥ã‚‹ã€‚
 
-SITE-INFO ¤¬»ØÄê¤µ¤ì¤Æ¤¤¤Ê¤±¤ì¤Ğ¡¢¥ß¥Ë¥Ğ¥Ã¥Õ¥¡¤«¤éÆÉ¤ß¹ş¤à¡£
-REFETCH ¤¬ nil ¤Ç¤¹¤Ç¤Ë¥Ğ¥Ã¥Õ¥¡¤¬Â¸ºß¤¹¤ë¤Ê¤é¡¢HTTP GET ¤·¤Ê¤¤¡£"
+SITE-INFO ãŒæŒ‡å®šã•ã‚Œã¦ã„ãªã‘ã‚Œã°ã€ãƒŸãƒ‹ãƒãƒƒãƒ•ã‚¡ã‹ã‚‰èª­ã¿è¾¼ã‚€ã€‚
+REFETCH ãŒ nil ã§ã™ã§ã«ãƒãƒƒãƒ•ã‚¡ãŒå­˜åœ¨ã™ã‚‹ãªã‚‰ã€HTTP GET ã—ãªã„ã€‚"
   (interactive "P")
   (hiki-initialize)
   (let (buf)
@@ -440,10 +440,10 @@ REFETCH ¤¬ nil ¤Ç¤¹¤Ç¤Ë¥Ğ¥Ã¥Õ¥¡¤¬Â¸ºß¤¹¤ë¤Ê¤é¡¢HTTP GET ¤·¤Ê¤¤¡£"
     (unless pagename (delete-other-windows))))
 
 (defun hiki-display-index (site-info &optional refetch pagename)
-  "°ìÍ÷¤òÉ½¼¨¤·¡¢¥Ğ¥Ã¥Õ¥¡¤òÊÖ¤¹¡£
+  "ä¸€è¦§ã‚’è¡¨ç¤ºã—ã€ãƒãƒƒãƒ•ã‚¡ã‚’è¿”ã™ã€‚
 
-REFETCH ¤¬ nil ¤Ç´û¤Ë¥Ğ¥Ã¥Õ¥¡¤¬Â¸ºß¤¹¤ë¤Ê¤é¡¢HTTP GET ¤·¤Ê¤¤¡£
-PAGENAME ¤ËÂĞ±ş¤·¤¿¹Ô¤¬¤¢¤ì¤Ğ¡¢¥«¡¼¥½¥ë¤ò¤½¤³¤Ë°ÜÆ°¤¹¤ë¡£ "
+REFETCH ãŒ nil ã§æ—¢ã«ãƒãƒƒãƒ•ã‚¡ãŒå­˜åœ¨ã™ã‚‹ãªã‚‰ã€HTTP GET ã—ãªã„ã€‚
+PAGENAME ã«å¯¾å¿œã—ãŸè¡ŒãŒã‚ã‚Œã°ã€ã‚«ãƒ¼ã‚½ãƒ«ã‚’ãã“ã«ç§»å‹•ã™ã‚‹ã€‚ "
   (let ((old-buf (current-buffer))
 	(buf (hiki-index-get-buffer-create site-info)))
     (switch-to-buffer buf)
@@ -470,7 +470,7 @@ PAGENAME ¤ËÂĞ±ş¤·¤¿¹Ô¤¬¤¢¤ì¤Ğ¡¢¥«¡¼¥½¥ë¤ò¤½¤³¤Ë°ÜÆ°¤¹¤ë¡£ "
     buf))
 
 (defun hiki-index-get-buffer-create (site-info)
-  "°ìÍ÷É½¼¨ÍÑ¤Î¥Ğ¥Ã¥Õ¥¡¤òÊÖ¤¹¡£"
+  "ä¸€è¦§è¡¨ç¤ºç”¨ã®ãƒãƒƒãƒ•ã‚¡ã‚’è¿”ã™ã€‚"
   (let ((buf-name (hiki-index-buffer-name site-info)))
     (or (get-buffer buf-name)
 	(progn
@@ -496,9 +496,9 @@ PAGENAME ¤ËÂĞ±ş¤·¤¿¹Ô¤¬¤¢¤ì¤Ğ¡¢¥«¡¼¥½¥ë¤ò¤½¤³¤Ë°ÜÆ°¤¹¤ë¡£ "
 	    extra)))
 
 (defun hiki-index-display-page (&optional refetch)
-  "¸½ºß¹Ô¤Î¥Ú¡¼¥¸¤òÉ½¼¨¤¹¤ë¡£
+  "ç¾åœ¨è¡Œã®ãƒšãƒ¼ã‚¸ã‚’è¡¨ç¤ºã™ã‚‹ã€‚
 
-REFETCH ¤¬ nil ¤Ç¤¹¤Ç¤Ë¥Ğ¥Ã¥Õ¥¡¤¬Â¸ºß¤¹¤ë¤Ê¤é¡¢HTTP GET ¤·¤Ê¤¤¡£"
+REFETCH ãŒ nil ã§ã™ã§ã«ãƒãƒƒãƒ•ã‚¡ãŒå­˜åœ¨ã™ã‚‹ãªã‚‰ã€HTTP GET ã—ãªã„ã€‚"
   (interactive)
   (let ((point (point))
 	(page-info (hiki-index-page-info-current-line))
@@ -516,9 +516,9 @@ REFETCH ¤¬ nil ¤Ç¤¹¤Ç¤Ë¥Ğ¥Ã¥Õ¥¡¤¬Â¸ºß¤¹¤ë¤Ê¤é¡¢HTTP GET ¤·¤Ê¤¤¡£"
     (goto-char point)))
 
 (defun hiki-index-display-page-next (&optional refetch)
-  "¸½ºß¹Ô¤Î¥Ú¡¼¥¸¤òÉ½¼¨¤¹¤ë¡£¤¹¤Ç¤ËÉ½¼¨¤µ¤ì¤Æ¤¤¤ë»ş¤Ï¥¹¥¯¥í¡¼¥ë¤¹¤ë¡£
+  "ç¾åœ¨è¡Œã®ãƒšãƒ¼ã‚¸ã‚’è¡¨ç¤ºã™ã‚‹ã€‚ã™ã§ã«è¡¨ç¤ºã•ã‚Œã¦ã„ã‚‹æ™‚ã¯ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«ã™ã‚‹ã€‚
 
-REFETCH ¤¬ nil ¤Ç¤¹¤Ç¤Ë¥Ğ¥Ã¥Õ¥¡¤¬Â¸ºß¤¹¤ë¤Ê¤é¡¢HTTP GET ¤·¤Ê¤¤¡£"
+REFETCH ãŒ nil ã§ã™ã§ã«ãƒãƒƒãƒ•ã‚¡ãŒå­˜åœ¨ã™ã‚‹ãªã‚‰ã€HTTP GET ã—ãªã„ã€‚"
   (interactive)
   (let ((page-info (hiki-index-page-info-current-line))
 	(old-win (selected-window))
@@ -532,19 +532,19 @@ REFETCH ¤¬ nil ¤Ç¤¹¤Ç¤Ë¥Ğ¥Ã¥Õ¥¡¤¬Â¸ºß¤¹¤ë¤Ê¤é¡¢HTTP GET ¤·¤Ê¤¤¡£"
 	(let ((other-window-scroll-buffer buf)
 	      (start (window-start win)))
 	  (scroll-other-window)
-;;; ¥¹¥¯¥í¡¼¥ë½ĞÍè¤Ê¤¤»ş¤Ï¼¡¹Ô¤Ë°Ü¤ë¡£
+;;; ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«å‡ºæ¥ãªã„æ™‚ã¯æ¬¡è¡Œã«ç§»ã‚‹ã€‚
 ;;;	  (when (= (window-start win) start)
 ;;;	    (forward-line)
 ;;;	    (hiki-index-display-page refetch))
 	  )))))
 
 (defun hiki-index-edit-page-current-line ()
-  "¸½ºß¹Ô¤Î¥Ú¡¼¥¸¤òÊÔ½¸¤¹¤ë¡£"
+  "ç¾åœ¨è¡Œã®ãƒšãƒ¼ã‚¸ã‚’ç·¨é›†ã™ã‚‹ã€‚"
   (interactive)
   (hiki-index-edit-page (nth 1 (hiki-index-page-info-current-line))))
 
 (defun hiki-index-edit-page (&optional pagename)
-  "¥Ú¡¼¥¸¤òÊÔ½¸¤¹¤ë¡£"
+  "ãƒšãƒ¼ã‚¸ã‚’ç·¨é›†ã™ã‚‹ã€‚"
   (interactive)
   (let ((index-buf (current-buffer))
 	edit-buf start)
@@ -565,7 +565,7 @@ REFETCH ¤¬ nil ¤Ç¤¹¤Ç¤Ë¥Ğ¥Ã¥Õ¥¡¤¬Â¸ºß¤¹¤ë¤Ê¤é¡¢HTTP GET ¤·¤Ê¤¤¡£"
       (switch-to-buffer edit-buf))))
 
 (defun hiki-index-page-info-current-line ()
-  "¸½ºß¹Ô¤Î¥Ú¡¼¥¸¾ğÊó(list)¤òÊÖ¤¹¡£"
+  "ç¾åœ¨è¡Œã®ãƒšãƒ¼ã‚¸æƒ…å ±(list)ã‚’è¿”ã™ã€‚"
   (let (num)
     (save-excursion
       (beginning-of-line)
@@ -576,7 +576,7 @@ REFETCH ¤¬ nil ¤Ç¤¹¤Ç¤Ë¥Ğ¥Ã¥Õ¥¡¤¬Â¸ºß¤¹¤ë¤Ê¤é¡¢HTTP GET ¤·¤Ê¤¤¡£"
      (t nil))))
 
 (defun hiki-index-page-info (pagename)
-  "PAGENAME ¤Î page-info ¤òÊÖ¤¹¡£ÃÎ¤é¤Ê¤±¤ì¤Ğ nil¡£"
+  "PAGENAME ã® page-info ã‚’è¿”ã™ã€‚çŸ¥ã‚‰ãªã‘ã‚Œã° nilã€‚"
   (let (result)
     (dolist (page-info hiki-index-page-info-list)
       (when (string= (nth 1 page-info) pagename)
@@ -584,12 +584,12 @@ REFETCH ¤¬ nil ¤Ç¤¹¤Ç¤Ë¥Ğ¥Ã¥Õ¥¡¤¬Â¸ºß¤¹¤ë¤Ê¤é¡¢HTTP GET ¤·¤Ê¤¤¡£"
     result))
 
 (defun hiki-index-refetch-index ()
-  "°ìÍ÷¤ÎºÆÆÉ¤ß¹ş¤ß¤ò¹Ô¤¦¡£"
+  "ä¸€è¦§ã®å†èª­ã¿è¾¼ã¿ã‚’è¡Œã†ã€‚"
   (interactive)
   (hiki-index hiki-site-info t (nth 1 (hiki-index-page-info-current-line))))
 
 (defun hiki-index-sort (&optional rev)
-  "°ìÍ÷¤Î¥½¡¼¥È¤ò¹Ô¤¦"
+  "ä¸€è¦§ã®ã‚½ãƒ¼ãƒˆã‚’è¡Œã†"
   (interactive "P")
   (message "Sorting...")
   (hiki-index-sort-by 
@@ -598,7 +598,7 @@ REFETCH ¤¬ nil ¤Ç¤¹¤Ç¤Ë¥Ğ¥Ã¥Õ¥¡¤¬Â¸ºß¤¹¤ë¤Ê¤é¡¢HTTP GET ¤·¤Ê¤¤¡£"
   (message "Sorting... done."))
 
 (defun hiki-index-suspend ()
-  "hiki-index ¤ò°ì»şÃæÃÇ¤¹¤ë¡£"
+  "hiki-index ã‚’ä¸€æ™‚ä¸­æ–­ã™ã‚‹ã€‚"
   (interactive)
   (delete-other-windows)
   (dolist (elm hiki-page-buffer-alist)
@@ -606,7 +606,7 @@ REFETCH ¤¬ nil ¤Ç¤¹¤Ç¤Ë¥Ğ¥Ã¥Õ¥¡¤¬Â¸ºß¤¹¤ë¤Ê¤é¡¢HTTP GET ¤·¤Ê¤¤¡£"
   (replace-buffer-in-windows (current-buffer)))
 
 (defun hiki-index-quit ()
-  "hiki-index ¤ò½ªÎ»¤¹¤ë¡£"
+  "hiki-index ã‚’çµ‚äº†ã™ã‚‹ã€‚"
   (interactive)
   (let ((tmp hiki-page-buffer-alist))
     (delete-other-windows)
@@ -647,9 +647,9 @@ REFETCH ¤¬ nil ¤Ç¤¹¤Ç¤Ë¥Ğ¥Ã¥Õ¥¡¤¬Â¸ºß¤¹¤ë¤Ê¤é¡¢HTTP GET ¤·¤Ê¤¤¡£"
 ;;; func
 
 (defun hiki-display-page (pagename site-info &optional refetch)
-  "¥Ú¡¼¥¸¤Î¤òÉ½¼¨¤¹¤ë
+  "ãƒšãƒ¼ã‚¸ã®ã‚’è¡¨ç¤ºã™ã‚‹
 
-REFETCH ¤¬ nil ¤Ç¤¹¤Ç¤Ë¥Ğ¥Ã¥Õ¥¡¤¬Â¸ºß¤¹¤ë¤Ê¤é¡¢HTTP GET ¤·¤Ê¤¤¡£"
+REFETCH ãŒ nil ã§ã™ã§ã«ãƒãƒƒãƒ•ã‚¡ãŒå­˜åœ¨ã™ã‚‹ãªã‚‰ã€HTTP GET ã—ãªã„ã€‚"
   (let ((not-cancelled t)
 	result body keyword pagetitle password history point buf new-page)
     (setq buf (cdr (assoc (list (hiki-site-name site-info) pagename) 
@@ -697,7 +697,7 @@ REFETCH ¤¬ nil ¤Ç¤¹¤Ç¤Ë¥Ğ¥Ã¥Õ¥¡¤¬Â¸ºß¤¹¤ë¤Ê¤é¡¢HTTP GET ¤·¤Ê¤¤¡£"
       result)))
 
 (defun hiki-edit-page (pagename site-info)
-  "PAGENAME ¤ÎÊÔ½¸¥â¡¼¥É¤ËÆş¤ë¡£¥Ğ¥Ã¥Õ¥¡¤òÊÖ¤¹¡£"
+  "PAGENAME ã®ç·¨é›†ãƒ¢ãƒ¼ãƒ‰ã«å…¥ã‚‹ã€‚ãƒãƒƒãƒ•ã‚¡ã‚’è¿”ã™ã€‚"
   (let ((result (hiki-display-page pagename site-info t)))
     (when result
       (setq hiki-md5hex (cdr (assq 'md5hex result)))
@@ -714,7 +714,7 @@ REFETCH ¤¬ nil ¤Ç¤¹¤Ç¤Ë¥Ğ¥Ã¥Õ¥¡¤¬Â¸ºß¤¹¤ë¤Ê¤é¡¢HTTP GET ¤·¤Ê¤¤¡£"
       (current-buffer))))
 
 (defun hiki-fetch-index (site-info)
-  "¥Ú¡¼¥¸°ìÍ÷¤ò¼èÆÀ¤¹¤ë¡£"
+  "ãƒšãƒ¼ã‚¸ä¸€è¦§ã‚’å–å¾—ã™ã‚‹ã€‚"
   (let (indexes history (i 1)
                 (buf (hiki-http-request 'get "index" nil (hiki-site-url site-info))))
     (when (bufferp buf)
@@ -741,7 +741,7 @@ REFETCH ¤¬ nil ¤Ç¤¹¤Ç¤Ë¥Ğ¥Ã¥Õ¥¡¤¬Â¸ºß¤¹¤ë¤Ê¤é¡¢HTTP GET ¤·¤Ê¤¤¡£"
       (reverse indexes))))
 
 (defun hiki-fetch-source (pagename site-url)
-  "Hiki ¤Î ¥½¡¼¥¹¤ò¼èÆÀ¤¹¤ë¡£
+  "Hiki ã® ã‚½ãƒ¼ã‚¹ã‚’å–å¾—ã™ã‚‹ã€‚
 
 '((md5hex . \"...\")
   (session-id . \"...\")
@@ -749,7 +749,7 @@ REFETCH ¤¬ nil ¤Ç¤¹¤Ç¤Ë¥Ğ¥Ã¥Õ¥¡¤¬Â¸ºß¤¹¤ë¤Ê¤é¡¢HTTP GET ¤·¤Ê¤¤¡£"
   (pagetitle . (...)) 
   (keyword . (...)) 
   (update-timestamp . t/nil)
-  (password . t/nil)) ¤òÊÖ¤¹¡£"
+  (password . t/nil)) ã‚’è¿”ã™ã€‚"
   (let (buf start end pt result)
     (setq buf (hiki-http-request 'get "edit" pagename site-url))
     (when (bufferp buf)
@@ -848,7 +848,7 @@ REFETCH ¤¬ nil ¤Ç¤¹¤Ç¤Ë¥Ğ¥Ã¥Õ¥¡¤¬Â¸ºß¤¹¤ë¤Ê¤é¡¢HTTP GET ¤·¤Ê¤¤¡£"
       (hiki-edit-quit))))
 
 (defun hiki-conflict-show-diff ()
-  "¸½ºß¤Î¥Ğ¥Ã¥Õ¥¡¤È¥µ¡¼¥Ğ¤Î¥Ç¡¼¥¿¤òÈæ³Ó¤·¡¢É½¼¨¤¹¤ë¡£"
+  "ç¾åœ¨ã®ãƒãƒƒãƒ•ã‚¡ã¨ã‚µãƒ¼ãƒã®ãƒ‡ãƒ¼ã‚¿ã‚’æ¯”è¼ƒã—ã€è¡¨ç¤ºã™ã‚‹ã€‚"
   (let 
       ((file1 (expand-file-name (make-temp-name "hiki") 
 				temporary-file-directory))
@@ -957,9 +957,9 @@ Otherwise replace all entity references within current buffer."
     (add-text-properties 0 (length string) properties string)))
 
 (defun hiki-prefix (str width)
-  "STR ¤ÎÀèÆ¬¤ò WIDTHÊ¸»ú¤ò¼è¤ê½Ğ¤¹¡£
+  "STR ã®å…ˆé ­ã‚’ WIDTHæ–‡å­—ã‚’å–ã‚Šå‡ºã™ã€‚
 
-WIDTH ¤ËËş¤¿¤Ê¤¤¾ì¹ç¤Ï¡¢ËöÈø¤Ë¶õÇò¤¬¥Ñ¥Ç¥£¥ó¥°¤µ¤ì¤ë¡£"
+WIDTH ã«æº€ãŸãªã„å ´åˆã¯ã€æœ«å°¾ã«ç©ºç™½ãŒãƒ‘ãƒ‡ã‚£ãƒ³ã‚°ã•ã‚Œã‚‹ã€‚"
   (let (l (result "")
 	(w (string-width str)))
     (if (< w width)

@@ -1,81 +1,81 @@
-�� Hiki�Ȥ� ��
+◆ Hikiとは ◆
 
-Hiki�Ϥ�����ҤȤĤ�Wiki���󥸥�Ǥ���Hiki�ˤϰʲ�����ħ������ޤ���
-
-
-�� ���ꥸ�ʥ�Wiki�˻�������ץ�ʽ�
-
-Hiki�ϥ��ꥸ�ʥ��Wiki�˻�������ץ�ʽ񼰤򥵥ݡ��Ȥ��Ƥ��ޤ����ܺ٤ˤ�
-���Ƥ� http://hikiwiki.org/ja/TextFormattingRules.html �򻲾Ȥ��Ƥ���������
+HikiはいわゆるひとつのWikiエンジンです。Hikiには以下の特徴があります。
 
 
-�� CSS��Ȥä��ơ��޵�ǽ
+○ オリジナルWikiに似たシンプルな書式
 
-�������륷���Ȥ�Ȥäƴ�ñ�˸����ܤ��Ѥ��뤳�Ȥ��Ǥ�������ϥơ��ޤȸƤ�
-��ޤ���Hiki�Ǥϡ��������������������������ƥ�tDiary�Ѥ�˭�٤ʥơ��ޤ�
-���Ѥ��뤳�Ȥ��Ǥ��ޤ���
-
-
-�� �ץ饰����ˤ�뵡ǽ��ĥ
-
-�ץ饰����ˤ�굡ǽ���ɲä��뤳�Ȥ��Ǥ��ޤ���tDiary�Ρ������˰�¸���ʤ���
-�ץ饰����񻺤������������������Ǽ�����ʤ�Ƥ��ޤ���
+HikiはオリジナルのWikiに似たシンプルな書式をサポートしています。詳細につ
+いては http://hikiwiki.org/ja/TextFormattingRules.html を参照してください。
 
 
-�� HikiFarm���б�
+○ CSSを使ったテーマ機能
 
-HikiFarm�������֤���С��֥饦���夫���ñ�˿�����Hiki�򤤤��Ĥ��뤳
-�Ȥ��Ǥ��ޤ����ܤ����� misc/hikifarm/README ��������������
-
-
-�� ���Ϥ���HTML�������ѹ���ǽ
-
-Hiki�Ǥ�ʸ��������Ruby������ץ�ERB��ȤäƤ��뤿�ᡢ
-���Ϥ���HTML�η����������ѹ����뤳�Ȥ��Ǥ��ޤ���
+スタイルシートを使って簡単に見た目を変えることができ、これはテーマと呼ば
+れます。Hikiでは、ただただしさん作の日記システムtDiary用の豊富なテーマを
+使用することができます。
 
 
-�� InterWiki�Υ��ݡ���
+○ プラグインによる機能拡張
 
-InterWiki�򥵥ݡ��Ȥ��Ƥ��ޤ���InterWiki�Ȥϡ���Ȥ�Ȥ�Wiki�����С��֤�
-�Ĥʤ��뵡ǽ���ä��ʤ餷���ˤΤǤ������Ȥ����ˤ�äƤ�Wiki�����С��ʳ���
-�Υ�󥯤��뤳�Ȥ��Ǥ��ޤ������Ȥ���InterWikiName�Ȥ����ڡ����˰ʲ��Τ褦
-�˽񤤤��塢
+プラグインにより機能を追加することができます。tDiaryの（日記に依存しない）
+プラグイン資産を最大限生かせる方向で実装を進めています。
+
+
+○ HikiFarmに対応
+
+HikiFarmを一つ設置すれば、ブラウザ上から簡単に新しいHikiをいくつも作るこ
+とができます。詳しくは misc/hikifarm/README をご覧ください。
+
+
+○ 出力するHTMLを柔軟に変更可能
+
+Hikiでは文書埋め込みRubyスクリプトERBを使っているため、
+出力するHTMLの形式を柔軟に変更することができます。
+
+
+○ InterWikiのサポート
+
+InterWikiをサポートしています。InterWikiとは、もともとはWikiサーバー間を
+つなげる機能だった（らしい）のですが、使い方によってはWikiサーバー以外へ
+のリンクすることができます。たとえばInterWikiNameというページに以下のよう
+に書いた後、
 
  *[[ruby-list|http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/]]
  *[[Hiki|http://hikiwiki.org/ja/?]] euc
 
-Ǥ�դΥڡ����ˡ�
+任意のページに、
  [[Hiki:HikiFarm]]
 
-�Ƚ񤯤�http://hikiwiki.org/ja/�Ρ�HikiFarm�פȤ���
-�ڡ����ؤΥ�󥯤ˤʤ�ޤ���
+と書くとhttp://hikiwiki.org/ja/の「HikiFarm」という
+ページへのリンクになります。
 
-Ʊ�ͤˡ�
+同様に、
  [[ruby-list:1]]
 
-�Ƚ񤯤�ruby-list�᡼��󥰥ꥹ�Ȥ�1�֤Υ᡼��ؤΥ�󥯤ˤʤ�ޤ���
+と書くとruby-listメーリングリストの1番のメールへのリンクになります。
 
 
-�� �ڡ����˥��ƥ����դ��Ǥ���
+○ ページにカテゴリ付けできる
 
-ɸ����󶡤����ץ饰����(category.rb�ޤ���keyword.rb)�ˤ��ƥڡ�����
-���ƥ�����դ��ơ����ƥ���ñ�̤ǥڡ����򰷤����Ȥ��Ǥ��ޤ���
+標準で提供されるプラグイン(category.rbまたはkeyword.rb)により各ページに
+カテゴリを付けて、カテゴリ単位でページを扱うことができます。
 
 
 
-�� ��������ݡ��Ȥʤ� ��
+◆ 著作権、サポートなど ◆
 
-Hiki�ϡ�GNU GPL2 �����ۡ����Ѥ���Ĥ���ե꡼���եȥ������Ǥ���Hiki�θ���
-�Ԥϡ֤��������ҤȤ��פǡ����ߤǤ�Hiki��ȯ������ˤ�곫ȯ����Ƥ��ޤ���
+Hikiは、GNU GPL2 で配布、改変を許可するフリーソフトウェアです。Hikiの原作
+者は「たけうちひとし」で、現在ではHiki開発チームにより開発されています。
 
-�����������ۥե�����Τ����ʲ��Τ�ΤϤ��줾��θ���Ԥ������ͭ���ޤ���
+ただし、配布ファイルのうち以下のものはそれぞれの原作者が著作権を有します。
 
 hiki/db/tmarshal.rb
-  ��Ӥ�������ruby-list:30305�˥ݥ��Ȥ���������ץȤ�㴳����������Ρ�Ruby �饤���󥹤����ۡ� 
+  るびきちさんがruby-list:30305にポストしたスクリプトを若干修正したもの。Ruby ライセンスで配布。 
 hiki/docdiff/*
-  ���ľ���������BSD�饤���󥹤����ۡ�
+  森田尚さん作。修正BSDライセンスで配布。
 hiki/image_size.rb
-  Keisuke Minami ����Ruby �饤���󥹤�����
+  Keisuke Minami さん作。Ruby ライセンスで配布
 
-Hiki �� http://hikiwiki.org/ja/ �ǥ��ݡ��Ȥ�ԤäƤ��ޤ���
-���ո�������˾�Ϥ�����ؤɤ�����
+Hiki は http://hikiwiki.org/ja/ でサポートを行っています。
+ご意見・ご要望はこちらへどうぞ。

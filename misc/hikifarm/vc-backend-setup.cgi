@@ -1,12 +1,12 @@
 #!/usr/bin/env ruby
 #
-# �� �С����������Хå�����ɥ��åȥ��åץ�����ץ� ��
+# ● バージョン管理バックエンドセットアップスクリプト ●
 #
-#  CVS/Subversion ��Хå�����ɤȤ��ƻȤ��Ȥ��ϡ�
-#  �ǽ�ˤ��Υ�����ץȤ�¹Ԥ��Ƥ���������
+#  CVS/Subversion をバックエンドとして使うときは、
+#  最初にこのスクリプトを実行してください。
 #  
-#  ���Υ�����ץȤϡ�hikifarm.conf �Τ���ǥ��쥯�ȥ��
-#  ���ԡ����Ƽ¹Ԥ��Ƥ���������
+#  このスクリプトは、hikifarm.conf のあるディレクトリに
+#  コピーして実行してください。
 # 
 #          
 
@@ -36,5 +36,5 @@ Dir["#{File.dirname(__FILE__)}/*"].each do |wiki|
   repos.import(File.basename(wiki)) unless repos.imported?(File.basename(wiki))
 end
 
-puts "��ݥ��ȥ�κ���������ݡ��Ȥ���λ���ޤ�����"
+puts "リポジトリの作成・インポートが終了しました。"
 

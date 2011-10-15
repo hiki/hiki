@@ -15,8 +15,8 @@ class HikifarmConfig
   end
 
   def load
-    # ¥Ç¥Õ¥©¥ë¥ÈÀßÄê
-    # Á°¤â¤Ã¤ÆÄêµÁ¤·¤Æ¤Ê¤¤¤È eval ¤·¤Æ¤â»Ä¤é¤Ê¤¤
+    # ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆè¨­å®š
+    # å‰ã‚‚ã£ã¦å®šç¾©ã—ã¦ãªã„ã¨ eval ã—ã¦ã‚‚æ®‹ã‚‰ãªã„
     ruby = '/usr/bin/env ruby'
     hiki = ''
     hikifarm_description = nil
@@ -269,10 +269,10 @@ class HikifarmIndexPage < ErbPage
     @css = css
     @title = title
     @header_content = if header_file
-                        File.exist?(header_file) ? File.read(header_file).untaint : error_msg("!! #{header_file} ¤¬Â¸ºß¤·¤Ş¤»¤ó !!")
+                        File.exist?(header_file) ? File.read(header_file).untaint : error_msg("!! #{header_file} ãŒå­˜åœ¨ã—ã¾ã›ã‚“ !!")
                       end
     @footer_content = if footer_file
-                        File.exist?(footer_file) ? File.read(footer_file).untaint : error_msg("!! #{footer_file} ¤¬Â¸ºß¤·¤Ş¤»¤ó !!")
+                        File.exist?(footer_file) ? File.read(footer_file).untaint : error_msg("!! #{footer_file} ãŒå­˜åœ¨ã—ã¾ã›ã‚“ !!")
                       end
     @msg = msg
   end
@@ -296,9 +296,9 @@ class HikifarmIndexPage < ErbPage
 
   def wikilist_table
     r = ''
-    r = "<p>Á´ #{@farm.wikis_num} Wiki / #{@farm.pages_num} ¥Ú¡¼¥¸ (* ¤Ïº¹Ê¬¤Ø¤Î¥ê¥ó¥¯)</p>\n"
+    r = "<p>å…¨ #{@farm.wikis_num} Wiki / #{@farm.pages_num} ãƒšãƒ¼ã‚¸ (* ã¯å·®åˆ†ã¸ã®ãƒªãƒ³ã‚¯)</p>\n"
     r << "<table>\n"
-    r << %Q!<tr><th>Wiki ¤ÎÌ¾Á°</th><th>ºÇ½ª¹¹¿·»ş¹ï / ºÇ½ª¹¹¿·¥Ú¡¼¥¸</th></tr>!
+    r << %Q!<tr><th>Wiki ã®åå‰</th><th>æœ€çµ‚æ›´æ–°æ™‚åˆ» / æœ€çµ‚æ›´æ–°ãƒšãƒ¼ã‚¸</th></tr>!
     wikilist = @farm.wikilist.sort{ |a,b| a.mtime <=> b.mtime }.reverse
     wikilist.each do |wiki|
       page = CGI.escapeHTML(CGI.unescape(wiki.last_modified_page))
@@ -433,7 +433,7 @@ class HikifarmRSSPage < ErbPage
   end
 
   def wiki_description(wiki)
-    "¡Ö#{CGI.unescape(wiki.last_modified_page)}¡×¥Ú¡¼¥¸¤¬ÊÑ¹¹¤µ¤ì¤Ş¤·¤¿¡¥"
+    "ã€Œ#{CGI.unescape(wiki.last_modified_page)}ã€ãƒšãƒ¼ã‚¸ãŒå¤‰æ›´ã•ã‚Œã¾ã—ãŸï¼"
   end
 
   def content_encoded(wiki)
@@ -486,7 +486,7 @@ class App
     elsif 'POST' == @cgi.request_method and @cgi.params['wiki'][0] and @cgi.params['wiki'][0].length > 0
       begin
         name = @cgi.params['wiki'][0]
-        raise '±Ñ¿ô»ú¤Î¤ß»ØÄê¤Ç¤­¤Ş¤¹' if /\A[a-zA-Z0-9]+\z/ !~ name
+        raise 'è‹±æ•°å­—ã®ã¿æŒ‡å®šã§ãã¾ã™' if /\A[a-zA-Z0-9]+\z/ !~ name
         @farm.create_wiki(name, @conf.hiki, @conf.cgi_name, @conf.attach_cgi_name, @conf.data_root, @conf.default_pages)
 
         print @cgi.header({'Location' => hikifarm_uri})

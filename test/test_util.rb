@@ -14,8 +14,8 @@ class TMarshal_Unit_Tests < Test::Unit::TestCase
     @t1 = "123\n456\n"
     @t2 = "123\nabc\n456\n"
     @t3 = "123\n456\ndef\n"
-    @t4 = "¤³¤ó¤Ë¤Á¤Ï¡¢»ä¤ÎÌ¾Á°¤Ï¤ï¤¿¤Ê¤Ù¤Ç¤¹¡£\n»ä¤ÏJust Another Ruby Porter¤Ç¤¹¡£"
-    @t5 = "¤³¤ó¤Ğ¤ó¤Ï¡¢»ä¤ÎÌ¾Á°¤Ï¤Ş¤Ä¤â¤È¤Ç¤¹¡£\nRuby¤òºî¤Ã¤¿¤Î¤Ï»ä¤Ç¤¹¡£»ä¤ÏRuby Hacker¤Ç¤¹¡£"
+    @t4 = "ã“ã‚“ã«ã¡ã¯ã€ç§ã®åå‰ã¯ã‚ãŸãªã¹ã§ã™ã€‚\nç§ã¯Just Another Ruby Porterã§ã™ã€‚"
+    @t5 = "ã“ã‚“ã°ã‚“ã¯ã€ç§ã®åå‰ã¯ã¾ã¤ã‚‚ã¨ã§ã™ã€‚\nRubyã‚’ä½œã£ãŸã®ã¯ç§ã§ã™ã€‚ç§ã¯Ruby Hackerã§ã™ã€‚"
     @d1 = Document.new( @t1, 'EUC-JP', 'LF' )
     @d2 = Document.new( @t2, 'EUC-JP', 'LF' )
     @d3 = Document.new( @t3, 'EUC-JP', 'LF' )
@@ -25,12 +25,12 @@ class TMarshal_Unit_Tests < Test::Unit::TestCase
 
   def test_word_diff_html
     assert_equal( "123\n<ins class=\"added\">abc</ins>\n456\n", word_diff( @t1, @t2 ) )
-    assert_equal( "<del class=\"deleted\">¤³¤ó¤Ë¤Á¤Ï</del><ins class=\"added\">¤³¤ó¤Ğ¤ó¤Ï</ins>¡¢»ä¤Î<del class=\"deleted\">Ì¾Á°¤Ï¤ï¤¿¤Ê¤Ù¤Ç¤¹</del><ins class=\"added\">Ì¾Á°¤Ï¤Ş¤Ä¤â¤È¤Ç¤¹</ins>¡£\n<ins class=\"added\">Ruby¤òºî¤Ã¤¿¤Î¤Ï»ä¤Ç¤¹¡£</ins>»ä¤Ï<del class=\"deleted\">Just Another </del>Ruby <del class=\"deleted\">Porter</del><ins class=\"added\">Hacker</ins>¤Ç¤¹¡£", word_diff( @t4, @t5) )
+    assert_equal( "<del class=\"deleted\">ã“ã‚“ã«ã¡ã¯</del><ins class=\"added\">ã“ã‚“ã°ã‚“ã¯</ins>ã€ç§ã®<del class=\"deleted\">åå‰ã¯ã‚ãŸãªã¹ã§ã™</del><ins class=\"added\">åå‰ã¯ã¾ã¤ã‚‚ã¨ã§ã™</ins>ã€‚\n<ins class=\"added\">Rubyã‚’ä½œã£ãŸã®ã¯ç§ã§ã™ã€‚</ins>ç§ã¯<del class=\"deleted\">Just Another </del>Ruby <del class=\"deleted\">Porter</del><ins class=\"added\">Hacker</ins>ã§ã™ã€‚", word_diff( @t4, @t5) )
   end
 
   def test_word_diff_text
     assert_equal( "123\n{+abc+}\n456\n", word_diff_text( @t1, @t2 ) )
-    assert_equal( "[-¤³¤ó¤Ë¤Á¤Ï-]{+¤³¤ó¤Ğ¤ó¤Ï+}¡¢»ä¤Î[-Ì¾Á°¤Ï¤ï¤¿¤Ê¤Ù¤Ç¤¹-]{+Ì¾Á°¤Ï¤Ş¤Ä¤â¤È¤Ç¤¹+}¡£\n{+Ruby¤òºî¤Ã¤¿¤Î¤Ï»ä¤Ç¤¹¡£+}»ä¤Ï[-Just Another -]Ruby [-Porter-]{+Hacker+}¤Ç¤¹¡£", word_diff_text( @t4, @t5 ) )
+    assert_equal( "[-ã“ã‚“ã«ã¡ã¯-]{+ã“ã‚“ã°ã‚“ã¯+}ã€ç§ã®[-åå‰ã¯ã‚ãŸãªã¹ã§ã™-]{+åå‰ã¯ã¾ã¤ã‚‚ã¨ã§ã™+}ã€‚\n{+Rubyã‚’ä½œã£ãŸã®ã¯ç§ã§ã™ã€‚+}ç§ã¯[-Just Another -]Ruby [-Porter-]{+Hacker+}ã§ã™ã€‚", word_diff_text( @t4, @t5 ) )
   end
 
   def test_unified_diff
@@ -39,12 +39,12 @@ class TMarshal_Unit_Tests < Test::Unit::TestCase
   end
 
   def test_euc_to_utf8
-    assert_equal( "\343\201\273\343\201\222", euc_to_utf8( '¤Û¤²' ) )
-    assert_equal( "\343\200\234", euc_to_utf8( '¡Á' ) )
+    assert_equal( "\343\201\273\343\201\222", euc_to_utf8( 'ã»ã’' ) )
+    assert_equal( "\343\200\234", euc_to_utf8( 'ã€œ' ) )
   end
 
   def test_utf8_to_euc
-    assert_equal( '¤Û¤²', utf8_to_euc( "\343\201\273\343\201\222" ) )
-    assert_equal( '¡Á', utf8_to_euc( "\343\200\234" ) )
+    assert_equal( 'ã»ã’', utf8_to_euc( "\343\201\273\343\201\222" ) )
+    assert_equal( 'ã€œ', utf8_to_euc( "\343\200\234" ) )
   end
 end
