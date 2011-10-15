@@ -18,10 +18,10 @@ hiki-dev
 Unified diff format is recommended.
 Add a -u option to the diff command.
 
-If you get files via CVS, type the following command.
-  $ cvs diff -u
+If you get files via Git, type the following command.
+  $ git diff
 
-
+You also can pull request to http://github.com/hiki/hiki.
 
 ! Create the original version control backend
 

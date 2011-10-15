@@ -25,9 +25,11 @@ hiki-dev
 パッチは、unified diff 形式を推奨します。
 diff コマンドに -u オプションを付けてください。
 
-CVS でソースを取ってきている場合には、
-  $ cvs diff -u
+git でソースを取ってきている場合には、
+  $ git diff
 で作成できます。
+
+http://github.com/hiki/hiki へ pull request する方法でもかまいません。
 
 一般的な注意点としては、下記記事が参考になります。
 
