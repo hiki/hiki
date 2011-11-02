@@ -62,7 +62,7 @@ module Hiki
     #      # => "%27Stop%21%27+said+Fred"
     def escape(string)
       string.gsub(/([^ a-zA-Z0-9_.-]+)/n) do
-        '%' + $1.unpack('H2' * $1.size).join('%').upcase
+        '%' + $1.unpack('H2' * $1.bytesize).join('%').upcase
       end.tr(' ', '+')
     end
 
