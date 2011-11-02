@@ -1,0 +1,10 @@
+/data/cache/
+/data/hiki.conf
+/data/info.db
+/data/session/
+/data/text/
+!/data/text/FrontPage
+!/data/text/InterWikiName
+!/data/text/SideMenu
+!/data/text/TextFormattingRules
+/hikiconf.rb
