@@ -149,7 +149,7 @@ module Hiki
       @style         ||= 'default'
       @hilight_keys    = true if @hilight_keys.nil?
       @plugin_debug  ||= false
-      @charset       ||= 'EUC-JP'
+      @charset       ||= 'UTF-8'
       @database_type ||= 'flatfile'
       @cgi_name        = './' if !@cgi_name || @cgi_name.empty?
       @admin_name    ||= 'admin'

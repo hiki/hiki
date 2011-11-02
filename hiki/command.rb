@@ -67,7 +67,7 @@ module Hiki
       end
 
       @aliaswiki  = AliasWiki.new( @db.load( @conf.aliaswiki_name ) )
-      @p = @aliaswiki.original_name(@p).to_euc if @p
+      @p = @aliaswiki.original_name(@p) if @p
 
       options = @conf.options || Hash.new( '' )
       options['page']    = @p
@@ -461,7 +461,7 @@ module Hiki
     def cmd_create( msg = nil )
       p = @request.params['key']
       if p
-        @p = @aliaswiki.original_name(p).to_euc
+        @p = @aliaswiki.original_name(p)
         if /^\./ =~ @p || @p.size > @conf.max_name_size || @p.size == 0
           @request.params['key'] = nil
           cmd_create( @conf.msg_invalid_filename( @conf.max_name_size) )
