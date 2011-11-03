@@ -373,9 +373,9 @@ EOS
           to = case @charset
                when /^utf-8$/i
                  'w'
-               when /^shift_jis/i
+               when /\Ashift_jis\z/i
                  's'
-               when /^EUC-JP/i
+               when /\Aeuc-jp\z/i
                  'e'
                else
                  'e' # XXX what should we use?
