@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 # $Id: test_util.rb,v 1.4 2006-05-29 13:39:10 fdiary Exp $
 
-$KCODE = 'e'
-
 $:.unshift(File.join(File.dirname(__FILE__), '../hiki'))
 
 require 'test/unit'
@@ -17,11 +15,6 @@ class TMarshal_Unit_Tests < Test::Unit::TestCase
     @t3 = "123\n456\ndef\n"
     @t4 = "こんにちは、私の名前はわたなべです。\n私はJust Another Ruby Porterです。"
     @t5 = "こんばんは、私の名前はまつもとです。\nRubyを作ったのは私です。私はRuby Hackerです。"
-    @d1 = Document.new( @t1, 'EUC-JP', 'LF' )
-    @d2 = Document.new( @t2, 'EUC-JP', 'LF' )
-    @d3 = Document.new( @t3, 'EUC-JP', 'LF' )
-    @d4 = Document.new( @t4, 'EUC-JP', 'LF' )
-    @d5 = Document.new( @t5, 'EUC-JP', 'LF' )
   end
 
   def test_word_diff_html
