@@ -29,7 +29,7 @@ module Hiki
                when 'euc'
                  escape(p.to_euc)
                when 'utf8'
-                 escape(euc_to_utf8(p))
+                 escape(p.to_utf8)
                else
                  p
                end
