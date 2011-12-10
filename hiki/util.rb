@@ -174,8 +174,8 @@ module Hiki
     end
 
     def word_diff( src, dst, digest = false )
-      src_doc = Document.new( src, 'EUC-JP', CharString.guess_eol($/) )
-      dst_doc = Document.new( dst, 'EUC-JP', CharString.guess_eol($/) )
+      src_doc = Document.new( src, @charset, CharString.guess_eol($/) )
+      dst_doc = Document.new( dst, @charset, CharString.guess_eol($/) )
       diff = compare_by_line_word( src_doc, dst_doc )
       overriding_tags = {
         :start_common => '',
@@ -197,8 +197,8 @@ module Hiki
     end
 
     def word_diff_text( src, dst, digest = false )
-      src_doc = Document.new( src, 'EUC-JP' )
-      dst_doc = Document.new( dst, 'EUC-JP' )
+      src_doc = Document.new( src, @charset)
+      dst_doc = Document.new( dst, @charset)
       diff = compare_by_line_word( src_doc, dst_doc )
       if digest
         return View.new( diff, src.encoding, src.eol ).to_wdiff_digest({}, false).join.gsub( %r|\n\+\}|, "+}\n" )
