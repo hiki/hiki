@@ -15,6 +15,7 @@ class TMarshal_Unit_Tests < Test::Unit::TestCase
     @t3 = "123\n456\ndef\n"
     @t4 = "こんにちは、私の名前はわたなべです。\n私はJust Another Ruby Porterです。"
     @t5 = "こんばんは、私の名前はまつもとです。\nRubyを作ったのは私です。私はRuby Hackerです。"
+    @conf = Object.new
   end
 
   def test_word_diff_html
@@ -56,7 +57,6 @@ class TMarshal_Unit_Tests < Test::Unit::TestCase
     error = Object.new
     mock(error).class.returns("Hiki::PluginError")
     mock(error).message.returns("Plugin Error")
-    @conf = Object.new
     mock(@conf).plugin_debug.returns(false)
     assert_equal("<strong>Hiki::PluginError (Plugin Error): do_something</strong><br>",
                  plugin_error("do_something", error))
@@ -67,12 +67,31 @@ class TMarshal_Unit_Tests < Test::Unit::TestCase
     mock(error).class.returns("Hiki::PluginError")
     mock(error).message.returns("Plugin Error")
     mock(error).backtrace.returns(["backtrace1", "backtrace2", "backtrace3"])
-    @conf = Object.new
     mock(@conf).plugin_debug.returns(true)
     assert_equal(<<STR.chomp, plugin_error("do_something", error))
 <strong>Hiki::PluginError (Plugin Error): do_something</strong><br><strong>backtrace1<br>
 backtrace2<br>
 backtrace3</strong>
 STR
+  end
+
+  def test_cmdstr
+    assert_equal("?c=hoge;fuga", cmdstr("hoge", "fuga"))
+  end
+
+  def test_title
+    mock(@conf).site_name.returns("<TestSite>")
+    assert_equal("&lt;TestSite&gt; - FrontPage", title("FrontPage"))
+  end
+
+  def test_view_title
+    mock(@conf).cgi_name.returns("hiki.cgi")
+    assert_equal(%Q!<a href="hiki.cgi?c=search;key=FrontPage">FrontPage</a>!, view_title("FrontPage"))
+  end
+
+  def test_format_date
+    mock(@conf).msg_time_format.returns("%Y-%m-%d #DAY# %H:%M:%S")
+    mock(@conf).msg_day.returns(%w(日 月 火 水 木 金 土))
+    assert_equal("2011-01-01 (土) 01:02:03", format_date(Time.new(2011, 1, 1, 1, 2, 3)))
   end
 end
