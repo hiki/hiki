@@ -306,48 +306,67 @@ EOS
       end
     end
 
-    def euc_to_utf8(str)
-      if NKF.const_defined?(:UTF8)
-        return NKF.nkf('-m0 -w', str)
-      else
-        begin
-          require 'uconv'
-        rescue LoadError
+    if Object.const_defined?(:Encoding)
+      # TODO remove this method in future release
+      def euc_to_utf8(str)
+        str.encode("UTF-8", "EUC-JP")
+      end
+
+      # TODO remove this method in future release
+      def utf8_to_euc(str)
+        str.encode("EUC-JP", "UTF-8")
+      end
+
+      # TODO remove this method in future release
+      def to_native(str, charset=nil)
+        str.encode(@charset, charset)
+      end
+    else
+      # TODO remove this method in future release
+      def euc_to_utf8(str)
+        if NKF.const_defined?(:UTF8)
+          return NKF.nkf('-m0 -w', str)
+        else
+          begin
+            require 'uconv'
+          rescue LoadError
             raise "Please update to Ruby >= 1.8.2, or install either uconv or rbuconv."
+          end
+          return Uconv.euctou8(str)
         end
-        return Uconv.euctou8(str)
       end
-    end
 
-    def utf8_to_euc(str)
-      if NKF.const_defined?(:UTF8)
-        return NKF.nkf('-m0 -e', str)
-      else
+      # TODO remove this method in future release
+      def utf8_to_euc(str)
+        if NKF.const_defined?(:UTF8)
+          return NKF.nkf('-m0 -e', str)
+        else
+          begin
+            require 'uconv'
+          rescue LoadError
+            raise "Please update to Ruby >= 1.8.2, or install either uconv or rbuconv."
+          end
+          return Uconv.u8toeuc(str)
+        end
+      end
+
+      # TODO remove this method in future release
+      def to_native(str, charset=nil)
+        # XXX to_charset will be 'utf-8' in the future version
         begin
-          require 'uconv'
-        rescue LoadError
-          raise "Please update to Ruby >= 1.8.2, or install either uconv or rbuconv."
-        end
-        return Uconv.u8toeuc(str)
-      end
-    end
-
-    def to_native(str, charset=nil)
-      # XXX to_charset will be 'utf-8' in the future version
-      begin
-        Iconv.conv(@charset, charset || 'utf-8', str)
-      rescue
-        from = case charset
-               when /^utf-8$/i
-                 'W'
-               when /^shift_jis/i
-                 'S'
-               when /^EUC-JP/i
-                 'E'
-               else
-                 ''
-               end
-        to = case @charset
+          Iconv.conv(@charset, charset || 'utf-8', str)
+        rescue
+          from = case charset
+                 when /^utf-8$/i
+                   'W'
+                 when /^shift_jis/i
+                   'S'
+                 when /^EUC-JP/i
+                   'E'
+                 else
+                   ''
+                 end
+          to = case @charset
                when /^utf-8$/i
                  'w'
                when /^shift_jis/i
@@ -357,7 +376,8 @@ EOS
                else
                  'e' # XXX what should we use?
                end
-        NKF.nkf("-m0 -#{from}#{to}", str)
+          NKF.nkf("-m0 -#{from}#{to}", str)
+        end
       end
     end
 

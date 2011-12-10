@@ -33,12 +33,22 @@ class TMarshal_Unit_Tests < Test::Unit::TestCase
   end
 
   def test_euc_to_utf8
-    assert_equal( "\343\201\273\343\201\222", euc_to_utf8( 'ほげ' ) )
-    assert_equal( "\343\200\234", euc_to_utf8( '〜' ) )
+    omit("do not use this method with Ruby1.9") if Object.const_defined?(:Encoding)
+    hoge_euc = "\xA4\xDB\xA4\xB2"
+    hoge_utf8 = "ほげ"
+    fullwidth_wave_euc = "\xA1\xC1"
+    fullwidth_wave_utf8 = "〜"
+    assert_equal(hoge_utf8, euc_to_utf8(hoge_euc))
+    assert_equal(fullwidth_wave_utf8, euc_to_utf8(fullwidth_wave_euc))
   end
 
   def test_utf8_to_euc
-    assert_equal( 'ほげ', utf8_to_euc( "\343\201\273\343\201\222" ) )
-    assert_equal( '〜', utf8_to_euc( "\343\200\234" ) )
+    omit("do not use this method with Ruby1.9") if Object.const_defined?(:Encoding)
+    hoge_euc = "\xA4\xDB\xA4\xB2"
+    hoge_utf8 = "ほげ"
+    fullwidth_wave_euc = "\xA1\xC1"
+    fullwidth_wave_utf8 = "〜"
+    assert_equal(hoge_euc, utf8_to_euc(hoge_utf8))
+    assert_equal(fullwidth_wave_euc, utf8_to_euc(fullwidth_wave_utf8))
   end
 end
