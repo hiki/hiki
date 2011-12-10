@@ -51,4 +51,28 @@ class TMarshal_Unit_Tests < Test::Unit::TestCase
     assert_equal(hoge_euc, utf8_to_euc(hoge_utf8))
     assert_equal(fullwidth_wave_euc, utf8_to_euc(fullwidth_wave_utf8))
   end
+
+  def test_plugin_error
+    error = Object.new
+    mock(error).class.returns("Hiki::PluginError")
+    mock(error).message.returns("Plugin Error")
+    @conf = Object.new
+    mock(@conf).plugin_debug.returns(false)
+    assert_equal("<strong>Hiki::PluginError (Plugin Error): do_something</strong><br>",
+                 plugin_error("do_something", error))
+  end
+
+  def test_plugin_error_with_debug
+    error = Object.new
+    mock(error).class.returns("Hiki::PluginError")
+    mock(error).message.returns("Plugin Error")
+    mock(error).backtrace.returns(["backtrace1", "backtrace2", "backtrace3"])
+    @conf = Object.new
+    mock(@conf).plugin_debug.returns(true)
+    assert_equal(<<STR.chomp, plugin_error("do_something", error))
+<strong>Hiki::PluginError (Plugin Error): do_something</strong><br><strong>backtrace1<br>
+backtrace2<br>
+backtrace3</strong>
+STR
+  end
 end
