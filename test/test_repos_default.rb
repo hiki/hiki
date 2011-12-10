@@ -41,5 +41,5 @@ class Repos_Default_Tests < Test::Unit::TestCase
       [1, @now.localtime.strftime('%Y/%m/%d %H:%M:%S'), '', 'backup']
     ]
     assert_equal(revs, @repos.revisions(@page_name))
-  end  
+  end
 end
