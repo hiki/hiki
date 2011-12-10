@@ -94,4 +94,24 @@ STR
     mock(@conf).msg_day.returns(%w(日 月 火 水 木 金 土))
     assert_equal("2011-01-01 (土) 01:02:03", format_date(Time.new(2011, 1, 1, 1, 2, 3)))
   end
+
+  def test_escape
+    expected = [
+                "%E3%81%82%E3%81%84%E3%81%86%E3%81%88%E3%81%8A",
+                "%E3%83%95%E3%83%AD%E3%83%B3%E3%83%88%E3%83%9A%E3%83%BC%E3%82%B8",
+                "%A4%A2%A4%A4%A4%A6%A4%A8%A4%AA",
+                "%A5%D5%A5%ED%A5%F3%A5%C8%A5%DA%A1%BC%A5%B8",
+                "%82%A0%82%A2%82%A4%82%A6%82%A8",
+                "%83%74%83%8D%83%93%83%67%83%79%81%5B%83%57",
+               ]
+    actual = [
+              "あいうえお",
+              "フロントページ",
+              NKF.nkf("-m0 -We", "あいうえお"),
+              NKF.nkf("-m0 -We", "フロントページ"),
+              NKF.nkf("-m0 -Ws", "あいうえお"),
+              NKF.nkf("-m0 -Ws", "フロントページ"),
+             ]
+    assert_equal(expected, actual.map{|v| escape(v) })
+  end
 end
