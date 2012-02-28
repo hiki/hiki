@@ -50,6 +50,15 @@ module Hiki
       File.open("#{@root}/#{wiki.untaint}/#{escape(page).untaint}/.removed", 'w'){|f|}
     end
 
+    def rename(old_page, new_page)
+      wiki = File.read("#{@data_path}/text/.wiki")
+      old_dir = "#{@root}/#{wiki.untaint}/#{escape(old_page).untaint}"
+      new_dir = "#{@root}/#{wiki.untaint}/#{escape(new_page).untaint}"
+      # TODO raise custom exception
+      raise if File.exist?(new_dir)
+      FileUtils.mv(old_dir, new_dir)
+    end
+
     def get_revision(page, revision)
       wiki = File.read("#{@data_path}/text/.wiki")
       File.read("#{@root}/#{wiki.untaint}/#{escape(page).untaint}/#{revision.to_i}")

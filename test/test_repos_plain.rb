@@ -68,6 +68,38 @@ class Repos_Plain_Tests < Test::Unit::TestCase
     assert_equal(expected, @repos.revisions('HogeHoge'))
   end
 
+  def test_rename
+    FileUtils.mkdir("#{@root}/#{@wiki}/HogeHoge")
+    FileUtils.mkdir("#{@root}/#{@wiki}/FooBar")
+    mkfile("#{@root}/#{@wiki}/HogeHoge/1", 'hogehoge')
+    mkfile("#{@root}/#{@wiki}/FooBar/1", 'foobar')
+
+    mkfile("#{@data_path}/text/HogeHoge", 'hogehoge')
+    mkfile("#{@data_path}/text/FooBar", 'foobar new')
+
+    @repos.commit('FooBar')
+    @repos.rename("FooBar", "FooBarBaz")
+    assert_equal('foobar', File.read("#{@root}/#{@wiki}/FooBarBaz/1"))
+    assert_equal('foobar new', File.read("#{@root}/#{@wiki}/FooBarBaz/2"))
+  end
+
+  def test_rename_new_page_already_exist
+    FileUtils.mkdir("#{@root}/#{@wiki}/HogeHoge")
+    FileUtils.mkdir("#{@root}/#{@wiki}/FooBar")
+    mkfile("#{@root}/#{@wiki}/HogeHoge/1", 'hogehoge')
+    mkfile("#{@root}/#{@wiki}/FooBar/1", 'foobar')
+
+    mkfile("#{@data_path}/text/HogeHoge", 'hogehoge')
+    mkfile("#{@data_path}/text/FooBar", 'foobar new')
+
+    @repos.commit('FooBar')
+    assert_raise(RuntimeError) do
+      @repos.rename("FooBar", "HogeHoge")
+    end
+
+    assert_equal('hogehoge', File.read("#{@root}/#{@wiki}/HogeHoge/1"))
+  end
+
   private
   def mkfile(file, contents)
     File.open(file, 'w') do |f|

@@ -43,6 +43,10 @@ module Hiki
       raise "Please override this function."
     end
 
+    def rename(old_page, new_page)
+      raise "Please override this function."
+    end
+
     def get_revision(page, revision)
       raise "Please override this function."
     end
@@ -81,6 +85,9 @@ module Hiki
     end
 
     def delete(page, log = nil)
+    end
+
+    def rename(old_page, new_page)
     end
 
     def get_revision(page, revision)
