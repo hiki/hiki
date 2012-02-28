@@ -23,6 +23,10 @@ module Hiki
       end
     end
 
+    def rename(old_page, new_page)
+      raise NotImplementedError
+    end
+
     def get_revision(page, revision)
       r = ""
       Dir.chdir("#{@data_path}/text") do
