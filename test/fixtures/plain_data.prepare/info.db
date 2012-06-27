@@ -1,0 +1,42 @@
+{
+"FrontPage" => {
+:count => 0,
+:freeze => false,
+:keyword => [
+],
+:last_modified => Time.at(1318683741),
+:references => [
+],
+:title => "",
+},
+"InterWikiName" => {
+:count => 0,
+:freeze => false,
+:keyword => [
+],
+:last_modified => Time.at(1318683573),
+:references => [
+],
+:title => "",
+},
+"SideMenu" => {
+:count => 0,
+:freeze => false,
+:keyword => [
+],
+:last_modified => Time.at(1318683741),
+:references => [
+],
+:title => "",
+},
+"TextFormattingRules" => {
+:count => 0,
+:freeze => false,
+:keyword => [
+],
+:last_modified => Time.at(1318683741),
+:references => [
+],
+:title => "",
+},
+}
