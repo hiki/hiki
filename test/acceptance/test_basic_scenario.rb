@@ -7,16 +7,12 @@ require "fileutils"
 module BasicScenario
   def test_title
     visit("/")
-    within("h1") do
-      assert_equal("FrontPage", text)
-    end
+    assert_title("FrontPage")
   end
 
   def test_get_create
     visit("/?c=create")
-    within("h1.header") do
-      assert_equal("Test Wiki - Create", text)
-    end
+    assert_title("Test Wiki - Create")
   end
 
   def test_create_new_page
@@ -27,9 +23,7 @@ module BasicScenario
     click_button("Save")
     click_link("Click here!")
 
-    within("h1.header") do
-      assert_equal("NewPage", text)
-    end
+    assert_title("NewPage")
     within(".body .section p") do
       assert_equal("Test Test", text)
     end
@@ -60,9 +54,7 @@ TEXT
     fill_in("contents", :with => "FrontPage contents")
     click_button("Save")
     click_link("Click here!")
-    within("h1.header") do
-      assert_equal("FrontPage", text)
-    end
+    assert_title("FrontPage")
     within(".body .section p") do
       assert_equal("FrontPage contents", text)
     end
