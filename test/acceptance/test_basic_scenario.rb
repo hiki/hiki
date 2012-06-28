@@ -101,3 +101,33 @@ class TestGitRepository < Test::Unit::TestCase
     rm_rf(@wiki_data_path)
   end
 end
+
+class TestSVNRepository < Test::Unit::TestCase
+  include Capybara::DSL
+  include TestHelper
+  include BasicScenario
+  include FileUtils
+
+  def setup
+    @wiki_data_path = fixtures_dir + "svn_data"
+    @wiki_repo_path = fixtures_dir + "svn_repo"
+    @wiki_base_data_path = fixtures_dir + "plain_data.prepare"
+    cp_r(@wiki_base_data_path, @wiki_data_path)
+    system("svnadmin", "create", @wiki_repo_path.expand_path.to_s)
+    system("svn", "import", "--quiet", "-m", "'Import initial data'",
+           "#{(@wiki_base_data_path + 'text').expand_path}",
+           "file://#{@wiki_repo_path.expand_path}")
+    Dir.chdir(@wiki_data_path.expand_path) do
+      rm_rf(@wiki_data_path + "text")
+      system("svn", "checkout", "--quiet",
+             "file://#{@wiki_repo_path.expand_path}", "#{@wiki_data_path + 'text'}")
+    end
+    config_path = (fixtures_dir + "hikiconf_svn.rb").expand_path
+    Capybara.app = Hiki::App.new(config_path)
+  end
+
+  def teardown
+    rm_rf(@wiki_data_path)
+    rm_rf(@wiki_repo_path)
+  end
+end
