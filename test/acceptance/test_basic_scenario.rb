@@ -68,13 +68,14 @@ class TestPlainTextRepository < Test::Unit::TestCase
   include FileUtils
 
   def setup
-    cp_r(fixtures_dir + "plain_data.prepare", fixtures_dir + "plain_data")
+    @wiki_data_path = fixtures_dir + "plain_data"
+    cp_r(fixtures_dir + "plain_data.prepare", @wiki_data_path)
     config_path = (fixtures_dir + "hikiconf_plain.rb").expand_path
     Capybara.app = Hiki::App.new(config_path)
   end
 
   def teardown
-    rm_rf(fixtures_dir + "plain_data")
+    rm_rf(@wiki_data_path)
   end
 end
 
