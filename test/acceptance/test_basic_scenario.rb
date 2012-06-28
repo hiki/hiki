@@ -78,3 +78,25 @@ class TestPlainTextRepository < Test::Unit::TestCase
   end
 end
 
+class TestGitRepository < Test::Unit::TestCase
+  include Capybara::DSL
+  include TestHelper
+  include BasicScenario
+  include FileUtils
+
+  def setup
+    @wiki_data_path = fixtures_dir + "git_data"
+    cp_r(fixtures_dir + "plain_data.prepare", @wiki_data_path)
+    Dir.chdir(@wiki_data_path.expand_path) do
+      system("git", "init", "--quiet", ".")
+      system("git", "add", "text")
+      system("git", "commit", "--quiet", "-m", "'Initial commit'")
+    end
+    config_path = (fixtures_dir + "hikiconf_git.rb").expand_path
+    Capybara.app = Hiki::App.new(config_path)
+  end
+
+  def teardown
+    rm_rf(@wiki_data_path)
+  end
+end
