@@ -80,6 +80,7 @@ module Hiki
 
     def commit(page, msg = default_msg)
       Dir.chdir("#{@data_path}/text") do
+        # FIXME do not add pages which is already under version control
         system("svn add -q -- #{escape(page)}".untaint)
         system("svn propdel -q svn:mime-type -- #{escape(page)}".untaint)
         system("svn ci -q --force-log -m \"#{msg}\"".untaint)
