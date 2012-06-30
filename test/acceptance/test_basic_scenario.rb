@@ -86,6 +86,7 @@ class TestGitRepository < Test::Unit::TestCase
   include FileUtils
 
   def setup
+    omit "couldn't find git." unless system("which git > /dev/null")
     @wiki_data_path = fixtures_dir + "git_data"
     cp_r(fixtures_dir + "plain_data.prepare", @wiki_data_path)
     Dir.chdir(@wiki_data_path.expand_path) do
@@ -109,6 +110,7 @@ class TestHgRepository < Test::Unit::TestCase
   include FileUtils
 
   def setup
+    omit "couldn't find hg." unless system("which hg > /dev/null")
     @wiki_data_path = fixtures_dir + "hg_data"
     cp_r(fixtures_dir + "plain_data.prepare", @wiki_data_path)
     Dir.chdir(@wiki_data_path.expand_path) do
@@ -132,6 +134,7 @@ class TestSVNRepository < Test::Unit::TestCase
   include FileUtils
 
   def setup
+    omit "couldn't find svn." unless system("which svn > /dev/null")
     @wiki_data_path = fixtures_dir + "svn_data"
     @wiki_repo_path = fixtures_dir + "svn_repo"
     @wiki_base_data_path = fixtures_dir + "plain_data.prepare"
