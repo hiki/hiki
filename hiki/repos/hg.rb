@@ -41,11 +41,14 @@ module Hiki
       require 'time'
       all_log = ''
       revs = []
+      original_lang = ENV["LANG"]
+      ENV["LANG"] = "C"
       Dir.chdir("#{@data_path}/text") do
         open("|hg log #{escape(page).untaint}") do |f|
           all_log = f.read
         end
       end
+      ENV["LANG"] = original_lang
       all_log.split(/\n\n(?=changeset:\s+\d+:)/).each do |l|
         rev = l[/^changeset:\s+(\d+):.*$/, 1].to_i+1
         date = Time.parse(l[/^date:\s+(.*)$/, 1]).localtime.strftime('%Y/%m/%d %H:%M:%S')
