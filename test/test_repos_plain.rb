@@ -93,7 +93,7 @@ class Repos_Plain_Tests < Test::Unit::TestCase
     mkfile("#{@data_path}/text/FooBar", 'foobar new')
 
     @repos.commit('FooBar')
-    assert_raise(RuntimeError) do
+    assert_raise(ArgumentError) do
       @repos.rename("FooBar", "HogeHoge")
     end
 

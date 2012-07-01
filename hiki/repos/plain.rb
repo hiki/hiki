@@ -54,8 +54,7 @@ module Hiki
       wiki = File.read("#{@data_path}/text/.wiki")
       old_dir = "#{@root}/#{wiki.untaint}/#{escape(old_page).untaint}"
       new_dir = "#{@root}/#{wiki.untaint}/#{escape(new_page).untaint}"
-      # TODO raise custom exception
-      raise if File.exist?(new_dir)
+      raise ArgumentError, "#{new_page} has been already exist." if File.exist?(new_dir)
       FileUtils.mv(old_dir, new_dir)
     end
 
