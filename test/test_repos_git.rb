@@ -15,7 +15,7 @@ class Repos_Git_Tests < Test::Unit::TestCase
     FileUtils.mkdir_p(@text_dir)
     omit "coundn't find git." unless system("which git > /dev/null")
     Dir.chdir(@text_dir) do
-      git("init")
+      git("init", "-q")
     end
   end
 
