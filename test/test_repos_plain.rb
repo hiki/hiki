@@ -72,12 +72,9 @@ class Repos_Plain_Tests < Test::Unit::TestCase
   end
 
   def test_rename
-    FileUtils.mkdir("#{@root}/#{@wiki}/HogeHoge")
     FileUtils.mkdir("#{@root}/#{@wiki}/FooBar")
-    mkfile("#{@root}/#{@wiki}/HogeHoge/1", 'hogehoge')
     mkfile("#{@root}/#{@wiki}/FooBar/1", 'foobar')
 
-    mkfile("#{@data_path}/text/HogeHoge", 'hogehoge')
     mkfile("#{@data_path}/text/FooBar", 'foobar new')
 
     @repos.commit('FooBar')
@@ -87,12 +84,9 @@ class Repos_Plain_Tests < Test::Unit::TestCase
   end
 
   def test_rename_multibyte
-    FileUtils.mkdir("#{@root}/#{@wiki}/#{escape("ほげほげ")}")
     FileUtils.mkdir("#{@root}/#{@wiki}/#{escape("ふーばー")}")
-    mkfile("#{@root}/#{@wiki}/#{escape("ほげほげ")}/1", 'hogehoge')
     mkfile("#{@root}/#{@wiki}/#{escape("ふーばー")}/1", 'foobar')
 
-    mkfile("#{@data_path}/text/#{escape("ほげほげ")}", 'hogehoge')
     mkfile("#{@data_path}/text/#{escape("ふーばー")}", 'foobar new')
 
     @repos.commit('ふーばー')
