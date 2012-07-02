@@ -6,16 +6,18 @@ module Hiki
     include Hiki::Util
 
     def commit(page, msg = default_msg)
+      escaped_page = escape(page).untaint
       Dir.chdir("#{@data_path}/text") do
-        system("git add -- #{escape(page)}".untaint)
-        system("git commit -q -m \"#{msg}\" -- #{escape(page)}".untaint)
+        system("git add -- #{escaped_page}".untaint)
+        system("git commit -q -m \"#{msg.untaint}\" -- #{escaped_page}")
       end
     end
 
     def delete(page, msg = default_msg)
+      escaped_page = escape(page).untaint
       Dir.chdir("#{@data_path}/text") do
-        system("git rm -q -- #{escape(page)}".untaint)
-        system("git commit -q -m \"#{msg}\" #{escape(page)}".untaint)
+        system("git rm -q -- #{escaped_page}")
+        system("git commit -q -m \"#{msg.untaint}\" #{escaped_page}")
       end
     end
 
