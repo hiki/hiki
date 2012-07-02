@@ -20,8 +20,8 @@ module Hiki
     end
 
     def rename(old_page, new_page)
-      old_page = old_page.untaint
-      new_page = new_page.untaint
+      old_page = escape(old_page.untaint)
+      new_page = escape(new_page.untaint)
       Dir.chdir("#{@data_path}/text") do
         raise ArgumentError, "#{new_page} has been already exist." if File.exist?(new_page)
         system("git", "mv", old_page, new_page)

@@ -1,9 +1,12 @@
+# -*- coding: utf-8 -*-
 require 'test/unit'
 require 'fileutils'
 require 'hiki/repos/git'
 require 'hiki/util'
 
 class Repos_Git_Tests < Test::Unit::TestCase
+  include Hiki::Util
+
   def setup
     @tmp_dir = File.join(File.dirname(__FILE__), "tmp")
     @root = "#{@tmp_dir}/root"
@@ -87,6 +90,13 @@ class Repos_Git_Tests < Test::Unit::TestCase
     @repos.commit("HogeHoge")
     @repos.rename("HogeHoge", "FooBar")
     assert_equal("hogehoge1\n", read("FooBar"))
+  end
+
+  def test_rename_multibyte
+    write(escape("ほげほげ"), "hogehoge1\n")
+    @repos.commit("ほげほげ")
+    @repos.rename("ほげほげ", "ふーばー")
+    assert_equal("hogehoge1\n", read(escape("ふーばー")))
   end
 
   def test_rename_new_page_already_exist
