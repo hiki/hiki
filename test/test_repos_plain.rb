@@ -1,9 +1,12 @@
+# -*- coding: utf-8 -*-
 require 'test/unit'
 require 'fileutils'
 require 'hiki/repos/plain'
 require 'hiki/util'
 
 class Repos_Plain_Tests < Test::Unit::TestCase
+  include Hiki::Util
+
   def setup
     @tmpdir = '__tmp-wikitest'
     @root = "#{@tmpdir}/root"
@@ -30,7 +33,7 @@ class Repos_Plain_Tests < Test::Unit::TestCase
     mkfile("#{@data_path}/text/FooBar", 'foobar new')
 
     @repos.commit('FooBar')
-    
+
     assert_equal('foobar', File.read("#{@root}/#{@wiki}/FooBar/1"))
     assert_equal('foobar new', File.read("#{@root}/#{@wiki}/FooBar/2"))
   end
@@ -81,6 +84,21 @@ class Repos_Plain_Tests < Test::Unit::TestCase
     @repos.rename("FooBar", "FooBarBaz")
     assert_equal('foobar', File.read("#{@root}/#{@wiki}/FooBarBaz/1"))
     assert_equal('foobar new', File.read("#{@root}/#{@wiki}/FooBarBaz/2"))
+  end
+
+  def test_rename_multibyte
+    FileUtils.mkdir("#{@root}/#{@wiki}/#{escape("ほげほげ")}")
+    FileUtils.mkdir("#{@root}/#{@wiki}/#{escape("ふーばー")}")
+    mkfile("#{@root}/#{@wiki}/#{escape("ほげほげ")}/1", 'hogehoge')
+    mkfile("#{@root}/#{@wiki}/#{escape("ふーばー")}/1", 'foobar')
+
+    mkfile("#{@data_path}/text/#{escape("ほげほげ")}", 'hogehoge')
+    mkfile("#{@data_path}/text/#{escape("ふーばー")}", 'foobar new')
+
+    @repos.commit('ふーばー')
+    @repos.rename("ふーばー", "ふーばーばず")
+    assert_equal('foobar', File.read("#{@root}/#{@wiki}/#{escape("ふーばーばず")}/1"))
+    assert_equal('foobar new', File.read("#{@root}/#{@wiki}/#{escape("ふーばーばず")}/2"))
   end
 
   def test_rename_new_page_already_exist
