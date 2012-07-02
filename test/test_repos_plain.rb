@@ -24,8 +24,8 @@ class Repos_Plain_Tests < Test::Unit::TestCase
   end
 
   def test_commit
-    FileUtils.mkdir("#{@root}/#{@wiki}/HogeHoge")
-    FileUtils.mkdir("#{@root}/#{@wiki}/FooBar")
+    FileUtils.mkdir_p("#{@root}/#{@wiki}/HogeHoge")
+    FileUtils.mkdir_p("#{@root}/#{@wiki}/FooBar")
     mkfile("#{@root}/#{@wiki}/HogeHoge/1", 'hogehoge')
     mkfile("#{@root}/#{@wiki}/FooBar/1", 'foobar')
 
@@ -39,8 +39,8 @@ class Repos_Plain_Tests < Test::Unit::TestCase
   end
 
   def test_get_revision
-    FileUtils.mkdir("#{@root}/#{@wiki}/HogeHoge")
-    FileUtils.mkdir("#{@root}/#{@wiki}/FooBar")
+    FileUtils.mkdir_p("#{@root}/#{@wiki}/HogeHoge")
+    FileUtils.mkdir_p("#{@root}/#{@wiki}/FooBar")
     mkfile("#{@root}/#{@wiki}/HogeHoge/1", 'hogehoge1')
     mkfile("#{@root}/#{@wiki}/FooBar/1", 'foobar1')
 
@@ -56,7 +56,7 @@ class Repos_Plain_Tests < Test::Unit::TestCase
   end
 
   def test_revisions
-    FileUtils.mkdir("#{@root}/#{@wiki}/HogeHoge")
+    FileUtils.mkdir_p("#{@root}/#{@wiki}/HogeHoge")
     mkfile("#{@root}/#{@wiki}/HogeHoge/1", 'hogehoge1')
     mkfile("#{@root}/#{@wiki}/HogeHoge/2", 'hogehoge2')
     mkfile("#{@root}/#{@wiki}/HogeHoge/3", 'hogehoge3')
@@ -72,7 +72,7 @@ class Repos_Plain_Tests < Test::Unit::TestCase
   end
 
   def test_rename
-    FileUtils.mkdir("#{@root}/#{@wiki}/FooBar")
+    FileUtils.mkdir_p("#{@root}/#{@wiki}/FooBar")
     mkfile("#{@root}/#{@wiki}/FooBar/1", 'foobar')
 
     mkfile("#{@data_path}/text/FooBar", 'foobar new')
@@ -84,7 +84,7 @@ class Repos_Plain_Tests < Test::Unit::TestCase
   end
 
   def test_rename_multibyte
-    FileUtils.mkdir("#{@root}/#{@wiki}/#{escape("ふーばー")}")
+    FileUtils.mkdir_p("#{@root}/#{@wiki}/#{escape("ふーばー")}")
     mkfile("#{@root}/#{@wiki}/#{escape("ふーばー")}/1", 'foobar')
 
     mkfile("#{@data_path}/text/#{escape("ふーばー")}", 'foobar new')
@@ -96,8 +96,8 @@ class Repos_Plain_Tests < Test::Unit::TestCase
   end
 
   def test_rename_new_page_already_exist
-    FileUtils.mkdir("#{@root}/#{@wiki}/HogeHoge")
-    FileUtils.mkdir("#{@root}/#{@wiki}/FooBar")
+    FileUtils.mkdir_p("#{@root}/#{@wiki}/HogeHoge")
+    FileUtils.mkdir_p("#{@root}/#{@wiki}/FooBar")
     mkfile("#{@root}/#{@wiki}/HogeHoge/1", 'hogehoge')
     mkfile("#{@root}/#{@wiki}/FooBar/1", 'foobar')
 
