@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # $Id: test_repos_hg.rb,v 1.1 2008-08-06 10:48:25 hiraku Exp $
 # Copyright (C) 2008, KURODA Hiraku <hiraku{@}hinet.mydns.jp>
 # This code is modified from "test/test_repos_git.rb" by Kouhei Sutou
@@ -9,6 +10,8 @@ require 'hiki/repos/hg'
 require 'hiki/util'
 
 class Repos_Hg_Tests < Test::Unit::TestCase
+  include Hiki::Util
+
   def setup
     @tmp_dir = File.join(File.dirname(__FILE__), "tmp")
     @root = "#{@tmp_dir}/root"
@@ -76,6 +79,30 @@ class Repos_Hg_Tests < Test::Unit::TestCase
                ]
 
     assert_equal(expected, @repos.revisions('HogeHoge'))
+  end
+
+  def test_rename
+    write("HogeHoge", "hogehoge1\n")
+    @repos.commit("HogeHoge")
+    @repos.rename("HogeHoge", "FooBar")
+    assert_equal("hogehoge1\n", read("FooBar"))
+  end
+
+  def test_rename_multibyte
+    write(escape("ほげほげ"), "hogehoge1\n")
+    @repos.commit("ほげほげ")
+    @repos.rename("ほげほげ", "ふーばー")
+    assert_equal("hogehoge1\n", read(escape("ふーばー")))
+  end
+
+  def test_rename_new_page_already_exist
+    write("HogeHoge", "hogehoge1\n")
+    @repos.commit("HogeHoge")
+    write("FooBar", "foobar\n")
+    @repos.commit("FooBar")
+    assert_raise(ArgumentError) do
+      @repos.rename("HogeHoge", "FooBar")
+    end
   end
 
   private
