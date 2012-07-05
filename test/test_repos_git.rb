@@ -117,20 +117,4 @@ class Repos_Git_Tests < Test::Unit::TestCase
     raise result unless $?.success?
     result
   end
-
-  def file_name(page)
-    "#{@data_dir}/text/#{page}"
-  end
-
-  def write(page, content)
-    File.open(file_name(page), "wb") do |f|
-      f.print(content)
-    end
-  end
-
-  def read(page)
-    File.open(file_name(page), "rb") do |f|
-      f.read
-    end
-  end
 end

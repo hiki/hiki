@@ -19,4 +19,20 @@ module TestHelper
   def check_command(command)
     omit "couldn't find #{command}" unless system("which #{command} > /dev/null")
   end
+
+  def file_name(page)
+    File.join(@date_dir, "text", page)
+  end
+
+  def write(page, content)
+    File.open(file_name(page), "wb") do |f|
+      f.print(content)
+    end
+  end
+
+  def read(page)
+    File.open(file_name(page), "rb") do |f|
+      f.read
+    end
+  end
 end
