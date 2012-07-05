@@ -63,20 +63,21 @@ class Repos_Hg_Tests < Test::Unit::TestCase
   end
 
   def test_revisions
-    rev1 = rev2 = rev3 = nil
     write("HogeHoge", 'hogehoge1')
     Dir.chdir(@text_dir) {hg("add", "HogeHoge")}
     Dir.chdir(@text_dir) {hg("commit", "-m", "First", "HogeHoge")}
+    modified1 = Time.now.localtime.strftime('%Y/%m/%d %H:%M:%S')
     write("HogeHoge", 'hogehoge2')
     Dir.chdir(@text_dir) {hg("commit", "-m", "Second", "HogeHoge")}
+    modified2 = Time.now.localtime.strftime('%Y/%m/%d %H:%M:%S')
     write("HogeHoge", 'hogehoge3')
     Dir.chdir(@text_dir) {hg("commit", "-m", "Third", "HogeHoge")}
+    modified3 = Time.now.localtime.strftime('%Y/%m/%d %H:%M:%S')
 
-    modified = Time.now.localtime.strftime('%Y/%m/%d %H:%M:%S')
     expected = [
-                [3, modified, '', 'Third'],
-                [2, modified, '', 'Second'],
-                [1, modified, '', 'First'],
+                [3, modified3, '', 'Third'],
+                [2, modified2, '', 'Second'],
+                [1, modified1, '', 'First'],
                ]
 
     assert_equal(expected, @repos.revisions('HogeHoge'))
