@@ -6,6 +6,7 @@ require 'hiki/util'
 
 class Repos_Git_Tests < Test::Unit::TestCase
   include Hiki::Util
+  include TestHelper
 
   def setup
     @tmp_dir = File.join(File.dirname(__FILE__), "tmp")
@@ -16,7 +17,7 @@ class Repos_Git_Tests < Test::Unit::TestCase
     @repos = Hiki::ReposGit.new(@root, @data_dir)
 
     FileUtils.mkdir_p(@text_dir)
-    omit "coundn't find git." unless system("which git > /dev/null")
+    check_command("git")
     Dir.chdir(@text_dir) do
       git("init", "-q")
     end

@@ -11,6 +11,7 @@ require 'hiki/util'
 
 class Repos_Hg_Tests < Test::Unit::TestCase
   include Hiki::Util
+  include TestHelper
 
   def setup
     @tmp_dir = File.join(File.dirname(__FILE__), "tmp")
@@ -21,7 +22,7 @@ class Repos_Hg_Tests < Test::Unit::TestCase
     @repos = Hiki::ReposHg.new(@root, @data_dir)
 
     FileUtils.mkdir_p(@text_dir)
-    omit "couldn't find hg." unless system("which hg > /dev/null")
+    check_command("hg")
     Dir.chdir(@text_dir) do
       hg("init")
     end

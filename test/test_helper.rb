@@ -15,4 +15,8 @@ module TestHelper
       assert_equal(expected, text)
     end
   end
+
+  def check_command(command)
+    omit "couldn't find #{command}" unless system("which #{command} > /dev/null")
+  end
 end
