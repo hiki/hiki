@@ -21,7 +21,7 @@ module TestHelper
   end
 
   def file_name(page)
-    File.join(@date_dir, "text", page)
+    File.join(@data_dir, "text", page)
   end
 
   def write(page, content)
