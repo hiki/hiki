@@ -55,6 +55,19 @@ module Hiki
       raise "Please override this function."
     end
 
+    def pages
+      entries = Dir.entries(File.join(@data_path, "text")).reject{|entry|
+        entry =~ /\A\./ || File.directory?(entry)
+      }.map{|entry| unescape(entry) }
+      if block_given?
+        entries.each do |entry|
+          yield entry
+        end
+      else
+        entries
+      end
+    end
+
     private
 
     def default_msg

@@ -112,6 +112,34 @@ class Repos_Plain_Tests < Test::Unit::TestCase
     assert_equal('hogehoge', File.read("#{@root}/#{@wiki}/HogeHoge/1"))
   end
 
+  def test_pages
+    FileUtils.mkdir_p("#{@root}/#{@wiki}/HogeHoge")
+    FileUtils.mkdir_p("#{@root}/#{@wiki}/FooBar")
+    mkfile("#{@root}/#{@wiki}/HogeHoge/1", 'hogehoge')
+    mkfile("#{@root}/#{@wiki}/FooBar/1", 'foobar')
+
+    mkfile("#{@data_path}/text/HogeHoge", 'hogehoge')
+    mkfile("#{@data_path}/text/FooBar", 'foobar new')
+
+    assert_equal(["HogeHoge", "FooBar"].sort, @repos.pages.sort)
+  end
+
+  def test_pages_with_block
+    FileUtils.mkdir_p("#{@root}/#{@wiki}/HogeHoge")
+    FileUtils.mkdir_p("#{@root}/#{@wiki}/FooBar")
+    mkfile("#{@root}/#{@wiki}/HogeHoge/1", 'hogehoge')
+    mkfile("#{@root}/#{@wiki}/FooBar/1", 'foobar')
+
+    mkfile("#{@data_path}/text/HogeHoge", 'hogehoge')
+    mkfile("#{@data_path}/text/FooBar", 'foobar new')
+
+    actuals = []
+    @repos.pages.each do |page|
+      actuals << page
+    end
+    assert_equal(["HogeHoge", "FooBar"].sort, actuals.sort)
+  end
+
   private
   def mkfile(file, contents)
     File.open(file, 'w') do |f|
