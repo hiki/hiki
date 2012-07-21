@@ -33,7 +33,7 @@ module Hiki
       old_page = escape(old_page.untaint)
       new_page = escape(new_page.untaint)
       Dir.chdir(@text_dir) do
-        raise ArgumentError, "#{new_page} has been already exist." if File.exist?(new_page)
+        raise ArgumentError, "#{new_page} has already existed." if File.exist?(new_page)
         system("git", "mv", old_page, new_page)
         system("git", "commit", "-q", "-m", "'Rename #{old_page} to #{new_page}'")
       end
