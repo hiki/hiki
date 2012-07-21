@@ -45,6 +45,21 @@ class Repos_Git_Tests < Test::Unit::TestCase
     end
   end
 
+  def test_commit_with_content
+    @repos.commit_with_content("FooBar", "foobar")
+    assert_equal("foobar", read("FooBar"))
+    old_hash = nil
+    Dir.chdir(@text_dir) do
+      old_hash = git("hash-object", "FooBar")
+    end
+    @repos.commit_with_content("FooBar", "foobar new")
+    assert_equal("foobar new", read("FooBar"))
+
+    Dir.chdir(@text_dir) do
+      assert_equal("foobar", git("cat-file", "blob", old_hash))
+    end
+  end
+
   def test_get_revision
     rev1 = rev2 = rev3 = nil
     write("HogeHoge", 'hogehoge1')
