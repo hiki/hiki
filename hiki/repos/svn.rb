@@ -79,17 +79,19 @@ module Hiki
     end
 
     def commit(page, msg = default_msg)
+      escaped_page = escape(page).untaint
       Dir.chdir(@text_dir) do
-        found = system("svn status -q -- #{escape(page)} | grep -q #{escape(page)}".untaint)
-        system("svn add -q -- #{escape(page)}".untaint) unless found
-        system("svn propdel -q svn:mime-type -- #{escape(page)}".untaint)
-        system("svn ci -q --force-log -m \"#{msg}\"".untaint)
+        found = system("svn status -q -- #{escaped_page} | grep -q #{escaped_page}")
+        system("svn add -q -- #{escaped_page}") unless found
+        system("svn propdel -q svn:mime-type -- #{escaped_page}")
+        system("svn ci -q --force-log -m \"#{msg}\"")
       end
     end
 
     def delete(page, msg = default_msg)
+      escaped_page = escape(page).untaint
       Dir.chdir(@text_dir) do
-        system("svn remove -q -- #{escape(page)}".untaint)
+        system("svn remove -q -- #{escaped_page}")
         system("svn ci -q --force-log -m \"#{msg}\"".untaint)
       end
     end
@@ -100,8 +102,9 @@ module Hiki
 
     def get_revision(page, revision)
       ret = ''
+      escaped_page = escape(page).untaint
       Dir.chdir(@text_dir) do
-        open("|svn cat -r #{revision.to_i} #{escape(page).untaint}") do |f|
+        open("|svn cat -r #{revision.to_i} #{escaped_page}") do |f|
           ret = f.read
         end
       end
@@ -110,10 +113,11 @@ module Hiki
 
     def revisions(page)
       require 'time'
+      escaped_page = escape(page).untaint
       log = ''
       revs = []
       Dir.chdir(@text_dir) do
-        open("|svn log #{escape(page).untaint}") do |f|
+        open("|svn log #{escaped_page}") do |f|
           log = f.read
         end
       end
