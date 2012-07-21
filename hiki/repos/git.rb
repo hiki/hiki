@@ -7,7 +7,7 @@ module Hiki
 
     def commit(page, msg = default_msg)
       escaped_page = escape(page).untaint
-      Dir.chdir("#{@data_path}/text") do
+      Dir.chdir(@text_dir) do
         system("git add -- #{escaped_page}".untaint)
         system("git commit -q -m \"#{msg.untaint}\" -- #{escaped_page}")
       end
@@ -15,7 +15,7 @@ module Hiki
 
     def delete(page, msg = default_msg)
       escaped_page = escape(page).untaint
-      Dir.chdir("#{@data_path}/text") do
+      Dir.chdir(@text_dir) do
         system("git rm -q -- #{escaped_page}")
         system("git commit -q -m \"#{msg.untaint}\" #{escaped_page}")
       end
@@ -24,7 +24,7 @@ module Hiki
     def rename(old_page, new_page)
       old_page = escape(old_page.untaint)
       new_page = escape(new_page.untaint)
-      Dir.chdir("#{@data_path}/text") do
+      Dir.chdir(@text_dir) do
         raise ArgumentError, "#{new_page} has been already exist." if File.exist?(new_page)
         system("git", "mv", old_page, new_page)
         system("git", "commit", "-q", "-m", "'Rename #{old_page} to #{new_page}'")
@@ -33,7 +33,7 @@ module Hiki
 
     def get_revision(page, revision)
       ret = ''
-      Dir.chdir("#{@data_path}/text") do
+      Dir.chdir(@text_dir) do
         open("|git cat-file blob #{revision}".untaint) do |f|
           ret = f.read
         end
@@ -45,7 +45,7 @@ module Hiki
       require 'time'
       all_log = ''
       revs = []
-      Dir.chdir("#{@data_path}/text") do
+      Dir.chdir(@text_dir) do
         open("|git log --raw -- #{escape(page).untaint}") do |f|
           all_log = f.read
         end

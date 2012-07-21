@@ -33,6 +33,7 @@ module Hiki
     def initialize(root, data_path)
       @root = root
       @data_path = data_path
+      @text_dir = File.join(data_path, "text")
     end
 
     def commit(page, log = nil)
