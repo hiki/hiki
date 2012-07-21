@@ -113,6 +113,30 @@ class Repos_SVN_Tests < Test::Unit::TestCase
     end
   end
 
+  def test_pages
+    write(escape("ほげほげ"), "hogehoge1\n")
+    @repos.commit("ほげほげ")
+    write("FooBar", "foobar\n")
+    @repos.commit("FooBar")
+
+    assert_equal(["ほげほげ", "FooBar"].map{|v| v.force_encoding("binary") }.sort,
+                 @repos.pages.sort)
+  end
+
+  def test_pages_with_block
+    write(escape("ほげほげ"), "hogehoge1\n")
+    @repos.commit("ほげほげ")
+    write("FooBar", "foobar\n")
+    @repos.commit("FooBar")
+
+    actuals = []
+    @repos.pages.each do |page|
+      actuals << page
+    end
+    assert_equal(["ほげほげ", "FooBar"].map{|v| v.force_encoding("binary") }.sort,
+                 actuals.sort)
+  end
+
   private
   def svn(*args)
     args = args.map{|arg| arg.dump }.join(' ')
