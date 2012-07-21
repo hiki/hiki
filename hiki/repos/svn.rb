@@ -79,7 +79,7 @@ module Hiki
     end
 
     def commit(page, msg = default_msg)
-      Dir.chdir("#{@data_path}/text") do
+      Dir.chdir(@text_dir) do
         found = system("svn status -q -- #{escape(page)} | grep -q #{escape(page)}".untaint)
         system("svn add -q -- #{escape(page)}".untaint) unless found
         system("svn propdel -q svn:mime-type -- #{escape(page)}".untaint)
@@ -88,7 +88,7 @@ module Hiki
     end
 
     def delete(page, msg = default_msg)
-      Dir.chdir("#{@data_path}/text") do
+      Dir.chdir(@text_dir) do
         system("svn remove -q -- #{escape(page)}".untaint)
         system("svn ci -q --force-log -m \"#{msg}\"".untaint)
       end
@@ -100,7 +100,7 @@ module Hiki
 
     def get_revision(page, revision)
       ret = ''
-      Dir.chdir("#{@data_path}/text") do
+      Dir.chdir(@text_dir) do
         open("|svn cat -r #{revision.to_i} #{escape(page).untaint}") do |f|
           ret = f.read
         end
@@ -112,7 +112,7 @@ module Hiki
       require 'time'
       log = ''
       revs = []
-      Dir.chdir("#{@data_path}/text") do
+      Dir.chdir(@text_dir) do
         open("|svn log #{escape(page).untaint}") do |f|
           log = f.read
         end
