@@ -89,6 +89,30 @@ class Repos_SVN_Tests < Test::Unit::TestCase
     assert_equal(expected, @repos.revisions('HogeHoge'))
   end
 
+  def test_rename
+    write("HogeHoge", "hogehoge1\n")
+    @repos.commit("HogeHoge")
+    @repos.rename("HogeHoge", "FooBar")
+    assert_equal("hogehoge1\n", read("FooBar"))
+  end
+
+  def test_rename_multibyte
+    write(escape("ほげほげ"), "hogehoge1\n")
+    @repos.commit("ほげほげ")
+    @repos.rename("ほげほげ", "ふーばー")
+    assert_equal("hogehoge1\n", read(escape("ふーばー")))
+  end
+
+  def test_rename_new_page_already_exist
+    write("HogeHoge", "hogehoge1\n")
+    @repos.commit("HogeHoge")
+    write("FooBar", "foobar\n")
+    @repos.commit("FooBar")
+    assert_raise(ArgumentError) do
+      @repos.rename("HogeHoge", "FooBar")
+    end
+  end
+
   private
   def svn(*args)
     args = args.map{|arg| arg.dump }.join(' ')

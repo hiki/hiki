@@ -105,7 +105,13 @@ module Hiki
     end
 
     def rename(old_page, new_page)
-      raise NotImplementedError
+      old_page = escape(old_page.untaint)
+      new_page = escape(new_page.untaint)
+      Dir.chdir(@text_dir) do
+        raise ArgumentError, "#{new_page} has already existed." if File.exist?(new_page)
+        system("svn", "mv", "-q", old_page, new_page)
+        system("svn", "commit", "-q", "-m", "'Rename #{old_page} to #{new_page}'")
+      end
     end
 
     def get_revision(page, revision)
