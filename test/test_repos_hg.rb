@@ -47,6 +47,13 @@ class Repos_Hg_Tests < Test::Unit::TestCase
     end
   end
 
+  def test_commit_with_content
+    @repos.commit_with_content("FooBar", "foobar")
+    assert_equal("foobar", read("FooBar"))
+    @repos.commit_with_content("FooBar", "foobar new")
+    assert_equal("foobar new", read("FooBar"))
+  end
+
   def test_get_revision
     rev1 = rev2 = rev3 = nil
     write("HogeHoge", 'hogehoge1')
