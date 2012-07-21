@@ -88,6 +88,14 @@ module Hiki
       end
     end
 
+    def commit_with_content(page, content, msg = default_msg)
+      escaped_page = escape(page).untaint
+      File.open(File.join(@text_dir, escaped_page), "w+") do |file|
+        file.write(content)
+      end
+      commit(page)
+    end
+
     def delete(page, msg = default_msg)
       escaped_page = escape(page).untaint
       Dir.chdir(@text_dir) do
