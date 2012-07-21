@@ -10,23 +10,25 @@ module Hiki
     include Hiki::Util
 
     def commit(page, msg = default_msg)
-      Dir.chdir("#{@data_path}/text") do
-        system("hg addremove -q #{escape(page)}".untaint)
-        system("hg ci -m \"#{msg}\" #{escape(page)}".untaint)
+      escaped_page = escape(page).untaint
+      Dir.chdir(@text_dir) do
+        system("hg addremove -q #{escaped_page}")
+        system("hg ci -m \"#{msg}\" #{escaped_page}")
       end
     end
 
     def delete(page, msg = default_msg)
-      Dir.chdir("#{@data_path}/text") do
-        system("hg rm #{escape(page)}".untaint)
-        system("hg ci -m \"#{msg}\" #{escape(page)}".untaint)
+      escaped_page = escape(page).untaint
+      Dir.chdir(@text_dir) do
+        system("hg rm #{escaped_page}")
+        system("hg ci -m \"#{msg}\" #{escaped_page}")
       end
     end
 
     def rename(old_page, new_page)
       old_page = escape(old_page.untaint)
       new_page = escape(new_page.untaint)
-      Dir.chdir("#{@data_path}/text") do
+      Dir.chdir(@text_dir) do
         raise ArgumentError, "#{new_page} has been already exist." if File.exist?(new_page)
         system("hg", "mv", "-q", old_page, new_page)
         system("hg", "commit", "-q", "-m", "'Rename #{old_page} to #{new_page}'")
@@ -35,8 +37,9 @@ module Hiki
 
     def get_revision(page, revision)
       r = ""
-      Dir.chdir("#{@data_path}/text") do
-        open("|hg cat -r #{revision.to_i-1} #{escape(page)}".untaint) do |f|
+      escaped_page = escape(page).untaint
+      Dir.chdir(@text_dir) do
+        open("|hg cat -r #{revision.to_i-1} #{escaped_page}".untaint) do |f|
           r = f.read
         end
       end
@@ -45,12 +48,13 @@ module Hiki
 
     def revisions(page)
       require 'time'
+      escaped_page = escape(page).untaint
       all_log = ''
       revs = []
       original_lang = ENV["LANG"]
       ENV["LANG"] = "C"
-      Dir.chdir("#{@data_path}/text") do
-        open("|hg log #{escape(page).untaint}") do |f|
+      Dir.chdir(@text_dir) do
+        open("|hg log #{escaped_page}") do |f|
           all_log = f.read
         end
       end
