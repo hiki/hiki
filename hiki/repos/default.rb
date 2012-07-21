@@ -39,6 +39,10 @@ module Hiki
       raise "Please override this function."
     end
 
+    def commit_with_content(page, content, log = nil)
+      raise "Please override this function."
+    end
+
     def delete(page, log = nil)
       raise "Please override this function."
     end
@@ -95,6 +99,9 @@ module Hiki
     include Hiki::Util
 
     def commit(page, log = nil)
+    end
+
+    def commit_with_content(page, content, log = nil)
     end
 
     def delete(page, log = nil)

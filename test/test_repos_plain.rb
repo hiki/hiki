@@ -38,6 +38,18 @@ class Repos_Plain_Tests < Test::Unit::TestCase
     assert_equal('foobar new', File.read("#{@root}/#{@wiki}/FooBar/2"))
   end
 
+  def test_commit_with_content
+    FileUtils.mkdir_p("#{@root}/#{@wiki}/HogeHoge")
+    FileUtils.mkdir_p("#{@root}/#{@wiki}/FooBar")
+    mkfile("#{@root}/#{@wiki}/HogeHoge/1", 'hogehoge')
+    mkfile("#{@root}/#{@wiki}/FooBar/1", 'foobar')
+
+    @repos.commit_with_content("FooBar", "foobar new")
+
+    assert_equal('foobar', File.read("#{@root}/#{@wiki}/FooBar/1"))
+    assert_equal('foobar new', File.read("#{@root}/#{@wiki}/FooBar/2"))
+  end
+
   def test_get_revision
     FileUtils.mkdir_p("#{@root}/#{@wiki}/HogeHoge")
     FileUtils.mkdir_p("#{@root}/#{@wiki}/FooBar")

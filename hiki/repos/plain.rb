@@ -45,6 +45,22 @@ module Hiki
       FileUtils.cp("#{@data_path}/text/#{escape(page).untaint}", "#{dir}/#{rev}")
     end
 
+    # This is a utility method for command line tools
+    def commit_with_content(page, content, log = nil)
+      escaped_page = escape(page)
+      wiki = File.read(File.join(@data_path, "text", ".wiki"))
+      dir = File.join(@root, wiki, escaped_page).untaint
+      revision = last_revision(page) + 1
+      page_path = File.join(@data_path, "text", escaped_page).untaint
+      FileUtils.mkdir_p(dir)
+      FileUtils.rm_f(File.join(dir, ".removed"))
+
+      File.open(page_path, "w+") do |file|
+        file.write(content)
+      end
+      FileUtils.cp(page_path, File.join(dir, revision.to_s))
+    end
+
     def delete(page, log = nil)
       wiki = File.read("#{@data_path}/text/.wiki")
       File.open("#{@root}/#{wiki.untaint}/#{escape(page).untaint}/.removed", 'w'){|f|}
