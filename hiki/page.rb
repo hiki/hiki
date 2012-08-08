@@ -13,17 +13,28 @@ module Hiki
       require 'erb'
     end
 
-    attr_accessor :template, :contents
+    attr_accessor :command, :template, :contents
 
     def initialize(request, conf)
       @request = request
       @conf = conf
+      @layout = @conf.read_layout
+      @command  = nil
       @template = ''
       @contents = nil
     end
 
     def to_html
-      ERB.new( @template ).result( binding )
+      method_name = "render_#{@command}"
+      unless respond_to?(:layout)
+        erb = ERB.new(@layout)
+        erb.def_method(self.class, "render_layout", "layout.html")
+      end
+      unless respond_to?(method_name)
+        erb = ERB.new(@template)
+        erb.def_method(self.class, method_name, "#{@command}.html")
+      end
+      render_layout{ __send__(method_name) }
     end
 
     def process( plugin )

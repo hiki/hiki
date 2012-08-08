@@ -157,6 +157,7 @@ module Hiki
       end
 
       @page = Hiki::Page.new( @request, @conf )
+      @page.command  = @cmd
       @page.template = @conf.read_template( @cmd )
       @page.contents = data
 
