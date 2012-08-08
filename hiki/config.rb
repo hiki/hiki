@@ -120,6 +120,11 @@ module Hiki
       end
     end
 
+    def read_layout
+      path = File.join(@template_path, "layout.html")
+      File.read(path)
+    end
+
     private
 
     # loading hikiconf.rb in current directory
