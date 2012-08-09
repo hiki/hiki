@@ -121,7 +121,11 @@ module Hiki
     end
 
     def read_layout
-      path = File.join(@template_path, "layout.html")
+      if mobile_agent?
+        path = File.join(@template_path, "i.layout.html")
+      else
+        path = File.join(@template_path, "layout.html")
+      end
       File.read(path)
     end
 

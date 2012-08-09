@@ -25,16 +25,26 @@ module Hiki
     end
 
     def to_html
-      method_name = "render_#{@command}"
-      unless respond_to?(:layout)
+      if @conf.mobile_agent?
+        content_method_name = "render_mobile_#{@command}"
+        content_name = "i.#{@command}.html"
+        layout_method_name = "render_mobile_layout"
+        layout_name = "i.layout.html"
+      else
+        content_method_name = "render_#{@command}"
+        content_name = "#{@command}.html"
+        layout_method_name = "render_layout"
+        layout_name = "layout.html"
+      end
+      unless respond_to?(layout_method_name)
         erb = ERB.new(@layout)
-        erb.def_method(self.class, "render_layout", "layout.html")
+        erb.def_method(self.class, layout_method_name, layout_name)
       end
-      unless respond_to?(method_name)
+      unless respond_to?(content_method_name)
         erb = ERB.new(@template)
-        erb.def_method(self.class, method_name, "#{@command}.html")
+        erb.def_method(self.class, content_method_name, layout_name)
       end
-      render_layout{ __send__(method_name) }
+      __send__(layout_method_name){ __send__(content_method_name) }
     end
 
     def process( plugin )
