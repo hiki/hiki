@@ -1,8 +1,3 @@
-<html>
-<head>
-<%= @contents[:header] %>
-</head>
-<body>
 <div><%= @contents[:tools] %></div>
 <h1><%=@conf.msg_config%></h1>
 <p>|<% @plugin.each_conf_key do |key|%><a href="<%=@contents[:cgi_name]%>?c=admin;conf=<%=key%>"><%=@plugin.conf_label( key )%></a>|<% end %></p>
@@ -14,5 +9,3 @@
 <%=@plugin.conf_proc( @contents[:key] )%>
 <input type="submit" name="saveconf" value="OK">
 </form>
-</body>
-</html>

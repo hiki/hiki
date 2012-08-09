@@ -1,8 +1,3 @@
-<html>
-<head>
-<%= @contents[:header] %>
-</head>
-<body>
 <div><%= @contents[:tools] %></div>
 <h1><%= @contents[:title] %></h1>
 <% if @contents[:list] %><ul>
@@ -12,7 +7,5 @@
 <form action="<%= @contents[:cgi_name] %>" method="<%= @contents[:method] %>">
 <input type="hidden" value="<%= @contents[:cmd] %>" name="c">
 <%= @contents[:msg2] %><input size="30" maxlength="50" name="key" <%= @contents[:key] %>>
-<input type="submit" value="<%= @contents[:button] %>"> 
+<input type="submit" value="<%= @contents[:button] %>">
 </form>
-</body>
-</html>
