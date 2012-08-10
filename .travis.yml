@@ -7,7 +7,7 @@ rvm:
 #  - rbx-18mode
 #  - rbx-19mode
 
-script: bundle exec ruby test/runner.rb
+script: bundle exec ruby -W0 test/runner.rb
 
 branches:
   only:
