@@ -30,6 +30,8 @@ class Plugin_RSS_Unit_Tests < Test::Unit::TestCase
         ['', @now]
       }
     end
+
+    ARGV << " " # dummy argment for CGI offline mode
   end
 
   def test_rss_returns_304_when_if_modified_since_is_same_to_last_modified
