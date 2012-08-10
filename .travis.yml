@@ -9,6 +9,7 @@ rvm:
 
 install:
   - sudo apt-get install subversion mercurial
+  - bundle install
 
 script: bundle exec ruby -W0 test/runner.rb
 
