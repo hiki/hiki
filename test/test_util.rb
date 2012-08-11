@@ -6,7 +6,7 @@ $:.unshift(File.join(File.dirname(__FILE__), '../hiki'))
 require 'test/unit'
 require 'hiki/util'
 
-class TMarshal_Unit_Tests < Test::Unit::TestCase
+class TestUtil < Test::Unit::TestCase
   include Hiki::Util
 
   def setup
