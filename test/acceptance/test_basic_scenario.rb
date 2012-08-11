@@ -115,6 +115,12 @@ class TestHgRepository < Test::Unit::TestCase
     cp_r(fixtures_dir + "plain_data.prepare", @wiki_data_path)
     Dir.chdir(@wiki_data_path.expand_path) do
       system("hg", "init", "--quiet", ".")
+      File.open(".hg/hgrc", "a+") do |file|
+        file.puts <<EOF
+[ui]
+username=Hiki <hikitest@example.com>
+EOF
+      end
       system("hg", "add", "--quiet", "text")
       system("hg", "commit", "--quiet", "-m", "'Initial commit'")
     end
