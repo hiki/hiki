@@ -10,5 +10,6 @@ $LOAD_PATH.unshift(rootdir, "#{rootdir}/hiki")
 $LOAD_PATH.unshift(rootdir, "#{rootdir}/test")
 
 require "test_helper"
+require "rack"
 
 exit Test::Unit::AutoRunner.run(true, File.dirname($0))
