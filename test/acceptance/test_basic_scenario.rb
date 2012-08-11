@@ -59,9 +59,12 @@ TEXT
       assert_equal("FrontPage contents", text)
     end
   end
+
+  module Repository
+  end
 end
 
-class TestPlainTextRepository < Test::Unit::TestCase
+class BasicScenario::Repository::TestPlainText < Test::Unit::TestCase
   include Capybara::DSL
   include TestHelper
   include BasicScenario
@@ -79,7 +82,7 @@ class TestPlainTextRepository < Test::Unit::TestCase
   end
 end
 
-class TestGitRepository < Test::Unit::TestCase
+class BasicScenario::Repository::TestGit < Test::Unit::TestCase
   include Capybara::DSL
   include TestHelper
   include BasicScenario
@@ -103,7 +106,7 @@ class TestGitRepository < Test::Unit::TestCase
   end
 end
 
-class TestHgRepository < Test::Unit::TestCase
+class BasicScenario::Repository::TestHg < Test::Unit::TestCase
   include Capybara::DSL
   include TestHelper
   include BasicScenario
@@ -133,7 +136,7 @@ EOF
   end
 end
 
-class TestSVNRepository < Test::Unit::TestCase
+class BasicScenario::Repository::TestSVN < Test::Unit::TestCase
   include Capybara::DSL
   include TestHelper
   include BasicScenario
