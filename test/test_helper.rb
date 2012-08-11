@@ -35,4 +35,13 @@ module TestHelper
       f.read
     end
   end
+
+  def create_hgrc
+    File.open(".hg/hgrc", "a+") do |file|
+      file.puts <<EOF
+[ui]
+username=Hiki <hikitest@example.com>
+EOF
+    end
+  end
 end

@@ -25,12 +25,7 @@ class Repos_Hg_Tests < Test::Unit::TestCase
     check_command("hg")
     Dir.chdir(@text_dir) do
       hg("init")
-      File.open(".hg/hgrc", "a+") do |file|
-        file.puts <<EOF
-[ui]
-username=Hiki <hikitest@example.com>
-EOF
-      end
+      create_hgrc
     end
   end
 
