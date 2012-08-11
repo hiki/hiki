@@ -13,6 +13,7 @@ install:
 
 script: bundle exec ruby -W0 test/runner.rb -v
 
-branches:
-  only:
-    - master
+#branches:
+#  only:
+#    - master
+
