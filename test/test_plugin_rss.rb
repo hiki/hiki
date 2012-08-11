@@ -2,7 +2,7 @@
 
 require 'test/unit'
 require 'time'
-require 'cgi'
+require 'cgi/util'
 require 'rack'
 require File.join(File.dirname(__FILE__), *%w[.. hiki request])
 require File.join(File.dirname(__FILE__), *%w[.. hiki response])
