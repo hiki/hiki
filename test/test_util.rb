@@ -92,7 +92,7 @@ STR
   def test_format_date
     mock(@conf).msg_time_format.returns("%Y-%m-%d #DAY# %H:%M:%S")
     mock(@conf).msg_day.returns(%w(日 月 火 水 木 金 土))
-    assert_equal("2011-01-01 (土) 01:02:03", format_date(Time.new(2011, 1, 1, 1, 2, 3)))
+    assert_equal("2011-01-01 (土) 01:02:03", format_date(Time.mktime(2011, 1, 1, 1, 2, 3)))
   end
 
   def test_escape
