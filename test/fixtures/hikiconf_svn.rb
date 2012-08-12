@@ -2,7 +2,7 @@
 require "pathname"
 fixtures_dir = Pathname(__FILE__.tr("()", "")).dirname
 
-@data_path       = (fixtures_dir + "svn_data").expand_path.to_path
+@data_path       = (fixtures_dir + "svn_data").expand_path.to_s
 @smtp_server     = 'localhost'
 @use_plugin      = true
 @use_session     = true
@@ -20,7 +20,7 @@ fixtures_dir = Pathname(__FILE__.tr("()", "")).dirname
 @use_wikiname    = true
 @xmlrpc_enabled  = true
 @repos_type      = "svn"
-@repos_root      = (fixtures_dir + "svn_repo").expand_path.to_path
+@repos_root      = (fixtures_dir + "svn_repo").expand_path.to_s
 
 #=========================================
 #  変更可能項目

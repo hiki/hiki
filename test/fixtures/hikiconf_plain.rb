@@ -2,7 +2,7 @@
 require "pathname"
 fixtures_dir = Pathname(__FILE__.tr("()", "")).dirname
 
-@data_path       = (fixtures_dir + "plain_data").expand_path.to_path
+@data_path       = (fixtures_dir + "plain_data").expand_path.to_s
 @smtp_server     = 'localhost'
 @use_plugin      = true
 @use_session     = true

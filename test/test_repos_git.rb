@@ -131,8 +131,12 @@ class Repos_Git_Tests < Test::Unit::TestCase
     write("FooBar", "foobar\n")
     @repos.commit("FooBar")
 
-    assert_equal(["ほげほげ", "FooBar"].map{|v| v.force_encoding("binary") }.sort,
-                 @repos.pages.sort)
+    expected = ["ほげほげ", "FooBar"]
+    if Object.const_defined?(:Encoding)
+      expected = expected.map{|v| v.force_encoding("binary") }
+    end
+
+    assert_equal(expected.sort, @repos.pages.sort)
   end
 
   def test_pages_with_block
@@ -145,8 +149,13 @@ class Repos_Git_Tests < Test::Unit::TestCase
     @repos.pages.each do |page|
       actuals << page
     end
-    assert_equal(["ほげほげ", "FooBar"].map{|v| v.force_encoding("binary") }.sort,
-                 actuals.sort)
+
+    expected = ["ほげほげ", "FooBar"]
+    if Object.const_defined?(:Encoding)
+      expected = expected.map{|v| v.force_encoding("binary") }
+    end
+
+    assert_equal(expected.sort, actuals.sort)
   end
 
   private
