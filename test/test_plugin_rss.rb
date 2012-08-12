@@ -2,7 +2,11 @@
 
 require 'test/unit'
 require 'time'
-require 'cgi/util'
+begin
+  require 'cgi/util'
+rescue LoadError
+  require 'cgi'
+end
 require 'rack'
 require File.join(File.dirname(__FILE__), *%w[.. hiki request])
 require File.join(File.dirname(__FILE__), *%w[.. hiki response])
