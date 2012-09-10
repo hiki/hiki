@@ -30,10 +30,10 @@ def main(argv)
             "Specify the repository type [plain, svn, git, hg] (default: plain") {|type|
     repository_type = type
   }
-  paseer.on("-i", "--input-encoding=ENCODING", "Specify the input encoding"){|encoding|
+  parser.on("-i", "--input-encoding=ENCODING", "Specify the input encoding"){|encoding|
     input_encoding = Encoding.find(encoding)
   }
-  paseer.on("-o", "--output-encoding=ENCODING", "Specify the output encoding"){|encoding|
+  parser.on("-o", "--output-encoding=ENCODING", "Specify the output encoding"){|encoding|
     output_encoding  = Encoding.find(encoding)
   }
 
