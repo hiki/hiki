@@ -84,18 +84,20 @@ class Repos_Git_Tests < Test::Unit::TestCase
     Dir.chdir(@text_dir) {git("add", "HogeHoge")}
     Dir.chdir(@text_dir) {git("commit", "-m", "First", "HogeHoge")}
     Dir.chdir(@text_dir) {rev1 = git("hash-object", "HogeHoge")}
+    modified1 = Time.now.localtime.strftime('%Y/%m/%d %H:%M:%S')
     write("HogeHoge", 'hogehoge2')
     Dir.chdir(@text_dir) {git("commit", "-m", "Second", "HogeHoge")}
     Dir.chdir(@text_dir) {rev2 = git("hash-object", "HogeHoge")}
+    modified2 = Time.now.localtime.strftime('%Y/%m/%d %H:%M:%S')
     write("HogeHoge", 'hogehoge3')
     Dir.chdir(@text_dir) {git("commit", "-m", "Third", "HogeHoge")}
     Dir.chdir(@text_dir) {rev3 = git("hash-object", "HogeHoge")}
+    modified3 = Time.now.localtime.strftime('%Y/%m/%d %H:%M:%S')
 
-    modified = Time.now.localtime.strftime('%Y/%m/%d %H:%M:%S')
     expected = [
-                [rev3[0, 7], modified, '', 'Third'],
-                [rev2[0, 7], modified, '', 'Second'],
-                [rev1[0, 7], modified, '', 'First'],
+                [rev3[0, 7], modified1, '', 'Third'],
+                [rev2[0, 7], modified2, '', 'Second'],
+                [rev1[0, 7], modified3, '', 'First'],
                ]
 
     assert_equal(expected, @repos.revisions('HogeHoge'))
