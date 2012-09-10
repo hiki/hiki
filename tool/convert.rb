@@ -1,8 +1,10 @@
 #! /usr/bin/env ruby
 
+$:.unshift '.'
+
 require "optparse"
 require "pathname"
-require_relative "../hiki/util"
+require "hiki/util"
 
 def convert(data_dir, repository_class, input_encoding, output_encoding)
   repository = repository_class.new(nil, data_dir)
@@ -30,10 +32,10 @@ def main(argv)
             "Specify the repository type [plain, svn, git, hg] (default: plain") {|type|
     repository_type = type
   }
-  paseer.on("-i", "--input-encoding=ENCODING", "Specify the input encoding"){|encoding|
+  parser.on("-i", "--input-encoding=ENCODING", "Specify the input encoding"){|encoding|
     input_encoding = Encoding.find(encoding)
   }
-  paseer.on("-o", "--output-encoding=ENCODING", "Specify the output encoding"){|encoding|
+  parser.on("-o", "--output-encoding=ENCODING", "Specify the output encoding"){|encoding|
     output_encoding  = Encoding.find(encoding)
   }
 
@@ -46,7 +48,7 @@ def main(argv)
   end
 
   require_relative "../hiki/repos/#{repository_type}"
-  repository_class = ::Hiki.const_get("Repos#{repository_type}")
+  repository_class = ::Hiki.const_get("Repos#{repository_type.capitalize}")
 
   convert(data_dir, repository_class, input_encoding, output_encoding)
 end
