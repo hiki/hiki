@@ -48,7 +48,7 @@ def main(argv)
   end
 
   require_relative "../hiki/repos/#{repository_type}"
-  repository_class = ::Hiki.const_get("Repos#{repository_type}")
+  repository_class = ::Hiki.const_get("Repos#{repository_type.capitalize}")
 
   convert(data_dir, repository_class, input_encoding, output_encoding)
 end
