@@ -1,8 +1,10 @@
 #! /usr/bin/env ruby
 
+$:.unshift '.'
+
 require "optparse"
 require "pathname"
-require_relative "../hiki/util"
+require "hiki/util"
 
 def convert(data_dir, repository_class, input_encoding, output_encoding)
   repository = repository_class.new(nil, data_dir)
