@@ -4,7 +4,11 @@
 #
 # thanks to Kazuhiko, Masao Mutoh, SHIMADA Mitsunobu, Yoshimi, りた
 
-require 'cgi'
+begin
+  require "cgi/util"
+rescue LoadError
+  require 'cgi' # fallback for Ruby1.8
+end
 
 @options['attach.form'] ||= 'edit'
 
