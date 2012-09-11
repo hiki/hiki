@@ -4,6 +4,8 @@
 #
 # thanks to Kazuhiko, Masao Mutoh, SHIMADA Mitsunobu, Yoshimi, りた
 
+require 'cgi'
+
 @options['attach.form'] ||= 'edit'
 
 def attach_form(s = '')
