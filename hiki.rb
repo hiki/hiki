@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+$LOAD_PATH.unshift(File.dirname(__FILE__))
+
 require 'hiki/app'
 require 'rubygems'
 require 'rack'
