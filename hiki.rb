@@ -19,4 +19,4 @@ options = {
   :Host => '0.0.0.0',
   :AccessLog => []
 }
-Rack::Handler::Mongrel.run(app, options)
+Rack::Handler.default.run(app, options)
