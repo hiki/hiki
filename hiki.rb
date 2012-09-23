@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+$LOAD_PATH.unshift(File.dirname(__FILE__))
+
 require 'hiki/app'
 require 'rubygems'
 require 'rack'
@@ -17,4 +19,4 @@ options = {
   :Host => '0.0.0.0',
   :AccessLog => []
 }
-Rack::Handler::Mongrel.run(app, options)
+Rack::Handler.default.run(app, options)
