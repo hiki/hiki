@@ -42,7 +42,7 @@ module Hiki
       end
       unless respond_to?(content_method_name)
         erb = ERB.new(@template)
-        erb.def_method(self.class, content_method_name, layout_name)
+        erb.def_method(self.class, content_method_name, content_name)
       end
       __send__(layout_method_name){ __send__(content_method_name) }
     end
