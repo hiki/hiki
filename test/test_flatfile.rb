@@ -100,4 +100,15 @@ STR
   def test_backup_exist_no_such_page
     @db.backup_exist?("NoSuchPage")
   end
+
+  def test_unlink
+    assert_false(@db.backup_exist?("FrontPage"))
+    @db.unlink("FrontPage")
+    assert_false(@db.exist?("FrontPage"))
+    assert_true(@db.backup_exist?("FrontPage"))
+  end
+
+  def test_unlink_no_such_page
+    assert_nothing_raised { @db.unlink("NoSuchPage") }
+  end
 end
