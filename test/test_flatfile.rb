@@ -111,4 +111,16 @@ STR
   def test_unlink_no_such_page
     assert_nothing_raised { @db.unlink("NoSuchPage") }
   end
+
+  def test_rename
+    expected = @db.load("FrontPage")
+    @db.rename("FrontPage", "Hoge")
+    assert_equal(expected, @db.load("Hoge"))
+  end
+
+  def test_rename_new_page_already_exist
+    assert_raise(ArgumentError) do
+      @db.rename("FrontPage", "InterWikiName")
+    end
+  end
 end

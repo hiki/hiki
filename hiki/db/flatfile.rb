@@ -81,6 +81,13 @@ module Hiki
       }
     end
 
+    def rename(old_page, new_page)
+      raise ArgumentError, "#{new_page} has already existed." if exist?(new_page)
+      text = load(old_page)
+      store(new_page, text, md5hex(text))
+      unlink(old_page)
+    end
+
     # ==============
     #   info DB
     # ==============
