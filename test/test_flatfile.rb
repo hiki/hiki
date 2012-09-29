@@ -25,4 +25,29 @@ class HikiDB_flatfile_Unit_Tests < Test::Unit::TestCase
   def test_close_db
     assert(@db.close_db)
   end
+
+  def test_load
+    expected = <<STR
+!ようこそ
+
+これはWikiエンジン[[Hiki|http://hikiwiki.org/ja/]]のFrontPageです。
+このページが見えているならインストールはうまくいっています。多分(^^;
+
+!使い始める前に（重要）
+
+ページ上部にある[管理]アンカをクリックし管理者用パスワードを設定してください。
+各ページの凍結（管理者以外の更新を抑止する）とその解除は管理者のみ行うことができます。
+
+!Hikiの書式について
+
+Hikiの書式はオリジナルWikiに似てますので、オリジナルの書式を知っている方は
+スムーズにコンテンツを記述することができるでしょう。ただし、一部、独自に拡張している
+書式もありますので、詳細についてはTextFormattingRulesを参照してください。
+STR
+    assert_equal(expected, @db.load("FrontPage"))
+  end
+
+  def test_load_no_such_page
+    assert_nil(@db.load("NoSuchPage"))
+  end
 end
