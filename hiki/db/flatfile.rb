@@ -67,10 +67,6 @@ module Hiki
       File.read( backupdir( page ) )
     end
 
-    def save( page, src, md5 )
-      raise 'DB#save is obsoleted. Please use Plugin#save instead.'
-    end
-
     def exist?( page )
       test( ?e,  textdir( page ) )
     end
