@@ -11,91 +11,91 @@ module Hiki
   class HikiDB_flatfile < HikiDBBase
     attr_reader :pages_path
 
-    def initialize( conf )
+    def initialize(conf)
       @conf = conf
       @pages_path = File.join(@conf.data_path, "text")
       @backup_path = File.join(@conf.data_path, "backup")
       @info_db = File.join(@conf.data_path, "info.db")
       create_missing_dirs
       create_infodb unless test(?e, @info_db)
-      @info = PTStore.new( @info_db )
+      @info = PTStore.new(@info_db)
     end
 
     def close_db
       true
     end
 
-    def store( page, text, md5, update_timestamp = true )
-      backup( page )
-      filename = textdir( page )
+    def store(page, text, md5, update_timestamp = true)
+      backup(page)
+      filename = textdir(page)
 
-      if exist?( page )
-        return nil if md5 != md5hex( page )
+      if exist?(page)
+        return nil if md5 != md5hex(page)
         if update_timestamp
-          FileUtils.copy( filename, backupdir( page ), {:preserve => true} )
+          FileUtils.copy(filename, backupdir(page), { :preserve => true })
         end
       end
-      create_info_default( page ) unless info_exist?( page )
+      create_info_default(page) unless info_exist?(page)
 
       if update_timestamp
-        set_last_update( page, Time.now )
+        set_last_update(page, Time.now)
       end
-      File.open( filename, 'wb' ) do |f|
-        f.write( text.gsub(/\r\n/, "\n") )
+      File.open(filename, 'wb') do |f|
+        f.write(text.gsub(/\r\n/, "\n"))
       end
       true
     end
 
-    def unlink( page )
-      if exist?( page )
+    def unlink(page)
+      if exist?(page)
         begin
-          FileUtils.copy( textdir( page ), backupdir( page ), {:preserve => true} )
-          delete_info( page )
-          File.unlink( textdir( page ) )
+          FileUtils.copy(textdir(page), backupdir(page), { :preserve => true })
+          delete_info(page)
+          File.unlink(textdir(page))
         rescue
         end
       end
     end
 
-    def load( page )
-      return nil unless exist?( page )
-      File.read( textdir( page ) )
+    def load(page)
+      return nil unless exist?(page)
+      File.read(textdir(page))
     end
 
-    def load_backup( page )
-      return nil unless backup_exist?( page )
-      File.read( backupdir( page ) )
+    def load_backup(page)
+      return nil unless backup_exist?(page)
+      File.read(backupdir(page))
     end
 
-    def exist?( page )
-      test( ?e,  textdir( page ) )
+    def exist?(page)
+      test(?e, textdir(page))
     end
 
-    def backup_exist?( page )
-      test( ?e,  backupdir( page ) )
+    def backup_exist?(page)
+      test(?e, backupdir(page))
     end
 
     def pages
-      Dir.glob( "#{@pages_path}/*" ).delete_if {|f| !test(?f, f.untaint)}.collect! {|f|
-        unescape(File.basename( f ))
+      Dir.glob("#{@pages_path}/*").delete_if {|f| !test(?f, f.untaint)}.collect! {|f|
+        unescape(File.basename(f))
       }
     end
 
     # ==============
     #   info DB
     # ==============
-    def info_exist? ( p )
+    def info_exist? (p)
       f = escape(p)
       @info.transaction(true) do
-        @info.root?( f )
+        @info.root?(f)
       end
     end
 
     def infodb_exist?
-      test( ?e, @info_db )
+      test(?e, @info_db)
     end
 
-    def info( p )
+    def info(p)
       f = escape(p)
       @info.transaction(true) do
         @info.root?(f) ? @info[f] : nil
@@ -141,30 +141,30 @@ module Hiki
       result
     end
 
-    def increment_hitcount ( p )
+    def increment_hitcount (p)
       f = escape(p)
       @info.transaction do
         @info[f][:count] = @info[f][:count] + 1
       end
     end
 
-    def get_hitcount( p )
+    def get_hitcount(p)
       get_attribute(p, :count)
     end
 
-    def freeze_page ( p, freeze )
+    def freeze_page (p, freeze)
       set_attribute(p, [[:freeze, freeze]])
     end
 
-    def is_frozen? ( p )
+    def is_frozen? (p)
       get_attribute(p, :freeze)
     end
 
-    def set_last_update ( p, t )
+    def set_last_update (p, t)
       set_attribute(p, [[:last_modified, t]])
     end
 
-    def get_last_update( p )
+    def get_last_update(p)
       get_attribute(p, :last_modified)
     end
 
@@ -203,11 +203,11 @@ module Hiki
     end
 
     def create_infodb
-      @info = PTStore.new( @info_db )
+      @info = PTStore.new(@info_db)
       @info.transaction do
         pages.each do |a|
           r = default
-          r[:last_modified] = File.mtime( "#{@pages_path}/#{escape(a)}".untaint )
+          r[:last_modified] = File.mtime("#{@pages_path}/#{escape(a)}".untaint)
           @info[escape(a)]  = r
         end
       end
