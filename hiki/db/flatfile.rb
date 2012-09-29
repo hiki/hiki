@@ -91,7 +91,7 @@ module Hiki
     # ==============
     #   info DB
     # ==============
-    def info_exist? (page)
+    def info_exist?(page)
       f = escape(page)
       @info.transaction(true) do
         @info.root?(f)
@@ -148,7 +148,7 @@ module Hiki
       result
     end
 
-    def increment_hitcount (page)
+    def increment_hitcount(page)
       f = escape(page)
       @info.transaction do
         @info[f][:count] = @info[f][:count] + 1
@@ -159,15 +159,15 @@ module Hiki
       get_attribute(page, :count)
     end
 
-    def freeze_page (page, freeze)
+    def freeze_page(page, freeze)
       set_attribute(page, [[:freeze, freeze]])
     end
 
-    def is_frozen? (page)
+    def is_frozen?(page)
       get_attribute(page, :freeze)
     end
 
-    def set_last_update (page, t)
+    def set_last_update(page, t)
       set_attribute(page, [[:last_modified, t]])
     end
 
