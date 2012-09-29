@@ -5,6 +5,7 @@ require 'hiki/config'
 require 'hiki/db/flatfile'
 require 'fileutils'
 require 'test_helper'
+require "digest/md5"
 
 class HikiDB_flatfile_Unit_Tests < Test::Unit::TestCase
   include TestHelper
@@ -62,5 +63,31 @@ STR
   def test_pages
     expected = %w[FrontPage InterWikiName SideMenu TextFormattingRules].sort
     assert_equal(expected, @db.pages.sort)
+  end
+
+  def test_load_backup
+    expected = <<STR
+!ようこそ
+
+これはWikiエンジン[[Hiki|http://hikiwiki.org/ja/]]のFrontPageです。
+このページが見えているならインストールはうまくいっています。多分(^^;
+
+!使い始める前に（重要）
+
+ページ上部にある[管理]アンカをクリックし管理者用パスワードを設定してください。
+各ページの凍結（管理者以外の更新を抑止する）とその解除は管理者のみ行うことができます。
+
+!Hikiの書式について
+
+Hikiの書式はオリジナルWikiに似てますので、オリジナルの書式を知っている方は
+スムーズにコンテンツを記述することができるでしょう。ただし、一部、独自に拡張している
+書式もありますので、詳細についてはTextFormattingRulesを参照してください。
+STR
+    @db.store("FrontPage", "test", Digest::MD5.hexdigest(expected))
+    assert_equal(expected, @db.load_backup("FrontPage"))
+  end
+
+  def test_load_backup_no_such_page
+    assert_nil(@db.load_backup("NoSuchPage"))
   end
 end
