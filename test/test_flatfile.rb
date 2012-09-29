@@ -58,4 +58,9 @@ STR
   def test_exist_no_such_page
     assert_false(@db.exist?("NoSuchPage"))
   end
+
+  def test_pages
+    expected = %w[FrontPage InterWikiName SideMenu TextFormattingRules].sort
+    assert_equal(expected, @db.pages.sort)
+  end
 end
