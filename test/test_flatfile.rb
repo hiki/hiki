@@ -90,4 +90,14 @@ STR
   def test_load_backup_no_such_page
     assert_nil(@db.load_backup("NoSuchPage"))
   end
+
+  def test_backup_exist
+    text = @db.load("FrontPage")
+    @db.store("FrontPage", "test", Digest::MD5.hexdigest(text))
+    @db.backup_exist?("FrontPage")
+  end
+
+  def test_backup_exist_no_such_page
+    @db.backup_exist?("NoSuchPage")
+  end
 end
