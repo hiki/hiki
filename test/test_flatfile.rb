@@ -50,4 +50,12 @@ STR
   def test_load_no_such_page
     assert_nil(@db.load("NoSuchPage"))
   end
+
+  def test_exist
+    assert_true(@db.exist?("FrontPage"))
+  end
+
+  def test_exist_no_such_page
+    assert_false(@db.exist?("NoSuchPage"))
+  end
 end
