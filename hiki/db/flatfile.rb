@@ -91,8 +91,8 @@ module Hiki
     # ==============
     #   info DB
     # ==============
-    def info_exist? (p)
-      f = escape(p)
+    def info_exist? (page)
+      f = escape(page)
       @info.transaction(true) do
         @info.root?(f)
       end
@@ -102,8 +102,8 @@ module Hiki
       test(?e, @info_db)
     end
 
-    def info(p)
-      f = escape(p)
+    def info(page)
+      f = escape(page)
       @info.transaction(true) do
         @info.root?(f) ? @info[f] : nil
       end
@@ -117,8 +117,8 @@ module Hiki
       h
     end
 
-    def set_attribute(p, attr)
-      f = escape(p)
+    def set_attribute(page, attr)
+      f = escape(page)
       @info.transaction do
         @info[f] = default unless @info[f]
         attr.each do |attribute, value|
@@ -127,8 +127,8 @@ module Hiki
       end
     end
 
-    def get_attribute(p, attribute)
-      f = escape(p)
+    def get_attribute(page, attribute)
+      f = escape(page)
       @info.transaction(true) do
         if @info.root?(f)
           @info[f][attribute] || default[attribute]
@@ -148,38 +148,38 @@ module Hiki
       result
     end
 
-    def increment_hitcount (p)
-      f = escape(p)
+    def increment_hitcount (page)
+      f = escape(page)
       @info.transaction do
         @info[f][:count] = @info[f][:count] + 1
       end
     end
 
-    def get_hitcount(p)
-      get_attribute(p, :count)
+    def get_hitcount(page)
+      get_attribute(page, :count)
     end
 
-    def freeze_page (p, freeze)
-      set_attribute(p, [[:freeze, freeze]])
+    def freeze_page (page, freeze)
+      set_attribute(page, [[:freeze, freeze]])
     end
 
-    def is_frozen? (p)
-      get_attribute(p, :freeze)
+    def is_frozen? (page)
+      get_attribute(page, :freeze)
     end
 
-    def set_last_update (p, t)
-      set_attribute(p, [[:last_modified, t]])
+    def set_last_update (page, t)
+      set_attribute(page, [[:last_modified, t]])
     end
 
-    def get_last_update(p)
-      get_attribute(p, :last_modified)
+    def get_last_update(page)
+      get_attribute(page, :last_modified)
     end
 
-    def set_references(p, r)
-      set_attribute(p, [[:references, r]])
+    def set_references(page, r)
+      set_attribute(page, [[:references, r]])
     end
 
-    def get_references(p)
+    def get_references(page)
       ref = []
       page_info.each do |a|
         r = a.values[0][:references]
@@ -187,7 +187,7 @@ module Hiki
           r = r.split(',')
           set_references(a.keys[0], r)
         end
-        ref << a.keys[0] if r.include?(p)
+        ref << a.keys[0] if r.include?(page)
       end
       ref
     end
@@ -199,8 +199,8 @@ module Hiki
       }
     end
 
-    def delete_info(p)
-      f = escape(p)
+    def delete_info(page)
+      f = escape(page)
       begin
         @info.transaction do
           @info.delete(f)
@@ -220,8 +220,8 @@ module Hiki
       end
     end
 
-    def create_info_default(p)
-      f = escape(p)
+    def create_info_default(page)
+      f = escape(page)
       @info.transaction do
         @info[f] = default
       end
