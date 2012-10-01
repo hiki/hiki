@@ -6,19 +6,19 @@ require "optparse"
 require "pathname"
 require "fileutils"
 require "digest/md5"
+require "nkf"
 require "hiki/util"
 require "hiki/config"
 
-def convert(data_path, database_class, input_encoding, output_encoding)
+def convert(data_path, database_class, input_encoding, output_encoding, nkf)
   config = Struct.new(:data_path).new
   config.data_path = data_path.expand_path
   db = database_class.new(config)
-  options = { invalid: :replace, undef: :replace }
   db.pages.each do |page|
     old_page = page
-    new_page = old_page.dup.encode!(output_encoding, input_encoding, options)
+    new_page = encode(old_page, input_encoding, output_encoding, nkf)
     old_text = db.load(old_page)
-    new_text = old_text.dup.encode!(output_encoding, input_encoding, options)
+    new_text = encode(old_text, input_encoding, output_encoding, nkf)
     if old_page == new_page
       db.unlink(old_page)
     else
@@ -30,6 +30,14 @@ def convert(data_path, database_class, input_encoding, output_encoding)
   FileUtils.rm_rf(cache_path)
 end
 
+def encode(text, input_encoding, output_encoding, nkf)
+  if nkf
+    NKF.nkf("-m0 --ic=#{input_encoding} --oc=#{output_encoding}", text)
+  else
+    text.dup.encode!(output_encoding, input_encoding, :invalid => :replace, :undef => :replace)
+  end
+end
+
 def main(argv)
   parser = OptionParser.new
   data_path = nil
@@ -37,6 +45,7 @@ def main(argv)
   database_type = "flatfile"
   input_encoding = nil
   output_encoding = nil
+  nkf = false
   parser.on("-D", "--data-directory=DIR", "Specify the data directory"){|dir|
     data_path = Pathname(dir).realpath
   }
@@ -55,6 +64,9 @@ def main(argv)
   parser.on("-o", "--output-encoding=ENCODING", "Specify the output encoding"){|encoding|
     output_encoding  = Encoding.find(encoding)
   }
+  parser.on("--nkf", "Use NKF (default: no)"){
+    nkf = true
+  }
 
   begin
     parser.parse!(argv)
@@ -69,7 +81,7 @@ def main(argv)
   require_relative "../hiki/db/#{database_type}"
   database_class = ::Hiki::const_get("HikiDB_#{database_type}")
 
-  convert(data_path, database_class, input_encoding, output_encoding)
+  convert(data_path, database_class, input_encoding, output_encoding, nkf)
 end
 
 if __FILE__ == $0
