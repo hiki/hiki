@@ -13,11 +13,12 @@ def convert(data_path, database_class, input_encoding, output_encoding)
   config = Struct.new(:data_path).new
   config.data_path = data_path.expand_path
   db = database_class.new(config)
+  options = { invalid: :replace, undef: :replace }
   db.pages.each do |page|
     old_page = page
-    new_page = old_page.dup.encode!(output_encoding, input_encoding)
+    new_page = old_page.dup.encode!(output_encoding, input_encoding, options)
     old_text = db.load(old_page)
-    new_text = old_text.dup.encode!(output_encoding, input_encoding)
+    new_text = old_text.dup.encode!(output_encoding, input_encoding, options)
     if old_page == new_page
       db.unlink(old_page)
     else
