@@ -15,12 +15,20 @@ def convert(data_path, database_class, input_encoding, output_encoding, nkf)
   config.data_path = data_path.expand_path
   db = database_class.new(config)
   db.pages.each do |page|
-    old_page = page
-    new_page = encode(old_page, input_encoding, output_encoding, nkf)
-    old_text = db.load(old_page)
-    new_text = encode(old_text, input_encoding, output_encoding, nkf)
-    db.unlink(old_page)
-    db.store(new_page, new_text, Digest::MD5.hexdigest(old_text))
+    begin
+      old_page = page
+      new_page = encode(old_page, input_encoding, output_encoding, nkf)
+      print "#{Hiki::Util.escape(old_page)} => #{Hiki::Util.escape(new_page)}"
+      old_text = db.load(old_page)
+      new_text = encode(old_text, input_encoding, output_encoding, nkf)
+      db.unlink(old_page)
+      db.store(new_page, new_text, Digest::MD5.hexdigest(old_text))
+      puts " OK."
+    rescue StandardError => ex
+      puts " NG."
+      puts "#{ex.class}: #{ex.message}"
+      puts ex.backtrace
+    end
   end
   cache_path = data_path + "cache"
   FileUtils.rm_rf(cache_path)
