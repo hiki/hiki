@@ -17,7 +17,12 @@ def convert(data_path, database_class, input_encoding, output_encoding)
     old_page = page
     new_page = old_page.dup.encode!(output_encoding, input_encoding)
     old_text = db.load(old_page)
-    new_text = old_text.dup.encode!(output_encoding, input_encoding)
+    new_text = begin
+                 old_text.dup.encode!(output_encoding, input_encoding)
+               rescue Encoding::UndefinedConversionError
+                 require 'nkf'
+                 NKF.nkf("-m0 -Ew", old_text.dup)
+               end
     if old_page == new_page
       db.unlink(old_page)
     else
