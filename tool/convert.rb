@@ -19,11 +19,7 @@ def convert(data_path, database_class, input_encoding, output_encoding, nkf)
     new_page = encode(old_page, input_encoding, output_encoding, nkf)
     old_text = db.load(old_page)
     new_text = encode(old_text, input_encoding, output_encoding, nkf)
-    if old_page == new_page
-      db.unlink(old_page)
-    else
-      db.rename(old_page, new_page)
-    end
+    db.unlink(old_page)
     db.store(new_page, new_text, Digest::MD5.hexdigest(old_text))
   end
   cache_path = data_path + "cache"
