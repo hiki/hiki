@@ -10,6 +10,29 @@ require "nkf"
 require "hiki/util"
 require "hiki/config"
 
+FILE_NAME_MAX_SIZE = 255
+
+def check(data_path, database_class, input_encoding, output_encoding, nkf)
+  config = Struct.new(:data_path).new
+  config.data_path = data_path.expand_path
+  db = database_class.new(config)
+  db.pages.each do |page|
+    begin
+      old_page = page
+      escaped_old_page = Hiki::Util.escape(old_page)
+      new_page = encode(old_page, input_encoding, output_encoding, nkf)
+      escaped_new_page = Hiki::Util.escape(new_page)
+      if escaped_new_page.bytesize > FILE_NAME_MAX_SIZE
+        puts "NG: #{escaped_old_page} => #{escaped_new_page}"
+      end
+    rescue StandardError => ex
+      puts "Error: #{escaped_old_page}"
+      puts "#{ex.class}: #{ex.message}"
+      puts ex.backtrace
+    end
+  end
+end
+
 def convert(data_path, database_class, input_encoding, output_encoding, nkf)
   config = Struct.new(:data_path).new
   config.data_path = data_path.expand_path
@@ -50,6 +73,7 @@ def main(argv)
   input_encoding = nil
   output_encoding = nil
   nkf = false
+  check_only = false
   parser.on("-D", "--data-directory=DIR", "Specify the data directory"){|dir|
     data_path = Pathname(dir).realpath
   }
@@ -71,6 +95,9 @@ def main(argv)
   parser.on("--nkf", "Use NKF (default: no)"){
     nkf = true
   }
+  parser.on("-C", "--check-only", "Check file name and exit"){
+    check = true
+  }
 
   begin
     parser.parse!(argv)
@@ -85,7 +112,11 @@ def main(argv)
   require_relative "../hiki/db/#{database_type}"
   database_class = ::Hiki::const_get("HikiDB_#{database_type}")
 
-  convert(data_path, database_class, input_encoding, output_encoding, nkf)
+  if check_only
+    check(data_path, database_class, input_encoding, output_encoding, nkf)
+  else
+    convert(data_path, database_class, input_encoding, output_encoding, nkf)
+  end
 end
 
 if __FILE__ == $0
