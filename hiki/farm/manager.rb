@@ -47,19 +47,8 @@ module Hiki
         mkdir_p("#{@farm_pub_path}/#{name.untaint}")
 
         unless Object.const_defined?(:Rack)
-          # create index.cgi
-          File.open("#{@farm_pub_path}/#{name}/#{@conf.cgi_name}", 'w') do |f|
-            f.puts(index(name, @conf.hiki))
-            f.chmod(0744)
-          end
-
-          # create attach.cgi
-          if attach_cgi_name
-            File.open("#{@farm_pub_path}/#{name}/#{@conf.attach_cgi_name}", 'w') do |f|
-              f.puts(attach(name, @conf.hiki))
-              f.chmod(0744)
-            end
-          end
+          create_index_cgi
+          create_attach_cgi
         end
 
         # create hikiconf.rb
@@ -94,6 +83,21 @@ module Hiki
         __my_wiki_name__ = wiki
         # FIXME: maybe wrong path to template file
         return ERB.new(File.read("#{hiki}/hiki.conf.erb")).result(binding)
+      end
+
+      def create_index_cgi
+        File.open("#{@farm_pub_path}/#{name}/#{@conf.cgi_name}", 'w') do |f|
+          f.puts(index(name, @conf.hiki))
+          f.chmod(0744)
+        end
+      end
+
+      def create_attach_cgi
+        return unless attach_cgi_name
+        File.open("#{@farm_pub_path}/#{name}/#{@conf.attach_cgi_name}", 'w') do |f|
+          f.puts(attach(name, @conf.hiki))
+          f.chmod(0744)
+        end
       end
 
       # not in use
