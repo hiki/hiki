@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 require 'hiki/util'
+require "fileutils"
 
 module Hiki
   module Farm
     class Manager
+      include FileUtils
+
       attr_reader :wikilist
 
       def initialize(conf)
@@ -41,7 +44,7 @@ module Hiki
       end
 
       def create_wiki(name)
-        Dir.mkdir("#{@farm_pub_path}/#{name.untaint}")
+        mkdir_p("#{@farm_pub_path}/#{name.untaint}")
 
         unless Object.const_defined?(:Rack)
           # create index.cgi
@@ -64,15 +67,14 @@ module Hiki
           f.puts(conf(name, @conf.hiki))
         end
 
-        # TODO: use fileutils
-        Dir.mkdir("#{@conf.data_root}/#{name}")
-        Dir.mkdir("#{@conf.data_root}/#{name}/text")
-        Dir.mkdir("#{@conf.data_root}/#{name}/backup")
-        Dir.mkdir("#{@conf.data_root}/#{name}/cache")
+        mkdir_p("#{@conf.data_root}/#{name}")
+        mkdir_p("#{@conf.data_root}/#{name}/text")
+        mkdir_p("#{@conf.data_root}/#{name}/backup")
+        mkdir_p("#{@conf.data_root}/#{name}/cache")
         require 'fileutils'
         Dir["#{@conf.default_pages_path}/*"].each do |f|
           f.untaint
-          FileUtils.cp(f, "#{@conf.data_root}/#{name}/text/#{File.basename(f)}") if File.file?(f)
+          cp(f, "#{@conf.data_root}/#{name}/text/#{File.basename(f)}") if File.file?(f)
         end
 
         @repos.import(name)
