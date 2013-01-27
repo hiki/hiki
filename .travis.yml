@@ -1,7 +1,9 @@
 language: ruby
+
 rvm:
   - 1.8.7
   - 1.9.3
+  - ruby-head
 #  - jruby-18mode
 #  - jruby-19mode
 #  - rbx-18mode
@@ -12,8 +14,3 @@ install:
   - bundle install
 
 script: bundle exec ruby -W0 test/runner.rb -v
-
-#branches:
-#  only:
-#    - master
-
