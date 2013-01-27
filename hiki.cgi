@@ -6,7 +6,7 @@ BEGIN { $stdout.binmode }
 begin
   # FIXME encoding can be different (eg. iso-8859-1 in
   # hikiconf.rb.sample.en).
-  Encoding.default_external = 'euc-jp'
+  Encoding.default_external = 'utf-8'
 rescue NameError
   $KCODE = 'e'
 end

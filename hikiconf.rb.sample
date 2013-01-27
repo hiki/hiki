@@ -122,7 +122,7 @@
 #@hilight_keys    = true
 
 # ページのキャラクタセット【オプション】
-#@charset         = 'EUC-JP'
+#@charset         = 'UTF-8'
 
 # タイムアウトの秒数【オプション】
 #@timeout         = 30

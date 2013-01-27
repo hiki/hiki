@@ -105,7 +105,7 @@ EOT
 
     class TokenList < Bayes::TokenList
       def initialize
-        super(Bayes::CHARSET::EUC)
+        super(Bayes::CHARSET::UTF8)
       end
 
       RE_URL = %r[(?:https?|ftp)://[a-zA-Z0-9;/?:@&=+$,\-_.!~*\'()%]+]
