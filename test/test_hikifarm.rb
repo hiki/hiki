@@ -11,6 +11,7 @@ class Wiki_Unit_Tests < Test::Unit::TestCase
     FileUtils.mkdir_p("#{@data_root}/#{name}/text")
     Dir.chdir("#{@data_root}/#{name}/text") do
       File.open('FrontPage', 'w'){|f| f.puts "frontpage"}
+      sleep 1
       File.open('SandBox', 'w'){|f| f.puts "sandbox"}
       @now = Time.now
     end
