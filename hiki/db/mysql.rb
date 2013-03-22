@@ -109,6 +109,9 @@ module Hiki
           value = 0
         end
         @db[:page].where(wiki: @wiki, name: page).update(attribute => value)
+        unless %w(references count freeze).include?(attribute)
+          @db[:page_backup].where(wiki: @wiki, name: page).order(:revision).limite(1).update(attribute => value)
+        end
       end
     end
 
