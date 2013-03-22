@@ -1,7 +1,8 @@
 # $Id: flatfile.rb,v 1.23 2005/11/01 14:21:00 yanagita Exp $
 # Copyright (C) 2007 Kazuhiko <kazuhiko@fdiary.net>
 
-require "mysql.so"
+require "sequel"
+
 require "hiki/storage"
 require "hiki/util"
 require "hiki/db/tmarshal"
@@ -12,10 +13,10 @@ module Hiki
 
     def initialize(conf)
       @conf = conf
-      @db = Mysql.real_connect(@conf.database_host, @conf.database_user, @conf.database_pass, @conf.database_name)
-      @db.query("set names ujis")
+      @db = Sequel.connect(ENV['DATABASE_URL'] || @conf.database_url)
       @wiki = @conf.database_wiki
-      @conf.repos.db = self
+      # XXX
+      # @conf.repos.db = self
       @cache = {}
     end
 
@@ -23,7 +24,7 @@ module Hiki
       true
     end
 
-    def store(page, text, md5, update_timestamp = true)
+    def store(page, body, md5, update_timestamp = true)
       if exist?(page)
         return nil if md5 != md5hex(page)
         if update_timestamp
@@ -31,52 +32,36 @@ module Hiki
         end
       end
 
-      body = text
       last_modified = Time::now
-      st = @db.prepare("insert into page_backup (body, last_modified, wiki, name, revision) select ?,?,?,?,ifnull(max(revision), 0) + 1 from page_backup where wiki=? and name=?")
-      st.execute(body, last_modified, @wiki, page, @wiki, page)
-      if update_timestamp
-        st = @db.prepare("insert into page (body, last_modified, wiki, name, count) values (?,?,?,?,0) on duplicate key update body=?,last_modified=?")
-        st.execute(body, last_modified, @wiki, page, body, last_modified)
+
+      record = @db[:page].where(wiki: @wiki, name: page)
+      if record.first
+        record.update(body: body, last_modified: last_modified)
       else
-        st = @db.prepare("insert into page (body, last_modified, wiki, name, count) values (?,?,?,?,0) on duplicate key update body=?")
-        st.execute(body, last_modified, @wiki, page, body)
+        @db[:page].insert(body: body, last_modified: last_modified, wiki: @wiki, name: page, count: 0)
       end
+
       @cache[page] = body
       true
     end
 
     def unlink(page)
-      st = @db.prepare("delete from page where wiki=? and name=?")
-      st.execute(@wiki, page)
+      @db[:page].where(wiki: @wiki, name: page).delete
     end
 
     def load(page)
       return @cache[page] if @cache.has_key?(page)
-      st = @db.prepare("select page.body from page where wiki=? and name=?")
-      st.execute(@wiki, page)
-      res = st.fetch
-      if res
-        body = res.first
-        if body.empty?
-          body = nil
-        end
+
+      if res = @db[:page].where(wiki: @wiki, name: page).select(:body).first
+        @cache[page] = res[:body]
       else
-        body = nil
+        @cache[page] = nil
       end
-      @cache[page] = body
-      return body
+      @cache[page]
     end
 
     def load_backup(page)
-      st = @db.prepare("select page_backup.body from page_backup where wiki=? and name=? order by revision desc limit 1 offset 1")
-      st.execute(@wiki, page)
-      res = st.fetch
-      if res
-        return res.first.to_euc
-      else
-        return nil
-      end
+      @db[:page_backup].where(wiki: @wiki, name: page).desc(:revision).limit(1, 1).to_a.first
     end
 
     def save(page, src, md5)
@@ -88,18 +73,9 @@ module Hiki
     end
 
     def pages
-      ret = []
-      st = @db.prepare("select page.name from page where wiki=?")
-      st.execute(@wiki)
-      while res = st.fetch
-        ret << res.first
-      end
-      return ret
+      @db[:page].where(wiki: @wiki).select(:name).to_a.map{|page| page[:name]}
     end
 
-    # ==============
-    #   info DB
-    # ==============
     def info(page)
       res = page_info.find{|i| i.to_a[0][0] == page}.to_a[0][1] rescue nil
       if res
@@ -110,21 +86,12 @@ module Hiki
     end
 
     def page_info
-      return @info_db if @info_db
-      ret = []
-      st = @db.prepare("select page.name, page.title, page.last_modified, page.keyword, page.references, page.editor, page.freeze, page.count from page where wiki=?")
-      st.execute(@wiki)
-      while res = st.fetch
-        name = res.shift
-        ret << {name => make_info_hash(res)}
-      end
-      @info_db = ret
-      return ret
+      @info_db ||= @db[:page].where(wiki: @wiki).select(:name, :title, :last_modified, :keyword, :references, :editor, :freeze, :count).to_a.map{|page| {page[:name] => make_info_hash(page)}}
     end
 
     def set_attribute(page, attr)
       attr.each do |attribute, value|
-	attribute = attribute.to_s.chomp
+        attribute = attribute.to_s.chomp
         case value
         when Array
           value = value.join("\n")
@@ -135,10 +102,6 @@ module Hiki
         end
         st = @db.prepare("update page set page.#{attribute}=? where wiki=? and name=?")
         st.execute(value, @wiki, page)
-	if !["references", "count", "freeze"].include?(attribute)
-          st2 = @db.prepare("update page_backup set page_backup.#{attribute}=? where wiki=? and name=? order by revision desc limit 1")
-          st2.execute(value, @wiki, page)
-        end
       end
     end
 
@@ -155,9 +118,8 @@ module Hiki
       result
     end
 
-    def increment_hitcount (page)
-      st = @db.prepare("update page set count=count+1 where wiki=? and name=?")
-      st.execute(@wiki, page)
+    def increment_hitcount(page)
+      @db[:page].where(wiki: @wiki, name: page).update(count: count + 1)
     end
 
     def get_hitcount(page)
@@ -197,7 +159,8 @@ module Hiki
       ref
     end
 
-  private
+    private
+
     def create_missing_dirs
       [@pages_path, @backup_path].each {|d|
         FileUtils.mkdir_p(d) unless FileTest.exist?(d)
@@ -214,21 +177,22 @@ module Hiki
       }
     end
 
-    def make_info_hash(ary)
-      return {:title => ary[0] || "",
-        :last_modified  => make_time(ary[1]),
-        :keyword => (ary[2] || "").split(/\n/),
-        :references => (ary[3] || "").split(/\n/),
-        :editor => ary[4],
-        :freeze => ary[5] == 1,
-        :count => ary[6],
+    def make_info_hash(hash)
+      {
+        :title => hash[:title] || "",
+        :last_modified  => make_time(hash[:last_modified]),
+        :keyword => (hash[:keyword] || "").split(/\n/),
+        :references => (hash[:references] || "").split(/\n/),
+        :editor => hash[:editor],
+        :freeze => (hash[:freeze] == 1),
+        :count => hash[:count],
       }
     end
 
     def make_time(mysql_time)
       if mysql_time
         return Time::local(mysql_time.year, mysql_time.month, mysql_time.day,
-                          mysql_time.hour, mysql_time.minute, mysql_time.second)
+          mysql_time.hour, mysql_time.min, mysql_time.sec)
       else
         return Time::now
       end
