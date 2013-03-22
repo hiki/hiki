@@ -3,6 +3,9 @@ source 'https://rubygems.org'
 gem 'rack'
 gem 'thin'
 
+gem 'sequel'
+gem 'mysql2'
+
 group :development do
   gem 'foreman'
 end
