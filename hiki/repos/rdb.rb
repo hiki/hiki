@@ -7,7 +7,7 @@ require "hiki/repos/default"
 require 'sequel'
 
 module Hiki
-  class HikifarmReposMysql < HikifarmReposBase
+  class HikifarmReposRdb < HikifarmReposBase
     def initialize(root, data_root)
       @data_root = data_root
       @db = Sequel.connect(root)
@@ -35,7 +35,7 @@ module Hiki
     end
   end
 
-  class ReposMysql < ReposBase
+  class ReposRdb < ReposBase
     attr_writer :db
 
     def initialize(root, data_path)

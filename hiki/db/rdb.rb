@@ -7,7 +7,7 @@ require "hiki/db/tmarshal"
 require "sequel"
 
 module Hiki
-  class HikiDB_mysql < HikiDBBase
+  class HikiDB_rdb < HikiDBBase
     attr_reader :db, :wiki
 
     def initialize(conf)
@@ -197,12 +197,11 @@ module Hiki
       }
     end
 
-    def make_time(mysql_time)
-      if mysql_time
-        return Time::local(mysql_time.year, mysql_time.month, mysql_time.day,
-          mysql_time.hour, mysql_time.min, mysql_time.sec)
+    def make_time(time)
+      if time
+        Time.local(time.year, time.month, time.day, time.hour, time.min, time.sec)
       else
-        return Time::now
+        Time.now
       end
     end
 
