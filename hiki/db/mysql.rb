@@ -34,6 +34,14 @@ module Hiki
 
       last_modified = Time::now
 
+      revisions = @db[:page_backup].where(wiki: @wiki, name: page).select(:revision).to_a.map{|record| record[:revision]}
+      revision = if revisions.empty?
+                   1
+                 else
+                   max(revisions)
+                 end
+      @db[:page_backup].insert(body: body, last_modified: last_modified, wiki: @wiki, name: page, revision: revision)
+
       record = @db[:page].where(wiki: @wiki, name: page)
       if record.first
         record.update(body: body, last_modified: last_modified)
@@ -61,7 +69,7 @@ module Hiki
     end
 
     def load_backup(page)
-      @db[:page_backup].where(wiki: @wiki, name: page).desc(:revision).limit(1, 1).to_a.first
+      @db[:page_backup].where(wiki: @wiki, name: page).order(:revision).limit(1, 1).to_a.first
     end
 
     def save(page, src, md5)
@@ -100,7 +108,7 @@ module Hiki
         when FalseClass
           value = 0
         end
-        @db[:page].where(wiki: @wiki, name: page).update(attribute => value) 
+        @db[:page].where(wiki: @wiki, name: page).update(attribute => value)
       end
     end
 
