@@ -1,11 +1,10 @@
 # $Id: flatfile.rb,v 1.23 2005/11/01 14:21:00 yanagita Exp $
 # Copyright (C) 2007 Kazuhiko <kazuhiko@fdiary.net>
 
-require "sequel"
-
 require "hiki/storage"
 require "hiki/util"
 require "hiki/db/tmarshal"
+require "sequel"
 
 module Hiki
   class HikiDB_mysql < HikiDBBase
@@ -15,8 +14,7 @@ module Hiki
       @conf = conf
       @db = Sequel.connect(ENV['DATABASE_URL'] || @conf.database_url)
       @wiki = @conf.database_wiki
-      # XXX
-      # @conf.repos.db = self
+      @conf.repos.db = self
       @cache = {}
     end
 
