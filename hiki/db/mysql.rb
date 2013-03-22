@@ -100,8 +100,7 @@ module Hiki
         when FalseClass
           value = 0
         end
-        st = @db.prepare("update page set page.#{attribute}=? where wiki=? and name=?")
-        st.execute(value, @wiki, page)
+        @db[:page].where(wiki: @wiki, name: page).update(attribute => value) 
       end
     end
 
