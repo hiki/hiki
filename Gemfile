@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rack'
 gem 'thin'
+gem 'docdiff'
 
 gem 'sequel'
 gem 'mysql2'
