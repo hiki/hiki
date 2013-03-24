@@ -6,8 +6,10 @@ require 'nkf'
 require 'cgi' unless Object.const_defined?(:Rack)
 require 'erb'
 
-autoload( :Document, 'docdiff' )
-autoload( :Diff, 'docdiff' )
+require 'docdiff/difference'
+require 'docdiff/document'
+require 'docdiff/view'
+require 'docdiff/diff/unidiff'
 
 class String
   # all instance methods added in String class will be obsoleted in the
