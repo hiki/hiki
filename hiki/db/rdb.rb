@@ -13,7 +13,6 @@ module Hiki
     def initialize(conf)
       @conf = conf
       @wiki = @conf.database_wiki
-      @conf.repos.db = self
       @cache = {}
     end
 
