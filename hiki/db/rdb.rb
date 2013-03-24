@@ -12,14 +12,27 @@ module Hiki
 
     def initialize(conf)
       @conf = conf
-      @db = Sequel.connect(ENV['DATABASE_URL'] || @conf.database_url)
       @wiki = @conf.database_wiki
       @conf.repos.db = self
       @cache = {}
     end
 
-    def close_db
+    def open_db
+      if block_given?
+        begin
+          @db = Sequel.connect(ENV['DATABASE_URL'] || @conf.database_url)
+          yield
+        ensure
+          close_db
+        end
+      else
+        true
+      end
       true
+    end
+
+    def close_db
+      @db.disconnect
     end
 
     def store(page, body, md5, update_timestamp = true)
