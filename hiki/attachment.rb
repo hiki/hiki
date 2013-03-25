@@ -13,10 +13,11 @@ module Hiki
     def initialize(config_path)
       @config_path = config_path
     end
+
     def call(env)
       request = Hiki::Request.new(env)
       # HACK replace ENV values to web application environment
-      env.each{|k,v| ENV[k] = v unless /\Arack\./ =~ k }
+      env.each{|k,v| ENV[k] = v.to_s unless /\Arack\./ =~ k }
       conf = Hiki::Config.new(@config_path)
       response = attach_file(request, conf)
       response.finish
