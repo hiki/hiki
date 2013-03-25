@@ -255,7 +255,7 @@ module Hiki
           smtp.send_mail <<EndOfMail, from_addr, *to_addrs
 From: #{from_addr}
 To: #{to_addrs.join(",")}
-Subject: #{NKF.nkf('-M', subject)}
+Subject: #{NKF.nkf('-Mj', subject)}
 Date: #{Time.now.rfc2822}
 MIME-Version: 1.0
 Content-Type: text/plain; charset="iso-2022-jp"
