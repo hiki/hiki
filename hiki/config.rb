@@ -138,7 +138,6 @@ module Hiki
       formaterror if $data_path
 
       raise 'No @data_path variable.' unless @data_path
-      @data_path += '/' if /\/$/ !~ @data_path
 
       # default values
       @smtp_server   ||= 'localhost'
