@@ -4,8 +4,8 @@
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
 
 module Hiki
-  VERSION = '0.9dev'
-  RELEASE_DATE = '2009-08-24'
+  VERSION = '1.0.0'
+  RELEASE_DATE = '2013-03-30'
 end
 
 # For backward compatibility
