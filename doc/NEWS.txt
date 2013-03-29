@@ -1,7 +1,21 @@
-! 0.9.0 での変更点（未リリース）
+! 1.0.0 での変更点
 
 * Wikiスタイルのパーサの DoS 脆弱性を修正しました。
 * Ruby-1.9に対応しました。
+* デフォルトの文字コードをUTF-8に変更しました。
+* Rackに対応しました。
+* Bundlerに対応しました。
+* docdiffはGemを使うようにしました。
+* hikidocはGemを使うようにしました。
+* If-Modified-Since の判定条件が誤っていたバグを修正しました。
+** Makoto Kitaichi さんが Pull Request [GitHub #7]
+* misc/plugin/attach.rb の NameError を修正しました。
+** Keisuke SOGAWA さんが Pull Request [GitHub #20]
+* ruby hiki.rb で動作するようになりました。
+** Tomohiko Himura さんが PUll Request [GitHub #21]
+* Sequel による RDBMS バックエンドを追加しました。[実験的]
+* Heroku 上で動くようになりました。[実験的]
+* Wiki テキストの文字コードを変更するスクリプトを追加しました。
 
 ! 0.8.8 での変更点
 

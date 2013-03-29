@@ -1,7 +1,20 @@
-! Changes in 0.9.0 (not yet released)
+! Changes in 1.0.0
 
-* fix DoS vulnerabilities in the process of Wiki style's parser.
-* support Ruby-1.9.
+* Fix DoS vulnerabilities in the process of Wiki style's parser.
+* Support Ruby-1.9.
+* Support Rack.
+* Support Bundler.
+* Use docdiff Gem.
+* Use hikidoc Gem.
+* Fix wrong condition for If-Modified-Since.
+** Pull Request by Makoto Kitaichi [GitHub #7]
+* Fix NameError in misc/plugin/attach.rb
+** Pull Request by Keisuke SOGAWA [GitHub #20]
+* We can run Hiki to run "ruby hiki.rb".
+** Pull Request by Tomohiko Himura [GitHub #21]
+* Support RDBMS by Sequel [Experimental]
+* Support Heroku [Experimental]
+* Add a script to convert wiki text encoding.
 
 ! Changes in 0.8.8
 
