@@ -17,7 +17,7 @@ def saveconf_edit_user
     end
     @conf['user.list'] = user_list
 
-    @request.params['user.list'].each do |line|
+    @request.params['user.list'].each_line do |line|
       if /^([^\s]+)\s+([^\s]+)/ =~ line
         name = $1
         pass = $2
