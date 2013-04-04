@@ -38,6 +38,8 @@ module Hiki
     attr_writer :db
 
     def initialize(database_url, data_path)
+      @database_url = database_url
+      @data_path = data_path
     end
 
     def commit(page, msg = default_msg)
@@ -47,9 +49,9 @@ module Hiki
     end
 
     def get_revision(page, revision)
-      db.open_db do
-        record = db[:page_backup].where(wiki: db.wiki, name: page, revision: revision).limit(1).select(:body).first
-      end
+      connect = Sequel.connect(ENV['DATABASE_URL'] || @database_url)
+      record = connect[:page_backup].where(wiki: @db.wiki, name: page, revision: revision).limit(1).select(:body).first
+      connect.disconnect
 
       if record && record[:body]
         record[:body]
@@ -59,9 +61,10 @@ module Hiki
     end
 
     def revisions(page)
-      db.open_db do
-        records = db[:page_backup].where(wiki: db.wiki, name: page).order(:revision).select(:revision, :last_modified, :editor)
-      end
+      connect = Sequel.connect(ENV['DATABASE_URL'] || @database_url)
+      records = connect[:page_backup].where(wiki: @db.wiki, name: page).order(:revision).select(:revision, :last_modified, :editor)
+      connect.disconnect
+
       records.map do |record|
         [
           record[:revision],
