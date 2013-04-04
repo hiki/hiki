@@ -12,6 +12,8 @@ module Hiki
       @conf = conf
       @wiki = @conf.database_wiki
       @cache = {}
+
+      @conf.repos.db = self
     end
 
     def open_db
