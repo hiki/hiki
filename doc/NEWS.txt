@@ -8,11 +8,11 @@
 * docdiffはGemを使うようにしました。
 * hikidocはGemを使うようにしました。
 * If-Modified-Since の判定条件が誤っていたバグを修正しました。
-** Makoto Kitaichi さんが Pull Request [GitHub #7]
+** Makoto Kitaichi さんが Pull Request [[GitHub:7]]
 * misc/plugin/attach.rb の NameError を修正しました。
-** Keisuke SOGAWA さんが Pull Request [GitHub #20]
+** Keisuke SOGAWA さんが Pull Request [[GitHub:20]]
 * ruby hiki.rb で動作するようになりました。
-** Tomohiko Himura さんが PUll Request [GitHub #21]
+** Tomohiko Himura さんが PUll Request [[GitHub:21]]
 * Sequel による RDBMS バックエンドを追加しました。[実験的]
 * Heroku 上で動くようになりました。[実験的]
 * Wiki テキストの文字コードを変更するスクリプトを追加しました。

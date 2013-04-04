@@ -7,11 +7,11 @@
 * Use docdiff Gem.
 * Use hikidoc Gem.
 * Fix wrong condition for If-Modified-Since.
-** Pull Request by Makoto Kitaichi [GitHub #7]
+** Pull Request by Makoto Kitaichi [[GitHub:7]]
 * Fix NameError in misc/plugin/attach.rb
-** Pull Request by Keisuke SOGAWA [GitHub #20]
+** Pull Request by Keisuke SOGAWA [[GitHub:20]]
 * We can run Hiki to run "ruby hiki.rb".
-** Pull Request by Tomohiko Himura [GitHub #21]
+** Pull Request by Tomohiko Himura [[GitHub:21]]
 * Support RDBMS by Sequel [Experimental]
 * Support Heroku [Experimental]
 * Add a script to convert wiki text encoding.
