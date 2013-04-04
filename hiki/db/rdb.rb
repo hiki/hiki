@@ -1,4 +1,3 @@
-# $Id: flatfile.rb,v 1.23 2005/11/01 14:21:00 yanagita Exp $
 # Copyright (C) 2007 Kazuhiko <kazuhiko@fdiary.net>
 
 require "hiki/storage"
@@ -14,6 +13,8 @@ module Hiki
       @conf = conf
       @wiki = @conf.database_wiki
       @cache = {}
+
+      @conf.repos.db = self
     end
 
     def open_db

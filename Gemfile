@@ -10,6 +10,7 @@ gem 'sequel'
 gem 'mysql2'
 
 group :development do
+  gem 'pry'
   gem 'foreman'
 end
 
