@@ -45,11 +45,7 @@ module Hiki
       last_modified = Time::now
 
       revisions = @db[:page_backup].where(wiki: @wiki, name: page).select(:revision).to_a.map{|record| record[:revision]}
-      revision = if revisions.empty?
-                   1
-                 else
-                   max(revisions)
-                 end
+      revision = revisions.empty? ? 1 : revisions.max
       @db[:page_backup].insert(body: body, last_modified: last_modified, wiki: @wiki, name: page, revision: revision)
 
       record = @db[:page].where(wiki: @wiki, name: page)
@@ -120,7 +116,7 @@ module Hiki
         end
         @db[:page].where(wiki: @wiki, name: page).update(attribute => value)
         unless %w(references count freeze).include?(attribute)
-          @db[:page_backup].where(wiki: @wiki, name: page).order(:revision).limite(1).update(attribute => value)
+          @db[:page_backup].where(wiki: @wiki, name: page).order(:revision).limit(1).update(attribute => value)
         end
       end
     end
