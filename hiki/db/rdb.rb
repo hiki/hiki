@@ -1,9 +1,7 @@
-# $Id: flatfile.rb,v 1.23 2005/11/01 14:21:00 yanagita Exp $
 # Copyright (C) 2007 Kazuhiko <kazuhiko@fdiary.net>
 
 require "hiki/storage"
 require "hiki/util"
-require "hiki/db/tmarshal"
 require "sequel"
 
 module Hiki
