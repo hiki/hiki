@@ -2,6 +2,7 @@
 
 require "hiki/storage"
 require "hiki/util"
+require "hiki/db/tmarshal"
 require "sequel"
 
 module Hiki
