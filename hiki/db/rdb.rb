@@ -46,7 +46,7 @@ module Hiki
       last_modified = Time::now
 
       revisions = @db[:page_backup].where(wiki: @wiki, name: page).select(:revision).to_a.map{|record| record[:revision]}
-      revision = revisions.empty? ? 1 : revisions.max
+      revision = revisions.empty? ? 1 : revisions.max + 1
       @db[:page_backup].insert(body: body, last_modified: last_modified, wiki: @wiki, name: page, revision: revision)
 
       record = @db[:page].where(wiki: @wiki, name: page)
