@@ -76,7 +76,11 @@ module Hiki
     end
 
     def load_backup(page)
-      @db[:page_backup].where(wiki: @wiki, name: page).order(:revision).limit(1, 1).to_a.first
+      if res = @db[:page_backup].where(wiki: @wiki, name: page).order(:revision).limit(1).select(:body).first
+        res[:body]
+      else
+        nil
+      end
     end
 
     def save(page, src, md5)
