@@ -67,7 +67,7 @@ module Hiki
     def load(page)
       return @cache[page] if @cache.has_key?(page)
 
-      if res = @db[:page].where(wiki: @wiki, name: page).select(:body).first
+      if res = @db[:page].where(wiki: @wiki, name: page).limit(1).select(:body).first
         @cache[page] = res[:body]
       else
         @cache[page] = nil
