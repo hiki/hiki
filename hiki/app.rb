@@ -29,10 +29,13 @@ module Hiki
           response = command.dispatch
         end
       end
-      # [body, status, headers]
-      # Rack::Response.new(*response){|r|
-      # }.finish
+
       response.header.delete('status')
+
+      charset = response.header.delete('charset')
+      response.header['Content-Type'] ||= response.header.delete('type')
+      response.header['Content-Type'] += "; charset=#{charset}" if charset
+
       response.finish
     end
   end
