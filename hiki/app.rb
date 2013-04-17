@@ -31,6 +31,7 @@ module Hiki
       end
 
       response.header.delete('status')
+      response.header.delete('cookie')
 
       charset = response.header.delete('charset')
       response.header['Content-Type'] ||= response.header.delete('type')
