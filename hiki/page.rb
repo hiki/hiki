@@ -2,7 +2,7 @@
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 
-require 'cgi' unless Object.const_defined?(:Rack)
+require 'cgi'
 require 'nkf'
 
 module Hiki
