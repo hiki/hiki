@@ -37,6 +37,11 @@ module Hiki
       response.header['Content-Type'] ||= response.header.delete('type')
       response.header['Content-Type'] += "; charset=#{charset}" if charset
 
+      if request.head?
+        response.header.delete('Content-Length')
+        response.body = []
+      end
+
       response.finish
     end
   end
