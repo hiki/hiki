@@ -255,14 +255,14 @@ module Hiki
           smtp.send_mail <<EndOfMail, from_addr, *to_addrs
 From: #{from_addr}
 To: #{to_addrs.join(",")}
-Subject: #{NKF.nkf('-Mj', subject)}
+Subject: #{NKF.nkf('-Mw', subject)}
 Date: #{Time.now.rfc2822}
 MIME-Version: 1.0
-Content-Type: text/plain; charset="iso-2022-jp"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: Base64
 X-Mailer: Hiki #{Hiki::VERSION}
 
-#{body.to_jis}
+#{NKF.nkf('-MBw', body)}
 EndOfMail
         end
       end
