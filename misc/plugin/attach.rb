@@ -129,12 +129,12 @@ def attach_src(file_name, page = @page)
   if file_name =~ /\.(txt|rd|rb|c|pl|py|sh|java|html|htm|css|xml|xsl|sql|yaml)\z/i
     file = "#{@conf.cache_path}/attach/#{escape(page.untaint)}/#{escape(file_name.untaint)}"
     s = %Q!<pre>!
-    content = File.readlines(file)
+    content = File.read(file).to_utf8.split(/^/)
     if @options['attach.show_linenum']
       line = 0
       content.collect! {|i| sprintf("%3d| %s", line+=1, i)}
     end
-    s << h(content.join).gsub(/^\t+/) {|t| tabstop * t.size}.to_euc
+    s << h(content.join).gsub(/^\t+/) {|t| tabstop * t.size}
     s << %Q!</pre>!
   end
 end
