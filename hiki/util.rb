@@ -271,12 +271,30 @@ EndOfMail
     def send_updating_mail(page, type, text='')
       body = <<EOS
 #{'-' * 25}
-REMOTE_ADDR = #{ENV['REMOTE_ADDR']}
-REMOTE_HOST = #{ENV['REMOTE_HOST']}
 EOS
-      body << "REMOTE_USER = #{ENV['REMOTE_USER']}\n" if ENV['REMOTE_USER']
+      info = {}
+      key_max_len = 0
+      [
+        'HTTP_CLIENT_IP',
+        'HTTP_X_FORWARDED_FOR',
+        'HTTP_X_REAL_IP',
+        'REMOTE_ADDR',
+        'REMOTE_HOST',
+        'REMOTE_USER',
+        'HTTP_USER_AGENT',
+      ].each do |key|
+        if ENV[key]
+          info[key] = ENV[key]
+          if key_max_len < key.size
+            key_max_len = key.size
+          end
+        end
+      end
+      info["URL"] = "#{@conf.index_url}?#{escape(page)}"
+      info.each do |key, value|
+        body << sprintf("%*s = %s\n", key_max_len, key, value)
+      end
       body << <<EOS
-        URL = #{@conf.index_url}?#{escape(page)}
 #{'-' * 25}
 #{text}
 EOS
