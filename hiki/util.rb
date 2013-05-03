@@ -54,6 +54,18 @@ class String
   def sanitize
     self
   end
+
+  unless method_defined?(:b)
+    if Object.const_defined?(:Encoding)
+      def b
+        force_encoding(Encoding::ASCII_8BIT)
+      end
+    else
+      def b
+        self
+      end
+    end
+  end
 end
 
 class Hash
