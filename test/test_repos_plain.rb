@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-require 'test/unit'
+require 'test_helper'
 require 'fileutils'
 require 'hiki/repos/plain'
 require 'hiki/util'

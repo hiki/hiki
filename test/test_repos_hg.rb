@@ -4,8 +4,7 @@
 # This code is modified from "test/test_repos_git.rb" by Kouhei Sutou
 # You can distribute this under GPL.
 
-require 'test/unit'
-require 'fileutils'
+require 'test_helper'
 require 'hiki/repos/hg'
 require 'hiki/util'
 

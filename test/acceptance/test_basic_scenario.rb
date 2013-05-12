@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
+
+require "test_helper"
+
 require "rack"
 require "hiki/app"
-require "test/unit/capybara"
-require "fileutils"
 
 module BasicScenario
   def test_title

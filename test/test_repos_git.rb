@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-require 'test/unit'
-require 'fileutils'
+
+require 'test_helper'
 require 'hiki/repos/git'
 require 'hiki/util'
 
