@@ -6,7 +6,7 @@ require 'hiki/config'
 class Config_Unit_Tests < Test::Unit::TestCase
   def setup
     base_dir = File.dirname(__FILE__)
-    @config_path = "#{base_dir}/fixtures/hikiconf_test.rb"
+    @config_path = "#{base_dir}/fixtures/hikiconf_unit.rb"
   end
 
   def test_initialize
