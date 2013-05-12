@@ -1,4 +1,4 @@
-require 'test/unit'
+require 'test_helper'
 require 'hiki/util'
 require 'hiki/repos/default'
 

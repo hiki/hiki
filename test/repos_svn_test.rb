@@ -1,15 +1,10 @@
 # -*- coding: utf-8 -*-
-# $Id: test_repos_hg.rb,v 1.1 2008-08-06 10:48:25 hiraku Exp $
-# Copyright (C) 2008, KURODA Hiraku <hiraku{@}hinet.mydns.jp>
-# This code is modified from "test/test_repos_git.rb" by Kouhei Sutou
-# You can distribute this under GPL.
 
-require 'test/unit'
-require 'fileutils'
-require 'hiki/repos/hg'
+require 'test_helper'
+require 'hiki/repos/svn'
 require 'hiki/util'
 
-class Repos_Hg_Tests < Test::Unit::TestCase
+class Repos_SVN_Tests < Test::Unit::TestCase
   include Hiki::Util
   include TestHelper
 
@@ -19,14 +14,13 @@ class Repos_Hg_Tests < Test::Unit::TestCase
     @wiki = 'wikiwiki'
     @data_dir = "#{@tmp_dir}/data"
     @text_dir = "#{@data_dir}/text"
-    @repos = Hiki::ReposHg.new(@root, @data_dir)
+    @repository_dir = "#{@tmp_dir}/repository"
+    @repos = Hiki::ReposSvn.new(@root, @data_dir)
 
     FileUtils.mkdir_p(@text_dir)
-    check_command("hg")
-    Dir.chdir(@text_dir) do
-      hg("init")
-      create_hgrc
-    end
+    check_command("svn")
+    svnadmin("create", @repository_dir)
+    svn("checkout", "file://#{@repository_dir}", @text_dir)
   end
 
   def teardown
@@ -44,7 +38,7 @@ class Repos_Hg_Tests < Test::Unit::TestCase
     assert_equal('foobar new', read('FooBar'))
 
     Dir.chdir(@text_dir) do
-      assert_equal("foobar new", hg("cat", "FooBar"))
+      assert_equal("foobar new", svn("cat", "FooBar"))
     end
   end
 
@@ -56,14 +50,15 @@ class Repos_Hg_Tests < Test::Unit::TestCase
   end
 
   def test_get_revision
-    rev1 = rev2 = rev3 = nil
-    write("HogeHoge", 'hogehoge1')
-    Dir.chdir(@text_dir) {hg("add", "HogeHoge")}
-    Dir.chdir(@text_dir) {hg("commit", "-m", "First", "HogeHoge")}
-    write("HogeHoge", 'hogehoge2')
-    Dir.chdir(@text_dir) {hg("commit", "-m", "Second", "HogeHoge")}
-    write("HogeHoge", 'hogehoge3')
-    Dir.chdir(@text_dir) {hg("commit", "-m", "Third", "HogeHoge")}
+    Dir.chdir(@text_dir) do
+      write("HogeHoge", "hogehoge1")
+      svn("add", "HogeHoge")
+      svn("commit", "-m", "First", "HogeHoge")
+      write("HogeHoge", "hogehoge2")
+      svn("commit", "-m", "Second", "HogeHoge")
+      write("HogeHoge", "hogehoge3")
+      svn("commit", "-m", "Third", "HogeHoge")
+    end
 
     assert_equal('hogehoge1', @repos.get_revision('HogeHoge', 1))
     assert_equal('hogehoge2', @repos.get_revision('HogeHoge', 2))
@@ -71,21 +66,24 @@ class Repos_Hg_Tests < Test::Unit::TestCase
   end
 
   def test_revisions
-    write("HogeHoge", 'hogehoge1')
-    Dir.chdir(@text_dir) {hg("add", "HogeHoge")}
-    Dir.chdir(@text_dir) {hg("commit", "-m", "First", "HogeHoge")}
-    modified1 = Time.now.localtime.strftime('%Y/%m/%d %H:%M:%S')
-    write("HogeHoge", 'hogehoge2')
-    Dir.chdir(@text_dir) {hg("commit", "-m", "Second", "HogeHoge")}
-    modified2 = Time.now.localtime.strftime('%Y/%m/%d %H:%M:%S')
-    write("HogeHoge", 'hogehoge3')
-    Dir.chdir(@text_dir) {hg("commit", "-m", "Third", "HogeHoge")}
-    modified3 = Time.now.localtime.strftime('%Y/%m/%d %H:%M:%S')
+    modified1 = modified2 = modified3 = nil
+    Dir.chdir(@text_dir) do
+      write("HogeHoge", "hogehoge1")
+      modified1 = Time.now.localtime.strftime('%Y/%m/%d %H:%M:%S')
+      svn("add", "HogeHoge")
+      svn("commit", "-m", "First", "HogeHoge")
+      write("HogeHoge", "hogehoge2")
+      modified2 = Time.now.localtime.strftime('%Y/%m/%d %H:%M:%S')
+      svn("commit", "-m", "Second", "HogeHoge")
+      write("HogeHoge", "hogehoge3")
+      modified3 = Time.now.localtime.strftime('%Y/%m/%d %H:%M:%S')
+      svn("commit", "-m", "Third", "HogeHoge")
+    end
 
     expected = [
-                [3, modified3, '', 'Third'],
-                [2, modified2, '', 'Second'],
-                [1, modified1, '', 'First'],
+                [3, modified3, '1 line', 'Third'],
+                [2, modified2, '1 line', 'Second'],
+                [1, modified1, '1 line', 'First'],
                ].transpose
     actual = @repos.revisions('HogeHoge').transpose
 
@@ -143,19 +141,24 @@ class Repos_Hg_Tests < Test::Unit::TestCase
     @repos.pages.each do |page|
       actuals << page
     end
-
     expected = ["ほげほげ", "FooBar"]
     if Object.const_defined?(:Encoding)
       expected = expected.map{|v| v.force_encoding("binary") }
     end
-
     assert_equal(expected.sort, actuals.sort)
   end
 
   private
-  def hg(*args)
-    args = args.collect{|arg| arg.dump}.join(' ')
-    result = `hg #{args}`.chomp
+  def svn(*args)
+    args = args.map{|arg| arg.dump }.join(' ')
+    result = `svn #{args}`.chomp
+    raise result unless $?.success?
+    result
+  end
+
+  def svnadmin(*args)
+    args = args.map{|arg| arg.dump }.join(' ')
+    result = `svnadmin #{args}`.chomp
     raise result unless $?.success?
     result
   end

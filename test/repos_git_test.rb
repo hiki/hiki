@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-require 'test/unit'
-require 'fileutils'
-require 'hiki/repos/svn'
+
+require 'test_helper'
+require 'hiki/repos/git'
 require 'hiki/util'
 
-class Repos_SVN_Tests < Test::Unit::TestCase
+class Repos_Git_Tests < Test::Unit::TestCase
   include Hiki::Util
   include TestHelper
 
@@ -14,13 +14,13 @@ class Repos_SVN_Tests < Test::Unit::TestCase
     @wiki = 'wikiwiki'
     @data_dir = "#{@tmp_dir}/data"
     @text_dir = "#{@data_dir}/text"
-    @repository_dir = "#{@tmp_dir}/repository"
-    @repos = Hiki::ReposSvn.new(@root, @data_dir)
+    @repos = Hiki::ReposGit.new(@root, @data_dir)
 
     FileUtils.mkdir_p(@text_dir)
-    check_command("svn")
-    svnadmin("create", @repository_dir)
-    svn("checkout", "file://#{@repository_dir}", @text_dir)
+    check_command("git")
+    Dir.chdir(@text_dir) do
+      git("init", "-q")
+    end
   end
 
   def teardown
@@ -31,59 +31,73 @@ class Repos_SVN_Tests < Test::Unit::TestCase
     write("FooBar", 'foobar')
     @repos.commit('FooBar')
     assert_equal('foobar', read('FooBar'))
-    file = nil
+    object = nil
+    Dir.chdir(@text_dir) do
+      object = git("hash-object", "FooBar")
+    end
 
     write("FooBar", 'foobar new')
     @repos.commit('FooBar')
     assert_equal('foobar new', read('FooBar'))
 
     Dir.chdir(@text_dir) do
-      assert_equal("foobar new", svn("cat", "FooBar"))
+      assert_equal("foobar", git("cat-file", "blob", object))
     end
   end
 
   def test_commit_with_content
     @repos.commit_with_content("FooBar", "foobar")
     assert_equal("foobar", read("FooBar"))
+    old_hash = nil
+    Dir.chdir(@text_dir) do
+      old_hash = git("hash-object", "FooBar")
+    end
     @repos.commit_with_content("FooBar", "foobar new")
     assert_equal("foobar new", read("FooBar"))
+
+    Dir.chdir(@text_dir) do
+      assert_equal("foobar", git("cat-file", "blob", old_hash))
+    end
   end
 
   def test_get_revision
-    Dir.chdir(@text_dir) do
-      write("HogeHoge", "hogehoge1")
-      svn("add", "HogeHoge")
-      svn("commit", "-m", "First", "HogeHoge")
-      write("HogeHoge", "hogehoge2")
-      svn("commit", "-m", "Second", "HogeHoge")
-      write("HogeHoge", "hogehoge3")
-      svn("commit", "-m", "Third", "HogeHoge")
-    end
+    rev1 = rev2 = rev3 = nil
+    write("HogeHoge", 'hogehoge1')
+    Dir.chdir(@text_dir) {git("add", "HogeHoge")}
+    Dir.chdir(@text_dir) {git("commit", "-m", "First", "HogeHoge")}
+    Dir.chdir(@text_dir) {rev1 = git("hash-object", "HogeHoge")}
+    write("HogeHoge", 'hogehoge2')
+    Dir.chdir(@text_dir) {git("commit", "-m", "Second", "HogeHoge")}
+    Dir.chdir(@text_dir) {rev2 = git("hash-object", "HogeHoge")}
+    write("HogeHoge", 'hogehoge3')
+    Dir.chdir(@text_dir) {git("commit", "-m", "Third", "HogeHoge")}
+    Dir.chdir(@text_dir) {rev3 = git("hash-object", "HogeHoge")}
 
-    assert_equal('hogehoge1', @repos.get_revision('HogeHoge', 1))
-    assert_equal('hogehoge2', @repos.get_revision('HogeHoge', 2))
-    assert_equal('hogehoge3', @repos.get_revision('HogeHoge', 3))
+    assert_equal('hogehoge1', @repos.get_revision('HogeHoge', rev1[0, 7]))
+    assert_equal('hogehoge2', @repos.get_revision('HogeHoge', rev2[0, 7]))
+    assert_equal('hogehoge3', @repos.get_revision('HogeHoge', rev3[0, 7]))
   end
 
   def test_revisions
-    modified1 = modified2 = modified3 = nil
-    Dir.chdir(@text_dir) do
-      write("HogeHoge", "hogehoge1")
-      modified1 = Time.now.localtime.strftime('%Y/%m/%d %H:%M:%S')
-      svn("add", "HogeHoge")
-      svn("commit", "-m", "First", "HogeHoge")
-      write("HogeHoge", "hogehoge2")
-      modified2 = Time.now.localtime.strftime('%Y/%m/%d %H:%M:%S')
-      svn("commit", "-m", "Second", "HogeHoge")
-      write("HogeHoge", "hogehoge3")
-      modified3 = Time.now.localtime.strftime('%Y/%m/%d %H:%M:%S')
-      svn("commit", "-m", "Third", "HogeHoge")
-    end
+    rev1 = rev2 = rev3 = nil
+    write("HogeHoge", 'hogehoge1')
+    Dir.chdir(@text_dir) {git("add", "HogeHoge")}
+    Dir.chdir(@text_dir) {git("commit", "-m", "First", "HogeHoge")}
+    Dir.chdir(@text_dir) {rev1 = git("hash-object", "HogeHoge")}
+    modified1 = Time.now.localtime.strftime('%Y/%m/%d %H:%M:%S')
+    write("HogeHoge", 'hogehoge2')
+    Dir.chdir(@text_dir) {git("commit", "-m", "Second", "HogeHoge")}
+    Dir.chdir(@text_dir) {rev2 = git("hash-object", "HogeHoge")}
+    modified2 = Time.now.localtime.strftime('%Y/%m/%d %H:%M:%S')
+    write("HogeHoge", 'hogehoge3')
+    Dir.chdir(@text_dir) {git("commit", "-m", "Third", "HogeHoge")}
+    Dir.chdir(@text_dir) {rev3 = git("hash-object", "HogeHoge")}
+    modified3 = Time.now.localtime.strftime('%Y/%m/%d %H:%M:%S')
 
     expected = [
-                [3, modified3, '1 line', 'Third'],
-                [2, modified2, '1 line', 'Second'],
-                [1, modified1, '1 line', 'First'],
+                [rev3[0, 7], modified1, '', 'Third'],
+                [rev2[0, 7], modified2, '', 'Second'],
+                [rev1[0, 7], modified3, '', 'First'],
                ].transpose
     actual = @repos.revisions('HogeHoge').transpose
 
@@ -128,6 +142,7 @@ class Repos_SVN_Tests < Test::Unit::TestCase
     if Object.const_defined?(:Encoding)
       expected = expected.map{|v| v.force_encoding("binary") }
     end
+
     assert_equal(expected.sort, @repos.pages.sort)
   end
 
@@ -141,24 +156,19 @@ class Repos_SVN_Tests < Test::Unit::TestCase
     @repos.pages.each do |page|
       actuals << page
     end
+
     expected = ["ほげほげ", "FooBar"]
     if Object.const_defined?(:Encoding)
       expected = expected.map{|v| v.force_encoding("binary") }
     end
+
     assert_equal(expected.sort, actuals.sort)
   end
 
   private
-  def svn(*args)
-    args = args.map{|arg| arg.dump }.join(' ')
-    result = `svn #{args}`.chomp
-    raise result unless $?.success?
-    result
-  end
-
-  def svnadmin(*args)
-    args = args.map{|arg| arg.dump }.join(' ')
-    result = `svnadmin #{args}`.chomp
+  def git(*args)
+    args = args.collect{|arg| arg.dump}.join(' ')
+    result = `git #{args}`.chomp
     raise result unless $?.success?
     result
   end

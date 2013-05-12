@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
+require "pathname"
+fixtures_dir = Pathname(__FILE__.tr("()", "")).dirname
 
+@data_path       = (fixtures_dir + "../data").expand_path.to_s
 @data_path       = 'data'
 @smtp_server     = 'localhost'
 @use_plugin      = true

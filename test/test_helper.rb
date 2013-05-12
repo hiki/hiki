@@ -1,4 +1,16 @@
+require 'bundler/setup'
+
+require 'test/unit'
+require 'test/unit/notify'
+require 'test/unit/rr'
+require "test/unit/capybara"
+
 require "pathname"
+require "fileutils"
+
+rootdir = Pathname(__FILE__).dirname.parent.expand_path
+$LOAD_PATH.unshift(rootdir, "#{rootdir}/hiki")
+$LOAD_PATH.unshift(rootdir, "#{rootdir}/test")
 
 module TestHelper
 
