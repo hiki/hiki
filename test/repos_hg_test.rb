@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
-require 'test/unit'
-require 'fileutils'
-require 'hiki/repos/git'
+# $Id: test_repos_hg.rb,v 1.1 2008-08-06 10:48:25 hiraku Exp $
+# Copyright (C) 2008, KURODA Hiraku <hiraku{@}hinet.mydns.jp>
+# This code is modified from "test/test_repos_git.rb" by Kouhei Sutou
+# You can distribute this under GPL.
+
+require 'test_helper'
+require 'hiki/repos/hg'
 require 'hiki/util'
 
-class Repos_Git_Tests < Test::Unit::TestCase
+class Repos_Hg_Tests < Test::Unit::TestCase
   include Hiki::Util
   include TestHelper
 
@@ -14,12 +18,13 @@ class Repos_Git_Tests < Test::Unit::TestCase
     @wiki = 'wikiwiki'
     @data_dir = "#{@tmp_dir}/data"
     @text_dir = "#{@data_dir}/text"
-    @repos = Hiki::ReposGit.new(@root, @data_dir)
+    @repos = Hiki::ReposHg.new(@root, @data_dir)
 
     FileUtils.mkdir_p(@text_dir)
-    check_command("git")
+    check_command("hg")
     Dir.chdir(@text_dir) do
-      git("init", "-q")
+      hg("init")
+      create_hgrc
     end
   end
 
@@ -31,73 +36,55 @@ class Repos_Git_Tests < Test::Unit::TestCase
     write("FooBar", 'foobar')
     @repos.commit('FooBar')
     assert_equal('foobar', read('FooBar'))
-    object = nil
-    Dir.chdir(@text_dir) do
-      object = git("hash-object", "FooBar")
-    end
+    file = nil
 
     write("FooBar", 'foobar new')
     @repos.commit('FooBar')
     assert_equal('foobar new', read('FooBar'))
 
     Dir.chdir(@text_dir) do
-      assert_equal("foobar", git("cat-file", "blob", object))
+      assert_equal("foobar new", hg("cat", "FooBar"))
     end
   end
 
   def test_commit_with_content
     @repos.commit_with_content("FooBar", "foobar")
     assert_equal("foobar", read("FooBar"))
-    old_hash = nil
-    Dir.chdir(@text_dir) do
-      old_hash = git("hash-object", "FooBar")
-    end
     @repos.commit_with_content("FooBar", "foobar new")
     assert_equal("foobar new", read("FooBar"))
-
-    Dir.chdir(@text_dir) do
-      assert_equal("foobar", git("cat-file", "blob", old_hash))
-    end
   end
 
   def test_get_revision
     rev1 = rev2 = rev3 = nil
     write("HogeHoge", 'hogehoge1')
-    Dir.chdir(@text_dir) {git("add", "HogeHoge")}
-    Dir.chdir(@text_dir) {git("commit", "-m", "First", "HogeHoge")}
-    Dir.chdir(@text_dir) {rev1 = git("hash-object", "HogeHoge")}
+    Dir.chdir(@text_dir) {hg("add", "HogeHoge")}
+    Dir.chdir(@text_dir) {hg("commit", "-m", "First", "HogeHoge")}
     write("HogeHoge", 'hogehoge2')
-    Dir.chdir(@text_dir) {git("commit", "-m", "Second", "HogeHoge")}
-    Dir.chdir(@text_dir) {rev2 = git("hash-object", "HogeHoge")}
+    Dir.chdir(@text_dir) {hg("commit", "-m", "Second", "HogeHoge")}
     write("HogeHoge", 'hogehoge3')
-    Dir.chdir(@text_dir) {git("commit", "-m", "Third", "HogeHoge")}
-    Dir.chdir(@text_dir) {rev3 = git("hash-object", "HogeHoge")}
+    Dir.chdir(@text_dir) {hg("commit", "-m", "Third", "HogeHoge")}
 
-    assert_equal('hogehoge1', @repos.get_revision('HogeHoge', rev1[0, 7]))
-    assert_equal('hogehoge2', @repos.get_revision('HogeHoge', rev2[0, 7]))
-    assert_equal('hogehoge3', @repos.get_revision('HogeHoge', rev3[0, 7]))
+    assert_equal('hogehoge1', @repos.get_revision('HogeHoge', 1))
+    assert_equal('hogehoge2', @repos.get_revision('HogeHoge', 2))
+    assert_equal('hogehoge3', @repos.get_revision('HogeHoge', 3))
   end
 
   def test_revisions
-    rev1 = rev2 = rev3 = nil
     write("HogeHoge", 'hogehoge1')
-    Dir.chdir(@text_dir) {git("add", "HogeHoge")}
-    Dir.chdir(@text_dir) {git("commit", "-m", "First", "HogeHoge")}
-    Dir.chdir(@text_dir) {rev1 = git("hash-object", "HogeHoge")}
+    Dir.chdir(@text_dir) {hg("add", "HogeHoge")}
+    Dir.chdir(@text_dir) {hg("commit", "-m", "First", "HogeHoge")}
     modified1 = Time.now.localtime.strftime('%Y/%m/%d %H:%M:%S')
     write("HogeHoge", 'hogehoge2')
-    Dir.chdir(@text_dir) {git("commit", "-m", "Second", "HogeHoge")}
-    Dir.chdir(@text_dir) {rev2 = git("hash-object", "HogeHoge")}
+    Dir.chdir(@text_dir) {hg("commit", "-m", "Second", "HogeHoge")}
     modified2 = Time.now.localtime.strftime('%Y/%m/%d %H:%M:%S')
     write("HogeHoge", 'hogehoge3')
-    Dir.chdir(@text_dir) {git("commit", "-m", "Third", "HogeHoge")}
-    Dir.chdir(@text_dir) {rev3 = git("hash-object", "HogeHoge")}
+    Dir.chdir(@text_dir) {hg("commit", "-m", "Third", "HogeHoge")}
     modified3 = Time.now.localtime.strftime('%Y/%m/%d %H:%M:%S')
 
     expected = [
-                [rev3[0, 7], modified1, '', 'Third'],
-                [rev2[0, 7], modified2, '', 'Second'],
-                [rev1[0, 7], modified3, '', 'First'],
+                [3, modified3, '', 'Third'],
+                [2, modified2, '', 'Second'],
+                [1, modified1, '', 'First'],
                ].transpose
     actual = @repos.revisions('HogeHoge').transpose
 
@@ -142,7 +129,6 @@ class Repos_Git_Tests < Test::Unit::TestCase
     if Object.const_defined?(:Encoding)
       expected = expected.map{|v| v.force_encoding("binary") }
     end
-
     assert_equal(expected.sort, @repos.pages.sort)
   end
 
@@ -166,9 +152,9 @@ class Repos_Git_Tests < Test::Unit::TestCase
   end
 
   private
-  def git(*args)
+  def hg(*args)
     args = args.collect{|arg| arg.dump}.join(' ')
-    result = `git #{args}`.chomp
+    result = `hg #{args}`.chomp
     raise result unless $?.success?
     result
   end

@@ -1,7 +1,6 @@
 # coding: utf-8
 
-require 'test/unit'
-require 'fileutils'
+require 'test_helper'
 require 'tempfile'
 
 class Plugin_Referer_Unit_Tests < Test::Unit::TestCase

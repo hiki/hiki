@@ -1,8 +1,7 @@
 $KCODE = 'u' unless Object.const_defined?(:Encoding)
 
-require 'test/unit'
+require 'test_helper'
 load "#{File.dirname(__FILE__)}/../misc/hikifarm/index.cgi"
-require 'fileutils'
 
 class Wiki_Unit_Tests < Test::Unit::TestCase
   def setup

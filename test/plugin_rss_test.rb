@@ -1,6 +1,6 @@
 # To do: Handle Exception raised in Time.parse line 92
 
-require 'test/unit'
+require 'test_helper'
 require 'time'
 begin
   require 'cgi/util'
