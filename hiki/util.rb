@@ -58,11 +58,11 @@ class String
   unless method_defined?(:b)
     if Object.const_defined?(:Encoding)
       def b
-        force_encoding(Encoding::ASCII_8BIT)
+        dup.force_encoding(Encoding::ASCII_8BIT)
       end
     else
       def b
-        self
+        dup
       end
     end
   end
