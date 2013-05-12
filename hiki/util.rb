@@ -269,7 +269,12 @@ EOS
           end
         end
       end
-      info["URL"] = "#{@conf.index_url}?#{escape(page)}"
+      info["URL"] = if Object.const_defined?(:Rack)
+                      index_url = (@request.index_url + @conf.cgi_name).sub(%r|/\./|, '/')
+                      "#{index_url}?#{escape(page)}"
+                    else
+                      "#{@conf.index_url}?#{escape(page)}"
+                    end
       info.each do |key, value|
         body << sprintf("%*s = %s\n", key_max_len, key, value)
       end
