@@ -82,7 +82,8 @@ module Hiki
     #   url_encoded_string = escape("'Stop!' said Fred")
     #      # => "%27Stop%21%27+said+Fred"
     def escape(string)
-      CGI.escape(string)
+      # .b needs to avoid ruby 1.9.3's CGI.escape encoding bug, fixed in 2.0.0
+      CGI.escape(string.b)
     end
 
     # URL-decode a string.
