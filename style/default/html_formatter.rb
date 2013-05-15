@@ -132,7 +132,11 @@ module Hiki
           if @db.exist?( u ) # page name
             k = @plugin.page_name( k ) if k == u
             @references << u
-            @plugin.hiki_anchor( escape(u) + anchor, k )
+            if u == ''
+              @plugin.make_anchor( anchor, k )
+            else
+              @plugin.hiki_anchor( escape(u) + anchor, k )
+            end
           elsif orig = @db.select{|i| i[:title] == u}.first # page title
             k = @plugin.page_name( k ) if k == u
             u = orig
