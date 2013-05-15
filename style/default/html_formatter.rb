@@ -132,7 +132,7 @@ module Hiki
           if @db.exist?( u ) # page name
             k = @plugin.page_name( k ) if k == u
             @references << u
-            if u == ''
+            if u.empty?
               @plugin.make_anchor( anchor, k )
             else
               @plugin.hiki_anchor( escape(u) + anchor, k )
