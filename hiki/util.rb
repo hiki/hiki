@@ -269,8 +269,8 @@ EOS
           end
         end
       end
-      info["URL"] = if Object.const_defined?(:Rack)
-                      index_url = (@request.index_url + @conf.cgi_name).sub(%r|/\./|, '/')
+      info["URL"] = if Object.const_defined?(:Rack) && @request
+                      index_url = (@request.base_url + @conf.cgi_name).sub(%r|/\./|, '/')
                       "#{index_url}?#{escape(page)}"
                     else
                       "#{@conf.index_url}?#{escape(page)}"
