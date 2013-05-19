@@ -7,10 +7,14 @@ require "pstore"
 module Bayes
 	module CHARSET
 		def self.setup_re(m)
-			o = $KCODE
-			$KCODE = m::KCODE
-			m.const_set(:RE_MESSAGE_TOKEN, Regexp.union(m::RE_KATAKANA, m::RE_KANJI, /[a-zA-Z]+/))
-			$KCODE=o
+			if RUBY_VERSION < "1.9"
+				o = $KCODE
+				$KCODE = m::KCODE
+				m.const_set(:RE_MESSAGE_TOKEN, Regexp.union(m::RE_KATAKANA, m::RE_KANJI, /[a-zA-Z]+/))
+				$KCODE=o
+			else
+				m.const_set(:RE_MESSAGE_TOKEN, Regexp.union(m::RE_KATAKANA, m::RE_KANJI, /[a-zA-Z]+/))
+			end
 		end
 
 		module EUC
