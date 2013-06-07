@@ -1,6 +1,6 @@
 #! /usr/bin/env ruby
 
-$LOAD_PATH.unshift '.'
+$LOAD_PATH.unshift "."
 
 require "optparse"
 require "pathname"
