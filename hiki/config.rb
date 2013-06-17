@@ -228,8 +228,12 @@ module Hiki
         b = binding.taint
         eval( def_vars1, b )
         Thread.start {
-          $SAFE = 4
-          eval( cgi_conf, b, "(hiki.conf)", 1 )
+          begin
+            $SAFE = 4
+          rescue ArgumentError
+          ensure
+            eval( cgi_conf, b, "(hiki.conf)", 1 )
+          end
         }.join
         eval( def_vars2, b )
       rescue IOError, Errno::ENOENT
