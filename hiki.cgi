@@ -3,13 +3,10 @@
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 BEGIN { $stdout.binmode }
-begin
-  # FIXME encoding can be different (eg. iso-8859-1 in
-  # hikiconf.rb.sample.en).
-  Encoding.default_external = 'utf-8'
-rescue NameError
-  $KCODE = 'e'
-end
+
+# FIXME encoding can be different (eg. iso-8859-1 in
+# hikiconf.rb.sample.en).
+Encoding.default_external = 'utf-8'
 
 begin
   if FileTest::symlink?( __FILE__ )

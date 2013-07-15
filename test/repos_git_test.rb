@@ -139,9 +139,7 @@ class Repos_Git_Tests < Test::Unit::TestCase
     @repos.commit("FooBar")
 
     expected = ["ほげほげ", "FooBar"]
-    if Object.const_defined?(:Encoding)
-      expected = expected.map{|v| v.force_encoding("binary") }
-    end
+    expected = expected.map{|v| v.force_encoding("binary") }
 
     assert_equal(expected.sort, @repos.pages.sort)
   end
@@ -158,9 +156,7 @@ class Repos_Git_Tests < Test::Unit::TestCase
     end
 
     expected = ["ほげほげ", "FooBar"]
-    if Object.const_defined?(:Encoding)
-      expected = expected.map{|v| v.force_encoding("binary") }
-    end
+    expected = expected.map{|v| v.force_encoding("binary") }
 
     assert_equal(expected.sort, actuals.sort)
   end
