@@ -56,14 +56,8 @@ class String
   end
 
   unless method_defined?(:b)
-    if Object.const_defined?(:Encoding)
-      def b
-        dup.force_encoding(Encoding::ASCII_8BIT)
-      end
-    else
-      def b
-        dup
-      end
+    def b
+      dup.force_encoding(Encoding::ASCII_8BIT)
     end
   end
 end
@@ -314,79 +308,19 @@ EOS
       end
     end
 
-    if Object.const_defined?(:Encoding)
-      # TODO remove this method in future release
-      def euc_to_utf8(str)
-        str.encode("UTF-8", "EUC-JP")
-      end
+    # TODO remove this method in future release
+    def euc_to_utf8(str)
+      str.encode("UTF-8", "EUC-JP")
+    end
 
-      # TODO remove this method in future release
-      def utf8_to_euc(str)
-        str.encode("EUC-JP", "UTF-8")
-      end
+    # TODO remove this method in future release
+    def utf8_to_euc(str)
+      str.encode("EUC-JP", "UTF-8")
+    end
 
-      # TODO remove this method in future release
-      def to_native(str, charset=nil)
-        str.encode(@charset, charset)
-      end
-    else
-      # TODO remove this method in future release
-      def euc_to_utf8(str)
-        if NKF.const_defined?(:UTF8)
-          return NKF.nkf('-m0 -w', str)
-        else
-          begin
-            require 'uconv'
-          rescue LoadError
-            raise "Please update to Ruby >= 1.8.2, or install either uconv or rbuconv."
-          end
-          return Uconv.euctou8(str)
-        end
-      end
-
-      # TODO remove this method in future release
-      def utf8_to_euc(str)
-        if NKF.const_defined?(:UTF8)
-          return NKF.nkf('-m0 -e', str)
-        else
-          begin
-            require 'uconv'
-          rescue LoadError
-            raise "Please update to Ruby >= 1.8.2, or install either uconv or rbuconv."
-          end
-          return Uconv.u8toeuc(str)
-        end
-      end
-
-      # TODO remove this method in future release
-      def to_native(str, charset=nil)
-        # XXX to_charset will be 'utf-8' in the future version
-        begin
-          Iconv.conv(@charset, charset || 'utf-8', str)
-        rescue
-          from = case charset
-                 when /^utf-8$/i
-                   'W'
-                 when /^shift_jis/i
-                   'S'
-                 when /^EUC-JP/i
-                   'E'
-                 else
-                   ''
-                 end
-          to = case @charset
-               when /^utf-8$/i
-                 'w'
-               when /\Ashift_jis\z/i
-                 's'
-               when /\Aeuc-jp\z/i
-                 'e'
-               else
-                 'e' # XXX what should we use?
-               end
-          NKF.nkf("-m0 -#{from}#{to}", str)
-        end
-      end
+    # TODO remove this method in future release
+    def to_native(str, charset=nil)
+      str.encode(@charset, charset)
     end
 
     def compare_by_line(doc1, doc2)
