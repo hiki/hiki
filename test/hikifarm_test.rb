@@ -1,5 +1,3 @@
-$KCODE = 'u' unless Object.const_defined?(:Encoding)
-
 require 'test_helper'
 load "#{File.dirname(__FILE__)}/../misc/hikifarm/index.cgi"
 
