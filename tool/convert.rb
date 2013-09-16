@@ -44,8 +44,10 @@ def convert(data_path, database_class, input_encoding, output_encoding, nkf)
       print "#{Hiki::Util.escape(old_page)} => #{Hiki::Util.escape(new_page)}"
       old_text = db.load(old_page)
       new_text = encode(old_text, input_encoding, output_encoding, nkf)
+      last_update = db.get_last_update(old_page)
       db.unlink(old_page)
       db.store(new_page, new_text, Digest::MD5.hexdigest(old_text))
+      db.set_last_update(new_page, last_update)
       puts " OK."
     rescue StandardError => ex
       puts " NG."
