@@ -17,7 +17,7 @@ module BasicScenario
   end
 
   def test_multiple_params
-    visit("/?Frontpage&foo=bar&buzz=foo")
+    visit("/?FrontPage&foo=bar&buzz=foo")
     assert_title("FrontPage")
   end
 
