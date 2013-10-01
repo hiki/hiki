@@ -61,6 +61,8 @@ module Hiki
              end
            end
 
+      @p = @request.params.keys.first if !@p && !@cmd
+
       if /\A\.{1,2}\z/ =~ @p
         redirect(@request, @conf.index_url)
         return
