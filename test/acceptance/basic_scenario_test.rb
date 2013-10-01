@@ -16,6 +16,11 @@ module BasicScenario
     assert_title("Test Wiki - Create")
   end
 
+  def test_multiple_params
+    visit("/?Frontpage&foo=bar&buzz=foo")
+    assert_title("FrontPage")
+  end
+
   def test_create_new_page
     visit("/?c=create")
     fill_in("key", :with => "NewPage")
