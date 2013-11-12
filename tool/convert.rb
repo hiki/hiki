@@ -39,7 +39,7 @@ def convert(data_path, database_class, input_encoding, output_encoding, nkf)
   db = database_class.new(config)
   db.pages.each do |page|
     begin
-      old_page = page
+      old_page = page.force_encoding(input_encoding)
       new_page = encode(old_page, input_encoding, output_encoding, nkf)
       print "#{Hiki::Util.escape(old_page)} => #{Hiki::Util.escape(new_page)}"
       old_text = db.load(old_page)
