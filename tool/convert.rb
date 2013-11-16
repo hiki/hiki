@@ -45,7 +45,7 @@ def convert(data_path, database_class, input_encoding, output_encoding, nkf)
       attach_path = data_path + "cache/attach/"
       if Dir.exist? attach_path + Hiki::Util.escape(old_page)
         if Hiki::Util.escape(old_page) != Hiki::Util.escape(new_page)
-          system "mv #{attach_path}/#{Hiki::Util.escape(old_page)} #{attach_path}/#{Hiki::Util.escape(new_page)}"
+          FileUtils.mv("#{attach_path}/#{Hiki::Util.escape(old_page)}", "#{attach_path}/#{Hiki::Util.escape(new_page)}")
         end
       end
       old_text = db.load(old_page)
