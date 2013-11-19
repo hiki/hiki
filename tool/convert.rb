@@ -44,6 +44,15 @@ def convert(data_path, database_class, input_encoding, output_encoding, nkf)
       print "#{Hiki::Util.escape(old_page)} => #{Hiki::Util.escape(new_page)}"
       attach_path = data_path + "cache/attach/"
       if Dir.exist? attach_path + Hiki::Util.escape(old_page)
+        Dir.glob("#{attach_path}#{Hiki::Util.escape(old_page)}/*").each do |old_file_fullpath|
+          old_file = File.basename(old_file_fullpath)
+          new_file = Hiki::Util.escape(encode(Hiki::Util.unescape(old_file), 
+                                              input_encoding, output_encoding, nkf))
+          new_file_fullpath = "#{attach_path}#{Hiki::Util.escape(old_page)}/#{new_file}"
+          if old_file != new_file
+            FileUtils.mv(old_file_fullpath, new_file_fullpath)
+          end
+        end
         if Hiki::Util.escape(old_page) != Hiki::Util.escape(new_page)
           FileUtils.mv("#{attach_path}/#{Hiki::Util.escape(old_page)}", "#{attach_path}/#{Hiki::Util.escape(new_page)}")
         end
