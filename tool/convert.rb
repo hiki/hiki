@@ -62,18 +62,22 @@ end
 
 def convert_attachments(data_path, old_page, new_page)
   attach_path = data_path + "cache/attach/"
-  if Dir.exist? attach_path + Hiki::Util.escape(old_page)
-    Dir.glob("#{attach_path}#{Hiki::Util.escape(old_page)}/*").each do |old_file_fullpath|
+  escaped_old_page = Hiki::Util.escape(old_page)
+  escaped_new_page = Hiki::Util.escape(new_page)
+  old_attachments_dir = attach_path + escaped_old_page
+  new_attachments_dir = attach_path + escaped_new_page
+  if old_attachments_dir.exist?
+    Dir.glob("#{old_attachments_dir}/*").each do |old_file_fullpath|
       old_file = File.basename(old_file_fullpath)
       new_file = Hiki::Util.escape(encode(Hiki::Util.unescape(old_file),
                                           input_encoding, output_encoding, nkf))
-      new_file_fullpath = "#{attach_path}#{Hiki::Util.escape(old_page)}/#{new_file}"
+      new_file_fullpath = "#{old_attachments_dir}/#{new_file}"
       if old_file != new_file
         FileUtils.mv(old_file_fullpath, new_file_fullpath)
       end
     end
     if Hiki::Util.escape(old_page) != Hiki::Util.escape(new_page)
-      FileUtils.mv("#{attach_path}/#{Hiki::Util.escape(old_page)}", "#{attach_path}/#{Hiki::Util.escape(new_page)}")
+      FileUtils.mv(old_attachments_dir, new_attachments_dir)
     end
   end
 end
