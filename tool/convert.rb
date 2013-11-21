@@ -42,21 +42,7 @@ def convert(data_path, database_class, input_encoding, output_encoding, nkf)
       old_page = page.force_encoding(input_encoding)
       new_page = encode(old_page, input_encoding, output_encoding, nkf)
       print "#{Hiki::Util.escape(old_page)} => #{Hiki::Util.escape(new_page)}"
-      attach_path = data_path + "cache/attach/"
-      if Dir.exist? attach_path + Hiki::Util.escape(old_page)
-        Dir.glob("#{attach_path}#{Hiki::Util.escape(old_page)}/*").each do |old_file_fullpath|
-          old_file = File.basename(old_file_fullpath)
-          new_file = Hiki::Util.escape(encode(Hiki::Util.unescape(old_file),
-                                              input_encoding, output_encoding, nkf))
-          new_file_fullpath = "#{attach_path}#{Hiki::Util.escape(old_page)}/#{new_file}"
-          if old_file != new_file
-            FileUtils.mv(old_file_fullpath, new_file_fullpath)
-          end
-        end
-        if Hiki::Util.escape(old_page) != Hiki::Util.escape(new_page)
-          FileUtils.mv("#{attach_path}/#{Hiki::Util.escape(old_page)}", "#{attach_path}/#{Hiki::Util.escape(new_page)}")
-        end
-      end
+      convert_attachments(data_path, old_page, new_page)
       old_text = db.load(old_page)
       new_text = encode(old_text, input_encoding, output_encoding, nkf)
       last_update = db.get_last_update(old_page)
@@ -72,6 +58,24 @@ def convert(data_path, database_class, input_encoding, output_encoding, nkf)
   end
   cache_path = data_path + "cache/parser/"
   FileUtils.rm_rf(cache_path)
+end
+
+def convert_attachments(data_path, old_page, new_page)
+  attach_path = data_path + "cache/attach/"
+  if Dir.exist? attach_path + Hiki::Util.escape(old_page)
+    Dir.glob("#{attach_path}#{Hiki::Util.escape(old_page)}/*").each do |old_file_fullpath|
+      old_file = File.basename(old_file_fullpath)
+      new_file = Hiki::Util.escape(encode(Hiki::Util.unescape(old_file),
+                                          input_encoding, output_encoding, nkf))
+      new_file_fullpath = "#{attach_path}#{Hiki::Util.escape(old_page)}/#{new_file}"
+      if old_file != new_file
+        FileUtils.mv(old_file_fullpath, new_file_fullpath)
+      end
+    end
+    if Hiki::Util.escape(old_page) != Hiki::Util.escape(new_page)
+      FileUtils.mv("#{attach_path}/#{Hiki::Util.escape(old_page)}", "#{attach_path}/#{Hiki::Util.escape(new_page)}")
+    end
+  end
 end
 
 def encode(text, input_encoding, output_encoding, nkf)
