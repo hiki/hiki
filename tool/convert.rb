@@ -76,7 +76,7 @@ def convert_attachments(data_path, old_page, new_page)
         FileUtils.mv(old_file_fullpath, new_file_fullpath)
       end
     end
-    if Hiki::Util.escape(old_page) != Hiki::Util.escape(new_page)
+    if escaped_old_page != escaped_new_page
       FileUtils.mv(old_attachments_dir, new_attachments_dir)
     end
   end
