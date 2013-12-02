@@ -112,9 +112,9 @@ def attach_download
     header['Content-Length'] = File.size(attach_file.untaint)
     header['Last-Modified'] = CGI.rfc1123_date(File.mtime(attach_file.untaint))
     if %r|^image/| =~ mime_type
-      header['Content-Disposition'] = %Q|inline; filename="#{file_name.to_sjis}"; modification-date="#{header['Last-Modified']}";|
+      header['Content-Disposition'] = %Q|inline; filename="#{file_name}"; modification-date="#{header['Last-Modified']}";|
     else
-      header['Content-Disposition'] = %Q|attachment; filename="#{file_name.to_sjis}"; modification-date="#{header['Last-Modified']}";|
+      header['Content-Disposition'] = %Q|attachment; filename="#{file_name}"; modification-date="#{header['Last-Modified']}";|
     end
     return ::Hiki::Response.new(File.open(attach_file.untaint, 'rb').read, 200, header)
   else
