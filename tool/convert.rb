@@ -42,7 +42,8 @@ def convert(data_path, database_class, input_encoding, output_encoding, nkf)
       old_page = page.force_encoding(input_encoding)
       new_page = encode(old_page, input_encoding, output_encoding, nkf)
       print "#{Hiki::Util.escape(old_page)} => #{Hiki::Util.escape(new_page)}"
-      convert_attachments(data_path, old_page, new_page)
+      convert_attachments(data_path, old_page, new_page, input_encoding, 
+                          output_encoding, nkf)
       old_text = db.load(old_page)
       new_text = encode(old_text, input_encoding, output_encoding, nkf)
       last_update = db.get_last_update(old_page)
@@ -60,7 +61,8 @@ def convert(data_path, database_class, input_encoding, output_encoding, nkf)
   FileUtils.rm_rf(cache_path)
 end
 
-def convert_attachments(data_path, old_page, new_page)
+def convert_attachments(data_path, old_page, new_page, input_encoding,
+                        output_encoding, nkf)
   attach_path = data_path + "cache/attach/"
   escaped_old_page = Hiki::Util.escape(old_page)
   escaped_new_page = Hiki::Util.escape(new_page)
