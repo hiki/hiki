@@ -105,7 +105,11 @@ module Hiki
     alias h escapeHTML
     alias unescape_html unescapeHTML
 
-    module_function :escape, :unescape, :escape_html, :h, :unescape_html
+    def set_conf(conf)
+      @conf = conf
+    end
+
+    module_function :escape, :unescape, :escape_html, :h, :unescape_html, :set_conf
 
     def plugin_error(method, e)
       msg = "<strong>#{e.class} (#{h(e.message)}): #{h(method)}</strong><br>"
@@ -293,10 +297,6 @@ EOS
       else
        "#{@conf.theme_url}/hiki_base.css"
       end
-    end
-
-    def set_conf(conf)
-      @conf = conf
     end
 
     def shorten(str, len = 200)
