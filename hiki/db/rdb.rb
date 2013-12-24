@@ -121,7 +121,7 @@ module Hiki
         end
         @db[:page].where(wiki: @wiki, name: page).update(attribute => value)
         unless %w(references count freeze).include?(attribute)
-          @db[:page_backup].where(wiki: @wiki, name: page).order(:revision).limit(1).update(attribute => value)
+          @db[:page_backup].where(wiki: @wiki, name: page).reverse_order(:revision).limit(1).update(attribute => value)
         end
       end
     end
