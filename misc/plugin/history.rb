@@ -239,8 +239,8 @@ module Hiki
         new = @db.load(@p)
         old = @conf.repos.get_revision(@p, r)
       else
-        new = @conf.repos.get_revision(@p, r)
-        old = @conf.repos.get_revision(@p, r2)
+        new = @conf.repos.get_revision(@p, r2)
+        old = @conf.repos.get_revision(@p, r)
       end
 
       # parse the result and make revisions array
