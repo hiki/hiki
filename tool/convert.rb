@@ -9,8 +9,31 @@ require "digest/md5"
 require "nkf"
 require "hiki/util"
 require "hiki/config"
+require 'hiki/db/ptstore'
 
 FILE_NAME_MAX_SIZE = 255
+
+def convert_info_db(data_path, input_encoding, output_encoding, nkf)
+
+  info_db_path = data_path + "info.db"
+  db = PTStore.new(info_db_path)
+
+  db.transaction do
+    db.roots.each do |d|
+      db[d][:title] = encode(db[d][:title], input_encoding, output_encoding, nkf)
+      db[d][:references].map! do |r|
+        encode(r, input_encoding, output_encoding, nkf)
+      end
+    end
+    db.roots.each do |d|
+      d_new = Hiki::Util.escape(encode(Hiki::Util.unescape(d),
+                                       input_encoding, output_encoding, nkf))
+      db[d_new] = db[d]
+      db.delete d if d_new != d
+    end
+    db.commit
+  end
+end
 
 def check(data_path, database_class, input_encoding, output_encoding, nkf)
   config = Struct.new(:data_path).new
@@ -41,7 +64,7 @@ def convert(data_path, database_class, input_encoding, output_encoding, nkf)
     begin
       old_page = page.force_encoding(input_encoding)
       new_page = encode(old_page, input_encoding, output_encoding, nkf)
-      print "#{Hiki::Util.escape(old_page)} => #{Hiki::Util.escape(new_page)}"
+      print "#{new_page}: #{Hiki::Util.escape(old_page)} => #{Hiki::Util.escape(new_page)}"
       convert_attachments(data_path, old_page, new_page, input_encoding, 
                           output_encoding, nkf)
       old_text = db.load(old_page)
@@ -142,6 +165,7 @@ def main(argv)
   if check_only
     check(data_path, database_class, input_encoding, output_encoding, nkf)
   else
+    convert_info_db(data_path, input_encoding, output_encoding, nkf)
     convert(data_path, database_class, input_encoding, output_encoding, nkf)
   end
 end
