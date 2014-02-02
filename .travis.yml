@@ -1,15 +1,16 @@
 language: ruby
 
+rvm:
+  - 1.9.3
+  - 2.0.0
+  - 2.1.0
+  - ruby-head
+
 before_script:
   - git config --global user.email "you@example.com"
   - git config --global user.name "Your Name"
 
-rvm:
-  - 1.9.3
-  - 2.0.0
-
-install:
+before_install:
   - sudo apt-get install subversion mercurial
-  - bundle install
 
 script: bundle exec rake test
