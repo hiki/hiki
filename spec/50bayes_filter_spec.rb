@@ -5,6 +5,9 @@ module Hiki
   class Plugin
   end
 end
+
+require 'spec_helper'
+
 require "tmpdir"
 require "hiki/filter"
 require "plugin/ja/50bayes_filter"
