@@ -14,3 +14,8 @@ before_install:
   - sudo apt-get install subversion mercurial
 
 script: bundle exec rake test
+
+matrix:
+  allow_failures:
+    # eventmachine cann't build with rb_thread_blocking_region
+    - rvm: ruby-head
