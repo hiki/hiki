@@ -92,7 +92,7 @@ module Hiki
               err += v + "\n"
               break if v =~ /special_parse/
             end
-            err += "</pre>" 
+            err += "</pre>"
           end
           ret = err
         end
@@ -283,5 +283,5 @@ module Hiki
       super(element)
     end
   end
-end 
+end
 

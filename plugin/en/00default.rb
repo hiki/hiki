@@ -61,7 +61,7 @@ add_conf_proc( 'theme', 'Appearance' ) do
       <p>Enter the directory where themes are located.</p>
       <p><input name="theme_path" value="#{h(@conf.theme_path)}" size="60"></p>
       <h3 class="subtitle">Sidebar</h3>
-      <p>Some themes cannot properly display the sidebar.  If you are using one of these themes, set this value to off.</p> 
+      <p>Some themes cannot properly display the sidebar.  If you are using one of these themes, set this value to off.</p>
       <p><select name="sidebar">
          <option value="true"#{@conf.use_sidebar ? ' selected' : ''}>On</option>
          <option value="false"#{@conf.use_sidebar ? '' : ' selected'}>Off</option>

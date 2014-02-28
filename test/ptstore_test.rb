@@ -27,7 +27,7 @@ class PTStore_Unit_Tests < Test::Unit::TestCase
       assert(roots.include?(n))
     end
   end
-  
+
   def test_settter_and_getter
     10.times do
       @db.transaction do

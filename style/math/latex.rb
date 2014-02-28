@@ -62,7 +62,7 @@ module Hiki
               f.puts("cd #{@image_path} && #{run}") } if @log
             raise unless system("cd #{@image_path} && #{run} #{log}")
           end
-  
+
           %w( tex aux log dvi ps err ).each do |ext|
             next if ext == "err" and @log
             gabage = "#{@image_path}/#{filename}.#{ext}"

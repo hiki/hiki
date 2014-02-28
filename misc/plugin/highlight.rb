@@ -22,10 +22,10 @@ add_footer_proc do
                 var highlightStyle = new Object();
                 highlightStyle.color = "#{h(@options['highlight.color'])}";
                 highlightStyle.backgroundColor = "#{h(@options['highlight.background'])}";
-                
+
                 var highlightElem = null;
                 var saveStyle = null;
-                
+
                 function highlightElement(name) {
                         if (highlightElem) {
                                 for (var key in saveStyle) {
@@ -33,17 +33,17 @@ add_footer_proc do
                                 }
                                 highlightElem = null;
                         }
-                
+
                         highlightElem = getHighlightElement(name);
                         if (!highlightElem) return;
-                
+
                         saveStyle = new Object();
                         for (var key in highlightStyle) {
                                 saveStyle[key] = highlightElem.style[key];
                                 highlightElem.style[key] = highlightStyle[key];
                         }
                 }
-                
+
                 function getHighlightElement(name) {
                         for (var i=0; i<document.anchors.length; ++i) {
                                 var anchor = document.anchors[i];
@@ -59,18 +59,18 @@ add_footer_proc do
                         }
                         return null;
                 }
-                
+
                 if (document.location.hash) {
                         highlightElement(document.location.hash.substr(1));
                 }
-                
+
                 hereURL = document.location.href.split(/\#/)[0];
                 for (var i=0; i<document.links.length; ++i) {
                         if (hereURL == document.links[i].href.split(/\#/)[0]) {
                                 document.links[i].onclick = handleLinkClick;
                         }
                 }
-                
+
                 function handleLinkClick() {
                         highlightElement(this.hash.substr(1));
                 }

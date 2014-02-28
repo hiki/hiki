@@ -106,7 +106,7 @@ def sp_list_plugins( sp_opt, with_checkbox )
     r << @sp_label_please_select
     unless unknown.empty? then
       r << @sp_label_new
-      r << "<ul>\n" 
+      r << "<ul>\n"
       r << sp_li_plugins( unknown, with_checkbox, sp_option( 'usenew' ) )
       r << "</ul>\n"
     end

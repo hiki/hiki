@@ -93,7 +93,7 @@ def amazon_image( item )
 	image = {}
 	begin
 		size = case @conf['amazon.imgsize']
-		when 0; 'Large' 
+		when 0; 'Large'
 		when 2; 'Small'
 		else;   'Medium'
 		end

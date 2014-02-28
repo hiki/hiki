@@ -1,6 +1,6 @@
 # coding: ASCII-8BIT
 # Copyright (C) 2007, KURODA Hiraku <hiraku@hinet.mydns.jp>
-# You can redistribute it and/or modify it under GPL2. 
+# You can redistribute it and/or modify it under GPL2.
 
 require "pstore"
 

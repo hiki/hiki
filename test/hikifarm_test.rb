@@ -13,7 +13,7 @@ class Wiki_Unit_Tests < Test::Unit::TestCase
       @now = Time.now
     end
     File.open("#{@data_root}/#{name}/hiki.conf", 'w'){|f| f.puts '@site_name = "FooBar"'}
-    
+
     @wiki = Wiki.new(name, @data_root)
   end
 

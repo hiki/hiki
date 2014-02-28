@@ -23,7 +23,7 @@ begin
 
   puts "install succeed!"
 
-rescue 
+rescue
   puts "install failed!"
   puts $!
 end

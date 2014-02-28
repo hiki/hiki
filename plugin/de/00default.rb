@@ -61,7 +61,7 @@ add_conf_proc( 'theme', 'Aussehen' ) do
       <p>Ordner der vorhandenen Themes.</p>
       <p><input name="theme_path" value="#{h(@conf.theme_path)}" size="60"></p>
       <h3 class="subtitle">Seitenleiste</h3>
-      <p>Manche Themes k&ouml;nnen die Seitenleiste nicht ordnungsgem&auml;&szlig; darstellen. Wenn sie eines dieser Themes benutzten, den Wert auf 'Aus' setzen.</p> 
+      <p>Manche Themes k&ouml;nnen die Seitenleiste nicht ordnungsgem&auml;&szlig; darstellen. Wenn sie eines dieser Themes benutzten, den Wert auf 'Aus' setzen.</p>
       <p><select name="sidebar">
          <option value="true"#{@conf.use_sidebar ? ' selected' : ''}>An</option>
          <option value="false"#{@conf.use_sidebar ? '' : ' selected'}>Aus</option>

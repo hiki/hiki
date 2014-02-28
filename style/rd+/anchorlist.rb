@@ -40,7 +40,7 @@ module Hiki
       else
         name, data = nil, word
       end
-      
+
       option = nil
       if data =~ REG_URL
         key = data
@@ -51,7 +51,7 @@ module Hiki
       end
       [key, option, name]
     end
-    
+
     def convert_charset(option, charset)
       return "" unless option
       return option unless charset
@@ -64,7 +64,7 @@ module Hiki
       end
       ret
     end
-    
+
     def data(key)
       data = @anchors[key]
       if data
@@ -73,7 +73,7 @@ module Hiki
         [nil, nil, nil]
       end
     end
-    
+
     def create_anchor(key, option_or_name = nil, name = nil, charset = nil)
       url, value, cset = data(key)
       if url.nil?
@@ -84,7 +84,7 @@ module Hiki
       charset = cset unless charset
       option_or_name = "#{option_or_name}" if option_or_name
       value = "#{key}:#{option_or_name}" if value == ""
-      
+
       if url.nil?
         url = key
         if name

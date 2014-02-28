@@ -26,7 +26,7 @@ module Hiki
         str # RD does not support blockquote.
       end
     end
-    
+
     def initialize( conf )
     end
 

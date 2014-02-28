@@ -19,7 +19,7 @@ module Hiki
         str.split(/\n/).collect{|s| %Q|""#{s}\n|}.join
       end
     end
-    
+
     def initialize( conf )
       @use_wiki_name = conf.use_wikiname
     end

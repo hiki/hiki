@@ -15,7 +15,7 @@ end
 
 def plugin_usage_label
 	attach_usage
-end	
+end
 
 def attach_usage
        '<div><ul>

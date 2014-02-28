@@ -90,7 +90,7 @@ function set_s( pre, suf, mg ){
       str = str.replace(/\\r\\n|\\r|\\n/mg, "\\n");
       var s = str.split("\\n");
       var i;
-      for ( i = 0; i < s.length ; i++ ) {  
+      for ( i = 0; i < s.length ; i++ ) {
         j = j + pre + s[i] + "\\n";
       }
       break;
@@ -126,7 +126,7 @@ function set_s( pre, suf, mg ){
       str = str.replace( /\\r\\n|\\r/mg, "\\n" );
       var s = str.split( "\\n" );
       var i;
-      for ( i = 0; i < s.length ; i++ ) {  
+      for ( i = 0; i < s.length ; i++ ) {
         j = j + pre + s[i] + "\\n";
       }
       rng.text = j;
@@ -137,7 +137,7 @@ function set_s( pre, suf, mg ){
       var s = str.split( "\\n" );
       var i;
       var re;
-      for ( i = 0; i < s.length ; i++ ) {  
+      for ( i = 0; i < s.length ; i++ ) {
         re = new RegExp( "^" + pre );
         j = j + s[i].replace( re, "" ) + "\\n";
       }

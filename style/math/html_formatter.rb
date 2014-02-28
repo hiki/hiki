@@ -20,7 +20,7 @@ module Hiki
           math.text_mode(unescape_html($1) )
         end
         str.gsub!( /(^\$\$.*\n?)+/ ) do |match|
-          '<div class="displaymath">%s</div>' % 
+          '<div class="displaymath">%s</div>' %
             math.display_mode( unescape_html(match).gsub( /^\$\$/, '' ) )
         end
       end

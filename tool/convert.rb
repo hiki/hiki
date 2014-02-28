@@ -65,7 +65,7 @@ def convert(data_path, database_class, input_encoding, output_encoding, nkf)
       old_page = page.force_encoding(input_encoding)
       new_page = encode(old_page, input_encoding, output_encoding, nkf)
       print "#{new_page}: #{Hiki::Util.escape(old_page)} => #{Hiki::Util.escape(new_page)}"
-      convert_attachments(data_path, old_page, new_page, input_encoding, 
+      convert_attachments(data_path, old_page, new_page, input_encoding,
                           output_encoding, nkf)
       old_text = db.load(old_page)
       new_text = encode(old_text, input_encoding, output_encoding, nkf)

@@ -197,7 +197,7 @@ def attach_show_page_files_checkbox
      s << %Q!<form method="post" enctype="multipart/form-data" action="#{attach_cgi}">
   <input type="hidden" name="p" value="#{h(@page)}">
   <input type="hidden" name="command" value="#{@command == 'create' ? 'edit' : @command}">
-  <p>#{attach_files_label}: 
+  <p>#{attach_files_label}:
 !
     files.each do |file_name|
       f = unescape(file_name)
