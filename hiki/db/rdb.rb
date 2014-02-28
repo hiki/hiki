@@ -189,24 +189,24 @@ module Hiki
     end
 
     def default
-      { :count          => 0,
-        :last_modified  => Time::now,
-        :freeze         => false,
-        :references     => [],
-        :keyword        => [],
-        :title          => "",
+      { count: 0,
+        last_modified: Time::now,
+        freeze: false,
+        references: [],
+        keyword: [],
+        title: "",
       }
     end
 
     def make_info_hash(hash)
       {
-        :title => hash[:title] || "",
-        :last_modified  => make_time(hash[:last_modified]),
-        :keyword => (hash[:keyword] || "").split(/\n/),
-        :references => (hash[:references] || "").split(/\n/),
-        :editor => hash[:editor],
-        :freeze => (hash[:freeze] == 1),
-        :count => hash[:count],
+        title: hash[:title] || "",
+        last_modified: make_time(hash[:last_modified]),
+        keyword: (hash[:keyword] || "").split(/\n/),
+        references: (hash[:references] || "").split(/\n/),
+        editor: hash[:editor],
+        freeze: (hash[:freeze] == 1),
+        count: hash[:count],
       }
     end
 

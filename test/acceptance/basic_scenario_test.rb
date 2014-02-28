@@ -23,9 +23,9 @@ module BasicScenario
 
   def test_create_new_page
     visit("/?c=create")
-    fill_in("key", :with => "NewPage")
+    fill_in("key", with: "NewPage")
     click_button("New")
-    fill_in("contents", :with => "Test Test")
+    fill_in("contents", with: "Test Test")
     click_button("Save")
     click_link("Click here!")
 
@@ -57,7 +57,7 @@ Hikiの書式はオリジナルWikiに似てますので、オリジナルの書
 書式もありますので、詳細についてはTextFormattingRulesを参照してください。
 TEXT
     end
-    fill_in("contents", :with => "FrontPage contents")
+    fill_in("contents", with: "FrontPage contents")
     click_button("Save")
     click_link("Click here!")
     assert_title("FrontPage")

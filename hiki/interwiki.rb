@@ -16,7 +16,7 @@ module Hiki
       @interwiki_names = {}
       (str || '').scan( INTERWIKI_NAME_RE ) do |i|
         e = i.size > 2 ? i[2] : 'none'
-        @interwiki_names[i[0]] = {:url => i[1], :encoding => e}
+        @interwiki_names[i[0]] = {url: i[1], encoding: e}
       end
     end
 

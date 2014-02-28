@@ -21,10 +21,10 @@ describe Hiki::Filter, "when error raised in filtering" do
       raise "ERROR"
     end
 
-    @conf = stub("conf", :null_object=>true)
-    @cgi = stub("cgi", :null_object=>true)
-    @plugin = stub("plugin", :null_object=>true)
-    @db = stub("db", :null_object=>true)
+    @conf = stub("conf", null_object:true)
+    @cgi = stub("cgi", null_object:true)
+    @plugin = stub("plugin", null_object:true)
+    @db = stub("db", null_object:true)
     Hiki::Filter.init(@conf, @cgi, @plugin, @db)
   end
 

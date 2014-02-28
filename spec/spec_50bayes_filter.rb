@@ -22,13 +22,13 @@ class << Object.new
         @base_url = "http://www.example.org/hiki.cgi"
         @opt = {}
         @conf = stub("conf",
-          :data_path=>@tmpdir,
-          :cache_path=>"#{@tmpdir}/cache",
-          :bayes_threshold=>nil,
-          :filter_type=>nil,
-          :cgi_name=>@base_url,
-          :index_url=>@base_url,
-          :null_object=>false)
+          data_path:@tmpdir,
+          cache_path:"#{@tmpdir}/cache",
+          bayes_threshold:nil,
+          filter_type:nil,
+          cgi_name:@base_url,
+          index_url:@base_url,
+          null_object:false)
         @conf.should_receive("[]".intern).any_number_of_times{|k| @opt[k]}
         @conf.should_receive("[]=".intern).any_number_of_times{|k, v| @opt[k]=v}
         BayesFilter.init(@conf)
@@ -41,13 +41,13 @@ class << Object.new
       ex.before do
         @params = Hash.new{|h, k| h[k]=[]}
         @cgi = stub("cgi",
-          :params=>@params,
-          :request_method=>"POST",
-          :null_object=>false)
+          params:@params,
+          request_method:"POST",
+          null_object:false)
         @pages = []
         @db = stub("db",
-          :pages=>@pages,
-          :null_object=>false)
+          pages:@pages,
+          null_object:false)
         @c = BayesFilterConfig.new(@cgi, @conf, "saveconf", @db)
       end
     end

@@ -11,10 +11,10 @@ class PTStore_Unit_Tests < Test::Unit::TestCase
     @db = PTStore.new(tempfile.path)
 
     @db.transaction do
-      @db['Taro'] = {:age => 22, :lang => 'Ruby', :man => true, :day => Time.now}
-      @db['Hanako'] = {:age => 23, :lang => 'Perl', :man => false, :day => Time.now}
-      @db['Jirou'] = {:age => 15, :lang => 'Smalltalk', :man => true, :day => Time.now}
-      @db['Rika'] = {:age => 4, :lang => 'Lisp', :man => false, :day => Time.now}
+      @db['Taro'] = {age: 22, lang: 'Ruby', man: true, day: Time.now}
+      @db['Hanako'] = {age: 23, lang: 'Perl', man: false, day: Time.now}
+      @db['Jirou'] = {age: 15, lang: 'Smalltalk', man: true, day: Time.now}
+      @db['Rika'] = {age: 4, lang: 'Lisp', man: false, day: Time.now}
     end
   end
 

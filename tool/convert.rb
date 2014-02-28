@@ -111,7 +111,7 @@ def encode(text, input_encoding, output_encoding, nkf)
   if nkf
     NKF.nkf("-m0 --ic=#{input_encoding} --oc=#{output_encoding}", text)
   else
-    text.dup.encode!(output_encoding, input_encoding, :invalid => :replace, :undef => :replace)
+    text.dup.encode!(output_encoding, input_encoding, invalid: :replace, undef: :replace)
   end
 end
 

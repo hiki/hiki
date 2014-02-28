@@ -25,8 +25,8 @@ module Hiki
     end
 
     def parse( s, top_level = 2 )
-      HikiDoc.to_html( s, :level => top_level,
-                       :use_wiki_name => @use_wiki_name )
+      HikiDoc.to_html( s, level: top_level,
+                       use_wiki_name: @use_wiki_name )
     end
   end
 end

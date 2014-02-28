@@ -17,12 +17,12 @@ module SetupBayesFilter
       @opt = {
       }
       @conf = stub("Hiki::Config",
-        :data_path=>@tmpdir,
-        :cache_path=>"#{@tmpdir}/cache",
-        :bayes_threshold=>nil,
-        :site_name=>"SiteName",
-        :index_url=>@index_url,
-        :null_object=>false)
+        data_path:@tmpdir,
+        cache_path:"#{@tmpdir}/cache",
+        bayes_threshold:nil,
+        site_name:"SiteName",
+        index_url:@index_url,
+        null_object:false)
       @conf.should_receive("[]".intern).any_number_of_times{|k| @opt[k]}
       @bf = Hiki::Filter::BayesFilter.init(@conf)
     end

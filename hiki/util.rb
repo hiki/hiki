@@ -161,16 +161,16 @@ module Hiki
       dst_doc = Document.new( dst, @charset, CharString.guess_eol($/) )
       diff = compare_by_line_word( src_doc, dst_doc )
       overriding_tags = {
-        :start_common => '',
-        :end_common => '',
-        :start_del           => '<del class="deleted">',
-        :end_del             => '</del>',
-        :start_add           => '<ins class="added">',
-        :end_add             => '</ins>',
-        :start_before_change => '<del class="deleted">',
-        :end_before_change   => '</del>',
-        :start_after_change  => '<ins class="added">',
-        :end_after_change    => '</ins>',
+        start_common: '',
+        end_common: '',
+        start_del: '<del class="deleted">',
+        end_del: '</del>',
+        start_add: '<ins class="added">',
+        end_add: '</ins>',
+        start_before_change: '<del class="deleted">',
+        end_before_change: '</del>',
+        start_after_change: '<ins class="added">',
+        end_after_change: '</ins>',
       }
       if digest
         return View.new( diff, src.encoding, src.eol ).to_html_digest(overriding_tags, false).join.gsub( %r|<br />|, '' ).gsub( %r|\n</ins>|, "</ins>\n" ) #"

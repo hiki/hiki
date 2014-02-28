@@ -8,7 +8,7 @@ def todo(p, num = 8)
 
   n = @db.load(unescape_html(p)) || ''
   n.scan(todo_re) do |i|
-    todo_list << {:priority => $1.to_i, :todo => $2}
+    todo_list << {priority: $1.to_i, todo: $2}
   end
 
   todo_list.sort! {|a, b| b[:priority] <=> a[:priority]}

@@ -47,5 +47,5 @@ module TMarshal
 end
 
 if __FILE__ == $0
-  puts TMarshal.dump({:age => 22, :lang => 'Ruby', :man => true, :day => Time.now})
+  puts TMarshal.dump({age: 22, lang: 'Ruby', man: true, day: Time.now})
 end

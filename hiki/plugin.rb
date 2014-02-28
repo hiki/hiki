@@ -289,7 +289,7 @@ module Hiki
       src.sub!(/\n*\z/, "\n")
       result = @db.store(page, src, md5, update_timestamp)
       if result
-        @db.set_attribute( page, :editor => @user )
+        @db.set_attribute( page, editor: @user )
         @db.delete_cache( page )
         begin
           update_proc
@@ -379,9 +379,9 @@ module Hiki
 
     def add_plugin_command(command, display_text, option = {})
       @plugin_command << command
-      @plugin_menu    << {:command => command,
-                          :display_text => display_text,
-                          :option => option} if display_text
+      @plugin_menu    << {command: command,
+                          display_text: display_text,
+                          option: option} if display_text
       nil
     end
 

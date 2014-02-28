@@ -38,7 +38,7 @@ module Hiki
       dir = "#{@root}/#{wiki.untaint}/#{escape(page).untaint}"
 
       Dir.mkdir(dir) if not File.exists?(dir)
-      FileUtils.rm("#{dir}/.removed", {:force => true})
+      FileUtils.rm("#{dir}/.removed", {force: true})
 
       rev = last_revision(page) + 1
 

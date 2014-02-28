@@ -92,7 +92,7 @@ class ImageSize
 
   def get_size
     if get_height && get_width
-      {:width => get_width, :height => get_height}
+      {width: get_width, height: get_height}
     else
       nil
     end

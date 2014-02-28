@@ -131,15 +131,15 @@ def its_parse_ticket( page )
     version = /:Version:(.*)/ =~ text ? $1.strip : ''
     milestone = /:Milestone:(.*)/ =~ text ? $1.strip : ''
 
-    { :num => num,
-      :summary => summary,
-      :priority => priority,
-      :reporter => reporter,
-      :status => status,
-      :assigned => assigned,
-      :created => created,
-      :version => version,
-      :milestone => milestone, }
+    { num: num,
+      summary: summary,
+      priority: priority,
+      reporter: reporter,
+      status: status,
+      assigned: assigned,
+      created: created,
+      version: version,
+      milestone: milestone, }
   rescue
     nil
   end

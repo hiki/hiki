@@ -139,8 +139,8 @@ if __FILE__ == $0
   ENV['SERVER_PORT'] ||= base_url.port.to_s
   logger = WEBrick::Log::new(STDERR, WEBrick::Log::INFO)
   server = WEBrick::HTTPServer.new({
-    :Port => base_url.port,
-    :Logger => logger,
+    Port: base_url.port,
+    Logger: logger,
   })
 
   # prepare $LOAD_PATH

@@ -36,8 +36,8 @@ module Hiki
         @pages_num = pages.size
         @pages = pages.reverse[0..9].collect do |page|
           {
-            :name => File.basename(page),
-            :mtime => File.mtime(page),
+            name: File.basename(page),
+            mtime: File.mtime(page),
           }
         end
       end
