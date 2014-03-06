@@ -9,7 +9,7 @@ require "hiki/command"
 
 describe Hiki::Filter, "when error raised in filtering" do
   before do
-    Hiki::Filter.should_not be_respond_to(:clear_filters)
+    expect(Hiki::Filter).not_to be_respond_to(:clear_filters)
     module Hiki::Filter
       def self.clear_filters
         r = @filters.dup
@@ -23,10 +23,10 @@ describe Hiki::Filter, "when error raised in filtering" do
       raise "ERROR"
     end
 
-    @conf = stub("conf", null_object:true)
-    @cgi = stub("cgi", null_object:true)
-    @plugin = stub("plugin", null_object:true)
-    @db = stub("db", null_object:true)
+    @conf = double("conf", null_object:true)
+    @cgi = double("cgi", null_object:true)
+    @plugin = double("plugin", null_object:true)
+    @db = double("db", null_object:true)
     Hiki::Filter.init(@conf, @cgi, @plugin, @db)
   end
 
@@ -43,7 +43,7 @@ describe Hiki::Filter, "when error raised in filtering" do
 
   it "should through page data without filter raised error" do
     r = nil
-    lambda{r = Hiki::Filter.new_page_is_spam?("TestPage", "text", "title")}.should_not raise_error
-    r.should be_false
+    expect{r = Hiki::Filter.new_page_is_spam?("TestPage", "text", "title")}.not_to raise_error
+    expect(r).to be_false
   end
 end

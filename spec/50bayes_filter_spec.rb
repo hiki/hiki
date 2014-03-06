@@ -24,7 +24,7 @@ class << Object.new
 
         @base_url = "http://www.example.org/hiki.cgi"
         @opt = {}
-        @conf = stub("conf",
+        @conf = double("conf",
           data_path:@tmpdir,
           cache_path:"#{@tmpdir}/cache",
           bayes_threshold:nil,
@@ -32,8 +32,8 @@ class << Object.new
           cgi_name:@base_url,
           index_url:@base_url,
           null_object:false)
-        @conf.should_receive("[]".intern).any_number_of_times{|k| @opt[k]}
-        @conf.should_receive("[]=".intern).any_number_of_times{|k, v| @opt[k]=v}
+        allow(@conf).to receive("[]".intern){|k| @opt[k]}
+        allow(@conf).to receive("[]=".intern){|k, v| @opt[k]=v}
         BayesFilter.init(@conf)
       end
 
@@ -43,12 +43,12 @@ class << Object.new
 
       ex.before do
         @params = Hash.new{|h, k| h[k]=[]}
-        @cgi = stub("cgi",
+        @cgi = double("cgi",
           params:@params,
           request_method:"POST",
           null_object:false)
         @pages = []
-        @db = stub("db",
+        @db = double("db",
           pages:@pages,
           null_object:false)
         @c = BayesFilterConfig.new(@cgi, @conf, "saveconf", @db)
@@ -65,7 +65,7 @@ class << Object.new
       end
 
       [EN].each do |m|
-        JA::BayesFilterConfig::Res.methods.sort.should == m::BayesFilterConfig::Res.methods.sort
+        expect(JA::BayesFilterConfig::Res.methods.sort).to eq(m::BayesFilterConfig::Res.methods.sort)
       end
     end
   end
@@ -74,22 +74,22 @@ class << Object.new
     include Common
 
     it "html" do
-      lambda{@c.html}.should_not raise_error
+      expect{@c.html}.not_to raise_error
     end
 
     it "conf_url" do
-      @c.conf_url.should == "#{@base_url}?c=admin;conf=bayes_filter"
-      @c.conf_url("hoge").should == "#{@base_url}?c=admin;conf=bayes_filter;bfmode=hoge"
+      expect(@c.conf_url).to eq("#{@base_url}?c=admin;conf=bayes_filter")
+      expect(@c.conf_url("hoge")).to eq("#{@base_url}?c=admin;conf=bayes_filter;bfmode=hoge")
     end
 
     it "save_mode?" do
-      @c.save_mode?.should be_true
-      @cgi.stub!(:request_method).and_return("GET")
-      @c.save_mode?.should be_false
-      @cgi.stub!(:request_method).and_return("POST")
-      @c.save_mode?.should be_true
+      expect(@c.save_mode?).to be_true
+      allow(@cgi).to receive(:request_method).and_return("GET")
+      expect(@c.save_mode?).to be_false
+      allow(@cgi).to receive(:request_method).and_return("POST")
+      expect(@c.save_mode?).to be_true
       @c.instance_variable_set("@confmode", "conf")
-      @c.save_mode?.should be_false
+      expect(@c.save_mode?).to be_false
     end
   end
 
@@ -112,9 +112,9 @@ class << Object.new
     end
 
     it "setting test" do
-      @ham.ham?.should be_true
-      @spam.ham?.should be_false
-      @doubt.ham?.should be_nil
+      expect(@ham.ham?).to be_true
+      expect(@spam.ham?).to be_false
+      expect(@doubt.ham?).to be_nil
     end
 
     it "html" do
@@ -123,12 +123,12 @@ class << Object.new
 
     it "submitted_pages" do
       l = @c.submitted_pages
-      l.ham.values.map{|i| i.cache_file_name}.should == [@ham.cache_file_name]
-      l.ham.each_pair{|k, d| k.should == d.cache_file_name[/H\d+$/]}
-      l.spam.values.map{|i| i.cache_file_name}.should == [@spam.cache_file_name]
-      l.spam.each_pair{|k, d| k.should == d.cache_file_name[/S\d+$/]}
-      l.doubt.values.map{|i| i.cache_file_name}.should == [@doubt.cache_file_name]
-      l.doubt.each_pair{|k, d| k.should == d.cache_file_name[/D\d+$/]}
+      expect(l.ham.values.map{|i| i.cache_file_name}).to eq([@ham.cache_file_name])
+      l.ham.each_pair{|k, d| expect(k).to eq(d.cache_file_name[/H\d+$/])}
+      expect(l.spam.values.map{|i| i.cache_file_name}).to eq([@spam.cache_file_name])
+      l.spam.each_pair{|k, d| expect(k).to eq(d.cache_file_name[/S\d+$/])}
+      expect(l.doubt.values.map{|i| i.cache_file_name}).to eq([@doubt.cache_file_name])
+      l.doubt.each_pair{|k, d| expect(k).to eq(d.cache_file_name[/D\d+$/])}
     end
   end
 
@@ -144,29 +144,29 @@ class << Object.new
       bp = Hiki::Filter::BayesFilter::PageData
       @ham = bp.new(pd.new("ham", "ham", "ham", "ham", "127.0.0.1"))
       @ham.cache_save
-      @ham.ham?.should be_true
+      expect(@ham.ham?).to be_true
       @spam = bp.new(pd.new("spam", "spam", "spam", "spam", "127.0.0.1"))
       @spam.cache_save
-      @spam.ham?.should be_false
+      expect(@spam.ham?).to be_false
       @doubt = bp.new(pd.new("ham spam", "ham spam", "ham spam", "ham spam", "127.0.0.1"))
       @doubt.cache_save
-      @doubt.ham?.should be_nil
+      expect(@doubt.ham?).to be_nil
     end
 
     it "html" do
-      @c.should_receive(:process_page_data){@c.proxied_by_rspec__process_page_data}
-      lambda{@c.html}.should_not raise_error
+      expect(@c).to receive(:process_page_data){@c.proxied_by_rspec__process_page_data}
+      expect{@c.html}.not_to raise_error
     end
 
     it "process data" do
       ham_id = "H#{@ham.file_name}"
       @params[ham_id] << "1"
       @params["register_#{ham_id}"] << "spam"
-      @c.save_mode?.should be_true
+      expect(@c.save_mode?).to be_true
       @c.process_page_data
-      File.should_not be_exist(@ham.cache_file_name)
-      File.should be_exist(@ham.corpus_file_name_spam)
-      @ham.ham?.should be_false
+      expect(File).not_to be_exist(@ham.cache_file_name)
+      expect(File).to be_exist(@ham.corpus_file_name_spam)
+      expect(@ham.ham?).to be_false
     end
   end
 
@@ -179,15 +179,15 @@ class << Object.new
       @filter_db = Bayes::PaulGraham.new
       @filter_db.spam << @token
       @filter_db.ham << @token
-      BayesFilter.stub!(:db).and_return(@filter_db)
+      allow(BayesFilter).to receive(:db).and_return(@filter_db)
     end
 
     it "should occur infinity-loop at #add_ham" do
-      lambda{@c.add_ham(@token)}.should_not raise_error
+      expect{@c.add_ham(@token)}.not_to raise_error
     end
 
     it "should occur infinity-loop at #add_spam" do
-      lambda{@c.add_spam(@token)}.should_not raise_error
+      expect{@c.add_spam(@token)}.not_to raise_error
     end
   end
 
@@ -200,15 +200,15 @@ class << Object.new
       @filter_db = Bayes::PaulGraham.new
       @filter_db.spam << @token
       @filter_db.ham << @token
-      BayesFilter.stub!(:db).and_return(@filter_db)
+      allow(BayesFilter).to receive(:db).and_return(@filter_db)
     end
 
     it "should occur infinity-loop at #add_ham" do
-      lambda{@c.add_ham(@token)}.should_not raise_error
+      expect{@c.add_ham(@token)}.not_to raise_error
     end
 
     it "should occur infinity-loop at #add_spam" do
-      lambda{@c.add_spam(@token)}.should_not raise_error
+      expect{@c.add_spam(@token)}.not_to raise_error
     end
   end
 
@@ -217,14 +217,14 @@ class << Object.new
 
     it "html(ham)" do
       @params["bfmode"] << BayesFilterConfig::Mode::HAM_TOKENS
-      @c.should_receive(:tokens_html){|token, title| @c.proxied_by_rspec__tokens_html(token, title)}
-      lambda{@c.html}.should_not raise_error
+      expect(@c).to receive(:tokens_html){|token, title| @c.proxied_by_rspec__tokens_html(token, title)}
+      expect{@c.html}.not_to raise_error
     end
 
     it "html(spam)" do
       @params["bfmode"] << BayesFilterConfig::Mode::SPAM_TOKENS
-      @c.should_receive(:tokens_html){|token, title| @c.proxied_by_rspec__tokens_html(token, title)}
-      lambda{@c.html}.should_not raise_error
+      expect(@c).to receive(:tokens_html){|token, title| @c.proxied_by_rspec__tokens_html(token, title)}
+      expect{@c.html}.not_to raise_error
     end
   end
 
@@ -240,14 +240,14 @@ class << Object.new
     end
 
     it "html" do
-      @c.should_receive(:submitted_page_diff_html)
-      lambda{@c.html}.should_not raise_error
+      expect(@c).to receive(:submitted_page_diff_html)
+      expect{@c.html}.not_to raise_error
     end
 
     it "submitted_page_diff_html" do
       $SAFE=1
-      @c.should_receive(:word_diff)
-      lambda{@c.submitted_page_diff_html}.should_not raise_error
+      expect(@c).to receive(:word_diff)
+      expect{@c.submitted_page_diff_html}.not_to raise_error
     end
   end
 
@@ -262,13 +262,13 @@ class << Object.new
     end
 
     it "html" do
-      @c.should_receive(:page_token_html)
-      lambda{@c.html}.should_not raise_error
+      expect(@c).to receive(:page_token_html)
+      expect{@c.html}.not_to raise_error
     end
 
     it "submitted_page_diff_html" do
       $SAFE=1
-      lambda{@c.page_token_html}.should_not raise_error
+      expect{@c.page_token_html}.not_to raise_error
     end
   end
 
@@ -280,11 +280,11 @@ class << Object.new
       Hiki::Filter::BayesFilter::PageData.new(pd.new("HamPage", "text")).corpus_save(true)
       Hiki::Filter::BayesFilter::PageData.new(pd.new("SpamPage", "text")).corpus_save(false)
       @pages << "TestPage"
-      @db.should_receive(:load).and_return do |page|
+      expect(@db).to receive(:load) do |page|
         "Text" if page=="TestPage"
       end
-      @db.should_receive(:get_attribute).any_number_of_times do |pg, attr|
-        pg.should == "TestPage"
+      allow(@db).to receive(:get_attribute) do |pg, attr|
+        expect(pg).to eq("TestPage")
         case attr
         when :title
           "Title"
@@ -295,7 +295,7 @@ class << Object.new
         end
       end
 
-      Hiki::Filter::BayesFilter.should_receive(:new_db){Hiki::Filter::BayesFilter.proxied_by_rspec__new_db}
+      expect(Hiki::Filter::BayesFilter).to receive(:new_db){Hiki::Filter::BayesFilter.proxied_by_rspec__new_db}
       lambda{$SAFE=1;@c.rebuild_db}.call #should_not raise_error
     end
   end
