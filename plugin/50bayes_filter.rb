@@ -74,8 +74,8 @@ class BayesFilterConfig
       @conf[REPORT] = @request.params[REPORT]
       @conf[SHARE_DB] = @request.params[SHARE_DB]
       @conf[LIMIT_OF_SUBMITTED_PAGES] = @request.params[LIMIT_OF_SUBMITTED_PAGES] || 50
-      threshold_spam = (@request.params[THRESHOLD]||0.95).to_f
-      threshold_ham = (@request.params[THRESHOLD_HAM]||0.05).to_f
+      threshold_spam = (@request.params[THRESHOLD].join.to_f || 0.95)
+      threshold_ham = (@request.params[THRESHOLD_HAM].join.to_f || 0.05)
       if 0 <= threshold_ham and threshold_ham <= threshold_spam and threshold_spam <= 1.0
         @conf[THRESHOLD_HAM] = threshold_ham
         @conf[THRESHOLD] = threshold_spam
@@ -118,7 +118,7 @@ EOT
   end
 
   def limit_of_submitted_pages
-    (@conf[LIMIT_OF_SUBMITTED_PAGES] || 50).to_i
+    (@conf[LIMIT_OF_SUBMITTED_PAGES].join.to_i || 50)
   end
 
   def submitted_pages_html

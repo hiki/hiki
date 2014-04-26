@@ -21,4 +21,5 @@ group :development, :test do
   gem 'test-unit-rr'
   gem 'test-unit-notify'
   gem 'test-unit-capybara'
+  gem 'rspec'
 end
