@@ -132,10 +132,10 @@ describe Hiki::Filter::BayesFilter, "with settings" do
     bfpd = Hiki::Filter::BayesFilter::PageData
 
     allow(db).to receive(:estimate).and_return(0.0)
-    expect(bfpd.new(pd.new("Page", "text")).ham?).to be_true
+    expect(bfpd.new(pd.new("Page", "text")).ham?).to be true
 
     allow(db).to receive(:estimate).and_return(1.0)
-    expect(bfpd.new(pd.new("Page", "spam")).ham?).to be_false
+    expect(bfpd.new(pd.new("Page", "spam")).ham?).to be false
 
     allow(db).to receive(:estimate).and_return(0.5)
     expect(bfpd.new(pd.new("Page", "ham spam")).ham?).to eq(nil)
@@ -181,10 +181,10 @@ describe Hiki::Filter::BayesFilter::PageData do
     expect(bfpd.new(pd.new("Page", "text")).ham?).to be_nil
 
     @bf.db.ham << ["ham"]
-    expect(bfpd.new(pd.new("Page", "ham")).ham?).to be_true
+    expect(bfpd.new(pd.new("Page", "ham")).ham?).to be true
 
     @bf.db.spam << ["spam"]
-    expect(bfpd.new(pd.new("Page", "spam")).ham?).to be_false
+    expect(bfpd.new(pd.new("Page", "spam")).ham?).to be false
     expect(bfpd.new(pd.new("Page", "ham spam")).ham?).to be_nil
   end
 

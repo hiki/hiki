@@ -83,13 +83,13 @@ class << Object.new
     end
 
     it "save_mode?" do
-      expect(@c.save_mode?).to be_true
+      expect(@c.save_mode?).to be true
       allow(@cgi).to receive(:request_method).and_return("GET")
-      expect(@c.save_mode?).to be_false
+      expect(@c.save_mode?).to be false
       allow(@cgi).to receive(:request_method).and_return("POST")
-      expect(@c.save_mode?).to be_true
+      expect(@c.save_mode?).to be true
       @c.instance_variable_set("@confmode", "conf")
-      expect(@c.save_mode?).to be_false
+      expect(@c.save_mode?).to be false
     end
   end
 
@@ -112,9 +112,9 @@ class << Object.new
     end
 
     it "setting test" do
-      expect(@ham.ham?).to be_true
-      expect(@spam.ham?).to be_false
-      expect(@doubt.ham?).to be_nil
+      expect(@ham.ham?).to be true
+      expect(@spam.ham?).to be false
+      expect(@doubt.ham?).to be nil
     end
 
     it "html" do
@@ -144,13 +144,13 @@ class << Object.new
       bp = Hiki::Filter::BayesFilter::PageData
       @ham = bp.new(pd.new("ham", "ham", "ham", "ham", "127.0.0.1"))
       @ham.cache_save
-      expect(@ham.ham?).to be_true
+      expect(@ham.ham?).to be true
       @spam = bp.new(pd.new("spam", "spam", "spam", "spam", "127.0.0.1"))
       @spam.cache_save
-      expect(@spam.ham?).to be_false
+      expect(@spam.ham?).to be false
       @doubt = bp.new(pd.new("ham spam", "ham spam", "ham spam", "ham spam", "127.0.0.1"))
       @doubt.cache_save
-      expect(@doubt.ham?).to be_nil
+      expect(@doubt.ham?).to be nil
     end
 
     it "html" do
@@ -162,11 +162,11 @@ class << Object.new
       ham_id = "H#{@ham.file_name}"
       @params[ham_id] << "1"
       @params["register_#{ham_id}"] << "spam"
-      expect(@c.save_mode?).to be_true
+      expect(@c.save_mode?).to be true
       @c.process_page_data
       expect(File).not_to be_exist(@ham.cache_file_name)
       expect(File).to be_exist(@ham.corpus_file_name_spam)
-      expect(@ham.ham?).to be_false
+      expect(@ham.ham?).to be false
     end
   end
 
