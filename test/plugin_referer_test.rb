@@ -16,7 +16,7 @@ class Plugin_Referer_Unit_Tests < Test::Unit::TestCase
   end
 
   def teardown
-    FileUtils.rm_r(@test_cache_path) if File.exists?(@test_cache_path)
+    FileUtils.rm_r(@test_cache_path) if File.exist?(@test_cache_path)
   end
 
   def test_body_leave_proc
@@ -37,7 +37,7 @@ class Plugin_Referer_Unit_Tests < Test::Unit::TestCase
     if ! defined?(@test_cache_path)
       tempfile = Tempfile.new(self.class.to_s)
       @test_cache_path = File.join(File.dirname(tempfile.path), self.class.to_s)
-      FileUtils.mkdir(@test_cache_path) unless File.exists?(@test_cache_path)
+      FileUtils.mkdir(@test_cache_path) unless File.exist?(@test_cache_path)
       tempfile.close(true)
     end
     @test_cache_path

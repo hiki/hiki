@@ -4,7 +4,7 @@ require 'fileutils'
 module Hiki
   class HikifarmReposPlain < HikifarmReposBase
     def setup
-      Dir.mkdir(@root) if not File.exists?(@root)
+      Dir.mkdir(@root) if not File.exist?(@root)
     end
 
     def imported?(wiki)
@@ -37,7 +37,7 @@ module Hiki
 
       dir = "#{@root}/#{wiki.untaint}/#{escape(page).untaint}"
 
-      Dir.mkdir(dir) if not File.exists?(dir)
+      Dir.mkdir(dir) if not File.exist?(dir)
       FileUtils.rm("#{dir}/.removed", {force: true})
 
       rev = last_revision(page) + 1
