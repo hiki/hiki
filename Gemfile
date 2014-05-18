@@ -2,11 +2,10 @@ source 'https://rubygems.org'
 
 gem 'rake'
 gem 'rack'
-gem 'thin'
-
 gem 'docdiff'
 gem 'hikidoc'
 
+gem 'thin'
 gem 'sequel'
 gem 'mysql2'
 
