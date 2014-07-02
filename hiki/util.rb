@@ -3,11 +3,7 @@
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'nkf'
-begin
-  require 'cgi/util'
-rescue LoadError
-  require 'cgi'
-end
+require 'cgi/util'
 require 'erb'
 
 require 'docdiff/difference'
