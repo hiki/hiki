@@ -12,11 +12,11 @@ module Hiki
       title_str = @key.empty? ? @conf.msg_search : @conf.msg_search_result
       str = <<-EOS
   <form class="update" action="./">
-    <h2>#{@conf.site_name.escapeHTML} - #{title_str.escapeHTML}</h2>
-    <p>#{@conf.msg_search_comment.escapeHTML}</p>
-    <p><input type="text" name="key" size="20" value="#{@key.escapeHTML}">
+    <h2>#{h(@conf.site_name)} - #{h(title_str)}</h2>
+    <p>#{h(@conf.msg_search_comment)}</p>
+    <p><input type="text" name="key" size="20" value="#{h(@key)}">
     <input type="hidden" name="c" value="search">
-    <input type="submit" name="search" value="#{@conf.msg_search.escapeHTML}"></p>
+    <input type="submit" name="search" value="#{h(@conf.msg_search)}"></p>
   </form>
 EOS
       parser = @conf.parser::new(@conf)
@@ -47,13 +47,13 @@ EOS
             options = create_search_options
             @result = db.search(@key, options)
             if @result.hit_count ==0
-              rast_output("<p>#{(@conf.msg_search_not_found % @key).escapeHTML}</p>")
+              rast_output("<p>#{h(@conf.msg_search_not_found % @key)}</p>")
             else
               rast_output(format_result)
             end
           end
         rescue
-          rast_output("<p>Error : #{$!.message.escapeHTML}</p>")
+          rast_output("<p>Error : #{h($!.message)}</p>")
         ensure
           rast_db_list.each do |db|
             db.close if db
@@ -63,18 +63,18 @@ EOS
     end
 
     def format_result
-      head = "<p>#{(@conf.msg_search_hits % [@key, @db.page_info.size, @result.hit_count]).escapeHTML} (#{@start + 1} - #{@start + @result.items.size})</p>\n"
+      head = "<p>#{h(@conf.msg_search_hits % [@key, @db.page_info.size, @result.hit_count])} (#{@start + 1} - #{@start + @result.items.size})</p>\n"
       ret = %Q(<dl class="search">\n)
       @result.items.each do |item|
         uri, title, last_modified = *item.properties
         title = uri if title.empty?
-        summary = item.summary.escapeHTML || ''
+        summary = h(item.summary) || ''
         for term in @result.terms
-          summary.gsub!(Regexp.new(Regexp.quote(term.term.escapeHTML), true, "e"),
+          summary.gsub!(Regexp.new(Regexp.quote(h(term.term)), true, "e"),
                         "<strong>\\&</strong>")
         end
-        ret << %Q|<dt><a href="#{uri.escapeHTML}">#{title.escapeHTML}</a></dt>\n|
-        ret << %Q|<dd>#{summary}<br><a href="#{uri.escapeHTML}">#{uri.escapeHTML}</a></dd>\n|
+        ret << %Q|<dt><a href="#{h(uri)}">#{h(title)}</a></dt>\n|
+        ret << %Q|<dd>#{summary}<br><a href="#{h(uri)}">#{h(uri)}</a></dd>\n|
       end
       ret << "</dl>\n"
       head + ret + format_links
