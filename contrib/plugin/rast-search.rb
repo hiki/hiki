@@ -1,7 +1,10 @@
 require 'rast'
+require 'hiki/util'
 
 module Hiki
   class RastSearch < Command
+    include Hiki::Util
+
     MAX_PAGES = 10
     NUM = 10
 
@@ -115,7 +118,7 @@ EOS
 
     def format_link(label, start, num)
       return format(%Q|<a href="%s?c=search;key=%s;start=%d">%s</a> |,
-                     @conf.cgi_name, @key.escape, start, label)
+                     @conf.cgi_name, escape(@key), start, label)
     end
 
     def create_search_options

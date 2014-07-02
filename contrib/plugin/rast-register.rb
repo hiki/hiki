@@ -3,7 +3,7 @@ require 'rast'
 def rast_register( page = @page, force = false )
   db_path = ( @conf.options['rast-register.db_path'] || "#{@cache_path}/rast" ).untaint
   rast_make_db( db_path ) unless File.exist?( db_path )
-  uri = "#{@conf.index_url}?#{page.escape}"
+  uri = "#{@conf.index_url}?#{escape(page)}"
   last_modified = @db.get_attribute( page, :last_modified ).strftime( "%FT%T" )
   options = {"properties" => ['last_modified']}
   Rast::DB.open( db_path, Rast::DB::RDWR, "sync_threshold_chars" => 500000) do |db|
@@ -36,7 +36,7 @@ def rast_delete
   db_path = ( @conf.options['rast-register.db_path'] || "#{@cache_path}/rast" ).untaint
   options = {"properties" => ['uri']}
   return unless File.exist?( db_path )
-  uri = "#{@conf.index_url}?#{@page.escape}"
+  uri = "#{@conf.index_url}?#{escape(@page)}"
   Rast::DB.open( db_path, Rast::DB::RDWR, "sync_threshold_chars" => 500000) do |db|
     result = db.search("uri = #{uri}", options)
     result.items.each do |item|

@@ -219,11 +219,11 @@ module Hiki
     end
 
     def textdir(s)
-      File::join(@pages_path, s.escape).untaint
+      File::join(@pages_path, escape(s)).untaint
     end
 
     def backupdir(s)
-      File::join(@backup_path, s.escape).untaint
+      File::join(@backup_path, escape(s)).untaint
     end
   end
 end
