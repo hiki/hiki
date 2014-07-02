@@ -1,19 +1,13 @@
 ◆ Hikiのインストールと設定 ◆
 
-Hikiを動かすためには何はなくとも、まずRuby (バージョン1.8以降) が必要です。
+Hikiを動かすためには何はなくとも、まずRuby (バージョン1.9以降) が必要です。
 [[Rubyホームページ|http://www.ruby-lang.org/ja/]]からダウンロードしてイン
 ストールしてください。
 
 
 ○ 依存するライブラリのインストール
 
-Ruby のバージョンが 1.8.2 より前の環境で、trackback.rb または
-rss-show.rb を使う時には、以下のいずれかをインストールする必要がありま
-す。バージョン 1.8.2 以降では不要です。
-
-* uconv    http://www.yoshidam.net/Ruby_ja.html#uconv
-* rbuconv  http://www.yoshidam.net/Ruby_ja.html#rbuconv
-
+  $ bundle install
 
 ○ インストール例で前提とする環境
 
