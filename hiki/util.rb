@@ -35,26 +35,6 @@ class String
     NKF.nkf('-m0 -w', self)
   end
 
-  def escape
-    Hiki::Util.escape(self)
-  end
-
-  def unescape
-    Hiki::Util.unescape(self)
-  end
-
-  def escapeHTML
-    Hiki::Util.escape_html(self)
-  end
-
-  def unescapeHTML
-    Hiki::Util.unescape_html(self)
-  end
-
-  def sanitize
-    self
-  end
-
   unless method_defined?(:b)
     def b
       dup.force_encoding(Encoding::ASCII_8BIT)
