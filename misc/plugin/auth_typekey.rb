@@ -25,7 +25,7 @@ def auth_typekey
 
   if ts and email and name and nick and sig and tk.verify(email, name, nick, ts, sig)
     session = Session.new(@conf)
-    session.user = utf8_to_euc(nick)
+    session.user = nick
     session.save
     self.cookies << typekey_cookie('typekey_session_id', session.session_id)
   end
