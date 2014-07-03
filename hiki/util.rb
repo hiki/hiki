@@ -285,16 +285,6 @@ EOS
     end
 
     # TODO remove this method in future release
-    def euc_to_utf8(str)
-      str.encode("UTF-8", "EUC-JP")
-    end
-
-    # TODO remove this method in future release
-    def utf8_to_euc(str)
-      str.encode("EUC-JP", "UTF-8")
-    end
-
-    # TODO remove this method in future release
     def to_native(str, charset=nil)
       str.encode(@charset, charset)
     end
