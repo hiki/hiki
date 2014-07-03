@@ -60,8 +60,8 @@ end
 def rss_format_items(items)
   html = "<ul>\n"
   items.each do |i|
-    page = utf8_to_euc( i.title )
-    url = utf8_to_euc( i.link )
+    page = i.title
+    url = i.link
     html << "<li>#{make_anchor(h(url), h(unescape_html(page)))}</li>\n"
   end
   html << "</ul>\n"
