@@ -76,7 +76,7 @@ module Hiki
     end
 
     def search
-      word = utf8_to_euc(@request.params['key'])
+      word = @request.params['key']
       r = ""
       unless word.empty? then
         total, l = @db.search( word )
@@ -91,7 +91,7 @@ module Hiki
       end
       header = {}
       header['type'] = 'text/html'
-      header['charset'] = 'EUC-JP'
+      header['charset'] = 'UTF-8'
       header['Content-Language'] = @conf.lang
       header['Pragma'] = 'no-cache'
       header['Cache-Control'] = 'no-cache'
