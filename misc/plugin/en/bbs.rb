@@ -1,4 +1,3 @@
-# $Id: bbs.rb,v 1.3 2005-03-03 15:53:55 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 def bbs_name_label

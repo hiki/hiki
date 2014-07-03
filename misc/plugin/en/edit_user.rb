@@ -1,4 +1,3 @@
-# $Id: edit_user.rb,v 1.3 2005-06-14 13:49:07 fdiary Exp $
 # Copyright (C) 2005 Kazuhiko <kazuhiko@fdiary.net>
 
 def label_edit_user_config; 'Edit users'; end

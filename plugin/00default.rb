@@ -1,4 +1,3 @@
-# $Id: 00default.rb,v 1.58 2008-06-25 11:15:32 hsbt Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 #==============================

@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# $Id: test_util.rb,v 1.4 2006-05-29 13:39:10 fdiary Exp $
 
 require 'test_helper'
 require 'hiki/util'

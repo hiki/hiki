@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# $Id: test_interwiki.rb,v 1.2 2005-06-28 05:39:09 fdiary Exp $
 
 require 'test_helper'
 require 'hiki/interwiki'

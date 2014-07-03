@@ -1,4 +1,3 @@
-# $Id: cvs.rb,v 1.11 2005-12-28 22:38:30 fdiary Exp $
 # Copyright (C) 2003, Koichiro Ohba <koichiro@meadowy.org>
 # Copyright (C) 2003, Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
 # You can distribute this under GPL.

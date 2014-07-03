@@ -1,4 +1,3 @@
-# $Id: config.rb,v 1.127 2008-02-07 15:44:11 yanagita Exp $
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.

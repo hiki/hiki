@@ -1,4 +1,3 @@
-# $Id: trackback.rb,v 1.14 2006-10-05 06:46:43 fdiary Exp $
 # Copyright (C) 2004 Kazuhiko <kazuhiko@fdiary.net>
 
 def trackback

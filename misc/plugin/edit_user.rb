@@ -1,4 +1,3 @@
-# $Id: edit_user.rb,v 1.5 2005-06-11 16:31:04 fdiary Exp $
 # Copyright (C) 2005 Kazuhiko <kazuhiko@fdiary.net>
 
 def saveconf_edit_user

@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# $Id: test_repos_hg.rb,v 1.1 2008-08-06 10:48:25 hiraku Exp $
 # Copyright (C) 2008, KURODA Hiraku <hiraku{@}hinet.mydns.jp>
 # This code is modified from "test/test_repos_git.rb" by Kouhei Sutou
 # You can distribute this under GPL.

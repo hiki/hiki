@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# $Id: auth_typekey.rb,v 1.1 2005-03-06 09:05:23 fdiary Exp $
 # Copyright (C) 2005 TAKEUCHI Hitoshi
 
 def label_auth_typekey_login

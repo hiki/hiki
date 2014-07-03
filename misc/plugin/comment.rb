@@ -1,4 +1,3 @@
-# $Id: comment.rb,v 1.14 2006-10-05 06:46:43 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 # modified by yoshimi.

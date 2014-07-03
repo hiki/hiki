@@ -1,4 +1,3 @@
-# $Id: diffmail.rb,v 1.11 2005-07-17 14:29:06 fdiary Exp $
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 
 #----- send a mail on updating

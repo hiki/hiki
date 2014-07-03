@@ -1,4 +1,3 @@
-# $Id: html_formatter.rb,v 1.4 2005-09-29 04:53:01 fdiary Exp $
 
 require 'hiki/util'
 require "style/default/html_formatter"

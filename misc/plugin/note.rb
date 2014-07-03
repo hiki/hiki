@@ -1,4 +1,3 @@
-# $Id: note.rb,v 1.2 2005-03-05 15:24:28 hitoshi Exp $
 # Copyright (C) 2005 Kazuhiko <kazuhiko@fdiary.net>
 # based on joesaisan's idea <http://joesaisan.tdiary.net/20050222.html#p02>
 

@@ -1,4 +1,3 @@
-# $Id: page.rb,v 1.15 2007-05-23 07:20:04 znz Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 

@@ -1,4 +1,3 @@
-# $Id: test_pluginutil.rb,v 1.2 2005-07-20 04:26:22 fdiary Exp $
 
 require 'test_helper'
 require 'hiki/pluginutil'

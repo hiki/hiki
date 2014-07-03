@@ -1,4 +1,3 @@
-# $Id: pluginutil.rb,v 1.10 2008-01-06 05:49:30 znz Exp $
 #
 # apply_plugin(str):
 #  Eval the string as a plugin.

@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-# $Id: hiki.cgi,v 1.36 2008-01-24 15:42:11 znz Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 BEGIN { $stdout.binmode }

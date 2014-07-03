@@ -1,5 +1,4 @@
 #!/usr/bin/ruby -Ke
-# $Id: hikilet.rb,v 1.12 2008-01-06 05:49:30 znz Exp $
 # Copyright (C) 2005-2007 Kazuhiro NISHIYAMA
 
 require 'hiki/config'

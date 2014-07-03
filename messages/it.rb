@@ -1,4 +1,3 @@
-# $Id: it.rb,v 1.15 2005-07-14 01:50:25 fdiary Exp $
 # it.rb
 #
 # Copyright (C) 2003 Luigi Maselli <metnik@tiscali.it>

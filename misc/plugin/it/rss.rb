@@ -1,4 +1,3 @@
-# $Id: rss.rb,v 1.3 2005-03-03 15:53:56 fdiary Exp $
 # Copyright (C) 2003 Luigi Maselli <metnik@tiscali.it>
 
 def label_rss_recent

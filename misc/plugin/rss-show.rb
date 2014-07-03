@@ -1,4 +1,3 @@
-# $Id: rss-show.rb,v 1.11 2005-09-26 13:35:05 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'rss/1.0'

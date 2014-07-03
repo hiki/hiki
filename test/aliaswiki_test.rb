@@ -1,4 +1,3 @@
-# $Id: test_aliaswiki.rb,v 1.1 2005-06-15 03:10:16 fdiary Exp $
 
 require 'test_helper'
 require 'hiki/aliaswiki'

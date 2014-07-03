@@ -1,4 +1,3 @@
-# $Id: storage.rb,v 1.17 2006-11-25 22:13:28 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'digest/md5'

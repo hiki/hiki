@@ -1,4 +1,3 @@
-# $Id: html_formatter.rb,v 1.62 2008-01-06 05:49:30 znz Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'

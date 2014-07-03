@@ -1,4 +1,3 @@
-# $Id: plugin.rb,v 1.37 2008-02-12 15:06:08 hiraku Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 #

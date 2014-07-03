@@ -1,4 +1,3 @@
-# $Id: edit_user.rb,v 1.1 2005-08-02 13:37:41 yanagita Exp $
 # Copyright (C) 2005 Kazuhiko <kazuhiko@fdiary.net>
 
 def label_edit_user_config; 'Benutzerverwaltung'; end

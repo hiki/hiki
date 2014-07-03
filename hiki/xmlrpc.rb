@@ -1,4 +1,3 @@
-# $Id: xmlrpc.rb,v 1.9 2007-09-25 06:23:41 fdiary Exp $
 
 require 'xmlrpc/server'
 require 'hiki/plugin'

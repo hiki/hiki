@@ -1,4 +1,3 @@
-# $Id: test_tmarshal.rb,v 1.1 2005-01-04 08:43:57 fdiary Exp $
 
 require 'test_helper'
 require 'hiki/db/tmarshal'

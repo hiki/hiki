@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# $Id: util.rb,v 1.44 2005-12-25 07:03:06 yanagita Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'nkf'

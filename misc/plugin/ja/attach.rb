@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# $Id: attach.rb,v 1.2 2005-06-17 05:03:43 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 def attach_files_label

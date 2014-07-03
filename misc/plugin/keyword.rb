@@ -1,4 +1,3 @@
-# $Id: keyword.rb,v 1.5 2005-09-30 11:45:49 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 def keyword_list(*key)

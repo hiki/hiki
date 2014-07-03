@@ -1,4 +1,3 @@
-# $Id: en.rb,v 1.20 2008-08-07 09:54:21 hiraku Exp $
 # en.rb
 #
 # Copyright (C) 2003 Masao Mutoh <mutoh@highway.ne.jp>

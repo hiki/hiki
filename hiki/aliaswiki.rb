@@ -1,4 +1,3 @@
-# $Id: aliaswiki.rb,v 1.5 2005-06-15 03:10:16 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 module Hiki

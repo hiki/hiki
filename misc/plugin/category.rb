@@ -1,4 +1,3 @@
-# $Id: category.rb,v 1.6 2005-09-30 11:45:49 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 def category_list(*category)

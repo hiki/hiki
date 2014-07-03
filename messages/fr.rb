@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# $Id: fr.rb,v 1.15 2005-07-14 01:50:25 fdiary Exp $
 # fr.rb
 #
 # Copyright (C) 2003 Laurent Sansonetti <laurent@datarescue.be>

@@ -1,4 +1,3 @@
-# $Id: interwiki.rb,v 1.10 2005-12-28 23:42:18 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hiki/util'

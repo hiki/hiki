@@ -1,4 +1,3 @@
-# $Id: session.rb,v 1.11 2007-06-24 13:28:49 yanagita Exp $
 # Copyright (C) 2004 Kazuhiko <kazuhiko@fdiary.net>
 
 module Hiki

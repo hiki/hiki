@@ -1,4 +1,3 @@
-# $Id: command.rb,v 1.92 2008-02-12 15:06:08 hiraku Exp $
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'timeout'

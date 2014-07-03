@@ -1,5 +1,4 @@
 # coding: utf-8
-# $Id: ptstore.rb,v 1.12 2006-08-07 02:10:27 fdiary Exp $
 #
 # ptstore.rb
 #   based on pstore.rb contained in Ruby 1.8.2

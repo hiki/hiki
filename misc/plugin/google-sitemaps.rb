@@ -1,4 +1,3 @@
-# $Id: google-sitemaps.rb,v 1.1 2005-06-09 13:17:40 yanagita Exp $
 # Copyright (C) 2003-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # Copyright (C) 2005 Kazuhiko <kazuhiko@fdiary.net>
 # Copyright (C) 2005 Kouhei Yanagita <sugi@dream.big.or.jp>

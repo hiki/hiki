@@ -1,4 +1,3 @@
-# $Id: similarity.rb,v 1.3 2004-03-04 06:15:19 hitoshi Exp $
 
 def similarity(style, permalink)
   s = <<"EOS"

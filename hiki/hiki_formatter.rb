@@ -1,4 +1,3 @@
-# $Id: hiki_formatter.rb,v 1.8 2008-01-06 05:49:30 znz Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 module Hiki

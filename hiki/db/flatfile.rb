@@ -1,5 +1,4 @@
 # coding: utf-8
-# $Id: flatfile.rb,v 1.24 2007-09-25 06:23:41 fdiary Exp $
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'fileutils'

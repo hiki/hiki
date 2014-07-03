@@ -1,4 +1,3 @@
-# $Id: src.rb,v 1.9 2007-01-12 02:27:19 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 def src

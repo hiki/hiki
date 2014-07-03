@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# $Id: template.rb,v 1.2 2005-06-27 05:21:42 fdiary Exp $
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 def template_label

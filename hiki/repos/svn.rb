@@ -1,4 +1,3 @@
-# $Id: svn.rb,v 1.14 2005-09-11 10:10:30 fdiary Exp $
 # Copyright (C) 2003, Koichiro Ohba <koichiro@meadowy.org>
 # Copyright (C) 2003, Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
 # You can distribute this under GPL.

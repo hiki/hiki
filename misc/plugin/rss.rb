@@ -1,4 +1,3 @@
-# $Id: rss.rb,v 1.23 2008-07-06 02:40:43 hsbt Exp $
 # Copyright (C) 2003-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # Copyright (C) 2005 Kazuhiko <kazuhiko@fdiary.net>
 

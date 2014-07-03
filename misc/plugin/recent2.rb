@@ -1,4 +1,3 @@
-# $Id: recent2.rb,v 1.3 2004-12-14 16:12:33 fdiary Exp $
 # Copyright (C) 2003 not <not@cds.ne.jp>
 
 def recent2( n = 20 )
