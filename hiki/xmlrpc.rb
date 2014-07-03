@@ -9,23 +9,21 @@ module Hiki
 
     def init_handler(server, conf, request)
       server.add_handler('wiki.getPage') do |page|
-        page = utf8_to_euc( page )
         db = conf.database
         ret = db.load( page )
         unless ret
           raise XMLRPC::FaultException.new(1, "No such page was found.")
         end
-        XMLRPC::Base64.new( euc_to_utf8( ret ) )
+        XMLRPC::Base64.new( ret )
       end
 
       server.add_handler('wiki.getPageInfo') do |page|
-        page = utf8_to_euc( page )
         db = conf.database
         title = db.get_attribute( page, :title )
         title = page if title.nil? || title.empty?
         {
-          'title' => XMLRPC::Base64.new( euc_to_utf8( title ) ),
-          'keyword' => db.get_attribute( page, :keyword ).collect { |k| XMLRPC::Base64.new( euc_to_utf8( k ) ) },
+          'title' => XMLRPC::Base64.new( title ),
+          'keyword' => db.get_attribute( page, :keyword ).collect { |k| XMLRPC::Base64.new(  k ) },
           'md5hex' => db.md5hex( page ),
           'lastModified' => db.get_attribute( page, :last_modified ).getutc,
           'author' => XMLRPC::Base64.new( db.get_attribute( page, :editor ) || '' )
@@ -33,15 +31,13 @@ module Hiki
       end
 
       server.add_handler('wiki.putPage') do |page, content, attributes|
-        page = utf8_to_euc( page )
-        content = utf8_to_euc( content )
         attributes ||= {}
         attributes.each_pair { |k, v|
           case v
           when String
-            v.replace( utf8_to_euc( v ) )
+            v.replace( v )
           when Array
-            v.map!{ |s| s.replace( utf8_to_euc( s ) ) }
+            v.map!{ |s| s.replace( s ) }
           end
         }
         request.params['c'] = 'save'
@@ -79,7 +75,7 @@ module Hiki
 
       server.add_handler('wiki.getAllPages') do
         db = conf.database
-        db.pages.collect{|p| XMLRPC::Base64.new( euc_to_utf8( p ) )}
+        db.pages.collect{|p| XMLRPC::Base64.new( p )}
       end
 
       #add_multicall
