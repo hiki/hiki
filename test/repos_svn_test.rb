@@ -31,6 +31,7 @@ class Repos_SVN_Tests < Test::Unit::TestCase
     write("FooBar", 'foobar')
     @repos.commit('FooBar')
     assert_equal('foobar', read('FooBar'))
+    file = nil
 
     write("FooBar", 'foobar new')
     @repos.commit('FooBar')
