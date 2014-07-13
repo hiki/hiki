@@ -5,9 +5,11 @@ gem 'rack'
 gem 'docdiff'
 gem 'hikidoc'
 
-gem 'thin'
-gem 'sequel'
-gem 'mysql2'
+group :production do
+  gem 'thin'
+  gem 'sequel'
+  gem 'mysql2'
+end
 
 group :development do
   gem 'pry'
