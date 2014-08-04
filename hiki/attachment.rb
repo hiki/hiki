@@ -26,6 +26,10 @@ module Hiki
     private
 
     def attach_file(request, conf)
+      unless /^attach\.rb$/ =~ conf.options['sp.selected'].to_s then
+        return Hiki::Response.new('plugin "attach.rb" is not enabled',
+                                  404, 'type' => 'text/plain')
+      end
       set_conf(conf)
       params = request.params
       page = params['p'] ? params['p'] : 'FrontPage'
