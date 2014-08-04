@@ -44,7 +44,7 @@ module Hiki
       end
 
       def create_wiki(name)
-        mkdir_p("#{@farm_pub_path}/#{name.untaint}")
+        mkdir("#{@farm_pub_path}/#{name.untaint}")
 
         unless Object.const_defined?(:Rack)
           create_index_cgi(name)
@@ -56,10 +56,10 @@ module Hiki
           f.puts(conf(name, @conf.hiki))
         end
 
-        mkdir_p("#{@conf.data_root}/#{name}")
-        mkdir_p("#{@conf.data_root}/#{name}/text")
-        mkdir_p("#{@conf.data_root}/#{name}/backup")
-        mkdir_p("#{@conf.data_root}/#{name}/cache")
+        mkdir("#{@conf.data_root}/#{name}")
+        mkdir("#{@conf.data_root}/#{name}/text")
+        mkdir("#{@conf.data_root}/#{name}/backup")
+        mkdir("#{@conf.data_root}/#{name}/cache")
         require 'fileutils'
         Dir["#{@conf.default_pages_path}/*"].each do |f|
           f.untaint
@@ -67,6 +67,9 @@ module Hiki
         end
 
         @repos.import(name)
+
+      rescue Errno::EEXIST
+        raise Errno::EEXIST, "that wiki already exists"
       end
 
       def command_key
