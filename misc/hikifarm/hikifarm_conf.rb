@@ -9,7 +9,7 @@
 @hikifarm_description = 'HogeHogeHikiFarm'
 
 # 作成したWikiサイトにあらかじめ入れたいドキュメントがあるディレクトリ
-@default_pages = "#{hiki}/data/text"
+@default_pages_path = "#{@hiki}/data/text"
 
 # データを入れるディレクトリ
 # この下に各Wiki名のディレクトリが掘られる
