@@ -26,7 +26,7 @@ module Hiki
     private
 
     def attach_file(request, conf)
-      unless /^attach\.rb$/ =~ conf.options['sp.selected'].to_s then
+      unless /^attach\.rb$/ =~ conf.options['sp.selected'].to_s
         return Hiki::Response.new('plugin "attach.rb" is not enabled',
                                   404, 'type' => 'text/plain')
       end
