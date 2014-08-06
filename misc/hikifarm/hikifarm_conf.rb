@@ -62,8 +62,8 @@
 
 # Hiki のファイル添付用 CGI ファイル名
 # nil のときは、ファイル添付用CGIは作成しない。
-# NOTE: Rack では使わない
-@attach_cgi_name = nil
+# NOTE: Rack ではファイルは作成しないが名前のみ使用
+@attach_cgi_name = 'attach.cgi'
 
 # Hikifarm の template ファイルがあるディレクトリ
 @hikifarm_template_dir = "#{@hiki}/misc/hikifarm/template"
