@@ -11,7 +11,12 @@ module Hiki
         when %r!\A/(\w+)/!
           hikiconf_rb = File.join(conf.farm_root, $1, 'hikiconf.rb')
           if File.exist?(hikiconf_rb)
-            Hiki::App.new(hikiconf_rb).call(env)
+            case $'
+            when conf.attach_cgi_name
+              Hiki::Attachment.new(hikiconf_rb).call(env)
+            else
+              Hiki::App.new(hikiconf_rb).call(env)
+            end
           else
             not_found
           end
