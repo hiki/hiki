@@ -8,8 +8,8 @@ require 'hiki/farm/page'
 
 module Hiki
   module Farm
-    VERSION = '1.0.0'
-    RELEASE_DATE = '2013-03-30'
+    VERSION = '2.0.0.pre1'
+    RELEASE_DATE = '2014-08-13'
   end
 end
 
