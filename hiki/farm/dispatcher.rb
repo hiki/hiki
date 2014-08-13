@@ -9,9 +9,28 @@ module Hiki
         when '/', "/#{Hiki::Farm::RSSPage.page_name}"
           Hiki::Farm::App.new(conf).call(env)
         when %r!\A/(\w+)/!
-          Hiki::App.new(File.join(conf.farm_root, $1, 'hikiconf.rb')).call(env)
+          hikiconf_rb = File.join(conf.farm_root, $1, 'hikiconf.rb')
+          if File.exist?(hikiconf_rb)
+            case $'
+            when conf.attach_cgi_name
+              Hiki::Attachment.new(hikiconf_rb).call(env)
+            else
+              Hiki::App.new(hikiconf_rb).call(env)
+            end
+          else
+            not_found
+          end
+        else
+          not_found
         end
       end
+
+      private
+
+      def not_found
+        Hiki::Response.new("not found", 404, "Content-Type" => "text/plain")
+      end
+
     end
   end
 end
