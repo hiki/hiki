@@ -1,3 +1,9 @@
+GIT
+  remote: git://github.com/eventmachine/eventmachine.git
+  revision: 4e1a1c4f5879bfe14ed660a0360cea2c5d7a92f2
+  specs:
+    eventmachine (1.0.3)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -16,7 +22,6 @@ GEM
     dotenv (0.11.1)
       dotenv-deployment (~> 0.0.2)
     dotenv-deployment (0.0.2)
-    eventmachine (1.0.3)
     ffi (1.9.5)
     foreman (0.75.0)
       dotenv (~> 0.11.1)
@@ -74,6 +79,7 @@ PLATFORMS
 DEPENDENCIES
   capybara (< 2)
   docdiff
+  eventmachine!
   foreman
   hikidoc
   mysql2
