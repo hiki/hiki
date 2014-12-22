@@ -33,7 +33,7 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
-    rack (1.5.2)
+    rack (1.6.0)
     rack-test (0.6.2)
       rack (>= 1.0)
     rake (10.4.2)
@@ -46,7 +46,7 @@ GEM
       websocket (~> 1.0)
     sequel (4.17.0)
     slop (3.6.0)
-    test-unit (3.0.7)
+    test-unit (3.0.8)
       power_assert
     test-unit-capybara (1.0.2)
       capybara (>= 1.1.2)
