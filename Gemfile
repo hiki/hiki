@@ -19,7 +19,6 @@ group :development, :test do
 end
 
 group :production do
-  gem 'eventmachine', github: 'eventmachine/eventmachine'
   gem 'thin'
   gem 'sequel'
   gem 'mysql2'
