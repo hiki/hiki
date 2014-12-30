@@ -54,7 +54,7 @@ module Hiki
       end
 
       def head?
-        request_method = 'HEAD'
+        request_method == 'HEAD'
       end
 
       def post?
