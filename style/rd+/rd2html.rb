@@ -174,10 +174,11 @@ module Hiki
     def a_name_href(anchor, label)
       if label.is_a? String
         label.gsub!(ESC_WORD_RE, "")
+        %Q[<a name="#{anchor}" href="##{anchor}" title="#{h(unescape(anchor))}">#{label}</a>]
       else
         label[0].gsub!(ESC_WORD_RE, "")
+        %Q[<a name="#{anchor}" href="##{anchor}" title="#{h(unescape(anchor))}">#{label[0]}</a>]
       end
-      %Q[<a name="#{anchor}" href="##{anchor}" title="#{h(unescape(anchor))}">#{label}</a>]
     end
 
     def apply_to_Headline(element, title)
