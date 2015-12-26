@@ -26,7 +26,7 @@ GEM
     mini_portile2 (2.0.0)
     multi_json (1.11.2)
     mysql2 (0.4.2)
-    nokogiri (1.6.7)
+    nokogiri (1.6.7.1)
       mini_portile2 (~> 2.0.0.rc2)
     power_assert (0.2.6)
     pry (0.10.3)
@@ -86,4 +86,4 @@ DEPENDENCIES
   thin
 
 BUNDLED WITH
-   1.10.6
+   1.11.2
