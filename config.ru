@@ -1,7 +1,7 @@
 #!/usr/bin/env rackup
 # -*- ruby -*-
 
-$LOAD_PATH.unshift '.'
+$LOAD_PATH.unshift 'lib'
 
 require 'hiki/app'
 require 'hiki/attachment'
