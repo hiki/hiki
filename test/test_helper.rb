@@ -9,8 +9,8 @@ require "pathname"
 require "fileutils"
 
 rootdir = Pathname(__FILE__).dirname.parent.expand_path
-$LOAD_PATH.unshift(rootdir, "#{rootdir}/hiki")
-$LOAD_PATH.unshift(rootdir, "#{rootdir}/test")
+$LOAD_PATH.unshift("#{rootdir}/lib")
+$LOAD_PATH.unshift("#{rootdir}/test")
 
 module TestHelper
 
