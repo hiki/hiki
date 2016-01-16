@@ -90,10 +90,10 @@ module Hiki
           @base_url = ''
         elsif ENV['HTTPS'] && /off/i !~ ENV['HTTPS']
           port = (ENV['SERVER_PORT'] == '443') ? '' : ':' + ENV['SERVER_PORT'].to_s
-          @base_url = "https://#{ ENV['SERVER_NAME'] }#{ port }#{File.dirname(ENV['SCRIPT_NAME'])}/".sub(%r|/+$|, '/')
+          @base_url = "https://#{ ENV['SERVER_NAME'] }#{ port }#{File.dirname(ENV['SCRIPT_NAME'])}/".sub(/\/+$/, '/')
         else
           port = (ENV['SERVER_PORT'] == '80') ? '' : ':' + ENV['SERVER_PORT'].to_s
-          @base_url = "http://#{ ENV['SERVER_NAME'] }#{ port }#{File.dirname(ENV['SCRIPT_NAME'])}/".sub(%r|/+$|, '/')
+          @base_url = "http://#{ ENV['SERVER_NAME'] }#{ port }#{File.dirname(ENV['SCRIPT_NAME'])}/".sub(/\/+$/, '/')
         end
       end
       @base_url
