@@ -18,7 +18,7 @@ require 'hiki/util'
 require 'hiki/command'
 
 module Hiki
-  PATH  = "#{File.dirname(File.dirname(__FILE__))}"
+  PATH  = "#{File.dirname(__FILE__)}"
 
   class Config
     include ::Hiki::Util
@@ -168,7 +168,7 @@ module Hiki
 
       @xmlrpc_enabled  = true unless defined?(@xmlrpc_enabled)
 
-      @template_path   ||= "#{PATH}/template"
+      @template_path   ||= Pathname(__FILE__).dirname.parent.parent + "template"
       @plugin_path     ||= "#{PATH}/plugin"
 
       @side_menu       ||= 'SideMenu'
@@ -283,7 +283,7 @@ module Hiki
 
       candidates.each do |lang|
         begin
-          require "messages/#{lang}"
+          require "hiki/messages/#{lang}"
           extend(Hiki.const_get("Messages_#{lang}"))
           @lang = lang
           return
