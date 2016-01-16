@@ -4,8 +4,9 @@ require 'test_helper'
 require 'time'
 require 'cgi/util'
 require 'rack'
-require File.join(File.dirname(__FILE__), *%w[.. hiki request])
-require File.join(File.dirname(__FILE__), *%w[.. hiki response])
+
+require 'hiki/request'
+require 'hiki/response'
 
 class Plugin_RSS_Unit_Tests < Test::Unit::TestCase
   def setup
