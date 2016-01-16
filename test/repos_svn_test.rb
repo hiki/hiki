@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 require 'test_helper'
-require 'hiki/repos/svn'
+require 'hiki/repository/svn'
 require 'hiki/util'
 
 class Repos_SVN_Tests < Test::Unit::TestCase
@@ -15,7 +15,7 @@ class Repos_SVN_Tests < Test::Unit::TestCase
     @data_dir = "#{@tmp_dir}/data"
     @text_dir = "#{@data_dir}/text"
     @repository_dir = "#{@tmp_dir}/repository"
-    @repos = Hiki::ReposSvn.new(@root, @data_dir)
+    @repos = Hiki::Repository::Svn.new(@root, @data_dir)
 
     FileUtils.mkdir_p(@text_dir)
     check_command("svn")

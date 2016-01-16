@@ -30,7 +30,7 @@ module Hiki
 
       require "style/#{@style}/parser"
       require "style/#{@style}/html_formatter"
-      require "hiki/repos/#{@repos_type}"
+      require "hiki/repository/#{@repos_type}"
       require "hiki/db/#{@database_type}"
 
       # parser class and formatter class
@@ -39,7 +39,7 @@ module Hiki
       @formatter = Hiki.const_get( "HTMLFormatter_#{style}" )
 
       # repository class
-      @repos = Hiki.const_get("Repos#{@repos_type.capitalize}").new(@repos_root, @data_path)
+      @repos = Hiki::Repository.const_get("#{@repos_type.capitalize}").new(@repos_root, @data_path)
 
       self.class.__send__ :attr_accessor, *instance_variables.map{|v| v.to_s.sub('@', '') }
 

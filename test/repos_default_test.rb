@@ -1,11 +1,11 @@
 require 'test_helper'
 require 'hiki/util'
-require 'hiki/repos/default'
+require 'hiki/repository/default'
 
 class Repos_Default_Tests < Test::Unit::TestCase
   def setup
     @data_path = '__tmp-wikitest'
-    @repos = Hiki::ReposDefault.new(nil, @data_path)
+    @repos = Hiki::Repository::Default.new(nil, @data_path)
     @page_name = 'HogeHoge'
 
     require 'fileutils'

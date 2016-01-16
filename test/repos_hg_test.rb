@@ -4,7 +4,7 @@
 # You can distribute this under GPL.
 
 require 'test_helper'
-require 'hiki/repos/hg'
+require 'hiki/repository/hg'
 require 'hiki/util'
 
 class Repos_Hg_Tests < Test::Unit::TestCase
@@ -17,7 +17,7 @@ class Repos_Hg_Tests < Test::Unit::TestCase
     @wiki = 'wikiwiki'
     @data_dir = "#{@tmp_dir}/data"
     @text_dir = "#{@data_dir}/text"
-    @repos = Hiki::ReposHg.new(@root, @data_dir)
+    @repos = Hiki::Repository::Hg.new(@root, @data_dir)
 
     FileUtils.mkdir_p(@text_dir)
     check_command("hg")

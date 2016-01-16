@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 require 'test_helper'
 require 'fileutils'
-require 'hiki/repos/plain'
+require 'hiki/repository/plain'
 require 'hiki/util'
 
 class Repos_Plain_Tests < Test::Unit::TestCase
@@ -12,7 +12,7 @@ class Repos_Plain_Tests < Test::Unit::TestCase
     @root = "#{@tmpdir}/root"
     @wiki = 'wikiwiki'
     @data_path = "#{@tmpdir}/data"
-    @repos = Hiki::ReposPlain.new(@root, @data_path)
+    @repos = Hiki::Repository::Plain.new(@root, @data_path)
 
     FileUtils.mkdir_p("#{@root}/#{@wiki}")
     FileUtils.mkdir_p("#{@data_path}/text")

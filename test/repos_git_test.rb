@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 require 'test_helper'
-require 'hiki/repos/git'
+require 'hiki/repository/git'
 require 'hiki/util'
 
 class Repos_Git_Tests < Test::Unit::TestCase
@@ -14,7 +14,7 @@ class Repos_Git_Tests < Test::Unit::TestCase
     @wiki = 'wikiwiki'
     @data_dir = "#{@tmp_dir}/data"
     @text_dir = "#{@data_dir}/text"
-    @repos = Hiki::ReposGit.new(@root, @data_dir)
+    @repos = Hiki::Repository::Git.new(@root, @data_dir)
 
     FileUtils.mkdir_p(@text_dir)
     check_command("git")
