@@ -134,7 +134,7 @@ module Hiki
     def load(config_path = 'hikiconf.rb')
       @options = {}
       eval( File.open(config_path){|f| f.read }.untaint, binding, "(#{config_path})", 1 )
-      formaterror if $data_path
+      format_error if $data_path
 
       raise 'No @data_path variable.' unless @data_path
       @data_path += '/' if /\/$/ !~ @data_path
@@ -243,7 +243,7 @@ module Hiki
       else
         @options2 = {}.taint
       end
-      formaterror if $site_name
+      format_error if $site_name
     end
 
     def method_missing( *m )
@@ -293,7 +293,7 @@ module Hiki
       raise "No message resource file is found. Please put one in the messages/ directory."
     end
 
-    def formaterror
+    def format_error
       raise "*** NOTICE ***\n\nThe format of configuration files (i.e. hikiconf.rb and hiki.conf) has changed.\nSee 'doc/VERSIONUP.txt' for more details.\n\n"
     end
   end
