@@ -3,6 +3,7 @@ require 'rubygems'
 require 'rack'
 
 require 'hiki/config'
+require 'hiki/repository'
 require 'hiki/xmlrpc'
 
 $LOAD_PATH.unshift(File.dirname(__FILE__))
