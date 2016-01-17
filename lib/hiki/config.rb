@@ -163,7 +163,7 @@ module Hiki
       @admin_name    ||= 'admin'
       @repos_type    ||= 'default'
       @use_wikiname    = true if @use_wikiname.nil?
-      @use_session      = true if @use_session.nil?
+      @use_session     = true if @use_session.nil?
       @options         = {} unless @options.class == Hash
 
       @xmlrpc_enabled  = true unless defined?(@xmlrpc_enabled)
