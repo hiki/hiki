@@ -3,7 +3,7 @@ require 'sequel'
 
 module Hiki
   module Repository
-    class Rdb < Base
+    class RDB < Base
       attr_writer :db
 
       def initialize(database_url, data_path)
