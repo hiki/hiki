@@ -6,8 +6,10 @@ require 'hiki/repository/base'
 
 module Hiki
   module Repository
-    class Cvs < Base
+    class CVS < Base
       include Hiki::Util
+
+      Hiki::Config::REPOSITORY_REGISTRY[:cvs] = self
 
       def commit(page, msg = default_msg)
         Dir.chdir( "#{@data_path}/text" ) do
