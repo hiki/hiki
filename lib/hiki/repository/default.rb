@@ -8,6 +8,9 @@ module Hiki
   module Repository
     class Default < Base
       include Hiki::Util
+
+      Hiki::Config::REPOSITORY_REGISTRY[:default] = self
+
       def commit(page, log = nil)
       end
 

@@ -6,6 +6,8 @@ module Hiki
     class RDB < Base
       attr_writer :db
 
+      Hiki::Config::REPOSITORY_REGISTRY[:rdb] = self
+
       def initialize(database_url, data_path)
         @database_url = database_url
         @data_path = data_path

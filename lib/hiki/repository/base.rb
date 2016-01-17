@@ -1,4 +1,5 @@
 require "hiki/util"
+require "hiki/config"
 
 module Hiki
   module Repository

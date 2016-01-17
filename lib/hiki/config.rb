@@ -12,6 +12,7 @@ HIKI_VERSION  = Hiki::VERSION
 HIKI_RELEASE_DATE = Hiki::RELEASE_DATE
 
 require 'cgi' unless Object.const_defined?(:Rack)
+require 'hiki/registry'
 require 'hiki/request'
 require 'hiki/response'
 require 'hiki/util'
@@ -30,7 +31,6 @@ module Hiki
 
       require "style/#{@style}/parser"
       require "style/#{@style}/html_formatter"
-      require "hiki/repository/#{@repos_type}"
       require "hiki/db/#{@database_type}"
 
       # parser class and formatter class
@@ -39,7 +39,7 @@ module Hiki
       @formatter = Hiki.const_get( "HTMLFormatter_#{style}" )
 
       # repository class
-      @repos = Hiki::Repository.const_get("#{@repos_type.capitalize}").new(@repos_root, @data_path)
+      @repos = REPOSITORY_REGISTRY[@repos_type].new(@repos_root, @data_path)
 
       self.class.__send__ :attr_accessor, *instance_variables.map{|v| v.to_s.sub('@', '') }
 
@@ -127,6 +127,8 @@ module Hiki
       end
       File.read(path)
     end
+
+    REPOSITORY_REGISTRY = Registry.new(:repository, "hiki/repository/")
 
     private
 

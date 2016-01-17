@@ -10,6 +10,8 @@ module Hiki
     class SVN < Base
       include Hiki::Util
 
+      Hiki::Config::REPOSITORY_REGISTRY[:svn] = self
+
       def initialize(root, data_path)
         super
         if /^[a-z]:/i =~ @root

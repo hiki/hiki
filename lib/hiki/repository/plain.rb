@@ -6,6 +6,8 @@ module Hiki
     class Plain < Base
       include Hiki::Util
 
+      Hiki::Config::REPOSITORY_REGISTRY[:plain] = self
+
       def commit(page, log = nil)
         wiki = File.read("#{@data_path}/text/.wiki")
 
