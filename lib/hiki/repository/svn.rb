@@ -7,7 +7,7 @@ require 'fileutils'
 
 module Hiki
   module Repository
-    class Svn < Base
+    class SVN < Base
       include Hiki::Util
 
       def initialize(root, data_path)

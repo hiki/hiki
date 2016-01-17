@@ -15,7 +15,7 @@ class Repos_SVN_Tests < Test::Unit::TestCase
     @data_dir = "#{@tmp_dir}/data"
     @text_dir = "#{@data_dir}/text"
     @repository_dir = "#{@tmp_dir}/repository"
-    @repos = Hiki::Repository::Svn.new(@root, @data_dir)
+    @repos = Hiki::Repository::SVN.new(@root, @data_dir)
 
     FileUtils.mkdir_p(@text_dir)
     check_command("svn")
