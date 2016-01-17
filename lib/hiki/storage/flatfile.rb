@@ -3,10 +3,13 @@
 require "fileutils"
 require "ptstore"
 require "hiki/util"
+require "hiki/storage/base"
 
 module Hiki
   module Storage
     class Flatfile < Base
+      Hiki::Config::STORAGE_REGISTRY[:flatfile] = self
+
       attr_reader :pages_path
 
       def initialize(conf)

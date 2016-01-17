@@ -31,7 +31,6 @@ module Hiki
 
       require "style/#{@style}/parser"
       require "style/#{@style}/html_formatter"
-      require "hiki/db/#{@database_type}"
 
       # parser class and formatter class
       style = @style.gsub( /\+/, '' )
@@ -49,7 +48,7 @@ module Hiki
     end
 
     def database
-      @database ||= Hiki.const_get( "HikiDB_#{database_type}" ).new( self )
+      @database ||= STORAGE_REGISTRY[database_type].new(self)
     end
 
     def bot?
@@ -129,6 +128,7 @@ module Hiki
     end
 
     REPOSITORY_REGISTRY = Registry.new(:repository, "hiki/repository/")
+    STORAGE_REGISTRY = Registry.new(:storage, "hiki/storage/")
 
     private
 
