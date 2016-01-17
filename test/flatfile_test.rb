@@ -2,7 +2,7 @@
 
 require 'test_helper'
 require 'hiki/config'
-require 'hiki/db/flatfile'
+require 'hiki/storage/flatfile'
 require "digest/md5"
 
 class HikiDB_flatfile_Unit_Tests < Test::Unit::TestCase
@@ -14,7 +14,7 @@ class HikiDB_flatfile_Unit_Tests < Test::Unit::TestCase
     cp_r(fixtures_dir + "plain_data.prepare", @wiki_data_path)
     config_path = (fixtures_dir + "hikiconf_default.rb").expand_path
     @conf = Hiki::Config.new(config_path)
-    @db = Hiki::HikiDB_flatfile.new(@conf)
+    @db = Hiki::Storage::Flatfile.new(@conf)
   end
 
   def teardown
