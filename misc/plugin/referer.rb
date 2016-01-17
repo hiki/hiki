@@ -1,7 +1,7 @@
 # coding: utf-8
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
-require 'hiki/db/ptstore'
+require 'ptstore'
 
 def add_referer(db)
   begin

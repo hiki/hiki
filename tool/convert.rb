@@ -9,7 +9,7 @@ require "digest/md5"
 require "nkf"
 require "hiki/util"
 require "hiki/config"
-require 'hiki/db/ptstore'
+require 'ptstore'
 
 FILE_NAME_MAX_SIZE = 255
 

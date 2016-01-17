@@ -1,6 +1,6 @@
 
 require 'test_helper'
-require 'hiki/db/tmarshal'
+require 'tmarshal'
 require 'stringio'
 
 class TMarshal_Unit_Tests < Test::Unit::TestCase

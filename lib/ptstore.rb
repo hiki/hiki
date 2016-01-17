@@ -17,7 +17,7 @@
 # end
 
 require 'pstore'
-require "hiki/db/tmarshal"
+require "tmarshal"
 
 
 class PTStore < PStore

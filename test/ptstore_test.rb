@@ -1,7 +1,7 @@
 # coding: utf-8
 
 require 'test_helper'
-require 'hiki/db/ptstore'
+require 'ptstore'
 require 'tempfile'
 
 class PTStore_Unit_Tests < Test::Unit::TestCase
