@@ -1,34 +1,35 @@
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 module Hiki
-  class Formatter
-    H2_RE = /^<h2>.*<a name=/
+  module Formatter
+    class Base
+      H2_RE = /^<h2>.*<a name=/
 
-    def apply_tdiary_theme(orig_html)
-      return orig_html if @conf.mobile_agent?
-      section = ''
-      title   = ''
-      html    = ''
+      def apply_tdiary_theme(orig_html)
+        return orig_html if @conf.mobile_agent?
+        section = ''
+        title   = ''
+        html    = ''
 
-      orig_html.each_line do |line|
-        if H2_RE =~ line
-          html << tdiary_section(title, section) unless title.empty? && section.empty?
-          section = ''
-          title = line
-        else
-          section << line
+        orig_html.each_line do |line|
+          if H2_RE =~ line
+            html << tdiary_section(title, section) unless title.empty? && section.empty?
+            section = ''
+            title = line
+          else
+            section << line
+          end
         end
+        html << tdiary_section(title, section)
       end
-      html << tdiary_section(title, section)
-    end
 
-    private
+      private
 
-    def tdiary_section(title, section)
-      title = title.strip
-      section = section.strip
-      return '' if title.empty? && section.empty?
-<<"EOS"
+      def tdiary_section(title, section)
+        title = title.strip
+        section = section.strip
+        return '' if title.empty? && section.empty?
+        <<"EOS"
 <div class="day">
   #{title}
   <div class="body">
@@ -38,6 +39,7 @@ module Hiki
   </div>
 </div>
 EOS
+      end
     end
   end
 end
