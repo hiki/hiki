@@ -1,7 +1,10 @@
 
-require "style/default/parser"
+require "hiki/style/default/parser"
 
 module Hiki
-  class Parser_math < Parser_default
+  module Parser
+    class Math < Default
+      Hiki::Config::PARSER_REGISTRY[:math] =  self
+    end
   end
 end

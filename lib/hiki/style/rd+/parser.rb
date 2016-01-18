@@ -7,41 +7,45 @@
 
 require 'rd/rdfmt'
 require 'cgi'
+require 'hiki/config'
 
 module Hiki
-  class Parser_rd
+  module Parser
+    class RD
+      Hiki::Config::PARSER_REGISTRY[:rd] = self
 
-    class << self
-      def heading( str, level = 1 )
-        '=' * level + str
+      class << self
+        def heading(str, level = 1)
+          '=' * level + str
+        end
+
+        def link(link_str, str = nil)
+          require 'uri'
+          link_str = "URL:#{link_str}" if link_str.index(URI.regexp) == 0
+          str ? "((<#{str}|#{link_str}>))" : "((<#{link_str}>))"
+        end
+
+        def blockquote(str)
+          str # RD does not support blockquote.
+        end
       end
 
-      def link( link_str, str = nil )
-        require 'uri'
-        link_str = "URL:#{link_str}" if link_str.index( URI.regexp ) == 0
-        str ? "((<#{str}|#{link_str}>))" : "((<#{link_str}>))"
+      def initialize(conf)
       end
 
-      def blockquote( str )
-        str # RD does not support blockquote.
-      end
-    end
-
-    def initialize( conf )
-    end
-
-    def parse(s)
-      begin
-        RD::RDTree.new("=begin\n#{s}\n=end\n\n")
-      rescue
-        error = $!.message.gsub(/^/, "  ")
-        i = 0
-        s = "\n#{s}\n"
-        src = s.split(/\n/).collect{|v| i += 1; "  %03d:   #{v.gsub('%', '%%')}" % [i]}.join("\n")
+      def parse(s)
         begin
-          RD::RDTree.new("=begin\n==Error! Please edit this page again.\n#{error}\n===Original document\n\n#{src}" + "\n=end\n")
+          RD::RDTree.new("=begin\n#{s}\n=end\n\n")
         rescue
-          RD::RDTree.new("=begin\n==Error! Please edit this page again.\n#{error}\n=end\n")
+          error = $!.message.gsub(/^/, "  ")
+          i = 0
+          s = "\n#{s}\n"
+          src = s.split(/\n/).collect{|v| i += 1; "  %03d:   #{v.gsub('%', '%%')}" % [i]}.join("\n")
+          begin
+            RD::RDTree.new("=begin\n==Error! Please edit this page again.\n#{error}\n===Original document\n\n#{src}" + "\n=end\n")
+          rescue
+            RD::RDTree.new("=begin\n==Error! Please edit this page again.\n#{error}\n=end\n")
+          end
         end
       end
     end
