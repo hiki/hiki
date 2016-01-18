@@ -29,13 +29,10 @@ module Hiki
 
       load_messages
 
-      require "style/#{@style}/parser"
-      require "style/#{@style}/html_formatter"
-
       # parser class and formatter class
       style = @style.gsub( /\+/, '' )
-      @parser = Hiki.const_get( "Parser_#{style}" )
-      @formatter = Hiki.const_get( "HTMLFormatter_#{style}" )
+      @parser = PARSER_REGISTRY[style]
+      @formatter = FORMATTER_REGISTRY[style]
 
       # repository class
       @repos = REPOSITORY_REGISTRY[@repos_type].new(@repos_root, @data_path)
@@ -129,6 +126,8 @@ module Hiki
 
     REPOSITORY_REGISTRY = Registry.new(:repository)
     STORAGE_REGISTRY = Registry.new(:storage)
+    PARSER_REGISTRY = Registry.new(:parser)
+    FORMATTER_REGISTRY = Registry.new(:formatter)
 
     private
 
@@ -300,3 +299,5 @@ module Hiki
     end
   end
 end
+
+require 'hiki/style'
