@@ -3,9 +3,8 @@ module Hiki
 
     attr_reader :kind
 
-    def initialize(kind, search_prefix = nil)
+    def initialize(kind)
       @kind = kind
-      @search_prefix = search_prefix
       @map = {}
     end
 

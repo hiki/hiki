@@ -127,8 +127,8 @@ module Hiki
       File.read(path)
     end
 
-    REPOSITORY_REGISTRY = Registry.new(:repository, "hiki/repository/")
-    STORAGE_REGISTRY = Registry.new(:storage, "hiki/storage/")
+    REPOSITORY_REGISTRY = Registry.new(:repository)
+    STORAGE_REGISTRY = Registry.new(:storage)
 
     private
 
