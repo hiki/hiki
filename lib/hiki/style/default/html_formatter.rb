@@ -4,11 +4,11 @@ require 'hiki/util'
 require 'hiki/pluginutil'
 require 'hiki/interwiki'
 require 'hiki/aliaswiki'
-require 'hiki/hiki_formatter'
+require 'hiki/formatter'
 require 'uri'
 
 module Hiki
-  class HTMLFormatter_default < HikiFormatter
+  class HTMLFormatter_default < Formatter
     include Hiki::Util
 
     def initialize( s, db, plugin, conf, prefix = 'l')

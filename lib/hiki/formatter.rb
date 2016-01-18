@@ -1,7 +1,7 @@
 # Copyright (C) 2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 module Hiki
-  class HikiFormatter
+  class Formatter
     H2_RE = /^<h2>.*<a name=/
 
     def apply_tdiary_theme(orig_html)

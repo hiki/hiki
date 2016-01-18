@@ -11,11 +11,11 @@
 # the Ruby's licence.
 
 require 'hiki/util'
-require 'hiki/hiki_formatter'
+require 'hiki/formatter'
 require 'style/rd+/rd2html.rb'
 
 module Hiki
-  class HTMLFormatter_rd < HikiFormatter
+  class HTMLFormatter_rd < Formatter
     include Hiki::Util
 
     def initialize( s, db, plugin, conf, suffix = 'l')
