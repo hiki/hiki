@@ -13,7 +13,7 @@
 
 require "cgi"
 require "rd/rd2html-lib"
-require 'style/rd+/anchorlist'
+require 'hiki/style/rd+/anchorlist'
 require 'hiki/pluginutil'
 require 'hiki/util'
 
