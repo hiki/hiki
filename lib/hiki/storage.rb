@@ -4,6 +4,6 @@ module Hiki
   end
 end
 
-require "hiki/storate/base"
+require "hiki/storage/base"
 require "hiki/storage/flatfile"
 require "hiki/storage/rdb"
