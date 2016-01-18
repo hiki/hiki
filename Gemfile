@@ -4,6 +4,7 @@ gem 'rake'
 gem 'rack'
 gem 'docdiff'
 gem 'hikidoc'
+gem 'rdtool'
 
 group :development do
   gem 'pry'
