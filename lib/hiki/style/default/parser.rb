@@ -1,12 +1,11 @@
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
 require 'hikidoc'
-require 'hiki/config'
 
 module Hiki
   module Parser
     class Default
-      Hiki::Config::PARSER_REGISTRY[:default] = self
+      Hiki::Parser::REGISTRY[:default] = self
 
       class << self
         def heading(str, level = 1)

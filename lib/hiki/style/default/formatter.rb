@@ -5,13 +5,12 @@ require 'hiki/pluginutil'
 require 'hiki/interwiki'
 require 'hiki/aliaswiki'
 require 'hiki/formatter'
-require 'hiki/config'
 require 'uri'
 
 module Hiki
   module Formatter
     class Default < Base
-      Hiki::Config::FORMATTER_REGISTRY[:default] = self
+      Hiki::Formatter::REGISTRY[:default] = self
 
       include Hiki::Util
 

@@ -12,13 +12,12 @@
 
 require 'hiki/util'
 require 'hiki/formatter'
-require 'hiki/config'
 require 'hiki/style/rd+/rd2html.rb'
 
 module Hiki
   module Formatter
     class RD < Base
-      Hiki::Config::FORMATTER_REGISTRY[:rd] = self
+      Hiki::Formatter::REGISTRY[:rd] = self
 
       include Hiki::Util
 

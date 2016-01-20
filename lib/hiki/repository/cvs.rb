@@ -9,7 +9,7 @@ module Hiki
     class CVS < Base
       include Hiki::Util
 
-      Hiki::Config::REPOSITORY_REGISTRY[:cvs] = self
+      REGISTRY[:cvs] = self
 
       def commit(page, msg = default_msg)
         Dir.chdir( "#{@data_path}/text" ) do

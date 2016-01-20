@@ -9,7 +9,7 @@ module Hiki
     class Hg < Base
       include Hiki::Util
 
-      Hiki::Config::REPOSITORY_REGISTRY[:hg] = self
+      REGISTRY[:hg] = self
 
       def commit(page, msg = default_msg)
         escaped_page = escape(page).untaint

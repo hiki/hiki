@@ -17,7 +17,10 @@ require 'hiki/request'
 require 'hiki/response'
 require 'hiki/util'
 require 'hiki/command'
+require 'hiki/storage'
+require 'hiki/repository'
 require 'hiki/messages'
+require 'hiki/style'
 
 module Hiki
   PATH  = "#{File.dirname(__FILE__)}"
@@ -32,11 +35,11 @@ module Hiki
 
       # parser class and formatter class
       style = @style.gsub( /\+/, '' )
-      @parser = PARSER_REGISTRY[style]
-      @formatter = FORMATTER_REGISTRY[style]
+      @parser = Hiki::Parser::REGISTRY[style]
+      @formatter = Hiki::Formatter::REGISTRY[style]
 
       # repository class
-      @repos = REPOSITORY_REGISTRY[@repos_type].new(@repos_root, @data_path)
+      @repos = Hiki::Repository::REGISTRY[@repos_type].new(@repos_root, @data_path)
 
       self.class.__send__ :attr_accessor, *instance_variables.map{|v| v.to_s.sub('@', '') }
 
@@ -46,7 +49,7 @@ module Hiki
     end
 
     def database
-      @database ||= STORAGE_REGISTRY[database_type].new(self)
+      @database ||= Hiki::Storage::REGISTRY[database_type].new(self)
     end
 
     def bot?
@@ -124,11 +127,6 @@ module Hiki
       end
       File.read(path)
     end
-
-    REPOSITORY_REGISTRY = Registry.new(:repository)
-    STORAGE_REGISTRY = Registry.new(:storage)
-    PARSER_REGISTRY = Registry.new(:parser)
-    FORMATTER_REGISTRY = Registry.new(:formatter)
 
     private
 
@@ -299,5 +297,3 @@ module Hiki
     end
   end
 end
-
-require 'hiki/style'

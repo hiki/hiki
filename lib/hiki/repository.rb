@@ -1,5 +1,8 @@
+require 'hiki/registry'
+
 module Hiki
   module Repository
+    REGISTRY = Hiki::Registry.new(:repository)
   end
 end
 

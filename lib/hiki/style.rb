@@ -1,5 +1,13 @@
+require 'hiki/registry'
+
 module Hiki
   module Style
+  end
+  module Formatter
+    REGISTRY = Registry.new(:formatter)
+  end
+  module Parser
+    REGISTRY = Registry.new(:parser)
   end
 end
 

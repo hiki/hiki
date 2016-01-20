@@ -7,12 +7,11 @@
 
 require 'rd/rdfmt'
 require 'cgi'
-require 'hiki/config'
 
 module Hiki
   module Parser
     class RD
-      Hiki::Config::PARSER_REGISTRY[:rd] = self
+      Hiki::Parser::REGISTRY[:rd] = self
 
       class << self
         def heading(str, level = 1)

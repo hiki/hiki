@@ -2,7 +2,6 @@
 
 require 'digest/md5'
 require 'hiki/util'
-require 'hiki/config'
 
 module Hiki
   module Storage
