@@ -3,7 +3,8 @@
 # You can redistribute it and/or modify it under the terms of
 # the Ruby's licence.
 module Hiki
-  module Messages_ja
+  module Messages::Ja
+    Hiki::Messages::REGISTRY[:ja] = self
     def msg_recent; '更新履歴' end
     def msg_create; '新規作成' end
     def msg_diff; '差分' end

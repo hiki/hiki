@@ -17,6 +17,7 @@ require 'hiki/request'
 require 'hiki/response'
 require 'hiki/util'
 require 'hiki/command'
+require 'hiki/messages'
 
 module Hiki
   PATH  = "#{File.dirname(__FILE__)}"
@@ -284,8 +285,7 @@ module Hiki
 
       candidates.each do |lang|
         begin
-          require "hiki/messages/#{lang}"
-          extend(Hiki.const_get("Messages_#{lang}"))
+          extend(Hiki::Messages::REGISTRY[lang])
           @lang = lang
           return
         rescue LoadError

@@ -10,7 +10,8 @@
 # the Ruby's licence.
 #
 module Hiki
-  module Messages_de
+  module Messages::De
+    Hiki::Messages::REGISTRY[:de] = self
     def msg_recent; 'Neu' end
     def msg_create; 'Erstellen' end
     def msg_diff; 'Diff' end
