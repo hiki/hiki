@@ -7,10 +7,6 @@ module Hiki
   RELEASE_DATE = '2014-08-13'
 end
 
-# For backward compatibility
-HIKI_VERSION  = Hiki::VERSION
-HIKI_RELEASE_DATE = Hiki::RELEASE_DATE
-
 require 'cgi' unless Object.const_defined?(:Rack)
 require 'hiki/registry'
 require 'hiki/request'
