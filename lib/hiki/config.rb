@@ -35,11 +35,11 @@ module Hiki
 
       # parser class and formatter class
       style = @style.gsub( /\+/, '' )
-      @parser = Hiki::Parser::REGISTRY[style]
-      @formatter = Hiki::Formatter::REGISTRY[style]
+      @parser = Parser.lookup(style)
+      @formatter = Formatter.lookup(style)
 
       # repository class
-      @repos = Hiki::Repository::REGISTRY[@repos_type].new(@repos_root, @data_path)
+      @repos = Repository.lookup(@repos_type).new(@repos_root, @data_path)
 
       self.class.__send__ :attr_accessor, *instance_variables.map{|v| v.to_s.sub('@', '') }
 
@@ -49,7 +49,7 @@ module Hiki
     end
 
     def database
-      @database ||= Hiki::Storage::REGISTRY[database_type].new(self)
+      @database ||= Storage.lookup(database_type).new(self)
     end
 
     def bot?
@@ -283,7 +283,7 @@ module Hiki
 
       candidates.each do |lang|
         begin
-          extend(Hiki::Messages::REGISTRY[lang])
+          extend(Messages.lookup(lang))
           @lang = lang
           return
         rescue LoadError

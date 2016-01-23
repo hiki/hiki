@@ -11,7 +11,7 @@ require 'cgi'
 module Hiki
   module Parser
     class RD
-      Hiki::Parser::REGISTRY[:rd] = self
+      Parser.register(:rd, self)
 
       class << self
         def heading(str, level = 1)

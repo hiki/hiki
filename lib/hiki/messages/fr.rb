@@ -12,7 +12,7 @@
 #
 module Hiki
   module Messages::Fr
-    Hiki::Messages::REGISTRY[:fr] = self
+    Messages.register(:fr, self)
     def msg_recent; 'Modifications récentes' end
     def msg_create; 'Créer' end
     def msg_diff; 'Différences' end

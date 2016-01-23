@@ -5,9 +5,11 @@ module Hiki
   end
   module Formatter
     REGISTRY = Registry.new(:formatter)
+    extend Registry::ClassMethods
   end
   module Parser
     REGISTRY = Registry.new(:parser)
+    extend Registry::ClassMethods
   end
 end
 

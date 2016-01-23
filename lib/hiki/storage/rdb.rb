@@ -6,7 +6,7 @@ require "sequel"
 module Hiki
   module Storage
     class RDB < Base
-      Hiki::Storage::REGISTRY[:rdb] = self
+      Storage.register(:rdb, self)
 
       attr_reader :db, :wiki
 

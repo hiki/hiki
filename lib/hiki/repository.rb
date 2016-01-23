@@ -2,7 +2,8 @@ require 'hiki/registry'
 
 module Hiki
   module Repository
-    REGISTRY = Hiki::Registry.new(:repository)
+    REGISTRY = Registry.new(:repository)
+    extend Registry::ClassMethods
   end
 end
 

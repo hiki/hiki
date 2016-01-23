@@ -5,7 +5,7 @@ module Hiki
     class Git < Base
       include Hiki::Util
 
-      REGISTRY[:git] = self
+      Repository.register(:git, self)
 
       def commit(page, msg = default_msg)
         escaped_page = escape(page).untaint

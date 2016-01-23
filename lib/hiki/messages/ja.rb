@@ -4,7 +4,7 @@
 # the Ruby's licence.
 module Hiki
   module Messages::Ja
-    Hiki::Messages::REGISTRY[:ja] = self
+    Messages::register(:ja, self)
     def msg_recent; '更新履歴' end
     def msg_create; '新規作成' end
     def msg_diff; '差分' end

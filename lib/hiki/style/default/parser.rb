@@ -5,7 +5,7 @@ require 'hikidoc'
 module Hiki
   module Parser
     class Default
-      Hiki::Parser::REGISTRY[:default] = self
+      Parser.register(:default, self)
 
       class << self
         def heading(str, level = 1)

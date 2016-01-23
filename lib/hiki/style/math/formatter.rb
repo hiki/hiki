@@ -6,7 +6,7 @@ require "hiki/style/math/latex.rb"
 module Hiki
   module Formatter
     class Math < Default
-      Hiki::Formatter::REGISTRY[:math] = self
+      Formatter.register(:math, self)
 
       include Hiki::Util
 

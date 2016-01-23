@@ -10,7 +10,7 @@ module Hiki
     class SVN < Base
       include Hiki::Util
 
-      REGISTRY[:svn] = self
+      Repository.register(:svn, self)
 
       def initialize(root, data_path)
         super

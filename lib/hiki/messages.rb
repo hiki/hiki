@@ -2,7 +2,8 @@ require 'hiki/registry'
 
 module Hiki
   module Messages
-    REGISTRY = Hiki::Registry.new(:messages)
+    REGISTRY = Registry.new(:messages)
+    extend Registry::ClassMethods
   end
 end
 

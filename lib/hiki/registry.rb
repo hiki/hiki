@@ -25,5 +25,15 @@ module Hiki
         super "Unknown #{@kind} '#{@type}'"
       end
     end
+
+    module ClassMethods
+      def register(name, klass)
+        self::REGISTRY[name] = klass
+      end
+
+      def lookup(name)
+        self::REGISTRY[name]
+      end
+    end
   end
 end

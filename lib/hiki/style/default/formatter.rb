@@ -10,7 +10,7 @@ require 'uri'
 module Hiki
   module Formatter
     class Default < Base
-      Hiki::Formatter::REGISTRY[:default] = self
+      Formatter.register(:default, self)
 
       include Hiki::Util
 

@@ -3,7 +3,7 @@ require "hiki/repository/svn"
 module Hiki
   module Repository
     class SVNSingle < SVN
-      REGISTRY[:svnsingle] = self
+      Repository.register(:svnsingle, self)
     end
   end
 end

@@ -17,7 +17,7 @@ require 'hiki/style/rd+/rd2html.rb'
 module Hiki
   module Formatter
     class RD < Base
-      Hiki::Formatter::REGISTRY[:rd] = self
+      Formatter.register(:rd, self)
 
       include Hiki::Util
 

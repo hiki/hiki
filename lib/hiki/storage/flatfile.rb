@@ -8,7 +8,7 @@ require "hiki/storage/base"
 module Hiki
   module Storage
     class Flatfile < Base
-      Hiki::Storage::REGISTRY[:flatfile] = self
+      Storage.register(:flatfile, self)
 
       attr_reader :pages_path
 

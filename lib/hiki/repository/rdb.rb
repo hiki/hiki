@@ -6,7 +6,7 @@ module Hiki
     class RDB < Base
       attr_writer :db
 
-      REGISTRY[:rdb] = self
+      Repository.register(:rdb, self)
 
       def initialize(database_url, data_path)
         @database_url = database_url
