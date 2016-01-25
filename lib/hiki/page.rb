@@ -47,7 +47,7 @@ module Hiki
       __send__(layout_method_name){ __send__(content_method_name) }
     end
 
-    def process( plugin )
+    def process(plugin)
       @plugin = plugin
       @body = to_html
 
@@ -58,7 +58,7 @@ module Hiki
       end
       @headers['type']     = 'text/html'
       if @conf.mobile_agent?
-        @body = NKF.nkf( '-sE', @body ) if /EUC-JP/i =~ @conf.charset
+        @body = NKF.nkf('-sE', @body) if /EUC-JP/i =~ @conf.charset
         @headers['charset']          = 'Shift_JIS'
       else
         @headers['charset']          = @conf.charset
@@ -71,7 +71,7 @@ module Hiki
       @headers['cookie']           = @plugin.cookies unless @plugin.cookies.empty?
     end
 
-    def out( headers = nil )
+    def out(headers = nil)
       @headers.update( headers ) if headers
       response = Hiki::Response.new(@body, 200, @headers)
       if Object.const_defined?(:Rack)
