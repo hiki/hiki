@@ -82,7 +82,7 @@ module Hiki
         cache_path = "#{@conf.cache_path}/parser"
         Dir.mkdir( cache_path ) unless test( ?e, cache_path )
         begin
-          tmp = Marshal.load( File.open( "#{cache_path}/#{escape(page)}".untaint, 'rb' ) {|f| f.read} )
+          tmp = Marshal.load(File.binread("#{cache_path}/#{escape(page)}".untaint))
           if tmp[0] == Hiki::RELEASE_DATE
             return tmp[1]
           else
