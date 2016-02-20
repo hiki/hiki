@@ -139,7 +139,8 @@ module Hiki
       end
     end
 
-  private
+    private
+
     def generate_page( data, status = 'OK' )
       @plugin.hiki_menu(data, @cmd)
       @plugin.title = data[:title]
