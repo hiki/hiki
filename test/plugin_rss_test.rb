@@ -12,18 +12,10 @@ class Plugin_RSS_Unit_Tests < Test::Unit::TestCase
   def setup
     @now = Time.parse(CGI.rfc1123_date(Time.now))
     @request = Object.new
-    class << @request
-      def params
-        {}
-      end
-    end
+    stub(@request).params.returns({})
     @conf = Object.new
-    class << @conf
-      def charset
-      end
-      def lang
-      end
-    end
+    stub(@conf).charset
+    stub(@conf).lang
     plugin_file = File.expand_path(File.join(File.dirname(__FILE__), *%w{.. misc plugin rss.rb}))
     instance_eval(File.read(plugin_file))
     class << self
