@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-require 'test_helper'
-require 'hiki/config'
+require "test_helper"
+require "hiki/config"
 
 class Config_Unit_Tests < Test::Unit::TestCase
   def setup

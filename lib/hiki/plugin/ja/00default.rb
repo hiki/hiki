@@ -2,7 +2,7 @@
 #
 # preferences (resources)
 #
-add_conf_proc( 'default', '基本' ) do
+add_conf_proc( "default", "基本" ) do
   saveconf_default
   <<-HTML
       <h3 class="subtitle">サイト名</h3>
@@ -23,15 +23,15 @@ add_conf_proc( 'default', '基本' ) do
   HTML
 end
 
-add_conf_proc( 'password', 'パスワード' ) do
+add_conf_proc( "password", "パスワード" ) do
   '<h3 class="password">パスワード</h3>' +
     case saveconf_password
     when :password_change_success
-      '<p>管理者用パスワードを変更しました。</p>'
+      "<p>管理者用パスワードを変更しました。</p>"
     when :password_change_failure
-      '<p>管理者用パスワードが間違っているか、パスワードが一致しません。</p>'
+      "<p>管理者用パスワードが間違っているか、パスワードが一致しません。</p>"
     when nil
-      '<p>管理者用パスワードを変更します。</p>'
+      "<p>管理者用パスワードを変更します。</p>"
     end +
     <<-HTML
         <p>現在のパスワード: <input type="password" name="old_password" size="40"></p>
@@ -40,7 +40,7 @@ add_conf_proc( 'password', 'パスワード' ) do
     HTML
 end
 
-add_conf_proc( 'theme', '表示設定' ) do
+add_conf_proc( "theme", "表示設定" ) do
   saveconf_theme
   r = <<-HTML
       <h3 class="subtitle">テーマの指定</h3>
@@ -85,7 +85,7 @@ add_conf_proc( 'theme', '表示設定' ) do
   HTML
 end
 
-add_conf_proc( 'xmlrpc', 'XML-RPC' ) do
+add_conf_proc( "xmlrpc", "XML-RPC" ) do
   saveconf_xmlrpc
 
   <<-HTML

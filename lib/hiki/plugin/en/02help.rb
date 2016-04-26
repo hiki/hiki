@@ -1,119 +1,119 @@
 def help_lineshelp_label
-   'LinesHelp'
+   "LinesHelp"
 end
 
 def help_wordshelp_label
-   'WordsHelp'
+   "WordsHelp"
 end
 
 def help_tablehelp_label
-   'TableHelp'
+   "TableHelp"
 end
 
 def help_pluginhelp_label
-   'PluginHelp'
+   "PluginHelp"
 end
 
 def help_mathhelp_label
-   'MathHelp'
+   "MathHelp"
 end
 
 def help_heading_label
-   'Heading'
+   "Heading"
 end
 
 def help_list_label
-   'List'
+   "List"
 end
 
 def help_numbered_label
-   'numbered'
+   "numbered"
 end
 
 def help_preformatted_label
-   'Preformatted'
+   "Preformatted"
 end
 
 def help_quotation_label
-   'Quotation'
+   "Quotation"
 end
 
 def help_comment_label
-   'Comment'
+   "Comment"
 end
 
 def help_cancel_label
-   'cancel'
+   "cancel"
 end
 
 def help_link_label
-   'Link'
+   "Link"
 end
 
 def help_url_label
-   'URL'
+   "URL"
 end
 
 def help_emphasized_label
-   'Emphasized'
+   "Emphasized"
 end
 
 def help_strongly_label
-   'strongly'
+   "strongly"
 end
 
 def help_struckout_label
-   'Struck out'
+   "Struck out"
 end
 
 def help_definition_label
-   'Definition'
+   "Definition"
 end
 
 def help_horizontal_label
-   'Horizontal'
+   "Horizontal"
 end
 
 def help_cell_label
-   'cell'
+   "cell"
 end
 
 def help_headingcell_label
-   'heading'
+   "heading"
 end
 
 def help_rows_label
-   'rows'
+   "rows"
 end
 
 def help_columns_label
-   'columns'
+   "columns"
 end
 
 def help_plugin_label
-   'Plugin'
+   "Plugin"
 end
 
 def help_br_label
-   'Line break'
+   "Line break"
 end
 
 def help_toc_label
-   'Contents'
+   "Contents"
 end
 
 def help_tochere_label
-   'here'
+   "here"
 end
 
 def help_recent_label
-   'Recent'
+   "Recent"
 end
 
 def help_display_label
-   'display'
+   "display"
 end
 
 def help_inline_label
-   'inline'
+   "inline"
 end

@@ -1,7 +1,7 @@
 
 module XMLRPC
   class RackServer < BasicServer
-    def initialize(request, class_delim = '.')
+    def initialize(request, class_delim = ".")
       @request = request
       super(class_delim)
     end

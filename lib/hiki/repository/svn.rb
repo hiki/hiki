@@ -2,8 +2,8 @@
 # Copyright (C) 2003, Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
 # You can distribute this under GPL.
 
-require 'hiki/repository/base'
-require 'fileutils'
+require "hiki/repository/base"
+require "fileutils"
 
 module Hiki
   module Repository
@@ -19,7 +19,7 @@ module Hiki
         else
           @base_uri = "file://#{@root}"
         end
-        @base_uri += '/' if %r|/$| !~ @base_uri
+        @base_uri += "/" if %r|/$| !~ @base_uri
       end
 
       def commit(page, msg = default_msg)
@@ -59,7 +59,7 @@ module Hiki
       end
 
       def get_revision(page, revision)
-        ret = ''
+        ret = ""
         escaped_page = escape(page).untaint
         Dir.chdir(@text_dir) do
           open("|svn cat -r #{revision.to_i} #{escaped_page}") do |f|
@@ -70,9 +70,9 @@ module Hiki
       end
 
       def revisions(page)
-        require 'time'
+        require "time"
         escaped_page = escape(page).untaint
-        log = ''
+        log = ""
         revs = []
         Dir.chdir(@text_dir) do
           open("|svn log #{escaped_page}") do |f|
@@ -81,7 +81,7 @@ module Hiki
         end
         log.split(/------------------------------------------------------------------------/).each do |tmp|
           if /(?:\D+)(\d+?)[\s:\|]+[(?:\s)*](?:.*?) \| (.*?)(?: \(.+\))? \| (.*?)\n\n(.*?)\n/m =~ tmp then
-            revs << [$1.to_i, Time.parse("#{$2}Z").localtime.strftime('%Y/%m/%d %H:%M:%S'), $3, $4]
+            revs << [$1.to_i, Time.parse("#{$2}Z").localtime.strftime("%Y/%m/%d %H:%M:%S"), $3, $4]
           end
         end
         revs

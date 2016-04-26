@@ -50,10 +50,10 @@ version 2 or later.
 =end
 
 
-@sp_label = 'プラグイン選択'
-@sp_label_description = '<p>どのプラグインを使うか選択します。</p>'
-@sp_label_please_select = '<p>有効にしたいプラグインにチェックしてください。プラグインのファイル名をクリックするとドキュメントが見られるかもしれません。ぜひ追加・編集してくださいね。</p>'
-@sp_label_new = '<h4>新入荷！お試しください</h4>'
-@sp_label_used = '<h4>使用中</h4>'
-@sp_label_notused = '<h4>休憩中</h4>'
-@sp_label_noplugin = '<p>選択可能なプラグインはありません。</p>'
+@sp_label = "プラグイン選択"
+@sp_label_description = "<p>どのプラグインを使うか選択します。</p>"
+@sp_label_please_select = "<p>有効にしたいプラグインにチェックしてください。プラグインのファイル名をクリックするとドキュメントが見られるかもしれません。ぜひ追加・編集してくださいね。</p>"
+@sp_label_new = "<h4>新入荷！お試しください</h4>"
+@sp_label_used = "<h4>使用中</h4>"
+@sp_label_notused = "<h4>休憩中</h4>"
+@sp_label_noplugin = "<p>選択可能なプラグインはありません。</p>"

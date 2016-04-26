@@ -1,33 +1,33 @@
 # -*- coding: utf-8 -*-
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
-require 'nkf'
-require 'cgi/util'
-require 'erb'
+require "nkf"
+require "cgi/util"
+require "erb"
 
-require 'docdiff/difference'
-require 'docdiff/document'
-require 'docdiff/view'
-require 'docdiff/diff/unidiff'
+require "docdiff/difference"
+require "docdiff/document"
+require "docdiff/view"
+require "docdiff/diff/unidiff"
 
 class String
   # all instance methods added in String class will be obsoleted in the
   # future release.
 
   def to_euc
-    NKF.nkf('-m0 -e', self)
+    NKF.nkf("-m0 -e", self)
   end
 
   def to_sjis
-    NKF.nkf('-m0 -s', self)
+    NKF.nkf("-m0 -s", self)
   end
 
   def to_jis
-    NKF.nkf('-m0 -j', self)
+    NKF.nkf("-m0 -j", self)
   end
 
   def to_utf8
-    NKF.nkf('-m0 -w', self)
+    NKF.nkf("-m0 -w", self)
   end
 
   unless method_defined?(:b)
@@ -111,17 +111,17 @@ module Hiki
     def get_common_data( db, plugin, conf )
       data = {}
       data[:author_name] = conf.author_name
-      data[:view_style]  = conf.use_sidebar ? h(conf.main_class) : 'hiki' # for tDiary theme
+      data[:view_style]  = conf.use_sidebar ? h(conf.main_class) : "hiki" # for tDiary theme
       data[:cgi_name]    = conf.cgi_name
       if conf.use_sidebar
         t = db.load_cache( conf.side_menu )
         unless t
-          m = db.load( conf.side_menu ) || ''
+          m = db.load( conf.side_menu ) || ""
           parser = conf.parser.new( conf )
           t = parser.parse( m )
           db.save_cache( conf.side_menu, t )
         end
-        f = conf.formatter.new( t, db, plugin, conf, 's' )
+        f = conf.formatter.new( t, db, plugin, conf, "s" )
         data[:sidebar]   = f.to_s
         data[:main_class]    = conf.main_class
         data[:sidebar_class] = h(conf.sidebar_class)
@@ -136,21 +136,21 @@ module Hiki
       dst_doc = Document.new( dst, @charset, CharString.guess_eol($/) )
       diff = compare_by_line_word( src_doc, dst_doc )
       overriding_tags = {
-        start_common: '',
-        end_common: '',
+        start_common: "",
+        end_common: "",
         start_del: '<del class="deleted">',
-        end_del: '</del>',
+        end_del: "</del>",
         start_add: '<ins class="added">',
-        end_add: '</ins>',
+        end_add: "</ins>",
         start_before_change: '<del class="deleted">',
-        end_before_change: '</del>',
+        end_before_change: "</del>",
         start_after_change: '<ins class="added">',
-        end_after_change: '</ins>',
+        end_after_change: "</ins>",
       }
       if digest
-        return View.new( diff, src.encoding, src.eol ).to_html_digest(overriding_tags, false).join.gsub( %r|<br />|, '' ).gsub( %r|\n</ins>|, "</ins>\n" ) #"
+        return View.new( diff, src.encoding, src.eol ).to_html_digest(overriding_tags, false).join.gsub( %r|<br />|, "" ).gsub( %r|\n</ins>|, "</ins>\n" ) #"
       else
-        return View.new( diff, src.encoding, src.eol ).to_html(overriding_tags, false).join.gsub( %r|<br />|, '' ).gsub( %r|\n</ins>|, "</ins>\n" ) #"
+        return View.new( diff, src.encoding, src.eol ).to_html(overriding_tags, false).join.gsub( %r|<br />|, "" ).gsub( %r|\n</ins>|, "</ins>\n" ) #"
       end
     end
 
@@ -166,14 +166,14 @@ module Hiki
     end
 
     def unified_diff( src, dst, context_lines = 3 )
-      return h(Diff.new(src.split(/^/), dst.split(/^/)).ses.unidiff( '', context_lines ))
+      return h(Diff.new(src.split(/^/), dst.split(/^/)).ses.unidiff( "", context_lines ))
     end
 
     def redirect(request, url, cookies = nil)
-      url.sub!(%r|/\./|, '/')
+      url.sub!(%r|/\./|, "/")
       header = {}
-      header['cookie'] = cookies if cookies
-      header['type'] = 'text/html'
+      header["cookie"] = cookies if cookies
+      header["type"] = "text/html"
       body = %Q[
                <html>
                <head>
@@ -184,7 +184,7 @@ module Hiki
                </html>]
       response = Hiki::Response.new(body, 200, header)
       if Object.const_defined?(:Rack)
-        cookies = response.header.delete('cookie')
+        cookies = response.header.delete("cookie")
         if cookies
           cookies.each do |cookie|
             response.set_cookie(cookie.name, cookie.value)
@@ -195,8 +195,8 @@ module Hiki
     end
 
     def sendmail(subject, body)
-      require 'net/smtp'
-      require 'time'
+      require "net/smtp"
+      require "time"
       if @conf.mail && !@conf.mail.empty? && @conf.smtp_server
         Net::SMTP.start(@conf.smtp_server, 25) do |smtp|
           from_addr = @conf.mail_from ? @conf.mail_from : @conf.mail[0]
@@ -220,20 +220,20 @@ EndOfMail
       end
     end
 
-    def send_updating_mail(page, type, text='')
+    def send_updating_mail(page, type, text="")
       body = <<EOS
 #{'-' * 25}
 EOS
       info = {}
       key_max_len = 0
       [
-        'HTTP_CLIENT_IP',
-        'HTTP_X_FORWARDED_FOR',
-        'HTTP_X_REAL_IP',
-        'REMOTE_ADDR',
-        'REMOTE_HOST',
-        'REMOTE_USER',
-        'HTTP_USER_AGENT',
+        "HTTP_CLIENT_IP",
+        "HTTP_X_FORWARDED_FOR",
+        "HTTP_X_REAL_IP",
+        "REMOTE_ADDR",
+        "REMOTE_HOST",
+        "REMOTE_USER",
+        "HTTP_USER_AGENT",
       ].each do |key|
         if ENV[key]
           info[key] = ENV[key]
@@ -243,7 +243,7 @@ EOS
         end
       end
       info["URL"] = if Object.const_defined?(:Rack) && @request
-                      index_url = (@request.base_url + @conf.cgi_name).sub(%r|/\./|, '/')
+                      index_url = (@request.base_url + @conf.cgi_name).sub(%r|/\./|, "/")
                       "#{index_url}?#{escape(page)}"
                     else
                       "#{@conf.index_url}?#{escape(page)}"
@@ -279,7 +279,7 @@ EOS
       if arr.length <= len - 2
         str
       else
-        arr[0...len-2].join('') + '..'
+        arr[0...len-2].join("") + ".."
       end
     end
 

@@ -1,6 +1,6 @@
 
-require 'test_helper'
-require 'hiki/aliaswiki'
+require "test_helper"
+require "hiki/aliaswiki"
 
 class AliasWiki_Unit_Tests < Test::Unit::TestCase
   def setup
@@ -8,18 +8,18 @@ class AliasWiki_Unit_Tests < Test::Unit::TestCase
   end
 
   def test_aliaswiki_found
-    assert_equal( 'alias_name', @aliaswiki.aliaswiki( 'orig_name' ))
+    assert_equal( "alias_name", @aliaswiki.aliaswiki( "orig_name" ))
   end
 
   def test_aliaswiki_not_found
-    assert_equal( 'page_name', @aliaswiki.aliaswiki( 'page_name' ))
+    assert_equal( "page_name", @aliaswiki.aliaswiki( "page_name" ))
   end
 
   def test_original_name_found
-    assert_equal( 'orig_name', @aliaswiki.original_name( 'alias_name' ))
+    assert_equal( "orig_name", @aliaswiki.original_name( "alias_name" ))
   end
 
   def test_original_name_not_found
-    assert_equal( 'page_name', @aliaswiki.original_name( 'page_name' ))
+    assert_equal( "page_name", @aliaswiki.original_name( "page_name" ))
   end
 end

@@ -1,6 +1,6 @@
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
-require 'hikidoc'
+require "hikidoc"
 
 module Hiki
   module Parser
@@ -9,7 +9,7 @@ module Hiki
 
       class << self
         def heading(str, level = 1)
-          '!' * level + str
+          "!" * level + str
         end
 
         def link(link_str, str = nil)

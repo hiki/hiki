@@ -5,8 +5,8 @@
 # You can redistribute it and/or modify it under the terms of
 # the Ruby's licence.
 
-require 'rd/rdfmt'
-require 'cgi'
+require "rd/rdfmt"
+require "cgi"
 
 module Hiki
   module Parser
@@ -15,11 +15,11 @@ module Hiki
 
       class << self
         def heading(str, level = 1)
-          '=' * level + str
+          "=" * level + str
         end
 
         def link(link_str, str = nil)
-          require 'uri'
+          require "uri"
           link_str = "URL:#{link_str}" if link_str.index(URI.regexp) == 0
           str ? "((<#{str}|#{link_str}>))" : "((<#{link_str}>))"
         end

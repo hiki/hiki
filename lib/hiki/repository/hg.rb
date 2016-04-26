@@ -2,7 +2,7 @@
 # This code is modified from "hiki/repos/git.rb" by Kouhei Sutou
 # You can distribute this under GPL.
 
-require 'hiki/repository/base'
+require "hiki/repository/base"
 
 module Hiki
   module Repository
@@ -57,9 +57,9 @@ module Hiki
       end
 
       def revisions(page)
-        require 'time'
+        require "time"
         escaped_page = escape(page).untaint
-        all_log = ''
+        all_log = ""
         revs = []
         original_lang = ENV["LANG"]
         ENV["LANG"] = "C"
@@ -71,7 +71,7 @@ module Hiki
         ENV["LANG"] = original_lang
         all_log.split(/\n\n(?=changeset:\s+\d+:)/).each do |l|
           rev = l[/^changeset:\s+(\d+):.*$/, 1].to_i+1
-          date = Time.parse(l[/^date:\s+(.*)$/, 1]).localtime.strftime('%Y/%m/%d %H:%M:%S')
+          date = Time.parse(l[/^date:\s+(.*)$/, 1]).localtime.strftime("%Y/%m/%d %H:%M:%S")
           summary = l[/^summary:\s+(.*)$/, 1]
           revs << [rev, date, "", summary]
         end

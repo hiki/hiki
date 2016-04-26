@@ -1,11 +1,11 @@
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
-require 'hiki/util'
-require 'hiki/pluginutil'
-require 'hiki/interwiki'
-require 'hiki/aliaswiki'
-require 'hiki/formatter'
-require 'uri'
+require "hiki/util"
+require "hiki/pluginutil"
+require "hiki/interwiki"
+require "hiki/aliaswiki"
+require "hiki/formatter"
+require "uri"
 
 module Hiki
   module Formatter
@@ -14,7 +14,7 @@ module Hiki
 
       include Hiki::Util
 
-      def initialize(s, db, plugin, conf, prefix = 'l')
+      def initialize(s, db, plugin, conf, prefix = "l")
         @html       = s
         @db         = db
         @plugin     = plugin
@@ -53,7 +53,7 @@ module Hiki
           if HEADING_RE =~ line
             new_level = $1.to_i - 1
             num += 1
-            title = $2.gsub( TAG_RE, '' ).strip
+            title = $2.gsub( TAG_RE, "" ).strip
             if new_level > level
               s << ( "<ul>\n" * ( new_level - level ) )
               level = new_level
@@ -122,14 +122,14 @@ module Hiki
         text.gsub(%r|<a href="(.+?)">(.+?)</a>|) do |str|
           k, u = $2, $1
           if URI_RE =~ u # uri
-            @plugin.make_anchor(u, k, 'external')
+            @plugin.make_anchor(u, k, "external")
           else
             u = unescape_html(u)
             u = @aliaswiki.aliaswiki_names.key(u) || u # alias wiki
             if /(.*)(#l\d+)\z/ =~ u
               u, anchor = $1, $2
             else
-              anchor = ''
+              anchor = ""
             end
             if @db.exist?(u) # page name
               k = @plugin.page_name(k) if k == u
@@ -145,13 +145,13 @@ module Hiki
               @references << u
               @plugin.hiki_anchor(escape(u) + anchor, k)
             elsif outer_alias = @interwiki.outer_alias(u) # outer alias
-              @plugin.make_anchor(outer_alias[0] + anchor, k, 'external')
+              @plugin.make_anchor(outer_alias[0] + anchor, k, "external")
             elsif /:/ =~ u # inter wiki ?
               s, p = u.split(/:/, 2)
               if s.empty? # normal link
-                @plugin.make_anchor(h(p) + anchor, k, 'external')
+                @plugin.make_anchor(h(p) + anchor, k, "external")
               elsif inter_link = @interwiki.interwiki(s, unescape_html(p), "#{s}:#{p}")
-                @plugin.make_anchor(inter_link[0], k, 'external')
+                @plugin.make_anchor(inter_link[0], k, "external")
               else
                 missing_page_anchor(k, u)
               end
@@ -215,12 +215,12 @@ module Hiki
           tag, plugin_str = $1, $2
           begin
             case tag
-            when 'span'
+            when "span"
               result = @plugin.inline_context{ apply_plugin(plugin_str, @plugin, @conf) }
-            when 'div'
+            when "div"
               result = @plugin.block_context{ apply_plugin(plugin_str, @plugin, @conf) }
             end
-            result.class == String ? result : ''
+            result.class == String ? result : ""
           rescue Exception => e
             $& + e.message
           end
@@ -245,9 +245,9 @@ module Hiki
       end
 
       def escape_html(text)
-        text.gsub(/&/, '&amp;').
-          gsub(/</, '&lt;').
-          gsub(/>/, '&gt;')
+        text.gsub(/&/, "&amp;").
+          gsub(/</, "&lt;").
+          gsub(/>/, "&gt;")
       end
     end
   end

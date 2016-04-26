@@ -4,7 +4,7 @@ require "rbconfig"
 require "ftools"
 include Config
 
-DSTPATH = ENV['DESTDIR'] + CONFIG["rubylibdir"]
+DSTPATH = ENV["DESTDIR"] + CONFIG["rubylibdir"]
 File.makedirs(DSTPATH)
 
 def join( *arg )
@@ -16,7 +16,7 @@ def base( name )
 end
 
 begin
-  Dir.glob('hiki/**/*.rb').each do | name |
+  Dir.glob("hiki/**/*.rb").each do | name |
     File.makedirs(join(DSTPATH, File.dirname(name)))
     File.install(name, join(DSTPATH, name), 0644, true )
   end

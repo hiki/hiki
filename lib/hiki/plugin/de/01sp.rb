@@ -39,10 +39,10 @@ distribution of modified versions of this work under the terms of GPL
 version 2 or later.
 =end
 
-@sp_label = 'Plugin Auswahl'
-@sp_label_description = '<p>W&auml;hlt das gew&uuml;nschte Plugin.</p>'
-@sp_label_please_select = '<p>Bitte die gew&uuml;nschten Plugins hier ausw&auml;hlen. Jeder Plugin-Dateiname ist mit einer eigenen Hilfeseite verbunden. Bitte erstelle oder verbessere die Hilfeseite!</p>'
-@sp_label_new = '<h4>Neu! Probiers aus.</h4>'
-@sp_label_used = '<h4>In benutzung</h4>'
-@sp_label_notused = '<h4>Derzeit nicht benutzt</h4>'
-@sp_label_noplugin = '<p>Es gibt keine optionalen Plugins.</p>'
+@sp_label = "Plugin Auswahl"
+@sp_label_description = "<p>W&auml;hlt das gew&uuml;nschte Plugin.</p>"
+@sp_label_please_select = "<p>Bitte die gew&uuml;nschten Plugins hier ausw&auml;hlen. Jeder Plugin-Dateiname ist mit einer eigenen Hilfeseite verbunden. Bitte erstelle oder verbessere die Hilfeseite!</p>"
+@sp_label_new = "<h4>Neu! Probiers aus.</h4>"
+@sp_label_used = "<h4>In benutzung</h4>"
+@sp_label_notused = "<h4>Derzeit nicht benutzt</h4>"
+@sp_label_noplugin = "<p>Es gibt keine optionalen Plugins.</p>"

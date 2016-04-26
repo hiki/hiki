@@ -3,9 +3,9 @@
 # This code is modified from "test/test_repos_git.rb" by Kouhei Sutou
 # You can distribute this under GPL.
 
-require 'test_helper'
-require 'hiki/repository/hg'
-require 'hiki/util'
+require "test_helper"
+require "hiki/repository/hg"
+require "hiki/util"
 
 class Repos_Hg_Tests < Test::Unit::TestCase
   include Hiki::Util
@@ -14,7 +14,7 @@ class Repos_Hg_Tests < Test::Unit::TestCase
   def setup
     @tmp_dir = File.join(File.dirname(__FILE__), "tmp")
     @root = "#{@tmp_dir}/root"
-    @wiki = 'wikiwiki'
+    @wiki = "wikiwiki"
     @data_dir = "#{@tmp_dir}/data"
     @text_dir = "#{@data_dir}/text"
     @repos = Hiki::Repository::Hg.new(@root, @data_dir)
@@ -32,13 +32,13 @@ class Repos_Hg_Tests < Test::Unit::TestCase
   end
 
   def test_commit
-    write("FooBar", 'foobar')
-    @repos.commit('FooBar')
-    assert_equal('foobar', read('FooBar'))
+    write("FooBar", "foobar")
+    @repos.commit("FooBar")
+    assert_equal("foobar", read("FooBar"))
 
-    write("FooBar", 'foobar new')
-    @repos.commit('FooBar')
-    assert_equal('foobar new', read('FooBar'))
+    write("FooBar", "foobar new")
+    @repos.commit("FooBar")
+    assert_equal("foobar new", read("FooBar"))
 
     Dir.chdir(@text_dir) do
       assert_equal("foobar new", hg("cat", "FooBar"))
@@ -53,37 +53,37 @@ class Repos_Hg_Tests < Test::Unit::TestCase
   end
 
   def test_get_revision
-    write("HogeHoge", 'hogehoge1')
+    write("HogeHoge", "hogehoge1")
     Dir.chdir(@text_dir) {hg("add", "HogeHoge")}
     Dir.chdir(@text_dir) {hg("commit", "-m", "First", "HogeHoge")}
-    write("HogeHoge", 'hogehoge2')
+    write("HogeHoge", "hogehoge2")
     Dir.chdir(@text_dir) {hg("commit", "-m", "Second", "HogeHoge")}
-    write("HogeHoge", 'hogehoge3')
+    write("HogeHoge", "hogehoge3")
     Dir.chdir(@text_dir) {hg("commit", "-m", "Third", "HogeHoge")}
 
-    assert_equal('hogehoge1', @repos.get_revision('HogeHoge', 1))
-    assert_equal('hogehoge2', @repos.get_revision('HogeHoge', 2))
-    assert_equal('hogehoge3', @repos.get_revision('HogeHoge', 3))
+    assert_equal("hogehoge1", @repos.get_revision("HogeHoge", 1))
+    assert_equal("hogehoge2", @repos.get_revision("HogeHoge", 2))
+    assert_equal("hogehoge3", @repos.get_revision("HogeHoge", 3))
   end
 
   def test_revisions
-    write("HogeHoge", 'hogehoge1')
+    write("HogeHoge", "hogehoge1")
     Dir.chdir(@text_dir) {hg("add", "HogeHoge")}
     Dir.chdir(@text_dir) {hg("commit", "-m", "First", "HogeHoge")}
-    modified1 = Time.now.localtime.strftime('%Y/%m/%d %H:%M:%S')
-    write("HogeHoge", 'hogehoge2')
+    modified1 = Time.now.localtime.strftime("%Y/%m/%d %H:%M:%S")
+    write("HogeHoge", "hogehoge2")
     Dir.chdir(@text_dir) {hg("commit", "-m", "Second", "HogeHoge")}
-    modified2 = Time.now.localtime.strftime('%Y/%m/%d %H:%M:%S')
-    write("HogeHoge", 'hogehoge3')
+    modified2 = Time.now.localtime.strftime("%Y/%m/%d %H:%M:%S")
+    write("HogeHoge", "hogehoge3")
     Dir.chdir(@text_dir) {hg("commit", "-m", "Third", "HogeHoge")}
-    modified3 = Time.now.localtime.strftime('%Y/%m/%d %H:%M:%S')
+    modified3 = Time.now.localtime.strftime("%Y/%m/%d %H:%M:%S")
 
     expected = [
-                [3, modified3, '', 'Third'],
-                [2, modified2, '', 'Second'],
-                [1, modified1, '', 'First'],
+                [3, modified3, "", "Third"],
+                [2, modified2, "", "Second"],
+                [1, modified1, "", "First"],
                ].transpose
-    actual = @repos.revisions('HogeHoge').transpose
+    actual = @repos.revisions("HogeHoge").transpose
 
     assert_equal(expected[0], actual[0])
     # disable to fragile test
@@ -146,7 +146,7 @@ class Repos_Hg_Tests < Test::Unit::TestCase
 
   private
   def hg(*args)
-    args = args.collect{|arg| arg.dump}.join(' ')
+    args = args.collect{|arg| arg.dump}.join(" ")
     result = `hg #{args}`.chomp
     raise result unless $?.success?
     result

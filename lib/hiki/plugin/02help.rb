@@ -3,8 +3,8 @@ def help_enabled?
 end
 
 def hiki_help
-  @options['help.tlbr_class'] ||= "helptlbr"
-  @options['help.bttn_class'] ||= "helpbttn"
+  @options["help.tlbr_class"] ||= "helptlbr"
+  @options["help.bttn_class"] ||= "helpbttn"
   help = <<END_HELP
 
 <script type="text/javascript"><!--

@@ -41,7 +41,7 @@ module Hiki
         if update_timestamp
           set_last_update(page, Time.now)
         end
-        File.open(filename, 'wb') do |f|
+        File.open(filename, "wb") do |f|
           f.write(text.gsub(/\r\n/, "\n"))
         end
         true
@@ -185,7 +185,7 @@ module Hiki
         page_info.each do |a|
           r = a.values[0][:references]
           if String === r # for compatibility
-            r = r.split(',')
+            r = r.split(",")
             set_references(a.keys[0], r)
           end
           ref << a.keys[0] if r.include?(page)
@@ -235,7 +235,7 @@ module Hiki
           freeze: false,
           references: [],
           keyword: [],
-          title: '',
+          title: "",
         }
       end
 

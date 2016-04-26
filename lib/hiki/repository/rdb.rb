@@ -1,5 +1,5 @@
-require 'hiki/repository/base'
-require 'sequel'
+require "hiki/repository/base"
+require "sequel"
 
 module Hiki
   module Repository
@@ -20,7 +20,7 @@ module Hiki
       end
 
       def get_revision(page, revision)
-        connect = Sequel.connect(ENV['DATABASE_URL'] || @database_url)
+        connect = Sequel.connect(ENV["DATABASE_URL"] || @database_url)
         record = connect[:page_backup].where(wiki: @db.wiki, name: page, revision: revision).limit(1).select(:body).first
         connect.disconnect
 
@@ -32,7 +32,7 @@ module Hiki
       end
 
       def revisions(page)
-        connect = Sequel.connect(ENV['DATABASE_URL'] || @database_url)
+        connect = Sequel.connect(ENV["DATABASE_URL"] || @database_url)
         records = connect[:page_backup].where(wiki: @db.wiki, name: page).order(:revision).select(:revision, :last_modified, :editor)
         connect.disconnect
 

@@ -2,7 +2,7 @@
 # Copyright (C) 2003, Yasuo Itabashi <yasuo_itabashi{@}hotmail.com>
 # You can distribute this under GPL.
 
-require 'hiki/repository/base'
+require "hiki/repository/base"
 
 module Hiki
   module Repository
@@ -30,7 +30,7 @@ module Hiki
       end
 
       def get_revision(page, revision)
-        ret = ''
+        ret = ""
         Dir.chdir("#{@data_path}/text") do
           open("|cvs -Q up -p -r 1.#{revision.to_i} #{escape(page).untaint}") do |f|
             ret = f.read
@@ -40,8 +40,8 @@ module Hiki
       end
 
       def revisions(page)
-        require 'time'
-        log = ''
+        require "time"
+        log = ""
         revs = []
         Dir.chdir("#{@data_path}/text") do
           open("|cvs -Q log #{escape(page).untaint}") do |f|

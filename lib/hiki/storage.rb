@@ -1,4 +1,4 @@
-require 'hiki/registry'
+require "hiki/registry"
 
 module Hiki
   module Storage

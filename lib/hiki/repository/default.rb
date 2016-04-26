@@ -28,14 +28,14 @@ module Hiki
         begin
           File::read("#{rev_path(revision)}/#{escape(page).untaint}")
         rescue
-          ''
+          ""
         end
       end
 
       def revisions(page)
         rev = []
-        rev << [2, File.mtime("#{rev_path(2)}/#{escape(page).untaint}").localtime.strftime('%Y/%m/%d %H:%M:%S'), '', 'current']
-        rev << [1, File.mtime("#{rev_path(1)}/#{escape(page).untaint}").localtime.strftime('%Y/%m/%d %H:%M:%S'), '', 'backup'] if File.exist?("#{rev_path(1)}/#{escape(page).untaint}")
+        rev << [2, File.mtime("#{rev_path(2)}/#{escape(page).untaint}").localtime.strftime("%Y/%m/%d %H:%M:%S"), "", "current"]
+        rev << [1, File.mtime("#{rev_path(1)}/#{escape(page).untaint}").localtime.strftime("%Y/%m/%d %H:%M:%S"), "", "backup"] if File.exist?("#{rev_path(1)}/#{escape(page).untaint}")
         rev
       end
 

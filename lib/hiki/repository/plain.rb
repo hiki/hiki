@@ -1,5 +1,5 @@
-require 'hiki/repository/base'
-require 'fileutils'
+require "hiki/repository/base"
+require "fileutils"
 
 module Hiki
   module Repository
@@ -39,7 +39,7 @@ module Hiki
 
       def delete(page, log = nil)
         wiki = File.read("#{@data_path}/text/.wiki")
-        File.open("#{@root}/#{wiki.untaint}/#{escape(page).untaint}/.removed", 'w'){|f|}
+        File.open("#{@root}/#{wiki.untaint}/#{escape(page).untaint}/.removed", "w"){|f|}
       end
 
       def rename(old_page, new_page)
@@ -59,7 +59,7 @@ module Hiki
         wiki = File.read("#{@data_path}/text/.wiki")
         revs = []
         Dir.glob("#{@root}/#{wiki.untaint}/#{escape(page).untaint}/*").each do |file|
-          revs << [File.basename(file).to_i, File.mtime(file.untaint).localtime.to_s, '', '']
+          revs << [File.basename(file).to_i, File.mtime(file.untaint).localtime.to_s, "", ""]
         end
         revs.sort_by{|e| -e[0]}
       end

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-require 'test_helper'
-require 'hiki/util'
+require "test_helper"
+require "hiki/util"
 
 class TestUtil < Test::Unit::TestCase
   include Hiki::Util

@@ -1,7 +1,7 @@
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
-require 'digest/md5'
-require 'hiki/util'
+require "digest/md5"
+require "hiki/util"
 
 module Hiki
   module Storage
@@ -23,11 +23,11 @@ module Hiki
       end
 
       def pages
-        ['page1', 'page2', 'page3']
+        ["page1", "page2", "page3"]
       end
 
       def backup( page )
-        @text = load( page ) || ''
+        @text = load( page ) || ""
       end
 
       def delete( page )
@@ -35,14 +35,14 @@ module Hiki
         unlink( page )
         delete_cache( page )
         begin
-          send_updating_mail(page, 'delete', text) if @conf.mail_on_update
+          send_updating_mail(page, "delete", text) if @conf.mail_on_update
         rescue
         end
       end
 
       def md5hex( page )
         s = load( page )
-        Digest::MD5.hexdigest( s || '' )
+        Digest::MD5.hexdigest( s || "" )
       end
 
       def search( w )
@@ -56,7 +56,7 @@ module Hiki
           info = i.values[0]
           keyword  = info[:keyword]
           title    = info[:title]
-          status   = ''
+          status   = ""
 
           keys.each do |key|
             quoted_key = Regexp.quote(key)
@@ -65,7 +65,7 @@ module Hiki
             elsif title and title.index(/#{quoted_key}/i)
               status << @conf.msg_match_title.gsub(/\]/, " <strong>#{h(key)}</strong>]")
             elsif load( page ).index(/^.*#{quoted_key}.*$/i)
-              status << '[' + h($&).gsub(/#{Regexp.quote(h(key))}/i) { "<strong>#{$&}</strong>"} + ']'
+              status << "[" + h($&).gsub(/#{Regexp.quote(h(key))}/i) { "<strong>#{$&}</strong>"} + "]"
             else
               status = nil
               break
@@ -95,7 +95,7 @@ module Hiki
 
       def save_cache( page, tokens )
         begin
-          File.open( "#{@conf.cache_path}/parser/#{escape(page)}".untaint, 'wb') do |f|
+          File.open( "#{@conf.cache_path}/parser/#{escape(page)}".untaint, "wb") do |f|
             Marshal.dump([Hiki::RELEASE_DATE, tokens], f)
           end
         rescue

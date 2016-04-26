@@ -7,14 +7,14 @@ module Hiki
 
       def apply_tdiary_theme(orig_html)
         return orig_html if @conf.mobile_agent?
-        section = ''
-        title   = ''
-        html    = ''
+        section = ""
+        title   = ""
+        html    = ""
 
         orig_html.each_line do |line|
           if H2_RE =~ line
             html << tdiary_section(title, section) unless title.empty? && section.empty?
-            section = ''
+            section = ""
             title = line
           else
             section << line
@@ -28,7 +28,7 @@ module Hiki
       def tdiary_section(title, section)
         title = title.strip
         section = section.strip
-        return '' if title.empty? && section.empty?
+        return "" if title.empty? && section.empty?
         <<"EOS"
 <div class="day">
   #{title}

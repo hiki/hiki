@@ -5,10 +5,10 @@ module Hiki
     class Cookie
       attr_reader :name, :value, :path, :expires
       def initialize(options)
-        @name    = options['name']
-        @value   = options['value']
-        @path    = options['path']
-        @expires = options['expires']
+        @name    = options["name"]
+        @value   = options["value"]
+        @path    = options["path"]
+        @expires = options["expires"]
       end
     end
   else

@@ -1,5 +1,5 @@
 
-require 'hiki/util'
+require "hiki/util"
 require "hiki/style/default/formatter"
 require "hiki/style/math/latex.rb"
 
@@ -24,7 +24,7 @@ module Hiki
           end
           str.gsub!(/(^\$\$.*\n?)+/) do |match|
             '<div class="displaymath">%s</div>' %
-              math.display_mode(unescape_html(match).gsub(/^\$\$/, ''))
+              math.display_mode(unescape_html(match).gsub(/^\$\$/, ""))
           end
         end
       end

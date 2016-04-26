@@ -1,13 +1,13 @@
 
-require 'test_helper'
-require 'tmarshal'
-require 'stringio'
+require "test_helper"
+require "tmarshal"
+require "stringio"
 
 class TMarshal_Unit_Tests < Test::Unit::TestCase
   class A;end
 
   def setup
-    @input = [true, false, nil, Object, :a, /x/, 1..2, 3...4, Time.gm(1970), 'ABC', {'a'=>1, 'b'=>2, 'c'=>3}]
+    @input = [true, false, nil, Object, :a, /x/, 1..2, 3...4, Time.gm(1970), "ABC", {"a"=>1, "b"=>2, "c"=>3}]
   end
 
   def teardown
@@ -15,7 +15,7 @@ class TMarshal_Unit_Tests < Test::Unit::TestCase
   end
 
   def test_string
-    assert_equal('"123"', TMarshal::dump('123'))
+    assert_equal('"123"', TMarshal::dump("123"))
   end
 
   def test_array
@@ -24,15 +24,15 @@ class TMarshal_Unit_Tests < Test::Unit::TestCase
   end
 
   def test_numeric
-    assert_equal('123', TMarshal::dump(123))
-    assert_equal('123123123123123', TMarshal::dump(123123123123123))
-    assert_equal('1.23', TMarshal::dump(1.23))
-    assert_equal('1.23e+45', TMarshal::dump(1.23e+45))
+    assert_equal("123", TMarshal::dump(123))
+    assert_equal("123123123123123", TMarshal::dump(123123123123123))
+    assert_equal("1.23", TMarshal::dump(1.23))
+    assert_equal("1.23e+45", TMarshal::dump(1.23e+45))
   end
 
   def test_hash
     assert_equal("{\n}", TMarshal::dump({}))
-    assert_equal("{\n\"a\" => 1,\n\"b\" => 2,\n}", TMarshal::dump({'a'=>1, 'b'=>2}))
+    assert_equal("{\n\"a\" => 1,\n\"b\" => 2,\n}", TMarshal::dump({"a"=>1, "b"=>2}))
   end
 
   def test_true

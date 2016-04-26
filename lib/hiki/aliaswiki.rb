@@ -2,7 +2,7 @@
 
 module Hiki
   class AliasWiki
-    require 'hiki/util'
+    require "hiki/util"
 
     ALIASWIKI_NAME_RE =  /\[\[(.+):(.+)\]\]/
 
@@ -10,7 +10,7 @@ module Hiki
 
     def initialize(str)
       @aliaswiki_names = {}
-      (str || '').scan( ALIASWIKI_NAME_RE ) do |i|
+      (str || "").scan( ALIASWIKI_NAME_RE ) do |i|
         @aliaswiki_names[i[0]] = i[1]
       end
     end

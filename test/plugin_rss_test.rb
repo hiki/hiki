@@ -1,12 +1,12 @@
 # To do: Handle Exception raised in Time.parse line 92
 
-require 'test_helper'
-require 'time'
-require 'cgi/util'
-require 'rack'
+require "test_helper"
+require "time"
+require "cgi/util"
+require "rack"
 
-require 'hiki/request'
-require 'hiki/response'
+require "hiki/request"
+require "hiki/response"
 
 class Plugin_RSS_Unit_Tests < Test::Unit::TestCase
   def setup
@@ -28,7 +28,7 @@ class Plugin_RSS_Unit_Tests < Test::Unit::TestCase
     instance_eval(File.read(plugin_file))
     class << self
       define_method(:rss_body) {|*page_num|
-        ['', @now]
+        ["", @now]
       }
     end
 
@@ -36,7 +36,7 @@ class Plugin_RSS_Unit_Tests < Test::Unit::TestCase
   end
 
   def test_rss_returns_304_when_if_modified_since_is_same_to_last_modified
-    ENV['HTTP_IF_MODIFIED_SINCE'] = CGI.rfc1123_date(@now)
+    ENV["HTTP_IF_MODIFIED_SINCE"] = CGI.rfc1123_date(@now)
     assert_equal(304, rss.status)
   end
 

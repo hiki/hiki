@@ -4,7 +4,7 @@
 #
 # preferences (resources)
 #
-add_conf_proc( 'default', 'Standard-Einstellungen' ) do
+add_conf_proc( "default", "Standard-Einstellungen" ) do
   saveconf_default
   <<-HTML
       <h3 class="subtitle">Wiki Name</h3>
@@ -25,15 +25,15 @@ add_conf_proc( 'default', 'Standard-Einstellungen' ) do
   HTML
 end
 
-add_conf_proc( 'password', 'Passwort' ) do
+add_conf_proc( "password", "Passwort" ) do
   '<h3 class="password">Passwort</h3>' +
     case saveconf_password
     when :password_change_success
-      '<p>Das Administrator Passwort wurde erfolgreich ge&auml;ndert.</p>'
+      "<p>Das Administrator Passwort wurde erfolgreich ge&auml;ndert.</p>"
     when :password_change_failure
-      '<p>Sie haben entweder ein falsches altes Passwort eingegeben oder Sie haben sich bei der Passwort-wiederholung verschrieben.</p>'
+      "<p>Sie haben entweder ein falsches altes Passwort eingegeben oder Sie haben sich bei der Passwort-wiederholung verschrieben.</p>"
     when nil
-      '<p>Administrator Passwort &auml;ndern.</p>'
+      "<p>Administrator Passwort &auml;ndern.</p>"
     end +
     <<-HTML
         <p>Jetziges Passwort: <input type="password" name="old_password" size="40"></p>
@@ -42,7 +42,7 @@ add_conf_proc( 'password', 'Passwort' ) do
     HTML
 end
 
-add_conf_proc( 'theme', 'Aussehen' ) do
+add_conf_proc( "theme", "Aussehen" ) do
   saveconf_theme
   r = <<-HTML
       <h3 class="subtitle">Aussehen</h3>
@@ -87,7 +87,7 @@ add_conf_proc( 'theme', 'Aussehen' ) do
   HTML
 end
 
-add_conf_proc( 'xmlrpc', 'XML-RPC' ) do
+add_conf_proc( "xmlrpc", "XML-RPC" ) do
   saveconf_xmlrpc
 
   <<-HTML

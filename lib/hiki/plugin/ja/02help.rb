@@ -1,120 +1,120 @@
 # -*- coding: utf-8 -*-
 def help_lineshelp_label
-   '行支援'
+   "行支援"
 end
 
 def help_wordshelp_label
-   '文字支援'
+   "文字支援"
 end
 
 def help_tablehelp_label
-   '表支援'
+   "表支援"
 end
 
 def help_pluginhelp_label
-   'プラグイン支援'
+   "プラグイン支援"
 end
 
 def help_mathhelp_label
-   '数式支援'
+   "数式支援"
 end
 
 def help_heading_label
-   '見出し'
+   "見出し"
 end
 
 def help_list_label
-   '箇条書'
+   "箇条書"
 end
 
 def help_numbered_label
-   '番号付'
+   "番号付"
 end
 
 def help_preformatted_label
-   '整形済'
+   "整形済"
 end
 
 def help_quotation_label
-   '引用'
+   "引用"
 end
 
 def help_comment_label
-   'コメント'
+   "コメント"
 end
 
 def help_cancel_label
-   '解除'
+   "解除"
 end
 
 def help_link_label
-   'リンク'
+   "リンク"
 end
 
 def help_url_label
-   'URL'
+   "URL"
 end
 
 def help_emphasized_label
-   '強調'
+   "強調"
 end
 
 def help_strongly_label
-   'さらに'
+   "さらに"
 end
 
 def help_struckout_label
-   '取消線'
+   "取消線"
 end
 
 def help_definition_label
-   '用語解説'
+   "用語解説"
 end
 
 def help_horizontal_label
-   '水平線'
+   "水平線"
 end
 
 def help_cell_label
-   'セル'
+   "セル"
 end
 
 def help_headingcell_label
-   '見出し'
+   "見出し"
 end
 
 def help_rows_label
-   '縦連結'
+   "縦連結"
 end
 
 def help_columns_label
-   '横連結'
+   "横連結"
 end
 
 def help_plugin_label
-   'プラグイン'
+   "プラグイン"
 end
 
 def help_br_label
-   '改行'
+   "改行"
 end
 
 def help_toc_label
-   '目次'
+   "目次"
 end
 
 def help_tochere_label
-   'ここに'
+   "ここに"
 end
 
 def help_recent_label
-   '最近'
+   "最近"
 end
 
 def help_display_label
-   'ディスプレイ'
+   "ディスプレイ"
 end
 
 def help_inline_label
-   'インライン'
+   "インライン"
 end

@@ -4,7 +4,7 @@
 #
 # preferences (resources)
 #
-add_conf_proc( 'default', 'Basic preferences' ) do
+add_conf_proc( "default", "Basic preferences" ) do
   saveconf_default
   <<-HTML
       <h3 class="subtitle">Site name</h3>
@@ -25,15 +25,15 @@ add_conf_proc( 'default', 'Basic preferences' ) do
   HTML
 end
 
-add_conf_proc( 'password', 'Password' ) do
+add_conf_proc( "password", "Password" ) do
   '<h3 class="password">Password</h3>' +
     case saveconf_password
     when :password_change_success
-      '<p>The admin password has been changed successfully.</p>'
+      "<p>The admin password has been changed successfully.</p>"
     when :password_change_failure
-      '<p>The old password is wrong or new passwords are not same.</p>'
+      "<p>The old password is wrong or new passwords are not same.</p>"
     when nil
-      '<p>You can change the admin password.</p>'
+      "<p>You can change the admin password.</p>"
     end +
     <<-HTML
         <p>Current password: <input type="password" name="old_password" size="40"></p>
@@ -42,7 +42,7 @@ add_conf_proc( 'password', 'Password' ) do
     HTML
 end
 
-add_conf_proc( 'theme', 'Appearance' ) do
+add_conf_proc( "theme", "Appearance" ) do
   saveconf_theme
   r = <<-HTML
       <h3 class="subtitle">Theme</h3>
@@ -87,7 +87,7 @@ add_conf_proc( 'theme', 'Appearance' ) do
   HTML
 end
 
-add_conf_proc( 'xmlrpc', 'XML-RPC' ) do
+add_conf_proc( "xmlrpc", "XML-RPC" ) do
   saveconf_xmlrpc
 
   <<-HTML

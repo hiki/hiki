@@ -3,10 +3,10 @@
 #
 # TADA Tadashi <sho@spc.gr.jp> holds the copyright of Config class.
 
-require 'cgi' unless Object.const_defined?(:Rack)
-require 'uri'
-require 'erb'
-require 'hiki/util'
+require "cgi" unless Object.const_defined?(:Rack)
+require "uri"
+require "erb"
+require "hiki/util"
 
 module Hiki
   class PluginError < StandardError; end
@@ -37,25 +37,25 @@ module Hiki
       @menu_procs       = []
       @conf_keys        = []
       @conf_procs       = {}
-      @mode             = ''
+      @mode             = ""
 
       options.each do |opt, val|
-        instance_variable_set("@#{opt}", val) unless opt.index('.')
+        instance_variable_set("@#{opt}", val) unless opt.index(".")
       end
 
       @toc_f            = false
       @context          = nil
       @plugin_command   = []
       @plugin_menu      = []
-      @text             = ''
+      @text             = ""
 
-      @mode = 'conf' if @request.params['c'] == 'admin'
-      @mode = 'saveconf' if @request.params['saveconf']
+      @mode = "conf" if @request.params["c"] == "admin"
+      @mode = "saveconf" if @request.params["saveconf"]
 
       # loading plugins
       @plugin_files = []
       plugin_path = @conf.plugin_path || "#{PATH}/plugin"
-      plugin_file = ''
+      plugin_file = ""
       begin
         Dir::glob( "#{plugin_path}/*.rb" ).sort.each do |file|
           plugin_file = file
@@ -88,7 +88,7 @@ module Hiki
       if path[-1] == ?/
         path
       else
-        File.dirname(path) + '/'
+        File.dirname(path) + "/"
       end
     end
 
@@ -98,7 +98,7 @@ module Hiki
         begin
           r << proc.call
         rescue Exception
-          r << plugin_error( 'header_proc', $! )
+          r << plugin_error( "header_proc", $! )
         end
       end
       r.join.chomp
@@ -128,7 +128,7 @@ module Hiki
         begin
           r << proc.call( @date )
         rescue Exception
-          r << plugin_error( 'body_enter_proc', $! )
+          r << plugin_error( "body_enter_proc", $! )
         end
       end
       r.join
@@ -140,7 +140,7 @@ module Hiki
         begin
           r << proc.call( @date )
         rescue Exception
-          r << plugin_error( 'body_leave_proc', $! )
+          r << plugin_error( "body_leave_proc", $! )
         end
       end
       r.join
@@ -152,7 +152,7 @@ module Hiki
         begin
           r << proc.call( @date )
         rescue Exception
-          r << plugin_error( 'page_attribute_proc', $! )
+          r << plugin_error( "page_attribute_proc", $! )
         end
       end
       r.join
@@ -164,7 +164,7 @@ module Hiki
         begin
           r << proc.call
         rescue Exception
-          r << plugin_error( 'footer_proc', $! )
+          r << plugin_error( "footer_proc", $! )
         end
       end
       r.join
@@ -176,7 +176,7 @@ module Hiki
         begin
           r << proc.call
         rescue Exception
-          r << plugin_error( 'edit_proc', $! )
+          r << plugin_error( "edit_proc", $! )
         end
       end
       r.join
@@ -188,7 +188,7 @@ module Hiki
         begin
           r << proc.call
         rescue Exception
-          r << plugin_error( 'form_proc', $! )
+          r << plugin_error( "form_proc", $! )
         end
       end
       r.join
@@ -200,7 +200,7 @@ module Hiki
         begin
           r << proc.call
         rescue Exception
-          r << plugin_error( 'menu_proc', $! )
+          r << plugin_error( "menu_proc", $! )
         end
       end
       r.compact
@@ -239,7 +239,7 @@ module Hiki
     end
 
     def conf_proc( key )
-      r = ''
+      r = ""
       label, block = @conf_procs[key]
       r = block.call if block
       r
@@ -256,7 +256,7 @@ module Hiki
       @export_method_list = nil
       @resource_loaded = false
       dirname, basename = File.split( file )
-      [@conf.lang, 'en', 'ja'].uniq.each do |lang|
+      [@conf.lang, "en", "ja"].uniq.each do |lang|
         begin
           load_file( File.join( dirname, lang, basename ) )
           @resource_loaded = true
@@ -283,8 +283,8 @@ module Hiki
     def save( page, src, md5, update_timestamp = true, filtering = true )
       return false if filtering and Filter.new_page_is_spam?(page, src)
 
-      src.gsub!(/\r/, '')
-      src.sub!(/\A\n*/, '')
+      src.gsub!(/\r/, "")
+      src.sub!(/\A\n*/, "")
       src.sub!(/\n*\z/, "\n")
       result = @db.store(page, src, md5, update_timestamp)
       if result
@@ -308,8 +308,8 @@ module Hiki
       name ||= @conf.admin_name
       if @conf.password.empty? || password.crypt( @conf.password ) == @conf.password && name == @conf.admin_name
         @user = @conf.admin_name
-      elsif @conf['user.list']
-        if @conf['user.list'].has_key?(name) && @conf['user.list'][name] == password.crypt(@conf['user.list'][name])
+      elsif @conf["user.list"]
+        if @conf["user.list"].has_key?(name) && @conf["user.list"][name] == password.crypt(@conf["user.list"][name])
           @user = name
         end
       end
@@ -394,15 +394,15 @@ module Hiki
       @date             = Time.now
       @cookies          = []
 
-      @options['cache_path']  = @conf.cache_path
-      @options['mode']        = "day"
+      @options["cache_path"]  = @conf.cache_path
+      @options["mode"]        = "day"
 #      @options['author_name'] = @conf.author_name || 'anonymous'
 #      @options['author_mail'] = @conf.mail
 #      @options['index_page']  = @conf.index_page
 #      @options['html_title']  = @conf.site_name
-      @options['years']       = {}
-      @options['diaries']     = nil,
-      @options['date']        = Time.now
+      @options["years"]       = {}
+      @options["diaries"]     = nil,
+      @options["date"]        = Time.now
 
       %w(cache_path mode years diaries date).each do |p|
         instance_variable_set("@#{p}", @options[p])

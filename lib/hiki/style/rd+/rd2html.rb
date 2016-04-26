@@ -13,9 +13,9 @@
 
 require "cgi"
 require "rd/rd2html-lib"
-require 'hiki/style/rd+/anchorlist'
-require 'hiki/pluginutil'
-require 'hiki/util'
+require "hiki/style/rd+/anchorlist"
+require "hiki/pluginutil"
+require "hiki/util"
 
 module Hiki
   class RD2HTMLVisitor < RD::RD2HTMLVisitor
@@ -27,7 +27,7 @@ module Hiki
     CLASS_RE = /\#|::|\./
     CHR_ENTITY_RE = "&lt;|&gt;|&amp;|&quot;"
     CONSTANT_RE = /([a-zA-Z0-9_\+!\?\=\|\[\]]|#{CHR_ENTITY_RE})+/
-    ESC_WORD = '_h_i-k-i_'
+    ESC_WORD = "_h_i-k-i_"
     ESC_WORD_RE = /#{ESC_WORD}/
 
     def initialize(plugin, db, conf)
@@ -80,7 +80,7 @@ module Hiki
       #Eval Plugin
       content = content.gsub(EVAL_PLUGIN_RE) do |match|
         method = unescape_html($1)
-        ret = ''
+        ret = ""
         begin
           ret = Hiki::Util.apply_plugin(method, @plugin, @conf)
           ret.gsub!(@regex_modulenames, "\\&#{ESC_WORD}") if @regex_modulenames
@@ -185,9 +185,9 @@ module Hiki
       title = special_parse(title.join)
       anchor = get_anchor(element)
       label = hyphen_escape(element.label)
-      @toc.push({'level' => element.level, 'index' => anchor, 'title' => title})
+      @toc.push({"level" => element.level, "index" => anchor, "title" => title})
       depth = element.level
-      depth += @conf.options['rd.header_depth'] - 1 if @conf.options['rd.header_depth']
+      depth += @conf.options["rd.header_depth"] - 1 if @conf.options["rd.header_depth"]
       %Q[<h#{depth}>#{a_name_href(anchor, title)}] +
       %Q[</h#{depth}><!-- RDLabel: "#{label}" -->]
     end
@@ -271,7 +271,7 @@ module Hiki
 
     def apply_to_Verbatim(element)
       begin
-        require 'rt/rt2html-lib'
+        require "rt/rt2html-lib"
         content = element.content
         if /\A#\s*RT\s*/ =~ content[0]
           content.shift

@@ -1,16 +1,16 @@
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 # Copyright (C) 2004-2005 Kazuhiko <kazuhiko@fdiary.net>
 
-require 'cgi' unless Object.const_defined?(:Rack)
-require 'cgi/util'
-require 'nkf'
+require "cgi" unless Object.const_defined?(:Rack)
+require "cgi/util"
+require "nkf"
 
 module Hiki
   class Page
     begin
-      require 'erb_fast'
+      require "erb_fast"
     rescue LoadError
-      require 'erb'
+      require "erb"
     end
 
     attr_accessor :command, :template, :contents
@@ -20,7 +20,7 @@ module Hiki
       @conf = conf
       @layout = @conf.read_layout
       @command  = nil
-      @template = ''
+      @template = ""
       @contents = nil
     end
 
@@ -53,29 +53,29 @@ module Hiki
 
       @conf.save_config if @contents[:save_config]
       @headers = {}
-      if @contents[:last_modified] and 'HEAD' == @request.request_method
-        @headers['Last-Modified']    = CGI.rfc1123_date(@contents[:last_modified])
+      if @contents[:last_modified] and "HEAD" == @request.request_method
+        @headers["Last-Modified"]    = CGI.rfc1123_date(@contents[:last_modified])
       end
-      @headers['type']     = 'text/html'
+      @headers["type"]     = "text/html"
       if @conf.mobile_agent?
-        @body = NKF.nkf('-sE', @body) if /EUC-JP/i =~ @conf.charset
-        @headers['charset']          = 'Shift_JIS'
+        @body = NKF.nkf("-sE", @body) if /EUC-JP/i =~ @conf.charset
+        @headers["charset"]          = "Shift_JIS"
       else
-        @headers['charset']          = @conf.charset
-        @headers['Content-Language'] = @conf.lang
-        @headers['Pragma']           = 'no-cache'
-        @headers['Cache-Control']    = 'no-cache'
+        @headers["charset"]          = @conf.charset
+        @headers["Content-Language"] = @conf.lang
+        @headers["Pragma"]           = "no-cache"
+        @headers["Cache-Control"]    = "no-cache"
       end
-      @headers['Vary']             = 'User-Agent,Accept-Language'
-      @headers['Content-Length']   = @body.bytesize.to_s rescue @body.size.to_s
-      @headers['cookie']           = @plugin.cookies unless @plugin.cookies.empty?
+      @headers["Vary"]             = "User-Agent,Accept-Language"
+      @headers["Content-Length"]   = @body.bytesize.to_s rescue @body.size.to_s
+      @headers["cookie"]           = @plugin.cookies unless @plugin.cookies.empty?
     end
 
     def out(headers = nil)
       @headers.update( headers ) if headers
       response = Hiki::Response.new(@body, 200, @headers)
       if Object.const_defined?(:Rack)
-        cookies = @headers.delete('cookie')
+        cookies = @headers.delete("cookie")
         if cookies
           cookies.each do |cookie|
             response.set_cookie(cookie.name, cookie.value)

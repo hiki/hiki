@@ -1,5 +1,5 @@
 require "digest/md5"
-require 'hiki/util'
+require "hiki/util"
 
 module Hiki
   class Math_latex
@@ -16,13 +16,13 @@ module Hiki
       rescue Exception
       end
 
-      @ptsize = @conf['math.latex.ptsize']
-      @documentclass = @conf['math.latex.documentclass']
-      @preamble = @conf['math.latex.preamble']
-      @latex = @conf['math.latex.latex'] ||= 'latex %.tex'
-      @dvips = @conf['math.latex.dvips'] ||= 'dvips %.dvi'
-      @convert = @conf['math.latex.convert'] ||= 'convert -antialias -transparent white -trim %.ps %.png'
-      @log = @conf['math.latex.log']
+      @ptsize = @conf["math.latex.ptsize"]
+      @documentclass = @conf["math.latex.documentclass"]
+      @preamble = @conf["math.latex.preamble"]
+      @latex = @conf["math.latex.latex"] ||= "latex %.tex"
+      @dvips = @conf["math.latex.dvips"] ||= "dvips %.dvi"
+      @convert = @conf["math.latex.convert"] ||= "convert -antialias -transparent white -trim %.ps %.png"
+      @log = @conf["math.latex.log"]
     end
 
     def md5(text)
@@ -42,7 +42,7 @@ module Hiki
       filename = md5(text.untaint)
       if !File.exist?("#{@image_path}/#{filename}.png") then
         File.open("#{@image_path}/#{filename}.tex", "w") do |f|
-          f.puts('\documentclass[' + @ptsize + 'pt]{' + @documentclass + '}')
+          f.puts('\documentclass[' + @ptsize + "pt]{" + @documentclass + "}")
           f.puts(@preamble)
           f.puts('\pagestyle{empty}')
           f.puts('\begin{document}')
@@ -57,7 +57,7 @@ module Hiki
             log = ">/dev/null 2>&1"
           end
           [ @latex, @dvips, @convert ].each do |cmd|
-            run = cmd.gsub('%') { filename }
+            run = cmd.gsub("%") { filename }
             File.open("#{@image_path}/#{filename}.err", "a"){|f|
               f.puts("cd #{@image_path} && #{run}") } if @log
             raise unless system("cd #{@image_path} && #{run} #{log}")
@@ -83,12 +83,12 @@ module Hiki
     end
 
     def text_mode(text)
-      return '' unless text
+      return "" unless text
       typeset("$#{text}$")
     end
 
     def display_mode(text)
-      return '' unless text
+      return "" unless text
       typeset("\\[#{text}\\]")
     end
   end

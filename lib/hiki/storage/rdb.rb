@@ -21,7 +21,7 @@ module Hiki
       def open_db
         if block_given?
           begin
-            @db = Sequel.connect(ENV['DATABASE_URL'] || @conf.database_url)
+            @db = Sequel.connect(ENV["DATABASE_URL"] || @conf.database_url)
             yield
           ensure
             close_db

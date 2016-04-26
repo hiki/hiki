@@ -35,11 +35,11 @@ puts "<a href=\"#{url_sign_in}\">sign in</a><br />";
 puts "<a href=\"#{url_sign_out}\">sign out</a><br />";
 =end
 
-require 'uri'
-require 'cgi' unless Object.const_defined?(:Rack)
-require 'open-uri'
-require 'base64'
-require 'openssl'
+require "uri"
+require "cgi" unless Object.const_defined?(:Rack)
+require "open-uri"
+require "base64"
+require "openssl"
 
 class TypeKey
     """This class handles TypeKey logins.
@@ -47,15 +47,15 @@ class TypeKey
 
   attr_accessor(:base_url,:key_url,:key_cache_path,:key_cache_timeout,:login_timeout)
 
-  def initialize(token, version = '1.1')
+  def initialize(token, version = "1.1")
     # Base url for generating login and logout urls.
-    @base_url = 'https://www.typekey.com/t/typekey/'
+    @base_url = "https://www.typekey.com/t/typekey/"
 
     # Url used to download the public key.
-    @key_url = 'http://www.typekey.com/extras/regkeys.txt'
+    @key_url = "http://www.typekey.com/extras/regkeys.txt"
 
     # Location for caching the public key.
-    @key_cache_path = '/tmp/tk_key_cache'
+    @key_cache_path = "/tmp/tk_key_cache"
 
     # Length of time to wait before refreshing the public key cache, in seconds.
     # Defaults to two days.
@@ -78,10 +78,10 @@ class TypeKey
       key = getKey()
     end
 
-    if @version == '1.1'
-      message =[email, name, nick, ts.to_s, @token].join('::')
+    if @version == "1.1"
+      message =[email, name, nick, ts.to_s, @token].join("::")
     else
-      message =[email, name, nick, ts.to_s].join('::')
+      message =[email, name, nick, ts.to_s].join("::")
     end
 
     if dsaVerify(message, sig, key)
@@ -99,22 +99,22 @@ class TypeKey
         """Return a URL to login to TypeKey
         """
     if email
-      email = '&need_email=1'
+      email = "&need_email=1"
     else
-      email = ''
+      email = ""
     end
     url  = @base_url
-    url += 'login?t=' + @token
+    url += "login?t=" + @token
     url += email
-    url += '&v=' + @version
-    url += '&_return=' + Hiki::Util.escape(return_url)
+    url += "&v=" + @version
+    url += "&_return=" + Hiki::Util.escape(return_url)
     return url
   end
 
   def getLogoutUrl(return_url)
         """Return a URL to logout of TypeKey
         """
-    return @base_url + 'logout?_return=' + URI.escape(return_url)
+    return @base_url + "logout?_return=" + URI.escape(return_url)
   end
 
   def getKey(url = nil)
@@ -128,7 +128,7 @@ class TypeKey
       end
 
       if (Time.now.to_i - mod_time) < @key_cache_timeout
-        File.open(@key_cache_path, 'r') {|fh|
+        File.open(@key_cache_path, "r") {|fh|
           @key_string = fh.read
         }
       else
@@ -136,7 +136,7 @@ class TypeKey
           @key_string = fh.read
         }
 
-        File.open(@key_cache_path, 'w') {|fh|
+        File.open(@key_cache_path, "w") {|fh|
           fh.puts(@key_string)
         }
 
@@ -147,8 +147,8 @@ class TypeKey
       }
     end
     tk_key = {}
-    for pair in @key_string.strip.split(' ')
-      key, value = pair.split('=')
+    for pair in @key_string.strip.split(" ")
+      key, value = pair.split("=")
       tk_key[key] = value.to_i
     end
     return tk_key
@@ -158,7 +158,7 @@ class TypeKey
   def dsaVerify(message, sig, key)
         """Verify a DSA signature
         """
-    r_sig, s_sig = sig.split(':')
+    r_sig, s_sig = sig.split(":")
     r_sig = Base64.decode64(r_sig).unpack("H*")[0].hex
     s_sig = Base64.decode64(s_sig).unpack("H*")[0].hex
 

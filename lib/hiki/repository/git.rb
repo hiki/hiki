@@ -1,4 +1,4 @@
-require 'hiki/repository/base'
+require "hiki/repository/base"
 
 module Hiki
   module Repository
@@ -42,7 +42,7 @@ module Hiki
       end
 
       def get_revision(page, revision)
-        ret = ''
+        ret = ""
         Dir.chdir(@text_dir) do
           open("|git cat-file blob #{revision}".untaint) do |f|
             ret = f.read
@@ -52,8 +52,8 @@ module Hiki
       end
 
       def revisions(page)
-        require 'time'
-        all_log = ''
+        require "time"
+        all_log = ""
         revs = []
         Dir.chdir(@text_dir) do
           open("|git log --raw -- #{escape(page).untaint}") do |f|
@@ -65,7 +65,7 @@ module Hiki
               \n:\d+\s\d+\s[a-fA-F\d]+\.{3}\s([a-fA-F\d]+)\.{3}\s\w
                  \s+#{Regexp.escape(escape(page))}\n+\z/xm =~ log
             revs << [$4,
-                     Time.parse("#{$2}Z").localtime.strftime('%Y/%m/%d %H:%M:%S'),
+                     Time.parse("#{$2}Z").localtime.strftime("%Y/%m/%d %H:%M:%S"),
                      "", # $1,
                      $3.strip]
           end

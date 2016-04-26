@@ -4,18 +4,18 @@
 # Copyright (C) Taku YASUI <tach@debian.or.jp>
 #
 
-require 'getoptlong'
-require 'ftools'
+require "getoptlong"
+require "ftools"
 
-SRCDIR = '/usr/share/hiki'
+SRCDIR = "/usr/share/hiki"
 
 def parse_options
   options = Hash.new
   parser = GetoptLong.new
-  parser.set_options(['--help',          '-h', GetoptLong::NO_ARGUMENT],
-  		     ['--copy',		 '-c', GetoptLong::NO_ARGUMENT])
+  parser.set_options(["--help",          "-h", GetoptLong::NO_ARGUMENT],
+  		     ["--copy",		 "-c", GetoptLong::NO_ARGUMENT])
   parser.each_option { |name, arg|  options[name.sub(/^--/, "")] = arg }
-  show_usage if options['help']
+  show_usage if options["help"]
   return options
 end
 
@@ -25,39 +25,39 @@ def setup_symlink(dir)
     filename = File.basename(file)
     next if ( File.exist?("#{dir}/plugin/#{filename}") && ! File.symlink?("#{dir}/plugin/#{filename}") )
     File.unlink("#{dir}/plugin/#{filename}") if ( File.exist?("#{dir}/plugin/#{filename}") )
-    system('ln', '-sf', file, "#{dir}/plugin")
+    system("ln", "-sf", file, "#{dir}/plugin")
   end
   Dir.glob("#{SRCDIR}/theme/*") do |file|
     filename = File.basename(file)
     next if ( File.exist?("#{dir}/theme/#{filename}") && ! File.symlink?("#{dir}/theme/#{filename}") )
     File.unlink("#{dir}/theme/#{filename}") if ( File.exist?("#{dir}/theme/#{filename}") )
-    system('ln', '-sf', file, "#{dir}/theme")
+    system("ln", "-sf", file, "#{dir}/theme")
   end
   if ( File.directory?("#{dir}/messages") )
     STDERR.puts "Warning: directory #{dir}/messages already exists."
   else
-    system('ln', '-sf', "#{SRCDIR}/messages", dir)
+    system("ln", "-sf", "#{SRCDIR}/messages", dir)
   end
   if ( File.directory?("#{dir}/template") )
     STDERR.puts "Warning: directory #{dir}/template already exists."
   else
-    system('ln', '-sf', "#{SRCDIR}/template", dir)
+    system("ln", "-sf", "#{SRCDIR}/template", dir)
   end
   if ( File.directory?("#{dir}/style") )
     STDERR.puts "Warning: directory #{dir}/style already exists."
   else
-    system('ln', '-sf', "#{SRCDIR}/style", dir)
+    system("ln", "-sf", "#{SRCDIR}/style", dir)
   end
   File.unlink("#{dir}/hiki.cgi") if ( File.exist?("#{dir}/hiki.cgi") )
   File.symlink("#{SRCDIR}/hiki.cgi", "#{dir}/hiki.cgi")
 end
 
 def setup_copy(dir)
-  system('cp', '-dfR', "#{SRCDIR}/plugin", dir)
-  system('cp', '-dfR', "#{SRCDIR}/theme", dir)
-  system('cp', '-dfR', "#{SRCDIR}/messages", dir)
-  system('cp', '-dfR', "#{SRCDIR}/template", dir)
-  system('cp', '-dfR', "#{SRCDIR}/style", dir)
+  system("cp", "-dfR", "#{SRCDIR}/plugin", dir)
+  system("cp", "-dfR", "#{SRCDIR}/theme", dir)
+  system("cp", "-dfR", "#{SRCDIR}/messages", dir)
+  system("cp", "-dfR", "#{SRCDIR}/template", dir)
+  system("cp", "-dfR", "#{SRCDIR}/style", dir)
   File.unlink("#{dir}/hiki.cgi") if ( File.exist?("#{dir}/hiki.cgi") )
   File.cp("#{SRCDIR}/hiki.cgi", dir)
 end
@@ -74,31 +74,31 @@ end
 def main
   begin
     opts = parse_options
-    dir = ARGV[0] || '.'
+    dir = ARGV[0] || "."
     File.makedirs(dir)
     if ( ! File.directory?("#{dir}/data") )
-      system('cp', '-r', "#{SRCDIR}/data", dir)
+      system("cp", "-r", "#{SRCDIR}/data", dir)
     end
     if ( ! File.exist?("#{dir}/hikiconf.rb") )
       File.cp("#{SRCDIR}/hikiconf.rb", dir)
     end
-    if ( opts['copy'])
+    if ( opts["copy"])
       setup_copy(dir)
     else
       setup_symlink(dir)
     end
-    if ( File.directory?('/var/www/tdiary/theme') )
+    if ( File.directory?("/var/www/tdiary/theme") )
       Dir.glob("/var/www/tdiary/theme/*") do |file|
         filename = File.basename(file)
         next if ( File.exist?("#{dir}/theme/#{filename}") && ! File.symlink?("#{dir}/theme/#{filename}") )
         File.unlink("#{dir}/theme/#{filename}") if ( File.exist?("#{dir}/theme/#{filename}") )
-        system('ln', '-sf', file, "#{dir}/theme")
+        system("ln", "-sf", file, "#{dir}/theme")
       end
     end
     puts "hikisetup succeeded!"
     puts "Please edit #{dir}/hikiconf.rb"
   rescue
-    puts 'Error: ' + $!
+    puts "Error: " + $!
     puts "hikisetup failed!"
   end
 end

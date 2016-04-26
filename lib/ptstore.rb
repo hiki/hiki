@@ -16,7 +16,7 @@
 #   p db["root"]
 # end
 
-require 'pstore'
+require "pstore"
 require "tmarshal"
 
 

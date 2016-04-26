@@ -1,8 +1,8 @@
 # coding: utf-8
 
-require 'test_helper'
-require 'ptstore'
-require 'tempfile'
+require "test_helper"
+require "ptstore"
+require "tempfile"
 
 class PTStore_Unit_Tests < Test::Unit::TestCase
   def setup
@@ -11,10 +11,10 @@ class PTStore_Unit_Tests < Test::Unit::TestCase
     @db = PTStore.new(tempfile.path)
 
     @db.transaction do
-      @db['Taro'] = {age: 22, lang: 'Ruby', man: true, day: Time.now}
-      @db['Hanako'] = {age: 23, lang: 'Perl', man: false, day: Time.now}
-      @db['Jirou'] = {age: 15, lang: 'Smalltalk', man: true, day: Time.now}
-      @db['Rika'] = {age: 4, lang: 'Lisp', man: false, day: Time.now}
+      @db["Taro"] = {age: 22, lang: "Ruby", man: true, day: Time.now}
+      @db["Hanako"] = {age: 23, lang: "Perl", man: false, day: Time.now}
+      @db["Jirou"] = {age: 15, lang: "Smalltalk", man: true, day: Time.now}
+      @db["Rika"] = {age: 4, lang: "Lisp", man: false, day: Time.now}
     end
   end
 
@@ -31,28 +31,28 @@ class PTStore_Unit_Tests < Test::Unit::TestCase
   def test_settter_and_getter
     10.times do
       @db.transaction do
-        @db['Hanako'][:age] += 1
+        @db["Hanako"][:age] += 1
       end
     end
     @db.transaction(true) do
-      assert_equal(33, @db['Hanako'][:age])
+      assert_equal(33, @db["Hanako"][:age])
     end
   end
 
   def test_transaction
     @db.transaction(true) do
-      assert(@db.roots.include?('Taro'))
+      assert(@db.roots.include?("Taro"))
 
       assert_raise(PStore::Error) do
-        @db['Ichiro'] = {}
+        @db["Ichiro"] = {}
       end
     end
   end
 
   def test_root_p
     @db.transaction(true) do
-      assert(@db.root?('Taro'))
-      assert(! @db.root?('Ichiro'))
+      assert(@db.root?("Taro"))
+      assert(! @db.root?("Ichiro"))
     end
   end
 end

@@ -1,8 +1,8 @@
 # coding: utf-8
 
-require 'test_helper'
-require 'hiki/config'
-require 'hiki/storage/flatfile'
+require "test_helper"
+require "hiki/config"
+require "hiki/storage/flatfile"
 require "digest/md5"
 
 class HikiDB_flatfile_Unit_Tests < Test::Unit::TestCase

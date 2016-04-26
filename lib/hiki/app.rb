@@ -1,16 +1,16 @@
 
-require 'rubygems'
-require 'rack'
+require "rubygems"
+require "rack"
 
-require 'hiki/config'
-require 'hiki/repository'
-require 'hiki/xmlrpc'
+require "hiki/config"
+require "hiki/repository"
+require "hiki/xmlrpc"
 
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 
 module Hiki
   class App
-    def initialize(config_path = 'hikiconf.rb')
+    def initialize(config_path = "hikiconf.rb")
       @config_path = config_path
     end
     def call(env)
@@ -31,12 +31,12 @@ module Hiki
         end
       end
 
-      response.header.delete('status')
-      response.header.delete('cookie')
+      response.header.delete("status")
+      response.header.delete("cookie")
 
-      charset = response.header.delete('charset')
-      response.header['Content-Type'] ||= response.header.delete('type')
-      response.header['Content-Type'] += "; charset=#{charset}" if charset
+      charset = response.header.delete("charset")
+      response.header["Content-Type"] ||= response.header.delete("type")
+      response.header["Content-Type"] += "; charset=#{charset}" if charset
 
       response.body = [] if request.head?
 

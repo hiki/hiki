@@ -100,22 +100,22 @@ class ImageSize
 
   def mime_type
     case @img_type
-    when 'SWF'
-      ret = 'application/x-shockwave-flash'
-    when 'PBM'
-      ref = 'image/x-portable-bitmap'
-    when 'PGM'
-      ret = 'image/x-portable-graymap'
-    when 'PPM'
-      ret = 'image/x-portable-pixmap'
-    when 'XBM'
-      ret = 'image/x-xbitmap'
-    when 'XPM'
-      ret = 'image/x-xpixmap'
-    when 'GIF', 'PNG', 'JPEG', 'BMP', 'TIFF'
+    when "SWF"
+      ret = "application/x-shockwave-flash"
+    when "PBM"
+      ref = "image/x-portable-bitmap"
+    when "PGM"
+      ret = "image/x-portable-graymap"
+    when "PPM"
+      ret = "image/x-portable-pixmap"
+    when "XBM"
+      ret = "image/x-xbitmap"
+    when "XPM"
+      ret = "image/x-xpixmap"
+    when "GIF", "PNG", "JPEG", "BMP", "TIFF"
       ret = "image/#{@img_type.downcase}"
     else
-      ret = 'application/octet-stream'
+      ret = "application/octet-stream"
     end
     ret
   end
@@ -125,7 +125,7 @@ class ImageSize
     elsif @img_top =~ /^GIF8[7,9]a/                   then Type::GIF
     elsif @img_top[0, 8] == "\x89PNG\x0d\x0a\x1a\x0a" then Type::PNG
     elsif @img_top[0, 2] == "\xFF\xD8"                then Type::JPEG
-    elsif @img_top[0, 2] == 'BM'                      then Type::BMP
+    elsif @img_top[0, 2] == "BM"                      then Type::BMP
     elsif @img_top =~ /^P[1-7]/                       then Type::PPM
     elsif @img_top =~ /\#define\s+\S+\s+\d+/          then Type::XBM
     elsif @img_top[0, 4] == "MM\x00\x2a"              then Type::TIFF
@@ -141,14 +141,14 @@ class ImageSize
 
   def measure_GIF()
     @img_data.read_o(6)
-    @img_data.read_o(4).unpack('vv')
+    @img_data.read_o(4).unpack("vv")
   end
   private(:measure_GIF)
 
   def measure_PNG()
     @img_data.read_o(12)
     raise "This file is not PNG." unless @img_data.read_o(4) == "IHDR"
-    @img_data.read_o(8).unpack('NN')
+    @img_data.read_o(8).unpack("NN")
   end
   private(:measure_PNG)
 
@@ -156,11 +156,11 @@ class ImageSize
     c_marker = "\xFF"   # Section marker.
     @img_data.read_o(2)
     while(true)
-      marker, code, length = @img_data.read_o(4).unpack('aan')
+      marker, code, length = @img_data.read_o(4).unpack("aan")
       raise "JPEG marker not found!" if marker != c_marker
 
       if JpegCodeCheck.include?(code)
-        height, width = @img_data.read_o(5).unpack('xnn')
+        height, width = @img_data.read_o(5).unpack("xnn")
         return([width, height])
       end
       @img_data.read_o(length - 2)
@@ -220,17 +220,17 @@ class ImageSize
   private(:measure_PSD)
 
   def measure_TIFF()
-    endian = if (@img_data.read_o(4) =~ /II\x2a\x00/o) then 'v' else 'n' end
+    endian = if (@img_data.read_o(4) =~ /II\x2a\x00/o) then "v" else "n" end
 # 'v' little-endian   'n' default to big-endian
 
     packspec = [
       nil,           # nothing (shouldn't happen)
-      'C',           # BYTE (8-bit unsigned integer)
+      "C",           # BYTE (8-bit unsigned integer)
       nil,           # ASCII
       endian,        # SHORT (16-bit unsigned integer)
       endian.upcase, # LONG (32-bit unsigned integer)
       nil,           # RATIONAL
-      'c',           # SBYTE (8-bit signed integer)
+      "c",           # SBYTE (8-bit signed integer)
       nil,           # UNDEFINED
       endian,        # SSHORT (16-bit unsigned integer)
       endian.upcase, # SLONG (32-bit unsigned integer)
@@ -267,7 +267,7 @@ class ImageSize
 
   def measure_PCX()
     header = @img_data.read_o(128)
-    head_part = header.unpack('C4S4')
+    head_part = header.unpack("C4S4")
     width = head_part[6] - head_part[4] + 1
     height = head_part[7] - head_part[5] + 1
     [width, height]
@@ -276,7 +276,7 @@ class ImageSize
 
   def measure_SWF()
     header = @img_data.read_o(9)
-    raise("This file is not SWF.") unless header.unpack('a3')[0] == 'FWS'
+    raise("This file is not SWF.") unless header.unpack("a3")[0] == "FWS"
 
     bit_length = Integer("0b#{header.unpack('@8B5')}")
     header << @img_data.read_o(bit_length*4/8+1)

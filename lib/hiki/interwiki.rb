@@ -1,6 +1,6 @@
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
-require 'hiki/util'
+require "hiki/util"
 
 module Hiki
   class InterWiki
@@ -13,8 +13,8 @@ module Hiki
 
     def initialize( str )
       @interwiki_names = {}
-      (str || '').scan( INTERWIKI_NAME_RE ) do |i|
-        e = i.size > 2 ? i[2] : 'none'
+      (str || "").scan( INTERWIKI_NAME_RE ) do |i|
+        e = i.size > 2 ? i[2] : "none"
         @interwiki_names[i[0]] = {url: i[1], encoding: e}
       end
     end
@@ -23,16 +23,16 @@ module Hiki
       if @interwiki_names.has_key?(s)
         encoding = @interwiki_names[s][:encoding]
         page = case encoding
-               when 'sjis'
+               when "sjis"
                  escape(p.encode("Shift_JIS"))
-               when 'euc'
+               when "euc"
                  escape(p.encode("EUC-JP"))
-               when 'utf8'
+               when "utf8"
                  escape(p.encode("UTF-8"))
                else
                  p
                end
-        if @interwiki_names[s][:url].index('$1')
+        if @interwiki_names[s][:url].index("$1")
           [h(@interwiki_names[s][:url].dup.sub(/\$1/, page)), display_text]
         else
           [h("#{@interwiki_names[s][:url]}#{page}"), display_text]
@@ -43,7 +43,7 @@ module Hiki
     end
 
     def outer_alias(s)
-      if @interwiki_names.has_key?(s) && @interwiki_names[s][:encoding] == 'alias'
+      if @interwiki_names.has_key?(s) && @interwiki_names[s][:encoding] == "alias"
         return [h(@interwiki_names[s][:url]), h(s)]
       else
         return nil

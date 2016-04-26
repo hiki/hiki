@@ -1,23 +1,23 @@
-require 'test_helper'
-require 'hiki/util'
-require 'hiki/repository/default'
+require "test_helper"
+require "hiki/util"
+require "hiki/repository/default"
 
 class Repos_Default_Tests < Test::Unit::TestCase
   def setup
-    @data_path = '__tmp-wikitest'
+    @data_path = "__tmp-wikitest"
     @repos = Hiki::Repository::Default.new(nil, @data_path)
-    @page_name = 'HogeHoge'
+    @page_name = "HogeHoge"
 
-    require 'fileutils'
+    require "fileutils"
     FileUtils.mkdir_p("#{@data_path}/text")
     FileUtils.mkdir_p("#{@data_path}/backup")
 
-    File.open("#{@data_path}/text/#{@page_name}", 'w') do |f|
-      f.print 'new file'
+    File.open("#{@data_path}/text/#{@page_name}", "w") do |f|
+      f.print "new file"
     end
 
-    File.open("#{@data_path}/backup/#{@page_name}", 'w') do |f|
-      f.print 'old file'
+    File.open("#{@data_path}/backup/#{@page_name}", "w") do |f|
+      f.print "old file"
     end
     @now = Time.now
   end
@@ -31,14 +31,14 @@ class Repos_Default_Tests < Test::Unit::TestCase
   end
 
   def test_get_revision
-    assert_equal('old file', @repos.get_revision(@page_name, 1))
-    assert_equal('new file', @repos.get_revision(@page_name, 2))
+    assert_equal("old file", @repos.get_revision(@page_name, 1))
+    assert_equal("new file", @repos.get_revision(@page_name, 2))
   end
 
   def test_revisions
     revs = [
-      [2, @now.localtime.strftime('%Y/%m/%d %H:%M:%S'), '', 'current'],
-      [1, @now.localtime.strftime('%Y/%m/%d %H:%M:%S'), '', 'backup']
+      [2, @now.localtime.strftime("%Y/%m/%d %H:%M:%S"), "", "current"],
+      [1, @now.localtime.strftime("%Y/%m/%d %H:%M:%S"), "", "backup"]
     ]
     assert_equal(revs, @repos.revisions(@page_name))
   end

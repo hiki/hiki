@@ -1,7 +1,7 @@
 # coding: utf-8
 
-require 'test_helper'
-require 'tempfile'
+require "test_helper"
+require "tempfile"
 
 class Plugin_Referer_Unit_Tests < Test::Unit::TestCase
   def setup
@@ -9,7 +9,7 @@ class Plugin_Referer_Unit_Tests < Test::Unit::TestCase
     @body_leave_proc = nil
     @cache_path = test_cache_path
     @options = {}
-    @page = 'test page'
+    @page = "test page"
 
     plugin_file = File.expand_path(File.join(File.dirname(__FILE__), *%w{.. misc plugin referer.rb}))
     instance_eval(File.open(plugin_file).read)

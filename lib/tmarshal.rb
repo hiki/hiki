@@ -20,7 +20,7 @@ module TMarshal
     when IO, StringIO
       eval port.read.untaint
     else
-      raise 'Wrong type!'
+      raise "Wrong type!"
     end
   end
 
@@ -41,11 +41,11 @@ module TMarshal
     when Time
       "Time.at(#{obj.to_i})"
     else
-      raise 'Wrong type!'
+      raise "Wrong type!"
     end
   end
 end
 
 if __FILE__ == $0
-  puts TMarshal.dump({age: 22, lang: 'Ruby', man: true, day: Time.now})
+  puts TMarshal.dump({age: 22, lang: "Ruby", man: true, day: Time.now})
 end

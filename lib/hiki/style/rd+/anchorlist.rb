@@ -8,8 +8,8 @@
 # Copyright (c) 2002,2003 MUTOH Masao <mutoh@highway.ne.jp>
 # You can redistribute it and/or modify it under GPL2.
 #
-require 'nkf'
-require 'hiki/util'
+require "nkf"
+require "hiki/util"
 
 module Hiki
   class AnchorList
@@ -28,7 +28,7 @@ module Hiki
     def initialize(interwiki_data, plugin)
       @anchors = {}
       @plugin = plugin
-      n = interwiki_data || ''
+      n = interwiki_data || ""
       n.scan(REG_INTERWIKI_NAME) do |i|
         @anchors[i[0]] = [i[1], "", i.size > 2 ? i[2] : ""]
       end

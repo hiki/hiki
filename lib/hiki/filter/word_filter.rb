@@ -4,10 +4,10 @@
 module Hiki::Filter
   add_filter do |new_page, old_page, posted_by_user|
     next if posted_by_user
-    next unless @conf['word_filter.use']
+    next unless @conf["word_filter.use"]
 
     spam = false
-    @conf['word_filter.words'].split(/\n/).each do |w|
+    @conf["word_filter.words"].split(/\n/).each do |w|
       next if w.empty?
       re = /#{w.chomp}/
       [:page, :title, :text, :keyword].each do |m|
