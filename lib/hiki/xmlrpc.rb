@@ -77,8 +77,8 @@ module Hiki
         db.pages.collect{|p| XMLRPC::Base64.new(p)}
       end
 
-      #add_multicall
-      #add_introspection
+      # add_multicall
+      # add_introspection
     end
   end
 

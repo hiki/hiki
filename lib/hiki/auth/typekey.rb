@@ -72,7 +72,7 @@ class TypeKey
   def verify(email, name, nick, ts, sig, key = nil)
         """Verify a typekey login
         """
-    #sig isn't urlencoded.
+    # sig isn't urlencoded.
     sig.gsub!(/ /,"+")
     unless key
       key = getKey()

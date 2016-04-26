@@ -9,7 +9,7 @@ require "rack"
 app = Rack::Builder.new{
   use Rack::Lint
   use Rack::ShowExceptions
-  #use Rack::ShowStatus
+  # use Rack::ShowStatus
   use Rack::CommonLogger
   use Rack::Static, urls: ["/theme"], root: "."
   run Hiki::App.new

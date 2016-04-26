@@ -148,9 +148,9 @@ module Hiki
         end_after_change: "</ins>",
       }
       if digest
-        return View.new( diff, src.encoding, src.eol ).to_html_digest(overriding_tags, false).join.gsub( %r|<br />|, "" ).gsub( %r|\n</ins>|, "</ins>\n" ) #"
+        return View.new( diff, src.encoding, src.eol ).to_html_digest(overriding_tags, false).join.gsub( %r|<br />|, "" ).gsub( %r|\n</ins>|, "</ins>\n" ) # "
       else
-        return View.new( diff, src.encoding, src.eol ).to_html(overriding_tags, false).join.gsub( %r|<br />|, "" ).gsub( %r|\n</ins>|, "</ins>\n" ) #"
+        return View.new( diff, src.encoding, src.eol ).to_html(overriding_tags, false).join.gsub( %r|<br />|, "" ).gsub( %r|\n</ins>|, "</ins>\n" ) # "
       end
     end
 

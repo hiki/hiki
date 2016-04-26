@@ -25,19 +25,19 @@ fixtures_dir = Pathname(__FILE__.tr("()", "")).dirname
 #  変更可能項目
 #=========================================
 
-#@cgi_name        = 'hiki.cgi'
-#@base_url        = "http://example.com/hiki/"
-#@cache_path      = "#{@data_path}/cache"
-#@template_path   = 'template'
-#@style           = 'default'
-#@mail_from       = 'from@mail.address.hoge'
-#@hilight_keys    = true
+# @cgi_name        = 'hiki.cgi'
+# @base_url        = "http://example.com/hiki/"
+# @cache_path      = "#{@data_path}/cache"
+# @template_path   = 'template'
+# @style           = 'default'
+# @mail_from       = 'from@mail.address.hoge'
+# @hilight_keys    = true
 
-#@charset         = 'UTF-8'
+# @charset         = 'UTF-8'
 
-#@timeout         = 30
+# @timeout         = 30
 
-#@plugin_debug    = false
+# @plugin_debug    = false
 
 @options         = {}                    # この行は変更しないでください。
 

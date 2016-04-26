@@ -47,7 +47,7 @@ module Hiki
       elsif data =~ REG_COLON
         key, option = $`, $'
       else
-        key = data #Error pattern
+        key = data # Error pattern
       end
       [key, option, name]
     end

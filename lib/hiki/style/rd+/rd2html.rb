@@ -47,7 +47,7 @@ module Hiki
         @regex = /(#{@modulenames})[\#\.\:](#{CHR_ENTITY_RE}|[a-zA-Z0-9_\#\.\:\=\[])*(#{CHR_ENTITY_RE}|[a-zA-Z0-9_!\+\?\=&\|\]])/
       end
 
-      #InterWikiName
+      # InterWikiName
       @anchorlist = AnchorList.new(@db.load(@conf.interwiki_name), plugin)
     end
 
@@ -77,7 +77,7 @@ module Hiki
 
     def special_parse(content)
       return content if content.nil? or content == ""
-      #Eval Plugin
+      # Eval Plugin
       content = content.gsub(EVAL_PLUGIN_RE) do |match|
         method = unescape_html($1)
         ret = ""
@@ -85,7 +85,7 @@ module Hiki
           ret = Hiki::Util.apply_plugin(method, @plugin, @conf)
           ret.gsub!(@regex_modulenames, "\\&#{ESC_WORD}") if @regex_modulenames
         rescue Exception
-          err = "Plugin Error: #{$!}" #<pre>#{match}</pre>"
+          err = "Plugin Error: #{$!}" # <pre>#{match}</pre>"
           if @conf.plugin_debug
             err += "</p><p>Back trace<pre>"
             $!.backtrace.each do |v|
@@ -99,7 +99,7 @@ module Hiki
         ret
       end
 
-      #Special Parse
+      # Special Parse
       if @regex
         content = content.gsub(@regex) do |match|
           s =  StringScanner.new(match)
@@ -144,7 +144,7 @@ module Hiki
                 option = escape(lastword)
               end
             end
-            #Create result
+            # Create result
             if @db.exist?(module_name)
               @references << module_name
               if option

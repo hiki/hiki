@@ -21,7 +21,7 @@ module Hiki
     def msg_login; "Login" end
     def msg_logout; "Logout" end
     def msg_search_result; "Risultati trovati" end
-    def msg_search_hits; '\'%1$s\': %3$d pagina(e) sono trovati in %2$d pagine.' end #da verificare
+    def msg_search_hits; '\'%1$s\': %3$d pagina(e) sono trovati in %2$d pagine.' end # da verificare
     def msg_search_not_found; '\'%s\'non trovato.' end
     def msg_search_comment; "Cerca in questo sito. Ignora MAIUSCOLO/minuscolo. Hiki ricerca le pagine che contengono tutte le parole inserite" end
     def msg_frontpage; "Alto" end
@@ -36,8 +36,8 @@ module Hiki
     def msg_date_format; "%d-%m-%Y " end
     def msg_day; %w(Dom Lun Mar Mer Gio Ven Sab) end
     def msg_preview; 'Conferma il risultato sotto e salvalo cliccando sul pulsante Salva se non ci sono errori -&gt;<a href="#form">Modulo</a>' end
-    def msg_mail_on; "Invia updated-mail" end #da verificare
-    def msg_mail_off; "Non inviare updated-mail" end #da verificare
+    def msg_mail_on; "Invia updated-mail" end # da verificare
+    def msg_mail_off; "Non inviare updated-mail" end # da verificare
     def msg_use; "Usa" end
     def msg_unuse; "Non usare" end
     def msg_login_info; '(TRANSLATE PLEASE) If you want to login as an administrator, type \'admin\' in the Name field.' end
