@@ -48,10 +48,10 @@ module Hiki
         lv = 1
         @visitor.toc.each do |hash|
           if hash["level"] > lv
-            s << ( "<ul>\n" * ( hash["level"] - lv ) )
+            s << ("<ul>\n" * (hash["level"] - lv))
             lv = hash["level"]
           elsif hash["level"] < lv
-            s << ( "</ul>\n" * ( lv - hash["level"] ) )
+            s << ("</ul>\n" * (lv - hash["level"]))
             lv = hash["level"]
           end
           s << %Q!<li><a href="##{hash['index']}">#{h(hash['title'])}</a>\n!

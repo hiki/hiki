@@ -53,12 +53,12 @@ module Hiki
           if HEADING_RE =~ line
             new_level = $1.to_i - 1
             num += 1
-            title = $2.gsub( TAG_RE, "" ).strip
+            title = $2.gsub(TAG_RE, "").strip
             if new_level > level
-              s << ( "<ul>\n" * ( new_level - level ) )
+              s << ("<ul>\n" * (new_level - level))
               level = new_level
             elsif new_level < level
-              s << ( "</ul>\n" * ( level - new_level ) )
+              s << ("</ul>\n" * (level - new_level))
               level = new_level
             end
             s << %Q!<li><a href="\#l#{num}">#{title}</a></li>\n!
@@ -71,7 +71,7 @@ module Hiki
       private
 
       def replace_inline_image(text)
-        text.gsub( /<a href="([^"]+)\.(jpg|jpeg|gif|png)">(.+?)<\/a>/i ) do |str|
+        text.gsub(/<a href="([^"]+)\.(jpg|jpeg|gif|png)">(.+?)<\/a>/i) do |str|
           %Q|<img src="#{$1}.#{$2}" alt="#{$3}">|
         end
       end
@@ -116,7 +116,7 @@ module Hiki
         ret.join
       end
 
-      URI_RE = /\A#{URI.regexp( %w( http https ftp file mailto ) )}\z/
+      URI_RE = /\A#{URI.regexp(%w( http https ftp file mailto ))}\z/
 
       def replace_link(text)
         text.gsub(%r|<a href="(.+?)">(.+?)</a>|) do |str|

@@ -5,7 +5,7 @@ require "hiki/interwiki"
 
 class InterWiki_Unit_Tests < Test::Unit::TestCase
   def setup
-    @interwiki = Hiki::InterWiki.new( <<-EOF )
+    @interwiki = Hiki::InterWiki.new(<<-EOF )
 *[[Hiki|http://hikiwiki.org/ja/?]] euc
 *[[Siki|http://hikiwiki.org/ja/?]] sjis
 *[[Uiki|http://hikiwiki.org/ja/?]] utf8
@@ -37,14 +37,14 @@ EOF
   end
 
   def test_interwiki_not_found
-    assert_equal( nil, @interwiki.interwiki( "foo", "bar" ))
+    assert_equal(nil, @interwiki.interwiki("foo", "bar"))
   end
 
   def test_outer_alias_found
-    assert_equal( ["http://sourceforge.jp/", "sf.jp"], @interwiki.outer_alias( "sf.jp" ))
+    assert_equal(["http://sourceforge.jp/", "sf.jp"], @interwiki.outer_alias("sf.jp"))
   end
 
   def test_outer_alias_not_found
-    assert_equal( nil, @interwiki.outer_alias( "sf.net" ))
+    assert_equal(nil, @interwiki.outer_alias("sf.net"))
   end
 end

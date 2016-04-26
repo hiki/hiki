@@ -22,7 +22,7 @@ module Hiki
         title = page if title.nil? || title.empty?
         {
           "title" => XMLRPC::Base64.new(title),
-          "keyword" => db.get_attribute(page, :keyword).collect {|k| XMLRPC::Base64.new(  k ) },
+          "keyword" => db.get_attribute(page, :keyword).collect {|k| XMLRPC::Base64.new(k) },
           "md5hex" => db.md5hex(page),
           "lastModified" => db.get_attribute(page, :last_modified).getutc,
           "author" => XMLRPC::Base64.new(db.get_attribute(page, :editor) || "")
@@ -56,9 +56,9 @@ module Hiki
           raise XMLRPC::FaultException.new(10, "can't edit this page.")
         end
 
-        md5hex = attributes["md5hex"] || db.md5hex( page )
+        md5hex = attributes["md5hex"] || db.md5hex(page)
         update_timestamp = !attributes["minoredit"]
-        unless plugin.save(page, content.gsub( /\r/, "" ), md5hex, update_timestamp)
+        unless plugin.save(page, content.gsub(/\r/, ""), md5hex, update_timestamp)
           raise XMLRPC::FaultException.new(11, "save failed.")
         end
         keyword = attributes["keyword"] || db.get_attribute(page, :keyword)

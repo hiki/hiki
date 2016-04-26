@@ -18,7 +18,7 @@ module Hiki
 
     TOC_STRING = "\000\000[Table of Contents]"
 
-    def initialize( options, conf )
+    def initialize(options, conf)
       @options      = options
       @conf         = conf
       set_tdiary_env
@@ -57,13 +57,13 @@ module Hiki
       plugin_path = @conf.plugin_path || "#{PATH}/plugin"
       plugin_file = ""
       begin
-        Dir::glob( "#{plugin_path}/*.rb" ).sort.each do |file|
+        Dir::glob("#{plugin_path}/*.rb").sort.each do |file|
           plugin_file = file
-          load_plugin( file )
+          load_plugin(file)
           @plugin_files << file
         end
       rescue Exception
-        raise PluginError, "Plugin error in '#{File::basename( plugin_file )}'.\n#{$!}\n#{$!.backtrace[0]}"
+        raise PluginError, "Plugin error in '#{File::basename(plugin_file)}'.\n#{$!}\n#{$!.backtrace[0]}"
       end
     end
 
@@ -75,12 +75,12 @@ module Hiki
       @context == :inline
     end
 
-    def block_context( &proc )
-      in_context( :block, &proc )
+    def block_context(&proc)
+      in_context(:block, &proc)
     end
 
-    def inline_context( &proc )
-      in_context( :inline, &proc )
+    def inline_context(&proc)
+      in_context(:inline, &proc)
     end
 
     def cookie_path
@@ -98,7 +98,7 @@ module Hiki
         begin
           r << proc.call
         rescue Exception
-          r << plugin_error( "header_proc", $! )
+          r << plugin_error("header_proc", $!)
         end
       end
       r.join.chomp
@@ -126,9 +126,9 @@ module Hiki
       r = []
       @body_enter_procs.each do |proc|
         begin
-          r << proc.call( @date )
+          r << proc.call(@date)
         rescue Exception
-          r << plugin_error( "body_enter_proc", $! )
+          r << plugin_error("body_enter_proc", $!)
         end
       end
       r.join
@@ -138,9 +138,9 @@ module Hiki
       r = []
       @body_leave_procs.each do |proc|
         begin
-          r << proc.call( @date )
+          r << proc.call(@date)
         rescue Exception
-          r << plugin_error( "body_leave_proc", $! )
+          r << plugin_error("body_leave_proc", $!)
         end
       end
       r.join
@@ -150,9 +150,9 @@ module Hiki
       r = []
       @page_attribute_procs.each do |proc|
         begin
-          r << proc.call( @date )
+          r << proc.call(@date)
         rescue Exception
-          r << plugin_error( "page_attribute_proc", $! )
+          r << plugin_error("page_attribute_proc", $!)
         end
       end
       r.join
@@ -164,7 +164,7 @@ module Hiki
         begin
           r << proc.call
         rescue Exception
-          r << plugin_error( "footer_proc", $! )
+          r << plugin_error("footer_proc", $!)
         end
       end
       r.join
@@ -176,7 +176,7 @@ module Hiki
         begin
           r << proc.call
         rescue Exception
-          r << plugin_error( "edit_proc", $! )
+          r << plugin_error("edit_proc", $!)
         end
       end
       r.join
@@ -188,7 +188,7 @@ module Hiki
         begin
           r << proc.call
         rescue Exception
-          r << plugin_error( "form_proc", $! )
+          r << plugin_error("form_proc", $!)
         end
       end
       r.join
@@ -200,13 +200,13 @@ module Hiki
         begin
           r << proc.call
         rescue Exception
-          r << plugin_error( "menu_proc", $! )
+          r << plugin_error("menu_proc", $!)
         end
       end
       r.compact
     end
 
-    def add_cookie( cookie )
+    def add_cookie(cookie)
       @cookies << cookie
     end
 
@@ -238,33 +238,33 @@ module Hiki
       end
     end
 
-    def conf_proc( key )
+    def conf_proc(key)
       r = ""
       label, block = @conf_procs[key]
       r = block.call if block
       r
     end
 
-    def conf_label( key )
+    def conf_label(key)
       label, block = @conf_procs[key]
       label
     end
 
-    def load_plugin( file )
+    def load_plugin(file)
       file.untaint
       @defined_method_list = []
       @export_method_list = nil
       @resource_loaded = false
-      dirname, basename = File.split( file )
+      dirname, basename = File.split(file)
       [@conf.lang, "en", "ja"].uniq.each do |lang|
         begin
-          load_file( File.join( dirname, lang, basename ) )
+          load_file(File.join(dirname, lang, basename))
           @resource_loaded = true
           break
         rescue IOError, Errno::ENOENT
         end
       end
-      load_file( file )
+      load_file(file)
       if @export_method_list
         @plugin_method_list.concat(@export_method_list)
       else
@@ -272,15 +272,15 @@ module Hiki
       end
     end
 
-    def load( page )
-      @db.load( page )
+    def load(page)
+      @db.load(page)
     end
 
-    def load_backup( page )
-      @db.load_backup( page )
+    def load_backup(page)
+      @db.load_backup(page)
     end
 
-    def save( page, src, md5, update_timestamp = true, filtering = true )
+    def save(page, src, md5, update_timestamp = true, filtering = true)
       return false if filtering and Filter.new_page_is_spam?(page, src)
 
       src.gsub!(/\r/, "")
@@ -288,8 +288,8 @@ module Hiki
       src.sub!(/\n*\z/, "\n")
       result = @db.store(page, src, md5, update_timestamp)
       if result
-        @db.set_attribute( page, editor: @user )
-        @db.delete_cache( page )
+        @db.set_attribute(page, editor: @user)
+        @db.delete_cache(page)
         begin
           update_proc
         rescue Exception
@@ -299,14 +299,14 @@ module Hiki
     end
 
     def admin?
-      ( @user == @conf.admin_name ) || @conf.password.empty?
+      (@user == @conf.admin_name) || @conf.password.empty?
     end
 
-    def login( name, password )
+    def login(name, password)
       return if @user
       return nil unless password
       name ||= @conf.admin_name
-      if @conf.password.empty? || password.crypt( @conf.password ) == @conf.password && name == @conf.admin_name
+      if @conf.password.empty? || password.crypt(@conf.password) == @conf.password && name == @conf.admin_name
         @user = @conf.admin_name
       elsif @conf["user.list"]
         if @conf["user.list"].has_key?(name) && @conf["user.list"][name] == password.crypt(@conf["user.list"][name])
@@ -336,43 +336,43 @@ module Hiki
       end
     end
 
-    def add_header_proc( block = Proc.new )
+    def add_header_proc(block = Proc.new)
       @header_procs << block
     end
 
-    def add_footer_proc( block = Proc.new )
+    def add_footer_proc(block = Proc.new)
       @footer_procs << block
     end
 
-    def add_update_proc( block = Proc.new )
+    def add_update_proc(block = Proc.new)
       @update_procs << block
     end
 
-    def add_delete_proc( block = Proc.new )
+    def add_delete_proc(block = Proc.new)
       @delete_procs << block
     end
 
-    def add_body_enter_proc( block = Proc.new )
+    def add_body_enter_proc(block = Proc.new)
       @body_enter_procs << block
     end
 
-    def add_page_attribute_proc( block = Proc.new )
+    def add_page_attribute_proc(block = Proc.new)
       @page_attribute_procs << block
     end
 
-    def add_body_leave_proc( block = Proc.new )
+    def add_body_leave_proc(block = Proc.new)
       @body_leave_procs << block
     end
 
-    def add_edit_proc( block = Proc.new )
+    def add_edit_proc(block = Proc.new)
       @edit_procs << block
     end
 
-    def add_form_proc( block = Proc.new )
+    def add_form_proc(block = Proc.new)
       @form_procs << block
     end
 
-    def add_menu_proc( block = Proc.new )
+    def add_menu_proc(block = Proc.new)
       @menu_procs << block
     end
 
@@ -384,9 +384,9 @@ module Hiki
       nil
     end
 
-    def add_conf_proc( key, label, block = Proc.new )
+    def add_conf_proc(key, label, block = Proc.new)
       return unless @mode =~ /^(conf|saveconf)$/
-      @conf_keys << key unless @conf_keys.index( key )
+      @conf_keys << key unless @conf_keys.index(key)
       @conf_procs[key] = [label, block]
     end
 

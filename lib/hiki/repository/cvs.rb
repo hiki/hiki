@@ -12,16 +12,16 @@ module Hiki
       Hiki::Repository.register(:cvs, self)
 
       def commit(page, msg = default_msg)
-        Dir.chdir( "#{@data_path}/text" ) do
-          system( "cvs -d #{@root} add -- #{escape(page)} > /dev/null 2>&1".untaint )
-          system( "cvs -d #{@root} ci -m '#{msg}' > /dev/null 2>&1".untaint )
+        Dir.chdir("#{@data_path}/text") do
+          system("cvs -d #{@root} add -- #{escape(page)} > /dev/null 2>&1".untaint)
+          system("cvs -d #{@root} ci -m '#{msg}' > /dev/null 2>&1".untaint)
         end
       end
 
       def delete(page, msg = default_msg)
-        Dir.chdir( "#{@data_path}/text" ) do
-          system( "cvs -d #{@root} remove -- #{escape(page)} > /dev/null 2>&1".untaint )
-          system( "cvs -d #{@root} ci -m '#{msg}' > /dev/null 2>&1".untaint )
+        Dir.chdir("#{@data_path}/text") do
+          system("cvs -d #{@root} remove -- #{escape(page)} > /dev/null 2>&1".untaint)
+          system("cvs -d #{@root} ci -m '#{msg}' > /dev/null 2>&1".untaint)
         end
       end
 

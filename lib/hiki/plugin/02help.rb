@@ -379,7 +379,7 @@ END_HELP
   help
 end
 
-def help_add_pbttn( help_txt, help_tps, help_pre, help_suf )
+def help_add_pbttn(help_txt, help_tps, help_pre, help_suf)
   return unless help_enabled?
   add_edit_proc do
     help = <<END_HELP

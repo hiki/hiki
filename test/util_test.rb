@@ -16,18 +16,18 @@ class TestUtil < Test::Unit::TestCase
   end
 
   def test_word_diff_html
-    assert_equal( "123\n<ins class=\"added\">abc</ins>\n456\n", word_diff( @t1, @t2 ) )
-    assert_equal( "<del class=\"deleted\">こんにちは</del><ins class=\"added\">こんばんは</ins>、私の<del class=\"deleted\">名前はわたなべです</del><ins class=\"added\">名前はまつもとです</ins>。\n<ins class=\"added\">Rubyを作ったのは私です。</ins>私は<del class=\"deleted\">Just Another </del>Ruby <del class=\"deleted\">Porter</del><ins class=\"added\">Hacker</ins>です。", word_diff( @t4, @t5) )
+    assert_equal("123\n<ins class=\"added\">abc</ins>\n456\n", word_diff(@t1, @t2))
+    assert_equal("<del class=\"deleted\">こんにちは</del><ins class=\"added\">こんばんは</ins>、私の<del class=\"deleted\">名前はわたなべです</del><ins class=\"added\">名前はまつもとです</ins>。\n<ins class=\"added\">Rubyを作ったのは私です。</ins>私は<del class=\"deleted\">Just Another </del>Ruby <del class=\"deleted\">Porter</del><ins class=\"added\">Hacker</ins>です。", word_diff(@t4, @t5))
   end
 
   def test_word_diff_text
-    assert_equal( "123\n{+abc+}\n456\n", word_diff_text( @t1, @t2 ) )
-    assert_equal( "[-こんにちは-]{+こんばんは+}、私の[-名前はわたなべです-]{+名前はまつもとです+}。\n{+Rubyを作ったのは私です。+}私は[-Just Another -]Ruby [-Porter-]{+Hacker+}です。", word_diff_text( @t4, @t5 ) )
+    assert_equal("123\n{+abc+}\n456\n", word_diff_text(@t1, @t2))
+    assert_equal("[-こんにちは-]{+こんばんは+}、私の[-名前はわたなべです-]{+名前はまつもとです+}。\n{+Rubyを作ったのは私です。+}私は[-Just Another -]Ruby [-Porter-]{+Hacker+}です。", word_diff_text(@t4, @t5))
   end
 
   def test_unified_diff
-    assert_equal( "@@ -1,2 +1,3 @@\n 123\n+abc\n 456\n", unified_diff( @t1, @t2 ) )
-    assert_equal( "@@ -1,3 +1,2 @@\n 123\n-abc\n 456\n", unified_diff( @t2, @t1 ) )
+    assert_equal("@@ -1,2 +1,3 @@\n 123\n+abc\n 456\n", unified_diff(@t1, @t2))
+    assert_equal("@@ -1,3 +1,2 @@\n 123\n-abc\n 456\n", unified_diff(@t2, @t1))
   end
 
   def test_plugin_error

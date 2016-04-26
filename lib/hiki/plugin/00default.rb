@@ -3,14 +3,14 @@
 #==============================
 #  tDiary plugins for Hiki
 #==============================
-def anchor( s )
+def anchor(s)
   s.sub!(/^\d+$/, "")
   p = h(escape(@page))
   p.gsub!(/%/, "%%")
   %Q[#{@conf.cgi_name}?#{p}#{s}]
 end
 
-def my( a, str )
+def my(a, str)
   %Q[<a href="#{anchor(a).gsub!(/%%/, '%')}">#{h(str)}</a>]
 end
 
@@ -23,7 +23,7 @@ def hiki_url(page)
 end
 
 #===== hiki_anchor
-def hiki_anchor( page, display_text )
+def hiki_anchor(page, display_text)
   if page == "FrontPage" then
     make_anchor(@conf.cgi_name, display_text)
   else
@@ -41,7 +41,7 @@ def make_anchor(url, display_text, a_class = nil)
 end
 
 #===== page_name
-def page_name( page )
+def page_name(page)
   pg_title = @db.get_attribute(page, :title)
   h((pg_title && pg_title.size > 0) ? pg_title : page)
 end
@@ -52,17 +52,17 @@ def toc
   ""
 end
 
-def toc_here( page = nil )
+def toc_here(page = nil)
   if page
-    tokens = @db.load_cache( page )
+    tokens = @db.load_cache(page)
     unless tokens
-      parser = @conf.parser.new( @conf )
-      tokens = parser.parse( @db.load( page ) )
-      @db.save_cache( page, tokens )
+      parser = @conf.parser.new(@conf)
+      tokens = parser.parse(@db.load(page))
+      @db.save_cache(page, tokens)
     end
-    formatter = @conf.formatter.new( tokens, @db, Plugin.new( @conf.options, @conf), @conf )
+    formatter = @conf.formatter.new(tokens, @db, Plugin.new(@conf.options, @conf), @conf)
     formatter.to_s
-    formatter.toc.gsub( /<a href="/, "<a href=\"#{hiki_url( page )}" )
+    formatter.toc.gsub(/<a href="/, "<a href=\"#{hiki_url(page)}")
   else
     @toc_f ||= :here
     TOC_STRING
@@ -70,7 +70,7 @@ def toc_here( page = nil )
 end
 
 #===== recent
-def recent( n = 20 )
+def recent(n = 20)
   n = n > 0 ? n : 0
 
   l = @db.page_info.sort do |a, b|
@@ -87,7 +87,7 @@ def recent( n = 20 )
     p = a[name]
 
     tm = p[:last_modified ]
-    cur_date = tm.strftime( @conf.msg_date_format )
+    cur_date = tm.strftime(@conf.msg_date_format)
 
     if ddd != cur_date
       s << "</ul>\n" if ddd
@@ -103,7 +103,7 @@ def recent( n = 20 )
 end
 
 #===== br
-def br( n = 1 )
+def br(n = 1)
   "<br>" * n.to_i
 end
 
@@ -194,7 +194,7 @@ def create_menu(data, command)
     menu << %Q!<a href="#{@conf.cgi_name}?c=create" rel="nofollow">#{@conf.msg_create}</a>! if creatable?
     menu << %Q!<a href="#{@conf.cgi_name}?c=edit;p=#{escape(@page)}" rel="nofollow">#{@conf.msg_edit}</a>! if @page && editable?
     menu << %Q!<a href="#{@conf.cgi_name}?c=diff;p=#{escape(@page)}" rel="nofollow">#{@conf.msg_diff}</a>! if @page && editable?
-    menu << %Q!#{hiki_anchor( 'FrontPage', page_name('FrontPage') )}!
+    menu << %Q!#{hiki_anchor('FrontPage', page_name('FrontPage'))}!
     menu << %Q!<a href="#{@conf.cgi_name}?c=index">#{@conf.msg_index}</a>!
     menu << %Q!<a href="#{@conf.cgi_name}?c=search">#{@conf.msg_search}</a>!
     menu << %Q!<a href="#{@conf.cgi_name}?c=recent">#{@conf.msg_recent_changes}</a>!
@@ -247,12 +247,12 @@ def saveconf_password
     password1       = @request.params["password1"]
     password2       = @request.params["password2"]
     if password1 and password1.size > 0
-      if (@conf.password.size > 0 && old_password.crypt( @conf.password ) != @conf.password) ||
+      if (@conf.password.size > 0 && old_password.crypt(@conf.password) != @conf.password) ||
           (password1 != password2)
          return :password_change_failure
       end
       salt = [rand(64),rand(64)].pack("C*").tr("\x00-\x3f","A-Za-z0-9./")
-      @conf.password = password1.crypt( salt )
+      @conf.password = password1.crypt(salt)
       return :password_change_success
     end
   end
@@ -279,10 +279,10 @@ end
 
 if @request.params["conf"] == "theme"
   @conf_theme_list = []
-  Dir.glob( "#{@conf.theme_path}/*".untaint ).sort.each do |dir|
-    theme = File.basename( dir )
-    next unless FileTest.file?( "#{dir}/#{theme}.css".untaint )
-    name = theme.split( /_/ ).collect{|s| s.capitalize}.join( " " )
+  Dir.glob("#{@conf.theme_path}/*".untaint).sort.each do |dir|
+    theme = File.basename(dir)
+    next unless FileTest.file?("#{dir}/#{theme}.css".untaint)
+    name = theme.split(/_/).collect{|s| s.capitalize}.join(" ")
     @conf_theme_list << [theme,name]
   end
 end
@@ -299,9 +299,9 @@ def auth?
   true
 end
 
-def editable?( page = @page )
+def editable?(page = @page)
   if page
-    auth? && ((!@db.is_frozen?( page ) && !@conf.options["freeze"]) || admin?)
+    auth? && ((!@db.is_frozen?(page) && !@conf.options["freeze"]) || admin?)
   else
     creatable?
   end

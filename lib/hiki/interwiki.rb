@@ -11,9 +11,9 @@ module Hiki
 
     attr_reader :interwiki_names
 
-    def initialize( str )
+    def initialize(str)
       @interwiki_names = {}
-      (str || "").scan( INTERWIKI_NAME_RE ) do |i|
+      (str || "").scan(INTERWIKI_NAME_RE) do |i|
         e = i.size > 2 ? i[2] : "none"
         @interwiki_names[i[0]] = {url: i[1], encoding: e}
       end

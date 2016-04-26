@@ -26,26 +26,26 @@ module Hiki
         ["page1", "page2", "page3"]
       end
 
-      def backup( page )
-        @text = load( page ) || ""
+      def backup(page)
+        @text = load(page) || ""
       end
 
-      def delete( page )
-        backup( page )
-        unlink( page )
-        delete_cache( page )
+      def delete(page)
+        backup(page)
+        unlink(page)
+        delete_cache(page)
         begin
           send_updating_mail(page, "delete", text) if @conf.mail_on_update
         rescue
         end
       end
 
-      def md5hex( page )
-        s = load( page )
-        Digest::MD5.hexdigest( s || "" )
+      def md5hex(page)
+        s = load(page)
+        Digest::MD5.hexdigest(s || "")
       end
 
-      def search( w )
+      def search(w)
         result  = []
         keys    = w.split
         p       = pages
@@ -64,7 +64,7 @@ module Hiki
               status << @conf.msg_match_keyword.gsub(/\]/, " <strong>#{h(key)}</strong>]")
             elsif title and title.index(/#{quoted_key}/i)
               status << @conf.msg_match_title.gsub(/\]/, " <strong>#{h(key)}</strong>]")
-            elsif load( page ).index(/^.*#{quoted_key}.*$/i)
+            elsif load(page).index(/^.*#{quoted_key}.*$/i)
               status << "[" + h($&).gsub(/#{Regexp.quote(h(key))}/i) { "<strong>#{$&}</strong>"} + "]"
             else
               status = nil
@@ -77,10 +77,10 @@ module Hiki
         [total, result]
       end
 
-      def load_cache( page )
-        Dir.mkdir( @conf.cache_path ) unless test( ?e, @conf.cache_path )
+      def load_cache(page)
+        Dir.mkdir(@conf.cache_path) unless test(?e, @conf.cache_path)
         cache_path = "#{@conf.cache_path}/parser"
-        Dir.mkdir( cache_path ) unless test( ?e, cache_path )
+        Dir.mkdir(cache_path) unless test(?e, cache_path)
         begin
           release_date, tokens = Marshal.load(File.binread("#{cache_path}/#{escape(page)}".untaint))
           if release_date == Hiki::RELEASE_DATE
@@ -93,16 +93,16 @@ module Hiki
         end
       end
 
-      def save_cache( page, tokens )
+      def save_cache(page, tokens)
         begin
-          File.open( "#{@conf.cache_path}/parser/#{escape(page)}".untaint, "wb") do |f|
+          File.open("#{@conf.cache_path}/parser/#{escape(page)}".untaint, "wb") do |f|
             Marshal.dump([Hiki::RELEASE_DATE, tokens], f)
           end
         rescue
         end
       end
 
-      def delete_cache( page )
+      def delete_cache(page)
         begin
           File.unlink("#{@conf.cache_path}/parser/#{escape(page)}".untaint)
         rescue Errno::ENOENT

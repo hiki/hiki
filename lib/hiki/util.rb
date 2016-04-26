@@ -92,7 +92,7 @@ module Hiki
       msg
     end
 
-    def cmdstr( cmd, param )
+    def cmdstr(cmd, param)
       "?c=#{cmd};#{param}"
     end
 
@@ -100,28 +100,28 @@ module Hiki
       h("#{@conf.site_name} - #{s}")
     end
 
-    def view_title( s )
+    def view_title(s)
       %Q!<a href="#{@conf.cgi_name}#{cmdstr('search', "key=#{escape(s)}") }">#{h(s)}</a>!
     end
 
-    def format_date( tm )
+    def format_date(tm)
       tm.strftime(@conf.msg_time_format).sub(/#DAY#/, "(#{@conf.msg_day[tm.wday]})")
     end
 
-    def get_common_data( db, plugin, conf )
+    def get_common_data(db, plugin, conf)
       data = {}
       data[:author_name] = conf.author_name
       data[:view_style]  = conf.use_sidebar ? h(conf.main_class) : "hiki" # for tDiary theme
       data[:cgi_name]    = conf.cgi_name
       if conf.use_sidebar
-        t = db.load_cache( conf.side_menu )
+        t = db.load_cache(conf.side_menu)
         unless t
-          m = db.load( conf.side_menu ) || ""
-          parser = conf.parser.new( conf )
-          t = parser.parse( m )
-          db.save_cache( conf.side_menu, t )
+          m = db.load(conf.side_menu) || ""
+          parser = conf.parser.new(conf)
+          t = parser.parse(m)
+          db.save_cache(conf.side_menu, t)
         end
-        f = conf.formatter.new( t, db, plugin, conf, "s" )
+        f = conf.formatter.new(t, db, plugin, conf, "s")
         data[:sidebar]   = f.to_s
         data[:main_class]    = conf.main_class
         data[:sidebar_class] = h(conf.sidebar_class)
@@ -131,10 +131,10 @@ module Hiki
       data
     end
 
-    def word_diff( src, dst, digest = false )
-      src_doc = Document.new( src, @charset, CharString.guess_eol($/) )
-      dst_doc = Document.new( dst, @charset, CharString.guess_eol($/) )
-      diff = compare_by_line_word( src_doc, dst_doc )
+    def word_diff(src, dst, digest = false)
+      src_doc = Document.new(src, @charset, CharString.guess_eol($/))
+      dst_doc = Document.new(dst, @charset, CharString.guess_eol($/))
+      diff = compare_by_line_word(src_doc, dst_doc)
       overriding_tags = {
         start_common: "",
         end_common: "",
@@ -148,25 +148,25 @@ module Hiki
         end_after_change: "</ins>",
       }
       if digest
-        return View.new( diff, src.encoding, src.eol ).to_html_digest(overriding_tags, false).join.gsub( %r|<br />|, "" ).gsub( %r|\n</ins>|, "</ins>\n" ) # "
+        return View.new(diff, src.encoding, src.eol).to_html_digest(overriding_tags, false).join.gsub(%r|<br />|, "").gsub(%r|\n</ins>|, "</ins>\n") # "
       else
-        return View.new( diff, src.encoding, src.eol ).to_html(overriding_tags, false).join.gsub( %r|<br />|, "" ).gsub( %r|\n</ins>|, "</ins>\n" ) # "
+        return View.new(diff, src.encoding, src.eol).to_html(overriding_tags, false).join.gsub(%r|<br />|, "").gsub(%r|\n</ins>|, "</ins>\n") # "
       end
     end
 
-    def word_diff_text( src, dst, digest = false )
-      src_doc = Document.new( src, @charset)
-      dst_doc = Document.new( dst, @charset)
-      diff = compare_by_line_word( src_doc, dst_doc )
+    def word_diff_text(src, dst, digest = false)
+      src_doc = Document.new(src, @charset)
+      dst_doc = Document.new(dst, @charset)
+      diff = compare_by_line_word(src_doc, dst_doc)
       if digest
-        return View.new( diff, src.encoding, src.eol ).to_wdiff_digest({}, false).join.gsub( %r|\n\+\}|, "+}\n" )
+        return View.new(diff, src.encoding, src.eol).to_wdiff_digest({}, false).join.gsub(%r|\n\+\}|, "+}\n")
       else
-        return View.new( diff, src.encoding, src.eol ).to_wdiff({}, false).join.gsub( %r|\n\+\}|, "+}\n" )
+        return View.new(diff, src.encoding, src.eol).to_wdiff({}, false).join.gsub(%r|\n\+\}|, "+}\n")
       end
     end
 
-    def unified_diff( src, dst, context_lines = 3 )
-      return h(Diff.new(src.split(/^/), dst.split(/^/)).ses.unidiff( "", context_lines ))
+    def unified_diff(src, dst, context_lines = 3)
+      return h(Diff.new(src.split(/^/), dst.split(/^/)).ses.unidiff("", context_lines))
     end
 
     def redirect(request, url, cookies = nil)

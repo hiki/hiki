@@ -30,7 +30,7 @@ module Hiki
       load_messages
 
       # parser class and formatter class
-      style = @style.gsub( /\+/, "" )
+      style = @style.gsub(/\+/, "")
       @parser = Parser.lookup(style)
       @formatter = Formatter.lookup(style)
 
@@ -41,7 +41,7 @@ module Hiki
 
       bot = ["googlebot", "Hatena Antenna", "moget@goo.ne.jp"]
       bot += @options["bot"] || []
-      @bot = Regexp.new( "(#{bot.uniq.join( '|' )})", true )
+      @bot = Regexp.new("(#{bot.uniq.join('|')})", true)
     end
 
     def database
@@ -59,21 +59,21 @@ module Hiki
     #
     # get/set/delete plugin options
     #
-    def []( key )
+    def [](key)
       @options[key]
     end
 
-    def []=( key, val )
+    def []=(key, val)
       @options2[key] = @options[key] = val
     end
 
-    def delete( key )
-      @options.delete( key )
-      @options2.delete( key )
+    def delete(key)
+      @options.delete(key)
+      @options2.delete(key)
     end
 
     def save_config
-      conf = ERB.new( File.open( "#{@template_path}/hiki.conf" ){|f| f.read }.untaint ).result( binding )
+      conf = ERB.new(File.open("#{@template_path}/hiki.conf"){|f| f.read }.untaint).result(binding)
       File.open(@config_file, "w") do |f|
         f.print conf
       end
@@ -102,7 +102,7 @@ module Hiki
       @index_url
     end
 
-    def read_template( cmd )
+    def read_template(cmd)
       if mobile_agent?
         template = File.join(@template_path, "i." + @template[cmd])
       else
@@ -129,7 +129,7 @@ module Hiki
     # loading hikiconf.rb in current directory
     def load(config_path = "hikiconf.rb")
       @options = {}
-      eval( File.open(config_path){|f| f.read }.untaint, binding, "(#{config_path})", 1 )
+      eval(File.open(config_path){|f| f.read }.untaint, binding, "(#{config_path})", 1)
       format_error if $data_path
 
       raise "No @data_path variable." unless @data_path
@@ -212,8 +212,8 @@ module Hiki
                    :mail_on_update, :use_sidebar, :auto_link, :use_wikiname,
                    :xmlrpc_enabled, :options2]
       begin
-        cgi_conf = File.open( @config_file ){|f| f.read }.untaint
-        cgi_conf.gsub!( /^[@$]/, "" )
+        cgi_conf = File.open(@config_file){|f| f.read }.untaint
+        cgi_conf.gsub!(/^[@$]/, "")
         def_vars1 = ""
         def_vars2 = ""
         variables.each do |var|
@@ -221,30 +221,30 @@ module Hiki
           def_vars2 << "@#{var} = #{var} unless #{var} == nil\n"
         end
         b = binding.taint
-        eval( def_vars1, b )
+        eval(def_vars1, b)
         Thread.start {
           begin
             $SAFE = 4
           rescue ArgumentError
           ensure
-            eval( cgi_conf, b, "(hiki.conf)", 1 )
+            eval(cgi_conf, b, "(hiki.conf)", 1)
           end
         }.join
-        eval( def_vars2, b )
+        eval(def_vars2, b)
       rescue IOError, Errno::ENOENT
       end
       @mail = [@mail].flatten # for backward compatibility
       if @options2 then
-        @options.update( @options2 )
+        @options.update(@options2)
       else
         @options2 = {}.taint
       end
       format_error if $site_name
     end
 
-    def method_missing( *m )
+    def method_missing(*m)
       if m.length == 1 then
-        instance_eval( <<-SRC
+        instance_eval(<<-SRC
         def #{m[0]}
           @#{m[0]}
         end

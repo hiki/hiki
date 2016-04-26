@@ -2,7 +2,7 @@
 #
 # preferences (resources)
 #
-add_conf_proc( "default", "Preferenze base" ) do
+add_conf_proc("default", "Preferenze base") do
   saveconf_default
   <<-HTML
       <h3 class="subtitle">Nome del sito</h3>
@@ -23,7 +23,7 @@ add_conf_proc( "default", "Preferenze base" ) do
   HTML
 end
 
-add_conf_proc( "password", "Password" ) do
+add_conf_proc("password", "Password") do
   '<h3 class="password">Password</h3>' +
     case saveconf_password
     when :password_change_success
@@ -40,7 +40,7 @@ add_conf_proc( "password", "Password" ) do
     HTML
 end
 
-add_conf_proc( "theme", "Aspetto" ) do
+add_conf_proc("theme", "Aspetto") do
   saveconf_theme
   r = <<-HTML
       <h3 class="subtitle">Tema</h3>
@@ -85,7 +85,7 @@ add_conf_proc( "theme", "Aspetto" ) do
   HTML
 end
 
-add_conf_proc( "xmlrpc", "XML-RPC" ) do
+add_conf_proc("xmlrpc", "XML-RPC") do
   saveconf_xmlrpc
 
   <<-HTML
