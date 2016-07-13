@@ -52,7 +52,7 @@ def comment_post
   count = 1
 
   content = ''
-  lines.each do |l|
+  lines.split("\n").each do |l|
     if /^\{\{r?comment.*\}\}/ =~ l && flag == false
       if count == comment_no
         content << l if style == 1
@@ -66,6 +66,7 @@ def comment_post
     else
       content << l
     end
+    content << "\n"
   end
 
   save( @page, content, md5hex ) if flag
