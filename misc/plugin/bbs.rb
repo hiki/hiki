@@ -43,13 +43,14 @@ def bbs_post
   return '' if msg.strip.size == 0
 
   lines = @db.load( @page )
+
   md5hex = @db.md5hex( @page )
 
   flag = false
   count = 1
 
   content = ''
-  lines.each do |l|
+  lines.split("\n").each do |l|
     if /^\{\{bbs\b(:?[^\}]*)?\}\}/ =~ l && flag == false
       if count == bbs_num
         content << "#{l}\n"
@@ -59,10 +60,10 @@ def bbs_post
         flag = true
       else
         count += 1
-        content << l
+        content << "#{l}\n"
       end
     else
-      content << l
+      content << "#{l}\n"
     end
   end
 
