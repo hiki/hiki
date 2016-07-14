@@ -49,20 +49,20 @@ def bbs_post
   count = 1
 
   content = ''
-  lines.each_line do |l|
-    if /^\{\{bbs\b(:?[^\}]*)?\}\}/ =~ l && flag == false
+  lines.each_line do |line|
+    if /^\{\{bbs\b(:?[^\}]*)?\}\}/ =~ line && flag == false
       if count == bbs_num
-        content << "#{l}\n"
+        content << "#{line}\n"
         content << @conf.parser.heading( "#{subject} - #{name} (#{format_date(Time.now)})\n", bbs_level )
         content << "#{msg}\n"
         content << "{{comment}}\n"
         flag = true
       else
         count += 1
-        content << l
+        content << line
       end
     else
-      content << l
+      content << line
     end
   end
 

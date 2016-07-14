@@ -52,19 +52,19 @@ def comment_post
   count = 1
 
   content = ''
-  lines.each_line do |l|
-    if /^\{\{r?comment.*\}\}/ =~ l && flag == false
+  lines.each_line do |line|
+    if /^\{\{r?comment.*\}\}/ =~ line && flag == false
       if count == comment_no
-        content << l if style == 1
+        content << line if style == 1
         content << "*#{format_date(Time.now)} #{name} : #{msg}\n"
-        content << l if style == 0
+        content << line if style == 0
         flag = true
       else
         count += 1
-        content << l
+        content << line
       end
     else
-      content << l
+      content << line
     end
   end
 

@@ -23,14 +23,14 @@ def trackback_post
 
   flag = false
   content = ''
-  lines.each_line do |l|
-    if /^\{\{trackback\}\}/ =~ l && flag == false
-      content << "#{l}\n"
+  lines.each_line do |line|
+    if /^\{\{trackback\}\}/ =~ line && flag == false
+      content << "#{line}\n"
       content << %Q!* trackback : #{@conf.parser.link( url, "#{title} (#{blog_name})" )} (#{format_date(Time.now)})\n!
       content << @conf.parser.blockquote( shorten( excerpt ) )
       flag = true
     else
-      content << l
+      content << line
     end
   end
 
