@@ -15,12 +15,13 @@ Hiki is a powerful and fast wiki clone written in Ruby.
 現在(2016/7/14) github上のhiki/hikiはgem化するために調整中であるが，
 これが今後標準化される可能性が高いので，これをbaseに開発をすすめる．
 
+# 仕様
 最低限要求される拡張は，
 - 数式の綺麗な表示
 - codeのcolorize（あるいはhighlight)表示
 である．
 
-# 数式の綺麗な表示
+## 数式の綺麗な表示
 旧バージョンではmath-xによって行っていた．しかし，
 1. MathMLがないと動かない
   - firefoxは標準装備
@@ -31,5 +32,13 @@ Hiki is a powerful and fast wiki clone written in Ruby.
 そこで，これらの欠点を解消して，最近開発が進んでいるmathjaxが使えるように
 環境を整える．
 
-# codeのcolorize（あるいはhighlight)表示
+## codeのcolorize（あるいはhighlight)表示
 昔のまま，vim-colorを使おうか．
+
+# 準備
+- githubでclone
+- rackup
+- [apacheからの起動](file.web_activate.html)
+- fontcolorによる単純なpluginの実装
+- mathjax
+- code highlight

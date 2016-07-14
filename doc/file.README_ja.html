@@ -83,6 +83,8 @@
 <p>現在(2016/7/14) github上のhiki/hikiはgem化するために調整中であるが，
 これが今後標準化される可能性が高いので，これをbaseに開発をすすめる．</p>
 
+<h1>仕様</h1>
+
 <p>最低限要求される拡張は，</p>
 
 <ul>
@@ -91,7 +93,7 @@
 である．</li>
 </ul>
 
-<h1>数式の綺麗な表示</h1>
+<h2>数式の綺麗な表示</h2>
 
 <p>旧バージョンではmath-xによって行っていた．しかし，</p>
 
@@ -109,13 +111,24 @@
 <p>そこで，これらの欠点を解消して，最近開発が進んでいるmathjaxが使えるように
 環境を整える．</p>
 
-<h1>codeのcolorize（あるいはhighlight)表示</h1>
+<h2>codeのcolorize（あるいはhighlight)表示</h2>
 
 <p>昔のまま，vim-colorを使おうか．</p>
+
+<h1>準備</h1>
+
+<ul>
+<li>githubでclone</li>
+<li>rackup</li>
+<li><a href="file.web_activate.html">apacheからの起動</a></li>
+<li>fontcolorによる単純なpluginの実装</li>
+<li>mathjax</li>
+<li>code highlight</li>
+</ul>
 </div></div>
 
       <div id="footer">
-  Generated on Thu Jul 14 15:22:01 2016 by
+  Generated on Thu Jul 14 15:59:44 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.0 (ruby-2.2.2).
 </div>
