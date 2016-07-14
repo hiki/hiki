@@ -1,0 +1,2702 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: Hiki::Plugin
+  
+    &mdash; Documentation by YARD 0.9.0
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  pathId = "Hiki::Plugin";
+  relpath = '../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../class_list.html"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../_index.html">Index (P)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../Hiki.html" title="Hiki (module)">Hiki</a></span></span>
+     &raquo; 
+    <span class="title">Plugin</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <iframe id="search_frame" src="../class_list.html"></iframe>
+
+      <div id="content"><h1>Class: Hiki::Plugin
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">Hiki::Plugin</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  <dl>
+      <dt>Includes:</dt>
+      <dd><span class='object_link'><a href="Util.html" title="Hiki::Util (module)">Util</a></span></dd>
+  </dl>
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/hiki/plugin.rb</dd>
+  </dl>
+  
+</div>
+
+
+  <h2>Constant Summary</h2>
+  <dl class="constants">
+    
+      <dt id="TOC_STRING-constant" class="">TOC_STRING =
+        
+      </dt>
+      <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\000\000[Table of Contents]</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+    
+  </dl>
+
+
+
+  
+  
+  <h3 class="inherited">Constants included
+     from <span class='object_link'><a href="Util.html" title="Hiki::Util (module)">Util</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Util.html#ARG_REG_A-constant" title="Hiki::Util::ARG_REG_A (constant)">Util::ARG_REG_A</a></span>, <span class='object_link'><a href="Util.html#ARG_REG_B-constant" title="Hiki::Util::ARG_REG_B (constant)">Util::ARG_REG_B</a></span>, <span class='object_link'><a href="Util.html#ARG_REG_C-constant" title="Hiki::Util::ARG_REG_C (constant)">Util::ARG_REG_C</a></span>, <span class='object_link'><a href="Util.html#ARG_REG_D-constant" title="Hiki::Util::ARG_REG_D (constant)">Util::ARG_REG_D</a></span>, <span class='object_link'><a href="Util.html#ARG_REG_E-constant" title="Hiki::Util::ARG_REG_E (constant)">Util::ARG_REG_E</a></span>, <span class='object_link'><a href="Util.html#ARG_REG_F-constant" title="Hiki::Util::ARG_REG_F (constant)">Util::ARG_REG_F</a></span>, <span class='object_link'><a href="Util.html#ARG_REG_G-constant" title="Hiki::Util::ARG_REG_G (constant)">Util::ARG_REG_G</a></span>, <span class='object_link'><a href="Util.html#ARG_REG_H-constant" title="Hiki::Util::ARG_REG_H (constant)">Util::ARG_REG_H</a></span>, <span class='object_link'><a href="Util.html#ARG_REG_I-constant" title="Hiki::Util::ARG_REG_I (constant)">Util::ARG_REG_I</a></span>, <span class='object_link'><a href="Util.html#ARG_REG_J-constant" title="Hiki::Util::ARG_REG_J (constant)">Util::ARG_REG_J</a></span>, <span class='object_link'><a href="Util.html#DIGIT_RE-constant" title="Hiki::Util::DIGIT_RE (constant)">Util::DIGIT_RE</a></span>, <span class='object_link'><a href="Util.html#LSTRIP_RE-constant" title="Hiki::Util::LSTRIP_RE (constant)">Util::LSTRIP_RE</a></span>, <span class='object_link'><a href="Util.html#METHOD_REG_A-constant" title="Hiki::Util::METHOD_REG_A (constant)">Util::METHOD_REG_A</a></span>, <span class='object_link'><a href="Util.html#NIL_RE-constant" title="Hiki::Util::NIL_RE (constant)">Util::NIL_RE</a></span>, <span class='object_link'><a href="Util.html#STRING_RE-constant" title="Hiki::Util::STRING_RE (constant)">Util::STRING_RE</a></span></p>
+
+
+  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#cookies-instance_method" title="#cookies (instance method)">#<strong>cookies</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute cookies.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#data-instance_method" title="#data (instance method)">#<strong>data</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute data.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#plugin_command-instance_method" title="#plugin_command (instance method)">#<strong>plugin_command</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute plugin_command.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#session_id-instance_method" title="#session_id (instance method)">#<strong>session_id</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute session_id.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#text-instance_method" title="#text (instance method)">#<strong>text</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute text.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#title-instance_method" title="#title (instance method)">#<strong>title</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute title.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#toc_f-instance_method" title="#toc_f (instance method)">#<strong>toc_f</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute toc_f.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#user-instance_method" title="#user (instance method)">#<strong>user</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute user.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#add_cookie-instance_method" title="#add_cookie (instance method)">#<strong>add_cookie</strong>(cookie)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#admin%3F-instance_method" title="#admin? (instance method)">#<strong>admin?</strong>  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#block_context-instance_method" title="#block_context (instance method)">#<strong>block_context</strong>(&amp;proc)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#block_context%3F-instance_method" title="#block_context? (instance method)">#<strong>block_context?</strong>  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#body_enter_proc-instance_method" title="#body_enter_proc (instance method)">#<strong>body_enter_proc</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#body_leave_proc-instance_method" title="#body_leave_proc (instance method)">#<strong>body_leave_proc</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#conf_label-instance_method" title="#conf_label (instance method)">#<strong>conf_label</strong>(key)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#conf_proc-instance_method" title="#conf_proc (instance method)">#<strong>conf_proc</strong>(key)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#cookie_path-instance_method" title="#cookie_path (instance method)">#<strong>cookie_path</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#delete_proc-instance_method" title="#delete_proc (instance method)">#<strong>delete_proc</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#each_conf_key-instance_method" title="#each_conf_key (instance method)">#<strong>each_conf_key</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#edit_proc-instance_method" title="#edit_proc (instance method)">#<strong>edit_proc</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#footer_proc-instance_method" title="#footer_proc (instance method)">#<strong>footer_proc</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#form_proc-instance_method" title="#form_proc (instance method)">#<strong>form_proc</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#header_proc-instance_method" title="#header_proc (instance method)">#<strong>header_proc</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(options, conf)  &#x21d2; Plugin </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>A new instance of Plugin.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#inline_context-instance_method" title="#inline_context (instance method)">#<strong>inline_context</strong>(&amp;proc)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#inline_context%3F-instance_method" title="#inline_context? (instance method)">#<strong>inline_context?</strong>  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#load-instance_method" title="#load (instance method)">#<strong>load</strong>(page)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#load_backup-instance_method" title="#load_backup (instance method)">#<strong>load_backup</strong>(page)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#load_file-instance_method" title="#load_file (instance method)">#<strong>load_file</strong>(filename)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#load_plugin-instance_method" title="#load_plugin (instance method)">#<strong>load_plugin</strong>(file)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#login-instance_method" title="#login (instance method)">#<strong>login</strong>(name, password)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#menu_proc-instance_method" title="#menu_proc (instance method)">#<strong>menu_proc</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#page_attribute_proc-instance_method" title="#page_attribute_proc (instance method)">#<strong>page_attribute_proc</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#save-instance_method" title="#save (instance method)">#<strong>save</strong>(page, src, md5, update_timestamp = true, filtering = true)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#send-instance_method" title="#send (instance method)">#<strong>send</strong>(name, *args)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#singleton_method_added-instance_method" title="#singleton_method_added (instance method)">#<strong>singleton_method_added</strong>(name)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#update_proc-instance_method" title="#update_proc (instance method)">#<strong>update_proc</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Util.html" title="Hiki::Util (module)">Util</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Util.html#apply_plugin-class_method" title="Hiki::Util.apply_plugin (method)">apply_plugin</a></span>, <span class='object_link'><a href="Util.html#argwords-class_method" title="Hiki::Util.argwords (method)">argwords</a></span>, <span class='object_link'><a href="Util.html#base_css_url-instance_method" title="Hiki::Util#base_css_url (method)">#base_css_url</a></span>, <span class='object_link'><a href="Util.html#cmdstr-instance_method" title="Hiki::Util#cmdstr (method)">#cmdstr</a></span>, <span class='object_link'><a href="Util.html#compare_by_line-instance_method" title="Hiki::Util#compare_by_line (method)">#compare_by_line</a></span>, <span class='object_link'><a href="Util.html#compare_by_line_word-instance_method" title="Hiki::Util#compare_by_line_word (method)">#compare_by_line_word</a></span>, <span class='object_link'><a href="Util.html#convert_value-class_method" title="Hiki::Util.convert_value (method)">convert_value</a></span>, <span class='object_link'><a href="Util.html#escape-class_method" title="Hiki::Util.escape (method)">escape</a></span>, <span class='object_link'><a href="Util.html#escapeHTML-instance_method" title="Hiki::Util#escapeHTML (method)">#escapeHTML</a></span>, <span class='object_link'><a href="Util.html#escape_html-class_method" title="Hiki::Util.escape_html (method)">escape_html</a></span>, <span class='object_link'><a href="Util.html#format_date-instance_method" title="Hiki::Util#format_date (method)">#format_date</a></span>, <span class='object_link'><a href="Util.html#get_common_data-instance_method" title="Hiki::Util#get_common_data (method)">#get_common_data</a></span>, <span class='object_link'><a href="Util.html#h-class_method" title="Hiki::Util.h (method)">h</a></span>, <span class='object_link'><a href="Util.html#methodwords-class_method" title="Hiki::Util.methodwords (method)">methodwords</a></span>, <span class='object_link'><a href="Util.html#plugin_error-instance_method" title="Hiki::Util#plugin_error (method)">#plugin_error</a></span>, <span class='object_link'><a href="Util.html#redirect-instance_method" title="Hiki::Util#redirect (method)">#redirect</a></span>, <span class='object_link'><a href="Util.html#send_updating_mail-instance_method" title="Hiki::Util#send_updating_mail (method)">#send_updating_mail</a></span>, <span class='object_link'><a href="Util.html#sendmail-instance_method" title="Hiki::Util#sendmail (method)">#sendmail</a></span>, <span class='object_link'><a href="Util.html#set_conf-class_method" title="Hiki::Util.set_conf (method)">set_conf</a></span>, <span class='object_link'><a href="Util.html#shorten-instance_method" title="Hiki::Util#shorten (method)">#shorten</a></span>, <span class='object_link'><a href="Util.html#theme_url-instance_method" title="Hiki::Util#theme_url (method)">#theme_url</a></span>, <span class='object_link'><a href="Util.html#to_native-instance_method" title="Hiki::Util#to_native (method)">#to_native</a></span>, <span class='object_link'><a href="Util.html#unescape-class_method" title="Hiki::Util.unescape (method)">unescape</a></span>, <span class='object_link'><a href="Util.html#unescapeHTML-instance_method" title="Hiki::Util#unescapeHTML (method)">#unescapeHTML</a></span>, <span class='object_link'><a href="Util.html#unescape_html-class_method" title="Hiki::Util.unescape_html (method)">unescape_html</a></span>, <span class='object_link'><a href="Util.html#unified_diff-instance_method" title="Hiki::Util#unified_diff (method)">#unified_diff</a></span>, <span class='object_link'><a href="Util.html#view_title-instance_method" title="Hiki::Util#view_title (method)">#view_title</a></span>, <span class='object_link'><a href="Util.html#word_diff-instance_method" title="Hiki::Util#word_diff (method)">#word_diff</a></span>, <span class='object_link'><a href="Util.html#word_diff_text-instance_method" title="Hiki::Util#word_diff_text (method)">#word_diff_text</a></span></p>
+
+  <div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    #<strong>initialize</strong>(options, conf)  &#x21d2; <tt><span class='object_link'><a href="" title="Hiki::Plugin (class)">Plugin</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns a new instance of Plugin</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/hiki/plugin.rb', line 21</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='id identifier rubyid_conf'>conf</span><span class='rparen'>)</span>
+  <span class='ivar'>@options</span>      <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span>
+  <span class='ivar'>@conf</span>         <span class='op'>=</span> <span class='id identifier rubyid_conf'>conf</span>
+  <span class='id identifier rubyid_set_tdiary_env'>set_tdiary_env</span>
+
+  <span class='ivar'>@cookies</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='ivar'>@plugin_method_list</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='ivar'>@header_procs</span>     <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='ivar'>@update_procs</span>     <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='ivar'>@delete_procs</span>     <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='ivar'>@body_enter_procs</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='ivar'>@body_leave_procs</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='ivar'>@page_attribute_procs</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='ivar'>@footer_procs</span>     <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='ivar'>@edit_procs</span>       <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='ivar'>@form_procs</span>       <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='ivar'>@menu_procs</span>       <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='ivar'>@conf_keys</span>        <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='ivar'>@conf_procs</span>       <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='ivar'>@mode</span>             <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
+
+  <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_opt'>opt</span><span class='comma'>,</span> <span class='id identifier rubyid_val'>val</span><span class='op'>|</span>
+    <span class='id identifier rubyid_instance_variable_set'>instance_variable_set</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>@</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_opt'>opt</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_val'>val</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_opt'>opt</span><span class='period'>.</span><span class='id identifier rubyid_index'>index</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='ivar'>@toc_f</span>            <span class='op'>=</span> <span class='kw'>false</span>
+  <span class='ivar'>@context</span>          <span class='op'>=</span> <span class='kw'>nil</span>
+  <span class='ivar'>@plugin_command</span>   <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='ivar'>@plugin_menu</span>      <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='ivar'>@text</span>             <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
+
+  <span class='ivar'>@mode</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>conf</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='ivar'>@request</span><span class='period'>.</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>c</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>admin</span><span class='tstring_end'>&quot;</span></span>
+  <span class='ivar'>@mode</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>saveconf</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='ivar'>@request</span><span class='period'>.</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>saveconf</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+
+  <span class='comment'># loading plugins
+</span>  <span class='ivar'>@plugin_files</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_plugin_path'>plugin_path</span> <span class='op'>=</span> <span class='ivar'>@conf</span><span class='period'>.</span><span class='id identifier rubyid_plugin_path'>plugin_path</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'>PATH</span><span class='embexpr_end'>}</span><span class='tstring_content'>/plugin</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_plugin_file'>plugin_file</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>begin</span>
+    <span class='const'>Dir</span><span class='op'>::</span><span class='id identifier rubyid_glob'>glob</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_plugin_path'>plugin_path</span><span class='embexpr_end'>}</span><span class='tstring_content'>/*.rb</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_sort'>sort</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span>
+      <span class='id identifier rubyid_plugin_file'>plugin_file</span> <span class='op'>=</span> <span class='id identifier rubyid_file'>file</span>
+      <span class='id identifier rubyid_load_plugin'>load_plugin</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span>
+      <span class='ivar'>@plugin_files</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_file'>file</span>
+    <span class='kw'>end</span>
+  <span class='kw'>rescue</span> <span class='const'>Exception</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'>PluginError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Plugin error in &#39;</span><span class='embexpr_beg'>#{</span><span class='const'>File</span><span class='op'>::</span><span class='id identifier rubyid_basename'>basename</span><span class='lparen'>(</span><span class='id identifier rubyid_plugin_file'>plugin_file</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39;.\n</span><span class='embexpr_beg'>#{</span><span class='gvar'>$!</span><span class='embexpr_end'>}</span><span class='tstring_content'>\n</span><span class='embexpr_beg'>#{</span><span class='gvar'>$!</span><span class='period'>.</span><span class='id identifier rubyid_backtrace'>backtrace</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id="cookies=-instance_method"></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="cookies-instance_method">
+  
+    #<strong>cookies</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute cookies</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+17
+18
+19</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/hiki/plugin.rb', line 17</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_cookies'>cookies</span>
+  <span class='ivar'>@cookies</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="data=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="data-instance_method">
+  
+    #<strong>data</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute data</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+17
+18
+19</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/hiki/plugin.rb', line 17</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_data'>data</span>
+  <span class='ivar'>@data</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="plugin_command-instance_method">
+  
+    #<strong>plugin_command</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute plugin_command</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+16
+17
+18</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/hiki/plugin.rb', line 16</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_plugin_command'>plugin_command</span>
+  <span class='ivar'>@plugin_command</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="session_id=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="session_id-instance_method">
+  
+    #<strong>session_id</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute session_id</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+17
+18
+19</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/hiki/plugin.rb', line 17</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_session_id'>session_id</span>
+  <span class='ivar'>@session_id</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="text=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="text-instance_method">
+  
+    #<strong>text</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute text</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+17
+18
+19</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/hiki/plugin.rb', line 17</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_text'>text</span>
+  <span class='ivar'>@text</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="title=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="title-instance_method">
+  
+    #<strong>title</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute title</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+17
+18
+19</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/hiki/plugin.rb', line 17</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_title'>title</span>
+  <span class='ivar'>@title</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="toc_f-instance_method">
+  
+    #<strong>toc_f</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute toc_f</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+16
+17
+18</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/hiki/plugin.rb', line 16</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_toc_f'>toc_f</span>
+  <span class='ivar'>@toc_f</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="user=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="user-instance_method">
+  
+    #<strong>user</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute user</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+17
+18
+19</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/hiki/plugin.rb', line 17</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_user'>user</span>
+  <span class='ivar'>@user</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="add_cookie-instance_method">
+  
+    #<strong>add_cookie</strong>(cookie)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+209
+210
+211</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/hiki/plugin.rb', line 209</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_add_cookie'>add_cookie</span><span class='lparen'>(</span><span class='id identifier rubyid_cookie'>cookie</span><span class='rparen'>)</span>
+  <span class='ivar'>@cookies</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_cookie'>cookie</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="admin?-instance_method">
+  
+    #<strong>admin?</strong>  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+301
+302
+303</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/hiki/plugin.rb', line 301</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_admin?'>admin?</span>
+  <span class='lparen'>(</span><span class='ivar'>@user</span> <span class='op'>==</span> <span class='ivar'>@conf</span><span class='period'>.</span><span class='id identifier rubyid_admin_name'>admin_name</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='ivar'>@conf</span><span class='period'>.</span><span class='id identifier rubyid_password'>password</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="block_context-instance_method">
+  
+    #<strong>block_context</strong>(&amp;proc)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+78
+79
+80</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/hiki/plugin.rb', line 78</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_block_context'>block_context</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_proc'>proc</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_in_context'>in_context</span><span class='lparen'>(</span><span class='symbol'>:block</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_proc'>proc</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="block_context?-instance_method">
+  
+    #<strong>block_context?</strong>  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+70
+71
+72</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/hiki/plugin.rb', line 70</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_block_context?'>block_context?</span>
+  <span class='ivar'>@context</span> <span class='op'>==</span> <span class='symbol'>:block</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="body_enter_proc-instance_method">
+  
+    #<strong>body_enter_proc</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/hiki/plugin.rb', line 125</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_body_enter_proc'>body_enter_proc</span>
+  <span class='id identifier rubyid_r'>r</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='ivar'>@body_enter_procs</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_proc'>proc</span><span class='op'>|</span>
+    <span class='kw'>begin</span>
+      <span class='id identifier rubyid_r'>r</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_proc'>proc</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='ivar'>@date</span><span class='rparen'>)</span>
+    <span class='kw'>rescue</span> <span class='const'>Exception</span>
+      <span class='id identifier rubyid_r'>r</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_plugin_error'>plugin_error</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>body_enter_proc</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='gvar'>$!</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="body_leave_proc-instance_method">
+  
+    #<strong>body_leave_proc</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/hiki/plugin.rb', line 137</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_body_leave_proc'>body_leave_proc</span>
+  <span class='id identifier rubyid_r'>r</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='ivar'>@body_leave_procs</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_proc'>proc</span><span class='op'>|</span>
+    <span class='kw'>begin</span>
+      <span class='id identifier rubyid_r'>r</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_proc'>proc</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='ivar'>@date</span><span class='rparen'>)</span>
+    <span class='kw'>rescue</span> <span class='const'>Exception</span>
+      <span class='id identifier rubyid_r'>r</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_plugin_error'>plugin_error</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>body_leave_proc</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='gvar'>$!</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="conf_label-instance_method">
+  
+    #<strong>conf_label</strong>(key)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+248
+249
+250
+251</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/hiki/plugin.rb', line 248</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_conf_label'>conf_label</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_label'>label</span><span class='comma'>,</span> <span class='id identifier rubyid_block'>block</span> <span class='op'>=</span> <span class='ivar'>@conf_procs</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_label'>label</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="conf_proc-instance_method">
+  
+    #<strong>conf_proc</strong>(key)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+241
+242
+243
+244
+245
+246</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/hiki/plugin.rb', line 241</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_conf_proc'>conf_proc</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_r'>r</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_label'>label</span><span class='comma'>,</span> <span class='id identifier rubyid_block'>block</span> <span class='op'>=</span> <span class='ivar'>@conf_procs</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_r'>r</span> <span class='op'>=</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span> <span class='kw'>if</span> <span class='id identifier rubyid_block'>block</span>
+  <span class='id identifier rubyid_r'>r</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="cookie_path-instance_method">
+  
+    #<strong>cookie_path</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+86
+87
+88
+89
+90
+91
+92
+93</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/hiki/plugin.rb', line 86</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_cookie_path'>cookie_path</span>
+  <span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='const'>URI</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='ivar'>@conf</span><span class='period'>.</span><span class='id identifier rubyid_base_url'>base_url</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_path'>path</span><span class='lbracket'>[</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='CHAR'>?/</span>
+    <span class='id identifier rubyid_path'>path</span>
+  <span class='kw'>else</span>
+    <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_dirname'>dirname</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="delete_proc-instance_method">
+  
+    #<strong>delete_proc</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+116
+117
+118
+119
+120
+121
+122
+123</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/hiki/plugin.rb', line 116</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_delete_proc'>delete_proc</span>
+  <span class='ivar'>@delete_procs</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_proc'>proc</span><span class='op'>|</span>
+    <span class='kw'>begin</span>
+      <span class='id identifier rubyid_proc'>proc</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span>
+    <span class='kw'>rescue</span> <span class='const'>Exception</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="each_conf_key-instance_method">
+  
+    #<strong>each_conf_key</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+235
+236
+237
+238
+239</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/hiki/plugin.rb', line 235</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_each_conf_key'>each_conf_key</span>
+  <span class='ivar'>@conf_keys</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='op'>|</span>
+    <span class='kw'>yield</span> <span class='id identifier rubyid_key'>key</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="edit_proc-instance_method">
+  
+    #<strong>edit_proc</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/hiki/plugin.rb', line 173</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_edit_proc'>edit_proc</span>
+  <span class='id identifier rubyid_r'>r</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='ivar'>@edit_procs</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_proc'>proc</span><span class='op'>|</span>
+    <span class='kw'>begin</span>
+      <span class='id identifier rubyid_r'>r</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_proc'>proc</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span>
+    <span class='kw'>rescue</span> <span class='const'>Exception</span>
+      <span class='id identifier rubyid_r'>r</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_plugin_error'>plugin_error</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>edit_proc</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='gvar'>$!</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="footer_proc-instance_method">
+  
+    #<strong>footer_proc</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/hiki/plugin.rb', line 161</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_footer_proc'>footer_proc</span>
+  <span class='id identifier rubyid_r'>r</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='ivar'>@footer_procs</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_proc'>proc</span><span class='op'>|</span>
+    <span class='kw'>begin</span>
+      <span class='id identifier rubyid_r'>r</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_proc'>proc</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span>
+    <span class='kw'>rescue</span> <span class='const'>Exception</span>
+      <span class='id identifier rubyid_r'>r</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_plugin_error'>plugin_error</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>footer_proc</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='gvar'>$!</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="form_proc-instance_method">
+  
+    #<strong>form_proc</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/hiki/plugin.rb', line 185</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_form_proc'>form_proc</span>
+  <span class='id identifier rubyid_r'>r</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='ivar'>@form_procs</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_proc'>proc</span><span class='op'>|</span>
+    <span class='kw'>begin</span>
+      <span class='id identifier rubyid_r'>r</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_proc'>proc</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span>
+    <span class='kw'>rescue</span> <span class='const'>Exception</span>
+      <span class='id identifier rubyid_r'>r</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_plugin_error'>plugin_error</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>form_proc</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='gvar'>$!</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="header_proc-instance_method">
+  
+    #<strong>header_proc</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/hiki/plugin.rb', line 95</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_header_proc'>header_proc</span>
+  <span class='id identifier rubyid_r'>r</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='ivar'>@header_procs</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_proc'>proc</span><span class='op'>|</span>
+    <span class='kw'>begin</span>
+      <span class='id identifier rubyid_r'>r</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_proc'>proc</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span>
+    <span class='kw'>rescue</span> <span class='const'>Exception</span>
+      <span class='id identifier rubyid_r'>r</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_plugin_error'>plugin_error</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>header_proc</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='gvar'>$!</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='period'>.</span><span class='id identifier rubyid_chomp'>chomp</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="inline_context-instance_method">
+  
+    #<strong>inline_context</strong>(&amp;proc)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+82
+83
+84</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/hiki/plugin.rb', line 82</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_inline_context'>inline_context</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_proc'>proc</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_in_context'>in_context</span><span class='lparen'>(</span><span class='symbol'>:inline</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_proc'>proc</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="inline_context?-instance_method">
+  
+    #<strong>inline_context?</strong>  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+74
+75
+76</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/hiki/plugin.rb', line 74</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_inline_context?'>inline_context?</span>
+  <span class='ivar'>@context</span> <span class='op'>==</span> <span class='symbol'>:inline</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="load-instance_method">
+  
+    #<strong>load</strong>(page)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+275
+276
+277</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/hiki/plugin.rb', line 275</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_load'>load</span><span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='rparen'>)</span>
+  <span class='ivar'>@db</span><span class='period'>.</span><span class='id identifier rubyid_load'>load</span><span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="load_backup-instance_method">
+  
+    #<strong>load_backup</strong>(page)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+279
+280
+281</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/hiki/plugin.rb', line 279</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_load_backup'>load_backup</span><span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='rparen'>)</span>
+  <span class='ivar'>@db</span><span class='period'>.</span><span class='id identifier rubyid_load_backup'>load_backup</span><span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="load_file-instance_method">
+  
+    #<strong>load_file</strong>(filename)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+217
+218
+219
+220
+221</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/hiki/plugin.rb', line 217</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_load_file'>load_file</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_src'>src</span><span class='op'>|</span>
+    <span class='id identifier rubyid_instance_eval'>instance_eval</span><span class='lparen'>(</span><span class='id identifier rubyid_src'>src</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='period'>.</span><span class='id identifier rubyid_untaint'>untaint</span><span class='comma'>,</span> <span class='id identifier rubyid_filename'>filename</span><span class='comma'>,</span> <span class='int'>1</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="load_plugin-instance_method">
+  
+    #<strong>load_plugin</strong>(file)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/hiki/plugin.rb', line 253</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_load_plugin'>load_plugin</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_untaint'>untaint</span>
+  <span class='ivar'>@defined_method_list</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='ivar'>@export_method_list</span> <span class='op'>=</span> <span class='kw'>nil</span>
+  <span class='ivar'>@resource_loaded</span> <span class='op'>=</span> <span class='kw'>false</span>
+  <span class='id identifier rubyid_dirname'>dirname</span><span class='comma'>,</span> <span class='id identifier rubyid_basename'>basename</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span>
+  <span class='lbracket'>[</span><span class='ivar'>@conf</span><span class='period'>.</span><span class='id identifier rubyid_lang'>lang</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>en</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ja</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_lang'>lang</span><span class='op'>|</span>
+    <span class='kw'>begin</span>
+      <span class='id identifier rubyid_load_file'>load_file</span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='id identifier rubyid_dirname'>dirname</span><span class='comma'>,</span> <span class='id identifier rubyid_lang'>lang</span><span class='comma'>,</span> <span class='id identifier rubyid_basename'>basename</span><span class='rparen'>)</span><span class='rparen'>)</span>
+      <span class='ivar'>@resource_loaded</span> <span class='op'>=</span> <span class='kw'>true</span>
+      <span class='kw'>break</span>
+    <span class='kw'>rescue</span> <span class='const'>IOError</span><span class='comma'>,</span> <span class='const'>Errno</span><span class='op'>::</span><span class='const'>ENOENT</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_load_file'>load_file</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='ivar'>@export_method_list</span>
+    <span class='ivar'>@plugin_method_list</span><span class='period'>.</span><span class='id identifier rubyid_concat'>concat</span><span class='lparen'>(</span><span class='ivar'>@export_method_list</span><span class='rparen'>)</span>
+  <span class='kw'>else</span>
+    <span class='ivar'>@plugin_method_list</span><span class='period'>.</span><span class='id identifier rubyid_concat'>concat</span><span class='lparen'>(</span><span class='ivar'>@defined_method_list</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="login-instance_method">
+  
+    #<strong>login</strong>(name, password)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/hiki/plugin.rb', line 305</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_login'>login</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_password'>password</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='ivar'>@user</span>
+  <span class='kw'>return</span> <span class='kw'>nil</span> <span class='kw'>unless</span> <span class='id identifier rubyid_password'>password</span>
+  <span class='id identifier rubyid_name'>name</span> <span class='op'>||=</span> <span class='ivar'>@conf</span><span class='period'>.</span><span class='id identifier rubyid_admin_name'>admin_name</span>
+  <span class='kw'>if</span> <span class='ivar'>@conf</span><span class='period'>.</span><span class='id identifier rubyid_password'>password</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='op'>||</span> <span class='id identifier rubyid_password'>password</span><span class='period'>.</span><span class='id identifier rubyid_crypt'>crypt</span><span class='lparen'>(</span><span class='ivar'>@conf</span><span class='period'>.</span><span class='id identifier rubyid_password'>password</span><span class='rparen'>)</span> <span class='op'>==</span> <span class='ivar'>@conf</span><span class='period'>.</span><span class='id identifier rubyid_password'>password</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_name'>name</span> <span class='op'>==</span> <span class='ivar'>@conf</span><span class='period'>.</span><span class='id identifier rubyid_admin_name'>admin_name</span>
+    <span class='ivar'>@user</span> <span class='op'>=</span> <span class='ivar'>@conf</span><span class='period'>.</span><span class='id identifier rubyid_admin_name'>admin_name</span>
+  <span class='kw'>elsif</span> <span class='ivar'>@conf</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>user.list</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+    <span class='kw'>if</span> <span class='ivar'>@conf</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>user.list</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_has_key?'>has_key?</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='ivar'>@conf</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>user.list</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='id identifier rubyid_password'>password</span><span class='period'>.</span><span class='id identifier rubyid_crypt'>crypt</span><span class='lparen'>(</span><span class='ivar'>@conf</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>user.list</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+      <span class='ivar'>@user</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="menu_proc-instance_method">
+  
+    #<strong>menu_proc</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/hiki/plugin.rb', line 197</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_menu_proc'>menu_proc</span>
+  <span class='id identifier rubyid_r'>r</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='ivar'>@menu_procs</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_proc'>proc</span><span class='op'>|</span>
+    <span class='kw'>begin</span>
+      <span class='id identifier rubyid_r'>r</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_proc'>proc</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span>
+    <span class='kw'>rescue</span> <span class='const'>Exception</span>
+      <span class='id identifier rubyid_r'>r</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_plugin_error'>plugin_error</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>menu_proc</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='gvar'>$!</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="page_attribute_proc-instance_method">
+  
+    #<strong>page_attribute_proc</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/hiki/plugin.rb', line 149</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_page_attribute_proc'>page_attribute_proc</span>
+  <span class='id identifier rubyid_r'>r</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='ivar'>@page_attribute_procs</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_proc'>proc</span><span class='op'>|</span>
+    <span class='kw'>begin</span>
+      <span class='id identifier rubyid_r'>r</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_proc'>proc</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='ivar'>@date</span><span class='rparen'>)</span>
+    <span class='kw'>rescue</span> <span class='const'>Exception</span>
+      <span class='id identifier rubyid_r'>r</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_plugin_error'>plugin_error</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>page_attribute_proc</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='gvar'>$!</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="save-instance_method">
+  
+    #<strong>save</strong>(page, src, md5, update_timestamp = true, filtering = true)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/hiki/plugin.rb', line 283</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_save'>save</span><span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='comma'>,</span> <span class='id identifier rubyid_src'>src</span><span class='comma'>,</span> <span class='id identifier rubyid_md5'>md5</span><span class='comma'>,</span> <span class='id identifier rubyid_update_timestamp'>update_timestamp</span> <span class='op'>=</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='id identifier rubyid_filtering'>filtering</span> <span class='op'>=</span> <span class='kw'>true</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_filtering'>filtering</span> <span class='kw'>and</span> <span class='const'>Filter</span><span class='period'>.</span><span class='id identifier rubyid_new_page_is_spam?'>new_page_is_spam?</span><span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='comma'>,</span> <span class='id identifier rubyid_src'>src</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_src'>src</span><span class='period'>.</span><span class='id identifier rubyid_gsub!'>gsub!</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\r</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_src'>src</span><span class='period'>.</span><span class='id identifier rubyid_sub!'>sub!</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\A\n*</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_src'>src</span><span class='period'>.</span><span class='id identifier rubyid_sub!'>sub!</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\n*\z</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='ivar'>@db</span><span class='period'>.</span><span class='id identifier rubyid_store'>store</span><span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='comma'>,</span> <span class='id identifier rubyid_src'>src</span><span class='comma'>,</span> <span class='id identifier rubyid_md5'>md5</span><span class='comma'>,</span> <span class='id identifier rubyid_update_timestamp'>update_timestamp</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_result'>result</span>
+    <span class='ivar'>@db</span><span class='period'>.</span><span class='id identifier rubyid_set_attribute'>set_attribute</span><span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='comma'>,</span> <span class='label'>editor:</span> <span class='ivar'>@user</span><span class='rparen'>)</span>
+    <span class='ivar'>@db</span><span class='period'>.</span><span class='id identifier rubyid_delete_cache'>delete_cache</span><span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='rparen'>)</span>
+    <span class='kw'>begin</span>
+      <span class='id identifier rubyid_update_proc'>update_proc</span>
+    <span class='kw'>rescue</span> <span class='const'>Exception</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_result'>result</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="send-instance_method">
+  
+    #<strong>send</strong>(name, *args)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/hiki/plugin.rb', line 223</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_intern'>intern</span> <span class='kw'>if</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='kw'>not</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Symbol</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'> is not a symbol</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+  <span class='kw'>if</span> <span class='kw'>not</span> <span class='ivar'>@plugin_method_list</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_method_missing'>method_missing</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid___send__'>__send__</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="singleton_method_added-instance_method">
+  
+    #<strong>singleton_method_added</strong>(name)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+213
+214
+215</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/hiki/plugin.rb', line 213</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_singleton_method_added'>singleton_method_added</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+  <span class='ivar'>@defined_method_list</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="update_proc-instance_method">
+  
+    #<strong>update_proc</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+107
+108
+109
+110
+111
+112
+113
+114</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/hiki/plugin.rb', line 107</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_update_proc'>update_proc</span>
+  <span class='ivar'>@update_procs</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_proc'>proc</span><span class='op'>|</span>
+    <span class='kw'>begin</span>
+      <span class='id identifier rubyid_proc'>proc</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span>
+    <span class='kw'>rescue</span> <span class='const'>Exception</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Thu Jul 14 15:22:03 2016 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.0 (ruby-2.2.2).
+</div>
+
+    </div>
+  </body>
+</html>

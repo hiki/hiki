@@ -9,6 +9,9 @@ gem "rdtool"
 group :development do
   gem "pry"
   gem "foreman"
+  gem "yard"
+  gem "hiki2md"
+  gem "mathjax-yard"
 end
 
 group :development, :test do

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: Hiki::Repository::SVNSingle
+  
+    &mdash; Documentation by YARD 0.9.0
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  pathId = "Hiki::Repository::SVNSingle";
+  relpath = '../../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../../class_list.html"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../../_index.html">Index (S)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../Hiki.html" title="Hiki (module)">Hiki</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Repository.html" title="Hiki::Repository (module)">Repository</a></span></span>
+     &raquo; 
+    <span class="title">SVNSingle</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <iframe id="search_frame" src="../../class_list.html"></iframe>
+
+      <div id="content"><h1>Class: Hiki::Repository::SVNSingle
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName"><span class='object_link'><a href="SVN.html" title="Hiki::Repository::SVN (class)">SVN</a></span></span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next"><span class='object_link'><a href="Base.html" title="Hiki::Repository::Base (class)">Base</a></span></li>
+          
+            <li class="next"><span class='object_link'><a href="SVN.html" title="Hiki::Repository::SVN (class)">SVN</a></span></li>
+          
+            <li class="next">Hiki::Repository::SVNSingle</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/hiki/repository/svnsingle.rb</dd>
+  </dl>
+  
+</div>
+
+
+
+
+  <h2>Constant Summary</h2>
+  
+  <h3 class="inherited">Constants included
+     from <span class='object_link'><a href="../Util.html" title="Hiki::Util (module)">Util</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Util.html#ARG_REG_A-constant" title="Hiki::Util::ARG_REG_A (constant)">Util::ARG_REG_A</a></span>, <span class='object_link'><a href="../Util.html#ARG_REG_B-constant" title="Hiki::Util::ARG_REG_B (constant)">Util::ARG_REG_B</a></span>, <span class='object_link'><a href="../Util.html#ARG_REG_C-constant" title="Hiki::Util::ARG_REG_C (constant)">Util::ARG_REG_C</a></span>, <span class='object_link'><a href="../Util.html#ARG_REG_D-constant" title="Hiki::Util::ARG_REG_D (constant)">Util::ARG_REG_D</a></span>, <span class='object_link'><a href="../Util.html#ARG_REG_E-constant" title="Hiki::Util::ARG_REG_E (constant)">Util::ARG_REG_E</a></span>, <span class='object_link'><a href="../Util.html#ARG_REG_F-constant" title="Hiki::Util::ARG_REG_F (constant)">Util::ARG_REG_F</a></span>, <span class='object_link'><a href="../Util.html#ARG_REG_G-constant" title="Hiki::Util::ARG_REG_G (constant)">Util::ARG_REG_G</a></span>, <span class='object_link'><a href="../Util.html#ARG_REG_H-constant" title="Hiki::Util::ARG_REG_H (constant)">Util::ARG_REG_H</a></span>, <span class='object_link'><a href="../Util.html#ARG_REG_I-constant" title="Hiki::Util::ARG_REG_I (constant)">Util::ARG_REG_I</a></span>, <span class='object_link'><a href="../Util.html#ARG_REG_J-constant" title="Hiki::Util::ARG_REG_J (constant)">Util::ARG_REG_J</a></span>, <span class='object_link'><a href="../Util.html#DIGIT_RE-constant" title="Hiki::Util::DIGIT_RE (constant)">Util::DIGIT_RE</a></span>, <span class='object_link'><a href="../Util.html#LSTRIP_RE-constant" title="Hiki::Util::LSTRIP_RE (constant)">Util::LSTRIP_RE</a></span>, <span class='object_link'><a href="../Util.html#METHOD_REG_A-constant" title="Hiki::Util::METHOD_REG_A (constant)">Util::METHOD_REG_A</a></span>, <span class='object_link'><a href="../Util.html#NIL_RE-constant" title="Hiki::Util::NIL_RE (constant)">Util::NIL_RE</a></span>, <span class='object_link'><a href="../Util.html#STRING_RE-constant" title="Hiki::Util::STRING_RE (constant)">Util::STRING_RE</a></span></p>
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  <h2>Method Summary</h2>
+  
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="SVN.html" title="Hiki::Repository::SVN (class)">SVN</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="SVN.html#commit-instance_method" title="Hiki::Repository::SVN#commit (method)">#commit</a></span>, <span class='object_link'><a href="SVN.html#commit_with_content-instance_method" title="Hiki::Repository::SVN#commit_with_content (method)">#commit_with_content</a></span>, <span class='object_link'><a href="SVN.html#delete-instance_method" title="Hiki::Repository::SVN#delete (method)">#delete</a></span>, <span class='object_link'><a href="SVN.html#get_revision-instance_method" title="Hiki::Repository::SVN#get_revision (method)">#get_revision</a></span>, <span class='object_link'><a href="SVN.html#initialize-instance_method" title="Hiki::Repository::SVN#initialize (method)">#initialize</a></span>, <span class='object_link'><a href="SVN.html#rename-instance_method" title="Hiki::Repository::SVN#rename (method)">#rename</a></span>, <span class='object_link'><a href="SVN.html#revisions-instance_method" title="Hiki::Repository::SVN#revisions (method)">#revisions</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Util.html" title="Hiki::Util (module)">Util</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Util.html#apply_plugin-class_method" title="Hiki::Util.apply_plugin (method)">apply_plugin</a></span>, <span class='object_link'><a href="../Util.html#argwords-class_method" title="Hiki::Util.argwords (method)">argwords</a></span>, <span class='object_link'><a href="../Util.html#base_css_url-instance_method" title="Hiki::Util#base_css_url (method)">#base_css_url</a></span>, <span class='object_link'><a href="../Util.html#cmdstr-instance_method" title="Hiki::Util#cmdstr (method)">#cmdstr</a></span>, <span class='object_link'><a href="../Util.html#compare_by_line-instance_method" title="Hiki::Util#compare_by_line (method)">#compare_by_line</a></span>, <span class='object_link'><a href="../Util.html#compare_by_line_word-instance_method" title="Hiki::Util#compare_by_line_word (method)">#compare_by_line_word</a></span>, <span class='object_link'><a href="../Util.html#convert_value-class_method" title="Hiki::Util.convert_value (method)">convert_value</a></span>, <span class='object_link'><a href="../Util.html#escape-class_method" title="Hiki::Util.escape (method)">escape</a></span>, <span class='object_link'><a href="../Util.html#escapeHTML-instance_method" title="Hiki::Util#escapeHTML (method)">#escapeHTML</a></span>, <span class='object_link'><a href="../Util.html#escape_html-class_method" title="Hiki::Util.escape_html (method)">escape_html</a></span>, <span class='object_link'><a href="../Util.html#format_date-instance_method" title="Hiki::Util#format_date (method)">#format_date</a></span>, <span class='object_link'><a href="../Util.html#get_common_data-instance_method" title="Hiki::Util#get_common_data (method)">#get_common_data</a></span>, <span class='object_link'><a href="../Util.html#h-class_method" title="Hiki::Util.h (method)">h</a></span>, <span class='object_link'><a href="../Util.html#methodwords-class_method" title="Hiki::Util.methodwords (method)">methodwords</a></span>, <span class='object_link'><a href="../Util.html#plugin_error-instance_method" title="Hiki::Util#plugin_error (method)">#plugin_error</a></span>, <span class='object_link'><a href="../Util.html#redirect-instance_method" title="Hiki::Util#redirect (method)">#redirect</a></span>, <span class='object_link'><a href="../Util.html#send_updating_mail-instance_method" title="Hiki::Util#send_updating_mail (method)">#send_updating_mail</a></span>, <span class='object_link'><a href="../Util.html#sendmail-instance_method" title="Hiki::Util#sendmail (method)">#sendmail</a></span>, <span class='object_link'><a href="../Util.html#set_conf-class_method" title="Hiki::Util.set_conf (method)">set_conf</a></span>, <span class='object_link'><a href="../Util.html#shorten-instance_method" title="Hiki::Util#shorten (method)">#shorten</a></span>, <span class='object_link'><a href="../Util.html#theme_url-instance_method" title="Hiki::Util#theme_url (method)">#theme_url</a></span>, <span class='object_link'><a href="../Util.html#title-instance_method" title="Hiki::Util#title (method)">#title</a></span>, <span class='object_link'><a href="../Util.html#to_native-instance_method" title="Hiki::Util#to_native (method)">#to_native</a></span>, <span class='object_link'><a href="../Util.html#unescape-class_method" title="Hiki::Util.unescape (method)">unescape</a></span>, <span class='object_link'><a href="../Util.html#unescapeHTML-instance_method" title="Hiki::Util#unescapeHTML (method)">#unescapeHTML</a></span>, <span class='object_link'><a href="../Util.html#unescape_html-class_method" title="Hiki::Util.unescape_html (method)">unescape_html</a></span>, <span class='object_link'><a href="../Util.html#unified_diff-instance_method" title="Hiki::Util#unified_diff (method)">#unified_diff</a></span>, <span class='object_link'><a href="../Util.html#view_title-instance_method" title="Hiki::Util#view_title (method)">#view_title</a></span>, <span class='object_link'><a href="../Util.html#word_diff-instance_method" title="Hiki::Util#word_diff (method)">#word_diff</a></span>, <span class='object_link'><a href="../Util.html#word_diff_text-instance_method" title="Hiki::Util#word_diff_text (method)">#word_diff_text</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="Base.html" title="Hiki::Repository::Base (class)">Base</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Base.html#commit-instance_method" title="Hiki::Repository::Base#commit (method)">#commit</a></span>, <span class='object_link'><a href="Base.html#delete-instance_method" title="Hiki::Repository::Base#delete (method)">#delete</a></span>, <span class='object_link'><a href="Base.html#get_revision-instance_method" title="Hiki::Repository::Base#get_revision (method)">#get_revision</a></span>, <span class='object_link'><a href="Base.html#initialize-instance_method" title="Hiki::Repository::Base#initialize (method)">#initialize</a></span>, <span class='object_link'><a href="Base.html#pages-instance_method" title="Hiki::Repository::Base#pages (method)">#pages</a></span>, <span class='object_link'><a href="Base.html#rename-instance_method" title="Hiki::Repository::Base#rename (method)">#rename</a></span>, <span class='object_link'><a href="Base.html#revisions-instance_method" title="Hiki::Repository::Base#revisions (method)">#revisions</a></span></p>
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <p class="notice">This class inherits a constructor from <span class='object_link'><a href="SVN.html#initialize-instance_method" title="Hiki::Repository::SVN#initialize (method)">Hiki::Repository::SVN</a></span></p>
+  
+</div>
+
+
+</div>
+
+      <div id="footer">
+  Generated on Thu Jul 14 15:22:05 2016 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.0 (ruby-2.2.2).
+</div>
+
+    </div>
+  </body>
+</html>

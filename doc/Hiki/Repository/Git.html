@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: Hiki::Repository::Git
+  
+    &mdash; Documentation by YARD 0.9.0
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  pathId = "Hiki::Repository::Git";
+  relpath = '../../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../../class_list.html"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../../_index.html">Index (G)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../Hiki.html" title="Hiki (module)">Hiki</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Repository.html" title="Hiki::Repository (module)">Repository</a></span></span>
+     &raquo; 
+    <span class="title">Git</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <iframe id="search_frame" src="../../class_list.html"></iframe>
+
+      <div id="content"><h1>Class: Hiki::Repository::Git
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName"><span class='object_link'><a href="Base.html" title="Hiki::Repository::Base (class)">Base</a></span></span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next"><span class='object_link'><a href="Base.html" title="Hiki::Repository::Base (class)">Base</a></span></li>
+          
+            <li class="next">Hiki::Repository::Git</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  <dl>
+      <dt>Includes:</dt>
+      <dd><span class='object_link'><a href="../Util.html" title="Hiki::Util (module)">Util</a></span></dd>
+  </dl>
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/hiki/repository/git.rb</dd>
+  </dl>
+  
+</div>
+
+
+
+
+  <h2>Constant Summary</h2>
+  
+  <h3 class="inherited">Constants included
+     from <span class='object_link'><a href="../Util.html" title="Hiki::Util (module)">Util</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Util.html#ARG_REG_A-constant" title="Hiki::Util::ARG_REG_A (constant)">Util::ARG_REG_A</a></span>, <span class='object_link'><a href="../Util.html#ARG_REG_B-constant" title="Hiki::Util::ARG_REG_B (constant)">Util::ARG_REG_B</a></span>, <span class='object_link'><a href="../Util.html#ARG_REG_C-constant" title="Hiki::Util::ARG_REG_C (constant)">Util::ARG_REG_C</a></span>, <span class='object_link'><a href="../Util.html#ARG_REG_D-constant" title="Hiki::Util::ARG_REG_D (constant)">Util::ARG_REG_D</a></span>, <span class='object_link'><a href="../Util.html#ARG_REG_E-constant" title="Hiki::Util::ARG_REG_E (constant)">Util::ARG_REG_E</a></span>, <span class='object_link'><a href="../Util.html#ARG_REG_F-constant" title="Hiki::Util::ARG_REG_F (constant)">Util::ARG_REG_F</a></span>, <span class='object_link'><a href="../Util.html#ARG_REG_G-constant" title="Hiki::Util::ARG_REG_G (constant)">Util::ARG_REG_G</a></span>, <span class='object_link'><a href="../Util.html#ARG_REG_H-constant" title="Hiki::Util::ARG_REG_H (constant)">Util::ARG_REG_H</a></span>, <span class='object_link'><a href="../Util.html#ARG_REG_I-constant" title="Hiki::Util::ARG_REG_I (constant)">Util::ARG_REG_I</a></span>, <span class='object_link'><a href="../Util.html#ARG_REG_J-constant" title="Hiki::Util::ARG_REG_J (constant)">Util::ARG_REG_J</a></span>, <span class='object_link'><a href="../Util.html#DIGIT_RE-constant" title="Hiki::Util::DIGIT_RE (constant)">Util::DIGIT_RE</a></span>, <span class='object_link'><a href="../Util.html#LSTRIP_RE-constant" title="Hiki::Util::LSTRIP_RE (constant)">Util::LSTRIP_RE</a></span>, <span class='object_link'><a href="../Util.html#METHOD_REG_A-constant" title="Hiki::Util::METHOD_REG_A (constant)">Util::METHOD_REG_A</a></span>, <span class='object_link'><a href="../Util.html#NIL_RE-constant" title="Hiki::Util::NIL_RE (constant)">Util::NIL_RE</a></span>, <span class='object_link'><a href="../Util.html#STRING_RE-constant" title="Hiki::Util::STRING_RE (constant)">Util::STRING_RE</a></span></p>
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#commit-instance_method" title="#commit (instance method)">#<strong>commit</strong>(page, msg = default_msg)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#commit_with_content-instance_method" title="#commit_with_content (instance method)">#<strong>commit_with_content</strong>(page, content, message = default_msg)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#delete-instance_method" title="#delete (instance method)">#<strong>delete</strong>(page, msg = default_msg)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_revision-instance_method" title="#get_revision (instance method)">#<strong>get_revision</strong>(page, revision)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#rename-instance_method" title="#rename (instance method)">#<strong>rename</strong>(old_page, new_page)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#revisions-instance_method" title="#revisions (instance method)">#<strong>revisions</strong>(page)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Util.html" title="Hiki::Util (module)">Util</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Util.html#apply_plugin-class_method" title="Hiki::Util.apply_plugin (method)">apply_plugin</a></span>, <span class='object_link'><a href="../Util.html#argwords-class_method" title="Hiki::Util.argwords (method)">argwords</a></span>, <span class='object_link'><a href="../Util.html#base_css_url-instance_method" title="Hiki::Util#base_css_url (method)">#base_css_url</a></span>, <span class='object_link'><a href="../Util.html#cmdstr-instance_method" title="Hiki::Util#cmdstr (method)">#cmdstr</a></span>, <span class='object_link'><a href="../Util.html#compare_by_line-instance_method" title="Hiki::Util#compare_by_line (method)">#compare_by_line</a></span>, <span class='object_link'><a href="../Util.html#compare_by_line_word-instance_method" title="Hiki::Util#compare_by_line_word (method)">#compare_by_line_word</a></span>, <span class='object_link'><a href="../Util.html#convert_value-class_method" title="Hiki::Util.convert_value (method)">convert_value</a></span>, <span class='object_link'><a href="../Util.html#escape-class_method" title="Hiki::Util.escape (method)">escape</a></span>, <span class='object_link'><a href="../Util.html#escapeHTML-instance_method" title="Hiki::Util#escapeHTML (method)">#escapeHTML</a></span>, <span class='object_link'><a href="../Util.html#escape_html-class_method" title="Hiki::Util.escape_html (method)">escape_html</a></span>, <span class='object_link'><a href="../Util.html#format_date-instance_method" title="Hiki::Util#format_date (method)">#format_date</a></span>, <span class='object_link'><a href="../Util.html#get_common_data-instance_method" title="Hiki::Util#get_common_data (method)">#get_common_data</a></span>, <span class='object_link'><a href="../Util.html#h-class_method" title="Hiki::Util.h (method)">h</a></span>, <span class='object_link'><a href="../Util.html#methodwords-class_method" title="Hiki::Util.methodwords (method)">methodwords</a></span>, <span class='object_link'><a href="../Util.html#plugin_error-instance_method" title="Hiki::Util#plugin_error (method)">#plugin_error</a></span>, <span class='object_link'><a href="../Util.html#redirect-instance_method" title="Hiki::Util#redirect (method)">#redirect</a></span>, <span class='object_link'><a href="../Util.html#send_updating_mail-instance_method" title="Hiki::Util#send_updating_mail (method)">#send_updating_mail</a></span>, <span class='object_link'><a href="../Util.html#sendmail-instance_method" title="Hiki::Util#sendmail (method)">#sendmail</a></span>, <span class='object_link'><a href="../Util.html#set_conf-class_method" title="Hiki::Util.set_conf (method)">set_conf</a></span>, <span class='object_link'><a href="../Util.html#shorten-instance_method" title="Hiki::Util#shorten (method)">#shorten</a></span>, <span class='object_link'><a href="../Util.html#theme_url-instance_method" title="Hiki::Util#theme_url (method)">#theme_url</a></span>, <span class='object_link'><a href="../Util.html#title-instance_method" title="Hiki::Util#title (method)">#title</a></span>, <span class='object_link'><a href="../Util.html#to_native-instance_method" title="Hiki::Util#to_native (method)">#to_native</a></span>, <span class='object_link'><a href="../Util.html#unescape-class_method" title="Hiki::Util.unescape (method)">unescape</a></span>, <span class='object_link'><a href="../Util.html#unescapeHTML-instance_method" title="Hiki::Util#unescapeHTML (method)">#unescapeHTML</a></span>, <span class='object_link'><a href="../Util.html#unescape_html-class_method" title="Hiki::Util.unescape_html (method)">unescape_html</a></span>, <span class='object_link'><a href="../Util.html#unified_diff-instance_method" title="Hiki::Util#unified_diff (method)">#unified_diff</a></span>, <span class='object_link'><a href="../Util.html#view_title-instance_method" title="Hiki::Util#view_title (method)">#view_title</a></span>, <span class='object_link'><a href="../Util.html#word_diff-instance_method" title="Hiki::Util#word_diff (method)">#word_diff</a></span>, <span class='object_link'><a href="../Util.html#word_diff_text-instance_method" title="Hiki::Util#word_diff_text (method)">#word_diff_text</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="Base.html" title="Hiki::Repository::Base (class)">Base</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Base.html#initialize-instance_method" title="Hiki::Repository::Base#initialize (method)">#initialize</a></span>, <span class='object_link'><a href="Base.html#pages-instance_method" title="Hiki::Repository::Base#pages (method)">#pages</a></span></p>
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <p class="notice">This class inherits a constructor from <span class='object_link'><a href="Base.html#initialize-instance_method" title="Hiki::Repository::Base#initialize (method)">Hiki::Repository::Base</a></span></p>
+  
+</div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="commit-instance_method">
+  
+    #<strong>commit</strong>(page, msg = default_msg)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+10
+11
+12
+13
+14
+15
+16</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/hiki/repository/git.rb', line 10</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_commit'>commit</span><span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='comma'>,</span> <span class='id identifier rubyid_msg'>msg</span> <span class='op'>=</span> <span class='id identifier rubyid_default_msg'>default_msg</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_escaped_page'>escaped_page</span> <span class='op'>=</span> <span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_untaint'>untaint</span>
+  <span class='const'>Dir</span><span class='period'>.</span><span class='id identifier rubyid_chdir'>chdir</span><span class='lparen'>(</span><span class='ivar'>@text_dir</span><span class='rparen'>)</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_system'>system</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git add -- </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_escaped_page'>escaped_page</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_untaint'>untaint</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_system'>system</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git commit -q -m \&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_msg'>msg</span><span class='period'>.</span><span class='id identifier rubyid_untaint'>untaint</span><span class='embexpr_end'>}</span><span class='tstring_content'>\&quot; -- </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_escaped_page'>escaped_page</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="commit_with_content-instance_method">
+  
+    #<strong>commit_with_content</strong>(page, content, message = default_msg)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+18
+19
+20
+21
+22
+23
+24</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/hiki/repository/git.rb', line 18</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_commit_with_content'>commit_with_content</span><span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='comma'>,</span> <span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='id identifier rubyid_default_msg'>default_msg</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_escaped_page'>escaped_page</span> <span class='op'>=</span> <span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_untaint'>untaint</span>
+  <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='ivar'>@text_dir</span><span class='comma'>,</span> <span class='id identifier rubyid_escaped_page'>escaped_page</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>w+</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span>
+    <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_commit'>commit</span><span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="delete-instance_method">
+  
+    #<strong>delete</strong>(page, msg = default_msg)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+26
+27
+28
+29
+30
+31
+32</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/hiki/repository/git.rb', line 26</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='comma'>,</span> <span class='id identifier rubyid_msg'>msg</span> <span class='op'>=</span> <span class='id identifier rubyid_default_msg'>default_msg</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_escaped_page'>escaped_page</span> <span class='op'>=</span> <span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_untaint'>untaint</span>
+  <span class='const'>Dir</span><span class='period'>.</span><span class='id identifier rubyid_chdir'>chdir</span><span class='lparen'>(</span><span class='ivar'>@text_dir</span><span class='rparen'>)</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_system'>system</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git rm -q -- </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_escaped_page'>escaped_page</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_system'>system</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git commit -q -m \&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_msg'>msg</span><span class='period'>.</span><span class='id identifier rubyid_untaint'>untaint</span><span class='embexpr_end'>}</span><span class='tstring_content'>\&quot; </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_escaped_page'>escaped_page</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_revision-instance_method">
+  
+    #<strong>get_revision</strong>(page, revision)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+44
+45
+46
+47
+48
+49
+50
+51
+52</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/hiki/repository/git.rb', line 44</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_revision'>get_revision</span><span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='comma'>,</span> <span class='id identifier rubyid_revision'>revision</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_ret'>ret</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
+  <span class='const'>Dir</span><span class='period'>.</span><span class='id identifier rubyid_chdir'>chdir</span><span class='lparen'>(</span><span class='ivar'>@text_dir</span><span class='rparen'>)</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|git cat-file blob </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_revision'>revision</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_untaint'>untaint</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span>
+      <span class='id identifier rubyid_ret'>ret</span> <span class='op'>=</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_ret'>ret</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="rename-instance_method">
+  
+    #<strong>rename</strong>(old_page, new_page)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+34
+35
+36
+37
+38
+39
+40
+41
+42</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/hiki/repository/git.rb', line 34</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_rename'>rename</span><span class='lparen'>(</span><span class='id identifier rubyid_old_page'>old_page</span><span class='comma'>,</span> <span class='id identifier rubyid_new_page'>new_page</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_old_page'>old_page</span> <span class='op'>=</span> <span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_old_page'>old_page</span><span class='period'>.</span><span class='id identifier rubyid_untaint'>untaint</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_new_page'>new_page</span> <span class='op'>=</span> <span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_new_page'>new_page</span><span class='period'>.</span><span class='id identifier rubyid_untaint'>untaint</span><span class='rparen'>)</span>
+  <span class='const'>Dir</span><span class='period'>.</span><span class='id identifier rubyid_chdir'>chdir</span><span class='lparen'>(</span><span class='ivar'>@text_dir</span><span class='rparen'>)</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_new_page'>new_page</span><span class='embexpr_end'>}</span><span class='tstring_content'> has already existed.</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span><span class='lparen'>(</span><span class='id identifier rubyid_new_page'>new_page</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_system'>system</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>mv</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_old_page'>old_page</span><span class='comma'>,</span> <span class='id identifier rubyid_new_page'>new_page</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_system'>system</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>commit</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-q</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-m</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&#39;Rename </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_old_page'>old_page</span><span class='embexpr_end'>}</span><span class='tstring_content'> to </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_new_page'>new_page</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="revisions-instance_method">
+  
+    #<strong>revisions</strong>(page)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/hiki/repository/git.rb', line 54</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_revisions'>revisions</span><span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>time</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_all_log'>all_log</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_revs'>revs</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='const'>Dir</span><span class='period'>.</span><span class='id identifier rubyid_chdir'>chdir</span><span class='lparen'>(</span><span class='ivar'>@text_dir</span><span class='rparen'>)</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|git log --raw -- </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_untaint'>untaint</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span>
+      <span class='id identifier rubyid_all_log'>all_log</span> <span class='op'>=</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_all_log'>all_log</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^commit (?:[a-fA-F\d]+)\n</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_log'>log</span><span class='op'>|</span>
+    <span class='kw'>if</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\AAuthor:\s*(.*?)\nDate:\s*(.*?)\n(.*?)
+        \n:\d+\s\d+\s[a-fA-F\d]+\.{3}\s([a-fA-F\d]+)\.{3}\s\w
+           \s+</span><span class='embexpr_beg'>#{</span><span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>\n+\z</span><span class='regexp_end'>/xm</span></span> <span class='op'>=~</span> <span class='id identifier rubyid_log'>log</span>
+      <span class='id identifier rubyid_revs'>revs</span> <span class='op'>&lt;&lt;</span> <span class='lbracket'>[</span><span class='backref'>$4</span><span class='comma'>,</span>
+               <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='backref'>$2</span><span class='embexpr_end'>}</span><span class='tstring_content'>Z</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_localtime'>localtime</span><span class='period'>.</span><span class='id identifier rubyid_strftime'>strftime</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>%Y/%m/%d %H:%M:%S</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='comma'>,</span>
+               <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='comment'># $1,
+</span>               <span class='backref'>$3</span><span class='period'>.</span><span class='id identifier rubyid_strip'>strip</span><span class='rbracket'>]</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_revs'>revs</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Thu Jul 14 15:22:04 2016 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.0 (ruby-2.2.2).
+</div>
+
+    </div>
+  </body>
+</html>
