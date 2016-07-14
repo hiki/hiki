@@ -34,7 +34,7 @@ See ../ChangeLog for changes after this.
 =end ChangeLog
 
 SP_PREFIX = "sp"
-*@sp_path = *(@conf["#{SP_PREFIX}.path"] || "#{PATH}/misc/plugin")
+*@sp_path = *(@conf["#{SP_PREFIX}.path"] || "#{PATH}/../../misc/plugin")
 @sp_path = @sp_path.collect do |path|
   /\/$/ =~ path ? path.chop : path
 end
