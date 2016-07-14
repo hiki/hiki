@@ -1,5 +1,7 @@
+#!/usr/local/opt/ruby/bin/ruby
 #!/usr/bin/env ruby
 # Copyright (C) 2002-2004 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+$LOAD_PATH.unshift "lib"
 
 BEGIN { $stdout.binmode }
 
