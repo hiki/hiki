@@ -49,7 +49,7 @@ def bbs_post
   count = 1
 
   content = ''
-  lines.each do |l|
+  lines.each_line do |l|
     if /^\{\{bbs\b(:?[^\}]*)?\}\}/ =~ l && flag == false
       if count == bbs_num
         content << "#{l}\n"

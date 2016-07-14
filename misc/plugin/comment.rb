@@ -52,7 +52,7 @@ def comment_post
   count = 1
 
   content = ''
-  lines.each do |l|
+  lines.each_line do |l|
     if /^\{\{r?comment.*\}\}/ =~ l && flag == false
       if count == comment_no
         content << l if style == 1
