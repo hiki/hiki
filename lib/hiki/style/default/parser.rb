@@ -1,6 +1,7 @@
 # Copyright (C) 2002-2003 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 
-require "hikidoc"
+#require "hikidoc"
+require "hiki/style/default/hikidoc"
 
 module Hiki
   module Parser
