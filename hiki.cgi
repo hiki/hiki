@@ -13,7 +13,7 @@ begin
   else
     org_path = File.dirname( File.expand_path( __FILE__ ) )
   end
-  $:.unshift( org_path.untaint, "#{org_path.untaint}/hiki" )
+  $:.unshift( org_path.untaint, "#{org_path.untaint}/lib" )
   $:.delete(".") if File.writable?(".")
 
   require 'hiki/config'
