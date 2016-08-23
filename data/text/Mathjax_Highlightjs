@@ -1,0 +1,193 @@
+{{toc}}
+
+!概要
+mathjax化とcode highlight化のメモ
+
+!localでの起動
+webに見に行くのでなく，localでも動かせるように，MathJax.jsおよびhighlight.pack.jsをinstall.
+*[[MathJax|http://docs.mathjax.org/en/latest/installation.html]]から行けるかな．
+*[[highlight|https://highlightjs.org/download/]]から，必要な言語にちぇっくを入れた後にDL
+*highlightのdirectoryとjsのpermissionに注意．
+<<<
+drwxr-xr-x@  8 bob  staff    272  7 18 12:04 ./
+-rw-r--r--@  1 bob  staff  79568  7 17 20:04 highlight.pack.js
+>>>
+<<< bash
+bob% tree -L 2
+.
+├── MathJax
+│   ├── MathJax.js
+│   ├── README.md
+│   ├── bower.json
+│   ├── composer.json
+│   ├── config
+│   ├── docs
+│   ├── extensions
+│   ├── fonts
+│   ├── jax
+│   ├── localization
+│   ├── package.json
+│   └── unpacked
+├── highlight
+│   ├── CHANGES.md
+│   ├── LICENSE
+│   ├── README.md
+│   ├── README.ru.md
+│   ├── highlight.pack.js
+│   └── styles
+>>>
+<<<
+Erb
+Haml
+Matlab
+Maxima
+Processing
+YAML
+>>>
+
+!mathjax化
+hikiに用意されているmathはlatexを通して，画像を表示．
+
+さらに，mathmlもあるが．．．やはり，mathjax化したい．
+
+template/layout.htmlを
+<<< html
+<head>
+<%= @contents[:header] %>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+                           tex2jax:{
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ]
+                           }
+                         });
+    </script>
+    <script type="text/javascript"
+            src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML">
+    </script>
+    <meta http-equiv="X-UA-Compatible" CONTENT="IE=EmulateIE7" />
+</head>
+>>>
+と変更するだけでOK.
+
+実際は，pluginで選択可能にして，headを書き換えるようにしたいが．．．
+
+!code highlight
+!! hikidocが用意している'syntax/convertors/html'
+* gem install syntaxでinstallする必要あり．
+* cssに以下を書き加えるべし．
+<<< css
+pre { background: #111122; padding: 10px; color: #228822; }
+.ruby .normal { color: #fff; }
+.ruby .comment { color: #005; font-style: italic; }
+.ruby .keyword { color: #A44; font-weight: bold; }
+.ruby .method { color: #44f; }
+.ruby .class { color: #0c4; }
+.ruby .module { color: #050; }
+.ruby .punct { color: #668; font-weight: bold; }
+.ruby .symbol { color: #ff0; }
+.ruby .string { color: #4f4; }
+.ruby .char { color: #F07; }
+.ruby .ident { color: #fff; }
+.ruby .constant { color: #0c4; }
+.ruby .regex { color: #B66; background: #FEF; }
+.ruby .number { color: #F99; }
+.ruby .attribute { color: #fc4; }
+.ruby .global { color: #7FB; }
+.ruby .expr { color: #227; }
+.ruby .escape { color: #277; }
+>>>
+これだけではダメなよう．
+
+!! highlight.jsの使用．
+layout.htmlに
+<<< html
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+>>>
+を付け加えて，lib/hiki/style/default/にhikidoc.rbを置いて，
+<<< ruby
+    def block_preformatted(str, info)
+      p syntax = info ? info.downcase : nil
+
+      if syntax
+        @f.puts %Q|<pre><code class="#{syntax}">#{text(str)}</code></pre>|
+          return
+      else
+        @f.puts %Q|<pre>#{text(str)}</pre>|
+        
+      end
+      preformatted(text(str))
+    end
+>>>
+と変更．
+
+lib/hiki/style/default/parser.rbで，
+<<< ruby
+#require "hikidoc"                                                                          
+require "hiki/style/default/hikidoc"
+
+module Hiki
+>>>
+と変更．ここで，Hikidoc/block_preformattedをoverwriteできるといいのだが．．．
+
+html出力がめちゃ，きれい．
+
+styleを外部から参照するときは，xcode.min.cssなど通常の名前の前に，minを付け加えるように．
+
+
+! classのoverride
+
+<<< ruby
+class HikiDoc
+  class << self
+    def block_preformatted(str, info)
+      p syntax = info ? info.downcase : nil
+
+      if syntax
+        @f.puts %Q|<pre><code class="#{syntax}">#{text(str)}</code></pre>|
+          return
+      else
+        @f.puts %Q|<pre>#{text(str)}</pre>|
+      end
+      preformatted(text(str))
+    end
+  end
+end
+
+>>>
+はだめ．
+
+テストにつくった，
+<<< ruby
+require 'hikidoc'
+
+class HikiDoc
+  class << self
+    def to_html(text)
+      return "<pre>#{text}<\pre>\n"
+    end
+  end
+end
+
+hiki = 'test'
+p converted = HikiDoc.to_html(hiki)
+>>>
+は動くんだけど．．．
+
+<<< Matlab
+plot3d(sin(x)*cos(y),x=-Pi..Pi,y=-Pi..Pi);
+>>>
+
+<<< Markdown
+!概要
+mathjax化とcode highlight化のメモ
+
+!localでの起動
+webに見に行くのでなく，localでも動かせるように，MathJax.jsおよびhighlight.pack.jsをinstall.
+*[[MathJax|http://docs.mathjax.org/en/latest/installation.html]]から行けるかな．
+*[[highlight|https://highlightjs.org/download/]]から，必要な言語にちぇっくを入れた後にDL
+*highlightのdirectoryとjsのpermissionに注意．
+>>>

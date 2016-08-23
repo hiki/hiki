@@ -1,0 +1,30 @@
+! About Hiki
+Hiki is a powerful and fast wiki clone written by Ruby.
+Hiki has following features.
+
+!! Simple formatting rules based on the original Wiki
+See TextFormattingRules for the details.
+
+!! Customizable appearance by CSS themes
+Hiki supports various themes for [[tDiary|http://www.tdiary.org/]].
+
+!! Plugins
+You can enhance features of Hiki by plugins.
+
+!! HikiFarm
+With HikiFarm, you can create new hikis by web browsers.
+
+! Copyright
+
+Hiki is a free software under the terms of the GNU General Public
+License version 2.
+Hiki was originally developed by Hitoshi Takeuchi, and is now developed
+by Hiki development team.
+
+Hiki includes some files by other authors.
+
+:hiki/db/tmarshal.rb:base of a Rubikitch's script posted on [[ruby-list:30305]]. Its license is Ruby's.
+:hiki/docdiff/*:by Hisashi Morita. Its license is modified BSD.
+:hiki/image_size.rb:by Keisuke Minami. Its license is Ruby's.
+
+We will support you at http://hikiwiki.org/en/.

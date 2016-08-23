@@ -4,6 +4,23 @@
 <html lang="<%= @contents[:lang] %>">
 <head>
 <%= @contents[:header] %>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+                           tex2jax:{
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ]
+                           }
+                         });
+    </script>
+    <script type="text/javascript"
+            src="js/MathJax/MathJax.js?config=TeX-AMS_HTML">
+    </script>
+    <meta http-equiv="X-UA-Compatible" CONTENT="IE=EmulateIE7" />
+
+<link rel="stylesheet" href="js/highlight/styles/tomorrow.css">
+<script src="js/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
 </head>
 
 <body>

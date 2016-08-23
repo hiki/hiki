@@ -6,3 +6,4 @@ DirectoryIndex hiki.cgi
 <Files "hikiconf.rb">
 	deny from all
 </Files>
+
