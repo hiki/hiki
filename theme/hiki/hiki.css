@@ -1,0 +1,655 @@
+/*
+Title: Hiki
+$Revision: 1.10 $
+Author: TAKEUCHI Hitoshi
+Access: hitoshi@namaraii.com
+License: GPL
+Comment: Hikiのデフォルトテーマ
+
+tDiaryのcloverテーマをベースに作成しました。
+オリジナルテーマ作者のただただしさん、NTさんに感謝します。
+
+Copyright 2002 (C) by TADA Tadashi <sho@spc.gr.jp>
+Copyright 2002 (C) by NT <nt@24i.net>
+Copyright 2004 (C) by TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+validated by W3C.
+*/
+/* ChangeLog
+2004-01-23 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* modified for Hiki
+
+2002-09-14 NT <nt@24i.net>
+        * convert for 1.5 series.
+
+2002-05-07 TADA Tadashi <sho@spc.gr.jp>
+	* remove overflow from pre.
+	* line-height of body upto 150%.
+
+2002-03-28 TADA Tadashi <sho@spc.gr.jp>
+	* image color down to 7bit.
+	* no underline for links.
+
+2002-03-28 TADA Tadashi <sho@spc.gr.jp>
+	* support new amazon plugin.
+
+2002-03-27 TADA Tadashi <sho@spc.gr.jp>
+	* fix textarea biyo--n problem.
+*/
+
+body {
+	background-color: #fff;
+	color: #000;
+	font-family: Arial,Verdana,Helvetica,'MS UI Gothic',sans-serif;
+	margin: 0;
+	padding: 0.5em;
+	padding-right: 1em;
+}
+
+a{
+  text-decoration: none;
+}
+
+a:link {
+  color: #22a;
+}
+
+a:visited {
+  color: #561464;
+}
+
+a:hover {
+        text-decoration: underline;
+}
+
+div.adminmenu {
+	text-align: right;
+	margin-top: 0px;
+	padding: 0.2em 0.5em 0.5em 0.5em;
+	padding-right: 0;
+	font-size: 75%;
+        line-height: 2.5em;
+}
+
+span.adminmenu {
+	background-color: #f0f0ff;
+	color: #ffffff;
+	border-color: #aaa;
+	border-style: solid;
+	border-width: 0px 1px 1px 0px;
+	padding: 2px;
+        white-space: nowrap;
+}
+
+h1 {
+	height: 64px;
+	line-height: 64px;
+	text-align: right;
+	padding-bottom: 5px;
+}
+
+h2 {
+	font-size: 160%;
+	border-style: solid;
+	border-color: #48c;
+	border-width: 0px 0px 1px 0px;
+}
+
+div.day h2 {
+	font-size: 160%;
+	border-style: solid;
+	border-color: #48c;
+	border-width: 0px 0px 2px 0px;
+	margin-left: 0.5em;
+	padding-left: 0.5em;
+	padding-bottom: 4px;
+}
+
+div.body {
+	margin-left: 1.8em;
+	line-height: 120%;
+}
+
+div.body h3 {
+	font-size: 140%;
+	border-style: dashed;
+	border-color: #48c;
+	border-width: 0px 0px 2px 0px;
+	margin-top: 1.5em;
+	margin-bottom: 0.5em;
+	padding: 0 0 0.4em 0;
+}
+
+div.body h4 h5 h6 {
+	margin-top: 1.5em;
+	margin-bottom: 0.5em;
+	padding: 4px;
+}
+
+div.body h4 {
+	font-size: 140%;
+	border-left: solid 3px #48c;
+	padding: 0.2em 0.3em;
+}
+div.body h5 {
+	font-size: 140%;
+}
+div.body h6 {
+	font-size: 110%;
+}
+
+div.body p {
+	margin-top: 0px;
+	margin-bottom: 0.5em;
+	color: #000;
+	background-color: transparent;
+	line-height: 150%;
+}
+
+div.body pre {
+	color: #000;
+	background-color: #f0f0ff;
+	border-style: solid;
+	border-width: 1px 1px 1px 6px;
+	border-color: #cccccc;
+	padding: 8px;
+	margin-left: 2em;
+}
+
+blockquote {
+	color: #000;
+	background-color: #f0f0ff;
+	border-style: solid;
+	border-color: #cccccc;
+	border-width: 2px 0px 2px 0px;
+	padding: 4px;
+	margin-left: 3em;
+	margin-right: 3em;
+}
+
+div.body blockquote p {
+	margin-left: 0em;
+}
+
+div.body li {
+	margin-left: 0.5em;
+}
+
+div.body dl {
+	margin-left: 0.5em;
+}
+
+div.body dt {
+	border-style: solid;
+	border-color: #eef;
+	border-width: 0px 0px 1px 0px;
+	margin-top: 0.7em;
+}
+
+div.body dd {
+	margin-top: 0.3em;
+	margin-bottom: 0.5em;
+	margin-left: 2em;
+}
+
+div.comment {
+	border-style: solid;
+	border-color: #ccc;
+	border-width: 1px;
+	color: #000;
+	background-color: #eef;
+	margin-top: 1em;
+	margin-bottom: 0.5em;
+	margin-left: 1em;
+	padding: 4px;
+	font-size: 90%;
+}
+
+div.form div.comment {
+	margin-right: 1em;
+	color: #000;
+	background-color: #fff;
+}
+
+div.comment p {
+	margin-top: 0px;
+	margin-bottom: 0.5em;
+}
+
+div.comment p.commenttitle {
+	border-style: dashed;
+	border-color: #ccc;
+	border-width: 0px 0px 1px 0px;
+}
+
+
+div.form {
+	border-style: solid;
+	border-color: #c0c0c0;
+	border-width: 1px;
+	color: #000;
+	background-color: #f0f0ff;
+}
+
+div.day div.form {
+	margin-top: 0px;
+	margin-bottom: 0.5em;
+	margin-left: 2em;
+}
+
+div.form form {
+	margin: 0;
+	padding: 4px 4px 4px 4px;
+	width: 100%;
+}
+
+div.form p {
+	margin-top: 0px;
+	margin-bottom: 0.5em;
+	padding-left: 4px;
+}
+
+div.form textarea {
+	margin-left: 2em;
+}
+
+div.referer {
+	text-align: right;
+	font-size: x-small;
+	margin-top: 0px;
+}
+
+div.refererlist {
+	border-style: solid;
+	color: #000;
+	border-color: #c0c0c0;
+	border-width: 1px;
+	background-color: #f0f0ff;
+	margin-top: 0px;
+	margin-left: 2em;
+	margin-bottom: 0.5em;
+	font-size: small;
+}
+
+div.refererlist ul {
+	margin-left: 2em;
+}
+
+div.form div.refererlist {
+	margin-right: 1em;
+	color: #000;
+	background-color: #fff;
+}
+
+div.refererlist p, div.refererlist ul {
+	margin-top: 0px;
+	margin-bottom: 0em;
+	padding: 4px 4px 4px 4px;
+}
+
+hr {
+	margin-top: 0.5em;
+	border-style: solid;
+	border-width: 2px 0px 0px 0px;
+	border-color: #ccc;
+}
+
+hr.sep {
+	display: none;
+}
+
+div.footer {
+	text-align: right;
+	font-size: 80%;
+	color: #444;
+}
+
+form div.body {
+	border-style: solid;
+	border-color: #c0c0c0;
+	border-width: 1px;
+	color: #000;
+	background-color: #f0f0ff;
+	padding: 0px 4px 4px 4px;
+}
+
+table {
+	border-color: #ccc;
+	border-width: 1px;
+	padding: 0px;
+	border-collapse: collapse;
+}
+th, tr, td {
+	border-style: solid;
+	border-color: #ccc;
+	border-width: 1px;
+	padding-top: 4px;
+	padding-left: 4px;
+}
+
+/*
+ for plugins
+ */
+
+/* calendar */
+div.calendar {
+	font-size: x-small;
+}
+
+/* calendar2 */
+table.calendar {
+	font-size: x-small;
+	line-height: 100%;
+	border-width: 0px;
+}
+
+table.calendar td {
+	margin: 0px;
+	text-align: right;
+	padding: 0px;
+	margin: 0px;
+}
+
+table.calendar td.calendar-prev-month, table.calendar td.calendar-current-month, table.calendar td.calendar-next-month {
+	text-align: center;
+}
+
+/* recent_list */
+p.recentitem {
+	font-size: small;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+div.recentsubtitles {
+	font-size: x-small;
+	margin-top: 0px;
+	margin-bottom: 1em;
+	margin-left: 1em;
+}
+
+/* footnote */
+div.body span.footnote {
+	vertical-align: super;
+	font-size: 80%;
+}
+
+div.footnote {
+	border-style: solid;
+	border-color: #c0c0c0;
+	border-width: 1px 0px 0px 0px;
+	margin-left: 3em;
+	font-size: small;
+}
+
+/* amazon plugin */
+img.left {
+	border-width: 1px;
+	border-color: #000080;
+	float: left;
+}
+
+img.right {
+	border-width: 1px;
+	border-color: #000080;
+	float: right;
+}
+
+/* similarity Plugin */
+.bulkfeedsSimilarity {
+  width: 500px;
+}
+
+.bulkfeedsSimilarityHeader {
+  font-weight: bold;
+  background: #ccc;
+  padding: 0.2em;
+  margin-bottom: 0.2em;
+}
+
+.bulkfeedsSimilarityHeader a {
+  font-weight: bold;
+  color: #000;
+}
+
+.bulkfeedsSimilarityHeader a:visited {
+  color: #000;
+}
+
+.bulkfeedsSimilarityItems {
+  margin: 0;
+  padding-left: 1em;
+  list-style: none;
+}
+
+.bulkfeedsSimilarityFooter {
+  text-align: center;
+  margin-top: 0.5em;
+}
+
+.bulkfeedsSimilarityFooter a {
+  color: #000;
+}
+
+.bulkfeedsSimilarityFooter a:visited {
+  color: #000;
+}
+
+.comments-head {
+  padding: 0.4em;
+  background: #ccc;
+}
+
+.comments-head a {
+  font-weight: bold;
+  color: #000;
+}
+
+.comments-head a:visited {
+  font-weight: bold;
+  color: #000;
+}
+
+.comments-body {
+  padding: 0.5em;
+}
+
+.comments-body p {
+  margin: 0.2em;
+}
+
+.hilight {
+    color: black;
+    background: #ff6666;
+}
+
+div.section {
+	clear: both;
+}
+
+div.main {
+	margin-left: 20%;
+}
+
+div.sidebar {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 20%;
+	font-size: 75%;
+	padding: 2px 2px 100% 2px;
+	border-style: solid;
+	border-color: #c0c0c0;
+	border-width: 1px;
+	color: #000;
+	background-color: #f0f0ff;
+}
+
+div.sidebar ul {
+	margin: 20px;
+	padding: 0px;
+}
+
+div.sidebar form {
+	margin: 0em 0em 0.5em 0em;
+	padding: 0px;
+}
+
+
+/*
+ツッコミ省略版本文
+*/
+div.commentshort {
+        font-size: 0.9em;
+        margin-left: 0.5em;
+}
+
+span.commentator {
+        font-weight: bold;
+}
+
+div.commentshort p {
+        margin-top: 0.5em;
+        margin-bottom: 0.2em;
+        line-height: 1.2em;
+}
+
+/*
+ツッコミ本体
+*/
+div.commentbody {
+        font-size: 0.9em;
+        margin: 0.5em;
+        line-height: 1.2em;
+}
+
+/*
+ツッコミした人の情報
+*/
+div.commentator {
+        line-height: 1.5em;
+}
+
+/*
+ツッコミ本文
+*/
+div.commentbody p {
+        margin: 0.5em;
+        margin-left: 2em;
+}
+
+/*
+フォームの設定
+*/
+div.form form {
+        margin: 0em 0em 0em 2em;
+}
+
+div.form div.caption {
+        font-size: 0.9em;
+        margin: 0.5em;
+}
+
+div.form form.comment {
+        font-size: 0.9em;
+}
+
+div.field {
+        display: inline;
+        margin-right: 2em;
+}
+
+form.comment input {
+        margin-left: 1em;
+}
+
+div.textarea {
+        display: block;
+        vertical-align: top;
+}
+
+form.comment textarea {
+        display: block;
+        margin-left: 3em;
+        width: 30em;
+        height: 5em;
+}
+
+div.button {
+        display: block;
+        margin-left: 3em;
+}
+
+/*
+更新フォーム
+*/
+form.update {
+        padding-top: 0.5em;
+        padding-bottom: 0.5em;
+}
+
+form.update input, form.update textarea, form.commentstat input {
+}
+
+form.update span.field {
+        display: inline;
+        margin-left: 0em;
+        margin-right: 0.5em;
+}
+
+form.update div.field.title {
+        display: block;
+        margin-top: 1em;
+}
+
+form.update div.field.title input {
+        margin-left: 0.5em;
+}
+
+form.update div.textarea {
+        display: block;
+        margin-top: 1em;
+}
+
+form.update textarea {
+        display: block;
+        margin-left: 3em;
+        margin-bottom: 1em;
+        width: 80%;
+        height: 15em;
+}
+
+form.update span.checkbox.hidediary {
+        margin-left: 1em;
+}
+
+/*
+ツッコミ状態変更フォーム
+*/
+div.comment form {
+        margin-top: 0em;
+}
+
+@media print {
+	div.main { margin-left: 0%;}
+	div.adminmenu { display: none; }
+	div.sidebar { display: none; }
+	div.comment   { display: none; }
+	div.footer    { display: none; }
+	div.referer   { display: none; }
+}
+
+@media screen {
+	div.main { margin-left: 20%;}
+	div.adminmenu { display: block;	}
+	div.sidebar { display: block; }
+	div.comment { display: block; }
+	div.footer { display: block; }
+	div.footer div { display: block; }
+	div.referer { display: block;}
+}
+
+div.hello {
+	text-align: right;
+	font-size: 80%;
+	margin-top: 0px;
+}

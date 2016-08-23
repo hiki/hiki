@@ -1,0 +1,35 @@
+ins.added {
+	font-weight: bold;
+}
+
+del.deleted {
+	text-decoration: line-through;
+}
+
+form.update textarea.keyword {
+        width: 15em;
+        height: 3em;
+}
+
+/* 02help */
+div.helptlbr {
+	font-size: small;
+	padding: 1px;
+}
+
+span.helpbttn {
+	border-style: solid;
+	border-width: 0px 0px 1px 0px;
+}
+
+@media print{
+  div.adminmenu{
+    display: none;
+  }
+  div.main{
+    margin-left: 0;
+  }
+  div.sidebar{
+    display: none;
+  }
+}

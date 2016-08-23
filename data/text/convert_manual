@@ -1,0 +1,29 @@
+!概要
+convertの使用法
+
+!Usage
+<<< bash
+Usage: convert [options]
+    -D, --data-directory=DIR         Specify the data directory
+    -d, --database-type=[TYPE]       Specify the database type [flatfile] (default: flatfile
+    -i, --input-encoding=ENCODING    Specify the input encoding
+    -o, --output-encoding=ENCODING   Specify the output encoding
+        --nkf                        Use NKF (default: no)
+    -C, --check-only                 Check file name and exit
+>>>
+
+!codeの改良
+
+<<< Diff
+bob% diff convert.rb convert.rb~
+4,5c4
+< # $LOAD_PATH.unshift "."
+< $LOAD_PATH.unshift "../lib"
+---
+> $LOAD_PATH.unshift "."
+164,165c163
+< #  require_relative "../hiki/db/#{database_type}"
+<   require_relative "../lib/hiki/storage/#{database_type}"
+---
+>   require_relative "../hiki/db/#{database_type}"
+>>>

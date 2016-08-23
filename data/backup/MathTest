@@ -1,0 +1,66 @@
+! mathtest
+!!エネルギー表記
+EAMは原子$i$のエネルギーを
+$$
+E_i = \sum _ j\phi \left( r_j \right) + f(\rho)
+$$
+と表記する．右辺第1項は単なる2体間の相互作用を表わす．
+右辺第2項が多体項と呼ばれるEAMに特徴的な項である．
+$r_j$はこの場合原子$j$との距離を意味しており，
+$E_i$は原子$i$の周りの原子との和によって求まる．
+多体項は，一般的に
+$$
+f(\rho) =\sqrt{\rho}=\sqrt {\sum_j h^2 \left( r_j \right) }
+$$
+によって求められる．$\rho$は強結合(tight binding)の2次モーメント近似から，
+電子密度を表わすとされている．
+これによって原子空孔をはじめ，多くの金属物性を
+うまく表現することが可能となった．詳しくは西谷・赤本参照．
+
+!! 具体例
+EAM potentialにおいて単原子空孔の生成エネルギ$E_v$は
+$$
+E_v = -\frac{E_c}{2}\frac{2-poq}{1-poq}
+$$
+の関係がある．
+
+!pre formatted test
+<<< css
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+                           tex2jax:{
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ]
+                           }
+                         });
+    </script>
+    <script type="text/javascript"
+            src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML">
+    </script>
+    <meta http-equiv="X-UA-Compatible" CONTENT="IE=EmulateIE7" />
+>>>
+
+<<< ruby
+#require "hikidoc"                                                                          
+require "hiki/style/default/hikidoc"
+
+module Hiki
+  module Parser
+    class Default
+      Parser.register(:default, self)
+
+      class << self
+        def heading(str, level = 1)
+          "!" * level + str
+        end
+
+        def link(link_str, str = nil)
+          str ? "[[#{str}|#{link_str}]]" : "[[#{link_str}]]"
+        end
+
+        def blockquote(str)
+          str.split(/\n/).collect{|s| %Q|""#{s}\n|}.join
+        end
+      end
+
+>>>

@@ -1,0 +1,24 @@
+<div class="main">
+<div class="adminmenu"><%= @contents[:tools] %></div>
+<h1 class="header"><%=@conf.msg_config%></h1>
+<form method="post" action="<%= @contents[:cgi_name] %>">
+<div class="conf day">
+  <input type="hidden" value="admin" name="c">
+  <input type="hidden" name="conf" value="<%=@contents[:key]%>">
+  <input type="hidden" name="session_id" value="<%=@contents[:session_id]%>">
+  <h2><span class="title"><%=@plugin.conf_label( @contents[:key] )%></span></h2>
+  <div class="body">
+    <%=@plugin.conf_proc( @contents[:key] )%>
+    <div><input type="submit" name="saveconf" value="OK"></div>
+  </div>
+</div>
+</form>
+<hr class="sep">
+</div>
+<div class="sidebar">
+<ul>
+<% @plugin.each_conf_key do |key|%>
+  <li><a href="<%=@contents[:cgi_name]%>?c=admin;conf=<%=key%>"><%=@plugin.conf_label( key )%></a></li>
+<% end %>
+</ul>
+</div>

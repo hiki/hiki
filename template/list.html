@@ -1,0 +1,19 @@
+<div class="<%= @contents[:view_style] %>">
+  <div class="adminmenu"><%= @contents[:tools] %></div>
+  <h1 class="header"><%= @contents[:title] %></h1>
+
+  <div class="day">
+    <div class="body">
+      <div class="section">
+        <% if @contents[:updatelist] %><ul>
+          <% @contents[:updatelist].each do |i| %><li><%= i %></li><% end %>
+        </ul><% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<% if @contents[:sidebar_class] %>
+<div class="<%= @contents[:sidebar_class] %>">
+  <%= @contents[:sidebar] %>
+</div>
+<% end %>

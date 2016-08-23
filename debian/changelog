@@ -1,0 +1,30 @@
+hiki (0.4.2a-4) unstable; urgency=low
+
+  * More dependency fix
+    (closes: #215429)
+
+ -- Taku YASUI <tach@debian.or.jp>  Mon, 13 Oct 2003 21:35:34 +0900
+
+hiki (0.4.2a-3) unstable; urgency=low
+
+  * Fix dependency
+    (closes: #212363)
+  * Force to use /usr/bin/ruby1.6
+    (closes: #212428)
+
+ -- Taku YASUI <tach@debian.or.jp>  Fri, 26 Sep 2003 11:05:16 +0900
+
+hiki (0.4.2a-2) unstable; urgency=low
+
+  * Fix: Cannot execute install.rb
+    (closes: #201055)
+
+ -- Taku YASUI <tach@debian.or.jp>  Thu, 17 Jul 2003 10:25:48 +0900
+
+hiki (0.4.2a-1) unstable; urgency=low
+
+  * Initial Release.
+    (closes: #199125)
+
+ -- Taku YASUI <tach@debian.or.jp>  Sun,  6 Jul 2003 23:28:18 +0900
+

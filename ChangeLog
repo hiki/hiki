@@ -1,0 +1,3603 @@
+2009-09-05  okkez  <okkez000@gmail.com>
+
+	* hiki/util.rb (Hiki::Util): add module functions (escape,
+	unescape, escape_html, h, unescape_html)
+	(String#escape, unescape, escapeHTML, unescapeHTML): use
+	Hiki::Util instead of CGI.
+
+2009-09-03  okkez  <okkez000@gmail.com>
+
+	* hiki/command.rb (Hiki::Command): do not include Hiki::Util on
+	top level.
+
+	* hiki/plugin.rb (Hiki::Plugin): include Hiki::Util instead of ERB::Util.
+
+2009-08-31  okkez  <okkez000@gmail.com>
+
+	* hiki/auth/typekey.rb: use literal instead of obvious new method.
+	* hiki/auth/typekey.rb: ditto.
+	* misc/plugin/attach.rb: ditto.
+	* misc/plugin/category.rb: ditto.
+	* misc/plugin/google-sitemaps.rb: ditto.
+	* misc/plugin/incremental_search.rb: ditto.
+	* misc/plugin/keyword.rb: ditto.
+	* misc/plugin/math.rb: ditto.
+	* misc/plugin/pagerank.rb: ditto.
+	* misc/plugin/rss.rb: ditto.
+	* misc/plugin/src.rb: ditto.
+	* plugin/01sp.rb: ditto.
+	* style/default/html_formatter.rb: ditto.
+	* style/rd+/anchorlist.rb: ditto.
+	* style/rd+/rd2html.rb: ditto.
+
+
+2009-08-30  okkez  <okkez000@gmail.com>
+
+	* hiki/command.rb: use Hiki::Util#escape, Hiki::Util#unescape,
+	Hiki::Util#escape_html and Hiki::Util#unescape_html instead of
+	CGI.escape, CGI.unescape, CGI.escapeHTML and CGI.unescapeHTML.
+	* hiki/db/flatfile.rb: ditto.
+	* hiki/filter/bayes_filter.rb: ditto.
+	* hiki/interwiki.rb: ditto.
+	* hiki/repos/cvs.rb: ditto.
+	* hiki/repos/default.rb: ditto.
+	* hiki/repos/git.rb: ditto.
+	* hiki/repos/hg.rb: ditto.
+	* hiki/repos/plain.rb: ditto.
+	* hiki/repos/svn.rb: ditto.
+	* hiki/storage.rb: ditto.
+	* hiki/util.rb: ditto.
+	* misc/plugin/append-css.rb: ditto.
+	* misc/plugin/attach.rb: ditto.
+	* misc/plugin/attach/attach.cgi: ditto.
+	* misc/plugin/auth_typekey.rb: ditto.
+	* misc/plugin/bbs.rb: ditto.
+	* misc/plugin/category.rb: ditto.
+	* misc/plugin/comment.rb: ditto.
+	* misc/plugin/diffmail.rb: ditto.
+	* misc/plugin/edit_user.rb: ditto.
+	* misc/plugin/footnote.rb: ditto.
+	* misc/plugin/google-sitemaps.rb: ditto.
+	* misc/plugin/highlight.rb: ditto.
+	* misc/plugin/history.rb: ditto.
+	* misc/plugin/incremental_search.rb: ditto.
+	* misc/plugin/isbn.rb: ditto.
+	* misc/plugin/its.rb: ditto.
+	* misc/plugin/keyword.rb: ditto.
+	* misc/plugin/math.rb: ditto.
+	* misc/plugin/note.rb: ditto.
+	* misc/plugin/orphan.rb: ditto.
+	* misc/plugin/pagerank.rb: ditto.
+	* misc/plugin/rank.rb: ditto.
+	* misc/plugin/readlirs.rb: ditto.
+	* misc/plugin/recent2.rb: ditto.
+	* misc/plugin/referer.rb: ditto.
+	* misc/plugin/rss-show.rb: ditto.
+	* misc/plugin/rss.rb: ditto.
+	* misc/plugin/sitemap.rb: ditto.
+	* misc/plugin/src.rb: ditto.
+	* misc/plugin/template.rb: ditto.
+	* misc/plugin/todo.rb: ditto.
+	* misc/plugin/trackback.rb: ditto.
+	* plugin/00default.rb: ditto.
+	* plugin/01sp.rb: ditto.
+	* plugin/50bayes_filter.rb: ditto.
+	* plugin/de/00default.rb: ditto.
+	* plugin/en/00default.rb: ditto.
+	* plugin/fr/00default.rb: ditto.
+	* plugin/it/00default.rb: ditto.
+	* plugin/ja/00default.rb: ditto.
+	* style/default/html_formatter.rb: ditto.
+	* style/math/html_formatter.rb: ditto.
+	* style/math/latex.rb: ditto.
+	* style/rd+/anchorlist.rb: ditto.
+	* style/rd+/html_formatter.rb: ditto.
+	* style/rd+/rd2html.rb: ditto.
+
+2009-08-30  okkez  <okkez000@gmail.com>
+
+	* hiki/util.rb (Hiki::Util): dead copy from Ruby 1.8 cgi.rb.
+	Hiki::Util#escape, Hiki::Util#unescape, Hiki::Util#unescapeHTML,
+	Hiki::Util#escapeHTML.
+
+2009-08-28  okkez  <okkez000@gmail.com>
+
+	* hiki/config.rb (Hiki::Config#initialize): improved performance.
+
+2009-08-24  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/parser.rb, style/default/html_formatter.rb:
+	replacing WikiName links is now handled by HikiDoc by specifying
+	use_wiki_name parameter.
+
+2009-08-23  okkez  <okkez000@gmail.com>
+
+	* hiki/command.rb (Hiki::Command): use ERB::Util#h
+	instead of String#escapeHTML or CGI::Util#escapeHTML .
+	* hiki/interwiki.rb (Hiki::InterWiki): ditto.
+	* hiki/pluginutil.rb (Hiki::Util): ditto.
+	* hiki/storage.rb (Hiki::HikiDBBase): ditto.
+	* hiki/util.rb (Hiki::Util): ditto.
+
+2009-08-23  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/hikidoc.rb: use recent hikidoc.rb (rev.122). fix a
+	bug: strings after non-WikiName expression are ignored.
+
+2009-08-19  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/rank.rb: increment hit count only in view mode.
+
+2009-08-17  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/docdiff/charstring.rb: code cleanup.
+
+2009-08-16  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/docdiff/charstring.rb: many changes for Ruby-1.9.
+	* hiki/docdiff/encoding/document.rb: do not guess encoding for
+	Ruby-1.9.
+
+	* hiki/docdiff/encoding/ja_utf8.rb: quote regular expressions
+	correctly.
+
+	* style/default/hikidoc.rb: use recent hikidoc.rb (rev.116).
+
+2009-08-15  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/command.rb (cmd_diff): use unified_diff if word_diff raises
+	an exception, because word_diff can raise
+	Encoding::CompatibilityError in Ruby-1.9. this change should be
+	temporary and should be removed when docdiff becomes Ruby-1.9
+	ready.
+
+	* hiki/util.rb (ppunified_diff): escape output in this method just
+	same as word_diff() does.
+	* misc/plugin/rss.rb (rss_body): remove escape because
+	unified_diff() will escape instead.
+
+	* hiki.cgi: set Encoding::defailt_external if exists (for Ruby
+	1.9). add :accept_charset parameter in CGI.new().
+
+	* style/default/html_formatter.rb: remove a needless regexp
+	option.
+
+	* hiki/docdiff/view.rb (apply_style, apply_style_digest): use
+	Array#join instead of Array#to_s, whose specification is different
+	between Ruby 1.8 and Ruby 1.9.
+	* hiki/util.rb (word_diff): ditto.
+
+	* hiki/util.rb (unified_diff): use String#split(/^/) instead of
+	String#to_a, that works on both (old) Ruby-1.8 and Ruby-1.9.
+
+	* style/default/parser.rb (parse): use HikiDoc.to_html instead of
+	HikiDoc#to_html.
+
+2009-08-14  Kazuhiko  <kazuhiko@fdiary.net>
+	* plugin/00default.rb (hiki_footer): display fcgi information in
+	footer.
+
+	* hiki/page.rb (process): use String#bytesize instead of
+	String#size if exists.
+
+	* hiki/config.rb (load_cgi_conf): call eval() with binding, that
+	is required for Ruby 1.9.
+
+	* hiki/db/ptstore.rb: define commit_new if missing, that is
+	required for Ruby 1.9.
+
+	* hiki/db/tmarshal.rb: use Array#join instead of Array#to_s, whose
+	specification is different between Ruby 1.8 and Ruby 1.9.
+
+2009-08-09  Kazuhiko  <kazuhiko@fdiary.net>
+	* Hiki 0.8.8 released!
+
+2009-08-08  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/util.rb (String): add a warning comment to notify that all
+	instance methods added in String class will be obsoleted in the
+	future release.
+
+	* misc/plugin/amazon.rb: import tDiary's amazon.rb (rev.3501).
+
+2009-08-05  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/hikidoc.rb: use recent hikidoc.rb (rev.110).
+
+2009-08-04  okkez  <okkez000@gmail.com>
+	* misc/plugin/attach/attach.cgi: use dot instead of double colon
+	when call singleton methods.
+
+2009-08-01  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/util.rb (Hiki::Util::sendmail): fix a typo (Hiki::Version
+	-> Hiki::VERSION).
+
+2009-07-28  okkez  <okkez000@gmail.com>
+	* misc/plugin/history.rb (Hiki::History#history): uncomment. (see
+	rev.942)
+
+2009-07-28  okkez  <okkez000@gmail.com>
+	* misc/plugin/history.rb: use dot instead double colon when call
+	singleton meshods.
+
+2009-07-28  Kazuhiko  <kazuhiko@fdiary.net>
+	* plugin/00default.rb: use ::Hiki::VERSION instead of
+	Hiki::VERSION.
+
+	* misc/plugin/amazon.rb: import tDiary's amazon.rb (rev.3484).
+
+2009-07-25  okkez  <okkez000@gmail.com>
+	* contrib/plugin/rast-register.rb: delete trailing white spaces,
+	fix indent.
+	* contrib/plugin/rast-search.rb: ditto.
+	* misc/plugin/attach.rb: ditto.
+	* misc/plugin/attach/attach.cgi: ditto.
+	* misc/plugin/auth_typekey.rb: ditto.
+	* misc/plugin/bbs.rb: ditto.
+	* misc/plugin/category.rb: ditto.
+	* misc/plugin/comment.rb: ditto.
+	* misc/plugin/diffmail.rb: ditto.
+	* misc/plugin/footnote.rb: ditto.
+	* misc/plugin/history.rb: ditto.
+	* misc/plugin/incremental_search.rb: ditto.
+	* misc/plugin/keyword.rb: ditto.
+	* misc/plugin/pagerank.rb: ditto.
+	* misc/plugin/rank.rb: ditto.
+	* misc/plugin/rbl.rb: ditto.
+	* misc/plugin/readlirs.rb: ditto.
+	* misc/plugin/recent2.rb: ditto.
+	* misc/plugin/referer.rb: ditto.
+	* misc/plugin/rss-show.rb: ditto.
+	* misc/plugin/rss.rb: ditto.
+	* misc/plugin/template.rb: ditto.
+
+2009-07-23  okkez  <okkez000@gmail.com>
+	* hiki.cgi: use dot instead double
+	colon when call singleton methods.
+
+2009-07-23  okkez  <okkez000@gmail.com>
+	* hiki/aliaswiki.rb: delete trailing white spaces, fix indent.
+	* hiki/auth/typekey.rb: ditto.
+	* hiki/config.rb: ditto.
+	* hiki/db/ptstore.rb: ditto.
+	* hiki/db/tmarshal.rb: ditto.
+	* hiki/filter.rb: ditto.
+	* hiki/filter/bayes_filter.rb: ditto.
+	* hiki/filter/word_filter.rb: ditto.
+	* hiki/hiki_formatter.rb: ditto.
+	* hiki/image_size.rb: ditto.
+	* hiki/interwiki.rb: ditto.
+	* hiki/plugin.rb: ditto.
+	* hiki/pluginutil.rb: ditto.
+	* hiki/repos/default.rb: ditto.
+	* hiki/repos/hg.rb: ditto.
+	* hiki/storage.rb: ditto.
+	* hiki/util.rb: ditto.
+
+2009-07-23  okkez  <okkez000@gmail.com>
+	* style/default/html_formatter.rb: use dot instead double
+	colon when call singleton methods.
+	* plugin/01sp.rb: ditto.
+	* plugin/00default.rb: ditto.
+	* hiki/xmlrpc.rb: ditto.
+	* hiki/util.rb: ditto.
+	* hiki/storage.rb: ditto.
+	* hiki/command.rb: ditto.
+	* hiki/config.rb: ditto.
+
+2009-07-19  okkez  <okkez000@gmail.com>
+	* hiki/config.rb (Hiki): add Hiki::VERSION, Hiki::RELEASE_DATE.
+	(Hiki::Config#load): use Hiki::VERSION instead HIKI_VERSION.
+	* plugin/00default.rb (#hiki_footer): ditto.
+	* hiki/util.rb (Hiki::Util#sendmail): ditto.
+
+	* hiki/storage.rb (Hiki::HikiDBBase#load_cache): use
+	Hiki::RELEASE_DATE instead HIKI_RELEASE_DATE.
+	* hiki/storage.rb (Hiki::HikiDBBase#save_cache): ditto.
+
+2008-10-12  KURODA Hiraku <hiraku@sapporo.email.ne.jp>
+	* plugin/50bayes_filter.rb: Use unified diff insted of "appended
+	lines" in "submitted_pages"
+
+	* hiki/filter/bayes_filter.rb: add
+	Hiki::Filter::BayesFilter::PageData#get_unified_diff.
+	* test/spec_bayes_filter.rb: ditto.
+
+2008-10-12  KURODA Hiraku <hiraku@sapporo.email.ne.jp>
+	* test/spec_bayes_filter.rb: Update some specs.
+
+2008-10-12  KURODA Hiraku <hiraku@sapporo.email.ne.jp>
+	* hiki/xmlrpc.rb: Fix: Error is raised in 'wiki.putPage' because
+	  Filter was not initialized.
+
+2008-09-24  Kazuhiro NISHIYAMA  <zn@mbf.nifty.com>
+	* misc/webrick/hikilet.rb: revert change on 2008-01-06,
+	  because ENV[key]=nil behavior of ruby 1.9 reverted.
+
+2008-09-19  okkez  <okkez000@gmail.com>
+	* hiki/plugin.rb (Hiki::Plugin#initialize): use
+	Object#instance_variable_set instead Kernel.eval.
+
+2008-09-19  okkez  <okkez000@gmail.com>
+	* hiki/config.rb (Hiki::Config#database): add new method.
+
+	* hiki.cgi: use Hiki::Config#datacase.
+	* hiki/xmlrpc.rb (Hiki::XMLRPCHandler#init_handler): ditto.
+	* misc/webrick/hikilet.rb (Hikilet#do_GET): ditto.
+
+2008-09-18 KURODA Hiraku <hiraku@sapporo.email.ne.jp>
+	* plugin/50bayes_filter.rb, plugin/en/50bayes_filter.rb,
+	  plugin/ja/50bayes_filter.rb, test/spec_50bayes_filter.rb
+	  : In submitted_page_diff, show difference of text using
+	    Util#word_diff.
+
+2008-09-18 KURODA Hiraku <hiraku@sapporo.email.ne.jp>
+	* hiki/filter.rb, hiki/filter/bayes_filter.rb,
+	  hiki/filter/word_filter.rb, test/spec_bayes_filter.rb
+	  : In bayes filter, when text is posted by registered user and
+	    judged as spam, add text to ham-db.
+
+
+2008-08-07 KURODA Hiraku <hiraku@sapporo.email.ne.jp>
+	* messages/en.rb: Fix typo. Reported by Kouhei Sutou.
+
+2008-08-06 KURODA Hiraku <hiraku@sapporo.email.ne.jp>
+	* hiki/repos/hg.rb, test/test_repos_hg.rb: support mercurial
+	repository.
+
+2008-08-06 KURODA Hiraku <hiraku@sapporo.email.ne.jp>
+	* hiki/filter/bayes_filter/bayes.rb: Update bayes library.
+	* hiki/filter/bayes_filter.rb, plugin/50bayes_filter.rb,
+	test/spec_50bayes_filter.rb, test/spec_bayes_filter.rb
+	: + Limit number of times of adding ham/spam into database to 10 times.
+	  + Add new threshold for ham, then post for page is treated as
+	'doubt' if threshold_ham < score < threshold(for spam).
+
+2008-07-06 SAKAI Masahiro <masahiro.sakai@gmail.com>
+	* misc/plugin/rss.rb: applied patch Hiki-dev:01126,01127.
+	* style/rd+/rd2html.rb: applied patch Hiki-dev:01163.
+
+2008-06-25 SHIBATA Hiroshi <shibata.hiroshi@gmail.com>
+	* plugin/00default.rb: display RUBY_PATCHLEVEL in footer.
+
+2008-05-18  KURODA Hiraku  <hiraku@sapporo.email.ne.jp>
+	* hiki/filter/bayes_filter.rb, plugin/50bayes_filter.rb,
+	plugin/en/50bayes_filter.rb, plugin/ja/50bayes_filter.rb
+	: Add feature to limit to show submitted pages.
+
+2008-05-16  KURODA Hiraku  <hiraku@sapporo.email.ne.jp>
+	* hiki/filter/bayes_filter.rb, plugin/50bayes_filter.rb,
+	test/spec_50bayes_filter.rb, test/spec_bayes_filter.rb
+	: URL of posted pagedata in bayes filter become to refer the page
+	'in Wiki'.
+
+2008-05-14  KURODA Hiraku  <hiraku@sapporo.email.ne.jp>
+	* hiki/filter/bayes_filter.rb, plugin/50bayes_filter.rb,
+	plugin/ja/50bayes_filter.rb, plubin/en/50bayes_filter.rb
+	: Add feature to share database for bayes filtering.
+
+2008-03-26  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/repos/git.rb, test/test_repos_git.rb: support git
+	repository (contributed by Kouhei Sutou).
+
+2008-02-23  KURODA Hiraku  <hiraku@sapporo.email.ne.jp>
+	* hiki/filter.rb, test/spec_filter.rb: Ignore error raised
+	inregisterd filter.
+	* hiki/filter/bayes_filter.rb, plugin/50bayes_filter.rb,
+	plugin/en/50bayes_filter.rb, plugin/ja/50bayes_filter.rb,
+	test/spec_bayes_filter.rb: Send report mail ONLY WHEN
+	configuration is set so.
+
+2008-02-20  KURODA Hiraku  <hiraku@sapporo.email.ne.jp>
+	* plugin/50bayes_filter.rb: Fix a bug for ruby-1.8.5.
+
+2008-02-12  KURODA Hiraku  <hiraku@sapporo.email.ne.jp>
+	* hiki/command.rb, hiki/plugin.rb, messages/en.rb, messages/ja.rb:
+	hiki/filter.rb, hiki/filter/bayes_filter.rb,
+	hiki/filter/bayes_filter/bayes.rb, hiki/filter/word_filter.rb,
+	plugin/50bayes_filter.rb, plugin/50word_filter.rb,
+	plugin/en/50bayes_filter.rb, plugin/en/50word_filter.rb,
+	plugin/ja/50bayes_filter.rb, plugin/ja/50word_filter.rb,
+	test/spec_50bayes_filter.rb, test/spec_bayes_filter.rb:
+	add spam filtering features.
+
+2008-02-08  Kouhei Yanagita <yanagi@shakenbu.org>
+	* template/adminform.html: div.main should precede div.sidebar.
+
+2008-01-25  Kazuhiro NISHIYAMA  <zn@mbf.nifty.com>
+	* hiki.cgi, misc/plugin/attach/attach.cgi: $defout -> $stdout.
+
+2008-01-07  Kazuhiro NISHIYAMA  <zn@mbf.nifty.com>
+	* plugin/01sp.rb: improve previous incompatible change.
+
+2008-01-06  Kazuhiro NISHIYAMA  <zn@mbf.nifty.com>
+	* hiki/config.rb, hiki/hiki_formatter.rb,
+	misc/webrick/hikilet.rb, plugin/01sp.rb, hiki/pluginutil.rb,
+	style/default/html_formatter.rb: partially support ruby 1.9.0.
+
+2007-10-29  Kazuhiro NISHIYAMA  <zn@mbf.nifty.com>
+	* hiki/command.rb: revert partial patched
+	toc_lv. (see [Hiki-dev:01106], [Hiki-dev:01164])
+
+2007-09-26  U.Nakamura  <usa@garbagecollect.jp>
+	* hiki/command.rb: raise SessionError instead of PermissionError
+	in case of session errors.
+
+2007-09-25  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/db/flatfile.rb, hiki.cgi, hiki/xmlrpc.rb,
+	misc/webrick/hikilet.rb: use HikiDB_dbtype as the name of the
+	class instead of HikiDB.
+
+	* hiki.cgi: remove "$SAFE = 1" for FastCGI.
+
+2007-09-24  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/history.rb: hide "Changes" heading in non-cvs
+	repository case.
+
+2007-07-17  Kouhei Yanagita <yanagi@shakenbu.org>
+	* plugin/00default.rb (create_menu): set rel="nofollow" in menu
+	links to edit/diff pages (patch by Kazuhiro NISHIYAMA).
+
+2007-06-24  Kouhei Yanagita <yanagi@shakenbu.org>
+	* Hiki 0.8.7 released!
+
+	* hiki/session.rb (initialize): fix a arbitrary file delete
+	vulnerability.
+
+2007-06-24  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/attach.rb (attach_download): add a Content-Length
+	header.
+
+2007-06-23  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/command.rb (cmd_admin): escape config key in admin mode.
+
+2007-06-22  Kouhei Yanagita <yanagi@shakenbu.org>
+	* hiki/session.rb (create_new_id): use Time#usec to make a session id
+	more hard-to-crack.
+
+2007-05-23  Kazuhiro NISHIYAMA  <zn@mbf.nifty.com>
+	* hiki/page.rb: add Vary to response headers.
+
+2007-04-08    <wiki@boron.rubyist.net>
+	* misc/plugin/attach.rb: get image size of other pages correctly.
+
+2007-03-14  Kazuhiro NISHIYAMA  <zn@mbf.nifty.com>
+	* misc/webrick/hikilet.rb: set $SAFE=1 in Hikilet.
+	return hiki.cgi style response on error.
+	support xmlrpc.
+	* hiki/xmlrpc.rb: support hikilet.
+
+2007-02-06  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/command.rb (cmd_view): fix too-escaped bug in title (closes
+	#76).
+
+2007-01-12  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/src.rb: use the language and charset configured as
+	default (by Richard Zidlicky).
+
+2007-01-01  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/amazon.rb, misc/plugin/en/amazon.rb,
+	misc/plugin/ja/amazon.rb: import the tDiary's amazon plugin.
+
+2006-11-26  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/storage.rb (md5hex): use MD5.hexdigest(s) instead of
+	MD5.new(s).hexdigest (closes #73).
+
+2006-10-16  Kazuhiro NISHIYAMA  <zn@mbf.nifty.com>
+	* hiki.cgi: return status 500 on error.
+
+2006-10-11  Kouhei Yanagita <yanagi@shakenbu.org>
+	* style/default/html_formatter.rb (URI_RE): allow file scheme in URI.
+
+2006-10-05  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/command.rb: check postable? if request method is "POST".
+	* misc/plugin/bbs.rb, misc/plugin/comment.rb, misc/plugin/its.rb,
+	misc/plugin/trackback.rb: cancel checking postable? in plugins.
+
+2006-10-04  Kazuhiko  <kazuhiko@fdiary.net>
+	* plugin/00default.rb: add postable?.
+	* hiki/command.rb, misc/plugin/bbs.rb, misc/plugin/comment.rb,
+	misc/plugin/its.rb, misc/plugin/trackback.rb: use postable?.
+	* misc/plugin/rbl.rb: add a new plugin that overrides postable? by
+	looking up Realtime Blackhole Lists.
+
+2006-09-03  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/amazon.rb: follow up to change <title> format and
+	image URL (closes #70) .
+
+2006-09-03  Kazuhiro NISHIYAMA  <zn@mbf.nifty.com>
+	* misc/webrick/hikilet.rb: session_id bug fix.
+
+2006-09-02  Kazuhiro NISHIYAMA  <zn@mbf.nifty.com>
+	* hiki/plugin.rb: use URI.parse() instead of URI(). (Ticket-66)
+
+	* misc/webrick/hikilet.rb: cookies bug fix.
+
+2006-08-08  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/command.rb (cmd_view): set correct references (closes #68).
+
+2006-08-07  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/bbs.rb: revise HTML.
+
+	* misc/plugin/its.rb: enable adding a comment and changing
+	properties with a single post.
+
+	* hiki/plugin.rb: add accessors of session_id.
+	* misc/plugin/bbs.rb, misc/plugin/comment.rb, misc/plugin/its.rb:
+	validate a session_id.
+	* hiki/command.rb: create a new session if a session_id is invalid.
+	* hiki/session.rb: save a session file if @user is nil.
+
+2006-08-05  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/html_formatter.rb (replace_inline): do not convert
+	tag texts at all (reported by shino).
+
+	* misc/plugin/rank.rb: return an empty string in body_leave_proc.
+
+	* hiki/db/ptstore.rb: inherit the PStore class and rewrite
+	cache-related codes.
+
+	* hiki/command.rb (cmd_view): update references only when
+	references differ from previous.
+
+	* hiki/command.rb (cmd_view), misc/plugin/rank.rb: increment a
+	counter only when the 'rank.rb' plugin is active.
+
+2006-07-31  Kazuhiko  <kazuhiko@fdiary.net>
+	* hikiconf.rb.sample, hiki/command.rb, hiki/config.rb,
+	misc/plugin/bbs.rb, misc/plugin/comment.rb, misc/plugin/its.rb:
+	add '@conf.use_session' to prevent spams.
+
+	* style/default/hikidoc.rb: sync with hikidoc rev.38.
+	  support nested modifier (reported by MoonWolf).
+
+2006-07-21  Kazuhiro NISHIYAMA  <zn@mbf.nifty.com>
+	* hiki/page.rb, misc/hikifarm/index.cgi, misc/plugin/referer.rb,
+	misc/plugin/trackback.rb: check request_method exactly.
+
+	* hiki/storage.rb: use Array#reverse_each instead of reverse.each.
+
+2006-07-03  Kazuhiko  <kazuhiko@fdiary.net>
+	* Hiki 0.8.6 released!
+
+	* misc/plugin/trackback.rb (trackback): use SCRIPT_FILENAME
+	instead of SCRIPT_NAME.
+
+	* data/text/TextFormattingRules: add explanations about
+	multi-lines pre-formatted text and description-only text.
+
+2006-07-02  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/command.rb (dispatch), hiki/config.rb: raise an error if
+	timeout exceeds.
+	* hikiconf.rb.sample, misc/i18n/hikiconf.rb.sample.en: add
+	'@timeout'.
+
+2006-06-06  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/docdiff/view.rb: sync to docdiff-0.3.3.
+
+2006-06-01  Kazuhiko  <kazuhiko@fdiary.net>
+	* plugin/00default.rb (saveconf_theme): fix a bug that raises an
+	exception when setting a wrong theme_path (closes #64).
+
+2006-04-28  Kazuhiro NISHIYAMA <zn@mbf.nifty.com>
+	* hiki/db/ptstore.rb (fetch): merge from pstore.rb in ruby 1.8.4.
+
+2006-03-15  Kouhei Yanagita <yanagi@shakenbu.org>
+	* hiki/config.rb (mobile_agent?): support WILLCOM's mobile agents (closes #57).
+
+2006-02-27  Kouhei Yanagita <yanagi@shakenbu.org>
+	* hiki/plugin.rb (cookie_path): fix the bug of breaking the path of the cookie
+	when base_url is specified (closes #56).
+
+2006-02-18  Kouhei Yanagita <yanagi@shakenbu.org>
+	* misc/plugin/show_plugins.rb: add a comment.
+
+2006-02-15  Kouhei Yanagita <yanagi@shakenbu.org>
+	* plugin/02help.rb (set_s): support Safari (patch by NAGASAKI).
+
+2006-02-04  Kazuhiro NISHIYAMA <zn@mbf.nifty.com>
+	* hiki/db/ptstore.rb: bug fix file.flock(File::LOCK_UN) without lock.
+
+2006-01-30  Kouhei Yanagita <yanagi@shakenbu.org>
+	* misc/plugin/attach.rb, hiki/image_size.rb: suppress the width/height
+	attributes when ImageSize could not determine the size of an image.
+
+	* misc/plugin/attach.rb (attach_image_anchor): introduce options['attach.cache_url'].
+	Don't use this unless all of the attached file is believed to be safe (patch by U.Nakamura).
+
+	* style/default/html_formatter.rb (replace_inline): Do not consider WikiName inside of pre elements.
+
+2005-12-31  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/config.rb (load_cgi_conf): convert @mail to Array even if
+	no cgi_conf file is found.
+
+2005-12-29  Kazuhiko  <kazuhiko@fdiary.net>
+	* Hiki 0.8.5 released!
+
+	* plugin/00default.rb: revise handling of theme_path (by OZAWA
+	Sakuro [Hiki-dev:01086]).
+
+	* hiki/interwiki.rb (interwiki): escapeHTML uris (by KURODA
+	Hiraku [Hik-dev:01089]).
+
+	* plugin/02help.rb: code cleanup by NAGASAKI.
+
+	* style/default/hikidoc.rb: sync with hikidoc rev.36.
+	  support relative inline URLs.
+	  fix parse_table (reported by H.M) (closes #44).
+
+	* misc/plugin/quote_page.rb: revise for current hiki (closes #47).
+	* style/default/parser.rb (parse): add a second argument to
+	specify top level.
+
+	* hiki/repos/cvs.rb (revisions): revise a regexp by miya (closes
+	#50).
+
+2005-12-26  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/rd+/rd2html.rb (apply_to_Reference_with_URL): revise a
+	regexp of image uris by Masao Mutoh (reported by GOTO Naohisa).
+
+2005-12-25  Kouhei Yanagita <yanagi@shakenbu.org>
+	* misc/plugin/attach.rb (attach_image_anchor): specify the size of
+	attached images using width and height attributes of img elements.
+
+	* template/view.html: add a <hr> separator between main contents
+	and a sidebar (closes #45).
+
+	* hiki/util.rb (sendmail), hikiconf.rb.sample, misc/i18n/hikiconf.rb.sample.en,
+	misc/hikifarm/template/index.html: Multiple mail addresses are available at conf.mail
+	by separating a comma (closes #23).
+
+	* hikiconf.rb.sample, hiki/config.rb, hiki/util.rb, misc/i18n/hikiconf.rb.sample.en,
+	plugin/00default.rb, plugin/de/00default.rb, plugin/en/00default.rb, plugin/fr/00default.rb,
+	plugin/it/00default.rb, plugin/ja/00default.rb, template/hiki.conf: Administrator's mail
+	addresses are held as an array internally.
+
+2005-12-18  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/command.rb (dispatch): enter 'preview' mode when no submit
+	parameter is sent from 'edit' mode (closes #43).
+
+2005-12-17  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/plugin.rb (save): do not remove spaces from the begining
+	and the end of texts (reported by ISOBE,
+	Kazuhiko [Hiki-dev:01078]).
+
+2005-12-02  Kazuhiko  <kazuhiko@fdiary.net>
+	* contrib/plugin/rast-register.rb: add a new plugin.
+	* contrib/plugin/rast-search.rb: add a new plugin.
+
+2005-11-28  Kouhei Yanagita <yanagi@shakenbu.org>
+	* hiki/config.rb (load): fixed: The XMLRPC feature could not be
+	disabled (reported by Atsushi SHICHI).
+
+2005-11-22  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/hikifarm/index.cgi: revise output HTML.
+
+2005-11-19  Kouhei Yanagita <yanagi@shakenbu.org>
+	* plugin/02help.rb, plugin/en/02help.rb, plugin/ja/02help.rb: refine
+	the interface of editing support (by NAGASAKI).
+
+2005-11-16  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/its.rb: add a 'Issue Tracking System' plugin.
+
+2005-11-15  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/hikifarm/hiki.conf: add descriptions by Atsushi SHICHI.
+	* doc/README-attach.txt: update a document by Atsushi SHICHI.
+
+2005-11-07  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/amazon.rb (getAmazon): revise for recent amazon sites.
+
+2005-11-03  Kouhei Yanagita <yanagi@shakenbu.org>
+	* plugin/01sp.rb, misc/plugin/show_plugins.rb: new plugin.
+	It displays enabled plugins.
+
+2005-11-02  Kouhei Yanagita <yanagi@shakenbu.org>
+	* hiki/command.rb (cmd_save): editors can delete pages without
+	administrative privilege.
+
+2005-11-01  Kouhei Yanagita <yanagi@shakenbu.org>
+	* hiki/db/flatfile.rb (unlink): backup the data when a page is deleted.
+
+2005-10-25  Kouhei Yanagita <yanagi@shakenbu.org>
+	* style/rd+/rd2html.rb (a_name_href): fixed a escape string
+	remaining bug (patch by Masao Mutoh).
+
+2005-10-19  Kouhei Yanagita <yanagi@shakenbu.org>
+	* hiki/repos/plain.rb, test/test_repos_plain.rb,
+	misc/hikifarm/hikifarm.conf: add a new version control backend,
+	which stores whole copy of each version.
+
+2005-10-15  Kazuhiro NISHIYAMA <zn@mbf.nifty.com>
+	* hiki/xmlrpc.rb: keyword bug fix.
+	use XMLRPC::FaultException instead of rescue and false.
+	support minoredit and md5hex. split XMLRPCHandler.
+
+2005-10-03  Kouhei Yanagita <yanagi@shakenbu.org>
+	* hiki/plugin.rb: use *_proc methods regardless of
+	the value of @conf.use_plugin.
+
+2005-10-02  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/hikidoc.rb: sync with hikidoc rev.33.
+	  revise esacpes in parse_link
+	  allow empty descriptions in definition lists
+	* style/default/html_formatter.rb (replace_link): follow the
+	change of hikidoc.rb.
+
+2005-09-30  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/hiki_formatter.rb (apply_tdiary_theme): revise
+	H2_RE (reported by NISHI Takao).
+
+	* misc/plugin/attach.rb, misc/plugin/category.rb,
+	misc/plugin/keyword.rb, misc/plugin/orphan.rb,
+	misc/plugin/referer.rb, misc/plugin/sitemap.rb,
+	misc/plugin/template.rb, plugin/00default.rb,
+	style/default/html_formatter.rb: revise for more strict HTML (by
+	KURODA Hiraku).
+
+2005-09-29  Kazuhiko  <kazuhiko@fdiary.net>
+	* Hiki 0.8.4 released!
+
+	* misc/webrick/hikilet.rb: add a script to run hiki with
+	WEBrick (by Kazuhiro NISHIYAMA).
+
+	* style/math/parser.rb, style/math/html_formatter.rb: follow the
+	changes of the default style.
+
+	* hiki/xmlrpc.rb: use utf-8 as the input/output charset.
+	add 'wiki.getPageInfo'.
+
+	* hiki/util.rb (redirect): always use 'meta refresh' (closes #26).
+
+	* style/default/hikidoc.rb: sync with hikidoc rev.30.
+	  allow empty descriptions in definition lists.
+
+2005-09-27  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/hikidoc.rb: sync with hikidoc rev.29.
+	  bugfix in parse_plugin.
+	  revise URI_RE.
+
+2005-09-26  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/rss-show.rb: use the rss library.
+
+	* style/default/hikidoc.rb: sync with hikidoc rev.27.
+	  revise parse_plugin.
+
+2005-09-20  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/html_formatter.rb (replace_link): display
+	specified titles in interwikis (closes #25).
+	ditto in outer aliases.
+
+	* plugin/00default.rb (toc): return an empty string (closes #24).
+
+2005-09-18  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/html_formatter.rb (replace_auto_link): do nothing
+	if @auto_links is empty.
+	* style/default/hikidoc.rb: sync with hikidoc rev.25.
+	  minimum match in parse_modifier.
+
+2005-09-15  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/amazon.rb (getAmazon): allow hankaku colon in a
+	regexp of an item_name.
+
+2005-09-14  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/amazon.rb: follow-up format changing of amazon.com
+	and amazon.co.jp.
+
+	* style/default/html_formatter.rb (replace_auto_link): typo.
+
+2005-09-13  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/command.rb: disallow a page whose name is '.' or
+	'..' (reported by take_tk [Hiki-users:51]).
+
+	* style/default/html_formatter.rb: correct auto links (reported by
+	take_tk [Hiki-users:46]).
+
+2005-09-11  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/html_formatter.rb (to_s): 'replace_auto_link'
+	after 'replace_link'.
+	(replace_auto_link): correct links.
+
+	* misc/plugin/rss.rb (rss): disable @conf.use_plugin in making
+	full-text HTML contents (reported by MORIOKA Toru
+	[Hiki-dev:01029]).
+
+	* hiki/hiki_formatter.rb (apply_tdiary_theme, tdiary_section):
+	move from style/default/html_formatter.rb.
+
+	* hiki/repos/svn.rb (commit, delete): add the '--force-log' option
+	to avoid an error in editing a page whose name and the editor is
+	the same (by ISOBE, Kazuhiko [Hiki-dev:01027]).
+
+2005-09-09  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/html_formatter.rb (replace_inline): add
+	'class="external"' to uri liks (hikidoc:18).
+
+2005-09-08  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/parser.db, style/default/html_formatter.rb: use
+	the HikiDoc library.
+
+2005-09-06  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/ja/rss.rb: support whole HTML output (instead of
+	title-only).
+
+2005-09-05  Kouhei Yanagita <yanagi@shakenbu.org>
+	* misc/plugin/rss.rb (rss_body),
+	misc/plugin/ja/rss.rb (label_rss_mode_candidate): RSS which lists
+	only titles of updated pages is supported (report by vette).
+
+	* misc/plugin/footnote.rb (render): support a block element
+	argument (patch by U.Nakamura).
+
+2005-09-03  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/sitemap.rb: code cleanup (report by Atsushi Koga).
+
+2005-09-01  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/html_formatter.rb (make_link): support anchors in
+	bracket links.
+
+	* misc/plugin/orphan.rb (orphan_pages): code cleanup (reported by
+	ISOBE, Kazuhiko).
+
+2005-08-30  Kouhei Yanagita <yanagi@shakenbu.org>
+	* misc/plugin/rss.rb (rss): deal with the If-Modified-Since header
+	in a request.
+
+2005-08-29  Kouhei Yanagita <yanagi@shakenbu.org>
+	* test/test_hikifarm.rb (test_create_wiki): the test failed
+	because one of the arguments of Hikifarm#create_wiki is lack.
+
+	* test/test_default_parser.rb (test_link, test_url): add some tests.
+
+	* style/default/parser.rb (inline_impl): the href of URL was not
+	escaped at tokens of URL_RE.
+
+2005-08-28  Kouhei Yanagita <yanagi@shakenbu.org>
+	* test/test_default_parser.rb: (test_emphasis, test_strong,
+	test_delete): add new test methods.
+
+	* style/default/parser.rb: Remove the HikiStack class and use
+	Array instead.  perform some refactorings.
+
+	* misc/hikifarm/index.cgi: update HIKIFARM_RELEASE_DATE. I've
+	forgotten to do it.
+
+2005-08-26  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/db/flatfile.rb (set_references, get_references): store
+	references as Array instead of csv String.
+
+2005-08-25  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/html_formatter.rb (make_link): display page names
+	instead of page titles if @conf.use_wikiname is false.
+
+2005-08-25  Kouhei Yanagita <yanagi@shakenbu.org>
+	* misc/hikifarm/hiki.conf, misc/hikifarm/hikifarm.conf,
+	misc/hikifarm/index.cgi: Hikifarm becomes to be able to set up
+	a CGI file for file attachment (by Kouhei Sutou).
+
+	* misc/plugin/attach.rb: moved from misc/plugin/attach/attach.rb to
+	be able to select a attach.rb plugin without file copy.
+
+2005-08-24  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/xmlrpc.rb (wiki.getPage, wiki.getAllPages): encode strings
+	with base64.
+
+	* misc/hiki-mode/hiki-mode.el (hiki-edit-save-page): escape page
+	name (reported by YAA).
+
+	* hiki/db/flatfile.rb: update a timestamp of a text file in minor
+	changes to making cvs commit properly.
+
+2005-08-04  Kazuhiko  <kazuhiko@fdiary.net>
+	* Hiki 0.8.3 released!
+
+2005-08-03  Kazuhiko  <kazuhiko@fdiary.net>
+	* plugin/00default.rb (create_menu): [SECURITY FIX] escape a page
+	name in a login menu (reported by Yutaka OIWA).
+	* hiki/config.rb (save_config): make contents of a conf file
+	before trying to write (reported by Yutaka OIWA).
+
+	* hiki/command.rb (cmd_create): [SECURITY FIX] escape a page name.
+
+	* hiki/command.rb (cmd_login): returns 'FORBIDDEN' if login fails.
+	(generate_page): accept 'status' as a second argument.
+
+	* hiki/repos/cvs.rb (revisions): revise for the current cvs.
+
+2005-08-03  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* hiki/config.rb (base_url): detecting https implemented wrongly.
+	* misc/hiki-mode/hiki-mode.el (hiki-fetch-index): fixed: Emacs
+	hangs up when fetching the index.
+	* misc/hiki-mode/hiki-mode.el (hiki-http-request): The URL
+	contains no query when method is POST.
+
+
+2005-08-03  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/config.rb (base_url): revise for IIS (closes #17).
+
+2005-08-02  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* messages/de.rb, misc/plugin/de/*, misc/text/default.de/*,
+	plugin/de/00default.rb, plugin/de/01sp.rb, plugin/de/02help.rb:
+	German resources are added (translated by Kashia Buch).
+
+	* doc/INSTALL.en: add description about German text.
+
+2005-07-31  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* hiki/xmlrpc.rb (init_handler): implement wiki.getAllPages.
+
+2005-07-29  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* hiki.cgi, hikiconf.rb.sample, hiki/config.rb, hiki/xmlrpc.rb,
+	misc/hikifarm/hiki.conf, misc/i18n/hikiconf.rb.sample.en,
+	plugin/00default.rb, plugin/en/00default.rb,
+	plugin/fr/00default.rb, plugin/it/00default.rb,
+	plugin/ja/00default.rb, template/hiki.conf: add web interface to
+	enable/disable XML-RPC interfaces.
+
+2005-07-28  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* hiki.cgi, hiki/xmlrpc.rb: XMLRPC interface is now available via
+	hiki.cgi.  xmlrpc.cgi becomes needless.
+
+	* misc/xmlrpc/xmlrpc.cgi, misc/xmlrpc/README: removed.
+
+2005-07-26  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* misc/hikifarm/vc-backend-setup.cgi:
+	HikifarmRepos*#import/imported?  should take a basenamed wiki
+	name. (by Atsushi Koga)
+
+	* style/default/html_formatter.rb (make_link): use a page name
+	instead of a page title in a toc (suggested by Shinya Kawaji).
+
+2005-07-21  Kazuhiko  <kazuhiko@fdiary.net>
+	* Hiki 0.8.2 released!
+
+2005-07-21  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* misc/hiki-mode/hiki-mode.el (hiki-fetch-index): fixed: FrontPage
+	is not listed in hiki-index.
+
+	* misc/hiki-mode/hiki-mode.el (hiki-edit-save-page): fixed: Can't
+	save keywords when initial keyword is empty. (by Takeshi UME Imai)
+
+	* misc/hiki-mode/hiki-mode.el (hiki-display-page): fixed: Can't
+	input keywords if keywords area is erased once.
+
+2005-07-20  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/attach/attach.cgi: only output basename of attached
+	/ detached files in diff mails.
+
+	* style/default/html_formatter.rb (make_link): use a page name
+	instead of a page title in a 'title' attribute (closes #14).
+
+	* misc/plugin/bbs.rb: support changing heading levels (by
+	U.Nakamura).
+
+	* hiki/pluginutil.rb (argwords): escape double quotes (reported by
+	Kazuhiro NISHIYAMA).
+
+2005-07-19  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki-mode.el: revise for 0.8.1 (by Takeshi UME Imai).
+
+2005-07-17  Kazuhiko  <kazuhiko@fdiary.net>
+	* plugin/00default.rb (toc_here): support a toc of another page.
+
+	* misc/plugin/diffmail.rb (updating_mail): support the word diff
+	format.
+	* hiki/util.rb (word_diff_text): support the digest mode.
+
+2005-07-17  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* doc/HACKING.txt, doc/HACKING.en: add HACKING documents.
+
+2005-07-16  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/html_formatter.rb (token_to_s): add interwiki to
+	toc_title (reported by Kazuhiro NISHIYAMA).
+
+	* misc/plugin/attach/attach.rb (attach_show_page_files_checkbox):
+	escape a filename (reported by Kazuhiro NISHIYAMA).
+	(attach_flash_anchor): escape a filename.
+
+2005-07-16  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* hiki/repos/default.rb: ReposBase#root and ReposBase#data_path are
+	now private.
+
+	* hiki/repos/cvs.rb (setup, import, update, commit, delete,
+	get_revision, revisions): use Dir.chdir with a block.
+
+	* hiki/repos/default.rb, hiki/repos/cvs.rb, hiki/repos/svn.rb,
+	hiki/repos/svnsingle.rb, misc/hikifarm/index.cgi,
+	misc/hikifarm/vc-backend-setup.cgi: separate HikifarmRepos* from
+	Repos*.
+
+	* test/test_hikifarm.rb: change @data_path to @data_root.
+
+2005-07-15  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/en/math.rb: add English resources (by Kashia Buch).
+
+	* hiki/config.rb (load): now default vaule of @use_plugin is true.
+	set @cgi_name to './' if it is empty.
+	* hiki/plugin.rb (save): set a ':editor' attribute.
+
+2005-07-14  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* Hiki 0.8.1 released!
+
+	* misc/hikifarm/index.cgi (run): not to use Hiki::Util.redirect as
+	a module function to avoid an error.
+
+	* misc/hikifarm/cvs.rb, misc/hikifarm/svn.rb: ReposCvs and
+	ReposSvnBase are derived from ReposBase instead of ReposDefault.
+
+	* misc/hikifarm/default.rb: methods of ReposBase raises an
+	exception because it should not to be instantiated.
+
+2005-07-14  Kazuhiko  <kazuhiko@fdiary.net>
+	* Hiki 0.8.1 released!
+
+	* hiki/command.rb (cmd_preview, cmd_save, cmd_admin),
+	template/adminform.html, template/edit.html,
+	template/i.adminform.html, template/i.edit.html: check the
+	session_id in cgi queries to avoid 'Cross-Site Request Forgeries'
+	vulnerabilities.
+
+	* hiki/command.rb (cmd_admin): raise PermissionError instead of
+	redirection to FrontPage.
+
+	* template/i.edit.html: remove needless 'freeze_msg'. add a link
+	to the editing form.
+
+	* plugin/00default.rb, template/edit.html, template/i.edit.html:
+	remove 'accesskey' attributes (closes #9).
+
+	* messages/en.rb, messages/fr.rb, messages/it.rb,
+	messages/ja.rb (msg_preview), template/edit.html: add a link to
+	the editing form (suggested by Kouhei Sutou).
+
+2005-07-13  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* test/test_repos_default.rb: add unit tests for ReposDefault.
+
+2005-07-13  Kazuhiko  <kazuhiko@fdiary.net>
+	* template/edit.html: remove needless 'freeze_msg'.
+	* hiki/command.rb (cmd_edit): preserve freeze status in preview
+	mode.
+
+	* hiki/util.rb (redirect): use 'meta refresh' if @conf.use_refresh
+	is set (reported by nkoz and 7743).
+
+	* hiki/command.rb: use an absolute path in the 'redirect'
+	method (reported by 7743).
+
+	* style/default/parser.rb (heading, link, blockquote),
+	style/rd+/parser.rb (heading, link, blockquote): add format
+	methods (suggested by Kouhei Sutou).
+	* misc/plugin/bbs.rb (bbs_post): use 'Parser.heading'.
+	* misc/plugin/trackback.rb (trackback_post): use 'Parser.link' and
+	'Parser.blockquote'.
+
+	* misc/plugin/comment.rb, misc/plugin/bbs.rb: use @user instead of
+	@cgi.cookies['auth_name'][0].
+
+	* misc/text/rd+/TextFormattingRules: revise URIs about the RD
+	format.
+
+	* plugin/00default.rb (create_menu): code cleanup.
+	(creatable?): add a new method.
+	* style/default/html_formatter.rb (make_link): use
+	'Plugin#creatable?' instead of 'Plugin#auth?' in missing anchors.
+
+	* misc/plugin/src.rb (src): add a title.
+
+	* hiki/command.rb (PermissionError): add a new exception class.
+	(dispatch): add an error message in the error page.
+	* template/error.html: display an error message.
+
+	* template/view.html: wrap main contents with 'div.main' and wrap
+	preview contents with 'div.preview'.
+
+	* hiki/repos/cvs.rb (import): use 'hiki' as a vendor-tag.
+
+2005-07-12  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/html_formatter.rb (tdiary_section): return empty
+	strings if contents is empty.
+
+	* hiki/command.rb (cmd_login), plugin/00default.rb (create_menu),
+	template/login.html: redirect to the current page (suggested by
+	hadai).
+
+	* misc/plugin/attach/attach.rb (attach_map): unescape page
+	names (by NAGASAKI).
+
+	* hiki/command.rb (cmd_login): use Plugin#login.
+	* misc/xmlrpc/xmlrpc.cgi: use Plugin#login and Plugin#editable?.
+	save 'editor' and 'title' correctly.
+	* plugin/00default.rb (editable?): add a new method.
+	* hiki/plugin.rb (login): add a new method to set '@user'.
+
+	* hiki-mode.el: support login and logout (by Takeshi UME Imai).
+
+2005-07-09  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* style/default/html_formatter.rb: fixed: a block plugin preceding
+	a heading level 1 (!) makes markup wrong.
+	* theme/hiki/hiki.css: widen padding-bottom of 'div.body h3'.
+
+2005-07-08  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* hiki/config.rb (load_messages): change name from guess_lang.
+	use all values in HTTP_ACCEPT_LANGUAGE. use 'en' as @lang when
+	resources of the acceptable languages is not found.
+	set @lang in this function instead of load().
+
+2005-07-08  Kazuhiko  <kazuhiko@fdiary.net>
+	* messages/fr.rb, messages/it.rb (msg_login_failure): add a
+	missing 'end'.
+	* hiki/config.rb (guess_lang): add a new method to detect
+	browsers' accept languages.
+
+2005-07-06  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* misc/i18n/hikiconf.rb.sample.en: add a setting of @base_url.
+
+2005-07-06  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/attach/attach.rb: export 'attach_form' method
+	(reported by Fu).
+
+2005-07-05  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/db/flatfile.rb (store): ignore Errno::EPERM in File::utime
+	(reported by hashi).
+
+	* hiki/command.rb (cmd_save): always save the 'editor' attribute.
+
+2005-07-04  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/pluginutil.rb (apply_plugin): catch all exceptions
+	(reported by Kouhei Sutou).
+
+	* style/default/html_formatter.rb (token_to_s): always use the
+	'plugin_error' method (reported by Kouhei Sutou).
+
+	* style/default/html_formatter.rb (toc): return more simple HTML.
+
+	* hiki/util.rb (plugin_error): escape exception messages (reported
+	by Kouhei Sutou).
+
+2005-07-03  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* style/default/html_formatter.rb (token_to_s): a double quote for
+	colspan is lacked.
+
+2005-07-02  Kazuhiko  <kazuhiko@fdiary.net>
+	* template/adminform.html: revise HTML (reported by Fu).
+
+2005-07-01  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/xmlrpc/xmlrpc.cgi: use 'Plugin#save' instead of
+	'HikiDB#save'.
+
+2005-06-29  Kazuhiko  <kazuhiko@fdiary.net>
+	* Hiki 0.8.0 released!
+
+	* plugin/02help.rb (help_enabled?): add a new method.
+
+	* template/edit.html, template/i.edit.html: set a value in a
+	'update_timestamp' checkbox (reported by KAWAI Masahiro).
+
+	* plugin/02help.rb, plugin/en/02help.rb, plugin/ja/02help.rb: add
+	a new plugin for support editing (by NAGASAKI).
+
+	* hiki/db/flatfile.rb (store): fix a bug in making a new page
+	without updating timestamp.
+
+	* misc/plugin/comment.rb (comment_post): not add emphasize and
+	link tags around a name (reported by Kouhei Sutou).
+
+	* plugin/00default.rb (br): add a new plugin method.
+
+	* hiki/command.rb (code_conv): add a new method for mobile agents.
+
+	* misc/plugin/amazon.rb: for a little modified of web site changing.
+
+2005-06-28  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* theme/hiki/hiki.css: revise the default theme.
+
+	* data/text/SideMenu, misc/text/rd+/SideMenu: SideMenu should
+	begin with a heading level 1.
+
+	* doc/README.txt, doc/INSTALL.txt: revise the documents.
+
+	* doc/README.en: add English README.
+
+2005-06-27  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/footnote.rb, misc/plugin/keyword.rb,
+	misc/plugin/orphan.rb, misc/plugin/pagerank.rb,
+	misc/plugin/referer.rb, misc/plugin/sitemap.rb: use
+	'export_plugin_methods'.
+
+	* misc/plugin/isbn.rb (isbn): revise bk1's uri. remove 'Fujisan'.
+
+	* misc/plugin/rss-show.rb: use 'rss-show/' directory under the
+	cache path.
+
+	* hiki/config.rb (load): mkdir a cache path if not exists.
+
+	* misc/plugin/readlirs.rb: use 'readlirs/' directory under the
+	cache path.
+
+	* misc/plugin/about.rb, remap_headings.rb: removed.
+	* misc/plugin/quote_page.rb: merge remap_headings.rb.
+
+	* misc/plugin/template.rb: support configuration via browsers.
+
+2005-06-25  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/hikifarm/index.cgi: check the remote repository condition
+	only if @repos_root exists (reported by NAGASAKI).
+
+2005-06-25  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* misc/text/default.en/*: add English data.
+	* data/text/EnglishTextFormattingRules: moved to
+	`misc/text/default.en/TextFormattingRules'.
+	* misc/text/default: removed because this is same to `data/text'.
+
+	* doc/INSTALL.en: add English data information to the document.
+
+	* misc/text/default.en/TextFormattingRules: reviced.
+
+	* misc/i18n/hikiconf.rb.sample.en: add a new file.
+
+2005-06-24  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* plugin/00default.rb, plugin/en/00default.rb,
+	plugin/fr/00default.rb, plugin/it/00default.rb,
+	plugin/ja/00default.rb: show a result message when admin password
+	is tried to be changed.
+	* doc/INSTALL.en: add an English document for installation.
+
+2005-06-24  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/config.rb (mobile_agent?): add a new method.
+	* hiki/page.rb, plugin/00default.rb: support mobile agents.
+	* style/default/html_formatter.rb (toc, apply_tdiary_theme):
+	support mobile agents
+
+	* hiki/repos/svn.rb: code cleanup.
+	* misc/hikifarm/index.cgi: revise the condition whether the
+	repository is local.
+
+2005-06-23  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/command.rb (generate_page): support 'toc' and 'toc_here'
+	plugins.
+	* plugin/00default.rb (toc_here): add a new plugin method.
+	(toc): display table of content at the top of the text for
+	backword compatibility.
+
+2005-06-23  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* hiki/config.rb (load), hikiconf.rb.sample: most of the instance
+	variables of Config class are now configurable in hikiconf.rb.
+
+2005-06-23  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/config.rb, plugin/00default.rb, plugin/en/00default.rb,
+	plugin/fr/00default.rb, plugin/it/00default.rb,
+	plugin/ja/00default.rb, template/hiki.conf: support configuration
+	of using the WikiName feature (by NAGASAKI).
+
+	* data/text/TextFormattingRules,
+	misc/text/default/TextFormattingRules: update (by fumifumi).
+
+	* style/default/parser.rb (parse): fix a bug in parsing plugins in
+	pre-formatted texts.
+
+	* style/default/parser.rb (parse_line): the format of table
+	headers is changed from '||~' to '||!' (suggested by Kouhei
+	Yanagita).
+
+	* hiki/command.rb, hiki/plugin.rb, hiki/db/flatfile.rb,
+	template/edit.html: support minor change edit that does not update
+	the timestamp (by hadai).
+	* messages/en.rb, messages/fr.rb, messages/it.rb, messages/ja.rb:
+	add 'msg_update_timestamp'.
+
+	* hiki/command.rb (cmd_edit): preserve keywords in preview mode.
+	escapeHTML keywords.
+
+2005-06-22  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* theme/hiki/hiki.css: revise the default theme.
+
+2005-06-22  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/command.rb (cmd_edit), template/edit.html: support
+	'{{toc}}' in the preview mode.
+
+	* plugin/00default.rb (toc), hiki/command.rb (generate_page),
+	template/view.html: display table of contents where '{{toc}}'
+	appears.
+
+2005-06-22  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* theme/hiki_base.css: add CSS for printing.
+
+2005-06-21  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/history.rb: fix bugs with default repos (reported by
+	Yazawa).
+
+	* hiki/plugin.rb (admin?): return true if the admin password is
+	empty.
+	* hiki/command.rb (initialize): not set @user if the admin
+	password is empty (suggested by Kouhei Sutou).
+
+	* style/default/parser.rb: support comments.
+
+	* util/plugin.rb, style/default/html_formatter.rb: support
+	inline/block contexts (by Kenta MURATA).
+
+	* style/default/parser.rb, style/default/html_formatter.rb:
+	support table headers and cell connections (by fumifumi and
+	NAGASAKI).
+
+2005-06-20  Kazuhiko  <kazuhiko@fdiary.net>
+	* plugin/00default.rb (anchor): add cgi_name for valid html
+	outputs.
+
+	* hiki/repos/default.rb (get_revision, revisions): add new
+	methods.
+	* misc/plugin/history.rb: support default repos. not display
+	'[Diff to ]' if the page has only one revision.
+
+2005-06-17  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/page.rb (out): accept headers hash as an argument.
+	* hiki/command.rb (generate_error_page): add a new method to
+	display an error page.
+	* template/error.html: add a new template file.
+
+	* misc/plugin/attach/attach.rb (attach_download): display an error
+	message if the file does not exist. use
+	'export_plugin_methods' (by Yazawa).
+	* misc/plugin/attach/attach.cgi: use Hiki::Utils::redirect (by
+	Yazawa).
+
+2005-06-16  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* hiki/command.rb (cmd_login), messages/en.rb, messages/fr.rb,
+	messages/it.rb, messages/ja.rb,
+	template/login.html (msg_login_failure): show a message when login
+	failure.
+
+2005-06-16  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/db/flatfile.rb (save): raise an exception with informations
+	about the incompatibility.
+	* hiki/plugin.rb (load, load_backup): add methods which are
+	aliases of HikiDB#load and HikiDB#load_backup.
+
+	* hiki/db/flatfile.rb (store): add 'preserve' option to keep
+	modified time.
+
+	* hiki/repos/svn.rb (revisions): use Time#strftime instead of
+	Time#to_s since Time#to_s may contains SJIS characters in mingw32
+	ruby (suggested by Atsushi Koga).
+	* view/template.html: ditto.
+
+	* hiki/command.rb (cmd_edit): support editing with a specified
+	revision.
+	* misc/plugin/history.rb: add a link to revert to a specified
+	revision.
+
+	* hiki/repos/cvs.rb (get_revision, revisions): add new methods.
+	* hiki/repos/svn.rb (get_revision, revisions): ditto.
+	* misc/plugin/history.rb: follow the changes.
+
+	* hiki/plugin.rb (Hiki::Plugin): add new instance variable @data.
+	* hiki/command.rb (generate_page): merge @plugin.data to control
+	parameters from plugins.
+
+	* hiki/repos/svn.rb: support Windows (suggested by Atsushi Koga).
+
+	* hiki/util.rb (Util::get_common_data): load a cache of 'SideMenu'
+	if exists (by Yazawa).
+
+	* style/default/html_formatter.rb (HTMLFormatter_default::make_link):
+	fix a bug that loses wikinames in the table of contents.
+
+2005-06-15  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/attach/attach.rb: use @options['attach.cgi_name']
+	to change the filename of 'attach.cgi' (by Koichiro Ohba).
+
+	* style/default/html_formatter.rb: add 'class="external"' to
+	InterWiki links (report by Kazuhiro NISHIYAMA).
+
+	* template/edit.html: move 'preview' and 'save' button just next
+	to the textarea.
+
+	* hiki/aliaswiki.rb (AliasWiki::initialize): the argument is now
+	contents of the aliaswiki page instead of 'db' and 'conf'.
+	* hiki/interwiki.rb (InterWiki::initialize): the argument is now
+	contents of the aliaswiki page instead of 'db', 'conf' and
+	'plugin'.
+	* style/default/html_formatter.rb: follow changes of
+	aliaswiki.rb and interwiki.rb.
+
+	* style/default/html_formatter.rb: make a normal anchor if a link
+	is missing interwiki link (by Kouhei Sutou).
+
+2005-06-14  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/en/edit_user.rb (label_edit_user_title): add a
+	missing resource (by GOTO Naohisa).
+
+	* template/login.html, messages/en.rb, messages/fr.rb,
+	messages/it.rb, messages/ja.rb (msg_login_info): add an
+	information about admin login.
+
+	* misc/plugin/history.rb: not display changes in 'svn' or
+	'svnsingle' mode (by ISOBE, Kazuhiko).
+
+2005-06-13  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* hiki/command.rb, hiki/config.rb, hiki/plugin.rb: use
+	Config#admin_name as a admin's login name.
+
+2005-06-13  Kazuhiko  <kazuhiko@fdiary.net>
+	* plugin/00default.rb: use '@user' for a commit message if exists.
+	* hiki/repos/svn.rb (ReposSvnBase::commit, ReposSvnBase::delete):
+	add a second argument for a commit message.
+	* hiki/repos/cvs.rb: ditto.
+	* hiki/repos/default.rb (ReposDefault::default_msg): add a new
+	method for the default commit message.
+
+2005-06-12  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/edit_user.rb (saveconf_edit_user): fix a typo of the
+	field name for user authentication (report by ISOBE, Kazuhiko).
+
+2005-06-11  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/parser.rb: revise the regexp of PLUGIN not to
+	allow '}}' in arguments.
+
+2005-06-10  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/search.rb (search_form): rename from 'search'. use
+	'export_plugin_methods'. add resource files.
+
+	* hiki/plugin.rb (Plugin::load_plugin): 'export_plugin_methods'
+	now works for not only a plugin but also a plugin and its resource
+	files.
+
+	* misc/plugin/attach/attach.rb: set the default value of
+	'attach.form' to 'edit'.
+
+	* hiki/command.rb (Command::cmd_view): not add a search link to
+	'view_title'.
+
+2005-06-09  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/plugin.rb (Plugin::load_file): export no methods if
+	'export_plugin_methods' is called without arguments.
+
+2005-06-09  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* misc/plugin/google-sitemaps.rb: add a new plugin.
+
+2005-06-09  Kazuhiko  <kazuhiko@fdiary.net>
+	* template/login.html: add a new template. input name and
+	password.
+
+	* hiki/plugin.rb (Plugin::admin?): add a new method.
+	* template/edit.html: remove a password field. display a checkbox
+	to freeze a page for 'admin' only.
+	* plugin/00default.rb: display acceptable menues only.
+	* hiki/command.rb (Command::cmd_save): use Plugin#admin?.
+
+	* hiki/storage.rb (HikiDBBase::backup): add a new method.
+	* hiki/db/flatfile.rb (HikiDB::store): call backup method first.
+
+	* hiki/pluginutil.rb (Util::convert_value, Util::argwords): take
+	'0123' as String.
+
+	* hiki/util.rb (Util::redirect): use 'Location' header instead of
+	'meta refresh'.
+
+	* hiki/command.rb (Command::initialize): automatically login as
+	'admin' if admin password is empty.
+
+2005-06-08  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/config.rb (Config::default): add an entry of 'login' in
+	@template.
+	* hiki/command.rb (Command::cmd_theme,
+	Command::admin_enter_password): remove needless methods.
+
+	* misc/plugin/edit_user.rb: add a new plugin.
+	* hiki/command.rb (cmd_login): support @conf['user.list'] that is
+	made by 'edit_user.rb' plugin.
+
+	* misc/plugin/rss.rb: use export_plugin_methods. support hiding
+	RSS menu.
+
+	* hiki/storage.rb (load_cache): only use cache files with same
+	HIKI_RELEASE_DATE.
+
+	* style/default/parser.rb: support multiple line plugins.
+	* style/default/html_formatter.rb (call_plugin_method): use
+	apply_plugin method in pluginutil.rb.
+	* hiki/util.rb (csv_split): remove a needless method.
+
+2005-06-07  Kazuhiko  <kazuhiko@fdiary.net>
+	* messages/en.rb, messages/fr.rb, messages/it.rb,
+	messages/ja.rb (msg_password_title): remove a needless message.
+	(msg_login): add a new message.
+
+	* misc/plugin/auth_typekey.rb: save 'auth_name' in a session file
+	instead of browser's cookie.
+
+	* hiki/command.rb (Command::cmd_view): redirect to FrontPage if a
+	page name is invalid.
+	(Command::template, Command::themes): remove needless methods.
+
+2005-06-06  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/page.rb (Page::process): rename from 'Page#page'.
+	(Page::out): add a new method.
+
+	* hiki/command.rb (Command::initialize): not put @plugin to @db.
+	(dispatch): redirect to FrontPage if a command is invalid.
+	(Command::themes): remove a needless method.
+
+	* hiki/storage.rb (HikiDBBase::save): move to 'Plugin#save'.
+	* misc/plugin/bbs.rb, misc/plugin/comment.rb,
+	misc/plugin/trackback.rb: use 'Plugin#save' instead of 'DB#save'.
+
+	* hiki/plugin.rb (Plugin::load_file): rename from 'Plugin#load'.
+	* hiki/config.rb (Config::load): fix a typo (main_on_update ->
+	mail_on_update).
+	(Config::read_template): add a new method.
+
+2005-06-06  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* misc/plugin/{rss-show.rb,trackback.rb}: remove needless
+	`require's.
+
+2005-06-06  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* misc/plugin/rss-show.rb (rss_parse): use Hiki::Util::utf8_to_euc.
+	* misc/plugin/trackback.rb (trackback_post): use
+	Hiki::Util::utf8_to_euc.
+
+2005-06-03  Masanori KADO  <QVE02451@nifty.com>
+	* misc/plugin/rss-show.rb (rss_show): add an argument to set the
+	number of items.
+
+2005-05-30  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/parser.rb (Parser_default::inline_impl): treat as
+	'reference' if interwiki's name is empty.
+
+2005-05-24  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/util.rb (Util::sendmail): make a MIME encoded subject.
+	(Util::send_updating_mail): use 'site_name' as a prefix of a
+	subject (by kdmsnr).
+
+2005-05-22  KOMATSU Shinichiro <koma2@lovepeers.org>
+	* misc/plugin/attach/attach.cgi (attach_file): If the attached file
+	contains scripts, deny it. ([Hiki-dev:00747])
+
+2005-05-21  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* hiki/image_size.rb (ImageSize::check_type): revise HTML
+	detection algorithm.
+
+2005-05-21  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/image_size.rb (ImageSize::check_type): revise HTML
+	detection algorithm.
+
+	* misc/plugin/attach/attach.rb (attach_download): use 'image_size'
+	library and set 'Content-Disposition: inline' if an attached file
+	is an image.
+	* hiki/image_size.rb: add a new file made by Keisuke Minami.
+	(ImageSize::mime_type): add a new method.
+	(ImageSize::check_type): treat as non-image file if 'script' tags
+	are included.
+
+	* misc/hikifarm/index.cgi: support symlinks.
+
+2005-05-21  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* misc/hikifarm/{index.cgi,hikifarm.conf,template/*}: separate
+	template files of Hikifarm.
+
+2005-05-21  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/hikifarm/index.cgi: support RSS output and add a link to a
+	wiki without any page by Kouhei Sutou.
+
+	* misc/hikifarm/index.cgi: define 'hikifarm_path' automatically.
+
+2005-05-19  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/hikifarm/index.cgi: support hiki.conf made by hiki 0.6.x.
+
+2005-05-19  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* hiki.cgi: use CGI.escapeHTML.
+
+2005-05-19  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* hiki.cgi: use text/html (not text/plain) to show error page
+	when an exception is raised.
+
+2005-05-17  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/local_css.rb: remove. use 'append-css.rb' instead.
+
+	* hiki/util.rb: change the class name from 'DocDiff' to 'Diff'.
+	* hiki/config.rb: add a new constant 'HIKI_RELEASE_DATE'.
+
+2005-05-12  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/attach/attach.rb (attach_image_anchor): remove a
+	needless tag (report by 7743).
+
+	* style/rd+/rd2html.rb (RD2HTMLVisitor::apply_to_Verbatim):
+	support tables if RTtool is available (by GOTOU Yuuzou).
+
+	* style/default/parser.rb (Parser_default::inline_impl): support a
+	block plugin (by Yazawa).
+
+2005-05-11  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/hikifarm/index.cgi: revise for mod_ruby. support a wiki
+	without any page.
+
+	* style/default/html_formatter.rb
+	(HTMLFormatter_default::token_to_s): display page's title if
+	available.
+
+2005-05-10  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki.cgi, misc/plugin/attach/attach.cgi: use absolute paths for
+	load paths.
+
+2005-05-09  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* misc/hikifarm/*: Hikifarm のコードを書き直し、
+	バージョン管理バックエンドのセットアップを分離した。
+	* test/test_hikifarm.rb: Hikifarm の Test Case
+	を追加した。
+
+2005-05-09  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/storage.rb (HikiDBBase::save_cache): revise for mod_ruby
+	(by Yazawa).
+
+	* style/default/parser.rb (parse_line): not make empty <dt> tags.
+
+2005-05-08  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/footnote.rb (fn): fix a multiple escapeHTML problem.
+
+2005-05-06  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki.cgi, misc/plugin/attach/attach.cgi: support a relative
+	symlink link.
+
+2005-05-02  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki-mode.el (hiki-fetch-source): follow the change of
+	'edit.rhtml'.
+
+2005-04-27  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/page.rb (Page::page): set an empty 'page_attribute' if nil.
+
+2005-04-26  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/rss-show.rb (rss_parse): revise a regexp of rss (by
+	kdmsnr).
+	* hiki/storage.rb (HikiDBBase::load_cache): read cache files by
+	binary mode.
+
+2005-04-22  Kazuhiko  <kazuhiko@fdiary.net>
+	* template/adminform.html: output a correct <h2> header (by
+	Yazawa).
+	* hiki/command.rb (Command::cmd_edit), template/edit.html,
+	template/view.html: output more valid HTML (by Yazawa).
+
+	* hiki.cgi: remove the current directory from $: when it is
+	writable.
+
+2005-04-20  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* hiki/misc/hiki-mode/*: hiki-mode.el を Attic から復活。
+
+2005-04-11  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* hiki/style/default/html_formatter.rb (token_to_s): h2 の
+	span.sanchor に `_' を入れていたのをやめて、&nbsp; にした。
+
+2005-04-10  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* hiki/repos/svn.rb, hiki/repos/svnsingle.rb,
+	misc/hikifarm/index.cgi, misc/hikifarm/hikifarm.conf: svn バックエ
+	ンドで、リポジトリの作り方が変だったのを修正。
+
+	* misc/plugin/history.rb: svn バックエンドで、ログが表示されていな
+	かったのを修正。
+
+2005-04-05  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/hikifarm/index.cgi: fix a bug in collecting site_name
+	(reported by kdmsnr). remove the current directory from $: when it
+	is writable (by hsuzuki)
+
+2005-04-01  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/command.rb (Command::cmd_admin, Command::admin_config): 不要
+	なコードの削除
+
+2005-03-26  Kazuhiko  <kazuhiko@fdiary.net>
+	* plugin/00default.rb (saveconf_theme): テーマ一覧取得のバグを修正
+
+2005-03-24  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* misc/hikifarm/hiki.conf: hikifarm.conf の data_path の値を使うよ
+	うに修正
+
+2005-03-22  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/xmlrpc/xmlrpc.cgi: options['params'] の初期化のバグを修正
+	report by Yoshikazu TAKATA
+
+2005-03-20  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/interwiki.rb: utf8 に対応 report by Zeus
+
+2005-03-18  Kouhei Yanagita <sugi@dream.big.or.jp>
+	* plugin/00default.rb, style/default/html_formatter.rb,
+	style/rd+/rd2html.rb: URL 形式のリンクに class="external" を付けた。
+
+2005-03-17  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/xmlrpc/xmlrpc.cgi: XMLRPC サーバを追加
+
+2005-03-15  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
+	* misc/plugin/00default.rb, misc/plugin/*/00default.rb: パスワード
+	変更時、パスワード間違っている場合にエラーメッセージを表示するよう
+	に修正 thanks to Kouhei Yanagita
+	* misc/plugin/keyword.rb: <h2> から <h3>へ変更
+	* misc/plugin/referer.rb: ファイル名をuntaintするように修正 by NOB
+
+2005-03-14  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/attach/attach.cgi: ファイル名を保存時にエスケープする
+	ように修正 by Yazawa
+
+2005-03-06  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/auth_typekey.rb: token を設定するまでは auth が true
+	になるように修正
+	* misc/plugin/ja/auth_typekey.rb: リソースの分離
+
+	* misc/plugin/math.rb: 設定画面の出力をエスケープするように修正
+
+2005-03-06  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
+	* hiki/auth/typekey.rb: conf_proc への対応
+	* hiki/session.rb: セション有効期間を変更可能に
+
+2005-03-05  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
+	* hiki/command.rb hiki/config.rb plugin/00default.rb
+	style/default/html_formatter.rb theme/hiki/hiki.css
+	misc/plugin/auth_typekey.rb hiki/auth/typekey.rb: TypeKey 認証の
+	サポート。
+	* misc/plugin/note.rb: 認証されていない場合はメニューを出さない
+	* misc/plugin/bbs.rb misc/plugin/comment.rb: 認証されている場合
+	名前欄に設定。
+
+2005-03-04  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/ja/attach.rb misc/plugin/ja/bbs.rb
+	misc/plugin/ja/comment.rb misc/plugin/ja/frozenmark.rb
+	misc/plugin/ja/history.rb misc/plugin/ja/referer.rb
+	misc/plugin/ja/src.rb misc/plugin/ja/template.rb: 日本語リソースを
+	分離
+
+	* hiki/plugin.rb (Plugin::load_plugin): プラグイン本体のロードをリ
+	ソースのロードよりも先に行うように修正 → この変更はキャンセル
+
+2005-03-03  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/rss.rb: 出力のフォーマットに従来の unified diff に加
+	えて word diff (ダイジェスト) と word diff (全文) を選べるようにし
+	て、管理画面での設定に対応
+	* hiki/util.rb (Util::word_diff): 第 3 引数を digest モードの真偽に
+	変更 (デフォルトは偽)
+	(Util::word_diff_text): plain text 用 word_diff メソッドを移動
+	* hiki/docdiff/view.rb (View::apply_style_digest): 差分が無いときは
+	空 Array を返すように変更
+	(View::html_tags): <ul>...</ul> 内の <hr /> を削除
+
+	* misc/plugin/incremental_search.rb: ajaxsearch.rb から改名
+
+2005-03-02  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/footnote.rb: view 時以外は add_*_proc を実行しないよ
+	うに修正
+
+	* misc/plugin/ajaxsearch.rb: 新プラグインの追加 by Michitaka Ohno
+
+	* hiki/plugin.rb (Plugin::add_plugin_command): display_text が偽の
+	時は plugin_menu に追加しないように変更
+	* hiki/command.rb (Command::dispatch): プラグインの提供するコマンド
+	を優先するように変更
+
+2005-03-01  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/plugin.rb (Plugin::initialize): インスタンス変数 '@cookies'
+	を追加
+	(Plugin::cookie_path): 新メソッドの追加
+	* hiki/page.rb (Page::page): クッキーがあれば出力するように変更
+	* template/adminform.html: セッション ID をクエリーで渡すのを廃止
+	* hiki/command.rb (Command::cmd_admin): セッションの管理をクッキー
+	で行うように変更
+	(Command::cmd_logout): ログアウトの追加
+	* plugin/00default.rb (hiki_menu): ログアウトの追加
+	* hiki/session.rb (Session::delete): 新メソッドの追加
+	(Session::initialize): 有効期限が切れたセッションファイルのみ削除す
+	るように変更
+
+	* plugin/en/00default.rb, messages/en.rb: メッセージの修正 by
+	Steve Brumbaugh
+
+2005-02-28  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/command.rb (cmd_create): 新規作成時に CGI 変数 'text' でデフォ
+	ルトのテキストを指定できるように変更
+	* misc/plugin/note.rb: 新プラグインの追加 thanks to joesaisan
+
+2005-02-21  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/rss.rb (rss_body): diff が空の時は先頭を出力するよう
+	に変更
+
+2005-02-16  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/rss.rb (rss_body), misc/plugin/src.rb (src),
+	misc/plugin/history.rb (history_src): 空白を '&nbsp;' で出力する用
+	に修正
+
+2005-02-15  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/src.rb (src), misc/plugin/history.rb (history_src,
+	history_diff): 出力を <pre> から <div> に変更
+	(parse_history): require 'time' の追加
+
+2005-02-14  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/command.rb (cmd_edit, cmd_diff), template/diff.html,
+	template/edit.html, misc/plugin/rss.rb: diff の出力を <pre> から
+	<div> に変更
+
+	* hiki/pluginutil.rb (Hiki::Util::methodwords): パースの修正 by
+	Masao Mutoh
+
+	* misc/plugin/comment.rb (rcomment): 逆順コメント用メソッド
+	'rcomment' の追加 by KADO Masanori
+
+2005-02-08  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/history.rb: リンクの追加 by Kouhei Sutou
+
+2005-02-01  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/diffmail.rb: プラグインによる更新時に、タイトルやキー
+	ワードが変化したように報告される不具合を修正
+
+2005-01-31  Kazuhiko  <kazuhiko@fdiary.net>
+	* plugin/en/00default.rb, plugin/fr/00default.rb,
+	plugin/it/00default.rb, plugin/ja/00default.rb: プルダウンの設定項
+	目をあらかじめ選択するように修正 report by GOTO Naohisa
+
+	* hiki/command.rb (admin_config), hiki/page.rb (page): save_config
+	の呼び出し条件を確認するように修正
+
+	* hiki/plugin.rb (initialize): 例外時にプラグインのファイル名が表示
+	されるように修正 by U.Nakamura
+
+	* hiki/storage.rb (load_cache, save_cache, delete_cache): パ−サ
+	キャッシュの処理を command.rb から移動
+	(save, delete): delete_cache を呼ぶように変更
+
+	* hiki/command.rb (cmd_view): 上記を使うように変更
+	(cmd_save): キャッシュの削除は上記で行うように変更
+
+2005-01-30  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/diffmail.rb: タイトル比較のエスケープを修正
+
+	* style/default/html_formatter.rb (apply_tdiary_theme): H2 がない場
+	合に本文が出力されない不具合の修正 report by kdmsnr
+
+	* hiki/plugin.rb (load_plugin): 言語リソースがない時に英語または日
+	本語のリソースをロードするように変更
+
+	* template/hiki.conf: options2 の保存に TMarshal::dump を使うように
+	変更
+
+2005-01-29  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/command.rb (load_plugin): Hiki::Plugin クラスに移動
+
+	* plugin/01sp.rb, plugin/en/01sp.rb, plugin/fr/01sp.rb,
+	plugin/it/01sp.rb, plugin/ja/01sp.rb: tDiary のプラグイン選択プラグ
+	インを導入 (fr, it は未訳)
+
+	* style/math/html_formatter.rb, style/math/latex.rb,
+	misc/plugin/math.rb: style/math/parser.rb: Math スタイルの拡張 by
+	Kenta MURATA
+
+	* hiki/config.rb, template/hiki.conf: tDiary 風にプラグインのオプショ
+	ンを保存できるように変更
+
+2005-01-28  Kazuhiko  <kazuhiko@fdiary.net>
+	* plugin/00default.rb (hiki_header): タイトルが二度 escapeHTML され
+	ているのを修正
+
+	* style/default/html_formatter.rb (auto_link): オートリンクのページ
+	名が二度 escapeHTML されているのを修正
+
+	* style/default/html_formatter.rb: より tDiary 風の HTML を出力する
+	ように修正 by す
+
+	* data/text/InterWikiName, misc/text/default/InterWikiName,
+	misc/text/rd+/InterWikiName: RWiki のリンクを更新 by す
+
+2005-01-27  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/diffmail.rb: diffmail2.rb の内容で上書き
+	* hiki/command.rb (cmd_edit): conflict 時の diff を word_diff に変更
+	* hiki/util.rb (diff_t, diff): 削除
+	(unified_diff): DocDiff::EditScript#unidiff に変更
+	* hiki/storage.rb (diff): 削除
+
+2005-01-26  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/command.rb (cmd_view): parser の出力をキャッシュ
+	(cmd_save): parser キャッシュを削除
+
+2005-01-24  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/command.rb, hiki/page.rb, hiki/util.rb: Amrita の代わりに
+	erb を使用するように変更
+	* hiki/config.rb: lang 設定によらず共通のテンプレートファイルを使用
+	するように変更
+	* hiki/plugin.rb, plugin/00default.rb: conf_proc に対応
+	* plugin/en/00default.rb, plugin/ja/00default.rb: 追加
+
+2005-01-23  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/html_formatter.rb (apply_tdiary_theme): 見出し行連
+	続時に出力されない不具合の修正 by す
+
+2005-01-21  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/repos/cvs.rb, hiki/repos/svn.rb: 開設者の IP アドレスをイン
+	ポート時のコミットログに記すように変更
+
+2005-01-15  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/html_formatter.rb (token_to_s, tdiary_section): 不
+	要な改行の削除 report by ibs
+
+2005-01-14  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/rss.rb (rss_body): <language> を <dc:language> に、
+	<copyright> を <dc:rights> に変更 by Masahiro Sakai
+
+	* hiki/util.rb: Hash#key が無い場合に定義するように変更
+	* hiki/aliaswiki.rb, style/default/html_formatter.rb: Hash#index の
+	代わりに Hash#key を使うように変更
+
+2005-01-10  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/attach/attach.cgi: hiki/ を $: に追加するように変更
+
+	* hiki/util.rb (Hiki::Util::euc_to_utf8, Hiki::Util::utf8_to_euc):
+	追加
+
+2005-01-08  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/command.rb (Hiki::Command::cmd_edit): コンフリクト時の
+	バグの修正
+
+2005-01-07  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/footnote.rb (render): footnote プラグイン内部ではプラ
+	グインを無効にするように修正
+
+	* hiki/docdiff/charstring.rb: 今のところ Hiki では不要な require
+	'iconv' を削除
+
+	* hiki/config.rb (Hiki::Config::bot?): 追加
+	* plugin/00default.rb (hiki_menu): bot アクセス時はページ一覧以外の
+	メニューを出さないように変更
+
+	* template/en/view.html, template/fr/view.html,
+	template/it/view.html, template/ja/view.html: page_title のリンクを
+	削除
+
+2005-01-06  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/docdiff: 追加 <http://raa.ruby-lang.org/project/docdiff/>
+	* hiki/util.rb (Hiki::Util::word_diff): 追加
+	* hiki/command.rb (Hiki::Command::cmd_diff): word_diff を使うように
+	変更
+	* misc/plugin/history.rb: word_diff を使うように変更
+
+	* hiki.cgi: hiki/ を $: に追加するように変更
+
+2005-01-04  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/rss.rb (rss_body): 差分を content:encoded として出力
+	するように変更
+
+	* hiki/util.rb (Hiki::Util::diff): 引数を「差分、旧、HTML フラグ」
+	から「旧、新、HTML フラグ」に変更
+	* hiki/command.rb (Hiki::Command::cmd_edit,
+	Hiki::Command::cmd_diff): Hiki::Util::diff の仕様にあわせて変更
+
+	* hiki/util.rb (Hiki::Util::unified_diff): 追加
+	* misc/plugin/diffmail2.rb (updating_mail):
+	Hiki::Util::unified_diff を使うように変更
+
+	* misc/plugin/diffmail.rb (updating_mail): Hiki::Util::diff を使う
+	ように変更
+
+	* hiki/db/ptstore.rb: ruby-1.8.2 の pstore.rb に追従
+
+2005-01-03  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/db/tmarshal.rb: 標準クラスに dump_text を追加するのを廃止
+	(TMarshal::dump_text): 追加。Hash の出力を key でソートするように変
+	更
+	(TMarshal::load): String の場合は read を呼ばないように変更
+
+	* hiki/db/flatfile.rb (Hiki::HikiDB::touch): 削除
+
+2004-12-31  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/attach/attach.rb: 強制的にダウンロードされるように修
+	正 report by Kazuhiro NISHIYAMA
+
+2004-12-26  KOMATSU Shinichiro  <koma2@ms.u-tokyo.ac.jp>
+	* hiki/command.rb: hiki/hiki_formatter.rb は使われていないので、
+	require しない。
+
+2004-12-25  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/parser.rb: 使われていないので削除
+
+2004-12-24  KOMATSU Shinichiro  <koma2@ms.u-tokyo.ac.jp>
+	* misc/plugin/quote_page.rb: s/Parser/@conf.parser/;
+	s/HTMLFormatter/@conf.formatter/
+	* misc/plugin/about.rb: s/Parser/Parser_default/;
+	s/HTMLFormatter/HTMLFormatter_default/ reported by Kouhei
+	Yanagita ([Hiki-dev:00615])
+
+2004-12-22  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/html_formatter.rb, style/default/parser.rb: コード
+	の整理 by Kenta MURATA
+
+	* style/math/html_formatter.rb, style/math/latex.rb,
+	misc/plugin/math.rb: style/math/parser.rb: Math スタイルの追加 by
+	Kenta MURATA
+
+2004-12-19  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/util.rb (Hiki::Util::send_updating_mail): HTTP 認証時は
+	REMOTE_USER 情報を付加するように変更 by Zaki
+
+2004-12-18  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/attach/attach.cgi: アップロードするファイルサイズの最
+	大値を @options['attach_size'] で指定できるように修正 (無指定時は
+	1MB)
+
+2004-12-18  KOMATSU Shinichiro  <koma2@ms.u-tokyo.ac.jp>
+	* hiki/db/flatfile.rb (Hiki::HikiDB), hiki/config.rb (Hiki::Config):
+	Hiki::Config の @pages_path, @backup_path, @info_db は
+	Hiki::HikiDB に移動。@pages_path のみ attr_reader として
+	外部から読むことを可能にする。
+	* misc/plugin/history.rb: 上記の変更に対応
+
+	* hiki/db/flatfile.rb (Hiki::HikiDB::create_infodb):
+	private メソッドに変更。
+	* hiki/db/flatfile.rb (Hiki::HikiDB::create_missing_dirs):
+	追加(private)。@pages_path, @backup_path が存在しない時は作成する。
+	* hiki/db/flatfile.rb (Hiki::HikiDB::textdir,
+	Hiki::HikiDB::backupdir): File::join を使用。
+
+2004-12-18  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/util.rb (Hiki::Util::diff): テキスト用の差分出力に対応
+	* style/default/html_formatter.rb, style/rd+/html_formatter.rb:
+	diff メソッドを Hiki::Util モジュールに移動
+
+2004-12-16  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/db/ptstore.rb (PTStore::transaction): 確実にアンロックするよ
+	うに修正
+
+2004-12-15  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/footnote.rb: 不具合の修正
+
+2004-12-14  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki.cgi: コードの整理
+
+	* messages/en.rb, messages/fr.rb, messages/it.rb, messages/ja.rb:
+	個別のモジュール名で定義するように変更
+	* hiki/command.rb, hiki/config.rb, hiki/storage.rb, hiki/util.rb,
+	misc/plugin/recent2.rb: それにあわせた変更
+
+	* hiki/command.rb, hiki/config.rb, misc/plugin/footnote.rb,
+	misc/plugin/history.rb: conf.parser と conf.formatter を String で
+	はなく Class で保存するように変更
+
+	* misc/plugin/footnote.rb: 脚注の中身をパースするように変更
+
+	* misc/plugin/attach/attach.cgi: $SAFE = 1 向け修正 by KAKUTANI
+	Shintaro
+	* misc/plugin/attach/attach.rb: 拡張子に sql と yaml を追加
+
+2004-12-14  KOMATSU Shinichiro  <koma2@ms.u-tokyo.ac.jp>
+	* misc/hikifarm/index.cgi, hiki/config.rb,
+	hiki/repos/cvs.rb hiki/repos/default.rb hiki/repos/svn.rb,
+	hiki.cgi, plugin/00default.rb: hikifarm と plugin の中の
+	リポジトリ回りのコードを hiki/repos/ に移動 ([Hiki-dev:00600])。
+
+2004-12-07  Kazuhiko  <kazuhiko@fdiary.net>
+	* data/text/EnglishTextFormattingRules,
+	misc/text/default/EnglishTextFormattingRules: 英語版の追加 thanks
+	to Steve Brumbaugh
+
+2004-10-31  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/history.rb (Hiki::History::history_diff): svn での不
+	具合の修正 by zaki
+
+	* misc/plugin/history.rb (Hiki::History::history): svn での不具合
+	の修正 by 滝沢
+
+	* misc/hikifarm/index.cgi: $SAFE = 1 向け修正 by 柳田
+
+2004-09-28  Kazuhiko  <kazuhiko@fdiary.net>
+	* theme/hiki/hiki.css: IE5 向けに @media screen に div.main を追加
+
+	* misc/plugin/rss.rb: RSS Auto Discovery に対応 by 柳田
+	* misc/hikifarm/index.cgi: $SAFE = 1 の追加 by 柳田
+
+2004-09-23  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/referer.rb: escapeHTML するように修正 thanks to みや
+	ざわ
+
+	* misc/hikifarm/index.cgi: POST メソッドか判定するように修正
+
+2004-09-22  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/attach/attach.cgi: ページ名の escape しすぎを修正
+	$defout.binmode の追加
+
+2004-09-14  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/attach/attach.rb (attach_src):
+	@options['attach.show_linenum] が true なら行番号を表示するように
+	変更
+
+	* hikiconf.rb.sample, hiki/config.rb,
+	style/default/html_formatter.rb: WikiName によるリンクを使うかどう
+	かを @use_wikiname で制御できるように変更
+
+2004-09-13  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/util.rb (Hiki::Util::shorten): 追加
+	* misc/plugin/trackback.rb: TrackBack 受信時刻の表示を追加。長すぎ
+	る excerpt を shorten するように変更
+
+	* hiki/config.rb, hiki/util.rb: Hiki::Util::base_url から
+	Hiki::Config::base_url に移動
+
+	* hiki/config.rb: index_page を廃止し、かわりに index_url を追加。
+	base_url と cgi_name から自動生成
+
+	* hikiconf.rb.sample, misc/hikifarm/hiki.conf,
+	misc/plugin/attach/attach.cgi, misc/plugin/rss.rb,
+	misc/plugin/trackback.rb: 上記の変更に伴う修正
+
+2004-09-10  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki.cgi, misc/plugin/trackback.rb: {{trackback}} と書いたページ
+	に trackback URI を表示するように変更
+
+	* misc/plugin/trackback.rb: tdiary テーマ向け修正 by MACHIDA
+	Hideki
+
+	* hiki/command.rb (Hiki::Command::get_recent): 各ページの差分への
+	リンクを追加
+
+	* hiki.cgi: TrackBack 向けの変更
+	* misc/plugin/trackback.rb: TrackBack プラグインの追加
+
+	* hiki/util.rb (Hiki::Util::set_conf): @conf 設定用メソッドを追加
+	(Hiki::Util::base_url): 追加
+
+	* misc/plugin/attach/attach.rb: [重要] HikiFarm 使用時に、個別の
+	Hiki 毎に attach.cgi を設置するように変更。hidden 属性の
+	cache_path と index_page を廃止。
+	* misc/plugin/attach/attach.cgi: config を読むように変更。
+
+2004-09-09  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/history.rb (Hiki::History::history_diff): ヘッダを除
+	く処理が gsub! だったのを sub! に修正
+
+	* hiki/db/flatfile.rb (Hiki::HikiDB::set_attribute): db に情報が内
+	場合にエラーにならないように修正
+
+	* hiki/command.rb (Hiki::Command::cmd_save): @options['freeeze']
+	も参照するように修正
+
+	* misc/plugin/diffmail2.rb: 差分周辺だけを通知する diffmail.rb の
+	改良版。タイトルやキーワードの変更も通知 thanks to zunda
+
+2004-09-08  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/command.rb (Hiki::Command::cmd_edit): @options['freeeze']
+	が true の場合、強制的に凍結されるように変更
+
+2004-09-07  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/rss.rb: rss_anchor の削除、rss の body 作成を
+	rss_body に分離
+
+2004-09-06  Kazuhiko  <kazuhiko@fdiary.net>
+	* plugin/00default.rb (hiki_anchor): FrontPage の場合はページ名を
+	URI に付加しないように変更
+
+	* misc/hikifarm/index.cgi (ReposSvn::import): svn import の前に
+	svnadmin create を呼ぶように修正
+	(ReposSvn::imported): trunk/ 以外のディレクトリが含まれていても動
+	作するように修正
+
+	* misc/plugin/history.rb (Hiki::History::history): time のパースで
+	locale による出力を削除するように修正
+
+2004-09-01  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/command.rb, hiki/util.rb, misc/plugin/history.rb: eval では
+	なく Mudule#const_get を使用するように変更
+
+2004-08-31  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/en/history.rb: 英語リソースを追加
+
+	* misc/hikifarm/hiki.conf: @repos_type の設定を追加
+	* misc/hikifarm/index.cgi: Wiki 数とページ数の合計を出力するように
+	変更、最終更新ページの差分へのリンクを追加、@repos.update を呼ばな
+	いように変更
+
+	* hiki/config.rb: @style に応じて @parser および @formatter を定義
+	* hiki/command.rb, hiki/util.rb, misc/plugin/history.rb:
+	conf.parser および conf.formatter を使うように変更
+	* style/default/html_formatter.rb: クラス名を
+	HTMLFormatter_default に変更し、HikiFormatter を継承
+	* style/rd+/html_formatter.rb: クラス名を HTMLFormatter_rd に変更
+	し、HikiFormatter を継承
+
+	* misc/hikifarm/index.cgi (ReposCvs::import): 数字で始まる wiki を
+	import できるように、vendor-tag の先頭に 'T' を追加
+
+2004-08-12  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/pluginutil.rb: lstrip を ruby-1.6 で動くように修正
+
+2004-08-09  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/session.rb (check): 「最初に認証した時から 10 分ではなく、
+	最後にそのセッションが有効だと確認してから 10 分」に変更 by
+	FUKUOKA Tomoyuki
+
+	* template/: <div class="recentsubtitles">〜</div> を削除 by
+	MACHIDA Hideki
+
+2004-08-07  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/attach/attach.rb: page を escapeHTML するように修正
+	thanks to yoggy
+	* misc/plugin/bbs.rb, misc/plugin/comment.rb,
+	misc/plugin/template.rb: page を escapeHTML するように修正
+
+2004-07-26  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/attach/attach.rb (attach_src): page を untaint する
+	ように修正 thanks to MACHIDA Hideki
+	* hiki/plugin.rb (initialize): @conf を再作成しないように修正
+	thanks to MACHIDA Hideki
+
+2004-07-03  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/util.rb (sendmail): from_addr を untaint するように修正
+
+2004-07-01  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
+	* hiki/db/flatfile.rb, ptstore.rb, misc/plugin/referer.rb :
+	mod_ruby時のキャッシュファイル開放漏れ修正
+
+2004-06-30  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
+	* hiki/db/ptstore.rb: 読み込み時のキャッシュ対応 by matsui
+
+2004-06-30  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/config.rb (load_cgi_conf): Thread を join するように修正
+	thanks to yoggy
+
+2004-06-28  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
+	* misc/plugin/history.rb: r を escapeHTML するように修正 thanks to
+	Kouhei Sutou
+
+2004-06-27  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/config.rb (load_cgi_conf): $SAFE=4 で評価するように変更
+
+2004-06-26  Kazuhiko  <kazuhiko@fdiary.net>
+	* template/en/edit.html, template/fr/edit.html, it/edit.html,
+	template/ja/edit.html: 書き方へのリンクを修正
+
+2004-06-23  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/session.rb (session_path): NetBSD 対策のため末尾に '/' を付
+	けないように修正 thanks to zunda
+
+	* misc/plugin/attach/attach.rb (attach_form): page を escapeHTML
+	するように修正し、出力される HTML を修正
+	* misc/plugin/local_css.rb (about_local_css): theme_url と
+	local_theme_url をescapeHTML するように修正
+	* plugin/00default.rb (hiki_header): base_css と theme_url を
+	escapeHTML するように修正
+	* hiki/storage.rb (search): 検索結果を escapeHTML するように修正
+	* hiki/command.rb (cmd_edit): pagename を escapeHTML するように修
+	正
+	* misc/plugin/pagerank.rb: title と stylesheet を escapeHTML し、
+	URI を escape するように修正
+
+	* hiki/command.rb (cmd_diff), hiki/util.rb (title): escapeHTML し
+	すぎなバグを修正
+
+2004-06-22  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/config.rb (save_config): String の際は dump を使うように修
+	正 thanks to akira yamada / やまだあきら
+
+	* hiki/page.rb (page): HEAD アクセス時のみ Last-Modified を返すよ
+	うに修正
+
+	* hiki/config.rb (load): 旧フォーマットの hikiconf.rb 使用時にエラー
+	を出すように修正
+
+	* hiki/command.rb (admin_save_config): パスワード無しの場合もセッ
+	ションを確認するように修正 thanks to sheepman
+
+	* misc/plugin/history.rb: @options['history.hidelog'] に対応、テー
+	ブルのスタイルシートはテーマに任せるように修正
+
+2004-06-18  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/config.rb: 設定項目のデフォルト値を用意するように修正
+
+	* hiki/config.rb (default), hiki/util.rb, plugin/00default.rb:
+	generator の定義を Config クラスに移動
+
+	* plugin/00default.rb (hiki_header): title 出力を escapeHTMLするよ
+	うに修正 thanks to Yuya Yamaguchi
+
+2004-06-17  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/session.rb: 新ファイル
+	* hiki/command.rb, template/en/adminform.html,
+	template/fr/adminform.html, it/adminform.html,
+	template/ja/adminform.html: 管理モードでセッション管理するように修
+	正
+
+	* hiki/command.rb (admin_config): title をつけるように修正
+
+2004-06-16  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/hikifarm/index.cgi: title 取得の修正、title 出力を
+	escapeHTMLするように修正
+
+2004-06-15  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki.cgi: load を require に修正
+	* misc/plugin/attach/attach.cgi: $cgi_name を './' に変更
+	* hiki/config.rb: hiki.conf の前にデフォルト設定を読み込むように修
+	正 thanks to m_t
+	* hiki/parser.rb, hiki/storage.rb, misc/plugin/src.rb: mod_ruby 対
+	応の修正
+	* style/default/html_formatter.rb: auto_link まわりの mod_ruby 対
+	応の修正 thanks to OZAWA Sakuro
+
+2004-06-12  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/hikifarm/hikifarm.conf, misc/hikifarm/index.cgi: 設定項目
+	'cgi_name' を新設
+	* misc/hikifarm/index.cgi: 生成する Hiki CGI の require 'hiki' を
+	load 'hiki.cgi' に修正
+
+	* hiki.cgi, hiki/aliaswiki.rb, hiki/command.rb,
+	hiki/hiki_formatter.rb, hiki/interwiki.rb, hiki/page.rb,
+	hiki/plugin.rb, hiki/pluginutil.rb, hiki/util.rb,
+	hiki/db/flatfile.rb, misc/hikifarm/hiki.conf,
+	misc/hikifarm/hikifarm.conf, misc/hikifarm/index.cgi,
+	misc/plugin/bbs.rb, misc/plugin/comment.rb, misc/plugin/cvs.rb,
+	misc/plugin/history.rb, misc/plugin/local_css.rb,
+	misc/plugin/pagerank.rb, misc/plugin/rss.rb,
+	misc/plugin/search.rb, misc/plugin/svn.rb,
+	misc/plugin/attach/attach.cgi, misc/plugin/attach/attach.rb,
+	plugin/00default.rb, style/default/html_formatter.rb,
+	style/default/parser.rb, style/rd+/html_formatter.rb,
+	style/rd+/parser.rb, style/rd+/rd2html.rb: mod_ruby 対応
+	* hiki/config.rb: Config クラス用ファイルを新設
+	* hiki/global.rb: Config#default に移行したため消去
+	* hikiconf.rb.sample, doc/INSTALL.txt, doc/VERSIONUP.txt: ドキュメ
+	ントの修正
+
+2004-06-11  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/rss.rb: site_name, author_name をエスケープするよう
+	に修正
+	* misc/plugin/pagerank.rb, misc/plugin/rss.rb, misc/plugin/src.rb:
+	CGI ヘッダの後に不要な改行の出力をしないように修正
+
+2004-06-10  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/util.rb (save_config): エスケープして保存するように修正
+
+2004-05-12  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/attach/attach.rb: $SAFE=1 向けの修正
+
+2004-04-18  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/db/flatfile.rb: プラグインからのフォーム入力中の改行正規化
+	by さく <http://hiki.ex-machina.jp/crouton/?2004-03-29>
+	* misc/plugin/attach/attach.rb: Last-Modified の出力 by matsui
+
+2004-04-07  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/history.rb: $SAFE=1 向けの修正 by Kouhei Sutou
+	* misc/plugin/cvs.rb: $SAFE=1 向けの修正
+	* misc/plugin/svn.rb: $SAFE=1 向けの修正
+
+	* hiki/pluginutil.rb: プラグイン評価用ファイル by Masao Mutoh
+	* style/rd+/rd2html.rb: セキュリティバグの修正 by Masao Mutoh
+
+2004-04-03  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/rss-show.rb (rss_show): $SAFE=1 向けの修正 by MACHIDA Hideki
+
+2004-04-02  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
+	* style/default/html_formatter.rb, messages/en.rb, messages/ja.rb:
+	存在しないページを作成するアンカー ? にtitle属性をつける by OZAWA
+	Sakuro
+
+2004-03-17  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/attach/attach.rb: $SAFE=1 向けの修正 by HOSONO Hidetomo
+
+2004-03-16  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/amazon.rb: $SAFE=1 向けの修正
+
+2004-03-11  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
+	* style/default+/html_formatter.rb, style/rd+/html_formatter.rb:
+	XSS脆弱性の修正
+	* template/en/edit.html: 英語テンプレートの修正 by mput
+
+2004-03-09  Kazuhiko  <kazuhiko@fdiary.net>
+	* plugin/00default.rb (hiki_footer): 不要な <div> の削除
+
+2004-03-05  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
+	* misc/plugin/pagerank.rb: 追加 by ichiyama ryoichi
+	* hiki.cgi, hiki/command.rb, hiki/db/flatfile.rb,
+	misc/plugin/attach/attach.rb, misc/plugin/amazon.rb: $SAFE=1
+
+2004-03-04  Kazuhiko  <kazuhiko@fdiary.net>
+	* template/: テンプレートの整理
+
+2004-03-04  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
+	* style/default/html_formatter.rb: XSS脆弱性の対処 thanks to
+	SHIMADA Keiki <k-ki@a01.itscom.net>
+
+2004-03-02  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
+	* misc/plugin/similarity.rb: 追加
+
+2004-03-01  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
+	* v0_6ブランチのマージ
+
+2004-03-01  Kazuhiko  <kazuhiko@fdiary.net>
+	* messages/en.rb: 不足しているリソースの追加
+	* template/en/adminform.html, template/en/edit.html,
+	template/en/form.html: hiki.cgi → @cgi_name
+
+2004-02-29  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
+	* misc/plugin/*.rb: Copytight表示の追加
+	* misc/plugin/splitpagename.rb: ページ名、タイトルなどの見直しに伴
+	い一時削除
+	* doc/*.txt: 文字コードをEUCに統一
+	* hikiconf.rb.sample: 設定例の変更
+	* plugin/remap_headings.rb: misc/pluginへ移動
+	* misc/hiki-farm/*: hiki-modeの同梱 by Hideaki Hori
+	* theme/hiki/hiki.css: hilight時のCSSを追加
+	* hikiconf.rb.sample: キーワードハイライトをデフォルトの動作に変更
+	* misc/plugin/recent2.rb: 新規追加 by not
+	* Version 0.6 リリース
+	* misc/hikifarm/hiki.conf: $hilight_keysの追加
+
+2004-02-15  TAKEUCHI Hitoshi  <hitoshi@namaraii.com>
+	* misc/plugin/local_css.rb, quote_page.rb, remap_headings.rb,
+	about.rb: 新規追加 by OZAWA Sakuro
+
+	* hiki/command.rb: preview時に空行がpreになるバグの対処
+
+	* misc/hikifarm/index.cgi, misc/plugin/svn.rb: history.rb対応の修
+	正 by Yasuo Itabashi
+
+	* misc/plugin/history.rb: 新規追加。by Hajime BABA and Yasuo
+	Itabashi
+
+	* hikiconf.rb.sample: $repos_rootなどの追加、デフォルト値の変更
+
+	* style/default/parser.rb, style/default/html_formatter.rb: 英文が
+	入力したテキストの行をまたがっている場合に、単語間の空白がなくなっ
+	てしまうバグの修正 by zunda
+
+	* doc/VERSIONUP.txt: 新規追加
+
+	* data/text/TextFormattingRules, FrontPage: hiki.pngへのリンク削除、
+	文言の修正
+
+	* doc/README.txt, INSTALL.txt: 現状に合わせて文言を修正
+
+2004-02-14  TAKEUCHI Hitoshi  <hitoshi@mail.namaraii.com>
+	* misc/plugin/amazon.rb, footnote.rb, highlight.rb: パッケージへ同
+	梱。tDiaryのconf_procはHikiでは未サポートのため、その修正も入って
+	いる。
+
+	* amrita/*: amrita-1.0.2をパッケージへ同梱
+
+	* hiki.cgi: バージョン番号の変更
+
+	* v0_5_branchをトランクへマージした。
+
+2004-01-25  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* template/*/view.html: 更新日時が表示されないバグの修正 thanks to
+	Yoshio TAKAEDA
+
+2004-01-24  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* hiki/command.rb, hiki/page.rb: c=recentで最も新しいページの更新
+	日時を返却するようにした。
+
+	* misc/plugin/rss.rb: 最も新しいページの更新日時を返却することにし
+	た（last-modifiedとdc:date)
+
+	* theme/hiki/*: @mediaを正しく扱えないブラウザでメニュー、サイド
+	バー、フッタなどが表示されない問題の対処。cloverテーマをベースに書
+	き直し。
+
+2004-01-22  Hideaki Hori  <yowaken@cool.ne.jp>
+	* hiki-mode.el (hiki-edit-mode): hiki-site-list で指定したスタイル
+	が反映されていなかったのを修正。
+	http://yowaken.dip.jp/hiki/hiki.cgi?CommentForHikiMode
+
+2004-01-14  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* style/rd+/rd2html.rb: HeadlineでModuleNamesに登録されたモジュー
+	ルが不正に展開されるバグの修正 by Masao Mutoh
+
+2004-01-14  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* misc/plugin/it/*, template/it/*, messages/it.rb: イタリア語リソー
+	スの追加 by Luigi Maselli via Masao Mutoh
+
+2004-01-12  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* misc/plugin/en/frozenmark.rb, fr/frozenmark.rb: frozenmark.rbの
+	英仏リソースを追加 by OZAWA Sakuro
+
+Sun Jan 11 16:29:09 2004  Hideaki Hori  <yowaken@cool.ne.jp>
+	* hiki-mode.el (hiki-read-site-name): ミニバッファに
+	デフォルト値を入れないようにした。
+
+Mon Dec 08 23:06:41 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+	* hiki-mode.el (hiki-fetch-source): bug fix.
+
+Wed Dec 03 21:25:16 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+	* hiki-mode.el (hiki-fetch-index): bug fix. タイトルとキーワードの
+	実体参照を置換していなかった。
+	* (hiki-fetch-source): ditto.
+
+	* (hiki-replace-entity-refs): &#39; -> '(シングルクォート) を追加。
+	* (hiki-do-replace-entity-ref): (save-match-data ...) でくくった。
+
+2003-11-16  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/plugin.rb, plugin/00default.rb: menu_proc のサポート
+	* hiki.cgi: '$defout.binmode' の追加 thanks to Atsushi Koga
+
+2003-11-16  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/attach/attach.rb: 例外を無視するように修正
+	by Hajime BABA
+
+2004-11-15  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/util.rb (Hiki::Util::sendmail): Content-Type ヘッダの追加
+	thanks to vette
+
+2003-11-14  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/parser.rb: 定義リストの前の部分を最小マッチに
+	thanks to TADA Tadashi
+	* hiki/command.rb: 検索キーワードのハイライト by Junichiro Kita
+
+2003-11-13  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/attach/attach.rb: プラグインの使い方の表示、
+	attach_view で Flash に対応
+	(image_size.rb が使えるならサイズを埋め込む) by たむらけんいち
+	XSS 脆弱性の修正、日本語ファイル名の扱いの修正 by Hajime BABA
+
+2003-11-13  Kazuhiko  <kazuhiko@fdiary.net>
+	* plugin/00default.rb: ブラウザキャッシュ無効の META タグ追加 by
+	Hajime BABA
+	* misc/plugin/cvs.rb: $cvsroot -> $repos_root by Hajime BABA
+
+Wed Nov 12 04:32:09 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+	* hiki-mode.el: bug fix. XEmacs での不具合に対応。 by simm
+	<http://pure.fan.gr.jp/simm/d/20031110.html#p02>、
+	<http://yowaken.dip.jp/tdiary/20031111.html#c01>参照。
+
+Mon Nov 10 22:55:59 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+	* hiki-mode.el (hiki-index-setup-keys): [RET] を消した。
+	* (require 'poem) するようにした。
+	(http://kitaj.no-ip.com/tdiary/20031110.html#p06 より。Thx.)
+
+Sat Oct 25 10:42:02 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+	* hiki-mode.el (hiki-read-char-with-retry): bug fix.
+	navi2ch-read-char -> hiki-read-char
+	[[yowaHiki:CommentForHikiMode]]のレポートより。Thanks.
+
+Sun Oct 19 00:58:09 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+	* hiki-mode.el (hiki-edit-quit): hiki-page-buffer-alist の中身をク
+	リアする。
+
+	* (hiki-index-quit): ditto.
+	表示しているサイト以外のバッファは kill しない。
+
+2003-10-17  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/storage.rb: 検索結果に表示されるキーワードが Regexp::quote
+	されていたのを修正 by ょゎ
+
+Thu Oct 16 05:43:59 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+	* hiki-mode.el (hiki-edit-mode): case-fold-search をローカル変数に
+	しない。
+
+	* hiki-mode.el (hiki-edit): bug fix. 編集中の hiki-edit がうまく行っ
+	てなかった。
+
+	* hiki-mode.el (hiki-index-refetch-index): 表示位置がリセットされ
+	ていたのを修正。
+
+	* hiki-mode.el: メッセージ関係。
+	(hiki-display-{page,index}): "Loading... done." を表示。
+	(hiki-index-sort-by): メッセージを削除、↓へ。
+	(hiki-index-sort): "Sorting... done." を表示。
+
+Thu Oct 16 04:21:16 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+	* hiki-mode.el (hiki-index-sort-by): bug fix. buffer-modified-p の
+	変更し忘れ。
+
+Thu Oct 16 04:15:46 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+	* hiki-mode.el (hiki-display-index): bug fix. ソート時の point 位
+	置がズレていたのを修正。
+
+Thu Oct 16 03:58:51 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+	* hiki-mode.el: 一覧のソート。
+	(hiki-index-sort-key): 新変数。ソートのキーを記憶。
+	(hiki-read-char, hiki-read-char-with-retry): 新関数。キー入力。同
+	名の navi2ch-* を参考にした。
+	(hiki-index-sort, hiki-index-sort-by, hiki-index-sort-subr):
+	新関数。ソートする。
+
+2003-10-16  Kazuhiko  <kazuhiko@fdiary.net>
+	* plugin/00default.rb: Content-Language として $lang を返すように
+	修正 by Masao Mutoh
+
+Tue Oct 14 21:31:10 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+	* hiki-mode.el (hiki-edit-reload): 新関数。編集中のページをリロード。
+	(hiki-edit): hiki-edit-reload 対応。
+
+Tue Oct 14 20:15:58 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+	* hiki-mode.el (hiki-edit-newpage): 新変数。新規ページ編集中に
+	non-nil。
+
+	* hiki-mode.el (hiki-edit-quit): 新規ページを作成した時は index を
+	必ず fetch する。
+
+	* hiki-mode.el: bug fix. hiki-edit がうまく動いてなかった。
+	(hiki-edit, hiki-display-page): 対応。
+	(hiki-index-edit-page-current-line): 新関数。
+	(hiki-index-edit-page): PAGENAME が指定されなければミニバッファか
+	ら読む。
+
+	* hiki-mode.el (hiki-index-page-info): 新関数。page-info を返す。
+
+	* hiki-mode.el (hiki-fetch-index): bug fix.
+
+Tue Oct 14 17:54:02 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+	* hiki-mode.el: 初期化を必ず行うようにした。
+	(hiki-initialize): 新関数。初期化を行う。
+	(hiki-init): 新変数。初期化してなければ nil。
+
+	* hiki-mode.el (hiki-index-display-page-next):
+	次行のページへ移動する処理をコメントアウト。
+
+Tue Oct 14 03:41:00 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+	* hiki-mode.el (hiki-edit-quit): バッファが変更されてたら警告を出
+	す。
+
+	* hiki-mode.el (hiki-index-display-page):
+	hiki-index-page-info-current-line を使うよう修正。
+
+	* hiki-mode.el (hiki-index-display-page-next): 新関数。
+	該当行のページを表示。既に表示してあるならスクロール。
+	これ以上スクロール出来ないなら、次行のページを表示。
+
+	* hiki-mode.el (hiki-index-suspend): bug fix.
+
+	* hiki-mode.el (hiki-display-page): 必ずページ先頭に移動する。
+	バッファを hiki-edit-mode にする。
+
+Tue Oct 14 02:36:16 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+	* hiki-mode.el (hiki-site-name-history): 新変数。
+
+	* hiki-mode.el (hiki-read-site-name): hiki-read-site-info から名称
+	変更。
+
+	* hiki-mode.el (hiki-index-suspend): 旧 hiki-index-quit。
+	bury-bufferする。
+	(hiki-index-quit): kill-bufferする。
+
+Tue Oct 14 01:44:48 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+	* hiki-mode.el (hiki-edit-quit): 一覧を表示しているウィンドウが
+	あるならウィンドウ分割を保存。なければ、1-pane で一覧表示。
+
+	* hiki-mode.el (hiki-edit): 2-pane で一覧を表示し、該当行で
+	recenter 。
+
+	* hiki-mode.el (hiki-index-page-info-string): マイナーチェンジ。
+
+	* hiki-mode.el (hiki-index-edit-page): 一覧表示の表示位置を保持。
+
+Mon Oct 13 06:46:14 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+	* hiki-mode.el (hiki-anchor-regexp-match-beginning,
+	hiki-anchor-regexp-match-end): 使っていないので削除。
+
+	* hiki-mode.el (hiki-edit): bug fix. カッコの対応が変だった。
+
+Sun Oct 12 23:13:14 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+	* hiki-mode.el: 変更。
+	hiki-list -> hiki-site-list
+	hiki-index-list -> hiki-index-page-info-list
+	(toggle-read-only 〜) -> (setq buffer-read-only 〜)
+	(recenter) -> (recenter t)
+
+	* hiki-mode.el (hiki-index): 表示を hiki-display-index に分離。
+	(hiki-display-index): 新関数。一覧表示。
+	(hiki-index-get-buffer-create): 新関数。一覧表示用バッファを返す。
+	(hiki-index-page-info-string): 新関数。一覧表示の一行分。
+
+	* hiki-mode.el (hiki-index-edit-page): 一部を
+	hiki-index-page-info-current-line に追い出した。
+	(hiki-index-page-info-current-line): 新関数。現在行のページ情報を返す。
+
+2003-10-12  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/hikifarm/index.cgi: 配下の Hiki の中の最新のページの
+	Last-Modified を HikiFarm の Last-Modified として返すようにした。
+
+2003-10-10  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/en/template.rb: 英語リソース追加。
+
+2003-10-10  Hideaki Hori  <yowaken@cool.ne.jp>
+	* hiki-mode.el: 名称変更。
+	hiki-index-edit -> hiki-index-edit-page
+	hiki-index-refetch -> hiki-index-refetch-index
+
+	* hiki-mode.el (hiki-page-buffer-alist): 新変数。バッファを保持。
+
+	* hiki-mode.el (hiki-index): optional 引数 refetch, pagename 追加。
+
+	* hiki-mode.el (hiki-index-display-page): 新関数。一覧から選んでペー
+	ジを表示。
+
+	* hiki-mode.el (hiki-display-page): 新関数。ページを表示。
+	(hiki-edit-page): fetch 回りを hiki-display-page に移動。
+
+	* hiki-mode.el (hiki-page-buffer-name): 新関数。すでに存在する時、
+	ページ表示バッファ名を返す。
+	(hiki-index-buffer-name): 新関数。一覧表示バッファ名を返す。
+	動作が別なのに名前が対称なのが気になるのでなんとかしたい。
+
+Fri Oct 10 05:44:32 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+	* hiki-mode.el: 名称変更。
+	hiki-mode -> hiki-edit-mode
+	hiki-setup-keys -> hiki-edit-setup-keys
+	hiki-next-anchor -> hiki-edit-next-anchor
+	hiki-rename-buffer -> hiki-edit-rename-buffer
+	hiki-save -> hiki-edit-save-page
+
+Wed Oct  8 16:21:52 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+	* hiki-mode.el: キーワード対応。
+	(hiki-keywords): 削除。
+	(hiki-edit-page, hiki-save): キーワード対応。
+
+	* hiki-mode.el (hiki-propertize): 新関数。navi2ch-propertize を参考。
+
+	* hiki-mode.el (hiki-fetch-source): bug fix. 古い(キーワード機能の
+	ない) Hiki 相手の時、キーワードを誤判定していた。
+
+Wed Oct  8 14:38:49 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+	* hiki-mode.el (hiki-save): パスワード間違いの検出を行うようにした。
+	1. <pre> があればコンフリクト。
+	2. そうでなくて、<textarea>があればパスワード間違い。
+	3. そうでなければ、送信成功。
+
+Wed Oct  8 04:29:29 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+	* hiki-mode.el (hiki-save): 成功時は hiki-edit-quit を呼ぶようにし
+	た。
+
+Wed Oct  8 03:54:33 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+	* hiki-mode.el (hiki-index): 引数に site-info を取るようにした。表
+	示も変更。delete-other-windows するようにした。(うれしいのか？)
+
+	* hiki-mode.el (hiki-index-refetch): 新関数。一覧を再取得する。
+	* hiki-mode.el (hiki-index-quit): 新関数。
+
+	* hiki-mode.el (hiki-edit-quit): 編集モードを抜け、一覧モードへ。
+
+	* hiki-mode.el (hiki-prefix): 新関数。
+
+	* hiki-mode.el (http-url-unhexify-string): bug fix. '+' を SPC に
+	変換していなかった。
+
+Wed Oct  8 01:31:45 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+	* hiki-mode.el (hiki-edit-page): bug fix. hiki-read-pagename の
+	completion でエラーが出ていた(hiki-pagename-history がおかしかった)。
+
+	* hiki-mode.el (hiki-index-edit): 新関数。一覧から選択して編集モー
+	ドへ。
+
+	* hiki-mode.el (hiki-index-setup-keys): 新関数。
+
+	* hiki-mode.el (hiki-index): 同サイトのバッファを上書きするようにした。
+
+Tue Oct 07 23:21:40 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+	* hiki-mode.el (hiki-index): 新関数。一覧を表示する。
+	* (hiki-index-mode): 一部の処理を hiki-index に移動。
+
+Tue Oct  7 03:57:46 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+	* hiki-mode.el (hiki-read-site-name): 廃止。hiki-read-site-info へ。
+	* (hiki-read-site-info): 新関数。
+
+	* hiki-mode.el (hiki-http-request): 引数の pagename を省略可に。
+
+	* hiki-mode.el (hiki-fetch-index): 新関数。ページ一覧を取得する。
+
+	* hiki-mode.el (http-url-unhexify-string): bug fix.
+
+	* hiki-mode.el (hiki-index-mode): 一覧用モード。
+
+2003-09-02  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/html_formatter.rb: インライン画像の alt をファイル
+	名だけにした。
+
+2003-08-28  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* misc/hikifarm/hiki.conf, misc/hikifarm/hikifarm.conf,
+	misc/hikifarm/index.cgi, misc/plugin/svn.rb: Subversion バックエン
+	ドへの対応 by koichiro koichiro
+
+2003-08-24  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* hiki/command.rb, plugin/00default.rb: ページ編集後にリダイレクトする
+	URL をプラグインで指定できるようにした thanks to zunda
+
+2003-08-23  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* hiki/command.rb, hiki/plugin.rb: プラグイン中で
+	export_plugin_methods がコールされた場合、指定された*以外*のメソッ
+	ドをWikiページ中からコールできないようにした。by むらけん
+	* hiki/util.rb,  style/default/html_formatter.rb: $plugin_debug の場合
+	にスタックトレースが二重に出力されるバグの修正
+
+2003-08-18  Kazuhiko  <kazuhiko@fdiary.net>
+	* plugin/00default.rb: $author_name をエスケープするようにした
+	thanks to zunda
+	* messages/fr.rb, template/fr/*.html, misc/plugin/fr/*.rb: フラン
+	ス語リソースの更新 via Masao Mutoh
+
+2003-08-16  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* hiki/command.rb, style/default/html_formatter.rb: $plugin_debugが
+	trueの場合にプラグイン内のスタックトレースを表示するように変更した
+	thanks to 高林哲
+
+2003-08-16  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/hikifarm/hiki.conf: $cache_path の値を修正。
+
+2003-08-12  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* template/*/view.html: div.footerをbodyの小要素に変更した thanks
+	to Kiyo
+	* messages/fr.rb, template/fr/*.html, misc/plugin/fr/*.rb:
+	フランス語リソースの追加 by Laurent Sansonetti via Masao Mutoh
+
+2003-08-12  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* misc/plugin/attach/attach.rb: MIME Typeにapplication/pdf追加
+	* hiki/command.rb: 新規ページ作成時にtouchするのをやめた
+	* misc/hikifarm/index.cgi: cvsrootのデフォルト値をnilに変更 thanks
+	to かくたに
+	* misc/text/rd+/TextFormattingRules: 文字コードを EUC-JP に変更
+	thanks to Masao Mutoh
+	* plugin/00default.rb: CVS関連処理の分離（cvs.rbへ）
+	* misc/plugin/cvs.rb: 新規作成
+
+2003-08-11  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/referer.rb: @options['referer_limit'] に対応。
+
+2003-08-10  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/attach/attach.rb: ruby-1.8 でエラーにならないように
+	修正 thanks to 高枝佳男。
+
+2003-07-30  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/hikifarm/index.cgi: 任意の場所にディレクトリが作成可能なセ
+	キュリティバグの修正 by 西山和広。
+	* plugin/00default.rb: 任意のコマンドを実行可能なセキュリティバグ
+	の修正 by 西山和広。
+	* hiki/util.rb: eval にファイル名を指定 by 西山和広。
+	* hiki.cgi: 'require' を rescue 対象に by 西山和広。
+
+2003-07-28  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/hikifarm/index.cgi: ruby-1.8 でエラーにならないように修正。
+	ファイルサイズがゼロのページを無視するように変更。
+
+2003-07-27  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/plugin.rb: ruby-1.8 で 'warning: tried to create Proc
+	object without a block' が出ないように修正。
+
+2003-07-26  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* misc/plugin/frozenmark.rb: page_attribute_procへ移動。凍結されて
+	いない場合にも凍結メッセージのspan要素(中身は空)が出力されてしまう
+	問題の修正。by さく
+
+2003-07-24  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* style/rd+/anchorlist.rb, style/rd+/html_formatter.rb,
+	style/rd+/rd2html.rb: default style と同様にStringクラスのescape,
+	escapeHTMLを利用するように変更 by 上美谷
+
+2003-07-21  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* misc/text/rd+/TextFormattingRules, doc/rd+/README,
+	style/rd+/rd2html.rb:headlineのレベルをオプションで設定できるよう
+	に変更 by Masao Mutoh
+
+2003-07-17  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* plugin/00default.rb: cvs_delete の追加。commit_cvs のメソッド名
+	変更。
+
+2003-07-17  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* hiki/command.rb, hiki/plugin.rb: delete_procのサポート
+
+2003-07-14  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/hikifarm/hiki.conf, misc/hikifarm/hikifarm.conf,
+	misc/hikifarm/index.cgi: cvs のサポート with むらけん
+	* plugin/00default.rb: commit_cvs の追加
+
+2003-07-13  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* hiki/command.rb, style/*/html_formatter.rb: diffの出力形式を変更
+	* plugin/00default.rb: 編集画面に表示している参照用ページへのアン
+	カが escapeHTML しすぎなバグを修正
+
+2003-07-13  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* hiki/interwiki.rb, style/default/*.rb: ブラケットネームで
+	WikiName、ページ名に対しても表示用ラベルを使えるようにした。[[ほげ
+	ほげ|TextFormattingRules]], [[ほげほげ|整形ルール]] など
+
+2003-07-10  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* misc/plugin/template.rb: template.autoinsert == true の場合のみ
+	自動的にテンプレートを適用するように変更。
+	* plugin/00default.rb: ページ新規作成時の更新メールにページソース
+	も含まれるように変更 by しまだ みつのぶ
+
+2003-07-09  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* style/rd+/rd2html.rb: headerのレベルをRDToolと同じにした。
+	by Masao Mutoh
+	* misc/plugin/en/attach.rb: 英語リソース漏れ対処 by Masao Mutoh
+
+2003-07-09  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* misc/plugin/frozenmark.rb: 凍結マークプラグイン by さく
+	* misc/plugin/diffmail.rb: diffメールプラグイン by しまだ みつのぶ
+	* hiki/command.rb, interwiki.rb, storage.rb, util.rb,
+	algorithm/diff.rb, db/flatfile.rb, misc/plugin/todo.rb,
+	style/default/parser.rb: Ruby 1.8でのwarning修正 by ょゎ
+
+2003-07-07  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/referer.rb: escape 漏れの修正 by 猫罰
+
+Sun Jul  6 03:43:04 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+	* hiki-mode.el:	<http://pure.fan.gr.jp/simm/d/20030703.html#p01> を
+	取り込んだ。内容は以下の通り。
+
+	* 編集ページのレイアウト変更に対応
+	* [bug fix] hiki-edit時のポイント復元
+	* ページ名補完
+	* タイトル変更をモードラインに反映させる対応
+	* [bug fix] WikiName取得
+
+2003-07-05  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* style/default/parser.rb: ブラケットネームのパース方法改善 by ょゎ
+
+2003-07-05  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* hiki/interwiki.rb, style/default/parser.rb,
+	style/rd+/anchorlist.rb: aタグのレンダリング対象にfile://を追加
+	by かくたに
+
+2003-07-05  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* hiki/command.rb, misc/template/template.rb: テンプレートが一つし
+	か定義されていない場合は自動的にロードするようにした。
+	template.default オプションの追加。
+
+2003-07-05  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* hiki/command.rb: 編集画面ではPlugin.page_nameを呼ばないようにし
+	た。
+
+2003-07-05  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* style/default/html_formatter.rb, parser.rb, hiki/db/flatfile.rb:
+	ブラケットネームでページタイトルを指定できるように変更。WikiNameは
+	ページタイトルへ展開しないよう変更。
+
+	* hiki/command.rb, messages/*.rb: ページ新規作成時、別名として定義
+	されている名前、存在するページタイトルはページ名として指定できない
+	ようにした
+
+	* hiki/command.rb: 編集画面のH1はページIDを表示するように変更した。
+
+2003-07-01  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* style/default/html_formatter.rb, theme/hiki/hiki.css: 未作成ペー
+	ジ名を表すWikiNameの後ろにつく?を印刷しないようにした thanks to い
+	ちやま
+
+	* misc/plugin/attach/attach.rb: ファイル添付フォームにnodispクラス
+	を追加
+
+	* misc/plugin/template.rb: テンプレート対象になるページが存在しな
+	い場合、フォームを表示しないようにした thanks to ふゆひこ
+
+	* plugin/00default.rb: update_procが呼び出されないバグの修正
+
+	* misc/plugin/referer.rb: 存在しないページのリファラを記録しないよ
+	うにした by かずひこ
+
+	* misc/plugin/attach/attach.rb: ファイル添付フォームのタグ不正を修
+	正 by  猫罰
+
+	* misc/plugin/splitpagename.rb: WikiNameを空白で分割して表示するプ
+	ラグイン by さく
+
+
+2003-06-27  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* hiki/command.rb, hiki/plugin.rb, hiki/db/flatfile.rb,
+	plugin/00defualt.rb, misc/plugin/template.rb: テンプレートのサポー
+	ト
+
+	* plugin/00default.rb: 編集画面へ元ページへのリンク用アンカ追加
+
+	* misc/plugin/cd.rb, isbn.rb, referer.rb, rss-show.rb: make_anchor
+	対応 by 猫罰
+
+	* misc/plugin/hikifarm/index.cgi: ページ名をCGI::escapeHTMLするよ
+	うにした
+
+	* hiki/util.rb, plugin/00defualt.rb: HTMLヘッダのgenerator出力不正
+	の修正 thanks to かずひこ
+
+	* hiki/command.rb, hiki/storage.rb. messages/*.rb: 複数キーワード
+	のand検索サポート by かずひこ
+
+
+2003-06-26  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* template/ja/diff.html: 余分なheadタグを削除 thanks to baba
+
+2003-06-22  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* plugin/00default.rb: フッタ変更（RubyとAmritaへの公式ページへのリンク追加）
+
+2003-06-22  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* misc/hikifarm/hikifarm.conf, index.cgi: HikiFarmをDirectoryIndex
+	固定以外でも対応できるように変更。インストール後に参照するHikiの場
+	所を変更できるようにした。
+	http://yowaken.dip.jp/tdiary/20030613.html#p02 by ょゎ
+
+
+2003-06-22  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* hiki/command.rb, plugin.rb, util.rb, plugin/00default.rb,
+	misc/plugin/attach/attach.rb, template/*/*.html: footer_proc,
+	header_proc, form_procのサポート、edit_procの仕様変更
+
+	* style/default/parser.rb:
+	[[http://www.namaraii.com/images/hoge.gif]]のパターンでIMGに展開す
+	るようにした
+
+	* style/default/html_formatter.rb, template/*/view.html: Heading近
+	辺にページ先頭に戻るためのアンカ追加
+
+	* template/*/edit.html: レイアウトの変更
+
+	* plugin/00default.rb: ページ更新時の処理を別メソッド化。
+
+	* misc/plugin/attach/attach.cgi: 複数ファイルを添付した場合の添付
+	ファイル削除バグFix
+
+	* hiki/command.rb, plugin.rb: プラグイン未使用時でもプラグインのロー
+	ドを行い、header_proc, footer_procのプラグインは実行するようにした。
+
+
+Thu Jun 12 04:37:07 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+	* hiki-mode.el (hiki-http-request): post-data をまとめて
+	url-hexify することにした。
+	(http-url-hexify-alist): 新関数。
+
+Thu Jun 12 03:27:22 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+	* 凍結されているページの更新に対応。
+	<URL:http://pure.fan.gr.jp/simm/d/20030604.html#p03>
+
+	* (hiki-conflict-show-diff): タイミングにより失敗することがあった
+	のを修正。
+	<URL:http://pure.fan.gr.jp/simm/d/20030605.html#p01>
+
+	* ページタイトルとキーワードに対応。(Hiki のCVS先端の機能)
+	<URL:http://pure.fan.gr.jp/simm/d/20030611.html#p03>
+
+2003-06-12  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* style/default/html_formatter.rb, style/rd+/html_formatter.rb,
+	template/en/diff.html, template/ja/diff.html, theme/hiki_base.css:
+	差分出力を<ins><del>を使うように変更 by ょゎ
+
+
+2003-06-09  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* hiki/command.rb: h1要素のエスケープに関するバグFix
+
+2003-06-08  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* misc/plugin/bbs.rb, misc/plugin/comment.rb: メッセージが空の場合
+	は追加しないように修正 thanks to smbd
+
+2003-06-08  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* template/*/*.html: media="all" の追加
+	* hiki/command.rb, hiki/page.rb: CSSのURL指定サポート
+
+2003-06-08  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* theme/hiki/hiki.css: div.sidebar formのmargin変更。
+
+2003-06-08  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* misc/plugin/search.rb: キーワードというラベルがキーワード機能と
+	誤解されそうなので検索語句に変更した。<br>の追加。
+
+
+2003-06-08  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* hiki/command.rb, hiki/util.rb, style/*/view.html: h1要素をページ
+	タイトルの変更用アンカに変更し、ページタイトルを表示するように変更
+
+	* hiki/command.rb: プレビューするとページタイトルが消えるバグの修
+	正 by ほそのひでとも
+
+	* misc/hiki.conf, misc/plugin/attach/attach.cgi, attach.rb:
+	HikiFarm 対応、削除機能のサポート by しまだ みつのぶ
+
+2003-06-07  SHIMADA Mitsunobu  <simm@isoternet.org>
+	* misc/plugin/attach/attach.cgi: 自動リロード先を
+	$cgi_name を用いて決定するよう変更
+
+2003-06-06  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/search.rb: 新規。thanks to baba
+
+2003-06-06  Kazuhiko  <kazuhiko@fdiary.net>
+	* style/default/html_formatter.rb: escapeHTML しすぎの修正。thanks
+	to kad
+
+2003-06-06  SHIMADA Mitsunobu  <simm@isoternet.org>
+	* misc/plugin/attach/attach.cgi, attach.rb: 添付ファイル削除対応
+
+Thu Jun  5 02:36:03 2003  Hideaki Hori  <yowaken@cool.ne.jp>
+	* hiki-mode.el: type fix. (hiki-md5sum -> hiki-md5hex)
+
+	* hiki-mode.el (hiki-edit-page): kill-buffer するタイミングを変更。
+
+2003-06-05  SHIMADA Mitsunobu  <simm@isoternet.org>
+	* misc/plugin/attach/attach.rb(attach_anchor_string): 新規作成
+	* misc/plugin/attach/attach.cgi: 添付後自動的に元ページ戻
+	る際のURLがおかしかったので修正
+
+2003-06-03  SHIMADA Mitsunobu  <simm@isoternet.org>
+	* misc/plugin/attach/attach.rb: 添付ファイル転送時に適用す
+	るattach.cgiのパスを変更できるようにした
+	* misc/plugin/attach/attach.cgi, attach.rb: 辻褄があうようパスを変更
+
+2003-06-01  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/attach/attach.cgi: リダイレクト先に $cgi_name を使う
+	ように修正。
+
+
+2003-06-01  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* plugin/00default.rb: フッタの表示をModified byからFounded byに変
+	更。thanks to さく
+
+	* style/default/html_formatter.rb: Aliasしたページのオートリンク出
+	力に関するバグFix
+
+	* hiki/command.rb: h1要素を当該ページへのアンカにした
+
+	* style/default/parser.rb: プラグインのパースバグ Fix
+
+2003-05-31  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* hiki/command.rb, hiki/plugin.rb, hiki/storage.rb, hiki/util.rb,
+	hiki/db/flatfile.rb, messages/*.rb, misc/plugin/orphan.rb,
+	referer.rb, rss.rb, plugin/00default.rb,
+	style/default/html_formatter.rb: ページタイトル・キーワード機能の
+	追加
+
+
+	* theme/hiki_base.css: キーワード用form対応の修正
+
+	* theme/hiki/hiki.css: 印刷に対応
+
+	* misc/plugin/keyword.rb: キーワードプラグインの新規追加
+
+	* hiki/storage.rb: 検索機能の拡張（ページタイトルとキーワードを検
+	索対象にした。マッチした行を表示するようにした）
+
+
+	* hiki/interwiki.rb, style/*/html_formatter.rb,
+	plugin/00default.rb: アンカ出力を全てmake_anchor経由で行うように変
+	更した。
+
+
+	* misc/plugin/rss_show.rb: 変数名の変更
+
+	* hiki/hiki_formatter.rb: <h2>が連続する場合に出力されないバグを修正
+
+	* style/default/parser.rb : [[ [hogehoge]
+	hoge|http://www.hogehoge.com/]]のように'[' ']'を含むアンカ生成のバ
+	グを修正
+
+
+	* style/default/parser.rb : プラグインのパラメタに'}'が存在する場
+	合のバグを修正
+
+
+2003-05-29  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/hikifarm/index.cgi: 一つも Wiki のないときにエラーになるバ
+	グを修正
+
+
+2003-05-29  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/isbn.rb: Amazon のアソシエイト ID を追加するように変
+	更
+
+2003-05-25  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/hikifarm/index.cgi: 更新時刻順に表示するように変更
+
+2003-05-25  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* theme/hiki/hiki.css: デフォルトテーマの変更
+
+2003-05-22  Kazuhiko  <kazuhiko@fdiary.net>
+	* hiki/command.rb: main_class, sidebar_class の無指定時のバグ修正
+
+2003-05-18  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* hiki/hiki_formatter.rb, command.rb, util.rb: tDiaryテーマ向けの
+	HTML変更を全スタイルに適用するように変更
+
+
+2003-05-17  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* plugin/00default.rb: accesskey の追加 by さく
+
+	* plugin/00default.rb: メニュー間スペース追加 by ょゎ
+
+	* plugin/00default.rb: フッタの Copyright 表示削除
+
+	* hiki/storage.rb, hiki/db/flatfile.rb, hiki/command.rb,
+	plugin/00default.rb: 更新のタイミングでプラグインを呼び出してメー
+	ル送信するように変更
+
+	* style/default/html_formatter.rb, template/*/view.html,
+	edit.html, adminform.html: tDiary スタイル互換性向上
+
+	* style/rd+/parser.rb, rd2html.rb: シンタックスエラー時の文字列に%
+	が含まれる場合にエラー結果画面が不正表示される不具合の修正、
+	html_anchorプラグインを書き換えたとき編集画面を指すアンカが不正に
+	なる不具合の修正 by Masao Mutoh
+
+
+	* hiki/page.rb: HEADの場合だけLast-Modifiedを返却するように変更
+	thanks to をゐなり and 岩月
+
+	* plugin/00default.rb: XREAでの無限ループ対処 by Masao Mutoh
+
+	* style/default/parser.rb: 先頭行がプラグインで、かつ同一行に他の
+	プラグインが存在する場合のparse不正修正
+
+	* hiki/plugin.rb: footnoteプラグイン対応の修正（@modeをlatestから
+	dayに変更）
+
+	* style/default/html_formatter.rb: 強調の前後にスペースが入らない
+	ように修正
+
+	* theme/hiki/hiki.css: Cloverベースに修正
+
+2003-05-15  Hideaki Hori  <yowaken@cool.ne.jp>
+	* hiki-mode.el (hiki-http-request): typo fix.
+
+2003-05-15  Hideaki Hori  <yowaken@cool.ne.jp>
+	* hiki-mode.el: サイト情報をバッファローカルにした。
+	(hiki-site-{url,name,style}}: 削除。
+	(hiki-site-info): 新変数。
+	(hiki-site-{url,name,style}}: 新関数。
+
+	* hiki-mode.el: concat -> format に書き換え。("%" を 含む文字列へ
+	の対応)
+
+	* hiki-mode.el (hiki-edit-page): 存在しないページを編集する時に
+	新規作成するか確認するようにした。
+
+2003-05-11  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* template/*/adminform.html, diff.html, edit.html, form.html,
+	list.html, success.html: ロボット避けメタタグの追加 by ょゎ
+
+	* hiki/util.rb, hikiconf.rb.sample: 更新時メールのFromとToを別に指
+	定できるように変更
+
+2003-05-07  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* plugin/00default.rb: anchor() で#が二重に出力されるバグの修正 by
+	ょゎ
+
+	* hiki/util.rb, template/en/adminform.html, edit.html, form.html,
+	ja/adminform.html, edit.html, form.html: $cgi_nameを変えても反映さ
+	れないテンプレートの修正 by ただただし
+
+2003-05-06  Hideaki Hori  <yowaken@cool.ne.jp>
+	* hiki-mode.el: サイト情報関係のコードを整理。
+	(hiki-site-{name,url,style}): hiki-{name,url,style} から名称変更。
+	(hiki-setup-url): 削除。
+	(hiki-read-site-name): 新関数。
+
+	* hiki-mode.el (hiki-edit): 表示しているのと同一ページを
+	編集する時は、カーソル位置を保存するようにした。
+
+2003-05-05  Hideaki Hori  <yowaken@cool.ne.jp>
+	* hiki-mode.el: コンフリクト時に diff を表示するようになった。
+	(hiki-conflict-show-diff): 新関数。
+
+2003-05-05  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* misc/plugin/rss.rb, misc/plugin/rss-show.rb: 取得したRSSから得ら
+	れるページ名が自サイトのAliasWikiNameで展開されるバグをFix, RSSで
+	出力するページ名をAliasされたものに変更
+
+2003-05-04  Hideaki Hori  <yowaken@cool.ne.jp>
+	* hiki-mode.el (http-url-unhexify-string): 新関数。
+	(hiki-edit-url): %xx 形式のURLに対応。
+
+2003-05-03  Hideaki Hori  <yowaken@cool.ne.jp>
+	* hiki-mode.el: スタイルのアンカーの違いに対応。
+	(hiki-style, hiki-style-anchor-regexp-alist): 新変数。
+	(hiki-search-anchor): 新関数。
+
+2003-05-03  Hideaki Hori  <yowaken@cool.ne.jp>
+	* hiki-mode.el (hiki-setup-url): Bug fix. 二回目の hiki-edit で
+	SITE が変わっていたの訂正。
+
+	* hiki-mode.el (hiki-edit): コードを整理。
+	(hiki-edit-page, hiki-fetch-source): 新関数。
+
+	* hiki-mode.el (hiki-edit-url): 新関数。 URL を直接指定して編集。
+
+2003-05-03  Hideaki Hori  <yowaken@cool.ne.jp>
+	* FONTLOCK をマージ。
+
+2003-05-02  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* misc/plugin/attach/attach.rb: attach_view メソッドの追加 by
+	yoshimi
+
+	* hiki/command.rb, hiki/plugin.rb: プラグインへcommandを渡すように
+	変更
+
+	* misc/plugin/attach/attach.rb, misc/plugin/attach/attach.cgi: 編
+	集画面からも添付できるように変更
+
+	* style/rd+/rd2html.rb:プラグイン使用時にエラーが発生した場合の表
+	示内容の改善。$plugin_debug対応。コードクリーンアップ。by Masao
+	Mutoh
+
+2003-05-01  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* misc/plugin/attach/attach.rb: attach_src メソッドの追加 by
+	yoshimi
+
+	* hiki/command.rb, misc/plugin/bbs.rb, comment.rb, referer.rb,
+	rss.rb, src.rb: pluginのi18n対応
+
+	* template/en/view.html: 不要なbody_leaveを削除
+
+	* template/*/edit.html: TextFormattingRulesの削除とedit_proc展開用
+	エリアの追加
+
+	* hiki/plugin.rb, hiki/command.rb, template/*/edit.html: edit_proc
+	の追加
+
+2003-04-30  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* hiki/command.rb: 新規作成時にページ名を渡すように修正 by Masao
+	Mutoh
+
+	* misc/plugin/attach/attach.rb: MIMEタイプの追加 by Masao Mutoh
+
+	* plugin/00default.rb: FrontPageがaliasされている場合のメニュー表
+	示変更 by さく
+
+2003-04-30  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* style/rd+/rd2html.rb, anchorlist.rb: InterWikiNameを使ったリンク
+	で表示文字列が不正になるバグの修正 by Masao Mutoh
+
+2003-04-30  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* hiki/plugin.rb, plugin/00default.rb, misc/plugin/rss.rb:
+	add_plugin_command されたコマンドを自動的にメニューバーへ追加する
+	ようにした
+
+	* misc/plugin/src.rb: srcプラグインの追加
+
+2003-04-30  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* style/default/html_formatter.rb: プラグイン実行結果に<div><span>
+	を付加しないようにした。
+
+	* style/default/html_formatter.rb: 最終トークンが:normal_textだっ
+	た場合にバッファに残り出力されない不具合の修正 by さく
+
+	* misc/plugin/referer.rb: URLの置換をサポート
+
+2003-04-29  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* style/default/parser.rb: inlineメソッドをpublicに変更
+
+	* style/rd+/rd2html.rb: hiki_anchor仕様変更対応 by Masao Mutoh
+
+2003-04-29  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* hiki/command.rb, hiki/util.rb: sendmailメソッドの汎用化 by さく
+
+2003-04-29  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* misc/plugin/referer.rb: omit_urlを指定するとrefererが記録されな
+	い不具合の修正
+
+2003-04-28  Hideaki Hori  <yowaken@cool.ne.jp>
+	* hiki-mode.el (hiki-current-anchor): Should not use font-lock
+	feature.
+
+	* hiki-mode.el (hiki-anchor-regexp-match-beginning,
+	hiki-anchor-regexp-match-end): New function.
+
+	* hiki-mode.el (hiki-current-anchor-string): Renamed from
+	hiki-current-anchor.
+
+2003-04-27  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* plugin/00defualt.rb: recent中のescape漏れ
+
+2003-04-27  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* hiki/command.rb, hiki/aliaswiki.rb: Aliasしたページ名を直接URLで
+	指定して編集した場合に、ページが空になる不具合の修正 by yoshimi
+
+	* hiki/util.rb: CGI名の指定漏れ patch from yoshimi
+
+	* style/rd+/rd2html.rb: Rubyのメソッド表記で最後に';'が入っている
+	場合にリンク対象になってしまう不具合の修正 patch from Masao Mutoh
+
+	* style/rd+/rd2html.rb: メソッド表記で'|'をメソッドとして認識する
+	ようにした patch from Masao Mutoh
+
+	* misc/plugin/attach/attach.rb: ページ名のescape漏れ。 by りた
+
+	* hiki/command.rb, misc/plugin/category.rb, misc/plugin/orphan.rb,
+	misc/plugin/rank.rb, misc/plugin/sitemap.rb,
+	misc/plugin/attach/attach.rb, plugin/00default.rb,
+	style/default/html_formatter.rb: hiki_anchor仕様変更に伴う修正
+
+	* hikiconf.rb.sample: $cgi_nameをglobal.rbから移動
+
+	* hikiconf.rb.sample, hiki/util.rb: $plugin_debugの追加 by さく
+
+2003-04-22  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* misc/plugin/rd+/status.rb: 削除
+
+	* style/rd+/* patch from Masao Mutoh
+
+	* style/rd+/html_formatter.rb, rd2html.rb: tocサポートのエンハンス
+
+	* style/rd+/anchorlist.rb: InterWikiNameのデフォルト表示方法で余計
+	な:がついてしまう不具合の修正
+
+	* style/rd+/rd2html.rb:  <=>, ==, []メソッドのパースに対応。
+	Headline,MethodList/DescListをアンカーにした
+
+	* style/rd+/*.rb: Pluginのhiki_anchorに対応(一部)
+
+	* style/rd+/parser.rb: エラー時にエラー箇所を表示するようにした
+
+	* misc/plugin/attach/attach.rb: MIME タイプが正しく渡らないバグの
+	修正 by Kazuhiko
+
+	* hiki/command.rb: ページ名が0バイトの場合のチェック漏れ by yoshimi
+
+2003-04-22  Kazuhiko  <kazuhiko@fdiary.net>
+	* plugin/00default.rb (hiki_anchor): title 属性の追加。
+
+	* plugin/00default.rb (recent): hiki_anchor の使用。
+
+2003-04-21  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* misc/plugin/attach/attach.rb: ページ毎の添付ファイル一覧出力バグ
+	Fix
+
+2003-04-21  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* hiki/db/flatfile.rb: info.db 読み出し用メソッドの追加
+
+	* template/*/view.html: attach プラグイン対応
+
+	* misc/plugin/rss.rb: 出力形式の変更
+
+	* misc/plugin/orphan.rb: 追加
+
+	* misc/plugin/sitemap.rb: 追加
+
+	* misc/plugin/attach/attach.(cgi|rb): 追加
+
+2003-04-15  Kazuhiko  <kazuhiko@fdiary.net>
+	* plugin/00default.rb (hiki_menu): hiki_anchor および cgi_name を
+	使うようにした。
+
+2003-04-15  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* misc/plugin/rss.rb: 指定した出力件数を見るように修正
+
+	* hiki/command.rb: プラグインのPOST後にリダイレクトするように修正
+
+2003-04-15  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* plugin/00default.rb: 新規作成で例外になるバグFix
+
+2003-04-15  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* plugin/00default.rb: メニュー中のページ名のescape漏れFix
+
+2003-04-14  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* plugin/00default.rb, hiki/command.rb, hiki/page.rb hiki/util.rb,
+	template/*/*, message/*.rb: ツール、フッタ出力のプラグイン化
+
+	* hiki/command.rb, hiki/plugin.rb: プラグインコマンドの追加
+
+	* hiki/global.rb, hiki/command.rb, hiki/util.rb,
+	template/*/adminform.html, hikiconf.rb.sample: 複数設置対応でテー
+	マが存在するディレクトリを管理画面で設定できるようにした。
+
+	* misc/plugin/entityref.rb: entityrefプラグインの追加 --- by
+	yoshimi
+
+	* misc/plugin/readlirs.rb: readlirsプラグインの追加 --- by yoshimi
+
+	* misc/plugin/isbn.rb: ISBNプラグインの追加 --- by 中村のりつぐ
+
+	* misc/plugin/cd.rb: CDプラグインの追加 --- by のとや
+
+	* misc/plugin/rss.rb: RSSプラグインの追加
+
+	* misc/plugin/rss-show.rb: RSS表示プラグインの追加
+
+2003-04-13  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* hiki/interwiki.rb: エンコード判定漏れのバグFix
+
+2003-04-13  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* hiki/interwiki.rb, style/default/html_formatter.rb: 外部URLへの
+	エイリアスに対応させた。
+
+	* hiki/command.rb: 別名でのページリクエストに対応させた。
+
+2003-04-12  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* hiki/command.rb, hiki/global.rb, hiki/aliaswiki.rb,
+	style/default/html_formatter.rb, plugin/00default.rb,
+	misc/plugin/category.rb, misc/plugin/rank.rb, hiki/plugin.rb: ブラ
+	ケットネームのエイリアス
+
+	* hiki/html_formatter.rb, hiki/util.rb, hiki/command.rb,
+	template/*/adminform.html: オートリンク
+
+	* hiki/util.rb, hiki/command.rb, template/*/*: CSSのクラス名変更
+
+	* style/rd+/html_formatter.rb: 複数Hiki設置対応
+
+	* style/rd+/html_formatter.rb, style/rd+/rd2html.rb: RD+スタイルで
+	のtoc対応 by usa
+
+2003-04-10  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* misc/plugin/comment.rb: コメント挿入位置指定のパラメタ追加
+
+2003-04-10  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* hiki/util.rb, misc/plugin/rank.rb: hiki_anchorの表示形式対応
+
+2003-04-09  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* dot.htaccess: 複数Hiki設置対応 by かずひこ
+
+2003-04-09  Kazuhiko  <kazuhiko@fdiary.net>
+	* misc/plugin/category.rb: hiki_anchorを使うように変更。
+
+2003-04-08  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* hiki.cgi, hiki/command.rb, hiki/util.rb,  hiki/global.rb:
+	require '/home/hoge/hiki/hiki.rb'対応。
+
+	* hikiconf.rb.sample, hiki/command.rb, hiki/util.rb, : テーマURLの
+	管理画面からの変更対応。
+
+	* hiki/command.rb, hiki/util.rb: ページ更新後のリダイレクト対応。
+
+	* hiki/db/flatfile.rb: ページ一覧でフラットファイルのみを対象にす
+	るよう変更。
+
+	* style/default/parser.rb: レンダリングバグFix（テーブル、定義リス
+	ト、箇条書き）
+
+	* data/text/default/*, data/text/rd+/*: ページデータ保存パス変更に
+	伴いmisc/text/配下へ移動。
+
+	* style/rd+/anchorlist.rb: InterWikiNameを利用したリンクの修正。by
+	usa <usa@dm4lab.to>
+
+2003-04-05  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* Hiki/RD+ のマージ : contributed by Masao Mutoh
+
+	* テーブルのサポート: by かずひこ
+
+	* 定義リスト中に':'がある場合のレンダリングバグFix: by ょゎ
+
+	* 更新後にredirectするようにした
+
+	* [[hoge|URL]]で相対パスも指定できるようにした
+
+2003-03-30  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* POST系プラグインのサポート
+
+	* 掲示板プラグイン、コメントプラグインの追加
+
+2003-03-23  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* InterWikiNameのバグFix
+
+	* プレビュー時のescapeに関するバグFix
+
+	* TextFormattingRulesの記述変更
+
+	* InterWikiNameの記述変更(google)
+
+2003-03-22  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* charset出力のバグFix
+
+	* サイドバーの送出順を変更（メインコンテンツの後へ）
+
+	* 英語版テンプレート、メッセージの取り込み
+
+	* mailto: にもアンカが設定されるように変更
+
+	* 1行に[hoge]と[[hoge|http://www.hoge.com/]]があるパターンのレンダ
+	リングバグFix
+
+	* ページ名に+などがある場合のバグFix
+
+	* TextFormattingRulesの記述変更（強調の記述誤り）
+
+2003-03-01  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* blockquoteの終了条件に関するバグFix
+
+	* [や]があるパラグラフ展開に関するバグFix
+
+	* emとstrongの解釈をtDiaryのWikiモードに合わせた
+
+2003-02-26  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* ページの削除機能
+
+	* blockquoteの扱いをtDiaryのWikiスタイルに合わせた
+
+	* ul,ol中のliに関するバグFix
+
+2003-02-26  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* 0.4.1.1
+
+	* 更新時の送信メールにREMOTE_ADDR,REMOTE_HOSTが入らないバグの修正
+
+2003-02-26  TAKEUCHI Hitoshi <hitoshi@namaraii.com>
+	* 0.4.1
+
+	* ライセンスをRuby'sからGPL2に変更
+
+	* WikiNameの解釈を変更
+
+	* doc/配下のドキュメントをHTMLからWiki形式に変更
+
+	* HTML 4.01 Transitional Validにした（少なくともTextFormattingRulesは）
+
+	* メール送信時にX-Mailerを出力するように変更
+
+	* 編集でテキストを読み込む際のescape漏れ修正
+
+	* 編集画面のtextareaの属性変更(wrap削除、accesskey追加)
+
+	* 引用のレンダリング不正を修正
+
+	* URLで使用できる文字として#を追加
+
+	* ドキュメントのtypo修正

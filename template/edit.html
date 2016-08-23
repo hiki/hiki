@@ -1,0 +1,53 @@
+<div class="<%= @contents[:view_style] %>">
+<div class="adminmenu"><%= @contents[:tools] %></div>
+<h1 class="header"><%= @contents[:title] %></h1>
+
+<div class="update day">
+  <% if @contents[:msg] %><div class="msg"><strong><%= @contents[:msg] %></strong></div><% end %>
+  <% if @contents[:body] %><div class="preview"><%= @contents[:body] %></div><% end %>
+  <% if @contents[:differ] %><div><%= @contents[:differ] %></div><% end %>
+<div class="form">
+  <form class="update" action="<%= @contents[:cgi_name] %>" method="POST">
+    <input type="hidden" name="p" value="<%= @contents[:pagename] %>">
+    <input type="hidden" name="c" value="save">
+    <input type="hidden" name="md5hex" value="<%= @contents[:md5hex] %>">
+    <input type="hidden" name="session_id" value="<%=@contents[:session_id]%>">
+    <a name="form"></a>
+    <p>
+      <%=@conf.msg_title%> <input type="text" name="page_title" size="60" value="<%= @contents[:page_title] %>">
+    </p>
+    <div class="textarea">
+      <textarea cols="80" rows="20" name="contents"><%= @contents[:contents] %></textarea>
+    </div>
+    <p>
+      <% if @contents[:preview_button] %><input type="submit" name="preview" value="<%=@conf.msg_preview_button%>"><% end %>
+      <% if @contents[:button] %><input type="submit" name="save" value="<%=@conf.msg_save%>"><% end %>
+      <input type="checkbox" name="update_timestamp" value="on"<%=@contents[:update_timestamp]%>><%=@conf.msg_update_timestamp%>
+    </p>
+    <p>
+      <%=@conf.msg_keyword_form%>
+      <textarea cols="15" rows="3" name="keyword" class="keyword"><%= @contents[:keyword] %></textarea>
+    </p>
+    <% if @plugin.admin? %>
+    <p>
+      <input type="checkbox" name="freeze" value="on"<%= @contents[:freeze] %>><%=@conf.msg_freeze_checkbox%> 
+    </p>
+    <% end %>
+    <div><%= @contents[:edit_proc] %></div>
+  </form>
+  <% if @contents[:link] %><div>
+    <%=@conf.msg_latest%>: [<%= @contents[:link] %>]
+  </div><% end %>
+</div>
+</div>
+
+<hr class="sep">
+
+<% unless @contents[:form_proc].empty? %><div class="update day"><%= @contents[:form_proc] %></div><% end %>
+
+<div class="update day">
+<div class="comment">
+  <div class="commentbody"><p><%=@conf.msg_rules%></p></div>
+</div>
+</div>
+</div>

@@ -1,0 +1,25 @@
+<div class="<%= @contents[:view_style] %>">
+  <div class="adminmenu"><%= @contents[:tools] %></div>
+  <h1 class="header"><%= @contents[:title] %></h1>
+
+  <div class="day">
+    <div class="body">
+      <div class="section">
+        <form action="<%= @contents[:cgi_name] %>" method="post">
+          <p><%= @conf.msg_login_info %></p>
+          <% if @contents[:login_result] %><p><%= @contents[:login_result] %></p><% end %>
+          <input type="hidden" value="<%= @contents[:cmd] %>" name="c">
+          <input type="hidden" value="<%= @contents[:page] %>" name="p">
+          <%= @conf.msg_name %>:<input size="30" name="name" type="text"><br>
+          <%= @conf.msg_password %>:<input size="30" name="password" type="password"><br>
+          <input type="submit" value="<%= @contents[:button] %>"> 
+       </form>
+      </div>
+    </div>
+  </div>
+</div>
+<% if @contents[:sidebar_class] %>
+<div class="<%= @contents[:sidebar_class] %>">
+  <%= @contents[:sidebar] %>
+</div>
+<% end %>

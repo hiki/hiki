@@ -1,0 +1,12 @@
+! hiki-mode.el
+
+EmacsでHikiのページを編集するためのmajor modeです。
+
+!! インストール
+パスの通っているところにhiki-mode.elを置いた後、~/.hikiに
+
+ (setq hiki-site-list '(("Hoge-Hiki" "http://example.com/hiki/")
+                        ("Fuga-Hiki" "http://example.jp/hiki/hiki.cgi")))
+ (require 'hiki-mode)
+
+のように書けばOK。

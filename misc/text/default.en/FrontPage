@@ -1,0 +1,13 @@
+! Welcome to Hiki
+This is FrontPage of [[Hiki|http://hikiwiki.org/en/]].
+If you can see this page, the installation completed successfully, perhaps ;-)
+
+! Before starting (IMPORTANT)
+Choose [Admin] menu and set password for the administrator.
+Only an administrator can freeze pages (this means `only an administrator can update')
+and cancel frozen state.
+
+! Format of Hiki
+Format of Hiki is similar to the original one. So you can easily write if you know
+original wiki's format. However, some format is extended originally.
+See TextFormattingRules for details.

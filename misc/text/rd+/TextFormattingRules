@@ -1,0 +1,79 @@
+= rd+ styleの記述方法
+ドキュメントはRDで記述します。詳しくは((<RD事始め|URL:http://www.rubyist.net/~rubikitch/computer/rd-intro/>))を参照してください。
+
+((<RWiki:RDの書き方>))わかりやすいです(他力本願(^^;))。
+
+== rd+拡張
+=== ModuleNames
+rd+ styleでは、より簡易にRubyライブラリに関連するドキュメントを読み書きすることができるように、
+クラスやメソッド名は自動的にリンクが生成されるようにしています。従って(('((<Hoge::Fuga>))'))と言った記述をする必要はありません。
+
+ただし、これを有効活用するために（特にAPIリファレンスに言えるのですが）、以下のルールに従ってください。
+
+* リンクする側
+   * Hoge::Foo - クラス名
+   * Hoge::FOO - 定数値
+   * Hoge::Foo#bar - インスタンスメソッド
+   * Hoge::Foo.bar - クラスメソッド
+   * Hoge.bar - モジュール関数
+
+* リンクされる側
+   * クラスメソッド - "--- Hoge::Foo.new" 
+   * インスタンスメソッド - "--- bar" #メソッド名のみ
+
+本機能を使うにはModuleNamesページにそのモジュールを記述しておきます。
+
+=== アンカー自動生成
+アンカーの自動生成には、RD自体が持つ方法とHikiのInterWikiを拡張したInterWiki+機能を使うことができます。
+
+==== 引数から単純にアンカーを生成する方法
+これは、通常のRDがサポートする形式です。
+
+ ((<URL:url>))
+ ((<name|URL:url>))
+
+* name - そのリンク先の名称(省略可能。省略した場合はurlが名称として表示される)
+* url - URL
+
+ 例：
+ ((<URL:http://www.hoge.com/>))
+ ((<hoge|URL:http://www.hoge.com/>))
+
+これらは以下のような結果になります。
+
+ 結果：
+ <a href="http://www.hoge.com/">http://www.hoge.com/</a>
+ <a href="http://www.hoge.com/">hoge</a>
+
+なお、URLが画像(jpg, jpeg, pngで終わるもの)はIMGタグに展開されます。
+
+==== InterWikiを使う方法
+InterWikiとは要は外部へのリンクを簡単にできるようにするもので、((<Hiki>))自体が持つInterWikiと同様の機能です。あらかじめ、InterWikiNameというページにキーワードを登録しておき、keyに該当するデータを元にアンカーを生成します。
+
+ ((<name|key:option>)) 
+
+* name - そのリンク先の名称(省略可能)。省略した場合はkeyが表示されます。
+* key - キー(InterWikiNameのキーワード)。InterWikiNameのURLに展開されます。
+* option - URLに追加する文字列(省略可能)。日本語を使いたい場合はURLエンコードするように設定します(defaultはなし、辞書ファイルにeuc/sjis/jisのいずれかを指定する)。
+
+ 例：
+ ((<Hiki>))
+ ((<bibo:20020329>))
+ ((<Linuxビボ〜ろく|bibo:20020329>))
+
+例えば、後述するInterWikiNameをそのまま利用したとすると以下のような結果になります。
+
+ 結果：
+ <a href="http://hikiwiki.org/ja/?">Hiki</a>
+ <a href="http://ponx.s5.xrea.com/bibo/?date=20020329">bibo</a>
+ <a href="http://ponx.s5.xrea.com/bibo/?date=20020329">Linuxビボ〜ろく</a>
+
+ちなみに、特殊な記号('/'など)を使う場合は"(ダブルクオート)で括ります。
+
+ ((<"Ruby/GLib">))
+
+==== InterWikiNameページの書き方
+InterWikiNameページは (('[[keyword|url]]')) charset というフォーマットで書きます。
+
+ *[[Hiki|http://hikiwiki.org/ja/?]] euc
+ *[[bibo|http://ponx.s5.xrea.com/bibo/?date=]] euc

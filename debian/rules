@@ -1,0 +1,75 @@
+#!/usr/bin/make -f
+# Sample debian/rules that uses debhelper.
+# GNU copyright 1997 to 1999 by Joey Hess.
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+# This is the debhelper compatability version to use.
+# export DH_COMPAT=3
+
+# This is the versions of upstream
+UPSTREAM = hiki
+UPSTREAM_VERSION = 0.4.2a
+
+build:
+	# noting to do
+
+clean:
+	dh_testdir
+	dh_testroot
+
+	# Clean build and stamps
+	rm -rf build
+	rm -rf unpack-stamp patch-stamp patch-stampTMP patches-stamp
+
+	dh_clean
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	dh_installdirs
+
+	# Add here commands to install the package into debian/hiki.
+	#mv hikiconf.rb.sample hikiconf.rb
+	DESTDIR=$(CURDIR)/debian/hiki ruby1.6 $(CURDIR)/debian/install.rb
+	cp -r data messages misc plugin style template theme $(CURDIR)/debian/hiki/usr/share/hiki
+	find $(CURDIR)/debian/hiki -type d -name CVS -print | xargs rm -rf
+	find $(CURDIR)/debian/hiki -name \*.rb -print | xargs chmod 644
+	find $(CURDIR)/debian/hiki -type d -path '*/hiki/algorithm' -print | xargs rm -rf
+	install -m 755 hiki.cgi $(CURDIR)/debian/hiki/usr/share/hiki/hiki.cgi
+	install -m 644 hikiconf.rb.sample $(CURDIR)/debian/hiki/usr/share/hiki/hikiconf.rb
+	install -m 755 debian/hikisetup $(CURDIR)/debian/hiki/usr/bin/hikisetup
+	perl -i -npe 's!hiki/algorithm/diff!algorithm/diff!' `find $(CURDIR)/debian/hiki -name '*.rb' -print`
+	perl -i -npe 's!/usr/bin/env ruby!/usr/bin/ruby1.6!' `find $(CURDIR)/debian/hiki -name '*.cgi' -print`
+
+
+# Build architecture-independent files here.
+binary-indep: build install
+	dh_testdir
+	dh_testroot
+	dh_installchangelogs -i ChangeLog
+	dh_installdocs -i
+	dh_installexamples -i
+#	dh_install -i
+#	dh_installmenu -i
+#	dh_installdebconf -i	
+#	dh_installlogrotate -i
+#	dh_installemacsen -i
+#	dh_installpam -i
+#	dh_installmime -i
+#	dh_installinit -i
+#	dh_installcron -i
+#	dh_installinfo -i
+	dh_installman -i debian/hikisetup.1
+	dh_link -i
+	dh_compress -i
+	dh_fixperms -i
+	dh_installdeb -i
+	dh_gencontrol -i
+	dh_md5sums -i
+	dh_builddeb -i
+
+binary: binary-indep
+.PHONY: build clean binary-indep binary install patch unpack

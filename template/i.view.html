@@ -1,0 +1,6 @@
+<div><%= @contents[:tools] %></div>
+<h1><%= @contents[:view_title] %></h1>
+<% if !@contents[:body_enter].empty? %><div><%= @contents[:body_enter] %></div><% end %>
+<div><%= @contents[:body] %></div>
+<% unless @contents[:body_leave].empty? %><div><%= @contents[:body_leave] %></div><% end %>
+<% if @contents[:sidebar_class] %><div><%= @contents[:sidebar] %></div><% end %>
