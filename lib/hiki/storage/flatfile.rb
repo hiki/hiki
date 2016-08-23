@@ -33,8 +33,8 @@ module Hiki
         if exist?(page)
           return nil if md5 != md5hex(page)
           if update_timestamp
-#            FileUtils.copy(filename, backupdir(page), { preserve: true })
-            FileUtils.copy(filename, backupdir(page), { preserve: false })
+#            FileUtils.copy(filename, backupdir(page), { preserve: false })
+            FileUtils.copy(filename, backupdir(page), { preserve: true })
           end
         end
         create_info_default(page) unless info_exist?(page)

@@ -1,9 +1,9 @@
-#    DirectoryIndex index.cgi hiki.cgi
-    Options FollowSymLinks ExecCGI
-    Allow from all
-    Require all granted
+Options +ExecCGI
+
+AddHandler cgi-script .cgi
+DirectoryIndex hiki.cgi
 
 <Files "hikiconf.rb">
-        deny from all
+	deny from all
 </Files>
 

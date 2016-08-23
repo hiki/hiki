@@ -110,12 +110,12 @@ def convert_attachments(data_path, old_page, new_page, input_encoding,
 end
 
 def encode(text, input_encoding, output_encoding, nkf)
-  NKF.nkf(  "-Ew" , text)
-#  if nkf
-#    NKF.nkf("-m0 --ic=#{input_encoding} --oc=#{output_encoding}", text)
-#  else
-#    text.dup.encode!(output_encoding, input_encoding, invalid: :replace, undef: :replace)
-#  end
+#  NKF.nkf(  "-Ew" , text)
+  if nkf
+    NKF.nkf("-m0 --ic=#{input_encoding} --oc=#{output_encoding}", text)
+  else
+    text.dup.encode!(output_encoding, input_encoding, invalid: :replace, undef: :replace)
+  end
 end
 
 def main(argv)
@@ -164,8 +164,13 @@ def main(argv)
   # repository_class = ::Hiki.const_get("Repos#{repository_type.capitalize}")
 #  require_relative "../hiki/db/#{database_type}"
   require_relative "../lib/hiki/storage/#{database_type}"
+<<<<<<< HEAD
 #  database_class = ::Hiki::const_get("HikiDB_#{database_type}")
   database_class = ::Hiki::Storage::Flatfile
+=======
+  database_class = ::Hiki::const_get("HikiDB_#{database_type}")
+
+>>>>>>> origin/math_highlight_included
   if check_only
     check(data_path, database_class, input_encoding, output_encoding, nkf)
   else

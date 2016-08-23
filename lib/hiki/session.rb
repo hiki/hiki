@@ -10,9 +10,6 @@ module Hiki
     def initialize(conf, session_id = nil, max_age = MAX_AGE)
       @conf = conf
       @max_age = max_age
-      # added for no implicit conversion of CGI::Cookie into String (TypeError)
-      session_id=session_id[0] if session_id.is_a?(Array)
-      
       if session_id
         if /\A[0-9a-f]{16}\z/ =~ session_id
           @session_id = session_id

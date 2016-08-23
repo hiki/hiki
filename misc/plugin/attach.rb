@@ -60,7 +60,8 @@ end
 
 def get_image_size(file_name, page = @page)
   begin
-    require 'hiki/image_size'
+#    require 'hiki/image_size'
+    require 'image_size'
     f = "#{@cache_path}/attach/#{escape(page)}/#{escape(file_name)}"
     File.open(f.untaint,'rb') do |fh|
       return ImageSize.new(fh).get_size
@@ -90,7 +91,11 @@ def attach_flash_anchor(file_name, page = @page)
 end
 
 def attach_download
+<<<<<<< HEAD
   require 'hiki/image_size'
+=======
+  require 'image_size'
+>>>>>>> origin/math_highlight_included
   params      = @request.params
   page        = (params['p'] || '')
   file_name   = (params['file_name'] || '')

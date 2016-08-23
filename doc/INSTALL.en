@@ -1,0 +1,73 @@
+Hiki Installation Guide
+
+
+! Requirement
+* Ruby 1.8 or later. (1.8.2 or later is recommended.)
+
+
+! How to install
+We use following settings as the example to explain the installation.
+* Hiki URL:              http://www.example.com/~foo/hiki/
+* path of the Hiki URL:  /home/foo/public_html/hiki/
+* data storing path:     /home/foo/hiki/
+
+
+!! CGI script settings
+Extract the package and copy the all contents to /home/foo/public_html/hiki/.
+hiki.cgi is the main CGI script so set its permittion to make WWW Server executable it.
+
+If you can't invoke ruby with /usr/bin/env, you must change the first line of the scripts
+to the path of ruby.
+
+!! creating .htaccess
+Rename ''dot.htaccess'' to ''.htaccess'' and modify it to suitable for the environment.
+
+ Options +ExecCGI
+ 
+ AddHandler cgi-script .cgi
+ DirectoryIndex hiki.cgi
+ 
+ <Files "hikiconf.rb">
+	deny from all
+ </Files>
+
+This setting means
+* Enable CGI execution.
+* Recognize the files which ends with `.cgi' as CGI scripts.
+* The default file is hiki.cgi.
+* Prohibit the reference of hikiconf.rb.
+
+
+!! creating the data storing directory.
+There is a `data' directory in the archive. Copy it to somewhere,
+which is recommended not to be accessible from WWW.
+
+ $ cp -r data /home/foo/hiki
+
+The `data' directory has Japanese text. If you'd like to use English version,
+copy `misc/text/default.en/*' to `/home/foo/hiki/text/'.
+German version is in `misc/text/default.de/'.
+
+All of the files in the data storing directory should be writable
+by WWW server.
+
+ $ chmod -R og+w /home/foo/hiki
+
+!! creating hikiconf.rb
+Next, rename ''hikiconf.rb.sample'' to ''hikiconf.rb'' and modify it.
+This file is directly loaded by CGI as a ruby script.
+
+If you need English version, use `misc/i18n/hikiconf.rb.sample.en'.
+
+Popular settings of Hiki is configurable via web interface, so
+you only need to change ''@data_path'' at least.
+
+ @data_path = '/home/foo/hiki'
+
+You can put various settings in ''hikiconf.rb''.
+See comments in ''hikiconf.rb.sample'' for details.
+
+! Execute Hiki
+Open the URL where you install Hiki. (e.g. http://www.example.com/~foo/hiki/ )
+If the FrontPage is shown, the installation is succeeded.
+

@@ -1,0 +1,22 @@
+language: ruby
+
+rvm:
+  - 2.1
+  - 2.2
+  - 2.3.0
+  - ruby-head
+
+before_install:
+  - sudo apt-get install subversion mercurial
+  - gem update bundler
+
+before_script:
+  - git config --global user.email "you@example.com"
+  - git config --global user.name "Your Name"
+
+script: bundle exec rake test
+
+matrix:
+  allow_failures:
+    # eventmachine cann't build with rb_thread_blocking_region
+    - rvm: ruby-head

@@ -5,32 +5,10 @@ require "nkf"
 require "cgi/util"
 require "erb"
 
-#ライブラリ読み込み
-require "cgi"
-
-#デバッグ用 [[http://blog.tofu-kun.org/071220192353.php]]
-def error_cgi
-  print "Content-Type:text/html;charset=EUC\n\n"
-  p $:
-  puts `gem environment 2>&1`
-  puts `HOME=/home/nishitani gem environment 2>&1`
-  print "<br />*** CGI Error List ***<br />"
-  print "#{CGI.escapeHTML($!.inspect)}<br />"
-  $@.each {|x| print CGI.escapeHTML(x), "<br />"}
-end
-
-
-$LOAD_PATH.unshift '/home/nishitani/.gem/ruby'
-#$LOAD_PATH.unshift '/home/nishitani/.gem/ruby/gems/docdiff-0.5.0/lib'
-require 'rubygems'
-begin
-  require "docdiff/difference"
-  require "docdiff/document"
-  require "docdiff/view"
-  require "docdiff/diff/unidiff"
-rescue LoadError
-  error_cgi
-end
+require "docdiff/difference"
+require "docdiff/document"
+require "docdiff/view"
+require "docdiff/diff/unidiff"
 
 class String
   # all instance methods added in String class will be obsoleted in the

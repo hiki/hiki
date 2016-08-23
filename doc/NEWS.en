@@ -1,0 +1,105 @@
+! Changes in 1.0.0
+
+* Fix DoS vulnerabilities in the process of Wiki style's parser.
+* Support Ruby-1.9.
+* Support Rack.
+* Support Bundler.
+* Use docdiff Gem.
+* Use hikidoc Gem.
+* Fix wrong condition for If-Modified-Since.
+** Pull Request by Makoto Kitaichi [[GitHub:7]]
+* Fix NameError in misc/plugin/attach.rb
+** Pull Request by Keisuke SOGAWA [[GitHub:20]]
+* We can run Hiki to run "ruby hiki.rb".
+** Pull Request by Tomohiko Himura [[GitHub:21]]
+* Support RDBMS by Sequel [Experimental]
+* Support Heroku [Experimental]
+* Add a script to convert wiki text encoding.
+
+! Changes in 0.8.8
+
+* use [[HikiDoc|http://rubyforge.org/projects/hikidoc/]] as Wiki style's parser.
+* support API authentication in amazon plugin.
+* add the spam filter feature.
+* support git repositories.
+* fix miscellaneous bugs.
+
+! Changes in 0.8.7
+
+* fix an arbitrary file delete vulnerabilities.
+* Add Content-Length header field in downloading attached files.
+* Add Vary header field.
+* $SAFE=1 is set in Hikilet.
+* XMLRPC is supported in Hikilet.
+* fix the bug that text in a title is escaped twice.
+* the amazon plugin of tDiary is imported.
+* file scheme URI is converted to a link.
+* use status 500 on error.
+* the postable? method is added in plugins.
+* enable adding a comment and changing properties with a single post in the its.rb plugin.
+* session management without login is supported.
+* nested inline modifier is supported.
+* fix miscellaneous bugs.
+
+! Changes in 0.8.6
+
+* fix DoS vulnerabilities in the process of getting a difference between pages.
+* fix the bug of unlocking without lock.
+* support WILLCOM's mobile agents.
+* fix the bug of breaking the path of the cookie when base_url is specified.
+* The page editing support script now supports Safari.
+* suppress the width/height attributes when the size of an image is unknown.
+* options['attach.cache_url'] is introduced. DO NOT use this unless all attached files are safe.
+* Do not consider WikiName inside of pre elements.
+
+! Changes in 0.8.5
+
+* support multiple addresses to notify changes.
+* support a pure-ruby version control repository.
+* add an 'Issue Tracking System' plugin (misc/plugin/its.rb).
+* add 'Rast Search' plugins (contrib/plugin/rast-register.rb, contrib/plugin/rast-search.rb).
+* fix miscellaneous bugs.
+
+! Changes in 0.8.4
+
+* use the HikiDoc library in the default style.
+* change the charset of XML-RPC interfaces to UTF-8.
+* support whole HTML output in RSS (rss.rb plugin).
+* support setting up attach.cgi in hikifarm.
+* support WEBrick (misc/webrick/).
+* fix miscellaneous bugs.
+
+! Changes in 0.8.3
+
+* fix 'Cross-Site Scripting' vulnerabilities.
+* fix a bug of possible losing a configuration file.
+* XML-RPC interfaces are now available via hiki.cgi. xmlrpc.cgi is removed.
+* German resources are added.
+* fix a hang up bug of 'hiki-mode.el'.
+
+! Changes in 0.8.2
+
+* fix 'Cross-Site Scripting' vulnerabilities in some plugins.
+* revise 'hiki-mode.el' to work correctly.
+* fix a bug in a redirection of 'hikifarm'.
+
+! Changes in 0.8.1
+
+* fix 'Cross-Site Request Forgeries' vulnerabilities.
+* set @lang automatically when @lang is not set.
+* fix a bug in saving with XML-RPC.
+* fix miscellaneous bugs.
+
+! Changes in 0.8.0
+
+* support mod_ruby.
+* support TrackBack (trackback.rb plugin).
+* support mobile agents.
+* add 'math' style (style/math/).
+* use ERB for the template engine instead of Amrita.
+* support selection and configuration of plugins via web.
+* store session informations in cookies.
+* support authentication of several users (edit_user.rb plugin).
+* the administrator's name becomes 'admin'.
+* support XML-RPC interfaces (misc/xmlrpc/).
+* much faster.
