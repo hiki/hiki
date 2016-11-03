@@ -164,7 +164,7 @@ module Hiki
 
       @xmlrpc_enabled  = true unless defined?(@xmlrpc_enabled)
 
-      @template_path   ||= Pathname(__FILE__).dirname.parent.parent + "template"
+      @template_path   ||= "#{PATH}/../../template"
       @plugin_path     ||= "#{PATH}/plugin"
 
       @side_menu       ||= "SideMenu"
