@@ -38,7 +38,7 @@ GEM
     rake (11.1.2)
     rdtool (0.6.38)
     rr (1.1.2)
-    rubyzip (1.2.0)
+    rubyzip (1.2.1)
     selenium-webdriver (2.53.0)
       childprocess (~> 0.5)
       rubyzip (~> 1.0)
@@ -86,4 +86,4 @@ DEPENDENCIES
   thin
 
 BUNDLED WITH
-   1.11.2
+   1.14.6
