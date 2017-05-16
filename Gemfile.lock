@@ -25,7 +25,7 @@ GEM
     mime-types-data (3.2016.0221)
     mini_portile2 (2.1.0)
     mysql2 (0.4.4)
-    nokogiri (1.7.1)
+    nokogiri (1.7.2)
       mini_portile2 (~> 2.1.0)
     power_assert (0.2.7)
     pry (0.10.3)
