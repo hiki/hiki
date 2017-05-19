@@ -108,7 +108,7 @@ class BasicScenario::Repository::TestGit < Test::Unit::TestCase
   end
 
   def teardown
-    rm_rf(@wiki_data_path)
+    rm_rf(@wiki_data_path) if @wiki_data_path
   end
 end
 
@@ -133,7 +133,7 @@ class BasicScenario::Repository::TestHg < Test::Unit::TestCase
   end
 
   def teardown
-    rm_rf(@wiki_data_path)
+    rm_rf(@wiki_data_path) if @wiki_data_path
   end
 end
 
@@ -163,7 +163,7 @@ class BasicScenario::Repository::TestSVN < Test::Unit::TestCase
   end
 
   def teardown
-    rm_rf(@wiki_data_path)
-    rm_rf(@wiki_repo_path)
+    rm_rf(@wiki_data_path) if @wiki_data_path
+    rm_rf(@wiki_repo_path) if @wiki_repo_path
   end
 end
