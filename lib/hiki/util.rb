@@ -132,8 +132,8 @@ module Hiki
     end
 
     def word_diff(src, dst, digest = false)
-      src_doc = Document.new(src, @charset, CharString.guess_eol($/))
-      dst_doc = Document.new(dst, @charset, CharString.guess_eol($/))
+      src_doc = DocDiff::Document.new(src, @charset, DocDiff::CharString.guess_eol($/))
+      dst_doc = DocDiff::Document.new(dst, @charset, DocDiff::CharString.guess_eol($/))
       diff = compare_by_line_word(src_doc, dst_doc)
       overriding_tags = {
         start_common: "",
@@ -148,25 +148,25 @@ module Hiki
         end_after_change: "</ins>",
       }
       if digest
-        return View.new(diff, src.encoding, src.eol).to_html_digest(overriding_tags, false).join.gsub(%r|<br />|, "").gsub(%r|\n</ins>|, "</ins>\n") # "
+        return DocDiff::View.new(diff, src.encoding, src.eol).to_html_digest(overriding_tags, false).join.gsub(%r|<br />|, "").gsub(%r|\n</ins>|, "</ins>\n") # "
       else
-        return View.new(diff, src.encoding, src.eol).to_html(overriding_tags, false).join.gsub(%r|<br />|, "").gsub(%r|\n</ins>|, "</ins>\n") # "
+        return DocDiff::View.new(diff, src.encoding, src.eol).to_html(overriding_tags, false).join.gsub(%r|<br />|, "").gsub(%r|\n</ins>|, "</ins>\n") # "
       end
     end
 
     def word_diff_text(src, dst, digest = false)
-      src_doc = Document.new(src, @charset)
-      dst_doc = Document.new(dst, @charset)
+      src_doc = DocDiff::Document.new(src, @charset)
+      dst_doc = DocDiff::Document.new(dst, @charset)
       diff = compare_by_line_word(src_doc, dst_doc)
       if digest
-        return View.new(diff, src.encoding, src.eol).to_wdiff_digest({}, false).join.gsub(%r|\n\+\}|, "+}\n")
+        return DocDiff::View.new(diff, src.encoding, src.eol).to_wdiff_digest({}, false).join.gsub(%r|\n\+\}|, "+}\n")
       else
-        return View.new(diff, src.encoding, src.eol).to_wdiff({}, false).join.gsub(%r|\n\+\}|, "+}\n")
+        return DocDiff::View.new(diff, src.encoding, src.eol).to_wdiff({}, false).join.gsub(%r|\n\+\}|, "+}\n")
       end
     end
 
     def unified_diff(src, dst, context_lines = 3)
-      return h(Diff.new(src.split(/^/), dst.split(/^/)).ses.unidiff("", context_lines))
+      return h(DocDiff::Diff.new(src.split(/^/), dst.split(/^/)).ses.unidiff("", context_lines))
     end
 
     def redirect(request, url, cookies = nil)
@@ -289,19 +289,19 @@ EOS
     end
 
     def compare_by_line(doc1, doc2)
-      Difference.new(doc1.split_to_line, doc2.split_to_line)
+      DocDiff::Difference.new(doc1.split_to_line, doc2.split_to_line)
     end
 
     def compare_by_line_word(doc1, doc2)
       lines = compare_by_line(doc1, doc2)
-      words = Difference.new
+      words = DocDiff::Difference.new
       lines.each{|line|
         if line.first == :change_elt
-          before_change = Document.new((line[1] || []).join,
+          before_change = DocDiff::Document.new((line[1] || []).join,
                                        doc1.encoding, doc1.eol)
-          after_change  = Document.new((line[2] || []).join,
+          after_change  = DocDiff::Document.new((line[2] || []).join,
                                        doc2.encoding, doc2.eol)
-          Difference.new(before_change.split_to_word,
+          DocDiff::Difference.new(before_change.split_to_word,
                          after_change.split_to_word).each{|word|
             words << word
           }
