@@ -159,8 +159,8 @@ def main(argv)
 
   # require_relative "../hiki/repos/#{repository_type}"
   # repository_class = ::Hiki.const_get("Repos#{repository_type.capitalize}")
-  require_relative "../hiki/db/#{database_type}"
-  database_class = ::Hiki::const_get("HikiDB_#{database_type}")
+  require_relative "../lib/hiki/storage/#{database_type}"
+  database_class = ::Hiki::Storage::const_get(database_type.capitalize)
 
   if check_only
     check(data_path, database_class, input_encoding, output_encoding, nkf)
