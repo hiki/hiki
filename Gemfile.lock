@@ -17,7 +17,7 @@ GEM
     foreman (0.84.0)
       thor (~> 0.19.1)
     hikidoc (0.1.0)
-    json (2.1.0)
+    json (2.3.1)
     method_source (0.8.2)
     mime-types (3.1)
       mime-types-data (~> 3.2015)
