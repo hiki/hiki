@@ -104,7 +104,7 @@ def attach_download
 
     header = {}
     header['Content-Type'] = mime_type
-    header['Content-Length'] = File.size(attach_file.untaint)
+    header['Content-Length'] = File.size(attach_file.untaint).to_s
     header['Last-Modified'] = CGI.rfc1123_date(File.mtime(attach_file.untaint))
     if %r|^image/| =~ mime_type
       header['Content-Disposition'] = %Q|inline; filename="#{file_name}"; modification-date="#{header['Last-Modified']}";|
